@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Formatter</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- CodeMirror -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/javascript/javascript.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>JF</h1>
+    <h2>JSON Formatter</h2>
+    <span>Formatter • Minifier • Validator</span>
+  </header>
+
+  <main>
+    <div class="toolbar">
+      <button id="toggle-theme">Toggle theme</button>
+      <input type="file" id="upload-json" accept=".json" hidden>
+      <button id="upload-btn">Upload JSON</button>
+      <button id="download-btn">Download</button>
+      <button id="format-btn">Format (Ctrl+Enter)</button>
+      <button id="minify-btn">Minify</button>
+      <button id="copy-btn">Copy</button>
+      <button id="clear-btn">Clear</button>
+    </div>
+
+    <div id="editor"></div>
+    <p id="status">Lines: 0 • Chars: 0</p>
+
+    <div id="drop-zone">Drag & drop a .json file here or click Upload</div>
+
+    <section>
+      <h3>Preview / Quick Tools</h3>
+      <p>Use the buttons above or keyboard shortcuts. You can also download the current contents as a file.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Built with ❤️ in India</p>
+    <a href="about.html">About</a> | 
+    <a href="privacy.html">Privacy</a> | 
+    <a href="contact.html">Contact</a>
+  </footer>
+
+  <script type="module" src="assets/js/app.js"></script>
+</body>
+</html>
