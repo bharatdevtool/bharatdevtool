@@ -2,7 +2,6 @@
 import { formatJSON, minifyJSON } from "./formatter.js";
 
 let editor;
-let darkMode = false;
 
 window.addEventListener("DOMContentLoaded", () => {
   // Initialize CodeMirror
@@ -23,7 +22,7 @@ window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("minify-btn").addEventListener("click", minifyHandler);
   document.getElementById("copy-btn").addEventListener("click", copyHandler);
   document.getElementById("clear-btn").addEventListener("click", clearHandler);
-  document.getElementById("toggle-theme").addEventListener("click", toggleTheme);
+  document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
 
   // Upload
   document.getElementById("upload-btn").addEventListener("click", () => {
@@ -49,9 +48,30 @@ window.addEventListener("DOMContentLoaded", () => {
       formatHandler();
     }
   });
+
+  // Initialize theme
+  initTheme();
 });
 
-// --- Functions ---
+// --- Theme Functions ---
+function initTheme() {
+  const saved = localStorage.getItem("theme");
+  if (saved) {
+    document.documentElement.setAttribute("data-theme", saved);
+  } else {
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
+  }
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute("data-theme");
+  const next = current === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  localStorage.setItem("theme", next);
+}
+
+// --- Other Functions ---
 function updateStatus() {
   const text = editor.getValue();
   const lines = text.split("\n").length;
@@ -84,11 +104,6 @@ function copyHandler() {
 
 function clearHandler() {
   editor.setValue("");
-}
-
-function toggleTheme() {
-  darkMode = !darkMode;
-  editor.setOption("theme", darkMode ? "darcula" : "default");
 }
 
 function handleUpload(event) {
