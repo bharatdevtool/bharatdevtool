@@ -3,13 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JSON Formatter</title>
+  <!-- SEO: Descriptive, keyword-rich title -->
+  <title>JSON Formatter & Beautifier | Minify & Escape Online | Bharat Dev Tools</title>
+  <!-- SEO: Primary meta description for search results -->
+  <meta name="description" content="Free online JSON Formatter, Beautifier, Minifier, and Escape/Unescape tool. Format, validate, and compress JSON instantly in your browser. No data stored.">
+  <!-- SEO: Helpful keywords (kept concise) -->
+  <meta name="keywords" content="json formatter, json beautifier, json minifier, json escape, unescape json, online json tool, pretty print json">
+  <!-- SEO: Canonical URL (update to your production domain) -->
+  <link rel="canonical" href="https://bharatdevtools.com/">
+  <!-- Social preview (Open Graph / Twitter) -->
+  <meta property="og:title" content="JSON Formatter & Beautifier | Bharat Dev Tools">
+  <meta property="og:description" content="Format, validate, minify, and escape JSON online. Fast, free, privacy‑friendly.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtools.com/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JSON Formatter & Beautifier | Bharat Dev Tools">
+  <meta name="twitter:description" content="Format, validate, minify, and escape JSON online. Fast, free, privacy‑friendly.">
   <link rel="stylesheet" href="assets/css/style.css">
 
   <!-- CodeMirror -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/fold/foldgutter.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/fold/foldcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/fold/foldgutter.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/fold/brace-fold.min.js"></script>
+
+  <!-- SEO: Structured data to help search engines understand this web application -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "JSON Formatter & Beautifier",
+    "url": "https://bharatdevtools.com/",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "description": "Free online JSON Formatter, Beautifier, Minifier, and Escape/Unescape tool. No data stored.",
+    "creator": {"@type":"Organization","name":"Bharat Dev Tools"}
+  }
+  </script>
 </head>
 <body>
 <header>
@@ -23,40 +56,180 @@
     <h1 class="sr-only">Bharat Dev Tools</h1>
   </div>
 
-  <!-- Theme toggle at far right -->
-  <button id="theme-toggle" aria-label="Toggle theme" class="theme-btn">🌓</button>
+  <!-- Header actions on the right -->
+  <div class="header-actions" role="group" aria-label="Quick actions">
+    <div class="theme-switcher">
+      <label class="theme-toggle" title="Toggle theme">
+        <input id="theme-toggle" type="checkbox" aria-label="Toggle theme" />
+        <span class="toggle-track">
+          <span class="toggle-thumb" aria-hidden="true"></span>
+          <span class="toggle-icon" data-light>☀️</span>
+          <span class="toggle-icon" data-dark>🌙</span>
+        </span>
+      </label>
+      <div id="theme-label" class="theme-label" aria-live="polite" role="status">
+        <span>Switch</span>
+        <span>Dark mode</span>
+      </div>
+    </div>
+    <span class="v-sep" aria-hidden="true"></span>
+    <div class="bookmark-switcher">
+      <button id="bookmark-btn" class="icon-btn" title="Bookmark" aria-haspopup="dialog" aria-controls="bookmark-dialog">🔖</button>
+      <button class="theme-label text-btn" id="bookmark-text-btn" aria-label="Add bookmark">
+        <span>Add</span>
+        <span>Bookmark</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Bookmark dialog -->
+  <dialog id="bookmark-dialog" class="modal">
+    <form method="dialog" class="modal-content">
+      <header class="modal-header">
+        <h3>Bookmark this tool</h3>
+        <button class="modal-close" aria-label="Close">✕</button>
+      </header>
+      <div class="modal-body">
+        <p>Your browser may not allow adding bookmarks programmatically.</p>
+        <p>
+          Press <strong>Cmd + D</strong> (Mac) or <strong>Ctrl + D</strong> (Windows) to bookmark, or copy the link below.
+        </p>
+        <div class="copy-row">
+          <input id="bookmark-link" type="text" readonly>
+          <button id="copy-link-btn" type="button">Copy</button>
+        </div>
+      </div>
+      <footer class="modal-footer">
+        <button value="cancel">Close</button>
+      </footer>
+    </form>
+  </dialog>
 </header>
 
-
-
   <main>
-    <div class="toolbar">
-      <button id="toggle-theme">Toggle theme</button>
-      <input type="file" id="upload-json" accept=".json" hidden>
-      <button id="upload-btn">Upload JSON</button>
-      <button id="download-btn">Download</button>
-      <button id="format-btn">Format (Ctrl+Enter)</button>
-      <button id="minify-btn">Minify</button>
-      <button id="copy-btn">Copy</button>
-      <button id="clear-btn">Clear</button>
+    <div class="workspace">
+      <section class="pane input-pane panel">
+        <div class="pane-header">
+          <div class="pane-toolbar">
+            <button id="input-upload-btn" class="icon-btn" title="Upload JSON" aria-label="Upload JSON" data-tip="Upload JSON">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0-12 4 4m-4-4-4 4M5 15v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"/></svg>
+            </button>
+            <button id="input-fetch-btn" class="icon-btn" title="Fetch from URL" aria-label="Fetch from URL" data-tip="Fetch from URL">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1"/><path d="M14 10a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1"/></svg>
+            </button>
+            <button id="input-clear-btn" class="icon-btn" title="Clear input" aria-label="Clear input" data-tip="Clear">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18"/><path d="M7 6v14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V6"/><path d="M10 10v8M14 10v8"/><path d="M9 6l1-2h4l1 2"/></svg>
+            </button>
+            <button id="input-copy-btn" class="icon-btn" title="Copy input" aria-label="Copy input" data-tip="Copy">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2Z"/><path d="M6 15H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+            <button id="input-fullscreen-btn" class="icon-btn" title="Fullscreen" aria-label="Fullscreen" data-tip="Fullscreen">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9V3h6M15 3h6v6M21 15v6h-6M9 21H3v-6"/></svg>
+            </button>
+            <input type="file" id="upload-json" accept=".json" hidden>
+            <div class="searchbar" id="input-searchbar">
+              <button class="search-toggle" type="button" aria-label="Search">
+                <span class="icon-search">🔍</span>
+                <span class="icon-clear">✕</span>
+              </button>
+              <input id="input-search" type="text" placeholder="Search" aria-label="Search in input" />
+              <span class="search-count" id="input-search-count">0/0</span>
+              <button id="input-search-prev" class="icon-btn" title="Previous match" aria-label="Previous match" data-tip="Prev">⟨</button>
+              <button id="input-search-next" class="icon-btn" title="Next match" aria-label="Next match" data-tip="Next">⟩</button>
+            </div>
+          </div>
+        </div>
+        <div id="input-editor" class="editor"></div>
+        <div id="input-error" class="error" role="status"></div>
+        <div class="pane-footer">
+          <span id="status" class="status">Lines: 0 • Chars: 0</span>
+        </div>
+      </section>
+
+      <div class="center-toolbar">
+        <button id="format-btn" class="btn-primary has-tooltip" title="Format & Repair (Ctrl/Cmd+Enter)">
+          Format <span class="info-icon" aria-describedby="fix-tip" aria-label="What's included" tabindex="0">i</span>
+          <div id="fix-tip" class="tooltip" role="tooltip">
+            <div class="tooltip-title">Also Repairs JSON</div>
+            <ul>
+              <li>Fix quotes and escape characters</li>
+              <li>Remove // and /* */ comments</li>
+              <li>Unwrap JSONP callback(…)</li>
+              <li>Turn JS-style objects into JSON (quote keys, replace undefined/NaN/Infinity)</li>
+              <li>Remove trailing commas and semicolons</li>
+            </ul>
+          </div>
+        </button>
+        <button id="minify-btn" title="Minify">Minify</button>
+        <button id="escape-btn" title="Escape JSON string">Escape</button>
+        <button id="unescape-btn" title="Unescape JSON string">Unescape</button>
+        <div class="font-controls" role="group" aria-label="Editor font size">
+          <button id="font-dec" class="icon-btn" title="Decrease font size" aria-label="Decrease font size" data-tip="Smaller">−</button>
+          <span class="font-label">Font</span>
+          <button id="font-inc" class="icon-btn" title="Increase font size" aria-label="Increase font size" data-tip="Larger">+</button>
+        </div>
+      </div>
+
+      <section class="pane output-pane panel">
+        <div class="pane-header">
+          <div class="pane-toolbar">
+            <div class="menu" id="download-menu">
+              <button id="output-download-btn" class="icon-btn" title="Download JSON" aria-label="Download JSON" data-tip="Download">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V9"/><path d="M8 17l4 4 4-4"/><path d="M5 3h14a2 2 0 0 1 2 2v6"/></svg>
+              </button>
+              <ul class="menu-list" role="menu" aria-label="Download as">
+                <li><button type="button" role="menuitem" id="dl-formatted">Formatted</button></li>
+                <li><button type="button" role="menuitem" id="dl-minified">Minify</button></li>
+                <li><button type="button" role="menuitem" id="dl-escaped">Escape</button></li>
+                <li><button type="button" role="menuitem" id="dl-unescaped">Unescape</button></li>
+              </ul>
+            </div>
+            <button id="output-copy-btn" class="icon-btn" title="Copy output" aria-label="Copy output" data-tip="Copy">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2Z"/><path d="M6 15H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+            <button id="output-clear-btn" class="icon-btn" title="Clear output" aria-label="Clear output" data-tip="Clear">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18"/><path d="M7 6v14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V6"/><path d="M10 10v8M14 10v8"/><path d="M9 6l1-2h4l1 2"/></svg>
+            </button>
+            <button id="output-fullscreen-btn" class="icon-btn" title="Fullscreen" aria-label="Fullscreen" data-tip="Fullscreen">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9V3h6M15 3h6v6M21 15v6h-6M9 21H3v-6"/></svg>
+            </button>
+            <div class="searchbar" id="output-searchbar">
+              <button class="search-toggle" type="button" aria-label="Search">
+                <span class="icon-search">🔍</span>
+                <span class="icon-clear">✕</span>
+              </button>
+              <input id="output-search" type="text" placeholder="Search" aria-label="Search in output" />
+              <span class="search-count" id="output-search-count">0/0</span>
+              <button id="output-search-prev" class="icon-btn" title="Previous match" aria-label="Previous match" data-tip="Prev">⟨</button>
+              <button id="output-search-next" class="icon-btn" title="Next match" aria-label="Next match" data-tip="Next">⟩</button>
+            </div>
+          </div>
+        </div>
+        <div id="output-editor" class="editor"></div>
+      </section>
     </div>
-
-    <div id="editor"></div>
-    <p id="status">Lines: 0 • Chars: 0</p>
-
-    <div id="drop-zone">Drag & drop a .json file here or click Upload</div>
-
-    <section>
-      <h3>Preview / Quick Tools</h3>
-      <p>Use the buttons above or keyboard shortcuts. You can also download the current contents as a file.</p>
-    </section>
   </main>
 
-  <footer>
-    <p>Built with ❤️ in India</p>
-    <a href="about.html">About</a> | 
-    <a href="privacy.html">Privacy</a> | 
-    <a href="contact.html">Contact</a>
+  <footer class="site-footer">
+    <section class="footer-hero">
+      <h2>Thank you!</h2>
+      <p>Thanks for being part of the Bharat Dev Tools community. If you have ideas, we’d love to hear them.</p>
+    </section>
+    <section class="footer-meta">
+      <p class="made-in">Built with ❤️ in India</p>
+      <nav class="footer-links" aria-label="Footer links">
+        <a href="about.html">About</a>
+        <span class="sep">•</span>
+        <a href="privacy.html">Privacy</a>
+        <span class="sep">•</span>
+        <a href="feedback.html">Contact</a>
+        <span class="sep">•</span>
+        <a href="feedback.html">Suggestions</a>
+      </nav>
+    </section>
+    <section class="footer-copy">
+      <small>Copyright © BharatDevTool 2025 | v1.0</small>
+    </section>
   </footer>
 
   <script type="module" src="assets/js/app.js"></script>
