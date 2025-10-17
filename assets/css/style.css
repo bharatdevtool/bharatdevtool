@@ -322,6 +322,7 @@ main {
 .CodeMirror {
   height: 100% !important;
   width: 100%;
+  background: var(--panel) !important;
 }
 .editor .placeholder {
   position: absolute;
@@ -355,6 +356,15 @@ main {
   margin-left: auto;
   color: var(--muted);
   font-size: 13px;
+}
+
+.pane-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  background: var(--panel);
 }
 
 .error {
@@ -433,6 +443,210 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
 .cm-search-match { background: #fde68a; border-radius: 2px; }
 [data-theme="dark"] .cm-search-match { background: rgba(253, 230, 138, 0.35); }
 .cm-search-active { background: #f59e0b; color: #111827; }
+
+/* JSON syntax highlighting - Keys and Values */
+.CodeMirror .cm-string { color: #059669 !important; } /* Green for strings */
+.CodeMirror .cm-property { color: #dc2626 !important; font-weight: 500 !important; } /* Red for keys */
+.CodeMirror .cm-atom { color: #059669 !important; } /* Green for other values like booleans */
+.CodeMirror .cm-keyword { color: #dc2626 !important; font-weight: 500 !important; } /* Red for keywords */
+.CodeMirror .cm-attribute { color: #dc2626 !important; font-weight: 500 !important; } /* Red for attributes */
+.CodeMirror .cm-variable { color: #dc2626 !important; font-weight: 500 !important; } /* Red for variables */
+.CodeMirror .cm-number { color: #7c3aed !important; } /* Violet for numbers */
+.CodeMirror .cm-boolean { color: #dc2626 !important; } /* Red for booleans */
+.CodeMirror .cm-null { color: #000000 !important; } /* Black for null */
+
+/* Additional selectors for better coverage */
+.CodeMirror .CodeMirror-line .cm-string { color: #059669 !important; }
+.CodeMirror .CodeMirror-line .cm-property { color: #dc2626 !important; font-weight: 500 !important; }
+.CodeMirror .CodeMirror-line .cm-atom { color: #059669 !important; }
+.CodeMirror .CodeMirror-line .cm-number { color: #7c3aed !important; }
+.CodeMirror .CodeMirror-line .cm-boolean { color: #dc2626 !important; }
+.CodeMirror .CodeMirror-line .cm-null { color: #000000 !important; }
+
+[data-theme="dark"] .CodeMirror .cm-string { color: #10b981 !important; } /* Lighter green for dark theme */
+[data-theme="dark"] .CodeMirror .cm-property { color: #f87171 !important; font-weight: 500 !important; } /* Light red for keys in dark theme */
+[data-theme="dark"] .CodeMirror .cm-atom { color: #10b981 !important; } /* Lighter green for other values in dark theme */
+[data-theme="dark"] .CodeMirror .cm-keyword { color: #f87171 !important; font-weight: 500 !important; } /* Light red for keywords in dark theme */
+[data-theme="dark"] .CodeMirror .cm-attribute { color: #f87171 !important; font-weight: 500 !important; } /* Light red for attributes in dark theme */
+[data-theme="dark"] .CodeMirror .cm-variable { color: #f87171 !important; font-weight: 500 !important; } /* Light red for variables in dark theme */
+[data-theme="dark"] .CodeMirror .cm-number { color: #a78bfa !important; } /* Light violet for numbers in dark theme */
+[data-theme="dark"] .CodeMirror .cm-boolean { color: #f87171 !important; } /* Light red for booleans in dark theme */
+[data-theme="dark"] .CodeMirror .cm-null { color: #ffffff !important; } /* White for null in dark theme */
+
+/* Dark theme CodeMirror background */
+[data-theme="dark"] .CodeMirror {
+  background: var(--panel) !important;
+}
+[data-theme="dark"] .CodeMirror-gutters {
+  background: var(--panel) !important;
+  border-right: 1px solid rgba(255,255,255,0.12) !important;
+}
+
+/* Dark theme punctuation - make braces, brackets, commas, colons white */
+[data-theme="dark"] .CodeMirror .cm-bracket,
+[data-theme="dark"] .CodeMirror .cm-punctuation,
+[data-theme="dark"] .CodeMirror .cm-operator,
+[data-theme="dark"] .CodeMirror .cm-meta,
+[data-theme="dark"] .CodeMirror .cm-delimiter {
+  color: #ffffff !important;
+}
+
+/* Additional specific selectors for JSON punctuation */
+[data-theme="dark"] .CodeMirror .CodeMirror-line .cm-bracket,
+[data-theme="dark"] .CodeMirror .CodeMirror-line .cm-punctuation,
+[data-theme="dark"] .CodeMirror .CodeMirror-line .cm-operator,
+[data-theme="dark"] .CodeMirror .CodeMirror-line .cm-meta,
+[data-theme="dark"] .CodeMirror .CodeMirror-line .cm-delimiter {
+  color: #ffffff !important;
+}
+
+/* Catch any remaining punctuation characters */
+[data-theme="dark"] .CodeMirror .CodeMirror-line span[role="presentation"] {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .CodeMirror .CodeMirror-line .cm-string { color: #10b981 !important; }
+[data-theme="dark"] .CodeMirror .CodeMirror-line .cm-property { color: #f87171 !important; font-weight: 500 !important; }
+[data-theme="dark"] .CodeMirror .CodeMirror-line .cm-atom { color: #10b981 !important; }
+[data-theme="dark"] .CodeMirror .CodeMirror-line .cm-number { color: #a78bfa !important; }
+[data-theme="dark"] .CodeMirror .CodeMirror-line .cm-boolean { color: #f87171 !important; }
+[data-theme="dark"] .CodeMirror .CodeMirror-line .cm-null { color: #ffffff !important; }
+
+/* Escape sequences, unescape characters, and unicode sequences in orange */
+.CodeMirror .cm-escape { color: #f59e0b !important; } /* Orange for escape sequences */
+.CodeMirror .cm-string-2 { color: #f59e0b !important; } /* Orange for unicode sequences */
+.CodeMirror .cm-string .cm-escape { color: #f59e0b !important; } /* Orange for escape chars within strings */
+.CodeMirror .cm-string .cm-string-2 { color: #f59e0b !important; } /* Orange for unicode within strings */
+
+/* Additional selectors for escape and unicode sequences */
+.CodeMirror .CodeMirror-line .cm-escape { color: #f59e0b !important; }
+.CodeMirror .CodeMirror-line .cm-string-2 { color: #f59e0b !important; }
+.CodeMirror .CodeMirror-line .cm-string .cm-escape { color: #f59e0b !important; }
+.CodeMirror .CodeMirror-line .cm-string .cm-string-2 { color: #f59e0b !important; }
+
+/* Dark theme for escape sequences */
+[data-theme="dark"] .CodeMirror .cm-escape { color: #fbbf24 !important; }
+[data-theme="dark"] .CodeMirror .cm-string-2 { color: #fbbf24 !important; }
+[data-theme="dark"] .CodeMirror .cm-string .cm-escape { color: #fbbf24 !important; }
+[data-theme="dark"] .CodeMirror .cm-string .cm-string-2 { color: #fbbf24 !important; }
+[data-theme="dark"] .CodeMirror .CodeMirror-line .cm-escape { color: #fbbf24 !important; }
+[data-theme="dark"] .CodeMirror .CodeMirror-line .cm-string-2 { color: #fbbf24 !important; }
+[data-theme="dark"] .CodeMirror .CodeMirror-line .cm-string .cm-escape { color: #fbbf24 !important; }
+[data-theme="dark"] .CodeMirror .CodeMirror-line .cm-string .cm-string-2 { color: #fbbf24 !important; }
+
+/* More specific targeting for escape sequences and unicode */
+.CodeMirror .cm-string .cm-escape,
+.CodeMirror .cm-string .cm-string-2,
+.CodeMirror .cm-string .cm-escape-sequence,
+.CodeMirror .cm-string .cm-unicode-escape { 
+  color: #f59e0b !important; 
+}
+
+.CodeMirror .CodeMirror-line .cm-string .cm-escape,
+.CodeMirror .CodeMirror-line .cm-string .cm-string-2,
+.CodeMirror .CodeMirror-line .cm-string .cm-escape-sequence,
+.CodeMirror .CodeMirror-line .cm-string .cm-unicode-escape { 
+  color: #f59e0b !important; 
+}
+
+[data-theme="dark"] .CodeMirror .cm-string .cm-escape,
+[data-theme="dark"] .CodeMirror .cm-string .cm-string-2,
+[data-theme="dark"] .CodeMirror .cm-string .cm-escape-sequence,
+[data-theme="dark"] .CodeMirror .cm-string .cm-unicode-escape { 
+  color: #fbbf24 !important; 
+}
+
+[data-theme="dark"] .CodeMirror .CodeMirror-line .cm-string .cm-escape,
+[data-theme="dark"] .CodeMirror .CodeMirror-line .cm-string .cm-string-2,
+[data-theme="dark"] .CodeMirror .CodeMirror-line .cm-string .cm-escape-sequence,
+[data-theme="dark"] .CodeMirror .CodeMirror-line .cm-string .cm-unicode-escape { 
+  color: #fbbf24 !important; 
+}
+
+/* Color preview in gutter */
+.CodeMirror .color-preview {
+  width: 14px;
+  height: 14px;
+  border: 1px solid #666666;
+  border-radius: 2px;
+  display: block;
+  margin: 1px auto;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  text-align: center;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.CodeMirror .color-preview:hover {
+  transform: translateX(-50%) scale(1.05);
+  border-color: #333333;
+}
+
+[data-theme="dark"] .CodeMirror .color-preview {
+  border-color: #999999;
+}
+
+[data-theme="dark"] .CodeMirror .color-preview:hover {
+  transform: translateX(-50%) scale(1.05);
+  border-color: #cccccc;
+}
+
+/* Ensure gutter alignment for color previews */
+.CodeMirror-gutter.CodeMirror-linenumbers {
+  text-align: center;
+}
+
+.CodeMirror-gutter.CodeMirror-linenumbers .color-preview {
+  display: block;
+  margin: 1px auto;
+}
+
+.CodeMirror .color-preview-line {
+  position: relative;
+}
+
+.CodeMirror .color-preview-line::before {
+  content: '';
+  position: absolute;
+  left: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  border: 2px solid #000000;
+  border-radius: 3px;
+  z-index: 10;
+}
+
+[data-theme="dark"] .CodeMirror .color-preview-line::before {
+  border-color: #ffffff;
+}
+
+/* Hyperlink styling for URLs in JSON */
+.CodeMirror .cm-string.cm-url,
+.CodeMirror .cm-string[data-url="true"] { 
+  color: #2563eb !important; 
+  text-decoration: underline !important; 
+  cursor: pointer !important;
+}
+.CodeMirror .cm-string.cm-url:hover,
+.CodeMirror .cm-string[data-url="true"]:hover { 
+  color: #1d4ed8 !important; 
+  text-decoration: underline !important;
+}
+[data-theme="dark"] .CodeMirror .cm-string.cm-url,
+[data-theme="dark"] .CodeMirror .cm-string[data-url="true"] { 
+  color: #60a5fa !important; 
+  text-decoration: underline !important; 
+  cursor: pointer !important;
+}
+[data-theme="dark"] .CodeMirror .cm-string.cm-url:hover,
+[data-theme="dark"] .CodeMirror .cm-string[data-url="true"]:hover { 
+  color: #93c5fd !important; 
+  text-decoration: underline !important;
+}
 
 /* Download menu */
 .menu { position: relative; }
@@ -595,4 +809,34 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
   .panel {
     height: auto;
   }
+}
+
+/* Plain text mode styling - single green color */
+.CodeMirror .plain-text {
+  color: #22c55e !important; /* Green color for plain text */
+  background: transparent !important;
+}
+
+/* File size indicator */
+.file-size {
+  font-size: 0.8rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 8px;
+  font-weight: 500;
+}
+
+.file-size.small {
+  background: #e5f3e5;
+  color: #22c55e;
+}
+
+.file-size.medium {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.file-size.large {
+  background: #fee2e2;
+  color: #dc2626;
 }

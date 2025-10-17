@@ -103,6 +103,16 @@ function unwrapJSONP(s) {
 
 export function repairJSON(text) {
   let t = String(text);
+  
+  // First, check if the JSON is already valid
+  try {
+    const obj = JSON.parse(t);
+    return JSON.stringify(obj, null, 2);
+  } catch (initialError) {
+    // Only apply repairs if the JSON is actually broken
+    console.log('Before parse:', t);
+  }
+  
   t = stripBOM(t);
   t = stripComments(t);
   t = unwrapJSONP(t);

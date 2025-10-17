@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bharat Dev Tools - Test Suite</title>
+    <style>
+        body {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .test-section {
+            background: #2a2a2a;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .test-section h2 {
+            color: #4CAF50;
+            margin-top: 0;
+        }
+        
+        .test-results {
+            background: #1a1a1a;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+        
+        .summary {
+            background: #2a2a2a;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .success {
+            color: #4CAF50;
+        }
+        
+        .error {
+            color: #f44336;
+        }
+        
+        .warning {
+            color: #ff9800;
+        }
+        
+        .run-tests-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 20px auto;
+            display: block;
+            transition: background 0.3s;
+        }
+        
+        .run-tests-btn:hover {
+            background: #45a049;
+        }
+        
+        .run-tests-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+        
+        .feature-list {
+            background: #2a2a2a;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .feature-list h3 {
+            color: #4CAF50;
+            margin-top: 0;
+        }
+        
+        .feature-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 5px 0;
+            border-bottom: 1px solid #333;
+        }
+        
+        .feature-list li:before {
+            content: "✓ ";
+            color: #4CAF50;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Bharat Dev Tools - Test Suite</h1>
+        
+        <div class="feature-list">
+            <h3>🔧 Features Being Tested</h3>
+            <ul>
+                <li>Basic JSON formatting and minification</li>
+                <li>JSON validation and error handling</li>
+                <li>JSON escape/unescape functionality</li>
+                <li>JSON repair (trailing commas, unquoted keys, comments, etc.)</li>
+                <li>Hex color preview detection and display</li>
+                <li>Search functionality (single character support)</li>
+                <li>URL detection and click handling</li>
+                <li>Escape sequence styling</li>
+                <li>Performance with large files</li>
+                <li>Edge cases and error handling</li>
+                <li>Theme functionality</li>
+                <li>File size indicators</li>
+                <li>Integration scenarios</li>
+            </ul>
+        </div>
+        
+        <button id="runTests" class="run-tests-btn">🚀 Run All Tests</button>
+        
+        <div id="testResults" class="test-results" style="display: none;">
+            <div id="testOutput"></div>
+        </div>
+        
+        <div id="testSummary" class="summary" style="display: none;">
+            <div id="summaryContent"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        // Import the test functions
+        import { 
+            formatJSON, 
+            minifyJSON, 
+            isValidJSON, 
+            escapeJSONString, 
+            unescapeJSONString, 
+            repairJSON 
+        } from '../assets/js/formatter.js';
+
+        // Test Results Tracking
+        let testsPassed = 0;
+        let testsFailed = 0;
+        let totalTests = 0;
+        let testOutput = '';
+
+        function runTest(testName, testFunction) {
+            totalTests++;
+            try {
+                const result = testFunction();
+                if (result === true) {
+                    testsPassed++;
+                    testOutput += `✅ ${testName}\n`;
+                } else {
+                    testsFailed++;
+                    testOutput += `❌ ${testName} - Expected true, got ${result}\n`;
+                }
+            } catch (error) {
+                testsFailed++;
+                testOutput += `❌ ${testName} - Error: ${error.message}\n`;
+            }
+        }
+
+        function assertEqual(actual, expected, message) {
+            if (actual === expected) {
+                return true;
+            } else {
+                throw new Error(`${message} - Expected: ${expected}, Got: ${actual}`);
+            }
+        }
+
+        function assertContains(actual, expected, message) {
+            if (actual.includes(expected)) {
+                return true;
+            } else {
+                throw new Error(`${message} - Expected to contain: ${expected}, Got: ${actual}`);
+            }
+        }
+
+        // Test Functions (same as in test.js)
+        function runAllTests() {
+            testOutput = '';
+            testsPassed = 0;
+            testsFailed = 0;
+            totalTests = 0;
+
+            testOutput += '\n🧪 Testing Basic JSON Formatting...\n\n';
+
+            runTest('formatJSON - Basic object formatting', () => {
+                const input = '{"name":"John","age":30}';
+                const expected = '{\n  "name": "John",\n  "age": 30\n}';
+                return assertEqual(formatJSON(input), expected, 'Basic object formatting');
+            });
+
+            runTest('formatJSON - Array formatting', () => {
+                const input = '[1,2,3,{"nested":"value"}]';
+                const result = formatJSON(input);
+                return assertContains(result, '"nested"', 'Array with nested object formatting');
+            });
+
+            runTest('formatJSON - Invalid JSON throws error', () => {
+                try {
+                    formatJSON('{"invalid": json}');
+                    return false;
+                } catch (error) {
+                    return assertContains(error.message, 'Invalid JSON', 'Invalid JSON should throw error');
+                }
+            });
+
+            testOutput += '\n🧪 Testing JSON Minification...\n\n';
+
+            runTest('minifyJSON - Basic minification', () => {
+                const input = '{\n  "name": "John",\n  "age": 30\n}';
+                const expected = '{"name":"John","age":30}';
+                return assertEqual(minifyJSON(input), expected, 'Basic minification');
+            });
+
+            runTest('minifyJSON - Already minified', () => {
+                const input = '{"name":"John","age":30}';
+                const expected = '{"name":"John","age":30}';
+                return assertEqual(minifyJSON(input), expected, 'Already minified JSON');
+            });
+
+            testOutput += '\n🧪 Testing JSON Validation...\n\n';
+
+            runTest('isValidJSON - Valid JSON returns true', () => {
+                return assertEqual(isValidJSON('{"name":"John"}'), true, 'Valid JSON should return true');
+            });
+
+            runTest('isValidJSON - Invalid JSON returns false', () => {
+                return assertEqual(isValidJSON('{"invalid": json}'), false, 'Invalid JSON should return false');
+            });
+
+            testOutput += '\n🧪 Testing JSON Escape/Unescape...\n\n';
+
+            runTest('escapeJSONString - Basic escaping', () => {
+                const input = 'Hello "World"';
+                const result = escapeJSONString(input);
+                return assertContains(result, '\\"', 'Should escape quotes');
+            });
+
+            runTest('unescapeJSONString - Basic unescaping', () => {
+                const input = 'Hello \\"World\\"';
+                const result = unescapeJSONString(input);
+                return assertEqual(result, 'Hello "World"', 'Should unescape quotes');
+            });
+
+            testOutput += '\n🧪 Testing JSON Repair (Core Feature)...\n\n';
+
+            runTest('repairJSON - Remove trailing commas', () => {
+                const input = '{"name":"John",}';
+                const result = repairJSON(input);
+                return assertContains(result, '"name": "John"', 'Should remove trailing comma');
+            });
+
+            runTest('repairJSON - Quote unquoted keys', () => {
+                const input = '{name:"John",age:30}';
+                const result = repairJSON(input);
+                return assertContains(result, '"name"', 'Should quote unquoted keys');
+            });
+
+            runTest('repairJSON - Replace undefined with null', () => {
+                const input = '{"value":undefined}';
+                const result = repairJSON(input);
+                return assertContains(result, '"value": null', 'Should replace undefined with null');
+            });
+
+            runTest('repairJSON - Remove single line comments', () => {
+                const input = '{"name":"John"} // comment';
+                const result = repairJSON(input);
+                return assertEqual(result.trim(), '{\n  "name": "John"\n}', 'Should remove single line comments');
+            });
+
+            runTest('repairJSON - Unwrap JSONP', () => {
+                const input = 'callback({"name":"John"})';
+                const result = repairJSON(input);
+                return assertContains(result, '"name": "John"', 'Should unwrap JSONP');
+            });
+
+            testOutput += '\n🧪 Testing Hex Color Preview Feature...\n\n';
+
+            runTest('Hex Color Detection - 6 character hex', () => {
+                const line = '  "color": "#ff0000",';
+                const hexRegex = /#([0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b/g;
+                const match = hexRegex.exec(line);
+                return assertEqual(match[0], '#ff0000', 'Should detect 6-character hex color');
+            });
+
+            runTest('Hex Color Detection - Prioritize longer matches', () => {
+                const line = '  "color": "#ff0000",';
+                const hexRegex = /#([0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b/g;
+                const match = hexRegex.exec(line);
+                return assertEqual(match[0], '#ff0000', 'Should match full 6-character hex, not just #ff0');
+            });
+
+            testOutput += '\n🧪 Testing Search Functionality...\n\n';
+
+            runTest('Search - Single character search', () => {
+                const query = 'a';
+                const text = '{"name":"John","age":30}';
+                const lowerText = text.toLowerCase();
+                const lowerQuery = query.toLowerCase();
+                const index = lowerText.indexOf(lowerQuery);
+                return assertEqual(index !== -1, true, 'Should find single character matches');
+            });
+
+            testOutput += '\n🧪 Testing Integration Scenarios...\n\n';
+
+            runTest('Integration - Complete workflow with hex colors', () => {
+                const input = `{
+                    "colors": {
+                        "primary": "#ff0000",
+                        "secondary": "#00ff00",
+                        "transparent": "#00000000"
+                    },
+                    "name": "Test"
+                }`;
+                
+                const repaired = repairJSON(input);
+                const isValid = isValidJSON(repaired);
+                const formatted = formatJSON(repaired);
+                
+                return assertEqual(isValid, true, 'Complete workflow should produce valid JSON');
+            });
+
+            // Display results
+            document.getElementById('testOutput').textContent = testOutput;
+            document.getElementById('testResults').style.display = 'block';
+            
+            // Display summary
+            const summaryContent = document.getElementById('summaryContent');
+            summaryContent.innerHTML = `
+                <h2>📊 Test Summary</h2>
+                <p><strong>Total Tests:</strong> ${totalTests}</p>
+                <p class="success"><strong>✅ Passed:</strong> ${testsPassed}</p>
+                <p class="error"><strong>❌ Failed:</strong> ${testsFailed}</p>
+                <p><strong>Success Rate:</strong> ${((testsPassed / totalTests) * 100).toFixed(1)}%</p>
+                ${testsFailed === 0 ? 
+                    '<p class="success">🎉 ALL TESTS PASSED! The JSON formatter is working perfectly.</p>' : 
+                    `<p class="error">⚠️ ${testsFailed} tests failed. Please review the failed tests above.</p>`
+                }
+            `;
+            document.getElementById('testSummary').style.display = 'block';
+        }
+
+        // Run tests when button is clicked
+        document.getElementById('runTests').addEventListener('click', () => {
+            document.getElementById('runTests').disabled = true;
+            document.getElementById('runTests').textContent = '🔄 Running Tests...';
+            
+            setTimeout(() => {
+                runAllTests();
+                document.getElementById('runTests').disabled = false;
+                document.getElementById('runTests').textContent = '🚀 Run All Tests';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

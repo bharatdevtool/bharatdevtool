@@ -16,7 +16,7 @@ window.addEventListener("DOMContentLoaded", () => {
     theme: "default",
     lineWrapping: true,
     foldGutter: true,
-    gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+    gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter", "color-preview-gutter"],
     value: ""
   });
   injectPlaceholder();
@@ -27,9 +27,23 @@ window.addEventListener("DOMContentLoaded", () => {
     theme: "default",
     lineWrapping: true,
     foldGutter: true,
-    gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+    gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter", "color-preview-gutter"],
     readOnly: false,
     value: defaultGreetingJSON()
+  });
+
+  // Output editor change - no styling (only format button gets styling)
+  outputEditor.on("change", () => {
+    // No styling for output changes - only format button should have styling
+  });
+
+  // Track focus for global search
+  inputEditor.on("focus", () => {
+    window.currentFocusedEditor = 'input';
+  });
+  
+  outputEditor.on("focus", () => {
+    window.currentFocusedEditor = 'output';
   });
 
   // JSONEditor integration removed per request
@@ -39,15 +53,30 @@ window.addEventListener("DOMContentLoaded", () => {
     updateStatus();
     updateValidity();
     updatePlaceholder();
+    updateFileSizeIndicator();
+    // No styling for input changes - only format button should have styling
   });
   updateStatus();
   updateValidity();
 
   // Buttons
   document.getElementById("format-btn").addEventListener("click", formatHandler);
-  document.getElementById("minify-btn").addEventListener("click", minifyHandler);
-  document.getElementById("escape-btn").addEventListener("click", escapeHandler);
-  document.getElementById("unescape-btn").addEventListener("click", unescapeHandler);
+  
+  const minifyBtn = document.getElementById("minify-btn");
+  const escapeBtn = document.getElementById("escape-btn");
+  const unescapeBtn = document.getElementById("unescape-btn");
+  
+  if (minifyBtn) {
+    minifyBtn.addEventListener("click", minifyHandler);
+  }
+  
+  if (escapeBtn) {
+    escapeBtn.addEventListener("click", escapeHandler);
+  }
+  
+  if (unescapeBtn) {
+    unescapeBtn.addEventListener("click", unescapeHandler);
+  }
 
   // New toolbars
   const uploadBtn = document.getElementById("input-upload-btn");
@@ -96,14 +125,51 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Global search shortcut: Ctrl/Cmd + F
+  document.addEventListener("keydown", (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === "f") {
+      e.preventDefault();
+      focusSearchForCurrentEditor();
+    }
+  });
+
+  // Collapse search bars when clicking outside AND search box is empty
+  document.addEventListener("click", (e) => {
+    const inputSearchBar = document.getElementById('input-search')?.closest('.searchbar');
+    const outputSearchBar = document.getElementById('output-search')?.closest('.searchbar');
+    
+    // Check if click is outside both search bars
+    if (inputSearchBar && !inputSearchBar.contains(e.target)) {
+      const inputEl = document.getElementById('input-search');
+      // Only collapse if search box is completely empty (no characters at all)
+      if (inputEl && inputEl.value.length === 0) {
+        inputSearchBar.classList.remove('active');
+        // Clear search highlights
+        if (window.clearSearchHighlights) {
+          window.clearSearchHighlights();
+        }
+      }
+    }
+    
+    if (outputSearchBar && !outputSearchBar.contains(e.target)) {
+      const outputEl = document.getElementById('output-search');
+      // Only collapse if search box is completely empty (no characters at all)
+      if (outputEl && outputEl.value.length === 0) {
+        outputSearchBar.classList.remove('active');
+        // Clear search highlights
+        if (window.clearSearchHighlights) {
+          window.clearSearchHighlights();
+        }
+      }
+    }
+  });
+
   // Hook up search for input and output
   initSearch({ editor: inputEditor, input: 'input-search', count: 'input-search-count', prev: 'input-search-prev', next: 'input-search-next' });
   initSearch({ editor: outputEditor, input: 'output-search', count: 'output-search-count', prev: 'output-search-prev', next: 'output-search-next' });
 
   // Initialize theme
   initTheme();
-  syncThemeToggleUI();
-  updateThemeLabel();
 
   // Initialize font size from cookie
   initEditorFontSize();
@@ -111,6 +177,13 @@ window.addEventListener("DOMContentLoaded", () => {
   const decBtn = document.getElementById('font-dec');
   if (incBtn) incBtn.addEventListener('click', () => adjustEditorFont(1));
   if (decBtn) decBtn.addEventListener('click', () => adjustEditorFont(-1));
+
+  // Force refresh highlighting to apply custom colors
+  setTimeout(() => {
+    if (inputEditor) inputEditor.refresh();
+    if (outputEditor) outputEditor.refresh();
+    // No styling on page load - only format button should have styling
+  }, 100);
 });
 
 // --- Theme Functions ---
@@ -119,9 +192,11 @@ function initTheme() {
   if (saved) {
     document.documentElement.setAttribute("data-theme", saved);
   } else {
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
+    // Default to light mode instead of following system theme
+    document.documentElement.setAttribute("data-theme", "light");
   }
+  syncThemeToggleUI();
+  updateThemeLabel();
 }
 
 function toggleTheme() {
@@ -131,6 +206,13 @@ function toggleTheme() {
   localStorage.setItem("theme", next);
   syncThemeToggleUI();
   updateThemeLabel();
+  
+  // Refresh editors to apply new theme colors
+  setTimeout(() => {
+    if (inputEditor) inputEditor.refresh();
+    if (outputEditor) outputEditor.refresh();
+    // No styling on theme change - only format button should have styling
+  }, 50);
 }
 
 function syncThemeToggleUI() {
@@ -210,6 +292,57 @@ function updateValidity() {
   }
 }
 
+function updateFileSizeIndicator() {
+  const src = inputEditor.getValue();
+  const fileSize = src.length;
+  const fileSizeKB = (fileSize / 1024).toFixed(1);
+  const fileSizeMB = (fileSize / 1024 / 1024).toFixed(1);
+  
+  // Update file size indicator in the UI
+  const sizeIndicator = document.getElementById('file-size-indicator');
+  if (sizeIndicator) {
+    if (fileSize > 1024 * 1024) {
+      sizeIndicator.textContent = `${fileSizeMB}MB`;
+      sizeIndicator.className = 'file-size large';
+    } else if (fileSize > 1024) {
+      sizeIndicator.textContent = `${fileSizeKB}KB`;
+      sizeIndicator.className = 'file-size medium';
+    } else {
+      sizeIndicator.textContent = `${fileSize}B`;
+      sizeIndicator.className = 'file-size small';
+    }
+  }
+}
+
+function updateOutputFileSizeIndicator() {
+  const src = outputEditor.getValue();
+  const fileSize = src.length;
+  const fileSizeKB = (fileSize / 1024).toFixed(1);
+  const fileSizeMB = (fileSize / 1024 / 1024).toFixed(1);
+  
+  // Update output file size indicator in the UI
+  const sizeIndicator = document.getElementById('output-file-size-indicator');
+  if (sizeIndicator) {
+    if (fileSize > 1024 * 1024) {
+      sizeIndicator.textContent = `${fileSizeMB}MB`;
+      sizeIndicator.className = 'file-size large';
+    } else if (fileSize > 1024) {
+      sizeIndicator.textContent = `${fileSizeKB}KB`;
+      sizeIndicator.className = 'file-size medium';
+    } else {
+      sizeIndicator.textContent = `${fileSize}B`;
+      sizeIndicator.className = 'file-size small';
+    }
+  }
+}
+
+function updateOutputStatus() {
+  const text = outputEditor.getValue();
+  const lines = text.split("\n").length;
+  const chars = text.length;
+  document.getElementById("output-status").textContent = `Lines: ${lines} • Chars: ${chars}`;
+}
+
 function formatHandler() {
   const src = inputEditor.getValue();
   if (src.trim().length === 0) {
@@ -218,23 +351,72 @@ function formatHandler() {
     updateValidity();
     return;
   }
+  
+  // Performance safeguard for large files
+  const fileSize = src.length;
+  const maxSize = 2 * 1024 * 1024; // 2MB limit for format (more restrictive due to styling)
+  
+  if (fileSize > maxSize) {
+    const shouldContinue = confirm(
+      `Large file detected (${(fileSize / 1024 / 1024).toFixed(1)}MB). ` +
+      `Formatting with styling may be very slow. Continue?`
+    );
+    if (!shouldContinue) {
+      return;
+    }
+  }
+  
+  // Show processing indicator for large files
+  if (fileSize > 512 * 1024) { // 512KB
+    document.getElementById("input-error").textContent = "Processing large file...";
+  }
+  
   // If input is already valid JSON, do a plain pretty-format to avoid over-repairing
   if (isValidJSON(src)) {
-    try {
-      const formatted = formatJSON(src);
-      outputEditor.setValue(formatted);
-      document.getElementById("input-error").textContent = "";
-      updateValidity();
-      return;
-    } catch (err) {
-      // Fallback to repair if formatting somehow fails
-    }
+  try {
+    const formatted = formatJSON(src);
+    outputEditor.setValue(formatted);
+    document.getElementById("input-error").textContent = "";
+    updateValidity();
+    
+    // Switch back to JSON mode for format
+    outputEditor.setOption("mode", "application/json");
+    outputEditor.clearOverlays();
+    
+    // Add URL handlers after formatting (with timeout for large files)
+    const timeoutDelay = fileSize > 1024 * 1024 ? 500 : 100;
+    setTimeout(() => {
+      try {
+        addUrlClickHandlers();
+        applyEscapeStyling();
+        addColorPreviews();
+        updateOutputFileSizeIndicator();
+        updateOutputStatus();
+      } catch (stylingErr) {
+        console.warn("Styling failed for large file:", stylingErr);
+        document.getElementById("input-error").textContent = "Formatted (styling skipped for performance)";
+        updateOutputFileSizeIndicator();
+        updateOutputStatus();
+      }
+    }, timeoutDelay);
+    return;
+  } catch (err) {
+    // Fallback to repair if formatting somehow fails
+  }
   }
   try {
     const repaired = repairJSON(src);
     outputEditor.setValue(repaired);
     document.getElementById("input-error").textContent = "";
     updateValidity();
+    // Add URL handlers after repair
+    setTimeout(() => {
+      addUrlClickHandlers();
+      applyEscapeStyling();
+      addColorPreviews();
+      updateOutputFileSizeIndicator();
+      updateOutputStatus();
+    }, 100);
   } catch (err) {
     document.getElementById("input-error").textContent = err.message;
     outputEditor.setValue("// Invalid JSON: " + err.message);
@@ -250,11 +432,47 @@ function minifyHandler() {
     updateValidity();
     return;
   }
+  
+  // Performance safeguard for large files
+  const fileSize = src.length;
+  const maxSize = 5 * 1024 * 1024; // 5MB limit
+  
+  if (fileSize > maxSize) {
+    const shouldContinue = confirm(
+      `Large file detected (${(fileSize / 1024 / 1024).toFixed(1)}MB). ` +
+      `Processing may be slow. Continue?`
+    );
+    if (!shouldContinue) {
+      return;
+    }
+  }
+  
+  // Show processing indicator for large files
+  if (fileSize > 1024 * 1024) { // 1MB
+    document.getElementById("input-error").textContent = "Processing large file...";
+  }
+  
   try {
-    const minified = minifyJSON(inputEditor.getValue());
+    const minified = minifyJSON(src);
+    
+    // Switch to plain text mode for minify
+    outputEditor.setOption("mode", null);
     outputEditor.setValue(minified);
+    
+    // Apply plain text styling (single green color)
+    outputEditor.addOverlay({
+      token: function(stream) {
+        stream.skipToEnd();
+        return "plain-text";
+      }
+    });
+    
     updateValidity();
+    updateOutputFileSizeIndicator();
+    updateOutputStatus();
+    document.getElementById("input-error").textContent = "";
   } catch (err) {
+    console.error("Minify error:", err);
     document.getElementById("input-error").textContent = err.message;
     outputEditor.setValue("// Invalid JSON: " + err.message);
     updateValidity();
@@ -270,8 +488,50 @@ function escapeHandler() {
     outputEditor.setValue(defaultGreetingJSON());
     return;
   }
-  const escaped = escapeJSONString(text);
-  outputEditor.setValue(escaped);
+  
+  // Performance safeguard for large files
+  const fileSize = text.length;
+  const maxSize = 5 * 1024 * 1024; // 5MB limit
+  
+  if (fileSize > maxSize) {
+    const shouldContinue = confirm(
+      `Large file detected (${(fileSize / 1024 / 1024).toFixed(1)}MB). ` +
+      `Processing may be slow. Continue?`
+    );
+    if (!shouldContinue) {
+      return;
+    }
+  }
+  
+  // Show processing indicator for large files
+  if (fileSize > 1024 * 1024) { // 1MB
+    document.getElementById("input-error").textContent = "Processing large file...";
+  }
+  
+  try {
+    const escaped = escapeJSONString(text);
+    
+    // Switch to plain text mode for escape
+    outputEditor.setOption("mode", null);
+    outputEditor.setValue(escaped);
+    
+    // Apply plain text styling (single green color)
+    outputEditor.addOverlay({
+      token: function(stream) {
+        stream.skipToEnd();
+        return "plain-text";
+      }
+    });
+    
+    document.getElementById("input-error").textContent = "";
+    updateOutputFileSizeIndicator();
+    updateOutputStatus();
+  } catch (err) {
+    document.getElementById("input-error").textContent = err.message;
+    outputEditor.setValue("// Error: " + err.message);
+    updateOutputFileSizeIndicator();
+    updateOutputStatus();
+  }
 }
 
 function unescapeHandler() {
@@ -281,8 +541,50 @@ function unescapeHandler() {
     outputEditor.setValue(defaultGreetingJSON());
     return;
   }
-  const unescaped = unescapeJSONString(text);
-  outputEditor.setValue(unescaped);
+  
+  // Performance safeguard for large files
+  const fileSize = text.length;
+  const maxSize = 5 * 1024 * 1024; // 5MB limit
+  
+  if (fileSize > maxSize) {
+    const shouldContinue = confirm(
+      `Large file detected (${(fileSize / 1024 / 1024).toFixed(1)}MB). ` +
+      `Processing may be slow. Continue?`
+    );
+    if (!shouldContinue) {
+      return;
+    }
+  }
+  
+  // Show processing indicator for large files
+  if (fileSize > 1024 * 1024) { // 1MB
+    document.getElementById("input-error").textContent = "Processing large file...";
+  }
+  
+  try {
+    const unescaped = unescapeJSONString(text);
+    
+    // Switch to plain text mode for unescape
+    outputEditor.setOption("mode", null);
+    outputEditor.setValue(unescaped);
+    
+    // Apply plain text styling (single green color)
+    outputEditor.addOverlay({
+      token: function(stream) {
+        stream.skipToEnd();
+        return "plain-text";
+      }
+    });
+    
+    document.getElementById("input-error").textContent = "";
+    updateOutputFileSizeIndicator();
+    updateOutputStatus();
+  } catch (err) {
+    document.getElementById("input-error").textContent = err.message;
+    outputEditor.setValue("// Error: " + err.message);
+    updateOutputFileSizeIndicator();
+    updateOutputStatus();
+  }
 }
 
 function copyHandler() {
@@ -449,6 +751,266 @@ function updatePlaceholder() {
   const hasContent = inputEditor.getValue().trim().length > 0;
   ph.style.display = hasContent ? "none" : "flex";
 }
+
+// --- URL Detection and Click Handling ---
+function isUrl(text) {
+  // Remove quotes first
+  const cleanText = text.replace(/^["']|["']$/g, '');
+  const urlRegex = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+  return urlRegex.test(cleanText);
+}
+
+function addUrlClickHandlers() {
+  // Add click handlers to both editors
+  [inputEditor, outputEditor].forEach(editor => {
+    if (!editor) return;
+    
+    // Remove existing listeners
+    editor.off('mousedown', handleUrlClick);
+    editor.on('mousedown', handleUrlClick);
+    
+    // Mark URL strings with data attribute
+    markUrlStrings(editor);
+  });
+}
+
+function markUrlStrings(editor) {
+  const doc = editor.getDoc();
+  const content = doc.getValue();
+  const lines = content.split('\n');
+  
+  lines.forEach((line, lineIndex) => {
+    // Find all string tokens that are URLs
+    const stringMatches = line.match(/"([^"]*https?:\/\/[^"]*)"/g);
+    if (stringMatches) {
+      stringMatches.forEach(match => {
+        const startPos = { line: lineIndex, ch: line.indexOf(match) };
+        const endPos = { line: lineIndex, ch: startPos.ch + match.length };
+        
+        // Add marker for URL
+        editor.markText(startPos, endPos, {
+          className: 'cm-string cm-url',
+          attributes: { 'data-url': 'true' }
+        });
+      });
+    }
+    
+    // Find and mark escape sequences and unicode sequences
+    markEscapeSequences(editor, line, lineIndex);
+  });
+}
+
+function markEscapeSequences(editor, line, lineIndex) {
+  // Find escape sequences like \" and \n
+  const escapeMatches = line.match(/\\[\\"\/bfnrt]/g);
+  if (escapeMatches) {
+    escapeMatches.forEach(match => {
+      const startPos = line.indexOf(match);
+      if (startPos !== -1) {
+        editor.markText(
+          { line: lineIndex, ch: startPos },
+          { line: lineIndex, ch: startPos + match.length },
+          { 
+            className: 'cm-string cm-escape',
+            css: 'color: #f59e0b !important;'
+          }
+        );
+      }
+    });
+  }
+  
+  // Find unicode escape sequences like \u003d
+  const unicodeMatches = line.match(/\\u[0-9a-fA-F]{4}/g);
+  if (unicodeMatches) {
+    unicodeMatches.forEach(match => {
+      const startPos = line.indexOf(match);
+      if (startPos !== -1) {
+        editor.markText(
+          { line: lineIndex, ch: startPos },
+          { line: lineIndex, ch: startPos + match.length },
+          { 
+            className: 'cm-string cm-unicode-escape',
+            css: 'color: #f59e0b !important;'
+          }
+        );
+      }
+    });
+  }
+}
+
+function handleUrlClick(cm, event) {
+  const pos = cm.coordsChar({ top: event.clientY, left: event.clientX });
+  const token = cm.getTokenAt(pos);
+  
+  if (token && token.type === 'string') {
+    // Check if it's a URL
+    const cleanText = token.string.replace(/^["']|["']$/g, '');
+    if (isUrl(cleanText)) {
+      let url = cleanText;
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        url = 'https://' + url;
+      }
+      window.open(url, '_blank');
+      event.preventDefault();
+    }
+  }
+}
+
+// Apply escape sequence styling directly to DOM elements
+function applyEscapeStyling() {
+  [inputEditor, outputEditor].forEach(editor => {
+    if (!editor) return;
+    
+    // Get all lines in the editor
+    const lineCount = editor.lineCount();
+    
+    for (let i = 0; i < lineCount; i++) {
+      const line = editor.getLine(i);
+      if (line) {
+        // Find escape sequences in this line
+        const escapeRegex = /\\[\\"\/bfnrt]/g;
+        let match;
+        while ((match = escapeRegex.exec(line)) !== null) {
+          const startPos = match.index;
+          const endPos = startPos + match[0].length;
+          
+          // Mark the text with orange color
+          editor.markText(
+            { line: i, ch: startPos },
+            { line: i, ch: endPos },
+            { 
+              className: 'cm-escape-orange',
+              css: 'color: #f59e0b !important; background: transparent !important;'
+            }
+          );
+        }
+        
+        // Find unicode escape sequences
+        const unicodeRegex = /\\u[0-9a-fA-F]{4}/g;
+        while ((match = unicodeRegex.exec(line)) !== null) {
+          const startPos = match.index;
+          const endPos = startPos + match[0].length;
+          
+          // Mark the text with orange color
+          editor.markText(
+            { line: i, ch: startPos },
+            { line: i, ch: endPos },
+            { 
+              className: 'cm-unicode-orange',
+              css: 'color: #f59e0b !important; background: transparent !important;'
+            }
+          );
+        }
+      }
+    }
+  });
+}
+
+// Add color preview for hex color codes
+function addColorPreviews() {
+  [inputEditor, outputEditor].forEach(editor => {
+    if (!editor) return;
+    
+    // Clear existing color previews
+    clearColorPreviews(editor);
+    
+    const lineCount = editor.lineCount();
+    for (let i = 0; i < lineCount; i++) {
+      const line = editor.getLine(i);
+      if (line) {
+        // Find hex color codes in the line - prioritize longer matches first
+        const hexRegex = /#([0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b/g;
+        let match;
+        let firstColor = null;
+        
+        while ((match = hexRegex.exec(line)) !== null) {
+          if (!firstColor) {
+            // match[0] is the full match including #
+            firstColor = match[0];
+          }
+        }
+        
+        if (firstColor) {
+          // Add color preview to this line
+          addColorPreviewToLine(editor, i, firstColor);
+        }
+      }
+    }
+  });
+}
+
+function clearColorPreviews(editor) {
+  // Clear all gutter markers for color previews more efficiently
+  const lineCount = editor.lineCount();
+  for (let i = 0; i < lineCount; i++) {
+    // Use the correct CodeMirror API to clear gutter markers
+    editor.setGutterMarker(i, 'CodeMirror-linenumbers', null);
+  }
+}
+
+function addColorPreviewToLine(editor, lineNumber, hexColor) {
+  // Replace the line number with color preview
+  editor.setGutterMarker(lineNumber, 'CodeMirror-linenumbers', createColorPreviewElement(hexColor));
+}
+
+function createColorPreviewElement(hexColor) {
+  const element = document.createElement('div');
+  element.className = 'color-preview';
+  element.style.backgroundColor = hexColor;
+  element.title = `Click to copy: ${hexColor}`;
+  
+  // Add click handler to copy hex color
+  element.addEventListener('click', (e) => {
+    e.stopPropagation();
+    navigator.clipboard.writeText(hexColor).then(() => {
+      // Show temporary feedback
+      const originalTitle = element.title;
+      element.title = 'Copied!';
+      setTimeout(() => {
+        element.title = originalTitle;
+      }, 1000);
+    });
+  });
+  
+  return element;
+}
+
+// Focus search for the currently active editor
+function focusSearchForCurrentEditor() {
+  let targetSearchInput = null;
+  
+  // Use tracked focus state if available
+  if (window.currentFocusedEditor === 'output') {
+    targetSearchInput = document.getElementById('output-search');
+  } else if (window.currentFocusedEditor === 'input') {
+    targetSearchInput = document.getElementById('input-search');
+  } else {
+    // Fallback: check which editor has focus
+    const activeElement = document.activeElement;
+    const inputEditorContainer = document.getElementById('input-editor');
+    const outputEditorContainer = document.getElementById('output-editor');
+    
+    if (outputEditorContainer && (outputEditorContainer.contains(activeElement) || 
+        outputEditor.hasFocus() || 
+        activeElement.closest('#output-editor'))) {
+      targetSearchInput = document.getElementById('output-search');
+    } else {
+      // Default to input search
+      targetSearchInput = document.getElementById('input-search');
+    }
+  }
+  
+  if (targetSearchInput) {
+    // Focus the search input
+    targetSearchInput.focus();
+    targetSearchInput.select();
+    
+    // Expand search bar immediately
+    const bar = targetSearchInput.closest('.searchbar');
+    if (bar) bar.classList.add('active');
+  }
+}
+
 // Removed toggle and expand/collapse helpers
 
 // --- Search helpers ---
@@ -469,13 +1031,17 @@ function initSearch(cfg) {
     markers = [];
   }
 
+  // Expose clearMarks function for external use
+  window.clearSearchHighlights = clearMarks;
+
   function highlightAll(query) {
     clearMarks();
     matches = [];
     activeIndex = -1;
     const bar = inputEl.closest('.searchbar');
-    if (bar) bar.classList.toggle('active', !!(query && query.length >= 3));
-    if (!query || query.length < 3) {
+    // Keep search bar expanded if there's any content, search starts with 1+ character
+    if (bar) bar.classList.toggle('active', !!(query && query.length > 0));
+    if (!query || query.length < 1) {
       countEl.textContent = '0/0';
       return;
     }
@@ -513,14 +1079,42 @@ function initSearch(cfg) {
     highlightAll(inputEl.value);
   });
 
+  // Expand search bar immediately on focus/click
+  inputEl.addEventListener('focus', () => {
+    const bar = inputEl.closest('.searchbar');
+    if (bar) bar.classList.add('active');
+  });
+
+  inputEl.addEventListener('click', () => {
+    const bar = inputEl.closest('.searchbar');
+    if (bar) bar.classList.add('active');
+  });
+
+  // Collapse search bar when focus leaves AND search box is empty
+  inputEl.addEventListener('blur', () => {
+    // Small delay to allow for clicking on search controls
+    setTimeout(() => {
+      const bar = inputEl.closest('.searchbar');
+      const isSearchBarFocused = bar && bar.contains(document.activeElement);
+      // Only collapse if search bar is not focused AND search box is completely empty
+      if (!isSearchBarFocused && inputEl.value.length === 0) {
+        bar.classList.remove('active');
+        highlightAll(''); // Clear highlights
+      }
+    }, 150);
+  });
+
   if (toggleBtn) {
     toggleBtn.addEventListener('click', () => {
-      if (inputEl.value && inputEl.value.length >= 3) {
+      if (inputEl.value && inputEl.value.length >= 1) {
         // clear
         inputEl.value = '';
         highlightAll('');
       } else {
         inputEl.focus();
+        // Expand search bar immediately
+        const bar = inputEl.closest('.searchbar');
+        if (bar) bar.classList.add('active');
       }
     });
   }

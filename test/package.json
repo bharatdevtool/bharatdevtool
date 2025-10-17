@@ -1,0 +1,25 @@
+{
+  "name": "bharat-dev-tools-tests",
+  "version": "1.0.0",
+  "description": "Comprehensive test suite for Bharat Dev Tools JSON Formatter",
+  "type": "module",
+  "scripts": {
+    "test": "node run-tests.js",
+    "test:watch": "node run-tests.js --watch",
+    "test:coverage": "node run-tests.js --coverage"
+  },
+  "keywords": [
+    "json",
+    "formatter",
+    "beautifier",
+    "minifier",
+    "repair",
+    "testing",
+    "validation"
+  ],
+  "author": "Bharat Dev Tools",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
