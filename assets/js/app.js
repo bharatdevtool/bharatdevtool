@@ -735,7 +735,13 @@ function injectPlaceholder() {
   const container = document.getElementById("input-editor");
   const el = document.createElement("div");
   el.className = "placeholder";
-  el.innerHTML = `
+  // Mobile-responsive placeholder content
+  const isMobile = window.innerWidth <= 768;
+  el.innerHTML = isMobile ? `
+    <h3>📱 Paste your JSON</h3>
+    <p>Tap to paste JSON or click Upload</p>
+    <p>Format, validate, repair, minify & escape JSON</p>
+  ` : `
     <h3>Paste or drop your JSON</h3>
     <p>Drag & drop a .json file here or click Upload</p>
     <p>We can format, validate, repair JS objects to JSON, minify, escape, and unescape.</p>
@@ -750,7 +756,32 @@ function updatePlaceholder() {
   if (!ph) return;
   const hasContent = inputEditor.getValue().trim().length > 0;
   ph.style.display = hasContent ? "none" : "flex";
+  
+  // Update content for mobile/desktop changes
+  const isMobile = window.innerWidth <= 768;
+  const currentContent = ph.innerHTML;
+  const mobileContent = `
+    <h3>📱 Paste your JSON</h3>
+    <p>Tap to paste JSON or click Upload</p>
+    <p>Format, validate, repair, minify & escape JSON</p>
+  `;
+  const desktopContent = `
+    <h3>Paste or drop your JSON</h3>
+    <p>Drag & drop a .json file here or click Upload</p>
+    <p>We can format, validate, repair JS objects to JSON, minify, escape, and unescape.</p>
+  `;
+  
+  if (isMobile && !currentContent.includes('📱')) {
+    ph.innerHTML = mobileContent;
+  } else if (!isMobile && currentContent.includes('📱')) {
+    ph.innerHTML = desktopContent;
+  }
 }
+
+// Add resize listener for mobile/desktop placeholder updates
+window.addEventListener('resize', () => {
+  updatePlaceholder();
+});
 
 // --- URL Detection and Click Handling ---
 function isUrl(text) {

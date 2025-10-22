@@ -14,6 +14,8 @@
  * - Performance tests
  * - Edge cases
  * - Integration scenarios
+ * 
+ * For comprehensive testing including DeepLink and QR Code tests, use run-all-tests.js
  */
 
 import { readFileSync } from 'fs';

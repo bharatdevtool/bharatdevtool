@@ -1,0 +1,114 @@
+/* Common CSS for Bharat Dev Tools - Theme Variables and Footer */
+:root {
+  --bg: #ffffff;
+  --panel: #f7f9fc;
+  --fg: #0f1720;
+  --muted: #6b7280;
+  --accent: #0069ff;
+  --danger: #dc2626;
+  --icon-outline: rgba(15, 23, 32, 0.18);
+  --pane-valid-bg: #ecfdf5; /* emerald-50 */
+  --pane-invalid-bg: #fef2f2; /* red-50 */
+  --search-width-collapsed: 80px;
+  --search-width-expanded: 144px;
+}
+
+[data-theme="dark"] {
+  --bg: #0b1220;
+  --panel: #0f1720;
+  --fg: #e6edf3;
+  --muted: #9aa7b2;
+  --accent: #7dd3fc;
+  --danger: #fca5a5;
+  --icon-outline: rgba(255, 255, 255, 0.25);
+  --pane-valid-bg: rgba(16, 185, 129, 0.12); /* emerald tint */
+  --pane-invalid-bg: rgba(239, 68, 68, 0.12); /* red tint */
+}
+
+/* Footer Styles */
+footer.site-footer { 
+  padding: 32px 16px 40px; 
+  color: var(--fg); 
+  border-top: 1px solid rgba(0,0,0,0.08); 
+  background: transparent; 
+}
+
+.site-footer .footer-hero { 
+  text-align: center; 
+  margin-bottom: 16px; 
+}
+
+.site-footer .footer-hero h2 { 
+  margin: 0 0 8px; 
+  font-size: 28px; 
+}
+
+.site-footer .footer-hero p { 
+  margin: 0; 
+  color: var(--muted); 
+}
+
+.site-footer .footer-meta { 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  gap: 12px; 
+  flex-wrap: wrap; 
+  margin-top: 12px; 
+}
+
+.site-footer .made-in { 
+  margin: 0 12px 0 0; 
+  color: var(--muted); 
+}
+
+.site-footer .footer-links { 
+  display: inline-flex; 
+  gap: 12px; 
+  align-items: center; 
+}
+
+.site-footer .footer-links a { 
+  color: var(--fg); 
+  text-decoration: none; 
+}
+
+.site-footer .footer-links a:hover { 
+  text-decoration: underline; 
+}
+
+.site-footer .sep { 
+  color: var(--muted); 
+}
+
+.site-footer .footer-copy { 
+  text-align: center; 
+  margin-top: 10px; 
+  color: var(--muted); 
+  font-size: 13px; 
+}
+
+/* Dark theme border adjustments */
+[data-theme="dark"] footer.site-footer {
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Dark theme footer link overrides for deeplink and QR pages */
+.dark .site-footer .footer-links a {
+  color: #e6edf3 !important;
+}
+
+.dark .site-footer .footer-links a:hover {
+  color: #e6edf3 !important;
+  text-decoration: underline !important;
+}
+
+/* Home page dark theme footer link overrides */
+[data-theme="dark"] .site-footer .footer-links a {
+  color: #e6edf3 !important;
+}
+
+[data-theme="dark"] .site-footer .footer-links a:hover {
+  color: #e6edf3 !important;
+  text-decoration: underline !important;
+}

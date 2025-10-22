@@ -32,6 +32,10 @@ html, body {
   color: var(--fg);
   transition: background 0.3s, color 0.3s;
   overflow-x: hidden;
+  /* Mobile touch improvements */
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .app {
@@ -85,6 +89,70 @@ header {
 /* Actions box */
 /* Header actions (no container box) */
 .header-actions { display:inline-flex; align-items:center; gap:14px; }
+
+/* DeepLink Launcher Entry Point */
+.deeplink-launcher {
+  display: inline-flex;
+  align-items: center;
+}
+
+.deeplink-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.deeplink-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+  color: white;
+  text-decoration: none;
+}
+
+.deeplink-icon {
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deeplink-label {
+  display: inline-flex;
+  flex-direction: column;
+  line-height: 1.1;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.deeplink-label span:first-child {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.deeplink-label span:last-child {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 11px;
+}
+
+/* Dark theme adjustments for deeplink button */
+[data-theme="dark"] .deeplink-btn {
+  background: linear-gradient(135deg, #4c63d2 0%, #5a2d7a 100%);
+  box-shadow: 0 2px 8px rgba(76, 99, 210, 0.4);
+}
+
+[data-theme="dark"] .deeplink-btn:hover {
+  background: linear-gradient(135deg, #3d52c4 0%, #4a2568 100%);
+  box-shadow: 0 4px 16px rgba(76, 99, 210, 0.5);
+}
 .v-sep {
   width: 1px; height: 28px; background: rgba(0,0,0,0.12);
 }
@@ -731,6 +799,54 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
 .center-toolbar button { width: 100%; }
 .center-toolbar .font-controls { width: 100%; }
 
+/* QR Generator in Header */
+.qr-generator {
+  display: flex;
+  align-items: center;
+}
+
+.qr-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.8rem;
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+}
+
+.qr-btn:hover {
+  background: linear-gradient(135deg, #ea580c, #c2410c);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  text-decoration: none;
+  color: white;
+}
+
+.qr-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.qr-icon {
+  font-size: 1rem;
+}
+
+.qr-label {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
 /* Tooltip */
 .has-tooltip {
   position: relative;
@@ -802,6 +918,311 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
     justify-content: flex-start;
     margin: 8px 0;
     width: auto;
+  }
+}
+
+/* Mobile Responsive Design */
+@media (max-width: 768px) {
+  /* Header mobile adjustments */
+  header {
+    padding: 0.6rem 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .brand {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .logo {
+    height: 48px;
+  }
+  
+  .header-actions {
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+  
+  /* Show labels on mobile for header buttons - icon above text */
+  .deeplink-label,
+  .qr-label,
+  .theme-label,
+  .bookmark-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.75rem;
+    line-height: 1.2;
+  }
+  
+  .deeplink-btn,
+  .qr-btn,
+  .theme-btn,
+  .bookmark-btn {
+    padding: 8px 12px;
+    min-width: 60px;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2px;
+  }
+  
+  /* Ensure icons are above text on mobile */
+  .deeplink-btn .deeplink-icon,
+  .qr-btn .qr-icon,
+  .theme-toggle,
+  .bookmark-btn {
+    order: 1;
+  }
+  
+  .deeplink-label,
+  .qr-label,
+  .theme-label,
+  .bookmark-text-btn {
+    order: 2;
+  }
+  
+  /* Theme toggle mobile layout */
+  .theme-switcher {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  
+  /* Bookmark mobile layout */
+  .bookmark-switcher {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  
+  /* Increase spacing between header buttons */
+  .header-actions {
+    gap: 12px;
+  }
+  
+  /* Main content mobile adjustments */
+  .app {
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .workspace {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+  
+  .panel {
+    height: calc(50vh - 1rem);
+    min-height: 200px;
+  }
+  
+  .center-toolbar {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+  
+  .toolbar-group {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .btn {
+    padding: 8px 12px;
+    font-size: 0.875rem;
+    min-height: 36px;
+  }
+  
+  /* Search and controls mobile */
+  .search-container {
+    width: 100%;
+    max-width: none;
+  }
+  
+  .search-input {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+  
+  /* File size indicator mobile */
+  .file-size {
+    font-size: 0.75rem;
+    padding: 2px 4px;
+  }
+  
+  /* Tooltip mobile adjustments */
+  .tooltip {
+    left: 0;
+    right: 0;
+    top: 100%;
+    transform: none;
+    width: auto;
+    max-width: none;
+    margin: 4px 0;
+  }
+  
+  /* CodeMirror mobile improvements */
+  .CodeMirror {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  
+  /* Mobile-specific improvements for better usability */
+  .panel-header {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+  }
+  
+  .panel-content {
+    padding: 0.5rem;
+  }
+  
+  /* Better mobile scrolling */
+  .panel {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Mobile-specific placeholder styling */
+  .placeholder {
+    text-align: center;
+    padding: 1rem;
+  }
+  
+  .placeholder h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .placeholder p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin: 0.25rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Extra small mobile devices */
+  header {
+    padding: 0.5rem 0.75rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+  
+  .brand {
+    justify-content: center;
+  }
+  
+  .logo {
+    height: 40px;
+  }
+  
+  .header-actions {
+    gap: 4px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .deeplink-btn,
+  .qr-btn,
+  .theme-btn,
+  .bookmark-btn {
+    padding: 6px 8px;
+    min-width: 50px;
+    flex-direction: column;
+    gap: 2px;
+  }
+  
+  .deeplink-label,
+  .qr-label,
+  .theme-label,
+  .bookmark-label {
+    font-size: 0.7rem;
+  }
+  
+  /* Maintain icon-above-text layout on extra small screens */
+  .deeplink-btn .deeplink-icon,
+  .qr-btn .qr-icon,
+  .theme-toggle,
+  .bookmark-btn {
+    order: 1;
+  }
+  
+  .deeplink-label,
+  .qr-label,
+  .theme-label,
+  .bookmark-text-btn {
+    order: 2;
+  }
+  
+  /* Theme and bookmark mobile layout on extra small screens */
+  .theme-switcher,
+  .bookmark-switcher {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  
+  /* Maintain spacing on extra small screens */
+  .header-actions {
+    gap: 8px;
+  }
+  
+  .workspace {
+    padding: 0.25rem;
+    gap: 0.25rem;
+  }
+  
+  .panel {
+    height: calc(50vh - 0.5rem);
+    min-height: 180px;
+  }
+  
+  .center-toolbar {
+    padding: 0.25rem;
+  }
+  
+  .btn {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    min-height: 32px;
+    /* Better touch targets */
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  .search-input {
+    font-size: 13px;
+    padding: 6px 10px;
+    /* Better touch targets */
+    min-height: 44px;
+  }
+  
+  /* Mobile-specific button improvements */
+  .btn:active {
+    transform: scale(0.98);
+  }
+  
+  /* Prevent zoom on input focus */
+  input, textarea, select {
+    font-size: 16px;
+  }
+  
+  /* Extra small mobile placeholder */
+  .placeholder h3 {
+    font-size: 1rem;
+  }
+  
+  .placeholder p {
+    font-size: 0.85rem;
   }
 }
 

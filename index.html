@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <!-- SEO: Descriptive, keyword-rich title -->
   <title>JSON Formatter & Beautifier | Minify & Escape Online | Bharat Dev Tools</title>
   <!-- SEO: Primary meta description for search results -->
@@ -20,6 +20,7 @@
   <meta name="twitter:title" content="JSON Formatter & Beautifier | Bharat Dev Tools">
   <meta name="twitter:description" content="Professional JSON Formatter & Validator. Format, beautify, minify, validate, and repair JSON instantly. Free online tool with syntax highlighting and error detection.">
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/common.css">
   
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -65,6 +66,28 @@
 
   <!-- Header actions on the right -->
   <div class="header-actions" role="group" aria-label="Quick actions">
+    <!-- DeepLink Launcher Entry Point -->
+    <div class="deeplink-launcher">
+      <a href="deeplink.html" class="deeplink-btn" title="DeepLink Launcher">
+        <span class="deeplink-icon">🔗</span>
+        <div class="deeplink-label">
+          <span>DeepLink</span>
+          <span>Launcher</span>
+        </div>
+      </a>
+    </div>
+    <span class="v-sep" aria-hidden="true"></span>
+    <!-- QR Code Generator Entry Point -->
+    <div class="qr-generator">
+      <a href="simple-qr.html" class="qr-btn" title="QR Code Generator">
+        <span class="qr-icon">📱</span>
+        <div class="qr-label">
+          <span>QR</span>
+          <span>Generator</span>
+        </div>
+      </a>
+    </div>
+    <span class="v-sep" aria-hidden="true"></span>
     <div class="theme-switcher">
       <label class="theme-toggle" title="Toggle theme">
         <input id="theme-toggle" type="checkbox" aria-label="Toggle theme" />
@@ -222,27 +245,9 @@
     </div>
   </main>
 
-  <footer class="site-footer">
-    <section class="footer-hero">
-      <h2>Thank you!</h2>
-      <p>Thanks for being part of the Bharat Dev Tools community. If you have ideas, we’d love to hear them.</p>
-    </section>
-    <section class="footer-meta">
-      <p class="made-in">Built with ❤️ in India</p>
-      <nav class="footer-links" aria-label="Footer links">
-        <a href="about.html">About</a>
-        <span class="sep">•</span>
-        <a href="privacy.html">Privacy</a>
-        <span class="sep">•</span>
-        <a href="https://forms.gle/TA7WEhzzQ6csQFGZ7" target="_blank" rel="noopener noreferrer">Contact us</a>
-        <span class="sep">•</span>
-        <a href="https://forms.gle/TA7WEhzzQ6csQFGZ7" target="_blank" rel="noopener noreferrer">Suggestions</a>
-      </nav>
-    </section>
-    <section class="footer-copy">
-      <small>Copyright © BharatDevTool 2025 | v1.0</small>
-    </section>
-  </footer>
+  <!-- Footer Component -->
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
 
   <script type="module" src="assets/js/app.js"></script>
 </body>

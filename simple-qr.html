@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Code Generator | Bharat Dev Tools</title>
+  <meta name="description" content="Professional QR Code Generator for URLs, text, and data. Create, customize, and download QR codes instantly. Free tool with history tracking and mobile optimization.">
+  <meta name="keywords" content="qr code generator, qr code, qr, barcode, mobile qr, free qr generator, qr code creator, qr maker, qr scanner, qr code online, qr generator free">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  <meta name="distribution" content="global">
+  <meta name="rating" content="general">
+  <link rel="canonical" href="https://bharatdevtools.com/simple-qr.html">
+  
+  <!-- Social preview -->
+  <meta property="og:title" content="QR Code Generator | Bharat Dev Tools">
+  <meta property="og:description" content="Professional QR Code Generator for URLs, text, and data. Create, customize, and download QR codes instantly. Free tool with history tracking and mobile optimization.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtools.com/simple-qr.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="QR Code Generator | Bharat Dev Tools">
+  <meta name="twitter:description" content="Professional QR Code Generator for URLs, text, and data. Create, customize, and download QR codes instantly. Free tool with history tracking and mobile optimization.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon.svg">
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Common CSS for consistent theming -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "QR Code Generator",
+    "description": "Professional QR Code Generator for URLs, text, and data. Create, customize, and download QR codes instantly.",
+    "url": "https://bharatdevtools.com/simple-qr.html",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtools.com"
+    },
+    "featureList": [
+      "QR Code Generation",
+      "URL Encoding",
+      "Text to QR",
+      "Custom QR Codes",
+      "Download QR Images",
+      "Mobile Optimization",
+      "History Tracking"
+    ],
+    "screenshot": "https://bharatdevtools.com/assets/img/qr-preview.png"
+  }
+  </script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Custom styles -->
+  <style>
+    .animate-fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-slide-up {
+      animation: slideUp 0.3s ease-out;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+    .toast.show {
+      transform: translateX(0);
+    }
+    .toast.success {
+      background: linear-gradient(135deg, #10b981, #059669);
+    }
+    .toast.error {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+    }
+    .toast.info {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+  <!-- Header -->
+  <header class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo -->
+        <div class="flex items-center">
+          <a href="index.html" class="flex items-center space-x-3">
+            <img src="https://ik.imagekit.io/bdt/bdt_round_corner.png?updatedAt=1759510331612" 
+                 alt="Bharat Dev Tools Logo" 
+                 class="h-8 w-8 rounded-lg">
+            <span class="text-xl font-bold text-gray-900 dark:text-white">Bharat Dev Tools</span>
+          </a>
+        </div>
+        
+        <!-- Header actions -->
+        <div class="flex items-center space-x-4">
+          <!-- Theme toggle -->
+          <button id="theme-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+            <span class="dark:hidden">🌙</span>
+            <span class="hidden dark:inline">☀️</span>
+          </button>
+          
+          <!-- Back to home -->
+          <a href="index.html" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
+            ← Back to JSON Tools
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Hero Section -->
+    <div class="text-center mb-12 animate-fade-in">
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        📱 QR Code Generator
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Generate QR codes for any URL or text. Free, fast, and easy to use with history tracking.
+      </p>
+    </div>
+
+    <!-- Main Input Panel -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mb-8 animate-fade-in">
+      <div class="space-y-6">
+        <!-- Input Field -->
+        <div>
+          <label for="qr-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Enter URL or Text
+          </label>
+          <div class="relative">
+            <input 
+              type="text" 
+              id="qr-input" 
+              placeholder="Enter URL or text to generate QR code (e.g., https://example.com, Hello World, etc.)"
+              class="w-full px-4 pr-10 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+            >
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+              <button id="clear-input" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 flex-shrink-0">
+                ✕
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Generate Button -->
+        <button id="generate-btn" class="w-full flex items-center justify-center px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium">
+          <span class="mr-2">🎯</span>
+          Generate QR Code
+        </button>
+
+        <!-- QR Code Display -->
+        <div id="qr-container" class="hidden">
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Generated QR Code
+          </label>
+          <div class="bg-white dark:bg-gray-700 p-6 rounded-lg border border-gray-200 dark:border-gray-600 text-center">
+            <div id="qr-code" class="flex justify-center mb-4"></div>
+            <div class="flex flex-col sm:flex-row gap-2 justify-center">
+              <button id="download-qr" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                📥 Download
+              </button>
+              <button id="copy-qr-url" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                📋 Copy URL
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- History Panel -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 animate-fade-in">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">📚 QR Code History</h3>
+        <span id="history-count" class="text-sm text-gray-500 dark:text-gray-400">0 QR codes saved</span>
+      </div>
+      
+      <div id="history-list" class="space-y-3">
+        <div id="empty-history" class="text-center py-8 text-gray-500 dark:text-gray-400">
+          <div class="text-4xl mb-2">📝</div>
+          <p>No QR codes generated yet</p>
+          <p class="text-sm">Generate a QR code above and it will be saved here automatically</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer Component -->
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+  <!-- QR Code Library -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <!-- Fallback QR Code Library -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+
+  <!-- Scripts -->
+  <script>
+    // Theme management
+    function initTheme() {
+      const saved = localStorage.getItem('theme');
+      if (saved) {
+        document.documentElement.classList.toggle('dark', saved === 'dark');
+      } else {
+        document.documentElement.classList.toggle('dark', window.matchMedia('(prefers-color-scheme: dark)').matches);
+      }
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+
+    // Toast notifications
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+      
+      setTimeout(() => toast.classList.add('show'), 100);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => container.removeChild(toast), 300);
+      }, 3000);
+    }
+
+    // Fallback QR Code generation using qrcode-generator
+    function generateQRCodeFallback(text, container) {
+      
+      // Validate input for fallback
+      if (!text || typeof text !== 'string' || !text.trim()) {
+        showToast('Invalid text for QR generation', 'error');
+        return;
+      }
+      
+      try {
+        // Check if qrcode-generator library is available
+        if (typeof qrcode === 'undefined') {
+          showToast('QR generation library not available', 'error');
+          return;
+        }
+        
+        // Create a div to hold the QR code
+        const qrDiv = document.createElement('div');
+        qrDiv.style.textAlign = 'center';
+        qrDiv.style.position = 'relative';
+        qrDiv.style.display = 'inline-block';
+        
+        // Generate QR code using qrcode-generator
+        const qr = qrcode(0, 'M');
+        qr.addData(text);
+        qr.make();
+        
+        // Create table for QR code
+        const table = document.createElement('table');
+        table.style.border = '0';
+        table.style.borderSpacing = '0px';
+        table.style.margin = '0 auto';
+        
+        const qrSize = qr.getModuleCount();
+        let cellSize = Math.floor(256 / qrSize);
+        
+        // Ensure minimum cell size for visibility
+        if (cellSize < 2) {
+          cellSize = 2;
+        }
+        
+        // Calculate center position for logo
+        const centerStart = Math.floor(qrSize / 2) - 2;
+        const centerEnd = Math.floor(qrSize / 2) + 2;
+        
+        for (let row = 0; row < qrSize; row++) {
+          const tr = document.createElement('tr');
+          for (let col = 0; col < qrSize; col++) {
+            const td = document.createElement('td');
+            td.style.width = cellSize + 'px';
+            td.style.height = cellSize + 'px';
+            td.style.padding = '0';
+            td.style.margin = '0';
+            
+            // Check if this cell is in the center area for logo
+            const isInCenter = row >= centerStart && row < centerEnd && col >= centerStart && col < centerEnd;
+            
+            if (isInCenter) {
+              // Make center area white for logo
+              td.style.backgroundColor = '#FFFFFF';
+            } else {
+              td.style.backgroundColor = qr.isDark(row, col) ? '#000000' : '#FFFFFF';
+            }
+            
+            tr.appendChild(td);
+          }
+          table.appendChild(tr);
+        }
+        
+        qrDiv.appendChild(table);
+        
+        // Add BDT logo in center
+        const logoDiv = document.createElement('div');
+        logoDiv.style.position = 'absolute';
+        logoDiv.style.top = '50%';
+        logoDiv.style.left = '50%';
+        logoDiv.style.transform = 'translate(-50%, -50%)';
+        logoDiv.style.width = (cellSize * 8) + 'px';
+        logoDiv.style.height = (cellSize * 8) + 'px';
+        logoDiv.style.backgroundColor = '#2563eb';
+        logoDiv.style.border = '4px solid #FFFFFF';
+        logoDiv.style.borderRadius = '50%';
+        logoDiv.style.display = 'flex';
+        logoDiv.style.alignItems = 'center';
+        logoDiv.style.justifyContent = 'center';
+        logoDiv.style.fontWeight = '900';
+        logoDiv.style.fontSize = (cellSize * 3) + 'px';
+        logoDiv.style.color = '#FFFFFF';
+        logoDiv.style.fontFamily = 'Arial, sans-serif';
+        logoDiv.style.boxShadow = '0 0 0 2px #000000';
+        logoDiv.textContent = 'BDT';
+        
+        qrDiv.appendChild(logoDiv);
+        container.appendChild(qrDiv);
+        
+        showToast('QR code generated successfully!', 'success');
+      } catch (e) {
+        console.error('❌ Fallback QR generation failed:', e);
+        showToast('QR code generation failed: ' + e.message, 'error');
+      }
+    }
+
+    // Generate QR Code
+    function generateQRCode(text) {
+      
+      // Validate input
+      if (!text || typeof text !== 'string' || !text.trim()) {
+        console.error('❌ Invalid text provided to generateQRCode');
+        showToast('Please enter some text to generate QR code', 'error');
+        return;
+      }
+      
+      const qrContainer = document.getElementById('qr-code');
+      
+      if (!qrContainer) {
+        console.error('❌ QR container not found');
+        showToast('QR container not found', 'error');
+        return;
+      }
+      
+      qrContainer.innerHTML = '';
+      
+      // Check if QRCode library is loaded
+      if (typeof QRCode === 'undefined') {
+        // Wait for library to load
+        setTimeout(() => {
+          if (typeof QRCode !== 'undefined') {
+            generateQRCode(text);
+          } else {
+            console.error('❌ QRCode library still not loaded, trying fallback');
+            generateQRCodeFallback(text, qrContainer);
+          }
+        }, 500);
+        return;
+      }
+      
+      
+      // Create wrapper div for QR code with logo
+      const qrWrapper = document.createElement('div');
+      qrWrapper.style.position = 'relative';
+      qrWrapper.style.display = 'inline-block';
+      qrWrapper.style.textAlign = 'center';
+      
+      // Create canvas element
+      const canvas = document.createElement('canvas');
+      qrWrapper.appendChild(canvas);
+      qrContainer.appendChild(qrWrapper);
+      
+      try {
+        QRCode.toCanvas(canvas, text, {
+          width: 256,
+          margin: 2,
+          color: {
+            dark: '#000000',
+            light: '#FFFFFF'
+          }
+        }, function (error) {
+          if (error) {
+            console.error('❌ QRCode generation error:', error);
+            qrContainer.innerHTML = '';
+            generateQRCodeFallback(text, qrContainer);
+          } else {
+            
+            // Add BDT logo overlay on canvas
+            const ctx = canvas.getContext('2d');
+            const logoSize = 80;
+            const logoX = (canvas.width - logoSize) / 2;
+            const logoY = (canvas.height - logoSize) / 2;
+            
+            // Draw white background circle for logo
+            ctx.fillStyle = '#FFFFFF';
+            ctx.beginPath();
+            ctx.arc(canvas.width / 2, canvas.height / 2, logoSize / 2 + 8, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Draw blue circle for logo
+            ctx.fillStyle = '#2563eb';
+            ctx.beginPath();
+            ctx.arc(canvas.width / 2, canvas.height / 2, logoSize / 2, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Draw black border around white circle
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(canvas.width / 2, canvas.height / 2, logoSize / 2 + 8, 0, 2 * Math.PI);
+            ctx.stroke();
+            
+            // Draw BDT text
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = '900 28px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('BDT', canvas.width / 2, canvas.height / 2);
+            
+            showToast('QR code generated successfully!', 'success');
+          }
+        });
+      } catch (e) {
+        console.error('❌ QRCode generation exception:', e);
+        qrContainer.innerHTML = '';
+        generateQRCodeFallback(text, qrContainer);
+      }
+    }
+
+    // Download QR Code
+    function downloadQRCode() {
+      const canvas = document.querySelector('#qr-code canvas');
+      const table = document.querySelector('#qr-code table');
+      
+      if (canvas) {
+        // Create a new canvas with watermark
+        const downloadCanvas = document.createElement('canvas');
+        const ctx = downloadCanvas.getContext('2d');
+        downloadCanvas.width = 300; // Slightly larger for watermark
+        downloadCanvas.height = 320; // Extra space for watermark
+        
+        // Fill with white background
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, 300, 320);
+        
+        // Draw the original QR code
+        ctx.drawImage(canvas, 22, 22, 256, 256); // Centered with margin
+        
+        // Add watermark
+        ctx.fillStyle = '#000000';
+        ctx.font = 'bold 12px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('Generated by Bharat Dev Tools', 150, 290);
+        ctx.fillText('bharatdevtools.com', 150, 305);
+        
+        const link = document.createElement('a');
+        link.download = `qrcode-${Date.now()}.png`;
+        link.href = downloadCanvas.toDataURL();
+        link.click();
+        showToast('QR code downloaded with watermark', 'success');
+      } else if (table) {
+        // For table-based QR code, we'll create a canvas and draw the table
+        const downloadCanvas = document.createElement('canvas');
+        const ctx = downloadCanvas.getContext('2d');
+        downloadCanvas.width = 300; // Slightly larger for watermark
+        downloadCanvas.height = 320; // Extra space for watermark
+        
+        // Fill with white background
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, 300, 320);
+        
+        // Draw the table as QR code
+        const rows = table.querySelectorAll('tr');
+        const cellSize = 256 / rows.length;
+        const startX = 22; // Center the QR code
+        const startY = 22;
+        
+        for (let row = 0; row < rows.length; row++) {
+          const cells = rows[row].querySelectorAll('td');
+          for (let col = 0; col < cells.length; col++) {
+            const cell = cells[col];
+            const bgColor = cell.style.backgroundColor;
+            if (bgColor === 'rgb(0, 0, 0)' || bgColor === '#000000') {
+              ctx.fillStyle = '#000000';
+              ctx.fillRect(startX + col * cellSize, startY + row * cellSize, cellSize, cellSize);
+            }
+          }
+        }
+        
+        // Add BDT logo in center (if not already there)
+        const logoSize = 80;
+        const centerX = startX + 128;
+        const centerY = startY + 128;
+        
+        // Draw white background circle for logo
+        ctx.fillStyle = '#FFFFFF';
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, logoSize / 2 + 8, 0, 2 * Math.PI);
+        ctx.fill();
+        
+        // Draw blue circle for logo
+        ctx.fillStyle = '#2563eb';
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, logoSize / 2, 0, 2 * Math.PI);
+        ctx.fill();
+        
+        // Draw black border around white circle
+        ctx.strokeStyle = '#000000';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, logoSize / 2 + 8, 0, 2 * Math.PI);
+        ctx.stroke();
+        
+        // Draw BDT text
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = '900 28px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('BDT', centerX, centerY);
+        
+        // Add watermark
+        ctx.fillStyle = '#000000';
+        ctx.font = 'bold 12px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('Generated by Bharat Dev Tools', 150, 290);
+        ctx.fillText('bharatdevtools.com', 150, 305);
+        
+        const link = document.createElement('a');
+        link.download = `qrcode-${Date.now()}.png`;
+        link.href = downloadCanvas.toDataURL();
+        link.click();
+        showToast('QR code downloaded with watermark', 'success');
+      } else {
+        showToast('No QR code to download', 'error');
+      }
+    }
+
+    // Copy QR URL
+    function copyQRURL() {
+      const input = document.getElementById('qr-input');
+      const text = input.value.trim();
+      if (text) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('URL copied to clipboard', 'success');
+        }).catch(() => {
+          // Fallback for older browsers
+          const textArea = document.createElement('textarea');
+          textArea.value = text;
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textArea);
+          showToast('URL copied to clipboard', 'success');
+        });
+      }
+    }
+
+    // History management
+    function loadHistory() {
+      const history = JSON.parse(localStorage.getItem('qr-history') || '[]');
+      return history;
+    }
+
+    function saveToHistory(text) {
+      const history = loadHistory();
+      const timestamp = new Date().toISOString();
+      
+      // Avoid duplicates
+      if (!history.some(item => item.text === text)) {
+        history.unshift({ text, timestamp });
+        // Keep only last 10 items
+        if (history.length > 10) {
+          history.splice(10);
+        }
+        localStorage.setItem('qr-history', JSON.stringify(history));
+        updateHistoryDisplay();
+        showToast('QR code saved to history', 'success');
+      }
+    }
+
+    function updateHistoryDisplay() {
+      const history = loadHistory();
+      const container = document.getElementById('history-list');
+      const count = document.getElementById('history-count');
+      const empty = document.getElementById('empty-history');
+      
+      if (count) {
+        count.textContent = `${history.length} QR code${history.length !== 1 ? 's' : ''} saved`;
+      }
+      
+      if (history.length === 0) {
+        if (empty) {
+          empty.style.display = 'block';
+        }
+        if (container) {
+          container.innerHTML = '';
+        }
+        return;
+      }
+      
+      if (empty) {
+        empty.style.display = 'none';
+      }
+      if (container) {
+        container.innerHTML = history.map((item, index) => {
+          const itemDate = new Date(item.timestamp);
+          const now = new Date();
+          const diffInHours = (now - itemDate) / (1000 * 60 * 60);
+          
+          let timeDisplay;
+          if (diffInHours < 24) {
+            timeDisplay = itemDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          } else {
+            timeDisplay = itemDate.toLocaleDateString([], { month: 'short', day: 'numeric' });
+          }
+          
+          return `
+        <div class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg animate-slide-up">
+          <div class="mb-3">
+            <div class="text-sm font-medium text-gray-900 dark:text-white break-all leading-relaxed">${item.text}</div>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="text-xs text-gray-500 dark:text-gray-400">${timeDisplay}</div>
+            <div class="flex items-center space-x-2">
+              <button onclick="regenerateQR('${item.text.replace(/'/g, "\\'")}')" class="p-2 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900 rounded" title="Regenerate">
+                🔄
+              </button>
+              <button onclick="copyQRText('${item.text.replace(/'/g, "\\'")}')" class="p-2 text-green-600 hover:bg-green-100 dark:hover:bg-green-900 rounded" title="Copy">
+                📋
+              </button>
+              <button onclick="deleteQR(${index})" class="p-2 text-red-600 hover:bg-red-100 dark:hover:bg-red-900 rounded" title="Delete">
+                🗑️
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+        }).join('');
+      }
+    }
+
+    function regenerateQR(text) {
+      document.getElementById('qr-input').value = text;
+      generateQRCode(text);
+      document.getElementById('qr-container').classList.remove('hidden');
+      showToast('QR code regenerated', 'info');
+    }
+
+    function copyQRText(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Text copied to clipboard', 'success');
+      }).catch(() => {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        showToast('Text copied to clipboard', 'success');
+      });
+    }
+
+    function deleteQR(index) {
+      const history = loadHistory();
+      history.splice(index, 1);
+      localStorage.setItem('qr-history', JSON.stringify(history));
+      updateHistoryDisplay();
+      showToast('QR code deleted', 'info');
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+      initTheme();
+      updateHistoryDisplay();
+      
+      // Check for URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const textParam = urlParams.get('text');
+      if (textParam) {
+        const input = document.getElementById('qr-input');
+        const decodedText = decodeURIComponent(textParam);
+        input.value = decodedText;
+        input.focus();
+        showToast('Text loaded from URL', 'info');
+      }
+      
+      const input = document.getElementById('qr-input');
+      const generateBtn = document.getElementById('generate-btn');
+      const clearBtn = document.getElementById('clear-input');
+      const downloadBtn = document.getElementById('download-qr');
+      const copyBtn = document.getElementById('copy-qr-url');
+      const qrContainer = document.getElementById('qr-container');
+
+      // Theme toggle
+      document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+      // Generate QR Code
+      generateBtn.addEventListener('click', function() {
+        const text = input.value.trim();
+        
+        if (text) {
+          generateQRCode(text);
+          qrContainer.classList.remove('hidden');
+          saveToHistory(text);
+        } else {
+          showToast('Please enter some text or URL', 'error');
+        }
+      });
+
+      // Clear input
+      clearBtn.addEventListener('click', function() {
+        input.value = '';
+        qrContainer.classList.add('hidden');
+        input.focus();
+      });
+
+      // Download QR Code
+      downloadBtn.addEventListener('click', downloadQRCode);
+
+      // Copy QR URL
+      copyBtn.addEventListener('click', copyQRURL);
+
+      // Enter key to generate
+      input.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          generateBtn.click();
+        }
+      });
+    });
+
+    // Make functions globally available
+    window.regenerateQR = regenerateQR;
+    window.copyQRText = copyQRText;
+    window.deleteQR = deleteQR;
+  </script>
+</body>
+</html>

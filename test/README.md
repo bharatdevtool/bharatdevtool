@@ -1,170 +1,144 @@
 # Bharat Dev Tools - Test Suite
 
-Comprehensive test suite for the JSON Formatter, Beautifier, Minifier, and Repair tool.
+This directory contains comprehensive test suites for all components of the Bharat Dev Tools project.
 
-## 🧪 What We Test
+## Test Structure
 
-This test suite covers all the functionality built in the Bharat Dev Tools project:
+### Test Files
 
-### Core JSON Functions
-- ✅ **JSON Formatting** - Pretty printing with proper indentation
-- ✅ **JSON Minification** - Removing whitespace and compacting
-- ✅ **JSON Validation** - Checking if input is valid JSON
-- ✅ **JSON Escape/Unescape** - Handling special characters in strings
+- **`run-tests.js`** - Original JSON formatter tests (legacy)
+- **`run-all-tests.js`** - Comprehensive test runner for all components
+- **`run-individual-tests.js`** - Individual test suite runner
+- **`deeplink-tests.js`** - DeepLink launcher test class
+- **`qr-tests.js`** - QR code generator test class
 
-### JSON Repair (Core Feature)
-- ✅ **Trailing Commas** - Remove trailing commas from objects/arrays
-- ✅ **Unquoted Keys** - Add quotes to unquoted object keys
-- ✅ **JavaScript Values** - Replace `undefined`, `NaN`, `Infinity` with `null`
-- ✅ **Comments** - Remove `//` and `/* */` comments
-- ✅ **JSONP Unwrapping** - Extract JSON from `callback({...})` format
-- ✅ **Single Quotes** - Convert `'` to `"` for JSON compliance
-- ✅ **Missing Commas** - Add missing commas between properties
-- ✅ **BOM Removal** - Remove Byte Order Mark characters
-- ✅ **Bare Objects** - Wrap unquoted object literals in braces
+### Test Classes
 
-### Advanced Features
-- ✅ **Hex Color Preview** - Detect and display color previews for hex values
-- ✅ **Search Functionality** - Single character search support
-- ✅ **URL Detection** - Identify and handle clickable URLs
-- ✅ **Escape Sequence Styling** - Highlight escape sequences in orange
-- ✅ **Performance** - Large file handling and optimization
-- ✅ **Edge Cases** - Empty input, whitespace, malformed data
-- ✅ **Integration** - Complete workflows with multiple features
+#### DeepLinkTester
+Tests for deeplink launcher functionality:
+- URL encoding/decoding
+- Deep link validation
+- Complex deeplink scenarios
+- Edge cases
+- Performance tests
+- Integration scenarios
 
-## 🚀 Running Tests
+#### QRTester  
+Tests for QR code generator functionality:
+- URL parameter handling
+- QR code generation
+- Share functionality
+- Complex scenarios
+- Edge cases
+- Performance tests
+- Integration scenarios
 
-### Option 1: Web Interface
-Open `test/index.html` in your browser and click "Run All Tests" for a visual test interface.
+## Running Tests
 
-### Option 2: Command Line
+### Run All Tests (Recommended)
 ```bash
-# Navigate to test directory
-cd test
+node run-all-tests.js
+```
+This runs all test suites: JSON formatter, deeplink launcher, and QR code generator.
 
-# Run all tests
-npm test
-
-# Or run directly with Node
+### Run Individual Test Suites
+```bash
+# Run only JSON formatter tests
 node run-tests.js
+
+# Run only deeplink launcher tests
+node run-individual-tests.js deeplink
+
+# Run only QR code generator tests  
+node run-individual-tests.js qr
+
+# Run all test suites
+node run-individual-tests.js all
 ```
 
-### Option 3: Individual Test Files
-```bash
-# Run specific test categories
-node run-tests.js --format
-node run-tests.js --repair
-node run-tests.js --colors
-```
+## Test Coverage
 
-## 📊 Test Results
+### DeepLink Launcher Tests
+- ✅ URL encoding/decoding with special characters
+- ✅ Deep link validation for various schemes
+- ✅ Complex deeplink scenarios with multiple parameters
+- ✅ Edge cases (empty strings, malformed URLs, control characters)
+- ✅ Performance tests for large batches
+- ✅ Integration workflows
 
-The test suite provides detailed feedback:
+### QR Code Generator Tests
+- ✅ URL parameter handling and decoding
+- ✅ QR code generation for various input types
+- ✅ Share functionality and Web Share API
+- ✅ Complex scenarios (long text, JSON data, base64)
+- ✅ Edge cases (empty input, null values, non-strings)
+- ✅ Performance tests for multiple generations
+- ✅ Integration workflows
 
-```
-🧪 Bharat Dev Tools - Test Suite
-================================
+### JSON Formatter Tests (Original)
+- ✅ Basic JSON formatting and minification
+- ✅ JSON validation and error handling
+- ✅ JSON repair functionality
+- ✅ Hex color preview detection
+- ✅ Search and URL detection
+- ✅ Performance and edge cases
+- ✅ Integration scenarios
 
-✅ formatJSON - Basic object formatting
-✅ minifyJSON - Basic minification
-✅ isValidJSON - Valid JSON returns true
-✅ repairJSON - Remove trailing commas
-✅ repairJSON - Quote unquoted keys
-✅ Hex Color Detection - 6 character hex
-✅ Search - Single character search
-✅ Integration - Complete workflow with hex colors
+## Test Features
 
-📊 TEST SUMMARY
-============================================================
-Total Tests: 45
-✅ Passed: 45
-❌ Failed: 0
-Success Rate: 100.0%
+### Comprehensive Coverage
+- **Edge Cases**: Empty inputs, malformed data, special characters
+- **Performance**: Large data sets, batch operations, timing tests
+- **Integration**: Complete workflows, cross-component interactions
+- **Complex Scenarios**: Real-world use cases, complex data structures
 
-🎉 ALL TESTS PASSED! The JSON formatter is working perfectly.
-```
+### Robust Testing
+- **Error Handling**: Tests for invalid inputs and error conditions
+- **Unicode Support**: International characters and emoji
+- **Special Characters**: URLs with query parameters, fragments, etc.
+- **Large Data**: Performance testing with large datasets
 
-## 🔧 Test Categories
+### Easy Maintenance
+- **Modular Design**: Separate test classes for each component
+- **Clear Structure**: Organized test categories and descriptions
+- **Detailed Output**: Comprehensive test results and failure reporting
+- **Independent Execution**: Can run individual test suites or all together
 
-### 1. Basic JSON Operations (8 tests)
-- Formatting, minification, validation, escape/unescape
+## Adding New Tests
 
-### 2. JSON Repair (12 tests)
-- Core repair functionality for broken JSON
+### For New Components
+1. Create a new test class following the pattern of `DeepLinkTester` or `QRTester`
+2. Implement `runTest()`, `assertEqual()`, `assertContains()` methods
+3. Add test categories (e.g., `testBasicFunctionality()`, `testEdgeCases()`)
+4. Include the new test class in `run-all-tests.js`
 
-### 3. Hex Color Features (4 tests)
-- Color detection and preview functionality
+### For Existing Components
+1. Add new test methods to existing test classes
+2. Follow the naming convention: `test[FeatureName]()`
+3. Include comprehensive edge cases and error conditions
+4. Add performance tests for new functionality
 
-### 4. Search & URL Features (4 tests)
-- Search functionality and URL detection
+## Test Results
 
-### 5. Performance Tests (2 tests)
-- Large file handling and optimization
+### Success Criteria
+- All tests should pass with 100% success rate
+- Performance tests should complete within specified time limits
+- Edge cases should be handled gracefully
+- Integration workflows should work end-to-end
 
-### 6. Edge Cases (3 tests)
-- Empty input, whitespace, malformed data
+### Failure Handling
+- Failed tests are clearly identified with error messages
+- Test results show success rate and failure details
+- Failed tests are categorized by component
+- Detailed error messages help identify issues
 
-### 7. Integration Tests (2 tests)
-- Complete workflows with multiple features
+## Continuous Integration
 
-## 🛡️ Regression Prevention
+These tests are designed to:
+- Run in CI/CD pipelines
+- Catch regressions early
+- Ensure code quality
+- Validate all functionality
+- Test edge cases that might be missed manually
 
-This test suite prevents regressions by:
-
-1. **Comprehensive Coverage** - Tests every function and feature
-2. **Edge Case Testing** - Handles unusual inputs and error conditions
-3. **Performance Monitoring** - Ensures large files are handled efficiently
-4. **Integration Testing** - Verifies features work together correctly
-5. **Visual Validation** - Web interface for manual testing
-
-## 🔍 Debugging Failed Tests
-
-If tests fail:
-
-1. **Check the error message** - It shows expected vs actual results
-2. **Review the test code** - Each test is clearly documented
-3. **Run individual tests** - Isolate specific functionality
-4. **Check browser console** - For web interface issues
-5. **Verify imports** - Ensure all modules are properly loaded
-
-## 📈 Adding New Tests
-
-To add tests for new features:
-
-1. **Add test function** in `run-tests.js`
-2. **Use `runTest()` helper** for consistent reporting
-3. **Include assertions** with `assertEqual()` or `assertContains()`
-4. **Document the test** with clear description
-5. **Update this README** with new test category
-
-Example:
-```javascript
-runTest('New Feature - Description', () => {
-  const input = 'test input';
-  const result = newFunction(input);
-  return assertEqual(result, 'expected output', 'Clear error message');
-});
-```
-
-## 🎯 Quality Assurance
-
-This test suite ensures:
-
-- ✅ **No Breaking Changes** - All existing functionality continues to work
-- ✅ **Performance Standards** - Large files are handled efficiently  
-- ✅ **Error Handling** - Invalid inputs are handled gracefully
-- ✅ **Feature Completeness** - All documented features work correctly
-- ✅ **Cross-Browser Compatibility** - Works in all modern browsers
-- ✅ **Accessibility** - Features work for all users
-
-## 📝 Test Maintenance
-
-- **Run tests before commits** - Prevent regressions
-- **Update tests for new features** - Maintain coverage
-- **Review failed tests immediately** - Fix issues quickly
-- **Monitor performance tests** - Ensure optimization
-- **Document test changes** - Keep team informed
-
----
-
-**Built with ❤️ for developers who need reliable JSON tools.**
+The test suite provides comprehensive coverage to ensure that any code changes don't break existing functionality and that all components work correctly together.
