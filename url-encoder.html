@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DeepLink Launcher | Bharat Dev Tools</title>
-  <meta name="description" content="Professional DeepLink Launcher for Android, iOS, and web. Encode, decode, validate, and launch deep links instantly. Free tool for developers, testers, and mobile app teams.">
-  <meta name="keywords" content="deeplink launcher, deep link, android deeplink, ios deeplink, url launcher, mobile deeplink, app link, universal link, custom scheme, deeplink testing, mobile development">
+  <title>Url Encoder/Decoder | Bharat Dev Tools</title>
+  <meta name="description" content="Professional URL Encoder and Decoder. Encode and decode URLs instantly. Free online tool for developers and testers. Perfect for URL encoding and decoding tasks.">
+  <meta name="keywords" content="url encoder, url decoder, encode url, decode url, url encoding, url decoding, online url encoder, online url decoder, percent encoding, url encode decode, uri encoding, uri decoder, free url encoder">
   <meta name="author" content="Bharat Dev Tools">
   <meta name="robots" content="index, follow">
   <meta name="googlebot" content="index, follow">
@@ -13,16 +13,16 @@
   <meta name="revisit-after" content="7 days">
   <meta name="distribution" content="global">
   <meta name="rating" content="general">
-  <link rel="canonical" href="https://bharatdevtools.com/deeplink.html">
+  <link rel="canonical" href="https://bharatdevtools.com/url-encoder.html">
   
   <!-- Social preview -->
-  <meta property="og:title" content="DeepLink Launcher | Bharat Dev Tools">
-  <meta property="og:description" content="Professional DeepLink Launcher for Android, iOS, and web. Encode, decode, validate, and launch deep links instantly. Free tool for developers, testers, and mobile app teams.">
+  <meta property="og:title" content="Url Encoder/Decoder | Bharat Dev Tools">
+  <meta property="og:description" content="Professional URL Encoder and Decoder. Encode and decode URLs instantly. Free online tool for developers and testers.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://bharatdevtools.com/deeplink.html">
+  <meta property="og:url" content="https://bharatdevtools.com/url-encoder.html">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="DeepLink Launcher | Bharat Dev Tools">
-  <meta name="twitter:description" content="Professional DeepLink Launcher for Android, iOS, and web. Encode, decode, validate, and launch deep links instantly. Free tool for developers, testers, and mobile app teams.">
+  <meta name="twitter:title" content="Url Encoder/Decoder | Bharat Dev Tools">
+  <meta name="twitter:description" content="Professional URL Encoder and Decoder. Encode and decode URLs instantly. Free online tool for developers and testers.">
   
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -61,9 +61,9 @@
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "DeepLink Launcher",
-    "description": "Professional DeepLink Launcher for Android, iOS, and web. Encode, decode, validate, and launch deep links instantly.",
-    "url": "https://bharatdevtools.com/deeplink.html",
+    "name": "Url Encoder/Decoder",
+    "description": "Professional URL Encoder and Decoder. Encode and decode URLs instantly. Free online tool for developers and testers.",
+    "url": "https://bharatdevtools.com/url-encoder.html",
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Web Browser",
     "offers": {
@@ -77,14 +77,12 @@
       "url": "https://bharatdevtools.com"
     },
     "featureList": [
-      "Deep Link Encoding",
-      "Deep Link Decoding", 
-      "URL Validation",
-      "Cross-Platform Support",
-      "Mobile App Testing",
+      "URL Encoding",
+      "URL Decoding",
+      "Percent Encoding",
+      "URI Encoding",
       "Developer Tools"
-    ],
-    "screenshot": "https://bharatdevtools.com/assets/img/deeplink-preview.png"
+    ]
   }
   </script>
   <script>
@@ -184,14 +182,16 @@
 
   <!-- Main Content -->
   <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- SEO Header (invisible, for Google) -->
+    <h1 class="sr-only">Url Encoder/Decoder</h1>
+    
     <!-- Hero Section -->
     <div class="text-center mb-12 animate-fade-in">
-      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-        🔗 DeepLink Launcher
-      </h1>
+      <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        🔗 Url Encoder/Decoder
+      </h2>
       <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-        Launch, encode, decode, and manage deep links for Android, iOS, and web. 
-        Perfect for developers and testers.
+        Encode and decode URLs instantly. Perfect for developers and testers.
       </p>
     </div>
 
@@ -200,14 +200,14 @@
       <div class="space-y-6">
         <!-- Input Field -->
         <div>
-          <label for="deeplink-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Deep Link URL
+          <label for="url-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            URL
           </label>
           <div class="relative">
             <input 
               type="text" 
-              id="deeplink-input" 
-              placeholder="Enter your deep link (e.g., myapp://open?param=value, https://example.com, etc.)"
+              id="url-input" 
+              placeholder="Enter your url (e.g., myapp://open?param=value, https://example.com, etc.)"
               class="w-full px-4 pr-10 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
             >
             <div class="absolute inset-y-0 right-0 flex items-center pr-3">
@@ -221,18 +221,14 @@
         </div>
 
         <!-- Action Buttons -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <button id="encode-decode-btn" class="flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
-            <span class="mr-2">🔄</span>
-            Encode/Decode
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <button id="encode-btn" class="flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+            <span class="mr-2">🔒</span>
+            Encode
           </button>
-          <button id="generate-qr-btn" class="flex items-center justify-center px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors font-medium">
-            <span class="mr-2">📱</span>
-            Generate QR
-          </button>
-          <button id="launch-btn" class="flex items-center justify-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
-            <span class="mr-2">🚀</span>
-            Launch
+          <button id="decode-btn" class="flex items-center justify-center px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium">
+            <span class="mr-2">🔓</span>
+            Decode
           </button>
         </div>
 
@@ -241,59 +237,42 @@
           <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Result
           </label>
-          <div class="relative">
-            <textarea 
-              id="result-output" 
-              readonly 
-              class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white font-mono text-sm"
-              rows="3"
-            ></textarea>
-            <div class="absolute top-2 right-2 flex flex-col space-y-1">
-              <button id="launch-result" class="px-3 py-1 bg-purple-200 dark:bg-purple-600 text-purple-700 dark:text-purple-300 rounded hover:bg-purple-300 dark:hover:bg-purple-500 transition-colors text-sm">
-                🚀 Launch
-              </button>
-              <button id="copy-result" class="px-3 py-1 bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors text-sm">
-                📋 Copy
-              </button>
-            </div>
+          <textarea 
+            id="result-output" 
+            readonly 
+            class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white font-mono text-sm mb-4"
+            rows="3"
+          ></textarea>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <button id="copy-result" class="flex items-center justify-center px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium">
+              <span class="mr-2">📋</span>
+              Copy
+            </button>
+            <button id="launch-result" class="flex items-center justify-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
+              <span class="mr-2">🚀</span>
+              Launch
+            </button>
+            <button id="generate-qr-result" class="flex items-center justify-center px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors font-medium">
+              <span class="mr-2">📱</span>
+              Generate QR
+            </button>
           </div>
         </div>
-      </div>
-    </div>
-
-
-    <!-- Upload/Download Section -->
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-8 animate-fade-in">
-      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">📥📤 Import/Export</h3>
-      <div class="flex flex-col sm:flex-row gap-4">
-        <label class="flex items-center justify-center px-6 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors cursor-pointer">
-          <input type="file" id="upload-file" accept=".csv,.txt" class="hidden">
-          <span class="mr-2">📁</span>
-          Upload CSV/TXT
-        </label>
-        <button id="download-btn" class="flex items-center justify-center px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
-          <span class="mr-2">💾</span>
-          Download CSV
-        </button>
-        <button id="clear-all-btn" class="flex items-center justify-center px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
-          <span class="mr-2">🗑️</span>
-          Clear All
-        </button>
       </div>
     </div>
 
     <!-- History Panel -->
     <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 animate-fade-in">
       <div class="flex items-center justify-between mb-6">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">📚 Deep Link History</h3>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">📚 URL History</h3>
         <span id="history-count" class="text-sm text-gray-500 dark:text-gray-400">0 links saved</span>
       </div>
       
       <div id="history-list" class="space-y-3">
         <div id="empty-history" class="text-center py-8 text-gray-500 dark:text-gray-400">
           <div class="text-4xl mb-2">📝</div>
-          <p>No deep links saved yet</p>
-          <p class="text-sm">Enter a deep link above and it will be saved here automatically</p>
+          <p>No URLs saved yet</p>
+          <p class="text-sm">Enter a url above and it will be saved here automatically</p>
         </div>
       </div>
     </div>
@@ -356,11 +335,11 @@
         errorElement.textContent = truncatedMessage;
         errorElement.classList.remove('hidden');
         
-        // Track deeplink launch failure in analytics
-        const input = document.getElementById('deeplink-input');
+        // Track url launch failure in analytics
+        const input = document.getElementById('url-input');
         if (typeof window.Analytics !== 'undefined' && input) {
           window.Analytics.trackDeeplinkLaunchFailed({
-            page: window.getCurrentPageNameForAnalytics ? window.getCurrentPageNameForAnalytics() : 'DeepLink Launcher',
+            page: window.getCurrentPageNameForAnalytics ? window.getCurrentPageNameForAnalytics() : 'Url Encoder/Decoder',
             error_message: message,
             deeplink_url: input.value.trim()
           });
@@ -373,13 +352,13 @@
       }
     }
 
-    // Deep link validation
+    // Url validation
     function validateDeepLink(url) {
-      if (!url.trim()) return { valid: false, message: 'Please enter a deep link' };
+      if (!url.trim()) return { valid: false, message: 'Please enter a url' };
       
       const trimmedUrl = url.trim();
       
-      // Check for common deep link patterns
+      // Check for common Url patterns
       const patterns = [
         /^https?:\/\//,  // HTTP/HTTPS
         /^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//,  // Custom schemes with //
@@ -402,15 +381,15 @@
         
         const scheme = trimmedUrl.split(':')[0] + ':';
         if (knownSchemes.includes(scheme.toLowerCase())) {
-          return { valid: true, message: `✅ Valid ${scheme} deeplink` };
+          return { valid: true, message: `✅ Valid ${scheme} URL` };
         }
         
-        return { valid: true, message: '✅ Valid deeplink format' };
+        return { valid: true, message: '✅ Valid URL format' };
       }
       
       return {
         valid: false,
-        message: 'Invalid deeplink format. Supported: http://, https://, tel:, mailto:, sms:, custom://, etc.'
+        message: 'Invalid URL format. Supported: http://, https://, tel:, mailto:, sms:, custom://, etc.'
       };
     }
 
@@ -427,7 +406,7 @@
       }
     }
 
-    // Launch deep link
+    // Launch Url
     function launchDeepLink(url) {
       try {
         // Check if it's a custom scheme
@@ -437,12 +416,12 @@
         } else {
           // For HTTP/HTTPS, use regular navigation
           window.location.href = url;
-          showToast('Deep link launched!', 'success');
+          showToast('Url launched!', 'success');
         }
       } catch (e) {
-        const errorMsg = 'Failed to launch deep link: ' + e.message;
+        const errorMsg = 'Failed to launch url: ' + e.message;
         showLaunchError(errorMsg);
-        showToast('Failed to launch deep link', 'error');
+        showToast('Failed to launch deep url', 'error');
       }
     }
 
@@ -453,7 +432,7 @@
       const isSimulator = /Simulator|iPhone Simulator|iPad Simulator/.test(navigator.userAgent);
       
       if (isSimulator) {
-        showToast('⚠️ Simulator detected! Deep links may not work. Try on real device.', 'error');
+        showToast('⚠️ Simulator detected! url may not work. Try on real device.', 'error');
         // Still try to launch
         setTimeout(() => {
           window.location.href = url;
@@ -490,13 +469,13 @@
           }
         }, 2000);
         
-        showToast('Deep link launched! (iOS)', 'success');
+        showToast('Url launched! (iOS)', 'success');
         
         // Check for errors after 3 seconds (longer delay for iOS)
         setTimeout(() => {
           window.removeEventListener('blur', handleBlur);
           if (!appLaunched && document.hasFocus()) {
-            showLaunchError('App may not be installed or deeplink not supported on iOS');
+            showLaunchError('App may not be installed or URL not supported on iOS');
           }
         }, 3000);
         
@@ -512,13 +491,13 @@
         window.addEventListener('blur', handleBlur);
         
         window.location.href = url;
-        showToast('Deep link launched! (Android)', 'success');
+        showToast('Url launched! (Android)', 'success');
         
         // Fallback after 4 seconds (longer delay for Android)
         setTimeout(() => {
           window.removeEventListener('blur', handleBlur);
           if (!appLaunched && document.hasFocus()) {
-            showLaunchError('App may not be installed or deeplink not supported on Android');
+            showLaunchError('App may not be installed or URL not supported on Android');
           }
         }, 4000);
         
@@ -534,13 +513,13 @@
         window.addEventListener('blur', handleBlur);
         
         window.location.href = url;
-        showToast('Deep link launched! (Desktop)', 'success');
+        showToast('Url launched! (Desktop)', 'success');
         
         // Check for errors after 3 seconds (longer delay for desktop)
         setTimeout(() => {
           window.removeEventListener('blur', handleBlur);
           if (!appLaunched && document.hasFocus()) {
-            showLaunchError('App may not be installed or deeplink not supported on desktop');
+            showLaunchError('App may not be installed or URL not supported on desktop');
           }
         }, 3000);
       }
@@ -548,7 +527,7 @@
 
     // History management
     function loadHistory() {
-      const history = JSON.parse(localStorage.getItem('deeplink-history') || '[]');
+      const history = JSON.parse(localStorage.getItem('url-history') || '[]');
       return history;
     }
 
@@ -559,9 +538,9 @@
       // Avoid duplicates
       if (!history.some(item => item.url === url)) {
         history.unshift({ url, timestamp });
-        localStorage.setItem('deeplink-history', JSON.stringify(history));
+        localStorage.setItem('url-history', JSON.stringify(history));
         updateHistoryDisplay();
-        showToast('Deep link saved to history', 'success');
+        showToast('Url saved to history', 'success');
       }
     }
 
@@ -617,7 +596,7 @@
               <button onclick="copyDeepLink('${item.url}')" class="p-2 text-green-600 hover:bg-green-100 dark:hover:bg-green-900 rounded" title="Copy">
                 📋
               </button>
-              <button onclick="launchDeepLink('${item.url.replace(/'/g, "\\'")}'); if(typeof window.Analytics !== 'undefined') window.Analytics.trackDeeplinkHistoryLaunch({page:'DeepLink Launcher'});" class="p-2 text-purple-600 hover:bg-purple-100 dark:hover:bg-purple-900 rounded" title="Launch">
+              <button onclick="launchDeepLink('${item.url.replace(/'/g, "\\'")}'); if(typeof window.Analytics !== 'undefined') window.Analytics.trackDeeplinkHistoryLaunch({page:'Url Encoder/Decoder'});" class="p-2 text-purple-600 hover:bg-purple-100 dark:hover:bg-purple-900 rounded" title="Launch">
                 🚀
               </button>
               <button onclick="deleteDeepLinkByUrl('${item.url}')" class="p-2 text-red-600 hover:bg-red-100 dark:hover:bg-red-900 rounded" title="Delete">
@@ -635,25 +614,25 @@
       // Track edit
       if (typeof window.Analytics !== 'undefined') {
         window.Analytics.trackDeeplinkHistoryEdit({
-          page: 'DeepLink Launcher'
+          page: 'Url Encoder/Decoder'
         });
       }
-      document.getElementById('deeplink-input').value = url;
-      document.getElementById('deeplink-input').focus();
-      showToast('Deep link loaded for editing', 'info');
+      document.getElementById('url-input').value = url;
+      document.getElementById('url-input').focus();
+      showToast('Url loaded for editing', 'info');
     }
 
     function copyDeepLink(url) {
       // Track copy
       if (typeof window.Analytics !== 'undefined') {
         window.Analytics.trackDeeplinkHistoryCopy({
-          page: 'DeepLink Launcher'
+          page: 'Url Encoder/Decoder'
         });
       }
       // Try modern clipboard API first
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(url).then(() => {
-          showToast('Deep link copied to clipboard', 'success');
+          showToast('Url copied to clipboard', 'success');
         }).catch(() => {
           // Fallback for mobile or when clipboard API fails
           fallbackCopyToClipboard(url);
@@ -678,7 +657,7 @@
       try {
         const successful = document.execCommand('copy');
         if (successful) {
-          showToast('Deep link copied to clipboard', 'success');
+          showToast('Url copied to clipboard', 'success');
         } else {
           showToast('Copy failed. Please select and copy manually', 'error');
         }
@@ -692,40 +671,40 @@
     function deleteDeepLink(index) {
       const history = loadHistory();
       history.splice(index, 1);
-      localStorage.setItem('deeplink-history', JSON.stringify(history));
+      localStorage.setItem('url-history', JSON.stringify(history));
       updateHistoryDisplay();
-      showToast('Deep link deleted', 'info');
+      showToast('Url deleted', 'info');
     }
 
     function deleteDeepLinkByUrl(url) {
       // Track delete
       if (typeof window.Analytics !== 'undefined') {
         window.Analytics.trackDeeplinkHistoryDelete({
-          page: 'DeepLink Launcher'
+          page: 'Url Encoder/Decoder'
         });
       }
       const history = loadHistory();
       const filteredHistory = history.filter(item => item.url !== url);
-      localStorage.setItem('deeplink-history', JSON.stringify(filteredHistory));
+      localStorage.setItem('url-history', JSON.stringify(filteredHistory));
       
       // Update display immediately
       updateHistoryDisplay();
-      showToast('Deep link deleted', 'info');
+      showToast('Url deleted', 'info');
     }
 
     function clearAllHistory() {
-      if (confirm('Are you sure you want to clear all saved deep links?')) {
+      if (confirm('Are you sure you want to clear all saved URLs?')) {
         // Track clear all
         if (typeof window.Analytics !== 'undefined') {
           const history = loadHistory();
           window.Analytics.trackDeeplinkClearAll({
-            page: 'DeepLink Launcher',
+            page: 'Url Encoder/Decoder',
             items_cleared: history.length
           });
         }
-        localStorage.removeItem('deeplink-history');
+        localStorage.removeItem('url-history');
         updateHistoryDisplay();
-        showToast('All deep links cleared', 'info');
+        showToast('All URLs cleared', 'info');
       }
     }
 
@@ -733,26 +712,26 @@
     function exportToCSV() {
       const history = loadHistory();
       if (history.length === 0) {
-        showToast('No deep links to export', 'error');
+        showToast('No Urls to export', 'error');
         return;
       }
       
       // Track download CSV
       if (typeof window.Analytics !== 'undefined') {
         window.Analytics.trackDeeplinkDownloadCsv({
-          page: 'DeepLink Launcher',
+          page: 'Url Encoder/Decoder',
           items_exported: history.length
         });
       }
       
-      const csvContent = 'DeepLink,DateAdded\n' + 
+      const csvContent = 'URL,DateAdded\n' + 
         history.map(item => `"${item.url}","${item.timestamp}"`).join('\n');
       
       const blob = new Blob([csvContent], { type: 'text/csv' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `deeplink-history-${new Date().toISOString().split('T')[0]}.csv`;
+      a.download = `url-history-${new Date().toISOString().split('T')[0]}.csv`;
       a.click();
       URL.revokeObjectURL(url);
       showToast('History exported to CSV', 'success');
@@ -783,14 +762,14 @@
           // Track upload CSV
           if (typeof window.Analytics !== 'undefined') {
             window.Analytics.trackDeeplinkUploadCsv({
-              page: 'DeepLink Launcher',
+              page: 'Url Encoder/Decoder',
               items_imported: imported
             });
           }
           
-          localStorage.setItem('deeplink-history', JSON.stringify(history));
+          localStorage.setItem('url-history', JSON.stringify(history));
           updateHistoryDisplay();
-          showToast(`Imported ${imported} deep links`, 'success');
+          showToast(`Imported ${imported} URLs`, 'success');
         } catch (error) {
           showToast('Failed to import file', 'error');
         }
@@ -808,22 +787,19 @@
       const urlParams = new URLSearchParams(window.location.search);
       const urlParam = urlParams.get('url');
       if (urlParam) {
-        const input = document.getElementById('deeplink-input');
+        const input = document.getElementById('url-input');
         input.value = decodeURIComponent(urlParam);
         input.focus();
-        showToast('Deep link loaded from URL', 'info');
+        showToast('URL loaded from URL', 'info');
       }
       
-      const input = document.getElementById('deeplink-input');
-      const launchBtn = document.getElementById('launch-btn');
-      const encodeDecodeBtn = document.getElementById('encode-decode-btn');
-      const generateQrBtn = document.getElementById('generate-qr-btn');
+      const input = document.getElementById('url-input');
+      const encodeBtn = document.getElementById('encode-btn');
+      const decodeBtn = document.getElementById('decode-btn');
       const clearBtn = document.getElementById('clear-input');
       const copyResultBtn = document.getElementById('copy-result');
       const launchResultBtn = document.getElementById('launch-result');
-      const downloadBtn = document.getElementById('download-btn');
-      const clearAllBtn = document.getElementById('clear-all-btn');
-      const uploadFile = document.getElementById('upload-file');
+      const generateQrResultBtn = document.getElementById('generate-qr-result');
       const resultContainer = document.getElementById('result-container');
       const resultOutput = document.getElementById('result-output');
       const validationMessage = document.getElementById('validation-message');
@@ -848,51 +824,41 @@
         }
       });
 
-      // Launch button
-      launchBtn.addEventListener('click', function() {
+      // Encode button
+      encodeBtn.addEventListener('click', function() {
         const url = input.value.trim();
-        const validation = validateDeepLink(url);
-        if (validation.valid) {
-          // Track launch
+        if (url) {
+          // Track encode
           if (typeof window.Analytics !== 'undefined') {
-            window.Analytics.trackDeeplinkLaunch({
-              page: 'DeepLink Launcher',
-              deeplink_scheme: url.split(':')[0] || 'unknown'
+            window.Analytics.trackDeeplinkEncode({
+              page: 'Url Encoder/Decoder'
             });
           }
-          launchDeepLink(url);
-          saveToHistory(url);
+          const encoded = encodeURL(url);
+          resultOutput.value = encoded;
+          resultContainer.classList.remove('hidden');
+          showToast('URL encoded', 'success');
         } else {
-          showToast(validation.message, 'error');
+          showToast('Please enter a URL to encode', 'error');
         }
       });
 
-      // Encode/Decode button - navigates to URL encoder/decoder screen
-      if (encodeDecodeBtn) {
-        encodeDecodeBtn.addEventListener('click', function() {
-          const url = input.value.trim();
-          // Navigate to URL encoder/decoder screen
-          const encoderUrl = url ? `url-encoder.html?url=${encodeURIComponent(url)}` : 'url-encoder.html';
-          window.location.href = encoderUrl;
-        });
-      }
-
-      // Generate QR button
-      generateQrBtn.addEventListener('click', function() {
+      // Decode button
+      decodeBtn.addEventListener('click', function() {
         const url = input.value.trim();
         if (url) {
-          // Track generate QR
+          // Track decode
           if (typeof window.Analytics !== 'undefined') {
-            window.Analytics.trackDeeplinkGenerateQr({
-              page: 'DeepLink Launcher'
+            window.Analytics.trackDeeplinkDecode({
+              page: 'Url Encoder/Decoder'
             });
           }
-          // Navigate to QR page with the deeplink as a parameter
-          const qrUrl = `simple-qr.html?text=${encodeURIComponent(url)}`;
-          window.location.href = qrUrl;
-          showToast('Redirecting to QR Generator...', 'info');
+          const decoded = decodeURL(url);
+          resultOutput.value = decoded;
+          resultContainer.classList.remove('hidden');
+          showToast('URL decoded', 'success');
         } else {
-          showToast('Please enter a deeplink to generate QR code', 'error');
+          showToast('Please enter a URL to decode', 'error');
         }
       });
 
@@ -907,6 +873,25 @@
       // Copy result
       copyResultBtn.addEventListener('click', function() {
         copyDeepLink(resultOutput.value);
+      });
+
+      // Generate QR result
+      generateQrResultBtn.addEventListener('click', function() {
+        const resultValue = resultOutput.value.trim();
+        if (resultValue) {
+          // Track generate QR
+          if (typeof window.Analytics !== 'undefined') {
+            window.Analytics.trackDeeplinkGenerateQr({
+              page: 'Url Encoder/Decoder'
+            });
+          }
+          // Navigate to QR page with the result as a parameter
+          const qrUrl = `simple-qr.html?text=${encodeURIComponent(resultValue)}`;
+          window.location.href = qrUrl;
+          showToast('Redirecting to QR Generator...', 'info');
+        } else {
+          showToast('No result to generate QR code', 'error');
+        }
       });
 
       // Launch result
@@ -931,21 +916,6 @@
         }
       });
 
-      // Download CSV
-      downloadBtn.addEventListener('click', exportToCSV);
-
-      // Clear all history
-      clearAllBtn.addEventListener('click', clearAllHistory);
-
-      // Upload file
-      uploadFile.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-          importFromCSV(file);
-        }
-      });
-
-
       // Auto-save on valid input
       input.addEventListener('blur', function() {
         const url = this.value.trim();
@@ -965,3 +935,4 @@
   </script>
 </body>
 </html>
+

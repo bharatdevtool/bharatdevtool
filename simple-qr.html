@@ -31,6 +31,25 @@
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.svg">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon.svg">
   
+  <!-- Sentry SDK -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+  ></script>
+  
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+  
+  <!-- Version Tracking Script -->
+  <script src="assets/js/version.js"></script>
+  
+  <!-- Analytics Script -->
+  <script src="assets/js/analytics.js"></script>
+  
   <!-- TailwindCSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
@@ -139,9 +158,10 @@
         <!-- Logo -->
         <div class="flex items-center">
           <a href="index.html" class="flex items-center space-x-3">
-            <img src="https://ik.imagekit.io/bdt/bdt_round_corner.png?updatedAt=1759510331612" 
+            <img src="" 
+                 data-logo="true"
                  alt="Bharat Dev Tools Logo" 
-                 class="h-8 w-8 rounded-lg">
+                 class="logo">
             <span class="text-xl font-bold text-gray-900 dark:text-white">Bharat Dev Tools</span>
           </a>
         </div>
@@ -252,6 +272,15 @@
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
   <!-- Fallback QR Code Library -->
   <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+
+  <!-- Initialize Sentry with version tracking -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
+        initSentryTracking();
+      }
+    });
+  </script>
 
   <!-- Scripts -->
   <script>
@@ -382,7 +411,6 @@
         
         showToast('QR code generated successfully!', 'success');
       } catch (e) {
-        console.error('❌ Fallback QR generation failed:', e);
         showToast('QR code generation failed: ' + e.message, 'error');
       }
     }
@@ -392,7 +420,6 @@
       
       // Validate input
       if (!text || typeof text !== 'string' || !text.trim()) {
-        console.error('❌ Invalid text provided to generateQRCode');
         showToast('Please enter some text to generate QR code', 'error');
         return;
       }
@@ -400,7 +427,6 @@
       const qrContainer = document.getElementById('qr-code');
       
       if (!qrContainer) {
-        console.error('❌ QR container not found');
         showToast('QR container not found', 'error');
         return;
       }
@@ -414,7 +440,6 @@
           if (typeof QRCode !== 'undefined') {
             generateQRCode(text);
           } else {
-            console.error('❌ QRCode library still not loaded, trying fallback');
             generateQRCodeFallback(text, qrContainer);
           }
         }, 500);
@@ -443,7 +468,6 @@
           }
         }, function (error) {
           if (error) {
-            console.error('❌ QRCode generation error:', error);
             qrContainer.innerHTML = '';
             generateQRCodeFallback(text, qrContainer);
           } else {
@@ -484,7 +508,6 @@
           }
         });
       } catch (e) {
-        console.error('❌ QRCode generation exception:', e);
         qrContainer.innerHTML = '';
         generateQRCodeFallback(text, qrContainer);
       }
@@ -492,6 +515,13 @@
 
     // Download QR Code
     function downloadQRCode() {
+      // Track download
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.trackQrDownload({
+          page: 'QR Code Generator'
+        });
+      }
+      
       const canvas = document.querySelector('#qr-code canvas');
       const table = document.querySelector('#qr-code table');
       
@@ -600,6 +630,13 @@
 
     // Copy QR URL
     function copyQRURL() {
+      // Track copy URL
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.trackQrCopyUrl({
+          page: 'QR Code Generator'
+        });
+      }
+      
       const input = document.getElementById('qr-input');
       const text = input.value.trim();
       if (text) {
@@ -703,6 +740,12 @@
     }
 
     function regenerateQR(text) {
+      // Track edit/regenerate
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.trackQrHistoryEdit({
+          page: 'QR Code Generator'
+        });
+      }
       document.getElementById('qr-input').value = text;
       generateQRCode(text);
       document.getElementById('qr-container').classList.remove('hidden');
@@ -710,6 +753,12 @@
     }
 
     function copyQRText(text) {
+      // Track copy
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.trackQrHistoryCopy({
+          page: 'QR Code Generator'
+        });
+      }
       navigator.clipboard.writeText(text).then(() => {
         showToast('Text copied to clipboard', 'success');
       }).catch(() => {
@@ -725,6 +774,12 @@
     }
 
     function deleteQR(index) {
+      // Track delete
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.trackQrHistoryDelete({
+          page: 'QR Code Generator'
+        });
+      }
       const history = loadHistory();
       history.splice(index, 1);
       localStorage.setItem('qr-history', JSON.stringify(history));
@@ -763,6 +818,13 @@
         const text = input.value.trim();
         
         if (text) {
+          // Track generate button
+          if (typeof window.Analytics !== 'undefined') {
+            window.Analytics.trackQrGenerateButton({
+              page: 'QR Code Generator',
+              text_length: text.length
+            });
+          }
           generateQRCode(text);
           qrContainer.classList.remove('hidden');
           saveToHistory(text);
