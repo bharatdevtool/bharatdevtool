@@ -29,6 +29,25 @@
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.svg">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon.svg">
 
+  <!-- Sentry SDK -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+  ></script>
+  
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+  
+  <!-- Version Tracking Script -->
+  <script src="assets/js/version.js"></script>
+  
+  <!-- Analytics Script -->
+  <script src="assets/js/analytics.js"></script>
+  
   <!-- CodeMirror -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/fold/foldgutter.min.css">
@@ -56,9 +75,13 @@
 <header>
   <div class="brand">
     <!-- Logo -->
-    <img src="https://ik.imagekit.io/bdt/bdt_round_corner.png?updatedAt=1759510331612" 
+    <img src="" 
+         data-logo="true"
          alt="Bharat Dev Tools Logo" 
          class="logo">
+    
+    <!-- Brand Text -->
+    <span class="brand-text">Bharat Dev Tools</span>
 
     <!-- Hidden but SEO friendly -->
     <h1 class="sr-only">Bharat Dev Tools</h1>
@@ -73,6 +96,17 @@
         <div class="deeplink-label">
           <span>DeepLink</span>
           <span>Launcher</span>
+        </div>
+      </a>
+    </div>
+    <span class="v-sep" aria-hidden="true"></span>
+    <!-- Url Encoder/Decoder Entry Point -->
+    <div class="url-encoder-launcher">
+      <a href="url-encoder.html" class="url-encoder-btn" title="Url Encoder/Decoder">
+        <span class="url-encoder-icon">🔗</span>
+        <div class="url-encoder-label">
+          <span>Url</span>
+          <span>Encoder</span>
         </div>
       </a>
     </div>
@@ -249,6 +283,93 @@
   <link rel="stylesheet" href="components/footer.css">
   <script src="components/footer.js"></script>
 
+  <!-- Initialize Sentry with version tracking -->
+  <script>
+    // Wait for Sentry and version.js to load
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
+        initSentryTracking();
+      }
+    });
+  </script>
+
   <script type="module" src="assets/js/app.js"></script>
+  
+  <!-- Analytics Tracking for Buttons -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Fullscreen button tracking (input & output)
+      ['input-fullscreen-btn', 'output-fullscreen-btn'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn && typeof window.Analytics !== 'undefined') {
+          btn.addEventListener('click', function() {
+            window.Analytics.trackButtonClickFullscreen({
+              page: 'JSON Formatter',
+              button_location: id.includes('input') ? 'input' : 'output'
+            });
+          });
+        }
+      });
+      
+      // Deeplink launcher button tracking
+      const deeplinkBtn = document.querySelector('.deeplink-btn');
+      if (deeplinkBtn && typeof window.Analytics !== 'undefined') {
+        deeplinkBtn.addEventListener('click', function() {
+          window.Analytics.trackButtonClickDeeplinkLauncher({
+            page: 'JSON Formatter'
+          });
+        });
+      }
+      
+      // Url encoder button tracking
+      const urlEncoderBtn = document.querySelector('.url-encoder-btn');
+      if (urlEncoderBtn && typeof window.Analytics !== 'undefined') {
+        urlEncoderBtn.addEventListener('click', function() {
+          window.Analytics.trackButtonClickUrlEncoder({
+            page: 'JSON Formatter'
+          });
+        });
+      }
+      
+      // QR generator button tracking
+      const qrBtn = document.querySelector('.qr-btn');
+      if (qrBtn && typeof window.Analytics !== 'undefined') {
+        qrBtn.addEventListener('click', function() {
+          window.Analytics.trackButtonClickQrGenerator({
+            page: 'JSON Formatter'
+          });
+        });
+      }
+      
+      // Bookmark button tracking
+      const bookmarkBtn = document.getElementById('bookmark-btn');
+      const bookmarkTextBtn = document.getElementById('bookmark-text-btn');
+      if (bookmarkBtn && typeof window.Analytics !== 'undefined') {
+        bookmarkBtn.addEventListener('click', function() {
+          window.Analytics.trackButtonClickBookmark({
+            page: 'JSON Formatter'
+          });
+        });
+      }
+      if (bookmarkTextBtn && typeof window.Analytics !== 'undefined') {
+        bookmarkTextBtn.addEventListener('click', function() {
+          window.Analytics.trackButtonClickBookmark({
+            page: 'JSON Formatter'
+          });
+        });
+      }
+      
+      // Theme toggle tracking
+      const themeToggle = document.getElementById('theme-toggle');
+      if (themeToggle && typeof window.Analytics !== 'undefined') {
+        themeToggle.addEventListener('change', function() {
+          window.Analytics.trackThemeToggle({
+            page: 'JSON Formatter',
+            theme: this.checked ? 'dark' : 'light'
+          });
+        });
+      }
+    });
+  </script>
 </body>
 </html>

@@ -5,17 +5,20 @@
  * 
  * This script allows running individual test suites:
  * - JSON Formatter tests
- * - DeepLink Launcher tests  
+ * - DeepLink Launcher tests
+ * - URL Encoder/Decoder tests
  * - QR Code Generator tests
  * 
  * Usage:
  * node run-individual-tests.js json     # Run only JSON formatter tests
  * node run-individual-tests.js deeplink # Run only deeplink launcher tests
+ * node run-individual-tests.js url      # Run only URL encoder/decoder tests
  * node run-individual-tests.js qr       # Run only QR code generator tests
  * node run-individual-tests.js all      # Run all test suites
  */
 
 import { DeepLinkTester } from './deeplink-tests.js';
+import { URLEncoderTester } from './url-encoder-tests.js';
 import { QRTester } from './qr-tests.js';
 
 // Get command line arguments
@@ -43,6 +46,18 @@ if (testSuite === 'deeplink' || testSuite === 'all') {
   console.log(`Success Rate: ${((deeplinkResults.passed / deeplinkResults.total) * 100).toFixed(1)}%\n`);
 }
 
+if (testSuite === 'url' || testSuite === 'all') {
+  console.log('Running URL Encoder/Decoder tests...\n');
+  const urlEncoderTester = new URLEncoderTester();
+  const urlEncoderResults = urlEncoderTester.runAllTests();
+  
+  console.log('\n📊 URL Encoder/Decoder Test Results:');
+  console.log(`Total: ${urlEncoderResults.total}`);
+  console.log(`✅ Passed: ${urlEncoderResults.passed}`);
+  console.log(`❌ Failed: ${urlEncoderResults.failed}`);
+  console.log(`Success Rate: ${((urlEncoderResults.passed / urlEncoderResults.total) * 100).toFixed(1)}%\n`);
+}
+
 if (testSuite === 'qr' || testSuite === 'all') {
   console.log('Running QR Code Generator tests...\n');
   const qrTester = new QRTester();
@@ -60,8 +75,8 @@ if (testSuite === 'all') {
   console.log('node run-all-tests.js');
 }
 
-if (!['json', 'deeplink', 'qr', 'all'].includes(testSuite)) {
+if (!['json', 'deeplink', 'url', 'qr', 'all'].includes(testSuite)) {
   console.log('❌ Invalid test suite specified.');
-  console.log('Usage: node run-individual-tests.js [json|deeplink|qr|all]');
+  console.log('Usage: node run-individual-tests.js [json|deeplink|url|qr|all]');
   process.exit(1);
 }
