@@ -6,7 +6,6 @@
  * This script runs all test suites for the project:
  * - JSON Formatter tests (original)
  * - DeepLink Launcher tests (new)
- * - URL Encoder/Decoder tests (new)
  * - QR Code Generator tests (new)
  * 
  * Each test suite runs independently to avoid conflicts.
@@ -32,7 +31,6 @@ import {
 
 // Import test classes
 import { DeepLinkTester } from './deeplink-tests.js';
-import { URLEncoderTester } from './url-encoder-tests.js';
 import { QRTester } from './qr-tests.js';
 
 // Test Results Tracking
@@ -369,11 +367,6 @@ console.log('\n' + '='.repeat(60));
 const deeplinkTester = new DeepLinkTester();
 const deeplinkResults = deeplinkTester.runAllTests();
 
-// Run URL Encoder/Decoder Tests
-console.log('\n' + '='.repeat(60));
-const urlEncoderTester = new URLEncoderTester();
-const urlEncoderResults = urlEncoderTester.runAllTests();
-
 // Run QR Code Generator Tests
 console.log('\n' + '='.repeat(60));
 const qrTester = new QRTester();
@@ -387,9 +380,9 @@ console.log('\n' + '='.repeat(60));
 console.log('📊 COMPREHENSIVE TEST SUMMARY');
 console.log('='.repeat(60));
 
-const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + qrResults.total;
-const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + qrResults.passed;
-const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + qrResults.failed;
+const grandTotal = totalTests + deeplinkResults.total + qrResults.total;
+const grandPassed = totalPassed + deeplinkResults.passed + qrResults.passed;
+const grandFailed = totalFailed + deeplinkResults.failed + qrResults.failed;
 
 console.log(`Total Tests: ${grandTotal}`);
 console.log(`✅ Passed: ${grandPassed}`);
@@ -399,7 +392,6 @@ console.log(`Success Rate: ${((grandPassed / grandTotal) * 100).toFixed(1)}%`);
 console.log('\n📋 Test Suite Breakdown:');
 console.log(`JSON Formatter: ${totalTests} tests (${totalPassed} passed, ${totalFailed} failed)`);
 console.log(`DeepLink Launcher: ${deeplinkResults.total} tests (${deeplinkResults.passed} passed, ${deeplinkResults.failed} failed)`);
-console.log(`URL Encoder/Decoder: ${urlEncoderResults.total} tests (${urlEncoderResults.passed} passed, ${urlEncoderResults.failed} failed)`);
 console.log(`QR Code Generator: ${qrResults.total} tests (${qrResults.passed} passed, ${qrResults.failed} failed)`);
 
 if (grandFailed === 0) {
@@ -416,11 +408,6 @@ if (grandFailed === 0) {
   if (deeplinkResults.failed > 0) {
     console.log('\nDeepLink Launcher failures:');
     deeplinkResults.failedTests.forEach(test => console.log(`   - ${test}`));
-  }
-  
-  if (urlEncoderResults.failed > 0) {
-    console.log('\nURL Encoder/Decoder failures:');
-    urlEncoderResults.failedTests.forEach(test => console.log(`   - ${test}`));
   }
   
   if (qrResults.failed > 0) {

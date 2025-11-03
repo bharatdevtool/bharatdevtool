@@ -352,28 +352,6 @@ function formatHandler() {
     return;
   }
   
-  // Track format button click
-  if (typeof window.Analytics !== 'undefined') {
-    const lines = src.split("\n").length;
-    const chars = src.length;
-    window.Analytics.trackButtonClickFormat({
-      page: window.getCurrentPageNameForAnalytics ? window.getCurrentPageNameForAnalytics() : 'JSON Formatter',
-      lines_before_format: lines,
-      chars_before_format: chars
-    });
-  }
-  
-  // Track JSON formatting attempts
-  Sentry.addBreadcrumb({
-    message: 'JSON formatting attempted',
-    category: 'user-action',
-    level: 'info',
-    data: {
-      inputLength: src.length,
-      hasContent: src.trim().length > 0
-    }
-  });
-  
   // Performance safeguard for large files
   const fileSize = src.length;
   const maxSize = 2 * 1024 * 1024; // 2MB limit for format (more restrictive due to styling)
@@ -415,6 +393,7 @@ function formatHandler() {
         updateOutputFileSizeIndicator();
         updateOutputStatus();
       } catch (stylingErr) {
+        console.warn("Styling failed for large file:", stylingErr);
         document.getElementById("input-error").textContent = "Formatted (styling skipped for performance)";
         updateOutputFileSizeIndicator();
         updateOutputStatus();
@@ -439,28 +418,6 @@ function formatHandler() {
       updateOutputStatus();
     }, 100);
   } catch (err) {
-    // Report JSON formatting errors to Sentry
-    Sentry.captureException(err, {
-      tags: {
-        operation: 'json_format',
-        fileSize: src.length
-      },
-      extra: {
-        inputPreview: src.substring(0, 200) + (src.length > 200 ? '...' : ''),
-        errorMessage: err.message
-      }
-    });
-    
-    // Track format failure in analytics
-    if (typeof window.Analytics !== 'undefined') {
-      window.Analytics.trackFormatFailed({
-        page: window.getCurrentPageNameForAnalytics ? window.getCurrentPageNameForAnalytics() : 'JSON Formatter',
-        error_message: err.message,
-        file_size: src.length,
-        lines_before_format: src.split("\n").length
-      });
-    }
-    
     document.getElementById("input-error").textContent = err.message;
     outputEditor.setValue("// Invalid JSON: " + err.message);
     updateValidity();
@@ -474,13 +431,6 @@ function minifyHandler() {
     outputEditor.setValue(defaultGreetingJSON());
     updateValidity();
     return;
-  }
-  
-  // Track minify button click
-  if (typeof window.Analytics !== 'undefined') {
-    window.Analytics.trackButtonClickMinify({
-      page: window.getCurrentPageNameForAnalytics ? window.getCurrentPageNameForAnalytics() : 'JSON Formatter'
-    });
   }
   
   // Performance safeguard for large files
@@ -522,27 +472,7 @@ function minifyHandler() {
     updateOutputStatus();
     document.getElementById("input-error").textContent = "";
   } catch (err) {
-    // Report minification errors to Sentry
-    Sentry.captureException(err, {
-      tags: {
-        operation: 'json_minify',
-        fileSize: src.length
-      },
-      extra: {
-        inputPreview: src.substring(0, 200) + (src.length > 200 ? '...' : ''),
-        errorMessage: err.message
-      }
-    });
-    
-    // Track minify failure in analytics
-    if (typeof window.Analytics !== 'undefined') {
-      window.Analytics.trackMinifyFailed({
-        page: window.getCurrentPageNameForAnalytics ? window.getCurrentPageNameForAnalytics() : 'JSON Formatter',
-        error_message: err.message,
-        file_size: src.length
-      });
-    }
-    
+    console.error("Minify error:", err);
     document.getElementById("input-error").textContent = err.message;
     outputEditor.setValue("// Invalid JSON: " + err.message);
     updateValidity();
@@ -557,13 +487,6 @@ function escapeHandler() {
     document.getElementById("input-error").textContent = "Empty input";
     outputEditor.setValue(defaultGreetingJSON());
     return;
-  }
-  
-  // Track escape button click
-  if (typeof window.Analytics !== 'undefined') {
-    window.Analytics.trackButtonClickEscape({
-      page: window.getCurrentPageNameForAnalytics ? window.getCurrentPageNameForAnalytics() : 'JSON Formatter'
-    });
   }
   
   // Performance safeguard for large files
@@ -604,14 +527,6 @@ function escapeHandler() {
     updateOutputFileSizeIndicator();
     updateOutputStatus();
   } catch (err) {
-    // Track escape failure in analytics
-    if (typeof window.Analytics !== 'undefined') {
-      window.Analytics.trackEscapeFailed({
-        page: window.getCurrentPageNameForAnalytics ? window.getCurrentPageNameForAnalytics() : 'JSON Formatter',
-        error_message: err.message
-      });
-    }
-    
     document.getElementById("input-error").textContent = err.message;
     outputEditor.setValue("// Error: " + err.message);
     updateOutputFileSizeIndicator();
@@ -625,13 +540,6 @@ function unescapeHandler() {
     document.getElementById("input-error").textContent = "Empty input";
     outputEditor.setValue(defaultGreetingJSON());
     return;
-  }
-  
-  // Track unescape button click
-  if (typeof window.Analytics !== 'undefined') {
-    window.Analytics.trackButtonClickUnescape({
-      page: window.getCurrentPageNameForAnalytics ? window.getCurrentPageNameForAnalytics() : 'JSON Formatter'
-    });
   }
   
   // Performance safeguard for large files
@@ -672,14 +580,6 @@ function unescapeHandler() {
     updateOutputFileSizeIndicator();
     updateOutputStatus();
   } catch (err) {
-    // Track unescape failure in analytics
-    if (typeof window.Analytics !== 'undefined') {
-      window.Analytics.trackUnescapeFailed({
-        page: window.getCurrentPageNameForAnalytics ? window.getCurrentPageNameForAnalytics() : 'JSON Formatter',
-        error_message: err.message
-      });
-    }
-    
     document.getElementById("input-error").textContent = err.message;
     outputEditor.setValue("// Error: " + err.message);
     updateOutputFileSizeIndicator();

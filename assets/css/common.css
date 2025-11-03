@@ -112,22 +112,3 @@ footer.site-footer {
   color: #e6edf3 !important;
   text-decoration: underline !important;
 }
-
-/* Logo consistency across all pages */
-.logo {
-  height: 26px;
-  width: auto;
-}
-
-/* Responsive logo sizing */
-@media (max-width: 768px) {
-  .logo {
-    height: 19px;
-  }
-}
-
-@media (max-width: 480px) {
-  .logo {
-    height: 16px;
-  }
-}

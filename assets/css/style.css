@@ -57,20 +57,12 @@ header {
   display: flex;
   gap: 12px;
   align-items: center;
-  margin-left: 8px;
-  margin-top: 8px;
 }
 
 .logo {
-  height: 26px;
+  height: 64px;
   width: auto;
-}
-
-.brand-text {
-  font-size: 22px;
-  font-weight: 600;
-  color: var(--fg);
-  transition: color 0.3s;
+  border-radius: 8px;
 }
 
 /* Controls / Buttons */
@@ -160,70 +152,6 @@ header {
 [data-theme="dark"] .deeplink-btn:hover {
   background: linear-gradient(135deg, #3d52c4 0%, #4a2568 100%);
   box-shadow: 0 4px 16px rgba(76, 99, 210, 0.5);
-}
-
-/* Url Encoder/Decoder Entry Point */
-.url-encoder-launcher {
-  display: inline-flex;
-  align-items: center;
-}
-
-.url-encoder-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(6, 182, 212, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.url-encoder-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(6, 182, 212, 0.4);
-  background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
-  color: white;
-  text-decoration: none;
-}
-
-.url-encoder-icon {
-  font-size: 16px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.url-encoder-label {
-  display: inline-flex;
-  flex-direction: column;
-  line-height: 1.1;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.url-encoder-label span:first-child {
-  color: rgba(255, 255, 255, 0.95);
-}
-
-.url-encoder-label span:last-child {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 11px;
-}
-
-/* Dark theme adjustments for url encoder button */
-[data-theme="dark"] .url-encoder-btn {
-  background: linear-gradient(135deg, #0e7490 0%, #155e75 100%);
-  box-shadow: 0 2px 8px rgba(14, 116, 144, 0.4);
-}
-
-[data-theme="dark"] .url-encoder-btn:hover {
-  background: linear-gradient(135deg, #155e75 0%, #164e63 100%);
-  box-shadow: 0 4px 16px rgba(14, 116, 144, 0.5);
 }
 .v-sep {
   width: 1px; height: 28px; background: rgba(0,0,0,0.12);
@@ -1005,16 +933,10 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
   .brand {
     flex: 1;
     min-width: 0;
-    margin-left: 8px;
-    margin-top: 8px;
   }
   
   .logo {
-    height: 19px;
-  }
-  
-  .brand-text {
-    font-size: 19px;
+    height: 48px;
   }
   
   .header-actions {
@@ -1025,7 +947,6 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
   
   /* Show labels on mobile for header buttons - icon above text */
   .deeplink-label,
-  .url-encoder-label,
   .qr-label,
   .theme-label,
   .bookmark-label {
@@ -1037,7 +958,6 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
   }
   
   .deeplink-btn,
-  .url-encoder-btn,
   .qr-btn,
   .theme-btn,
   .bookmark-btn {
@@ -1050,7 +970,6 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
   
   /* Ensure icons are above text on mobile */
   .deeplink-btn .deeplink-icon,
-  .url-encoder-btn .url-encoder-icon,
   .qr-btn .qr-icon,
   .theme-toggle,
   .bookmark-btn {
@@ -1058,7 +977,6 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
   }
   
   .deeplink-label,
-  .url-encoder-label,
   .qr-label,
   .theme-label,
   .bookmark-text-btn {
@@ -1200,16 +1118,10 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
   
   .brand {
     justify-content: center;
-    margin-left: 8px;
-    margin-top: 8px;
   }
   
   .logo {
-    height: 16px;
-  }
-  
-  .brand-text {
-    font-size: 17px;
+    height: 40px;
   }
   
   .header-actions {
@@ -1219,7 +1131,6 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
   }
   
   .deeplink-btn,
-  .url-encoder-btn,
   .qr-btn,
   .theme-btn,
   .bookmark-btn {
@@ -1230,7 +1141,6 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
   }
   
   .deeplink-label,
-  .url-encoder-label,
   .qr-label,
   .theme-label,
   .bookmark-label {
@@ -1239,7 +1149,6 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
   
   /* Maintain icon-above-text layout on extra small screens */
   .deeplink-btn .deeplink-icon,
-  .url-encoder-btn .url-encoder-icon,
   .qr-btn .qr-icon,
   .theme-toggle,
   .bookmark-btn {
@@ -1247,7 +1156,6 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
   }
   
   .deeplink-label,
-  .url-encoder-label,
   .qr-label,
   .theme-label,
   .bookmark-text-btn {

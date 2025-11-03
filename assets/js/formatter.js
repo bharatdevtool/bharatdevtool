@@ -1,34 +1,9 @@
 // formatter.js
 
-// Helper function to log errors to Sentry
-function logErrorToSentry(error, context = {}) {
-  if (typeof Sentry !== 'undefined' && typeof Sentry.captureException === 'function') {
-    try {
-      Sentry.captureException(error, {
-        tags: {
-          operation: 'json_formatting',
-          ...context.tags
-        },
-        extra: {
-          errorType: error.name,
-          errorMessage: error.message,
-          ...context.extra
-        }
-      });
-    } catch (sentryErr) {
-      // Fail silently if Sentry is not available
-    }
-  }
-}
-
 export function formatJSON(text) {
   try {
     return JSON.stringify(JSON.parse(text), null, 2);
   } catch (err) {
-    logErrorToSentry(err, {
-      tags: { function: 'formatJSON' },
-      extra: { inputLength: text.length, inputPreview: text.substring(0, 100) }
-    });
     throw new Error("Invalid JSON: " + err.message);
   }
 }
@@ -37,10 +12,6 @@ export function minifyJSON(text) {
   try {
     return JSON.stringify(JSON.parse(text));
   } catch (err) {
-    logErrorToSentry(err, {
-      tags: { function: 'minifyJSON' },
-      extra: { inputLength: text.length, inputPreview: text.substring(0, 100) }
-    });
     throw new Error("Invalid JSON: " + err.message);
   }
 }
@@ -67,12 +38,7 @@ export function unescapeJSONString(text) {
   try {
     // Safest way: wrap in quotes and JSON.parse
     return JSON.parse('"' + text.replace(/"/g, '\\"') + '"');
-  } catch (err) {
-    // Log error for debugging
-    logErrorToSentry(err, {
-      tags: { function: 'unescapeJSONString' },
-      extra: { inputLength: text.length, inputPreview: text.substring(0, 100) }
-    });
+  } catch (_) {
     // Fallback basic replacements
     return text
       .replace(/\\n/g, "\n")
@@ -144,6 +110,7 @@ export function repairJSON(text) {
     return JSON.stringify(obj, null, 2);
   } catch (initialError) {
     // Only apply repairs if the JSON is actually broken
+    console.log('Before parse:', t);
   }
   
   t = stripBOM(t);
@@ -188,17 +155,7 @@ export function repairJSON(text) {
       const wrapped = t.trim();
       const obj = JSON.parse(wrapped);
       return JSON.stringify(obj, null, 2);
-    } catch (innerErr) {
-      // Log the repair failure
-      logErrorToSentry(innerErr, {
-        tags: { function: 'repairJSON', stage: 'final_repair_attempt' },
-        extra: { 
-          originalError: err.message,
-          inputLength: text.length,
-          inputPreview: text.substring(0, 200),
-          repairAttempt: t.substring(0, 200)
-        }
-      });
+    } catch (_) {
       throw new Error("Could not repair JSON: " + err.message);
     }
   }

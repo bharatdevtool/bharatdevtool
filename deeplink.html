@@ -31,25 +31,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.svg">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon.svg">
   
-  <!-- Sentry SDK -->
-  <script
-    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
-    crossorigin="anonymous"
-  ></script>
-  
-  <!-- App Configuration -->
-  <script type="module">
-    import { APP_CONFIG } from './assets/js/config.js';
-    window.APP_CONFIG = APP_CONFIG;
-  </script>
-  <script src="assets/js/logo-loader.js"></script>
-  
-  <!-- Version Tracking Script -->
-  <script src="assets/js/version.js"></script>
-  
-  <!-- Analytics Script -->
-  <script src="assets/js/analytics.js"></script>
-  
   <!-- TailwindCSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
@@ -157,10 +138,9 @@
         <!-- Logo -->
         <div class="flex items-center">
           <a href="index.html" class="flex items-center space-x-3">
-            <img src="" 
-                 data-logo="true"
+            <img src="https://ik.imagekit.io/bdt/bdt_round_corner.png?updatedAt=1759510331612" 
                  alt="Bharat Dev Tools Logo" 
-                 class="logo">
+                 class="h-8 w-8 rounded-lg">
             <span class="text-xl font-bold text-gray-900 dark:text-white">Bharat Dev Tools</span>
           </a>
         </div>
@@ -221,10 +201,14 @@
         </div>
 
         <!-- Action Buttons -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <button id="encode-decode-btn" class="flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
-            <span class="mr-2">🔄</span>
-            Encode/Decode
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <button id="encode-btn" class="flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+            <span class="mr-2">🔒</span>
+            Encode
+          </button>
+          <button id="decode-btn" class="flex items-center justify-center px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium">
+            <span class="mr-2">🔓</span>
+            Decode
           </button>
           <button id="generate-qr-btn" class="flex items-center justify-center px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors font-medium">
             <span class="mr-2">📱</span>
@@ -306,15 +290,6 @@
   <!-- Toast Container -->
   <div id="toast-container"></div>
 
-  <!-- Initialize Sentry with version tracking -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
-        initSentryTracking();
-      }
-    });
-  </script>
-
   <!-- Scripts -->
   <script>
     // Theme management
@@ -355,16 +330,6 @@
         const truncatedMessage = message.length > 100 ? message.substring(0, 97) + '...' : message;
         errorElement.textContent = truncatedMessage;
         errorElement.classList.remove('hidden');
-        
-        // Track deeplink launch failure in analytics
-        const input = document.getElementById('deeplink-input');
-        if (typeof window.Analytics !== 'undefined' && input) {
-          window.Analytics.trackDeeplinkLaunchFailed({
-            page: window.getCurrentPageNameForAnalytics ? window.getCurrentPageNameForAnalytics() : 'DeepLink Launcher',
-            error_message: message,
-            deeplink_url: input.value.trim()
-          });
-        }
         
         // Hide after 10 seconds
         setTimeout(() => {
@@ -617,7 +582,7 @@
               <button onclick="copyDeepLink('${item.url}')" class="p-2 text-green-600 hover:bg-green-100 dark:hover:bg-green-900 rounded" title="Copy">
                 📋
               </button>
-              <button onclick="launchDeepLink('${item.url.replace(/'/g, "\\'")}'); if(typeof window.Analytics !== 'undefined') window.Analytics.trackDeeplinkHistoryLaunch({page:'DeepLink Launcher'});" class="p-2 text-purple-600 hover:bg-purple-100 dark:hover:bg-purple-900 rounded" title="Launch">
+              <button onclick="launchDeepLink('${item.url}')" class="p-2 text-purple-600 hover:bg-purple-100 dark:hover:bg-purple-900 rounded" title="Launch">
                 🚀
               </button>
               <button onclick="deleteDeepLinkByUrl('${item.url}')" class="p-2 text-red-600 hover:bg-red-100 dark:hover:bg-red-900 rounded" title="Delete">
@@ -632,24 +597,12 @@
     }
 
     function editDeepLink(url) {
-      // Track edit
-      if (typeof window.Analytics !== 'undefined') {
-        window.Analytics.trackDeeplinkHistoryEdit({
-          page: 'DeepLink Launcher'
-        });
-      }
       document.getElementById('deeplink-input').value = url;
       document.getElementById('deeplink-input').focus();
       showToast('Deep link loaded for editing', 'info');
     }
 
     function copyDeepLink(url) {
-      // Track copy
-      if (typeof window.Analytics !== 'undefined') {
-        window.Analytics.trackDeeplinkHistoryCopy({
-          page: 'DeepLink Launcher'
-        });
-      }
       // Try modern clipboard API first
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(url).then(() => {
@@ -698,12 +651,6 @@
     }
 
     function deleteDeepLinkByUrl(url) {
-      // Track delete
-      if (typeof window.Analytics !== 'undefined') {
-        window.Analytics.trackDeeplinkHistoryDelete({
-          page: 'DeepLink Launcher'
-        });
-      }
       const history = loadHistory();
       const filteredHistory = history.filter(item => item.url !== url);
       localStorage.setItem('deeplink-history', JSON.stringify(filteredHistory));
@@ -715,14 +662,6 @@
 
     function clearAllHistory() {
       if (confirm('Are you sure you want to clear all saved deep links?')) {
-        // Track clear all
-        if (typeof window.Analytics !== 'undefined') {
-          const history = loadHistory();
-          window.Analytics.trackDeeplinkClearAll({
-            page: 'DeepLink Launcher',
-            items_cleared: history.length
-          });
-        }
         localStorage.removeItem('deeplink-history');
         updateHistoryDisplay();
         showToast('All deep links cleared', 'info');
@@ -735,14 +674,6 @@
       if (history.length === 0) {
         showToast('No deep links to export', 'error');
         return;
-      }
-      
-      // Track download CSV
-      if (typeof window.Analytics !== 'undefined') {
-        window.Analytics.trackDeeplinkDownloadCsv({
-          page: 'DeepLink Launcher',
-          items_exported: history.length
-        });
       }
       
       const csvContent = 'DeepLink,DateAdded\n' + 
@@ -780,14 +711,6 @@
             }
           });
           
-          // Track upload CSV
-          if (typeof window.Analytics !== 'undefined') {
-            window.Analytics.trackDeeplinkUploadCsv({
-              page: 'DeepLink Launcher',
-              items_imported: imported
-            });
-          }
-          
           localStorage.setItem('deeplink-history', JSON.stringify(history));
           updateHistoryDisplay();
           showToast(`Imported ${imported} deep links`, 'success');
@@ -816,7 +739,8 @@
       
       const input = document.getElementById('deeplink-input');
       const launchBtn = document.getElementById('launch-btn');
-      const encodeDecodeBtn = document.getElementById('encode-decode-btn');
+      const encodeBtn = document.getElementById('encode-btn');
+      const decodeBtn = document.getElementById('decode-btn');
       const generateQrBtn = document.getElementById('generate-qr-btn');
       const clearBtn = document.getElementById('clear-input');
       const copyResultBtn = document.getElementById('copy-result');
@@ -853,13 +777,6 @@
         const url = input.value.trim();
         const validation = validateDeepLink(url);
         if (validation.valid) {
-          // Track launch
-          if (typeof window.Analytics !== 'undefined') {
-            window.Analytics.trackDeeplinkLaunch({
-              page: 'DeepLink Launcher',
-              deeplink_scheme: url.split(':')[0] || 'unknown'
-            });
-          }
           launchDeepLink(url);
           saveToHistory(url);
         } else {
@@ -867,26 +784,36 @@
         }
       });
 
-      // Encode/Decode button - navigates to URL encoder/decoder screen
-      if (encodeDecodeBtn) {
-        encodeDecodeBtn.addEventListener('click', function() {
-          const url = input.value.trim();
-          // Navigate to URL encoder/decoder screen
-          const encoderUrl = url ? `url-encoder.html?url=${encodeURIComponent(url)}` : 'url-encoder.html';
-          window.location.href = encoderUrl;
-        });
-      }
+      // Encode button
+      encodeBtn.addEventListener('click', function() {
+        const url = input.value.trim();
+        if (url) {
+          const encoded = encodeURL(url);
+          resultOutput.value = encoded;
+          resultContainer.classList.remove('hidden');
+          showToast('URL encoded', 'success');
+        } else {
+          showToast('Please enter a URL to encode', 'error');
+        }
+      });
+
+      // Decode button
+      decodeBtn.addEventListener('click', function() {
+        const url = input.value.trim();
+        if (url) {
+          const decoded = decodeURL(url);
+          resultOutput.value = decoded;
+          resultContainer.classList.remove('hidden');
+          showToast('URL decoded', 'success');
+        } else {
+          showToast('Please enter a URL to decode', 'error');
+        }
+      });
 
       // Generate QR button
       generateQrBtn.addEventListener('click', function() {
         const url = input.value.trim();
         if (url) {
-          // Track generate QR
-          if (typeof window.Analytics !== 'undefined') {
-            window.Analytics.trackDeeplinkGenerateQr({
-              page: 'DeepLink Launcher'
-            });
-          }
           // Navigate to QR page with the deeplink as a parameter
           const qrUrl = `simple-qr.html?text=${encodeURIComponent(url)}`;
           window.location.href = qrUrl;
