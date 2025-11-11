@@ -42,8 +42,8 @@
 
 ```
 Allowed domains:
-- bharatdevtools.com
-- www.bharatdevtools.com
+- bharatdevtool.com
+- www.bharatdevtool.com
 
 Blocked domains:
 - localhost
@@ -115,7 +115,7 @@ const ANALYTICS_CONFIG = {
 
 1. **Domain Restrictions** (Most Important)
    ```
-   Allowed: bharatdevtools.com
+   Allowed: bharatdevtool.com
    Blocked: Everything else
    ```
 

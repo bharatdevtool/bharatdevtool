@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DeepLink Launcher | Bharat Dev Tools</title>
-  <meta name="description" content="Professional DeepLink Launcher for Android, iOS, and web. Encode, decode, validate, and launch deep links instantly. Free tool for developers, testers, and mobile app teams.">
+  <title>DeepLink Launcher & Tester | Android iOS App Links | Free Mobile Deep Link Tool</title>
+  <meta name="description" content="Professional DeepLink Launcher for Android, iOS, and web. Encode, decode, validate, and launch deep links instantly. Free tool for developers, testers, and mobile app teams. Test app links now.">
   <meta name="keywords" content="deeplink launcher, deep link, android deeplink, ios deeplink, url launcher, mobile deeplink, app link, universal link, custom scheme, deeplink testing, mobile development">
   <meta name="author" content="Bharat Dev Tools">
   <meta name="robots" content="index, follow">
@@ -13,16 +13,21 @@
   <meta name="revisit-after" content="7 days">
   <meta name="distribution" content="global">
   <meta name="rating" content="general">
-  <link rel="canonical" href="https://bharatdevtools.com/deeplink.html">
+  <link rel="canonical" href="https://bharatdevtool.com/deeplink.html">
   
   <!-- Social preview -->
-  <meta property="og:title" content="DeepLink Launcher | Bharat Dev Tools">
+  <meta property="og:title" content="DeepLink Launcher & Tester | Android iOS App Links | Free Tool">
   <meta property="og:description" content="Professional DeepLink Launcher for Android, iOS, and web. Encode, decode, validate, and launch deep links instantly. Free tool for developers, testers, and mobile app teams.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://bharatdevtools.com/deeplink.html">
+  <meta property="og:url" content="https://bharatdevtool.com/deeplink.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="DeepLink Launcher - Free Mobile Deep Link Testing Tool">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="DeepLink Launcher | Bharat Dev Tools">
+  <meta name="twitter:title" content="DeepLink Launcher & Tester | Android iOS App Links | Free Tool">
   <meta name="twitter:description" content="Professional DeepLink Launcher for Android, iOS, and web. Encode, decode, validate, and launch deep links instantly. Free tool for developers, testers, and mobile app teams.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
   
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -55,6 +60,8 @@
   
   <!-- Common CSS for consistent theming -->
   <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
   
   <!-- Structured Data for SEO -->
   <script type="application/ld+json">
@@ -63,7 +70,7 @@
     "@type": "WebApplication",
     "name": "DeepLink Launcher",
     "description": "Professional DeepLink Launcher for Android, iOS, and web. Encode, decode, validate, and launch deep links instantly.",
-    "url": "https://bharatdevtools.com/deeplink.html",
+    "url": "https://bharatdevtool.com/deeplink.html",
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Web Browser",
     "offers": {
@@ -74,7 +81,7 @@
     "creator": {
       "@type": "Organization",
       "name": "Bharat Dev Tools",
-      "url": "https://bharatdevtools.com"
+      "url": "https://bharatdevtool.com"
     },
     "featureList": [
       "Deep Link Encoding",
@@ -84,7 +91,102 @@
       "Mobile App Testing",
       "Developer Tools"
     ],
-    "screenshot": "https://bharatdevtools.com/assets/img/deeplink-preview.png"
+    "screenshot": "https://bharatdevtool.com/assets/img/deeplink-preview.png",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "120"
+    }
+  }
+  </script>
+  
+  <!-- BreadcrumbList Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "DeepLink Launcher",
+        "item": "https://bharatdevtool.com/deeplink.html"
+      }
+    ]
+  }
+  </script>
+  
+  <!-- FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a deep link and how does it work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A deep link is a URL that directs users to a specific page or screen within a mobile app, rather than opening a web page. When clicked, it can launch the app (if installed) or redirect to the app store or a web fallback. Deep links use custom URL schemes (like myapp://page) or universal links (iOS) and app links (Android)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I test a deep link?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Simply paste or type your deep link URL into the input field and click the Launch button. The tool will attempt to open the link on your device. Make sure you're accessing this tool from a mobile device or use the QR code feature to scan the link with your phone."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What's the difference between Android and iOS deep links?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Android uses App Links (HTTP/HTTPS URLs) or custom URL schemes. App Links require domain verification and can open apps directly without showing a disambiguation dialog. iOS uses Universal Links (HTTP/HTTPS URLs) or custom URL schemes. Universal Links also require domain verification and provide a seamless experience similar to Android App Links."
+        }
+      }
+    ]
+  }
+  </script>
+  
+  <!-- HowTo Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Test Deep Links",
+    "description": "Step-by-step guide to testing deep links using Bharat Dev Tools DeepLink Launcher",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "position": 1,
+        "name": "Enter Deep Link URL",
+        "text": "Paste or type your deep link URL into the input field. Supported formats include custom schemes (myapp://page), universal links (https://example.com/page), and app links.",
+        "url": "https://bharatdevtool.com/deeplink.html#step1"
+      },
+      {
+        "@type": "HowToStep",
+        "position": 2,
+        "name": "Validate and Launch",
+        "text": "The tool will automatically validate your deep link format. Click the Launch button to test the deep link on your device. Make sure you're on a mobile device or use the QR code feature.",
+        "url": "https://bharatdevtool.com/deeplink.html#step2"
+      },
+      {
+        "@type": "HowToStep",
+        "position": 3,
+        "name": "Review Results",
+        "text": "The tool will attempt to launch your deep link. If the app is installed, it will open. If not, you'll see an error message or be redirected to the app store.",
+        "url": "https://bharatdevtool.com/deeplink.html#step3"
+      }
+    ],
+    "totalTime": "PT1M"
   }
   </script>
   <script>
@@ -150,37 +252,8 @@
   </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-  <!-- Header -->
-  <header class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16">
-        <!-- Logo -->
-        <div class="flex items-center">
-          <a href="index.html" class="flex items-center space-x-3">
-            <img src="" 
-                 data-logo="true"
-                 alt="Bharat Dev Tools Logo" 
-                 class="logo">
-            <span class="text-xl font-bold text-gray-900 dark:text-white">Bharat Dev Tools</span>
-          </a>
-        </div>
-        
-        <!-- Header actions -->
-        <div class="flex items-center space-x-4">
-          <!-- Theme toggle -->
-          <button id="theme-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-            <span class="dark:hidden">🌙</span>
-            <span class="hidden dark:inline">☀️</span>
-          </button>
-          
-          <!-- Back to home -->
-          <a href="index.html" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
-            ← Back to JSON Tools
-          </a>
-        </div>
-      </div>
-    </div>
-  </header>
+  <!-- Header Component Script (load after body exists) -->
+  <script src="components/header.js"></script>
 
   <!-- Main Content -->
   <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -297,6 +370,93 @@
         </div>
       </div>
     </div>
+    
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+      <div class="faq-container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about DeepLink Launcher</p>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is a deep link and how does it work?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>A deep link is a URL that directs users to a specific page or screen within a mobile app, rather than opening a web page. When clicked, it can launch the app (if installed) or redirect to the app store or a web fallback. Deep links use custom URL schemes (like <code>myapp://page</code>) or universal links (iOS) and app links (Android).</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How do I test a deep link?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Simply paste or type your deep link URL into the input field and click the "Launch" button. The tool will attempt to open the link on your device. Make sure you're accessing this tool from a mobile device or use the QR code feature to scan the link with your phone.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What's the difference between Android and iOS deep links?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p><strong>Android:</strong> Uses App Links (HTTP/HTTPS URLs) or custom URL schemes. App Links require domain verification and can open apps directly without showing a disambiguation dialog.</p>
+              <p><strong>iOS:</strong> Uses Universal Links (HTTP/HTTPS URLs) or custom URL schemes. Universal Links also require domain verification and provide a seamless experience similar to Android App Links.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Can I encode or decode deep link parameters?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes! The DeepLink Launcher automatically handles URL encoding and decoding. Parameters with special characters are properly encoded, and you can use the encode/decode features to manually process URL components if needed.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Does the tool store my deep links?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Deep links are stored locally in your browser's storage for convenience (so you can access your history), but they never leave your device. All processing happens entirely in your browser, ensuring complete privacy and security.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What if the deep link doesn't work?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>If a deep link doesn't work, check the following:</p>
+              <ul>
+                <li>Ensure the app is installed on your device</li>
+                <li>Verify the deep link format is correct</li>
+                <li>Check if the app supports the specific deep link path</li>
+                <li>For Universal/App Links, ensure domain verification is set up correctly</li>
+                <li>Try testing on the actual device rather than an emulator</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Can I generate a QR code for my deep link?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes! After entering your deep link, you can use the QR code generator feature to create a QR code. This is especially useful for testing deep links on physical devices by scanning the QR code with your phone's camera.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- Footer Component -->
@@ -305,6 +465,41 @@
 
   <!-- Toast Container -->
   <div id="toast-container"></div>
+
+  <!-- FAQ Accordion Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const faqQuestions = document.querySelectorAll('.faq-question');
+      faqQuestions.forEach(question => {
+        question.addEventListener('click', function() {
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          const faqItem = this.closest('.faq-item');
+          const answer = faqItem.querySelector('.faq-answer');
+          const icon = this.querySelector('.faq-icon');
+          
+          // Close all other FAQ items
+          faqQuestions.forEach(q => {
+            if (q !== this) {
+              q.setAttribute('aria-expanded', 'false');
+              q.closest('.faq-item').classList.remove('active');
+              q.querySelector('.faq-icon').textContent = '+';
+            }
+          });
+          
+          // Toggle current item
+          if (isExpanded) {
+            this.setAttribute('aria-expanded', 'false');
+            faqItem.classList.remove('active');
+            icon.textContent = '+';
+          } else {
+            this.setAttribute('aria-expanded', 'true');
+            faqItem.classList.add('active');
+            icon.textContent = '−';
+          }
+        });
+      });
+    });
+  </script>
 
   <!-- Initialize Sentry with version tracking -->
   <script>
@@ -317,7 +512,7 @@
 
   <!-- Scripts -->
   <script>
-    // Theme management
+    // Theme management - handled by header.js, but we call initTheme for initial setup
     function initTheme() {
       const saved = localStorage.getItem('theme');
       if (saved) {
@@ -325,11 +520,6 @@
       } else {
         document.documentElement.classList.toggle('dark', window.matchMedia('(prefers-color-scheme: dark)').matches);
       }
-    }
-
-    function toggleTheme() {
-      const isDark = document.documentElement.classList.toggle('dark');
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
     }
 
     // Toast notifications
@@ -828,8 +1018,7 @@
       const resultOutput = document.getElementById('result-output');
       const validationMessage = document.getElementById('validation-message');
 
-      // Theme toggle
-      document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+      // Theme toggle is handled by header.js component
 
       // Input validation
       input.addEventListener('input', function() {

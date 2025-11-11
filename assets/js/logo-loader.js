@@ -26,6 +26,9 @@
     });
   }
   
+  // Expose initLogo function globally so header component can call it
+  window.initLogo = initLogo;
+  
   // Initialize when DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initLogo);
