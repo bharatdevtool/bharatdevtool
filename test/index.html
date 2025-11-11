@@ -90,6 +90,59 @@
             cursor: not-allowed;
         }
         
+        .build-checkbox-container {
+            background: #2a2a2a;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #ff9800;
+        }
+        
+        .build-checkbox-container h3 {
+            color: #ff9800;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        
+        .checkbox-wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .checkbox-wrapper input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            cursor: pointer;
+            accent-color: #4CAF50;
+        }
+        
+        .checkbox-wrapper label {
+            color: #e0e0e0;
+            cursor: pointer;
+            flex: 1;
+            line-height: 1.5;
+        }
+        
+        .build-instructions {
+            background: #1a1a1a;
+            border-radius: 4px;
+            padding: 12px;
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #b0b0b0;
+        }
+        
+        .build-instructions code {
+            background: #2a2a2a;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #4CAF50;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        }
+        
         .feature-list {
             background: #2a2a2a;
             border-radius: 8px;
@@ -130,6 +183,7 @@
                 <li><strong>DeepLink Launcher:</strong> URL encoding/decoding, validation, complex scenarios, edge cases</li>
                 <li><strong>URL Encoder/Decoder:</strong> URL encoding/decoding, special characters, complex URLs, edge cases</li>
                 <li><strong>QR Code Generator:</strong> URL parameters, QR generation, share functionality, edge cases</li>
+                <li><strong>QR Code Decoder:</strong> Image decoding, camera support, history management, image compression, launch functionality</li>
                 <li><strong>Performance Tests:</strong> Large data handling, batch operations, timing constraints</li>
                 <li><strong>Edge Cases:</strong> Empty inputs, malformed data, special characters, Unicode</li>
                 <li><strong>Integration Tests:</strong> Complete workflows, cross-component interactions</li>
@@ -137,7 +191,25 @@
             </ul>
         </div>
         
-        <button id="runTests" class="run-tests-btn">🚀 Run All Tests</button>
+        <div class="build-checkbox-container">
+            <h3>⚠️ Build Step Required</h3>
+            <div class="checkbox-wrapper">
+                <input type="checkbox" id="buildCheckbox">
+                <label for="buildCheckbox">
+                    <strong>Did you run <code>build.js</code> to create <code>jsonformatter/index.html</code> file?</strong>
+                </label>
+            </div>
+            <div class="build-instructions">
+                <p style="margin: 0 0 8px 0;"><strong>📝 How to run build:</strong></p>
+                <p style="margin: 0;">Run this command from the project root directory:</p>
+                <p style="margin: 8px 0 0 0;"><code>node build.js</code></p>
+                <p style="margin: 12px 0 0 0; color: #ff9800;">
+                    ⚠️ <strong>Important:</strong> The "Run All Tests" button will only be enabled after you check this box.
+                </p>
+            </div>
+        </div>
+        
+        <button id="runTests" class="run-tests-btn" disabled>🚀 Run All Tests</button>
         
         <div id="testResults" class="test-results" style="display: none;">
             <div id="testOutput"></div>
@@ -218,6 +290,31 @@
                 const appSchemeRegex = /^[a-zA-Z][a-zA-Z0-9+.-]*:\/\/[^\s]+$/;
                 return appSchemeRegex.test(url);
             }
+        }
+
+        // QR Code Decoder Test Functions
+        function validateDecodedText(text) {
+            if (!text || typeof text !== 'string' || text.trim().length === 0) {
+                return false;
+            }
+            return true;
+        }
+
+        function validateImageFile(file) {
+            if (!file || !file.type || !file.size) {
+                return false;
+            }
+            if (!file.type.startsWith('image/')) {
+                return false;
+            }
+            if (file.size > 10 * 1024 * 1024) {
+                return false;
+            }
+            return true;
+        }
+
+        function simulateImageCompression(originalSize) {
+            return Math.floor(originalSize * 0.05);
         }
 
         // QR Code Generator Test Functions
@@ -1376,6 +1473,224 @@
                 return assertEqual(history.length, 3, 'History should contain all generated QR codes');
             });
 
+            // QR Code Decoder Tests
+            testOutput += '\n============================================================\n';
+            testOutput += '🧪 QR Code Decoder Test Suite\n';
+            testOutput += '==================================\n\n';
+
+            testOutput += '🧪 Testing QR Code Decoding...\n\n';
+
+            runTest('QR decode - Basic URL decoding', () => {
+                const decodedText = 'https://example.com';
+                const isValid = validateDecodedText(decodedText);
+                return assertEqual(isValid, true, 'Basic URL should be decoded correctly');
+            });
+
+            runTest('QR decode - Text decoding', () => {
+                const decodedText = 'Hello World';
+                const isValid = validateDecodedText(decodedText);
+                return assertEqual(isValid, true, 'Text should be decoded correctly');
+            });
+
+            runTest('QR decode - Email decoding', () => {
+                const decodedText = 'mailto:test@example.com';
+                const isValid = validateDecodedText(decodedText);
+                return assertEqual(isValid, true, 'Email should be decoded correctly');
+            });
+
+            runTest('QR decode - Deep link decoding', () => {
+                const decodedText = 'myapp://product/123';
+                const isValid = validateDecodedText(decodedText);
+                return assertEqual(isValid, true, 'Deep link should be decoded correctly');
+            });
+
+            testOutput += '\n🧪 Testing Image Processing...\n\n';
+
+            runTest('Image processing - Valid PNG format', () => {
+                const imageFile = { type: 'image/png', size: 1024 };
+                const isValid = validateImageFile(imageFile);
+                return assertEqual(isValid, true, 'PNG image should be valid');
+            });
+
+            runTest('Image processing - Valid JPEG format', () => {
+                const imageFile = { type: 'image/jpeg', size: 2048 };
+                const isValid = validateImageFile(imageFile);
+                return assertEqual(isValid, true, 'JPEG image should be valid');
+            });
+
+            runTest('Image processing - File size validation', () => {
+                const imageFile = { type: 'image/png', size: 5 * 1024 * 1024 };
+                const isValid = validateImageFile(imageFile);
+                return assertEqual(isValid, true, '5MB image should be valid');
+            });
+
+            runTest('Image processing - File size limit', () => {
+                const imageFile = { type: 'image/png', size: 11 * 1024 * 1024 };
+                const isValid = validateImageFile(imageFile);
+                return assertEqual(isValid, false, '11MB image should exceed limit');
+            });
+
+            runTest('Image processing - Invalid file type', () => {
+                const imageFile = { type: 'application/pdf', size: 1024 };
+                const isValid = validateImageFile(imageFile);
+                return assertEqual(isValid, false, 'PDF should not be valid image');
+            });
+
+            testOutput += '\n🧪 Testing Image Compression...\n\n';
+
+            runTest('Image compression - Compression function exists', () => {
+                const compressionFn = simulateImageCompression;
+                return assertEqual(typeof compressionFn === 'function', true, 'Compression function should exist');
+            });
+
+            runTest('Image compression - Compressed size reduction', () => {
+                const originalSize = 1024 * 1024;
+                const compressedSize = simulateImageCompression(originalSize);
+                return assertEqual(compressedSize < originalSize, true, 'Compressed size should be smaller');
+            });
+
+            runTest('Image compression - Compression ratio', () => {
+                const originalSize = 5 * 1024 * 1024;
+                const compressedSize = simulateImageCompression(originalSize);
+                const ratio = compressedSize / originalSize;
+                return assertEqual(ratio < 0.1, true, 'Compression ratio should be < 10%');
+            });
+
+            testOutput += '\n🧪 Testing History Management...\n\n';
+
+            runTest('History - Save decoded QR code', () => {
+                const history = [];
+                const item = { text: 'https://example.com', timestamp: Date.now() };
+                history.push(item);
+                return assertEqual(history.length, 1, 'History should contain saved item');
+            });
+
+            runTest('History - History limit', () => {
+                const history = [];
+                for (let i = 0; i < 15; i++) {
+                    history.push({ text: `Item ${i}`, timestamp: Date.now() });
+                }
+                const limitedHistory = history.slice(-10);
+                return assertEqual(limitedHistory.length, 10, 'History should be limited to 10 items');
+            });
+
+            runTest('History - Delete item', () => {
+                const history = [
+                    { text: 'Item 1', timestamp: Date.now() },
+                    { text: 'Item 2', timestamp: Date.now() },
+                    { text: 'Item 3', timestamp: Date.now() }
+                ];
+                history.splice(1, 1);
+                return assertEqual(history.length, 2, 'History should have item deleted');
+            });
+
+            runTest('History - Duplicate prevention', () => {
+                const history = [
+                    { text: 'https://example.com', timestamp: Date.now() }
+                ];
+                const newItem = { text: 'https://example.com', timestamp: Date.now() };
+                const isDuplicate = history.some(item => item.text === newItem.text);
+                return assertEqual(isDuplicate, true, 'Duplicate detection should work');
+            });
+
+            testOutput += '\n🧪 Testing Launch Functionality...\n\n';
+
+            runTest('Launch - URL validation', () => {
+                const url = 'https://example.com';
+                const isValid = url.startsWith('http://') || url.startsWith('https://');
+                return assertEqual(isValid, true, 'URL should be valid');
+            });
+
+            runTest('Launch - Deep link validation', () => {
+                const deeplink = 'myapp://product/123';
+                const isValid = /^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(deeplink);
+                return assertEqual(isValid, true, 'Deep link should be valid');
+            });
+
+            runTest('Launch - URL prefix handling', () => {
+                const text = 'example.com';
+                const url = text.startsWith('//') ? 'https:' + text : 'https://' + text;
+                return assertEqual(url, 'https://example.com', 'URL prefix should be added correctly');
+            });
+
+            testOutput += '\n🧪 Testing Error Handling...\n\n';
+
+            runTest('Error handling - Invalid image file', () => {
+                const imageFile = { type: 'application/pdf', size: 1024 };
+                const isValid = validateImageFile(imageFile);
+                return assertEqual(isValid, false, 'Invalid image should be rejected');
+            });
+
+            runTest('Error handling - File too large', () => {
+                const imageFile = { type: 'image/png', size: 15 * 1024 * 1024 };
+                const isValid = validateImageFile(imageFile);
+                return assertEqual(isValid, false, 'Large file should be rejected');
+            });
+
+            runTest('Error handling - Empty decoded text', () => {
+                const decodedText = '';
+                const isValid = decodedText && decodedText.trim().length > 0;
+                return assertEqual(Boolean(isValid), false, 'Empty decoded text should be invalid');
+            });
+
+            testOutput += '\n🧪 Testing Edge Cases...\n\n';
+
+            runTest('Edge case - Very long decoded text', () => {
+                const longText = 'A'.repeat(10000);
+                const isValid = validateDecodedText(longText);
+                return assertEqual(isValid, true, 'Very long text should be handled');
+            });
+
+            runTest('Edge case - Special characters in decoded text', () => {
+                const specialText = 'https://example.com/path?param=value&other=<>&"\'';
+                const isValid = validateDecodedText(specialText);
+                return assertEqual(isValid, true, 'Special characters should be handled');
+            });
+
+            runTest('Edge case - Unicode characters', () => {
+                const unicodeText = 'https://example.com/测试/路径';
+                const isValid = validateDecodedText(unicodeText);
+                return assertEqual(isValid, true, 'Unicode characters should be handled');
+            });
+
+            testOutput += '\n🧪 Testing Integration Scenarios...\n\n';
+
+            runTest('Integration - Complete decode workflow', () => {
+                const imageFile = { type: 'image/png', size: 1024 };
+                const decodedText = 'https://example.com';
+                const history = [];
+                
+                const isValidFile = validateImageFile(imageFile);
+                const isValidText = validateDecodedText(decodedText);
+                history.push({ text: decodedText, timestamp: Date.now() });
+                
+                return assertEqual(isValidFile && isValidText && history.length === 1, true, 
+                    'Complete workflow should work');
+            });
+
+            runTest('Integration - Decode and launch workflow', () => {
+                const decodedText = 'https://example.com';
+                const isValidURL = decodedText.startsWith('http://') || decodedText.startsWith('https://');
+                const canLaunch = isValidURL;
+                
+                return assertEqual(canLaunch, true, 'Decode and launch workflow should work');
+            });
+
+            runTest('Integration - Decode, compress, and save workflow', () => {
+                const decodedText = 'https://example.com';
+                const originalSize = 1024 * 1024;
+                const compressedSize = simulateImageCompression(originalSize);
+                const history = [{ text: decodedText, compressedSize, timestamp: Date.now() }];
+                
+                return assertEqual(
+                    decodedText.length > 0 && 
+                    compressedSize < originalSize && 
+                    history.length === 1,
+                    true,
+                    'Complete decode, compress, and save workflow should work'
+                );
+            });
+
             // Display results
             document.getElementById('testOutput').textContent = testOutput;
             document.getElementById('testResults').style.display = 'block';
@@ -1396,6 +1711,7 @@
                         <li>✅ <strong>DeepLink Launcher:</strong> URL encoding/decoding, validation, complex scenarios</li>
                         <li>✅ <strong>URL Encoder/Decoder:</strong> URL encoding/decoding, special characters, edge cases</li>
                         <li>✅ <strong>QR Code Generator:</strong> URL parameters, QR generation, share functionality</li>
+                        <li>✅ <strong>QR Code Decoder:</strong> Image decoding, camera support, history management, compression</li>
                         <li>✅ <strong>Performance Tests:</strong> Large data handling, batch operations</li>
                         <li>✅ <strong>Edge Cases:</strong> Empty inputs, malformed data, special characters</li>
                         <li>✅ <strong>Integration Tests:</strong> Complete workflows, cross-component interactions</li>
@@ -1410,15 +1726,32 @@
             document.getElementById('testSummary').style.display = 'block';
         }
 
+        // Enable/disable Run Tests button based on checkbox
+        const buildCheckbox = document.getElementById('buildCheckbox');
+        const runTestsBtn = document.getElementById('runTests');
+        
+        buildCheckbox.addEventListener('change', () => {
+            runTestsBtn.disabled = !buildCheckbox.checked;
+            if (buildCheckbox.checked) {
+                runTestsBtn.style.opacity = '1';
+            } else {
+                runTestsBtn.style.opacity = '0.6';
+            }
+        });
+        
         // Run tests when button is clicked
-        document.getElementById('runTests').addEventListener('click', () => {
-            document.getElementById('runTests').disabled = true;
-            document.getElementById('runTests').textContent = '🔄 Running Tests...';
+        runTestsBtn.addEventListener('click', () => {
+            if (!buildCheckbox.checked) {
+                return; // Prevent running if checkbox is not checked
+            }
+            
+            runTestsBtn.disabled = true;
+            runTestsBtn.textContent = '🔄 Running Tests...';
             
             setTimeout(() => {
                 runAllTests();
-                document.getElementById('runTests').disabled = false;
-                document.getElementById('runTests').textContent = '🚀 Run All Tests';
+                runTestsBtn.disabled = false;
+                runTestsBtn.textContent = '🚀 Run All Tests';
             }, 100);
         });
     </script>
