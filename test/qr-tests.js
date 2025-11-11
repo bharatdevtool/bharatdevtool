@@ -339,7 +339,7 @@ class QRTester {
     return {
       title: 'QR Code Generated',
       text: text,
-      url: typeof globalThis !== 'undefined' && globalThis.location ? globalThis.location.href : 'https://bharatdevtools.com'
+      url: typeof globalThis !== 'undefined' && globalThis.location ? globalThis.location.href : 'https://bharatdevtool.com'
     };
   }
 

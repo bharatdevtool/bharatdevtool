@@ -2,6 +2,6 @@ User-agent: *
 Allow: /
 
 # Point crawlers to the sitemap (update domain when deployed)
-Sitemap: https://bharatdevtools.com/sitemap.xml
+Sitemap: https://bharatdevtool.com/sitemap.xml
 
 

@@ -45,6 +45,17 @@ const ANALYTICS_EVENTS = {
   DOWNLOAD_QR_CODE: 'download_qr_code',
   COPY_QR_URL: 'copy_qr_url',
   
+  // QR Decoder events
+  QR_DECODE: 'qr_decode',
+  QR_DECODE_SUCCESS: 'qr_decode_success',
+  QR_DECODE_FAILED: 'qr_decode_failed',
+  QR_DECODE_COPY: 'qr_decode_copy',
+  QR_DECODE_LAUNCH: 'qr_decode_launch',
+  QR_DECODE_HISTORY_LOAD: 'qr_decode_history_load',
+  QR_DECODE_HISTORY_COPY: 'qr_decode_history_copy',
+  QR_DECODE_HISTORY_LAUNCH: 'qr_decode_history_launch',
+  QR_DECODE_HISTORY_DELETE: 'qr_decode_history_delete',
+  
   // General events
   THEME_TOGGLE: 'theme_toggle',
   BOOKMARK_ADD: 'bookmark_add',
@@ -289,6 +300,17 @@ const Analytics = {
   trackDownloadQrCode: (params) => trackEvent(ANALYTICS_EVENTS.DOWNLOAD_QR_CODE, params),
   trackCopyQrUrl: (params) => trackEvent(ANALYTICS_EVENTS.COPY_QR_URL, params),
   
+  // QR Decoder helpers
+  trackQrDecode: (params) => trackEvent(ANALYTICS_EVENTS.QR_DECODE, params),
+  trackQrDecodeSuccess: (params) => trackEvent(ANALYTICS_EVENTS.QR_DECODE_SUCCESS, params),
+  trackQrDecodeFailed: (params) => trackEvent(ANALYTICS_EVENTS.QR_DECODE_FAILED, params),
+  trackQrDecodeCopy: (params) => trackEvent(ANALYTICS_EVENTS.QR_DECODE_COPY, params),
+  trackQrDecodeLaunch: (params) => trackEvent(ANALYTICS_EVENTS.QR_DECODE_LAUNCH, params),
+  trackQrDecodeHistoryLoad: (params) => trackEvent(ANALYTICS_EVENTS.QR_DECODE_HISTORY_LOAD, params),
+  trackQrDecodeHistoryCopy: (params) => trackEvent(ANALYTICS_EVENTS.QR_DECODE_HISTORY_COPY, params),
+  trackQrDecodeHistoryLaunch: (params) => trackEvent(ANALYTICS_EVENTS.QR_DECODE_HISTORY_LAUNCH, params),
+  trackQrDecodeHistoryDelete: (params) => trackEvent(ANALYTICS_EVENTS.QR_DECODE_HISTORY_DELETE, params),
+  
   // General helpers
   trackThemeToggle: (params) => trackEvent(ANALYTICS_EVENTS.THEME_TOGGLE, params),
   trackBookmarkAdd: (params) => trackEvent(ANALYTICS_EVENTS.BOOKMARK_ADD, params),
@@ -351,6 +373,8 @@ const PAGE_NAMES = {
   'deeplink.html': 'DeepLink Launcher',
   'url-encoder.html': 'Url Encoder/Decoder',
   'simple-qr.html': 'QR Code Generator',
+  'qr-decoder.html': 'QR Code Decoder',
+  'tools.html': 'Our Developer Tools',
   'about.html': 'About',
   'feedback.html': 'Feedback',
   'privacy.html': 'Privacy Policy'
