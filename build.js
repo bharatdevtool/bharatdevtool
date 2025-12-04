@@ -165,6 +165,7 @@ function generateSitemap() {
   const sitemapEntries = [
     { loc: '/', file: 'index.html', changefreq: 'weekly', priority: '1.0' },
     { loc: '/jsonformatter/', file: 'jsonformatter/index.html', changefreq: 'weekly', priority: '1.0' },
+    { loc: '/jsondiff/', file: 'jsondiff/index.html', changefreq: 'weekly', priority: '0.8' },
     { loc: '/about.html', file: 'about.html', changefreq: 'yearly', priority: '0.6' },
     { loc: '/privacy.html', file: 'privacy.html', changefreq: 'yearly', priority: '0.5' },
     { loc: '/feedback.html', file: 'feedback.html', changefreq: 'monthly', priority: '0.6' },
