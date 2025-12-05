@@ -55,6 +55,9 @@
   <!-- Analytics Script -->
   <script src="assets/js/analytics.js"></script>
   
+  <!-- Theme Management (load early to prevent flash) -->
+  <script src="assets/js/theme.js"></script>
+  
   <!-- TailwindCSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
@@ -492,15 +495,7 @@
 
   <!-- Scripts -->
   <script>
-    // Theme management - handled by header.js, but we call initTheme for initial setup
-    function initTheme() {
-      const saved = localStorage.getItem('theme');
-      if (saved) {
-        document.documentElement.classList.toggle('dark', saved === 'dark');
-      } else {
-        document.documentElement.classList.toggle('dark', window.matchMedia('(prefers-color-scheme: dark)').matches);
-      }
-    }
+    // Theme management is now handled by theme.js utility
 
     // Toast notifications
     function showToast(message, type = 'info') {
@@ -971,7 +966,7 @@
 
     // Event listeners
     document.addEventListener('DOMContentLoaded', function() {
-      initTheme();
+      // Theme initialization is handled by theme.js automatically
       updateHistoryDisplay();
       
       // Check for URL parameters

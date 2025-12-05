@@ -657,7 +657,7 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
 .searchbar .icon-search { display: inline; font-size: 12px; }
 .searchbar.active .icon-clear { display: inline; color: var(--fg); }
 .searchbar.active .icon-search { display: none; }
-.searchbar input { width: var(--search-width-collapsed); border:none; outline:none; background: transparent; color: var(--fg); font-size: 12px; transition: width 0.2s ease; }
+.searchbar input { width: var(--search-width-collapsed); border:none; outline:none; background: transparent; color: var(--fg); font-size: 12px; transition: width 0.2s ease; caret-color: var(--fg); }
 .searchbar.active input { width: var(--search-width-expanded); }
 .searchbar .search-count { color: var(--muted); font-size: 12px; }
 .searchbar .icon-btn { width:20px; height:20px; }
@@ -705,6 +705,14 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
 [data-theme="dark"] .CodeMirror-gutters {
   background: var(--panel) !important;
   border-right: 1px solid rgba(255,255,255,0.12) !important;
+}
+
+/* CodeMirror cursor visibility in dark theme */
+[data-theme="dark"] .CodeMirror-cursor {
+  border-left-color: #e6edf3 !important;
+}
+[data-theme="dark"] .CodeMirror-cursor.CodeMirror-overwrite {
+  border-left-color: #e6edf3 !important;
 }
 
 /* Dark theme punctuation - make braces, brackets, commas, colons white */

@@ -29,6 +29,9 @@
   <script src="../assets/js/version.js"></script>
   <script src="../assets/js/analytics.js"></script>
   
+  <!-- Theme Management (load early to prevent flash) -->
+  <script src="../assets/js/theme.js"></script>
+  
   <!-- TailwindCSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
@@ -678,14 +681,7 @@
   </script>
 
   <script>
-    function initTheme() {
-      const saved = localStorage.getItem('theme');
-      if (saved) {
-        document.documentElement.classList.toggle('dark', saved === 'dark');
-      } else {
-        document.documentElement.classList.toggle('dark', window.matchMedia('(prefers-color-scheme: dark)').matches);
-      }
-    }
+    // Theme management is now handled by theme.js utility
 
     function getType(value) {
       if (value === null) return 'null';
@@ -1902,7 +1898,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      initTheme();
+      // Theme initialization is handled by theme.js automatically
       
       document.getElementById('format-both-btn').addEventListener('click', () => {
         ['left-json', 'right-json'].forEach(id => {

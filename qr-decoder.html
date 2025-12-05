@@ -55,6 +55,9 @@
   <!-- Analytics Script -->
   <script src="assets/js/analytics.js"></script>
   
+  <!-- Theme Management (load early to prevent flash) -->
+  <script src="assets/js/theme.js"></script>
+  
   <!-- TailwindCSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
@@ -665,16 +668,11 @@
       }
     }
 
-    // Theme management - handled by header.js, but we call initTheme for initial setup
+    // Theme management is now handled by theme.js utility
+    // Removed inline initTheme - using common theme.js instead
     function initTheme() {
-      const saved = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const isDark = saved ? saved === 'dark' : prefersDark;
-      
-      if (isDark) {
-        document.documentElement.classList.add('dark');
-        document.documentElement.setAttribute('data-theme', 'dark');
-      } else {
+      // This function is kept for backward compatibility but does nothing
+      // Theme is initialized by theme.js automatically
         document.documentElement.classList.remove('dark');
         document.documentElement.setAttribute('data-theme', 'light');
       }
@@ -1276,7 +1274,7 @@
 
     // Event listeners
     document.addEventListener('DOMContentLoaded', function() {
-      initTheme();
+      // Theme initialization is handled by theme.js automatically
       updateHistoryDisplay();
       
       const dropzone = document.getElementById('dropzone');

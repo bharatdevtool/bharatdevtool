@@ -187,30 +187,52 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 // --- Theme Functions ---
+// Theme management is now handled by theme.js utility
+// These functions are kept for backward compatibility and editor refresh logic
+
 function initTheme() {
-  const saved = localStorage.getItem("theme");
-  if (saved) {
-    document.documentElement.setAttribute("data-theme", saved);
+  // Use ThemeManager if available, otherwise fallback
+  if (typeof window.ThemeManager !== 'undefined') {
+    window.ThemeManager.init();
   } else {
-    // Default to light mode instead of following system theme
-    document.documentElement.setAttribute("data-theme", "light");
+    // Fallback: basic initialization
+    const saved = localStorage.getItem("theme");
+    const theme = saved || "dark"; // Default to dark mode
+    document.documentElement.setAttribute("data-theme", theme);
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
   }
   syncThemeToggleUI();
   updateThemeLabel();
 }
 
 function toggleTheme() {
-  const current = document.documentElement.getAttribute("data-theme");
-  const next = current === "dark" ? "light" : "dark";
-  document.documentElement.setAttribute("data-theme", next);
-  localStorage.setItem("theme", next);
+  // Use ThemeManager if available
+  if (typeof window.ThemeManager !== 'undefined') {
+    window.ThemeManager.toggle();
+  } else {
+    // Fallback: basic toggle
+    const current = document.documentElement.getAttribute("data-theme") || "dark";
+    const next = current === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    localStorage.setItem("theme", next);
+    if (next === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }
+  
   syncThemeToggleUI();
   updateThemeLabel();
   
   // Refresh editors to apply new theme colors
   setTimeout(() => {
-    if (inputEditor) inputEditor.refresh();
-    if (outputEditor) outputEditor.refresh();
+    if (typeof inputEditor !== 'undefined' && inputEditor) inputEditor.refresh();
+    if (typeof outputEditor !== 'undefined' && outputEditor) outputEditor.refresh();
     // No styling on theme change - only format button should have styling
   }, 50);
 }
@@ -218,7 +240,7 @@ function toggleTheme() {
 function syncThemeToggleUI() {
   const control = document.getElementById("theme-toggle");
   if (!control) return;
-  const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+  const isDark = (document.documentElement.getAttribute("data-theme") || "dark") === "dark";
   // When checked -> dark
   if (control.type === "checkbox") {
     control.checked = isDark;
@@ -228,10 +250,22 @@ function syncThemeToggleUI() {
 function updateThemeLabel() {
   const el = document.getElementById("theme-label");
   if (!el) return;
-  const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+  const isDark = (document.documentElement.getAttribute("data-theme") || "dark") === "dark";
   el.innerHTML = isDark
     ? '<span>Switch</span><span>Light mode</span>'
     : '<span>Switch</span><span>Dark mode</span>';
+}
+
+// Listen for theme changes from ThemeManager
+if (typeof window !== 'undefined') {
+  window.addEventListener('themechange', function(e) {
+    syncThemeToggleUI();
+    updateThemeLabel();
+    setTimeout(() => {
+      if (typeof inputEditor !== 'undefined' && inputEditor) inputEditor.refresh();
+      if (typeof outputEditor !== 'undefined' && outputEditor) outputEditor.refresh();
+    }, 50);
+  });
 }
 
 // --- Bookmark dialog ---

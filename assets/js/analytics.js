@@ -139,7 +139,7 @@ function initGA4() {
   // Initialize dataLayer and gtag function
   window.dataLayer = window.dataLayer || [];
   function gtag() {
-    dataLayer.push(arguments);
+    window.dataLayer.push(arguments);
   }
   window.gtag = gtag;
   gtag('js', new Date());
