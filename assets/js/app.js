@@ -32,9 +32,11 @@ window.addEventListener("DOMContentLoaded", () => {
     value: defaultGreetingJSON()
   });
 
-  // Output editor change - no styling (only format button gets styling)
+  // Output editor change - update validity and status
   outputEditor.on("change", () => {
-    // No styling for output changes - only format button should have styling
+    updateOutputStatus();
+    updateOutputValidity();
+    updateOutputFileSizeIndicator();
   });
 
   // Track focus for global search
@@ -58,6 +60,8 @@ window.addEventListener("DOMContentLoaded", () => {
   });
   updateStatus();
   updateValidity();
+  updateOutputStatus();
+  updateOutputValidity();
 
   // Buttons
   document.getElementById("format-btn").addEventListener("click", formatHandler);
@@ -99,7 +103,12 @@ window.addEventListener("DOMContentLoaded", () => {
   const outFsBtn = document.getElementById("output-fullscreen-btn");
   if (outDlBtn) outDlBtn.addEventListener("click", toggleDownloadMenu);
   if (outCopyBtn) outCopyBtn.addEventListener("click", () => navigator.clipboard.writeText(outputEditor.getValue()))
-  if (outClearBtn) outClearBtn.addEventListener("click", () => outputEditor.setValue(""));
+  if (outClearBtn) outClearBtn.addEventListener("click", () => {
+    outputEditor.setValue("");
+    updateOutputStatus();
+    updateOutputValidity();
+    updateOutputFileSizeIndicator();
+  });
   if (outFsBtn) outFsBtn.addEventListener("click", () => toggleFullscreen("output-editor"));
   document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
   const bookmarkBtn = document.getElementById("bookmark-btn");
@@ -313,16 +322,62 @@ function updateValidity() {
   const errorBox = document.getElementById("input-error");
   const text = inputEditor.getValue();
   const inputPane = document.querySelector('.input-pane');
+  const validationIndicator = document.getElementById('input-validation-indicator');
+  
   if (text.trim().length === 0) {
     if (inputPane) inputPane.classList.remove('valid', 'invalid');
+    if (validationIndicator) {
+      validationIndicator.classList.remove('valid', 'invalid');
+      validationIndicator.textContent = '';
+    }
     errorBox.textContent = "";
     return;
   }
   if (isValidJSON(text)) {
     if (inputPane) { inputPane.classList.add('valid'); inputPane.classList.remove('invalid'); }
+    if (validationIndicator) {
+      validationIndicator.classList.add('valid');
+      validationIndicator.classList.remove('invalid');
+      validationIndicator.textContent = '✔';
+    }
     errorBox.textContent = "";
   } else {
     if (inputPane) { inputPane.classList.add('invalid'); inputPane.classList.remove('valid'); }
+    if (validationIndicator) {
+      validationIndicator.classList.add('invalid');
+      validationIndicator.classList.remove('valid');
+      validationIndicator.textContent = '✖';
+    }
+  }
+}
+
+function updateOutputValidity() {
+  const text = outputEditor.getValue();
+  const outputPane = document.querySelector('.output-pane');
+  const validationIndicator = document.getElementById('output-validation-indicator');
+  
+  if (text.trim().length === 0) {
+    if (outputPane) outputPane.classList.remove('valid', 'invalid');
+    if (validationIndicator) {
+      validationIndicator.classList.remove('valid', 'invalid');
+      validationIndicator.textContent = '';
+    }
+    return;
+  }
+  if (isValidJSON(text)) {
+    if (outputPane) { outputPane.classList.add('valid'); outputPane.classList.remove('invalid'); }
+    if (validationIndicator) {
+      validationIndicator.classList.add('valid');
+      validationIndicator.classList.remove('invalid');
+      validationIndicator.textContent = '✔';
+    }
+  } else {
+    if (outputPane) { outputPane.classList.add('invalid'); outputPane.classList.remove('valid'); }
+    if (validationIndicator) {
+      validationIndicator.classList.add('invalid');
+      validationIndicator.classList.remove('valid');
+      validationIndicator.textContent = '✖';
+    }
   }
 }
 
@@ -383,6 +438,9 @@ function formatHandler() {
     document.getElementById("input-error").textContent = "Empty input";
     outputEditor.setValue(defaultGreetingJSON());
     updateValidity();
+    updateOutputStatus();
+    updateOutputValidity();
+    updateOutputFileSizeIndicator();
     return;
   }
   
@@ -436,6 +494,9 @@ function formatHandler() {
     outputEditor.setValue(formatted);
     document.getElementById("input-error").textContent = "";
     updateValidity();
+    updateOutputStatus();
+    updateOutputValidity();
+    updateOutputFileSizeIndicator();
     
     // Switch back to JSON mode for format
     outputEditor.setOption("mode", "application/json");
@@ -450,10 +511,12 @@ function formatHandler() {
         addColorPreviews();
         updateOutputFileSizeIndicator();
         updateOutputStatus();
+        updateOutputValidity();
       } catch (stylingErr) {
         document.getElementById("input-error").textContent = "Formatted (styling skipped for performance)";
         updateOutputFileSizeIndicator();
         updateOutputStatus();
+        updateOutputValidity();
       }
     }, timeoutDelay);
     return;
@@ -473,6 +536,7 @@ function formatHandler() {
       addColorPreviews();
       updateOutputFileSizeIndicator();
       updateOutputStatus();
+      updateOutputValidity();
     }, 100);
   } catch (err) {
     // Report JSON formatting errors to Sentry (guarded)
@@ -502,6 +566,9 @@ function formatHandler() {
     document.getElementById("input-error").textContent = err.message;
     outputEditor.setValue("// Invalid JSON: " + err.message);
     updateValidity();
+    updateOutputStatus();
+    updateOutputValidity();
+    updateOutputFileSizeIndicator();
   }
 }
 
@@ -511,6 +578,9 @@ function minifyHandler() {
     document.getElementById("input-error").textContent = "Empty input";
     outputEditor.setValue(defaultGreetingJSON());
     updateValidity();
+    updateOutputStatus();
+    updateOutputValidity();
+    updateOutputFileSizeIndicator();
     return;
   }
   
@@ -558,6 +628,7 @@ function minifyHandler() {
     updateValidity();
     updateOutputFileSizeIndicator();
     updateOutputStatus();
+    updateOutputValidity();
     document.getElementById("input-error").textContent = "";
   } catch (err) {
     // Report minification errors to Sentry (guarded)
@@ -586,6 +657,9 @@ function minifyHandler() {
     document.getElementById("input-error").textContent = err.message;
     outputEditor.setValue("// Invalid JSON: " + err.message);
     updateValidity();
+    updateOutputStatus();
+    updateOutputValidity();
+    updateOutputFileSizeIndicator();
   }
 }
 
@@ -596,6 +670,9 @@ function escapeHandler() {
   if (text.trim().length === 0) {
     document.getElementById("input-error").textContent = "Empty input";
     outputEditor.setValue(defaultGreetingJSON());
+    updateOutputStatus();
+    updateOutputValidity();
+    updateOutputFileSizeIndicator();
     return;
   }
   
@@ -643,6 +720,7 @@ function escapeHandler() {
     document.getElementById("input-error").textContent = "";
     updateOutputFileSizeIndicator();
     updateOutputStatus();
+    updateOutputValidity();
   } catch (err) {
     // Track escape failure in analytics
     if (typeof window.Analytics !== 'undefined') {
@@ -656,6 +734,7 @@ function escapeHandler() {
     outputEditor.setValue("// Error: " + err.message);
     updateOutputFileSizeIndicator();
     updateOutputStatus();
+    updateOutputValidity();
   }
 }
 
@@ -664,6 +743,9 @@ function unescapeHandler() {
   if (text.trim().length === 0) {
     document.getElementById("input-error").textContent = "Empty input";
     outputEditor.setValue(defaultGreetingJSON());
+    updateOutputStatus();
+    updateOutputValidity();
+    updateOutputFileSizeIndicator();
     return;
   }
   
@@ -711,6 +793,7 @@ function unescapeHandler() {
     document.getElementById("input-error").textContent = "";
     updateOutputFileSizeIndicator();
     updateOutputStatus();
+    updateOutputValidity();
   } catch (err) {
     // Track unescape failure in analytics
     if (typeof window.Analytics !== 'undefined') {
@@ -724,6 +807,7 @@ function unescapeHandler() {
     outputEditor.setValue("// Error: " + err.message);
     updateOutputFileSizeIndicator();
     updateOutputStatus();
+    updateOutputValidity();
   }
 }
 
@@ -735,6 +819,9 @@ function clearHandler() {
   inputEditor.setValue("");
   outputEditor.setValue("");
   updateValidity();
+  updateOutputStatus();
+  updateOutputValidity();
+  updateOutputFileSizeIndicator();
   updatePlaceholder();
 }
 

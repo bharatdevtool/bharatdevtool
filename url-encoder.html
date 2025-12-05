@@ -730,16 +730,24 @@
       }
     }
 
+    // Escape URL for use in HTML onclick attribute (escapes backslashes, single quotes, double quotes)
+    function escapeUrlForOnclick(url) {
+      return url
+        .replace(/\\/g, '\\\\')  // Escape backslashes first
+        .replace(/'/g, "\\'")     // Escape single quotes
+        .replace(/"/g, '&quot;'); // Escape double quotes as HTML entity
+    }
+
     function updateHistoryDisplay() {
       const history = loadHistory();
       const container = document.getElementById('history-list');
       const count = document.getElementById('history-count');
       const empty = document.getElementById('empty-history');
-      
+
       if (count) {
         count.textContent = `${history.length} link${history.length !== 1 ? 's' : ''} saved`;
       }
-      
+
       if (history.length === 0) {
         if (empty) {
           empty.style.display = 'block';
@@ -749,7 +757,7 @@
         }
         return;
       }
-      
+
       if (empty) {
         empty.style.display = 'none';
       }
@@ -758,7 +766,7 @@
           const itemDate = new Date(item.timestamp);
           const now = new Date();
           const diffInHours = (now - itemDate) / (1000 * 60 * 60);
-          
+
           let timeDisplay;
           if (diffInHours < 24) {
             // Show time only if within 24 hours
@@ -767,7 +775,9 @@
             // Show date only if more than 24 hours
             timeDisplay = itemDate.toLocaleDateString([], { month: 'short', day: 'numeric' });
           }
-          
+
+          const escapedUrl = escapeUrlForOnclick(item.url);
+
           return `
         <div class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg animate-slide-up">
           <div class="mb-3">
@@ -776,16 +786,16 @@
           <div class="flex items-center justify-between">
             <div class="text-xs text-gray-500 dark:text-gray-400">${timeDisplay}</div>
             <div class="flex items-center space-x-2">
-              <button onclick="editDeepLink('${item.url}')" class="p-2 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900 rounded" title="Edit">
+              <button onclick="editDeepLink('${escapedUrl}')" class="p-2 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900 rounded" title="Edit">
                 ✏️
               </button>
-              <button onclick="copyDeepLink('${item.url}')" class="p-2 text-green-600 hover:bg-green-100 dark:hover:bg-green-900 rounded" title="Copy">
+              <button onclick="copyDeepLink('${escapedUrl}')" class="p-2 text-green-600 hover:bg-green-100 dark:hover:bg-green-900 rounded" title="Copy">
                 📋
               </button>
-              <button onclick="launchDeepLink('${item.url.replace(/'/g, "\\'")}'); if(typeof window.Analytics !== 'undefined') window.Analytics.trackDeeplinkHistoryLaunch({page:'Url Encoder/Decoder'});" class="p-2 text-purple-600 hover:bg-purple-100 dark:hover:bg-purple-900 rounded" title="Launch">
+              <button onclick="launchDeepLink('${escapedUrl}'); if(typeof window.Analytics !== 'undefined') window.Analytics.trackDeeplinkHistoryLaunch({page:'Url Encoder/Decoder'});" class="p-2 text-purple-600 hover:bg-purple-100 dark:hover:bg-purple-900 rounded" title="Launch">
                 🚀
               </button>
-              <button onclick="deleteDeepLinkByUrl('${item.url}')" class="p-2 text-red-600 hover:bg-red-100 dark:hover:bg-red-900 rounded" title="Delete">
+              <button onclick="deleteDeepLinkByUrl('${escapedUrl}')" class="p-2 text-red-600 hover:bg-red-100 dark:hover:bg-red-900 rounded" title="Delete">
                 🗑️
               </button>
             </div>

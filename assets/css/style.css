@@ -581,6 +581,7 @@ main {
   margin-left: auto;
   color: var(--muted);
   font-size: 13px;
+  background: transparent;
 }
 
 .pane-footer {
@@ -589,7 +590,33 @@ main {
   justify-content: space-between;
   padding: 8px 12px;
   border-top: 1px solid rgba(0,0,0,0.08);
-  background: var(--panel);
+  background: transparent;
+}
+
+/* Validation indicator in pane-footer */
+.validation-indicator {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.validation-indicator.valid {
+  color: #22c55e;
+}
+
+.validation-indicator.invalid {
+  color: #dc2626;
+}
+
+[data-theme="dark"] .validation-indicator.valid {
+  color: #34d399;
+}
+
+[data-theme="dark"] .validation-indicator.invalid {
+  color: #f87171;
 }
 
 .error {
@@ -910,6 +937,11 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
 .input-pane { transition: background-color 0.25s ease; }
 .input-pane.valid { background: var(--pane-valid-bg); }
 .input-pane.invalid { background: var(--pane-invalid-bg); }
+
+/* Validity state styling: tint the output pane background */
+.output-pane { transition: background-color 0.25s ease; }
+.output-pane.valid { background: var(--pane-valid-bg); }
+.output-pane.invalid { background: var(--pane-invalid-bg); }
 
 .center-toolbar {
   display: flex;

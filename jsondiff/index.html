@@ -128,7 +128,7 @@
       min-height: 20px;
       padding: 2px 12px;
       font-family: 'Courier New', monospace;
-      font-size: 13px;
+      font-size: 15px;
       line-height: 1.6;
       border-left: 3px solid transparent;
       transition: background-color 0.1s ease;
@@ -153,11 +153,13 @@
       word-break: break-word;
       overflow-wrap: break-word;
       white-space: pre;
-      color: #111827; /* darker text for better readability */
+      color: #0f1720; /* darker text for better readability */
+      font-weight: 500;
     }
     
     .dark .json-line-content {
-      color: #e5e7eb;
+      color: #f9fafb;
+      font-weight: 500;
     }
     
     /* Missing items - red highlight */
@@ -1985,14 +1987,7 @@
 
         if (!textarea || !uploadInput) return;
 
-        // Clicking textarea opens file picker only when empty
-        textarea.addEventListener('click', () => {
-          if (textarea.value.trim() === '') {
-            uploadInput.click();
-          }
-        });
-
-        // Upload button opens file picker
+        // Upload button opens file picker (textarea click disabled - upload only via button)
         if (uploadBtn) {
           uploadBtn.addEventListener('click', () => uploadInput.click());
         }
