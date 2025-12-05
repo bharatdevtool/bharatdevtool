@@ -150,7 +150,11 @@
       word-break: break-word;
       overflow-wrap: break-word;
       white-space: pre;
-      color: var(--fg);
+      color: #111827; /* darker text for better readability */
+    }
+    
+    .dark .json-line-content {
+      color: #e5e7eb;
     }
     
     /* Missing items - red highlight */
@@ -322,12 +326,43 @@
       <!-- Input Panels -->
       <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div>
-          <label for="left-json" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Left JSON
-          </label>
+          <div class="flex items-center justify-between mb-2">
+            <label for="left-json" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              Left JSON
+            </label>
+            <div class="flex items-center gap-2">
+              <button
+                id="left-upload-btn"
+                class="icon-btn"
+                type="button"
+                title="Upload JSON"
+                aria-label="Upload JSON"
+                data-tip="Upload JSON"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 3v12m0-12 4 4m-4-4-4 4"/>
+                  <path d="M5 15v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"/>
+                </svg>
+              </button>
+              <button
+                id="left-fetch-btn"
+                class="icon-btn"
+                type="button"
+                title="Fetch from URL"
+                aria-label="Fetch from URL"
+                data-tip="Fetch from URL"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M10 14a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1"/>
+                  <path d="M14 10a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1"/>
+                </svg>
+              </button>
+              <input type="file" id="left-upload-input" accept=".json,application/json" hidden>
+            </div>
+          </div>
           <textarea 
             id="left-json" 
-            placeholder='{"key": "value"}'
+            placeholder='{"message": "Built with ❤️ for developers"}'
             class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 font-mono text-sm"
             rows="12"
           ></textarea>
@@ -335,17 +370,52 @@
         </div>
 
         <div class="lg:border-l lg:border-gray-200 lg:dark:border-gray-700 lg:pl-6">
-          <label for="right-json" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Right JSON
-          </label>
+          <div class="flex items-center justify-between mb-2">
+            <label for="right-json" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              Right JSON
+            </label>
+            <div class="flex items-center gap-2">
+              <button
+                id="right-upload-btn"
+                class="icon-btn"
+                type="button"
+                title="Upload JSON"
+                aria-label="Upload JSON"
+                data-tip="Upload JSON"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 3v12m0-12 4 4m-4-4-4 4"/>
+                  <path d="M5 15v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"/>
+                </svg>
+              </button>
+              <button
+                id="right-fetch-btn"
+                class="icon-btn"
+                type="button"
+                title="Fetch from URL"
+                aria-label="Fetch from URL"
+                data-tip="Fetch from URL"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M10 14a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1"/>
+                  <path d="M14 10a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1"/>
+                </svg>
+              </button>
+              <input type="file" id="right-upload-input" accept=".json,application/json" hidden>
+            </div>
+          </div>
           <textarea 
             id="right-json" 
-            placeholder='{"key": "value"}'
+            placeholder='{"message": "Built with ❤️ for developers"}'
             class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 font-mono text-sm"
             rows="12"
           ></textarea>
           <div id="right-error" class="error-message hidden"></div>
         </div>
+      </div>
+
+      <div class="mt-4 text-center text-sm text-gray-600 dark:text-gray-300">
+        Paste, upload, or fetch two JSON documents, then run a side-by-side diff to highlight missing keys, type mismatches, and value differences.
       </div>
     </div>
 
@@ -478,7 +548,7 @@
           </button>
           <div class="faq-answer">
             <p>Yes! Our JSON comparison tool works with both minified (single-line) and formatted (pretty-printed) JSON. The tool automatically parses and compares the structure regardless of formatting. Use the "Format Both" button to standardize formatting before comparison for better readability.</p>
-            <p>The comparison focuses on structural differences, not whitespace, so you can compare JSON from different sources without worrying about formatting variations. For JSON formatting tools, visit our <a href="../jsonformatter/">JSON Formatter</a> page.</p>
+            <p>The comparison focuses on structural differences, not whitespace, so you can compare JSON from different sources without worrying about formatting variations. For JSON formatting tools, visit our <a href="../jsonformatter/index.html">JSON Formatter</a> page.</p>
           </div>
         </div>
         
@@ -590,6 +660,16 @@
 
   <link rel="stylesheet" href="../components/footer.css">
   <script src="../components/footer.js"></script>
+
+  <!-- Initialize Sentry with version tracking -->
+  <script>
+    // Wait for Sentry and version.js to load
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
+        initSentryTracking();
+      }
+    });
+  </script>
 
   <script type="module">
     import { formatJSON, isValidJSON } from '../assets/js/formatter.js';
@@ -1898,6 +1978,67 @@
       document.getElementById('right-json').addEventListener('input', function() {
         validateJSON(this.value, 'right-error');
       });
+
+      // JSON upload + fetch helpers for left/right inputs
+      function setupJsonInputHelpers(textareaId, uploadInputId, uploadBtnId, fetchBtnId, errorId) {
+        const textarea = document.getElementById(textareaId);
+        const uploadInput = document.getElementById(uploadInputId);
+        const uploadBtn = document.getElementById(uploadBtnId);
+        const fetchBtn = document.getElementById(fetchBtnId);
+        const errorEl = document.getElementById(errorId);
+
+        if (!textarea || !uploadInput) return;
+
+        // Clicking textarea opens file picker only when empty
+        textarea.addEventListener('click', () => {
+          if (textarea.value.trim() === '') {
+            uploadInput.click();
+          }
+        });
+
+        // Upload button opens file picker
+        if (uploadBtn) {
+          uploadBtn.addEventListener('click', () => uploadInput.click());
+        }
+
+        // Handle file selection
+        uploadInput.addEventListener('change', (event) => {
+          const file = event.target.files[0];
+          if (!file) return;
+
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            textarea.value = e.target.result;
+            validateJSON(textarea.value, errorId);
+          };
+          reader.readAsText(file);
+        });
+
+        // Fetch JSON from URL
+        if (fetchBtn) {
+          fetchBtn.addEventListener('click', () => {
+            const url = prompt('Enter JSON URL');
+            if (!url) return;
+
+            fetch(url)
+              .then((r) => r.text())
+              .then((t) => {
+                textarea.value = t;
+                validateJSON(textarea.value, errorId);
+              })
+              .catch((err) => {
+                if (errorEl) {
+                  errorEl.textContent = `Failed to load JSON: ${err.message}`;
+                  errorEl.classList.remove('hidden');
+                }
+              });
+          });
+        }
+      }
+
+      // Initialize helpers for both sides
+      setupJsonInputHelpers('left-json', 'left-upload-input', 'left-upload-btn', 'left-fetch-btn', 'left-error');
+      setupJsonInputHelpers('right-json', 'right-upload-input', 'right-upload-btn', 'right-fetch-btn', 'right-error');
     });
   </script>
   

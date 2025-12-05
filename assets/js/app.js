@@ -363,16 +363,18 @@ function formatHandler() {
     });
   }
   
-  // Track JSON formatting attempts
-  Sentry.addBreadcrumb({
-    message: 'JSON formatting attempted',
-    category: 'user-action',
-    level: 'info',
-    data: {
-      inputLength: src.length,
-      hasContent: src.trim().length > 0
-    }
-  });
+  // Track JSON formatting attempts (guarded Sentry usage)
+  if (typeof Sentry !== 'undefined' && typeof Sentry.addBreadcrumb === 'function') {
+    Sentry.addBreadcrumb({
+      message: 'JSON formatting attempted',
+      category: 'user-action',
+      level: 'info',
+      data: {
+        inputLength: src.length,
+        hasContent: src.trim().length > 0
+      }
+    });
+  }
   
   // Performance safeguard for large files
   const fileSize = src.length;
@@ -439,17 +441,19 @@ function formatHandler() {
       updateOutputStatus();
     }, 100);
   } catch (err) {
-    // Report JSON formatting errors to Sentry
-    Sentry.captureException(err, {
-      tags: {
-        operation: 'json_format',
-        fileSize: src.length
-      },
-      extra: {
-        inputPreview: src.substring(0, 200) + (src.length > 200 ? '...' : ''),
-        errorMessage: err.message
-      }
-    });
+    // Report JSON formatting errors to Sentry (guarded)
+    if (typeof Sentry !== 'undefined' && typeof Sentry.captureException === 'function') {
+      Sentry.captureException(err, {
+        tags: {
+          operation: 'json_format',
+          fileSize: src.length
+        },
+        extra: {
+          inputPreview: src.substring(0, 200) + (src.length > 200 ? '...' : ''),
+          errorMessage: err.message
+        }
+      });
+    }
     
     // Track format failure in analytics
     if (typeof window.Analytics !== 'undefined') {
@@ -522,17 +526,19 @@ function minifyHandler() {
     updateOutputStatus();
     document.getElementById("input-error").textContent = "";
   } catch (err) {
-    // Report minification errors to Sentry
-    Sentry.captureException(err, {
-      tags: {
-        operation: 'json_minify',
-        fileSize: src.length
-      },
-      extra: {
-        inputPreview: src.substring(0, 200) + (src.length > 200 ? '...' : ''),
-        errorMessage: err.message
-      }
-    });
+    // Report minification errors to Sentry (guarded)
+    if (typeof Sentry !== 'undefined' && typeof Sentry.captureException === 'function') {
+      Sentry.captureException(err, {
+        tags: {
+          operation: 'json_minify',
+          fileSize: src.length
+        },
+        extra: {
+          inputPreview: src.substring(0, 200) + (src.length > 200 ? '...' : ''),
+          errorMessage: err.message
+        }
+      });
+    }
     
     // Track minify failure in analytics
     if (typeof window.Analytics !== 'undefined') {

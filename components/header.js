@@ -9,13 +9,28 @@ function createSecondaryHeader() {
     }
   });
 
+  // Determine the correct path to root index.html based on current location
+  function getRootPath() {
+    const pathname = window.location.pathname;
+    // Count how many directory levels deep we are
+    const pathParts = pathname.split('/').filter(part => part && part !== 'index.html');
+    // If we're in a subdirectory (like jsondiff/), go up one level
+    if (pathParts.length > 0) {
+      return '../index.html';
+    }
+    // If we're at root, use index.html
+    return 'index.html';
+  }
+
+  const rootPath = getRootPath();
+
   const headerHTML = `
     <header class="secondary-header bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="secondary-header-inner flex justify-between items-center h-16 w-full">
           <!-- Logo -->
           <div class="secondary-header-logo flex items-center">
-            <a href="index.html" class="flex items-center space-x-3">
+            <a href="${rootPath}" class="flex items-center space-x-3">
               <img src="" 
                    data-logo="true"
                    alt="Bharat Dev Tools Logo" 
@@ -33,7 +48,7 @@ function createSecondaryHeader() {
             </button>
             
             <!-- Back to home -->
-            <a href="index.html" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors whitespace-nowrap">
+            <a href="${rootPath}" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors whitespace-nowrap">
               ← Back to JSON Tools
             </a>
           </div>
@@ -114,15 +129,16 @@ function initHeaderThemeToggle() {
 
 // Initialize header when DOM is loaded and Tailwind is ready
 function initHeader() {
-  // Skip header creation only on index.html (main JSON formatter page)
-  const currentPage = window.location.pathname.split('/').pop() || window.location.pathname;
+  // Skip header creation only on root index.html (main JSON formatter page)
   const fullPath = window.location.pathname;
-  const href = window.location.href;
+  const pathParts = fullPath.split('/').filter(part => part);
   
-  // Check if we're on index.html - skip header creation (it has its own header)
-  if (currentPage === 'index.html' ||
-      fullPath.endsWith('/index.html') ||
-      (currentPage === '' && fullPath === '/' && !href.includes('#'))) {
+  // Check if we're on root index.html - skip header creation (it has its own header)
+  // Only skip if path is exactly "/" or "/index.html" (root level)
+  if (fullPath === '/' || 
+      fullPath === '/index.html' ||
+      (pathParts.length === 0) ||
+      (pathParts.length === 1 && pathParts[0] === 'index.html')) {
     return;
   }
   

@@ -35,6 +35,7 @@ import { DeepLinkTester } from './deeplink-tests.js';
 import { URLEncoderTester } from './url-encoder-tests.js';
 import { QRTester } from './qr-tests.js';
 import { QRDecoderTester } from './qr-decoder-tests.js';
+import { JSONDiffTester } from './jsondiff-tests.js';
 
 // Test Results Tracking
 let totalTests = 0;
@@ -392,6 +393,14 @@ const qrDecoderTester = new QRDecoderTester();
 const qrDecoderResults = qrDecoderTester.runAllTests();
 
 // ============================================================================
+// JSON COMPARISON (DIFF) TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+const jsonDiffTester = new JSONDiffTester();
+const jsonDiffResults = jsonDiffTester.runAllTests();
+
+// ============================================================================
 // FINAL TEST SUMMARY
 // ============================================================================
 
@@ -399,9 +408,9 @@ console.log('\n' + '='.repeat(60));
 console.log('📊 COMPREHENSIVE TEST SUMMARY');
 console.log('='.repeat(60));
 
-const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + qrResults.total + qrDecoderResults.total;
-const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + qrResults.passed + qrDecoderResults.passed;
-const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + qrResults.failed + qrDecoderResults.failed;
+const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total;
+const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed;
+const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed;
 
 console.log(`Total Tests: ${grandTotal}`);
 console.log(`✅ Passed: ${grandPassed}`);
@@ -414,6 +423,7 @@ console.log(`DeepLink Launcher: ${deeplinkResults.total} tests (${deeplinkResult
 console.log(`URL Encoder/Decoder: ${urlEncoderResults.total} tests (${urlEncoderResults.passed} passed, ${urlEncoderResults.failed} failed)`);
 console.log(`QR Code Generator: ${qrResults.total} tests (${qrResults.passed} passed, ${qrResults.failed} failed)`);
 console.log(`QR Code Decoder: ${qrDecoderResults.total} tests (${qrDecoderResults.passed} passed, ${qrDecoderResults.failed} failed)`);
+console.log(`JSON Comparison (Diff): ${jsonDiffResults.total} tests (${jsonDiffResults.passed} passed, ${jsonDiffResults.failed} failed)`);
 
 if (grandFailed === 0) {
   console.log('\n🎉 ALL TESTS PASSED! All components are working perfectly.');
@@ -444,6 +454,11 @@ if (grandFailed === 0) {
   if (qrDecoderResults.failed > 0) {
     console.log('\nQR Code Decoder failures:');
     qrDecoderResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  
+  if (jsonDiffResults.failed > 0) {
+    console.log('\nJSON Comparison (Diff) failures:');
+    jsonDiffResults.failedTests.forEach(test => console.log(`   - ${test}`));
   }
   
   console.log('\nPlease review the failed tests above.');
