@@ -539,7 +539,9 @@
         qrDiv.style.display = 'inline-block';
         
         // Generate QR code using qrcode-generator
-        const qr = qrcode(0, 'M');
+        // Use error correction level 'H' (High) to handle logo overlay
+        // First param: type number (0 = auto-detect), Second param: error correction level ('L', 'M', 'Q', 'H')
+        const qr = qrcode(0, 'H'); // High error correction (30%) for logo compatibility
         qr.addData(text);
         qr.make();
         
@@ -557,9 +559,10 @@
           cellSize = 2;
         }
         
-        // Calculate center position for logo
-        const centerStart = Math.floor(qrSize / 2) - 2;
-        const centerEnd = Math.floor(qrSize / 2) + 2;
+        // Calculate center position for logo (smaller area for better decoding)
+        const logoAreaSize = 4; // Reduced from 4x4 to ensure better decoding
+        const centerStart = Math.floor(qrSize / 2) - Math.floor(logoAreaSize / 2);
+        const centerEnd = Math.floor(qrSize / 2) + Math.ceil(logoAreaSize / 2);
         
         for (let row = 0; row < qrSize; row++) {
           const tr = document.createElement('tr');
@@ -587,22 +590,24 @@
         
         qrDiv.appendChild(table);
         
-        // Add BDT logo in center
+        // Add BDT logo in center (smaller size for better decoding)
         const logoDiv = document.createElement('div');
         logoDiv.style.position = 'absolute';
         logoDiv.style.top = '50%';
         logoDiv.style.left = '50%';
         logoDiv.style.transform = 'translate(-50%, -50%)';
-        logoDiv.style.width = (cellSize * 8) + 'px';
-        logoDiv.style.height = (cellSize * 8) + 'px';
+        // Reduced logo size from 8 cells to 6 cells for better QR code readability
+        const logoCellSize = Math.min(6, Math.floor(qrSize * 0.25)); // Max 25% of QR code size
+        logoDiv.style.width = (cellSize * logoCellSize) + 'px';
+        logoDiv.style.height = (cellSize * logoCellSize) + 'px';
         logoDiv.style.backgroundColor = '#2563eb';
-        logoDiv.style.border = '4px solid #FFFFFF';
+        logoDiv.style.border = '3px solid #FFFFFF';
         logoDiv.style.borderRadius = '50%';
         logoDiv.style.display = 'flex';
         logoDiv.style.alignItems = 'center';
         logoDiv.style.justifyContent = 'center';
         logoDiv.style.fontWeight = '900';
-        logoDiv.style.fontSize = (cellSize * 3) + 'px';
+        logoDiv.style.fontSize = (cellSize * 2.5) + 'px'; // Reduced font size
         logoDiv.style.color = '#FFFFFF';
         logoDiv.style.fontFamily = 'Arial, sans-serif';
         logoDiv.style.boxShadow = '0 0 0 2px #000000';
@@ -664,6 +669,7 @@
         QRCode.toCanvas(canvas, text, {
           width: 256,
           margin: 2,
+          errorCorrectionLevel: 'H', // High error correction (30%) to handle logo overlay
           color: {
             dark: '#000000',
             light: '#FFFFFF'
@@ -675,36 +681,38 @@
           } else {
             
             // Add BDT logo overlay on canvas
+            // Use smaller logo size to ensure better QR code readability
             const ctx = canvas.getContext('2d');
-            const logoSize = 80;
-            const logoX = (canvas.width - logoSize) / 2;
-            const logoY = (canvas.height - logoSize) / 2;
+            const logoSize = 64; // Reduced from 80 to 64 for better decoding (25% coverage instead of 31%)
+            const logoRadius = logoSize / 2;
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
             
-            // Draw white background circle for logo
+            // Draw white background circle for logo (with border)
             ctx.fillStyle = '#FFFFFF';
             ctx.beginPath();
-            ctx.arc(canvas.width / 2, canvas.height / 2, logoSize / 2 + 8, 0, 2 * Math.PI);
-            ctx.fill();
-            
-            // Draw blue circle for logo
-            ctx.fillStyle = '#2563eb';
-            ctx.beginPath();
-            ctx.arc(canvas.width / 2, canvas.height / 2, logoSize / 2, 0, 2 * Math.PI);
+            ctx.arc(centerX, centerY, logoRadius + 6, 0, 2 * Math.PI);
             ctx.fill();
             
             // Draw black border around white circle
             ctx.strokeStyle = '#000000';
             ctx.lineWidth = 2;
             ctx.beginPath();
-            ctx.arc(canvas.width / 2, canvas.height / 2, logoSize / 2 + 8, 0, 2 * Math.PI);
+            ctx.arc(centerX, centerY, logoRadius + 6, 0, 2 * Math.PI);
             ctx.stroke();
             
-            // Draw BDT text
+            // Draw blue circle for logo
+            ctx.fillStyle = '#2563eb';
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, logoRadius, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Draw BDT text (adjusted font size for smaller logo)
             ctx.fillStyle = '#FFFFFF';
-            ctx.font = '900 28px Arial';
+            ctx.font = '900 22px Arial'; // Reduced from 28px to 22px
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText('BDT', canvas.width / 2, canvas.height / 2);
+            ctx.fillText('BDT', centerX, centerY);
             
             showToast('QR code generated successfully!', 'success');
           }
@@ -783,7 +791,8 @@
         }
         
         // Add BDT logo in center (if not already there)
-        const logoSize = 80;
+        // Use smaller logo size to match the display version
+        const logoSize = 64; // Reduced from 80 to match display version
         const centerX = startX + 128;
         const centerY = startY + 128;
         
@@ -806,9 +815,9 @@
         ctx.arc(centerX, centerY, logoSize / 2 + 8, 0, 2 * Math.PI);
         ctx.stroke();
         
-        // Draw BDT text
+        // Draw BDT text (adjusted for smaller logo)
         ctx.fillStyle = '#FFFFFF';
-        ctx.font = '900 28px Arial';
+        ctx.font = '900 22px Arial'; // Reduced from 28px to match display version
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText('BDT', centerX, centerY);
