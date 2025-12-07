@@ -376,7 +376,8 @@ const PAGE_NAMES = {
   '/jsondiff/': 'JSON Comparison Tool',
   'deeplink.html': 'DeepLink Launcher',
   'url-encoder.html': 'Url Encoder/Decoder',
-  'simple-qr.html': 'QR Code Generator',
+  'qr-generator-free.html': 'QR Code Generator',
+  'simple-qr.html': 'QR Code Generator', // Legacy redirect support
   'qr-decoder.html': 'QR Code Decoder',
   'tools.html': 'Our Developer Tools',
   'about.html': 'About',

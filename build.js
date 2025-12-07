@@ -111,7 +111,7 @@ function transformHTML(content, isSubdirectory) {
   // Transform navigation links
   transformed = transformed.replace(/href="(deeplink\.html)/g, 'href="../$1');
   transformed = transformed.replace(/href="(url-encoder\.html)/g, 'href="../$1');
-  transformed = transformed.replace(/href="(simple-qr\.html)/g, 'href="../$1');
+  transformed = transformed.replace(/href="(qr-generator-free\.html)/g, 'href="../$1');
   
   // Transform canonical URLs
   transformed = transformed.replace(
@@ -169,7 +169,7 @@ function generateSitemap() {
     { loc: '/about.html', file: 'about.html', changefreq: 'yearly', priority: '0.6' },
     { loc: '/privacy.html', file: 'privacy.html', changefreq: 'yearly', priority: '0.5' },
     { loc: '/feedback.html', file: 'feedback.html', changefreq: 'monthly', priority: '0.6' },
-    { loc: '/simple-qr.html', file: 'simple-qr.html', changefreq: 'weekly', priority: '0.8' },
+    { loc: '/qr-generator-free.html', file: 'qr-generator-free.html', changefreq: 'weekly', priority: '0.8' },
     { loc: '/qr-decoder.html', file: 'qr-decoder.html', changefreq: 'weekly', priority: '0.8' },
     { loc: '/deeplink.html', file: 'deeplink.html', changefreq: 'weekly', priority: '0.8' },
     { loc: '/url-encoder.html', file: 'url-encoder.html', changefreq: 'weekly', priority: '0.8' },
@@ -338,7 +338,7 @@ function preReleaseChecks() {
   }
   
   // Check for common issues in HTML
-  const htmlFiles = ['index.html', 'deeplink.html', 'url-encoder.html', 'simple-qr.html', 'qr-decoder.html', 'tools.html'];
+  const htmlFiles = ['index.html', 'deeplink.html', 'url-encoder.html', 'qr-generator-free.html', 'qr-decoder.html', 'tools.html'];
   htmlFiles.forEach(file => {
     if (fs.existsSync(file)) {
       const content = fs.readFileSync(file, 'utf8');

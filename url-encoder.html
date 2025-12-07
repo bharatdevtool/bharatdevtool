@@ -1073,20 +1073,16 @@
       // Generate QR result
       generateQrResultBtn.addEventListener('click', function() {
         const resultValue = resultOutput.value.trim();
-        if (resultValue) {
-          // Track generate QR
-          if (typeof window.Analytics !== 'undefined') {
-            window.Analytics.trackDeeplinkGenerateQr({
-              page: 'Url Encoder/Decoder'
-            });
-          }
-          // Navigate to QR page with the result as a parameter
-          const qrUrl = `simple-qr.html?text=${encodeURIComponent(resultValue)}`;
-          window.location.href = qrUrl;
-          showToast('Redirecting to QR Generator...', 'info');
-        } else {
-          showToast('No result to generate QR code', 'error');
+        // Track generate QR
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.trackDeeplinkGenerateQr({
+            page: 'Url Encoder/Decoder'
+          });
         }
+        // Navigate to QR page with the result as a parameter if text exists, otherwise just navigate
+        const qrUrl = resultValue ? `qr-generator-free.html?text=${encodeURIComponent(resultValue)}` : 'qr-generator-free.html';
+        window.location.href = qrUrl;
+        showToast('Redirecting to QR Generator...', 'info');
       });
 
       // Launch result

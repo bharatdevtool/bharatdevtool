@@ -1071,23 +1071,19 @@
         });
       }
 
-      // Generate QR button
+      // Generate QR button - always navigates, passes text if available
       generateQrBtn.addEventListener('click', function() {
         const url = input.value.trim();
-        if (url) {
-          // Track generate QR
-          if (typeof window.Analytics !== 'undefined') {
-            window.Analytics.trackDeeplinkGenerateQr({
-              page: 'DeepLink Launcher'
-            });
-          }
-          // Navigate to QR page with the deeplink as a parameter
-          const qrUrl = `simple-qr.html?text=${encodeURIComponent(url)}`;
-          window.location.href = qrUrl;
-          showToast('Redirecting to QR Generator...', 'info');
-        } else {
-          showToast('Please enter a deeplink to generate QR code', 'error');
+        // Track generate QR
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.trackDeeplinkGenerateQr({
+            page: 'DeepLink Launcher'
+          });
         }
+        // Navigate to QR page with the deeplink as a parameter if text exists, otherwise just navigate
+        const qrUrl = url ? `qr-generator-free.html?text=${encodeURIComponent(url)}` : 'qr-generator-free.html';
+        window.location.href = qrUrl;
+        showToast('Redirecting to QR Generator...', 'info');
       });
 
       // Clear input

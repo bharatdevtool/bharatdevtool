@@ -384,7 +384,7 @@
         Upload QR code images and extract links instantly. Free, fast, and easy to use with history tracking.
       </p>
       <!-- Generate QR Button -->
-      <a href="simple-qr.html" class="inline-flex items-center justify-center px-6 py-3 bg-primary-600 dark:bg-primary-500 text-white rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors font-medium shadow-sm">
+      <a href="qr-generator-free.html" class="inline-flex items-center justify-center px-6 py-3 bg-primary-600 dark:bg-primary-500 text-white rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors font-medium shadow-sm">
         <span class="mr-2">📱</span>
         Generate QR Code
       </a>
@@ -1498,12 +1498,12 @@
       launchBtn.addEventListener('click', launchDecodedLink);
 
       // Generate QR button tracking
-      const generateQrBtn = document.querySelector('a[href="simple-qr.html"]');
+      const generateQrBtn = document.querySelector('a[href="qr-generator-free.html"]');
       if (generateQrBtn && typeof window.Analytics !== 'undefined') {
         generateQrBtn.addEventListener('click', function() {
           window.Analytics.track('button_click_generate_qr', {
             page: 'QR Code Decoder',
-            destination: 'simple-qr.html'
+            destination: 'qr-generator-free.html'
           });
         });
       }
