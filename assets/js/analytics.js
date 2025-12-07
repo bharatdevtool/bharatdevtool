@@ -103,7 +103,17 @@ const ANALYTICS_EVENTS = {
   QR_COPY_URL: 'qr_copy_url',
   QR_HISTORY_EDIT: 'qr_history_edit',
   QR_HISTORY_COPY: 'qr_history_copy',
-  QR_HISTORY_DELETE: 'qr_history_delete'
+  QR_HISTORY_DELETE: 'qr_history_delete',
+  
+  // JSON Diff/Comparison events
+  JSON_DIFF_COMPARE: 'json_diff_compare',
+  JSON_DIFF_FORMAT_BOTH: 'json_diff_format_both',
+  JSON_DIFF_SWAP: 'json_diff_swap',
+  JSON_DIFF_CLEAR: 'json_diff_clear',
+  JSON_DIFF_FULLSCREEN: 'json_diff_fullscreen',
+  JSON_DIFF_UPLOAD_FILE: 'json_diff_upload_file',
+  JSON_DIFF_FETCH_URL: 'json_diff_fetch_url',
+  JSON_DIFF_COMPARE_FAILED: 'json_diff_compare_failed'
 };
 
 // ============================================================================
@@ -360,6 +370,16 @@ const Analytics = {
   trackQrHistoryEdit: (params) => trackEvent(ANALYTICS_EVENTS.QR_HISTORY_EDIT, params),
   trackQrHistoryCopy: (params) => trackEvent(ANALYTICS_EVENTS.QR_HISTORY_COPY, params),
   trackQrHistoryDelete: (params) => trackEvent(ANALYTICS_EVENTS.QR_HISTORY_DELETE, params),
+  
+  // JSON Diff/Comparison event helpers
+  trackJsonDiffCompare: (params) => trackEvent(ANALYTICS_EVENTS.JSON_DIFF_COMPARE, params),
+  trackJsonDiffFormatBoth: (params) => trackEvent(ANALYTICS_EVENTS.JSON_DIFF_FORMAT_BOTH, params),
+  trackJsonDiffSwap: (params) => trackEvent(ANALYTICS_EVENTS.JSON_DIFF_SWAP, params),
+  trackJsonDiffClear: (params) => trackEvent(ANALYTICS_EVENTS.JSON_DIFF_CLEAR, params),
+  trackJsonDiffFullscreen: (params) => trackEvent(ANALYTICS_EVENTS.JSON_DIFF_FULLSCREEN, params),
+  trackJsonDiffUploadFile: (params) => trackEvent(ANALYTICS_EVENTS.JSON_DIFF_UPLOAD_FILE, params),
+  trackJsonDiffFetchUrl: (params) => trackEvent(ANALYTICS_EVENTS.JSON_DIFF_FETCH_URL, params),
+  trackJsonDiffCompareFailed: (params) => trackEvent(ANALYTICS_EVENTS.JSON_DIFF_COMPARE_FAILED, params),
   
   // Generic event tracker
   track: trackEvent

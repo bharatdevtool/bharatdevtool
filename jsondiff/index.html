@@ -1867,6 +1867,14 @@
         const rightVal = validateJSON(rightText, 'right-error');
         
         if (!leftVal.valid || !rightVal.valid) {
+          // Track failed comparison
+          if (typeof window.Analytics !== 'undefined') {
+            window.Analytics.trackJsonDiffCompareFailed({
+              page: 'JSON Comparison Tool',
+              left_valid: leftVal.valid,
+              right_valid: rightVal.valid
+            });
+          }
           return;
         }
         
@@ -1893,9 +1901,31 @@
         
         document.getElementById('comparison-results').classList.remove('hidden');
         setTimeout(() => setupSynchronizedScrolling(), 100);
+        
+        // Track successful comparison
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.trackJsonDiffCompare({
+            page: 'JSON Comparison Tool',
+            left_size: leftText.length,
+            right_size: rightText.length,
+            highlight_values: highlightValues,
+            missing_left: summary.missingLeft,
+            missing_right: summary.missingRight,
+            type_mismatches: summary.typeMismatches,
+            total_differences: summary.missingLeft + summary.missingRight + summary.typeMismatches
+          });
+        }
       } catch (error) {
         console.error('Comparison error:', error);
         alert('Error during comparison: ' + error.message);
+        
+        // Track comparison error
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.trackJsonDiffCompareFailed({
+            page: 'JSON Comparison Tool',
+            error_message: error.message
+          });
+        }
       }
     }
 
@@ -1903,6 +1933,13 @@
       // Theme initialization is handled by theme.js automatically
       
       document.getElementById('format-both-btn').addEventListener('click', () => {
+        // Track format both button click
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.trackJsonDiffFormatBoth({
+            page: 'JSON Comparison Tool'
+          });
+        }
+        
         ['left-json', 'right-json'].forEach(id => {
           const textarea = document.getElementById(id);
           try {
@@ -1913,6 +1950,13 @@
       });
       
       document.getElementById('swap-btn').addEventListener('click', () => {
+        // Track swap button click
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.trackJsonDiffSwap({
+            page: 'JSON Comparison Tool'
+          });
+        }
+        
         const left = document.getElementById('left-json');
         const right = document.getElementById('right-json');
         const temp = left.value;
@@ -1921,6 +1965,13 @@
       });
       
       document.getElementById('clear-btn').addEventListener('click', () => {
+        // Track clear button click
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.trackJsonDiffClear({
+            page: 'JSON Comparison Tool'
+          });
+        }
+        
         document.getElementById('left-json').value = '';
         document.getElementById('right-json').value = '';
         document.getElementById('left-error').classList.add('hidden');
@@ -1929,7 +1980,13 @@
       });
       
       document.getElementById('compare-btn').addEventListener('click', function() {
-        console.log('Compare button clicked');
+        // Track compare button click
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('button_click_compare', {
+            page: 'JSON Comparison Tool'
+          });
+        }
+        
         performComparison();
       });
       
@@ -1966,6 +2023,14 @@
         fullscreenBtn.addEventListener('click', () => {
           const isFullscreen = comparisonCard.classList.toggle('fullscreen');
           fullscreenBtn.textContent = isFullscreen ? '⤢ Exit Full Screen' : '⤢ Full Screen';
+          
+          // Track fullscreen toggle
+          if (typeof window.Analytics !== 'undefined') {
+            window.Analytics.trackJsonDiffFullscreen({
+              page: 'JSON Comparison Tool',
+              is_fullscreen: isFullscreen
+            });
+          }
         });
       }
       
@@ -1997,10 +2062,30 @@
           const file = event.target.files[0];
           if (!file) return;
 
+          // Track file upload
+          if (typeof window.Analytics !== 'undefined') {
+            window.Analytics.trackJsonDiffUploadFile({
+              page: 'JSON Comparison Tool',
+              file_name: file.name,
+              file_size: file.size,
+              file_type: file.type,
+              side: textareaId.includes('left') ? 'left' : 'right'
+            });
+          }
+
           const reader = new FileReader();
           reader.onload = (e) => {
             textarea.value = e.target.result;
             validateJSON(textarea.value, errorId);
+          };
+          reader.onerror = () => {
+            // Track upload failure
+            if (typeof window.Analytics !== 'undefined') {
+              window.Analytics.trackFileUploadFailed({
+                page: 'JSON Comparison Tool',
+                side: textareaId.includes('left') ? 'left' : 'right'
+              });
+            }
           };
           reader.readAsText(file);
         });
@@ -2010,6 +2095,14 @@
           fetchBtn.addEventListener('click', () => {
             const url = prompt('Enter JSON URL');
             if (!url) return;
+
+            // Track URL fetch
+            if (typeof window.Analytics !== 'undefined') {
+              window.Analytics.trackJsonDiffFetchUrl({
+                page: 'JSON Comparison Tool',
+                side: textareaId.includes('left') ? 'left' : 'right'
+              });
+            }
 
             fetch(url)
               .then((r) => r.text())
@@ -2021,6 +2114,15 @@
                 if (errorEl) {
                   errorEl.textContent = `Failed to load JSON: ${err.message}`;
                   errorEl.classList.remove('hidden');
+                }
+                
+                // Track fetch failure
+                if (typeof window.Analytics !== 'undefined') {
+                  window.Analytics.trackUrlFetchFailed({
+                    page: 'JSON Comparison Tool',
+                    side: textareaId.includes('left') ? 'left' : 'right',
+                    error_message: err.message
+                  });
                 }
               });
           });
