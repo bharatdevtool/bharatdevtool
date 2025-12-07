@@ -1013,9 +1013,26 @@ window.addEventListener('resize', () => {
 // --- URL Detection and Click Handling ---
 function isUrl(text) {
   // Remove quotes first
-  const cleanText = text.replace(/^["']|["']$/g, '');
-  const urlRegex = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
-  return urlRegex.test(cleanText);
+  const cleanText = text.replace(/^["']|["']$/g, '').trim();
+  
+  // Try using URL constructor for validation (most reliable)
+  try {
+    // If it already has a protocol, validate directly
+    if (cleanText.match(/^https?:\/\//i)) {
+      new URL(cleanText);
+      return true;
+    }
+    // If no protocol, try adding https://
+    if (cleanText.match(/^[\da-z][\da-z\.-]*\.[a-z]{2,}/i)) {
+      new URL('https://' + cleanText);
+      return true;
+    }
+  } catch (e) {
+    // URL constructor failed, not a valid URL
+    return false;
+  }
+  
+  return false;
 }
 
 function addUrlClickHandlers() {

@@ -268,18 +268,79 @@ function runJSONFormatterTests() {
   });
 
   // URL Detection Tests
-  console.log('\n🧪 Testing URL Detection...\n');
+  console.log('\n🧪 Testing URL Detection in JSON Formatter...\n');
+
+  // Helper function to test URL detection (simulating isUrl function)
+  function testIsUrl(text) {
+    const cleanText = text.replace(/^["']|["']$/g, '').trim();
+    try {
+      if (cleanText.match(/^https?:\/\//i)) {
+        new URL(cleanText);
+        return true;
+      }
+      if (cleanText.match(/^[\da-z][\da-z\.-]*\.[a-z]{2,}/i)) {
+        new URL('https://' + cleanText);
+        return true;
+      }
+    } catch (e) {
+      return false;
+    }
+    return false;
+  }
 
   runTest('URL Detection - HTTP URL', () => {
-    const urlRegex = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
     const url = 'https://example.com';
-    return assertEqual(urlRegex.test(url), true, 'Should detect HTTP URL');
+    return assertEqual(testIsUrl(url), true, 'Should detect HTTPS URL');
   });
 
   runTest('URL Detection - HTTPS URL', () => {
-    const urlRegex = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
     const url = 'https://example.com';
-    return assertEqual(urlRegex.test(url), true, 'Should detect HTTPS URL');
+    return assertEqual(testIsUrl(url), true, 'Should detect HTTPS URL');
+  });
+
+  runTest('URL Detection - URL with query parameters', () => {
+    const url = 'https://www.google.com/maps/dir/?api=1&origin=12.918966000000001,77.63625060000003&destination=12.9759688,77.601646&travelmode=driving';
+    return assertEqual(testIsUrl(url), true, 'Should detect URL with query parameters');
+  });
+
+  runTest('URL Detection - URL with single query parameter', () => {
+    const url = 'https://example.com/page?param=value';
+    return assertEqual(testIsUrl(url), true, 'Should detect URL with single query parameter');
+  });
+
+  runTest('URL Detection - URL with multiple query parameters', () => {
+    const url = 'https://example.com/search?q=test&page=1&sort=date';
+    return assertEqual(testIsUrl(url), true, 'Should detect URL with multiple query parameters');
+  });
+
+  runTest('URL Detection - URL with fragment', () => {
+    const url = 'https://example.com/page#section';
+    return assertEqual(testIsUrl(url), true, 'Should detect URL with fragment');
+  });
+
+  runTest('URL Detection - URL with query and fragment', () => {
+    const url = 'https://example.com/page?param=value#section';
+    return assertEqual(testIsUrl(url), true, 'Should detect URL with query and fragment');
+  });
+
+  runTest('URL Detection - URL with encoded characters', () => {
+    const url = 'https://example.com/search?q=hello%20world&lang=en';
+    return assertEqual(testIsUrl(url), true, 'Should detect URL with encoded characters');
+  });
+
+  runTest('URL Detection - URL with port number', () => {
+    const url = 'https://example.com:8080/path';
+    return assertEqual(testIsUrl(url), true, 'Should detect URL with port number');
+  });
+
+  runTest('URL Detection - Invalid text (not a URL)', () => {
+    const text = 'This is not a URL';
+    return assertEqual(testIsUrl(text), false, 'Should reject non-URL text');
+  });
+
+  runTest('URL Detection - URL in JSON string format', () => {
+    const url = '"https://example.com?param=value"';
+    return assertEqual(testIsUrl(url), true, 'Should detect URL when wrapped in quotes');
   });
 
   // Performance Tests

@@ -755,7 +755,7 @@
       return url
         .replace(/\\/g, '\\\\')  // Escape backslashes first
         .replace(/'/g, "\\'")     // Escape single quotes
-        .replace(/"/g, '&quot;'); // Escape double quotes as HTML entity
+        .replace(/"/g, '\\"');    // Escape double quotes with backslash for JavaScript string context
     }
 
     function updateHistoryDisplay() {
