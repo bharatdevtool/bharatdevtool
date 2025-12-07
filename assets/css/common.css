@@ -131,3 +131,9 @@ footer.site-footer {
     height: 16px;
   }
 }
+
+/* Cursor visibility in dark theme for input and textarea elements */
+[data-theme="dark"] input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]),
+[data-theme="dark"] textarea {
+  caret-color: #e6edf3;
+}

@@ -2,61 +2,67 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://bharatdevtool.com/</loc>
-    <lastmod>2025-11-11</lastmod>
+    <lastmod>2025-12-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://bharatdevtool.com/jsonformatter/</loc>
-    <lastmod>2025-11-11</lastmod>
+    <lastmod>2025-12-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://bharatdevtool.com/jsondiff/</loc>
+    <lastmod>2025-12-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://bharatdevtool.com/about.html</loc>
-    <lastmod>2025-11-11</lastmod>
+    <lastmod>2025-12-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://bharatdevtool.com/privacy.html</loc>
-    <lastmod>2025-11-11</lastmod>
+    <lastmod>2025-12-07</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://bharatdevtool.com/feedback.html</loc>
-    <lastmod>2025-11-11</lastmod>
+    <lastmod>2025-12-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://bharatdevtool.com/simple-qr.html</loc>
-    <lastmod>2025-11-11</lastmod>
+    <loc>https://bharatdevtool.com/qr-generator-free.html</loc>
+    <lastmod>2025-12-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://bharatdevtool.com/qr-decoder.html</loc>
-    <lastmod>2025-11-11</lastmod>
+    <lastmod>2025-12-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://bharatdevtool.com/deeplink.html</loc>
-    <lastmod>2025-11-11</lastmod>
+    <lastmod>2025-12-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://bharatdevtool.com/url-encoder.html</loc>
-    <lastmod>2025-11-11</lastmod>
+    <lastmod>2025-12-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://bharatdevtool.com/tools.html</loc>
-    <lastmod>2025-11-11</lastmod>
+    <lastmod>2025-12-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

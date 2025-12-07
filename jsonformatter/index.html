@@ -24,8 +24,16 @@
   <meta name="twitter:title" content="JSON Formatter, Beautifier & Validator Online | Free Tool">
   <meta name="twitter:description" content="Professional JSON Formatter & Validator. Format, beautify, minify, validate, and repair JSON instantly. Free online tool with syntax highlighting, error detection, and secure processing.">
   <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
-  <link rel="stylesheet" href="../assets/css/style.css">
+
+  <!-- Resource Hints: Preconnect to external domains for faster loading -->
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://js-de.sentry-cdn.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+  <link rel="dns-prefetch" href="https://js-de.sentry-cdn.com">
+
+  <!-- Critical CSS: Load normally for immediate rendering -->
   <link rel="stylesheet" href="../assets/css/common.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
   
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
@@ -33,34 +41,19 @@
   <link rel="apple-touch-icon" sizes="180x180" href="../favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon.svg">
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon.svg">
-
-  <!-- Sentry SDK -->
-  <script
-    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
-    crossorigin="anonymous"
-  ></script>
   
-  <!-- App Configuration -->
+  <!-- App Configuration: Critical, keep in head -->
   <script type="module">
     import { APP_CONFIG } from '../assets/js/config.js';
     window.APP_CONFIG = APP_CONFIG;
   </script>
-  <script src="../assets/js/logo-loader.js"></script>
   
-  <!-- Version Tracking Script -->
-  <script src="../assets/js/version.js"></script>
+  <!-- Theme Management (load early to prevent flash) -->
+  <script src="../assets/js/theme.js"></script>
   
-  <!-- Analytics Script -->
-  <script src="../assets/js/analytics.js"></script>
-  
-  <!-- CodeMirror -->
+  <!-- CodeMirror CSS: Load early for editor styling -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/fold/foldgutter.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/javascript/javascript.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/fold/foldcode.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/fold/foldgutter.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/fold/brace-fold.min.js"></script>
 
   <!-- SEO: Structured data to help search engines understand this web application -->
   <script type="application/ld+json">
@@ -262,7 +255,7 @@
     <span class="v-sep" aria-hidden="true"></span>
     <!-- QR Code Generator Entry Point -->
     <div class="qr-generator">
-      <a href="../simple-qr.html" class="qr-btn" title="QR Code Generator">
+      <a href="../qr-generator-free.html" class="qr-btn" title="QR Code Generator">
         <span class="qr-icon">📱</span>
         <div class="qr-label">
           <span>QR</span>
@@ -271,12 +264,12 @@
       </a>
     </div>
     <span class="v-sep" aria-hidden="true"></span>
-    <!-- Our Developer Tools Link -->
+    <!-- All Tools Link -->
     <div class="tools-link">
-      <a href="tools.html" class="tools-btn" title="Our Developer Tools">
+      <a href="tools.html" class="tools-btn" title="All Tools">
         <span class="tools-icon">🛠️</span>
         <div class="tools-label">
-          <span>Our Developer</span>
+          <span>All</span>
           <span>Tools</span>
         </div>
       </a>
@@ -366,6 +359,7 @@
         <div id="input-editor" class="editor"></div>
         <div id="input-error" class="error" role="status"></div>
         <div class="pane-footer">
+          <span class="validation-indicator" id="input-validation-indicator" aria-label="Validation status"></span>
           <span id="status" class="status">Lines: 0 • Chars: 0</span>
           <span id="file-size-indicator" class="file-size small">0B</span>
         </div>
@@ -393,6 +387,15 @@
           <span class="font-label">Font</span>
           <button id="font-inc" class="icon-btn" title="Increase font size" aria-label="Increase font size" data-tip="Larger">+</button>
         </div>
+        <button
+          id="jsondiff-btn"
+          type="button"
+          class="btn-secondary"
+          title="Compare two JSON documents side-by-side"
+          onclick="window.location.href='jsondiff/';"
+        >
+          JSON Diff
+        </button>
       </div>
 
       <section class="pane output-pane panel">
@@ -432,6 +435,7 @@
         </div>
         <div id="output-editor" class="editor"></div>
         <div class="pane-footer">
+          <span class="validation-indicator" id="output-validation-indicator" aria-label="Validation status"></span>
           <span id="output-status" class="status">Lines: 0 • Chars: 0</span>
           <span id="output-file-size-indicator" class="file-size small">0B</span>
         </div>
@@ -667,6 +671,41 @@
             theme: this.checked ? 'dark' : 'light'
           });
         });
+      }
+    });
+  </script>
+
+  <!-- Non-critical scripts: Load asynchronously to avoid render blocking -->
+  
+  <!-- CodeMirror JS: Load with defer (needed for JSON editor) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/javascript/javascript.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/fold/foldcode.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/fold/foldgutter.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/fold/brace-fold.min.js" defer></script>
+  
+  <!-- Logo Loader: Defer loading -->
+  <script src="../assets/js/logo-loader.js" defer></script>
+
+  <!-- Version Tracking Script: Defer loading -->
+  <script src="../assets/js/version.js" defer></script>
+
+  <!-- Analytics Script: Defer loading -->
+  <script src="../assets/js/analytics.js" defer></script>
+
+  <!-- Sentry SDK: Defer loading -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+
+  <!-- Initialize Sentry with version tracking -->
+  <script>
+    // Wait for Sentry and version.js to load
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
+        initSentryTracking();
       }
     });
   </script>

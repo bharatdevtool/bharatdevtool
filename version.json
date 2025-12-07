@@ -1,10 +1,12 @@
 {
-  "version": "1.2",
-  "buildDate": "2025-11-11",
-  "releaseName": "Initial Release",
+  "version": "1.3",
+  "buildDate": "2025-12-07",
+  "releaseName": "Introduces Json Diff Tool",
   "features": [
     "JSON Formatter",
     "QR Code Generator",
-    "DeepLink Launcher"
+    "DeepLink Launcher",
+    "Json Diff Tool",
+    "Url Encoder/Decoder"
   ]
 }

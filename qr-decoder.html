@@ -55,6 +55,9 @@
   <!-- Analytics Script -->
   <script src="assets/js/analytics.js"></script>
   
+  <!-- Theme Management (load early to prevent flash) -->
+  <script src="assets/js/theme.js"></script>
+  
   <!-- TailwindCSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
@@ -377,9 +380,14 @@
       <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
         🔍 QR Code Decoder
       </h1>
-      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-6">
         Upload QR code images and extract links instantly. Free, fast, and easy to use with history tracking.
       </p>
+      <!-- Generate QR Button -->
+      <a href="qr-generator-free.html" class="inline-flex items-center justify-center px-6 py-3 bg-primary-600 dark:bg-primary-500 text-white rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors font-medium shadow-sm">
+        <span class="mr-2">📱</span>
+        Generate QR Code
+      </a>
     </div>
 
     <!-- Main Upload Panel -->
@@ -399,10 +407,10 @@
                   Click to upload or drag and drop
                 </p>
                 <span class="text-gray-400 dark:text-gray-500">|</span>
-                <button id="start-camera-btn" class="text-lg font-medium text-white bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors cursor-pointer px-4 py-2 rounded-lg shadow-sm">
+                <button type="button" id="start-camera-btn" class="text-lg font-medium text-white bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors cursor-pointer px-4 py-2 rounded-lg shadow-sm">
                   📷 Camera
                 </button>
-                <button id="stop-camera-btn" class="hidden text-lg font-medium text-white bg-red-600 dark:bg-red-500 hover:bg-red-700 dark:hover:bg-red-600 transition-colors cursor-pointer px-4 py-2 rounded-lg shadow-sm" style="pointer-events: auto;">
+                <button type="button" id="stop-camera-btn" class="hidden text-lg font-medium text-white bg-red-600 dark:bg-red-500 hover:bg-red-700 dark:hover:bg-red-600 transition-colors cursor-pointer px-4 py-2 rounded-lg shadow-sm" style="pointer-events: auto;">
                   ⏹️ Stop
                 </button>
               </div>
@@ -596,7 +604,37 @@
   <div id="toast-container"></div>
 
   <!-- QR Code Decoding Library -->
-  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js" 
+          onerror="console.error('Failed to load jsQR from primary CDN'); loadJsQRFallback();"></script>
+  <script>
+    // Fallback loader for jsQR library
+    function loadJsQRFallback() {
+      if (typeof jsQR === 'undefined') {
+        console.log('Attempting to load jsQR from fallback CDN...');
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/jsqr@1.4.0/dist/jsQR.min.js';
+        script.onerror = function() {
+          console.error('Failed to load jsQR from fallback CDN as well');
+        };
+        script.onload = function() {
+          console.log('jsQR loaded successfully from fallback CDN');
+        };
+        document.head.appendChild(script);
+      }
+    }
+    
+    // Verify jsQR library loaded correctly
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        if (typeof jsQR === 'undefined') {
+          console.error('jsQR library failed to load from CDN');
+          loadJsQRFallback();
+        } else {
+          console.log('jsQR library loaded successfully');
+        }
+      }, 1000); // Give CDN time to load
+    });
+  </script>
 
   <!-- FAQ Accordion Script -->
   <script>
@@ -665,19 +703,11 @@
       }
     }
 
-    // Theme management - handled by header.js, but we call initTheme for initial setup
+    // Theme management is now handled by theme.js utility
+    // Removed inline initTheme - using common theme.js instead
     function initTheme() {
-      const saved = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const isDark = saved ? saved === 'dark' : prefersDark;
-      
-      if (isDark) {
-        document.documentElement.classList.add('dark');
-        document.documentElement.setAttribute('data-theme', 'dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-        document.documentElement.setAttribute('data-theme', 'light');
-      }
+      // This function is kept for backward compatibility but does nothing
+      // Theme is initialized by theme.js automatically
     }
 
     // Toast notifications
@@ -862,10 +892,25 @@
           return;
         }
         
-        // Try to decode QR code
-        const code = jsQR(imageData.data, imageData.width, imageData.height, {
-          inversionAttempts: 'dontInvert',
-        });
+        // Validate image data
+        if (!imageData || !imageData.data || imageData.width <= 0 || imageData.height <= 0) {
+          // Continue scanning if image data is invalid
+          scanInterval = requestAnimationFrame(() => scanQRFromVideo(video));
+          return;
+        }
+        
+        // Try to decode QR code - use attemptBoth for maximum compatibility
+        let code;
+        try {
+          code = jsQR(imageData.data, imageData.width, imageData.height, {
+            inversionAttempts: 'attemptBoth', // Try both normal and inverted for better success rate
+          });
+        } catch (decodeError) {
+          console.error('Error during QR decoding from video:', decodeError);
+          // Continue scanning on error
+          scanInterval = requestAnimationFrame(() => scanQRFromVideo(video));
+          return;
+        }
         
         if (code) {
           // QR code found!
@@ -934,12 +979,26 @@
         const img = new Image();
         img.onload = function() {
           try {
+            // Validate image dimensions
+            if (img.width === 0 || img.height === 0) {
+              showToast('Invalid image dimensions. Please try a different image.', 'error');
+              return;
+            }
+            
             // Create canvas to process image
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
+            
+            // Set canvas dimensions to match image
             canvas.width = img.width;
             canvas.height = img.height;
-            ctx.drawImage(img, 0, 0);
+            
+            // Use image smoothing for better quality
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+            
+            // Draw image to canvas
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
             
             // Get image data
             const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -948,13 +1007,32 @@
             if (typeof jsQR === 'undefined') {
               showToast('QR decoding library not loaded. Please refresh the page.', 'error');
               logErrorToSentry(new Error('jsQR library not available'), { tags: { operation: 'library_check' } });
+              console.error('jsQR library is not available. Check if the CDN script loaded correctly.');
               return;
             }
             
-            // Decode QR code
-            const code = jsQR(imageData.data, imageData.width, imageData.height, {
-              inversionAttempts: 'dontInvert',
-            });
+            // Validate image data
+            if (!imageData || !imageData.data || imageData.width <= 0 || imageData.height <= 0) {
+              showToast('Invalid image data. Please try a different image.', 'error');
+              logErrorToSentry(new Error('Invalid image data'), { 
+                tags: { operation: 'invalid_image_data' },
+                extra: { width: imageData?.width, height: imageData?.height }
+              });
+              return;
+            }
+            
+            // Decode QR code - use attemptBoth for maximum compatibility
+            let code;
+            try {
+              code = jsQR(imageData.data, imageData.width, imageData.height, {
+                inversionAttempts: 'attemptBoth', // Try both normal and inverted for better success rate
+              });
+            } catch (decodeError) {
+              console.error('Error during QR decoding:', decodeError);
+              showToast('Error during QR code decoding. Please try a clearer image.', 'error');
+              logErrorToSentry(decodeError, { tags: { operation: 'decode_exception' } });
+              return;
+            }
             
             if (code) {
               // Successfully decoded
@@ -995,17 +1073,26 @@
               
               showToast('QR code decoded successfully!', 'success');
             } else {
-              showToast('Could not decode QR code. Please try a clearer image.', 'error');
+              // Provide more helpful error message
+              const errorMsg = 'Could not decode QR code. ' + 
+                'Please ensure the image is clear, the QR code is not damaged, and try again.';
+              showToast(errorMsg, 'error');
               logErrorToSentry(new Error('QR code decoding failed'), { 
                 tags: { operation: 'decode_failed' },
-                extra: { image_width: img.width, image_height: img.height }
+                extra: { 
+                  image_width: img.width, 
+                  image_height: img.height,
+                  image_type: imageFile?.type || 'unknown'
+                }
               });
               
               // Track decode failure
               if (typeof window.Analytics !== 'undefined') {
                 window.Analytics.trackQrDecodeFailed({
                   page: 'QR Code Decoder',
-                  reason: 'no_qr_found'
+                  reason: 'no_qr_found',
+                  image_width: img.width,
+                  image_height: img.height
                 });
               }
             }
@@ -1276,7 +1363,7 @@
 
     // Event listeners
     document.addEventListener('DOMContentLoaded', function() {
-      initTheme();
+      // Theme initialization is handled by theme.js automatically
       updateHistoryDisplay();
       
       const dropzone = document.getElementById('dropzone');
@@ -1286,20 +1373,38 @@
       const startCameraBtn = document.getElementById('start-camera-btn');
       const stopCameraBtn = document.getElementById('stop-camera-btn');
 
+      // Validate required elements exist
+      if (!dropzone) {
+        console.error('Dropzone element not found');
+        return;
+      }
+      if (!fileInput) {
+        console.error('File input element not found');
+        return;
+      }
+
       // Theme toggle is handled by header.js component
 
-      // Camera buttons
+      // Camera buttons - use capture phase to ensure they fire before dropzone
       if (startCameraBtn) {
         startCameraBtn.addEventListener('click', function(e) {
+          e.preventDefault();
           e.stopPropagation(); // Prevent triggering dropzone click
+          e.stopImmediatePropagation(); // Prevent other handlers
           startCamera();
-        });
+        }, true); // Use capture phase
+      } else {
+        console.error('Start camera button not found');
       }
       if (stopCameraBtn) {
         stopCameraBtn.addEventListener('click', function(e) {
+          e.preventDefault();
           e.stopPropagation(); // Prevent triggering dropzone click
+          e.stopImmediatePropagation(); // Prevent other handlers
           stopCamera();
-        });
+        }, true); // Use capture phase
+      } else {
+        console.error('Stop camera button not found');
       }
 
       // Stop camera when page is unloaded
@@ -1310,13 +1415,28 @@
       });
 
       // Click to upload (only if camera is not active)
-      dropzone.addEventListener('click', function(e) {
-        // Don't open file dialog if camera is active or if clicking on camera buttons
-        if (isScanning || e.target.closest('#start-camera-btn') || e.target.closest('#stop-camera-btn')) {
-          return;
-        }
-        fileInput.click();
-      });
+      if (dropzone && fileInput) {
+        dropzone.addEventListener('click', function(e) {
+          // Don't open file dialog if clicking directly on file input
+          if (e.target === fileInput || e.target.closest('input[type="file"]')) {
+            return;
+          }
+          // Don't open file dialog if camera is active or if clicking on camera buttons
+          const clickedButton = e.target.closest('#start-camera-btn') || e.target.closest('#stop-camera-btn');
+          if (isScanning || clickedButton) {
+            return;
+          }
+          // Trigger file input click
+          try {
+            fileInput.click();
+          } catch (error) {
+            console.error('Error triggering file input click:', error);
+            showToast('Error opening file dialog. Please try again.', 'error');
+          }
+        });
+      } else {
+        console.error('Dropzone or file input not found');
+      }
 
       // File input change
       fileInput.addEventListener('change', function(e) {
@@ -1376,6 +1496,17 @@
 
       // Launch button
       launchBtn.addEventListener('click', launchDecodedLink);
+
+      // Generate QR button tracking
+      const generateQrBtn = document.querySelector('a[href="qr-generator-free.html"]');
+      if (generateQrBtn && typeof window.Analytics !== 'undefined') {
+        generateQrBtn.addEventListener('click', function() {
+          window.Analytics.track('button_click_generate_qr', {
+            page: 'QR Code Decoder',
+            destination: 'qr-generator-free.html'
+          });
+        });
+      }
     });
 
     // Make functions globally available

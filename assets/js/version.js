@@ -5,6 +5,41 @@ let appVersion = {
   releaseName: "Initial Release"
 };
 
+// Track version load failure, waiting for analytics to be available
+function trackVersionLoadFailed(error) {
+  const errorMessage = error.message || String(error);
+  const errorName = error.name || 'VersionLoadError';
+  const errorData = {
+    error_name: errorName,
+    error_message: errorMessage,
+    error_type: 'version_load_error',
+    page: window.getCurrentPageNameForAnalytics ? window.getCurrentPageNameForAnalytics() : 'Unknown',
+    url: window.location.href,
+    default_version: appVersion.version
+  };
+
+  // Wait for Analytics to be available (handles race condition with analytics.js)
+  function waitForAnalyticsAndTrack(maxWait = 2000, checkInterval = 50) {
+    const startTime = Date.now();
+    
+    function checkAnalytics() {
+      if (typeof window !== 'undefined' && window.Analytics && typeof window.Analytics.trackVersionLoadFailed === 'function') {
+        // Analytics is available, track the error
+        window.Analytics.trackVersionLoadFailed(errorData);
+      } else if (Date.now() - startTime < maxWait) {
+        // Analytics not ready yet, check again after interval
+        setTimeout(checkAnalytics, checkInterval);
+      }
+      // If timeout reached, silently fail (analytics not available)
+    }
+    
+    // Start checking
+    checkAnalytics();
+  }
+  
+  waitForAnalyticsAndTrack();
+}
+
 async function loadVersion() {
   try {
     // Add cache busting with timestamp to ensure we get the latest version
@@ -23,19 +58,9 @@ async function loadVersion() {
     }
   } catch (error) {
     // Fallback to default version
-    // Track error in GA4 if analytics is available
-    if (typeof window !== 'undefined' && window.Analytics) {
-      const errorMessage = error.message || String(error);
-      const errorName = error.name || 'VersionLoadError';
-      
-      window.Analytics.trackVersionLoadFailed({
-        error_name: errorName,
-        error_message: errorMessage,
-        error_type: 'version_load_error',
-        page: window.getCurrentPageNameForAnalytics ? window.getCurrentPageNameForAnalytics() : 'Unknown',
-        url: window.location.href,
-        default_version: appVersion.version
-      });
+    // Track error in GA4, waiting for analytics to be available
+    if (typeof window !== 'undefined') {
+      trackVersionLoadFailed(error);
     }
     // Note: Error is tracked in GA4, no console logging to keep console clean
   }

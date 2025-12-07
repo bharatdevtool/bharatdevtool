@@ -57,7 +57,7 @@ class QRTester {
     console.log('\n🧪 Testing URL Parameter Handling...\n');
 
     this.runTest('URL parameter - Basic text parameter', () => {
-      const url = 'simple-qr.html?text=Hello%20World';
+      const url = 'qr-generator-free.html?text=Hello%20World';
       const params = new URLSearchParams(url.split('?')[1]);
       const text = params.get('text');
       const decoded = decodeURIComponent(text);
@@ -65,7 +65,7 @@ class QRTester {
     });
 
     this.runTest('URL parameter - Complex URL parameter', () => {
-      const url = 'simple-qr.html?text=https%3A%2F%2Fexample.com%2Fpath%3Fparam%3Dvalue';
+      const url = 'qr-generator-free.html?text=https%3A%2F%2Fexample.com%2Fpath%3Fparam%3Dvalue';
       const params = new URLSearchParams(url.split('?')[1]);
       const text = params.get('text');
       const decoded = decodeURIComponent(text);
@@ -73,7 +73,7 @@ class QRTester {
     });
 
     this.runTest('URL parameter - Special characters', () => {
-      const url = 'simple-qr.html?text=Test%20%26%20%3C%3E%20%22%20%27';
+      const url = 'qr-generator-free.html?text=Test%20%26%20%3C%3E%20%22%20%27';
       const params = new URLSearchParams(url.split('?')[1]);
       const text = params.get('text');
       const decoded = decodeURIComponent(text);
@@ -81,7 +81,7 @@ class QRTester {
     });
 
     this.runTest('URL parameter - Unicode characters', () => {
-      const url = 'simple-qr.html?text=%E6%B5%8B%E8%AF%95';
+      const url = 'qr-generator-free.html?text=%E6%B5%8B%E8%AF%95';
       const params = new URLSearchParams(url.split('?')[1]);
       const text = params.get('text');
       const decoded = decodeURIComponent(text);
@@ -89,14 +89,14 @@ class QRTester {
     });
 
     this.runTest('URL parameter - Empty parameter', () => {
-      const url = 'simple-qr.html?text=';
+      const url = 'qr-generator-free.html?text=';
       const params = new URLSearchParams(url.split('?')[1]);
       const text = params.get('text');
       return this.assertEqual(text, '', 'Empty parameter should be handled correctly');
     });
 
     this.runTest('URL parameter - Missing parameter', () => {
-      const url = 'simple-qr.html';
+      const url = 'qr-generator-free.html';
       const params = new URLSearchParams(url.split('?')[1] || '');
       const text = params.get('text');
       return this.assertEqual(text, null, 'Missing parameter should return null');

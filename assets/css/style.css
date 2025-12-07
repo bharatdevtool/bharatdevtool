@@ -109,6 +109,7 @@ header {
   align-items: center;
   gap: 8px;
   padding: 6px 12px;
+  min-width: 64px;
   border-radius: 8px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
@@ -173,6 +174,7 @@ header {
   align-items: center;
   gap: 8px;
   padding: 6px 12px;
+  min-width: 64px;
   border-radius: 8px;
   background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
   color: white;
@@ -240,14 +242,16 @@ header {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 12px;
+  padding: 6px 22px;
+  min-width: 64px;
   border-radius: 8px;
   background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: white;
   text-decoration: none;
   font-weight: 500;
   transition: all 0.3s ease;
-  border: none;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
 }
 
@@ -268,6 +272,7 @@ header {
   font-size: 16px;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
 }
 
 .tools-label {
@@ -581,6 +586,7 @@ main {
   margin-left: auto;
   color: var(--muted);
   font-size: 13px;
+  background: transparent;
 }
 
 .pane-footer {
@@ -589,7 +595,33 @@ main {
   justify-content: space-between;
   padding: 8px 12px;
   border-top: 1px solid rgba(0,0,0,0.08);
-  background: var(--panel);
+  background: transparent;
+}
+
+/* Validation indicator in pane-footer */
+.validation-indicator {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.validation-indicator.valid {
+  color: #22c55e;
+}
+
+.validation-indicator.invalid {
+  color: #dc2626;
+}
+
+[data-theme="dark"] .validation-indicator.valid {
+  color: #34d399;
+}
+
+[data-theme="dark"] .validation-indicator.invalid {
+  color: #f87171;
 }
 
 .error {
@@ -657,7 +689,7 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
 .searchbar .icon-search { display: inline; font-size: 12px; }
 .searchbar.active .icon-clear { display: inline; color: var(--fg); }
 .searchbar.active .icon-search { display: none; }
-.searchbar input { width: var(--search-width-collapsed); border:none; outline:none; background: transparent; color: var(--fg); font-size: 12px; transition: width 0.2s ease; }
+.searchbar input { width: var(--search-width-collapsed); border:none; outline:none; background: transparent; color: var(--fg); font-size: 12px; transition: width 0.2s ease; caret-color: var(--fg); }
 .searchbar.active input { width: var(--search-width-expanded); }
 .searchbar .search-count { color: var(--muted); font-size: 12px; }
 .searchbar .icon-btn { width:20px; height:20px; }
@@ -705,6 +737,14 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
 [data-theme="dark"] .CodeMirror-gutters {
   background: var(--panel) !important;
   border-right: 1px solid rgba(255,255,255,0.12) !important;
+}
+
+/* CodeMirror cursor visibility in dark theme */
+[data-theme="dark"] .CodeMirror-cursor {
+  border-left-color: #e6edf3 !important;
+}
+[data-theme="dark"] .CodeMirror-cursor.CodeMirror-overwrite {
+  border-left-color: #e6edf3 !important;
 }
 
 /* Dark theme punctuation - make braces, brackets, commas, colons white */
@@ -903,6 +943,11 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
 .input-pane.valid { background: var(--pane-valid-bg); }
 .input-pane.invalid { background: var(--pane-invalid-bg); }
 
+/* Validity state styling: tint the output pane background */
+.output-pane { transition: background-color 0.25s ease; }
+.output-pane.valid { background: var(--pane-valid-bg); }
+.output-pane.invalid { background: var(--pane-invalid-bg); }
+
 .center-toolbar {
   display: flex;
   flex-direction: column;
@@ -967,6 +1012,7 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 0.8rem;
+  min-width: 64px;
   background: linear-gradient(135deg, #f97316, #ea580c);
   color: white;
   border: none;

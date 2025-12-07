@@ -32,9 +32,11 @@ window.addEventListener("DOMContentLoaded", () => {
     value: defaultGreetingJSON()
   });
 
-  // Output editor change - no styling (only format button gets styling)
+  // Output editor change - update validity and status
   outputEditor.on("change", () => {
-    // No styling for output changes - only format button should have styling
+    updateOutputStatus();
+    updateOutputValidity();
+    updateOutputFileSizeIndicator();
   });
 
   // Track focus for global search
@@ -58,6 +60,8 @@ window.addEventListener("DOMContentLoaded", () => {
   });
   updateStatus();
   updateValidity();
+  updateOutputStatus();
+  updateOutputValidity();
 
   // Buttons
   document.getElementById("format-btn").addEventListener("click", formatHandler);
@@ -99,7 +103,12 @@ window.addEventListener("DOMContentLoaded", () => {
   const outFsBtn = document.getElementById("output-fullscreen-btn");
   if (outDlBtn) outDlBtn.addEventListener("click", toggleDownloadMenu);
   if (outCopyBtn) outCopyBtn.addEventListener("click", () => navigator.clipboard.writeText(outputEditor.getValue()))
-  if (outClearBtn) outClearBtn.addEventListener("click", () => outputEditor.setValue(""));
+  if (outClearBtn) outClearBtn.addEventListener("click", () => {
+    outputEditor.setValue("");
+    updateOutputStatus();
+    updateOutputValidity();
+    updateOutputFileSizeIndicator();
+  });
   if (outFsBtn) outFsBtn.addEventListener("click", () => toggleFullscreen("output-editor"));
   document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
   const bookmarkBtn = document.getElementById("bookmark-btn");
@@ -187,30 +196,52 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 // --- Theme Functions ---
+// Theme management is now handled by theme.js utility
+// These functions are kept for backward compatibility and editor refresh logic
+
 function initTheme() {
-  const saved = localStorage.getItem("theme");
-  if (saved) {
-    document.documentElement.setAttribute("data-theme", saved);
+  // Use ThemeManager if available, otherwise fallback
+  if (typeof window.ThemeManager !== 'undefined') {
+    window.ThemeManager.init();
   } else {
-    // Default to light mode instead of following system theme
-    document.documentElement.setAttribute("data-theme", "light");
+    // Fallback: basic initialization
+    const saved = localStorage.getItem("theme");
+    const theme = saved || "dark"; // Default to dark mode
+    document.documentElement.setAttribute("data-theme", theme);
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
   }
   syncThemeToggleUI();
   updateThemeLabel();
 }
 
 function toggleTheme() {
-  const current = document.documentElement.getAttribute("data-theme");
-  const next = current === "dark" ? "light" : "dark";
-  document.documentElement.setAttribute("data-theme", next);
-  localStorage.setItem("theme", next);
+  // Use ThemeManager if available
+  if (typeof window.ThemeManager !== 'undefined') {
+    window.ThemeManager.toggle();
+  } else {
+    // Fallback: basic toggle
+    const current = document.documentElement.getAttribute("data-theme") || "dark";
+    const next = current === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    localStorage.setItem("theme", next);
+    if (next === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }
+  
   syncThemeToggleUI();
   updateThemeLabel();
   
   // Refresh editors to apply new theme colors
   setTimeout(() => {
-    if (inputEditor) inputEditor.refresh();
-    if (outputEditor) outputEditor.refresh();
+    if (typeof inputEditor !== 'undefined' && inputEditor) inputEditor.refresh();
+    if (typeof outputEditor !== 'undefined' && outputEditor) outputEditor.refresh();
     // No styling on theme change - only format button should have styling
   }, 50);
 }
@@ -218,7 +249,7 @@ function toggleTheme() {
 function syncThemeToggleUI() {
   const control = document.getElementById("theme-toggle");
   if (!control) return;
-  const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+  const isDark = (document.documentElement.getAttribute("data-theme") || "dark") === "dark";
   // When checked -> dark
   if (control.type === "checkbox") {
     control.checked = isDark;
@@ -228,10 +259,22 @@ function syncThemeToggleUI() {
 function updateThemeLabel() {
   const el = document.getElementById("theme-label");
   if (!el) return;
-  const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+  const isDark = (document.documentElement.getAttribute("data-theme") || "dark") === "dark";
   el.innerHTML = isDark
     ? '<span>Switch</span><span>Light mode</span>'
     : '<span>Switch</span><span>Dark mode</span>';
+}
+
+// Listen for theme changes from ThemeManager
+if (typeof window !== 'undefined') {
+  window.addEventListener('themechange', function(e) {
+    syncThemeToggleUI();
+    updateThemeLabel();
+    setTimeout(() => {
+      if (typeof inputEditor !== 'undefined' && inputEditor) inputEditor.refresh();
+      if (typeof outputEditor !== 'undefined' && outputEditor) outputEditor.refresh();
+    }, 50);
+  });
 }
 
 // --- Bookmark dialog ---
@@ -279,16 +322,62 @@ function updateValidity() {
   const errorBox = document.getElementById("input-error");
   const text = inputEditor.getValue();
   const inputPane = document.querySelector('.input-pane');
+  const validationIndicator = document.getElementById('input-validation-indicator');
+  
   if (text.trim().length === 0) {
     if (inputPane) inputPane.classList.remove('valid', 'invalid');
+    if (validationIndicator) {
+      validationIndicator.classList.remove('valid', 'invalid');
+      validationIndicator.textContent = '';
+    }
     errorBox.textContent = "";
     return;
   }
   if (isValidJSON(text)) {
     if (inputPane) { inputPane.classList.add('valid'); inputPane.classList.remove('invalid'); }
+    if (validationIndicator) {
+      validationIndicator.classList.add('valid');
+      validationIndicator.classList.remove('invalid');
+      validationIndicator.textContent = '✔';
+    }
     errorBox.textContent = "";
   } else {
     if (inputPane) { inputPane.classList.add('invalid'); inputPane.classList.remove('valid'); }
+    if (validationIndicator) {
+      validationIndicator.classList.add('invalid');
+      validationIndicator.classList.remove('valid');
+      validationIndicator.textContent = '✖';
+    }
+  }
+}
+
+function updateOutputValidity() {
+  const text = outputEditor.getValue();
+  const outputPane = document.querySelector('.output-pane');
+  const validationIndicator = document.getElementById('output-validation-indicator');
+  
+  if (text.trim().length === 0) {
+    if (outputPane) outputPane.classList.remove('valid', 'invalid');
+    if (validationIndicator) {
+      validationIndicator.classList.remove('valid', 'invalid');
+      validationIndicator.textContent = '';
+    }
+    return;
+  }
+  if (isValidJSON(text)) {
+    if (outputPane) { outputPane.classList.add('valid'); outputPane.classList.remove('invalid'); }
+    if (validationIndicator) {
+      validationIndicator.classList.add('valid');
+      validationIndicator.classList.remove('invalid');
+      validationIndicator.textContent = '✔';
+    }
+  } else {
+    if (outputPane) { outputPane.classList.add('invalid'); outputPane.classList.remove('valid'); }
+    if (validationIndicator) {
+      validationIndicator.classList.add('invalid');
+      validationIndicator.classList.remove('valid');
+      validationIndicator.textContent = '✖';
+    }
   }
 }
 
@@ -349,6 +438,9 @@ function formatHandler() {
     document.getElementById("input-error").textContent = "Empty input";
     outputEditor.setValue(defaultGreetingJSON());
     updateValidity();
+    updateOutputStatus();
+    updateOutputValidity();
+    updateOutputFileSizeIndicator();
     return;
   }
   
@@ -363,16 +455,18 @@ function formatHandler() {
     });
   }
   
-  // Track JSON formatting attempts
-  Sentry.addBreadcrumb({
-    message: 'JSON formatting attempted',
-    category: 'user-action',
-    level: 'info',
-    data: {
-      inputLength: src.length,
-      hasContent: src.trim().length > 0
-    }
-  });
+  // Track JSON formatting attempts (guarded Sentry usage)
+  if (typeof Sentry !== 'undefined' && typeof Sentry.addBreadcrumb === 'function') {
+    Sentry.addBreadcrumb({
+      message: 'JSON formatting attempted',
+      category: 'user-action',
+      level: 'info',
+      data: {
+        inputLength: src.length,
+        hasContent: src.trim().length > 0
+      }
+    });
+  }
   
   // Performance safeguard for large files
   const fileSize = src.length;
@@ -400,6 +494,9 @@ function formatHandler() {
     outputEditor.setValue(formatted);
     document.getElementById("input-error").textContent = "";
     updateValidity();
+    updateOutputStatus();
+    updateOutputValidity();
+    updateOutputFileSizeIndicator();
     
     // Switch back to JSON mode for format
     outputEditor.setOption("mode", "application/json");
@@ -414,10 +511,12 @@ function formatHandler() {
         addColorPreviews();
         updateOutputFileSizeIndicator();
         updateOutputStatus();
+        updateOutputValidity();
       } catch (stylingErr) {
         document.getElementById("input-error").textContent = "Formatted (styling skipped for performance)";
         updateOutputFileSizeIndicator();
         updateOutputStatus();
+        updateOutputValidity();
       }
     }, timeoutDelay);
     return;
@@ -437,19 +536,22 @@ function formatHandler() {
       addColorPreviews();
       updateOutputFileSizeIndicator();
       updateOutputStatus();
+      updateOutputValidity();
     }, 100);
   } catch (err) {
-    // Report JSON formatting errors to Sentry
-    Sentry.captureException(err, {
-      tags: {
-        operation: 'json_format',
-        fileSize: src.length
-      },
-      extra: {
-        inputPreview: src.substring(0, 200) + (src.length > 200 ? '...' : ''),
-        errorMessage: err.message
-      }
-    });
+    // Report JSON formatting errors to Sentry (guarded)
+    if (typeof Sentry !== 'undefined' && typeof Sentry.captureException === 'function') {
+      Sentry.captureException(err, {
+        tags: {
+          operation: 'json_format',
+          fileSize: src.length
+        },
+        extra: {
+          inputPreview: src.substring(0, 200) + (src.length > 200 ? '...' : ''),
+          errorMessage: err.message
+        }
+      });
+    }
     
     // Track format failure in analytics
     if (typeof window.Analytics !== 'undefined') {
@@ -464,6 +566,9 @@ function formatHandler() {
     document.getElementById("input-error").textContent = err.message;
     outputEditor.setValue("// Invalid JSON: " + err.message);
     updateValidity();
+    updateOutputStatus();
+    updateOutputValidity();
+    updateOutputFileSizeIndicator();
   }
 }
 
@@ -473,6 +578,9 @@ function minifyHandler() {
     document.getElementById("input-error").textContent = "Empty input";
     outputEditor.setValue(defaultGreetingJSON());
     updateValidity();
+    updateOutputStatus();
+    updateOutputValidity();
+    updateOutputFileSizeIndicator();
     return;
   }
   
@@ -520,19 +628,22 @@ function minifyHandler() {
     updateValidity();
     updateOutputFileSizeIndicator();
     updateOutputStatus();
+    updateOutputValidity();
     document.getElementById("input-error").textContent = "";
   } catch (err) {
-    // Report minification errors to Sentry
-    Sentry.captureException(err, {
-      tags: {
-        operation: 'json_minify',
-        fileSize: src.length
-      },
-      extra: {
-        inputPreview: src.substring(0, 200) + (src.length > 200 ? '...' : ''),
-        errorMessage: err.message
-      }
-    });
+    // Report minification errors to Sentry (guarded)
+    if (typeof Sentry !== 'undefined' && typeof Sentry.captureException === 'function') {
+      Sentry.captureException(err, {
+        tags: {
+          operation: 'json_minify',
+          fileSize: src.length
+        },
+        extra: {
+          inputPreview: src.substring(0, 200) + (src.length > 200 ? '...' : ''),
+          errorMessage: err.message
+        }
+      });
+    }
     
     // Track minify failure in analytics
     if (typeof window.Analytics !== 'undefined') {
@@ -546,6 +657,9 @@ function minifyHandler() {
     document.getElementById("input-error").textContent = err.message;
     outputEditor.setValue("// Invalid JSON: " + err.message);
     updateValidity();
+    updateOutputStatus();
+    updateOutputValidity();
+    updateOutputFileSizeIndicator();
   }
 }
 
@@ -556,6 +670,9 @@ function escapeHandler() {
   if (text.trim().length === 0) {
     document.getElementById("input-error").textContent = "Empty input";
     outputEditor.setValue(defaultGreetingJSON());
+    updateOutputStatus();
+    updateOutputValidity();
+    updateOutputFileSizeIndicator();
     return;
   }
   
@@ -603,6 +720,7 @@ function escapeHandler() {
     document.getElementById("input-error").textContent = "";
     updateOutputFileSizeIndicator();
     updateOutputStatus();
+    updateOutputValidity();
   } catch (err) {
     // Track escape failure in analytics
     if (typeof window.Analytics !== 'undefined') {
@@ -616,6 +734,7 @@ function escapeHandler() {
     outputEditor.setValue("// Error: " + err.message);
     updateOutputFileSizeIndicator();
     updateOutputStatus();
+    updateOutputValidity();
   }
 }
 
@@ -624,6 +743,9 @@ function unescapeHandler() {
   if (text.trim().length === 0) {
     document.getElementById("input-error").textContent = "Empty input";
     outputEditor.setValue(defaultGreetingJSON());
+    updateOutputStatus();
+    updateOutputValidity();
+    updateOutputFileSizeIndicator();
     return;
   }
   
@@ -671,6 +793,7 @@ function unescapeHandler() {
     document.getElementById("input-error").textContent = "";
     updateOutputFileSizeIndicator();
     updateOutputStatus();
+    updateOutputValidity();
   } catch (err) {
     // Track unescape failure in analytics
     if (typeof window.Analytics !== 'undefined') {
@@ -684,6 +807,7 @@ function unescapeHandler() {
     outputEditor.setValue("// Error: " + err.message);
     updateOutputFileSizeIndicator();
     updateOutputStatus();
+    updateOutputValidity();
   }
 }
 
@@ -695,6 +819,9 @@ function clearHandler() {
   inputEditor.setValue("");
   outputEditor.setValue("");
   updateValidity();
+  updateOutputStatus();
+  updateOutputValidity();
+  updateOutputFileSizeIndicator();
   updatePlaceholder();
 }
 
@@ -886,9 +1013,26 @@ window.addEventListener('resize', () => {
 // --- URL Detection and Click Handling ---
 function isUrl(text) {
   // Remove quotes first
-  const cleanText = text.replace(/^["']|["']$/g, '');
-  const urlRegex = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
-  return urlRegex.test(cleanText);
+  const cleanText = text.replace(/^["']|["']$/g, '').trim();
+  
+  // Try using URL constructor for validation (most reliable)
+  try {
+    // If it already has a protocol, validate directly
+    if (cleanText.match(/^https?:\/\//i)) {
+      new URL(cleanText);
+      return true;
+    }
+    // If no protocol, try adding https://
+    if (cleanText.match(/^[\da-z][\da-z\.-]*\.[a-z]{2,}/i)) {
+      new URL('https://' + cleanText);
+      return true;
+    }
+  } catch (e) {
+    // URL constructor failed, not a valid URL
+    return false;
+  }
+  
+  return false;
 }
 
 function addUrlClickHandlers() {

@@ -67,6 +67,7 @@ const ANALYTICS_EVENTS = {
   BUTTON_CLICK_ESCAPE: 'button_click_escape',
   BUTTON_CLICK_UNESCAPE: 'button_click_unescape',
   BUTTON_CLICK_FULLSCREEN: 'button_click_fullscreen',
+  BUTTON_CLICK_URL_ENCODER: 'button_click_url_encoder',
   BUTTON_CLICK_DEEPLINK_LAUNCHER: 'button_click_deeplink_launcher',
   BUTTON_CLICK_QR_GENERATOR: 'button_click_qr_generator',
   BUTTON_CLICK_BOOKMARK: 'button_click_bookmark',
@@ -102,7 +103,17 @@ const ANALYTICS_EVENTS = {
   QR_COPY_URL: 'qr_copy_url',
   QR_HISTORY_EDIT: 'qr_history_edit',
   QR_HISTORY_COPY: 'qr_history_copy',
-  QR_HISTORY_DELETE: 'qr_history_delete'
+  QR_HISTORY_DELETE: 'qr_history_delete',
+  
+  // JSON Diff/Comparison events
+  JSON_DIFF_COMPARE: 'json_diff_compare',
+  JSON_DIFF_FORMAT_BOTH: 'json_diff_format_both',
+  JSON_DIFF_SWAP: 'json_diff_swap',
+  JSON_DIFF_CLEAR: 'json_diff_clear',
+  JSON_DIFF_FULLSCREEN: 'json_diff_fullscreen',
+  JSON_DIFF_UPLOAD_FILE: 'json_diff_upload_file',
+  JSON_DIFF_FETCH_URL: 'json_diff_fetch_url',
+  JSON_DIFF_COMPARE_FAILED: 'json_diff_compare_failed'
 };
 
 // ============================================================================
@@ -138,7 +149,7 @@ function initGA4() {
   // Initialize dataLayer and gtag function
   window.dataLayer = window.dataLayer || [];
   function gtag() {
-    dataLayer.push(arguments);
+    window.dataLayer.push(arguments);
   }
   window.gtag = gtag;
   gtag('js', new Date());
@@ -322,6 +333,7 @@ const Analytics = {
   trackButtonClickEscape: (params) => trackEvent(ANALYTICS_EVENTS.BUTTON_CLICK_ESCAPE, params),
   trackButtonClickUnescape: (params) => trackEvent(ANALYTICS_EVENTS.BUTTON_CLICK_UNESCAPE, params),
   trackButtonClickFullscreen: (params) => trackEvent(ANALYTICS_EVENTS.BUTTON_CLICK_FULLSCREEN, params),
+  trackButtonClickUrlEncoder: (params) => trackEvent(ANALYTICS_EVENTS.BUTTON_CLICK_URL_ENCODER, params),
   trackButtonClickDeeplinkLauncher: (params) => trackEvent(ANALYTICS_EVENTS.BUTTON_CLICK_DEEPLINK_LAUNCHER, params),
   trackButtonClickQrGenerator: (params) => trackEvent(ANALYTICS_EVENTS.BUTTON_CLICK_QR_GENERATOR, params),
   trackButtonClickBookmark: (params) => trackEvent(ANALYTICS_EVENTS.BUTTON_CLICK_BOOKMARK, params),
@@ -359,6 +371,16 @@ const Analytics = {
   trackQrHistoryCopy: (params) => trackEvent(ANALYTICS_EVENTS.QR_HISTORY_COPY, params),
   trackQrHistoryDelete: (params) => trackEvent(ANALYTICS_EVENTS.QR_HISTORY_DELETE, params),
   
+  // JSON Diff/Comparison event helpers
+  trackJsonDiffCompare: (params) => trackEvent(ANALYTICS_EVENTS.JSON_DIFF_COMPARE, params),
+  trackJsonDiffFormatBoth: (params) => trackEvent(ANALYTICS_EVENTS.JSON_DIFF_FORMAT_BOTH, params),
+  trackJsonDiffSwap: (params) => trackEvent(ANALYTICS_EVENTS.JSON_DIFF_SWAP, params),
+  trackJsonDiffClear: (params) => trackEvent(ANALYTICS_EVENTS.JSON_DIFF_CLEAR, params),
+  trackJsonDiffFullscreen: (params) => trackEvent(ANALYTICS_EVENTS.JSON_DIFF_FULLSCREEN, params),
+  trackJsonDiffUploadFile: (params) => trackEvent(ANALYTICS_EVENTS.JSON_DIFF_UPLOAD_FILE, params),
+  trackJsonDiffFetchUrl: (params) => trackEvent(ANALYTICS_EVENTS.JSON_DIFF_FETCH_URL, params),
+  trackJsonDiffCompareFailed: (params) => trackEvent(ANALYTICS_EVENTS.JSON_DIFF_COMPARE_FAILED, params),
+  
   // Generic event tracker
   track: trackEvent
 };
@@ -370,9 +392,12 @@ const Analytics = {
 const PAGE_NAMES = {
   'index.html': 'JSON Formatter',
   '/': 'JSON Formatter',
+  'jsondiff.html': 'JSON Comparison Tool',
+  '/jsondiff/': 'JSON Comparison Tool',
   'deeplink.html': 'DeepLink Launcher',
   'url-encoder.html': 'Url Encoder/Decoder',
-  'simple-qr.html': 'QR Code Generator',
+  'qr-generator-free.html': 'QR Code Generator',
+  'simple-qr.html': 'QR Code Generator', // Legacy redirect support
   'qr-decoder.html': 'QR Code Decoder',
   'tools.html': 'Our Developer Tools',
   'about.html': 'About',

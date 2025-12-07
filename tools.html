@@ -73,6 +73,9 @@
   <!-- Analytics Script -->
   <script src="assets/js/analytics.js"></script>
   
+  <!-- Theme Management (load early to prevent flash) -->
+  <script src="assets/js/theme.js"></script>
+  
   <!-- Structured Data for SEO -->
   <script type="application/ld+json">
   {
@@ -129,26 +132,38 @@
       {
         "@type": "ListItem",
         "position": 2,
+        "name": "JSON Comparison & Diff Tool",
+        "url": "https://bharatdevtool.com/jsondiff/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
         "name": "DeepLink Launcher",
         "url": "https://bharatdevtool.com/deeplink.html"
       },
       {
         "@type": "ListItem",
-        "position": 3,
+        "position": 4,
         "name": "URL Encoder/Decoder",
         "url": "https://bharatdevtool.com/url-encoder.html"
       },
       {
         "@type": "ListItem",
-        "position": 4,
+        "position": 5,
         "name": "QR Code Generator",
-        "url": "https://bharatdevtool.com/simple-qr.html"
+        "url": "https://bharatdevtool.com/qr-generator-free.html"
       },
       {
         "@type": "ListItem",
-        "position": 5,
+        "position": 6,
         "name": "QR Code Decoder",
         "url": "https://bharatdevtool.com/qr-decoder.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 7,
+        "name": "Suggest Tool",
+        "url": "https://forms.gle/TA7WEhzzQ6csQFGZ7"
       }
     ]
   }
@@ -172,7 +187,7 @@
               <code>https://example.com</code> → QR code image
             </div>
             <div class="feature-actions">
-              <a href="simple-qr.html" class="feature-btn">Try QR Generator →</a>
+              <a href="qr-generator-free.html" class="feature-btn">Try QR Generator →</a>
               <a href="https://www.qrcode.com/en/about/standards.html" target="_blank" rel="noopener noreferrer" class="feature-link">QR Code Standards →</a>
             </div>
           </div>
@@ -204,6 +219,20 @@
               <a href="https://www.json.org/json-en.html" target="_blank" rel="noopener noreferrer" class="feature-link">Learn JSON Specification →</a>
             </div>
           </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🧩</div>
+            <h3 class="feature-title">JSON Comparison & Diff</h3>
+            <p class="feature-description">Compare two JSON documents side-by-side. Highlight missing keys, type mismatches, and value differences in structured JSON responses.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>{\"id\":1,\"name\":\"John\"}</code> ⇄ <code>{\"id\":\"1\",\"fullName\":\"John\"}</code> → Type mismatch & missing keys
+            </div>
+            <div class="feature-actions">
+              <a href="jsondiff/" class="feature-btn">Try JSON Diff →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON" target="_blank" rel="noopener noreferrer" class="feature-link">JSON Basics (MDN) →</a>
+            </div>
+          </div>
           
           <div class="feature-card">
             <div class="feature-icon">🔗</div>
@@ -230,6 +259,19 @@
             <div class="feature-actions">
               <a href="url-encoder.html" class="feature-btn">Try URL Encoder →</a>
               <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent" target="_blank" rel="noopener noreferrer" class="feature-link">URL Encoding Docs →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">💡</div>
+            <h3 class="feature-title">Suggest Tool</h3>
+            <p class="feature-description">Have an idea for a new developer tool? Share your suggestions with us. We'd love to hear what tools would be most helpful for your workflow.</p>
+            <div class="feature-example">
+              <strong>Help us improve:</strong>
+              Share your ideas and feedback to help us build better tools for developers.
+            </div>
+            <div class="feature-actions">
+              <a href="https://forms.gle/TA7WEhzzQ6csQFGZ7" target="_blank" rel="noopener noreferrer" class="feature-btn">Suggest a Tool →</a>
             </div>
           </div>
         </div>
