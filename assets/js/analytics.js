@@ -84,6 +84,18 @@ const ANALYTICS_EVENTS = {
   URL_FETCH_FAILED: 'url_fetch_failed',
   VERSION_LOAD_FAILED: 'version_load_failed',
   
+  // Base64 Encoder/Decoder events
+  BASE64_ENCODE: 'base64_encode',
+  BASE64_DECODE: 'base64_decode',
+  BASE64_COPY: 'base64_copy',
+  BASE64_SWAP: 'base64_swap',
+  BASE64_HISTORY_EDIT: 'base64_history_edit',
+  BASE64_HISTORY_COPY: 'base64_history_copy',
+  BASE64_HISTORY_DELETE: 'base64_history_delete',
+  VALIDATION_ERROR: 'validation_error',
+  ENCODE_ERROR: 'encode_error',
+  DECODE_ERROR: 'decode_error',
+  
   // Deeplink specific button events
   DEEPLINK_ENCODE: 'deeplink_encode',
   DEEPLINK_DECODE: 'deeplink_decode',
@@ -396,6 +408,8 @@ const PAGE_NAMES = {
   '/jsondiff/': 'JSON Comparison Tool',
   'deeplink.html': 'DeepLink Launcher',
   'url-encoder.html': 'Url Encoder/Decoder',
+  'base64.html': 'Base64 Encoder/Decoder',
+  'base64': 'Base64 Encoder/Decoder',
   'qr-generator-free.html': 'QR Code Generator',
   'simple-qr.html': 'QR Code Generator', // Legacy redirect support
   'qr-decoder.html': 'QR Code Decoder',

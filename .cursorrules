@@ -1,0 +1,1210 @@
+# Bharat Dev Tools - Cursor Rules
+
+## Project Overview
+
+This is **Bharat Dev Tools** - a scalable, reusable, high-performance, mobile-first, pure JavaScript developer tools platform. The project uses NO frameworks - only vanilla JavaScript, HTML, and CSS.
+
+**Goal**: Build a scalable, reusable, high-performance, mobile-first, pure JavaScript developer tools platform with shared components, analytics, observability, and strict quality standards.
+
+---
+
+## 1️⃣ Core Principles
+
+Whenever Cursor generates or modifies code, it MUST:
+
+- ✅ Follow **SOLID principles**
+- ✅ Ensure **high reusability**
+- ✅ Maintain **scalable architecture**
+- ✅ Follow **modular structure**
+- ✅ Write **clean, readable, maintainable JavaScript**
+- ✅ Avoid **vendor lock-in**; prefer free & open tech
+- ✅ Favor **performance, UX consistency, and security**
+- ✅ This entire project is **pure JavaScript** — no frameworks unless explicitly requested
+- ✅ **Less coupled code** - Minimize dependencies between modules
+- ✅ **Function names must clearly describe their purpose**
+- ✅ **Reduce complexity** - Minimize if/else nesting (use early returns, guard clauses)
+- ✅ **Comprehensive error tracking** - Log all failures with analytics
+- ✅ **Production-ready code** - All code must be production-ready (no debug code, no console.log, no exposed secrets)
+
+---
+
+## 1️⃣.1 Production Code Standards
+
+**CRITICAL RULES - All code must be production-ready:**
+
+### 1.1.1 No Console Logging
+
+**Rules**:
+- ✅ **NEVER use `console.log()` in production code**
+- ✅ **NEVER use `console.debug()`, `console.info()`, `console.warn()` in production**
+- ✅ **Use analytics tracking instead** for important events
+- ✅ **Use Sentry for error logging** instead of console.error
+- ✅ **Debug code must be wrapped in debug scope** (see below)
+
+**Example - Bad**:
+```javascript
+// ❌ BAD: Console.log in production code
+function formatJSON(text) {
+  console.log('Formatting JSON:', text); // ❌ REMOVE
+  return JSON.stringify(JSON.parse(text), null, 2);
+}
+```
+
+**Example - Good**:
+```javascript
+// ✅ GOOD: Use analytics or remove
+function formatJSON(text) {
+  // Track via analytics if needed
+  if (typeof window.Analytics !== 'undefined') {
+    window.Analytics.trackFormatJson({ input_length: text.length });
+  }
+  return JSON.stringify(JSON.parse(text), null, 2);
+}
+```
+
+### 1.1.2 Debug Code Scope
+
+**Rules**:
+- ✅ **All debug code MUST be wrapped in debug scope**
+- ✅ **Use environment detection** to enable/disable debug code
+- ✅ **Debug code should be removed or disabled in production**
+
+**Debug Scope Pattern**:
+```javascript
+// ✅ GOOD: Debug code in debug scope
+const DEBUG_MODE = window.location.hostname === 'localhost' || 
+                   window.location.hostname === '127.0.0.1' ||
+                   window.location.search.includes('debug=true');
+
+function formatJSON(text) {
+  if (DEBUG_MODE) {
+    console.log('[DEBUG] Formatting JSON:', text.substring(0, 100));
+  }
+  
+  // Production code here
+  return JSON.stringify(JSON.parse(text), null, 2);
+}
+
+// Or use a debug utility
+const Debug = {
+  log: (...args) => {
+    if (DEBUG_MODE) {
+      console.log('[DEBUG]', ...args);
+    }
+  },
+  error: (...args) => {
+    if (DEBUG_MODE) {
+      console.error('[DEBUG]', ...args);
+    }
+  }
+};
+
+// Usage
+Debug.log('Processing input:', input);
+```
+
+### 1.1.3 No Exposed Sensitive Information
+
+**Rules**:
+- ✅ **NEVER expose API keys, secrets, or sensitive data**
+- ✅ **NEVER hardcode credentials** in source code
+- ✅ **NEVER expose internal URLs or endpoints** that shouldn't be public
+- ✅ **NEVER log sensitive user data** (passwords, tokens, PII)
+- ✅ **Use environment variables or config files** for sensitive data (if needed)
+
+**Example - Bad**:
+```javascript
+// ❌ BAD: Exposed API key
+const API_KEY = 'sk_live_1234567890abcdef'; // ❌ NEVER DO THIS
+
+// ❌ BAD: Exposed internal endpoint
+const INTERNAL_API = 'https://internal.company.com/api'; // ❌ NEVER DO THIS
+```
+
+**Example - Good**:
+```javascript
+// ✅ GOOD: Use config with safe defaults
+const API_CONFIG = window.APP_CONFIG?.API_CONFIG || {
+  // Safe defaults or empty
+};
+
+// ✅ GOOD: No sensitive data in code
+// All sensitive data should be server-side or in secure config
+```
+
+### 1.1.4 Bundle Splitting & Code Splitting
+
+**Rules**:
+- ✅ **Implement bundle splitting** for faster page load
+- ✅ **Lazy load non-critical JavaScript** modules
+- ✅ **Split large utilities** into separate files
+- ✅ **Load heavy libraries on demand** (CodeMirror, large dependencies)
+- ✅ **Use dynamic imports** for code splitting
+
+**Bundle Splitting Pattern**:
+```javascript
+// ✅ GOOD: Lazy load heavy dependencies
+async function loadCodeMirror() {
+  if (window.CodeMirror) {
+    return Promise.resolve();
+  }
+  
+  // Load CodeMirror only when needed
+  await Promise.all([
+    loadScript('https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js'),
+    loadScript('https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/javascript/javascript.min.js')
+  ]);
+}
+
+// Load on demand
+document.getElementById('input-editor').addEventListener('focus', async () => {
+  await loadCodeMirror();
+  initializeEditor();
+});
+
+// ✅ GOOD: Dynamic imports for code splitting
+async function loadFormatter() {
+  const { formatJSON, minifyJSON } = await import('./assets/js/formatter.js');
+  return { formatJSON, minifyJSON };
+}
+
+// Use when needed
+const formatter = await loadFormatter();
+formatter.formatJSON(text);
+```
+
+**Script Loading Strategy**:
+```html
+<!-- Critical: Load immediately -->
+<script src="assets/js/theme.js"></script>
+<script type="module" src="assets/js/config.js"></script>
+
+<!-- Non-critical: Defer loading -->
+<script src="assets/js/analytics.js" defer></script>
+<script src="assets/js/version.js" defer></script>
+
+<!-- Heavy libraries: Load on demand or defer -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js" defer></script>
+```
+
+### 1.1.5 Production-Ready Code Checklist
+
+**Before committing, ensure**:
+- ✅ **No console.log statements** (use analytics or debug scope)
+- ✅ **No exposed secrets or sensitive data**
+- ✅ **No debug code** (or wrapped in debug scope)
+- ✅ **No commented-out code** (remove or document why it's there)
+- ✅ **No TODO comments** (complete the task or create an issue)
+- ✅ **No test data or mock data** in production code
+- ✅ **Error handling is complete** (no unhandled errors)
+- ✅ **All code is tested** (unit tests pass)
+- ✅ **Performance is optimized** (bundle splitting, lazy loading)
+- ✅ **Security checks pass** (no XSS vulnerabilities, input validation)
+
+---
+
+## 2️⃣ Code Quality & Architecture
+
+### 2.1 Loose Coupling
+
+**Rules**:
+- ✅ **Minimize dependencies** between modules
+- ✅ **Use dependency injection** where possible
+- ✅ **Avoid circular dependencies**
+- ✅ **Prefer composition over inheritance**
+- ✅ **Use interfaces/contracts** (via JSDoc) to define module boundaries
+- ✅ **Single Responsibility Principle** - Each module/function does one thing
+
+**Example - Good (Loose Coupling)**:
+```javascript
+// formatter.js - Independent module
+export function formatJSON(text) {
+  // No dependencies on other modules
+}
+
+// app.js - Uses formatter but doesn't tightly couple
+import { formatJSON } from './formatter.js';
+function handleFormat() {
+  try {
+    const result = formatJSON(input);
+    // Handle result
+  } catch (error) {
+    logError(error);
+  }
+}
+```
+
+**Example - Bad (Tight Coupling)**:
+```javascript
+// ❌ DON'T: Direct DOM manipulation in utility
+export function formatJSON(text) {
+  document.getElementById('output').value = JSON.stringify(JSON.parse(text));
+  // Tightly coupled to DOM structure
+}
+```
+
+### 2.2 Function Naming Conventions
+
+**Rules**:
+- ✅ **Function names MUST clearly describe what they do**
+- ✅ Use **verb-noun pattern**: `formatJSON`, `validateInput`, `trackEvent`
+- ✅ Use **descriptive names** - Avoid abbreviations unless universally understood
+- ✅ **Boolean functions** should start with `is`, `has`, `can`, `should`: `isValidJSON`, `hasError`
+- ✅ **Event handlers** should end with `Handler`: `formatHandler`, `minifyHandler`
+- ✅ **Utility functions** should be clear: `sanitizeInput`, `debounceFunction`
+
+**Examples**:
+```javascript
+// ✅ GOOD: Clear, descriptive names
+function formatJSONString(input) { }
+function validateUserInput(input) { }
+function trackButtonClickEvent(eventData) { }
+function isInputValid(input) { }
+function hasRequiredFields(formData) { }
+
+// ❌ BAD: Unclear names
+function doStuff(data) { }
+function proc(input) { }
+function check(x) { }
+function handle() { }
+```
+
+### 2.3 Reduce Complexity (Minimize If/Else)
+
+**Rules**:
+- ✅ **Use early returns** to reduce nesting
+- ✅ **Use guard clauses** for validation
+- ✅ **Extract complex conditions** into named functions
+- ✅ **Prefer ternary for simple conditions** (but not nested)
+- ✅ **Use switch statements** for multiple discrete values
+- ✅ **Avoid deeply nested if/else** (max 2-3 levels)
+
+**Example - Good (Early Returns)**:
+```javascript
+// ✅ GOOD: Early returns reduce nesting
+function processInput(input) {
+  if (!input) {
+    logError('Input is empty');
+    return null;
+  }
+  
+  if (!isValidFormat(input)) {
+    logError('Invalid format');
+    return null;
+  }
+  
+  // Main logic here (no nesting)
+  return processValidInput(input);
+}
+
+// ✅ GOOD: Guard clauses
+function formatJSON(text) {
+  if (!text || text.trim().length === 0) return '';
+  if (!isValidJSON(text)) {
+    logValidationError(text);
+    return null;
+  }
+  
+  return JSON.stringify(JSON.parse(text), null, 2);
+}
+```
+
+**Example - Bad (Deep Nesting)**:
+```javascript
+// ❌ BAD: Deep nesting
+function processInput(input) {
+  if (input) {
+    if (isValidFormat(input)) {
+      if (hasRequiredFields(input)) {
+        // Deep nesting - hard to read
+        return processValidInput(input);
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  } else {
+    return null;
+  }
+}
+```
+
+### 2.4 Error Handling & Analytics
+
+**Rules**:
+- ✅ **Every check/logic failure MUST be tracked with analytics**
+- ✅ **Include sufficient context** in error logs (input size, operation type, user action)
+- ✅ **Use consistent error logging pattern**
+- ✅ **Track both user-facing errors and internal failures**
+- ✅ **Include performance metrics** in error context
+
+**Error Tracking Pattern**:
+```javascript
+// ✅ GOOD: Comprehensive error tracking
+function formatJSON(text) {
+  try {
+    if (!text || text.trim().length === 0) {
+      // Track validation failure
+      trackValidationError({
+        operation: 'format_json',
+        error_type: 'empty_input',
+        page: getCurrentPageNameForAnalytics()
+      });
+      return null;
+    }
+    
+    const result = JSON.stringify(JSON.parse(text), null, 2);
+    return result;
+  } catch (error) {
+    // Track parsing failure with context
+    trackFormatError({
+      operation: 'format_json',
+      error_type: error.name,
+      error_message: error.message,
+      input_length: text.length,
+      input_preview: text.substring(0, 100),
+      page: getCurrentPageNameForAnalytics(),
+      timestamp: Date.now()
+    });
+    
+    // Log to Sentry
+    logErrorToSentry(error, {
+      tags: { operation: 'format_json' },
+      extra: { inputLength: text.length }
+    });
+    
+    throw error;
+  }
+}
+
+// Helper function for consistent error tracking
+function trackValidationError(context) {
+  if (typeof window.Analytics !== 'undefined') {
+    window.Analytics.track('validation_error', {
+      ...context,
+      user_agent: navigator.userAgent,
+      viewport: `${window.innerWidth}x${window.innerHeight}`
+    });
+  }
+}
+
+function trackFormatError(context) {
+  if (typeof window.Analytics !== 'undefined') {
+    window.Analytics.track('format_error', context);
+  }
+}
+```
+
+**Required Error Context**:
+- Operation name
+- Error type/name
+- Error message
+- Input data (size, preview - no PII)
+- Page name
+- Timestamp
+- User context (viewport, user agent - no PII)
+
+---
+
+## 3️⃣ Performance Monitoring
+
+### 3.1 Page Load Time Tracking
+
+**Status**: ✅ **Already Implemented** in `/assets/js/analytics.js`
+
+**Implementation**:
+- Page load time is automatically tracked via `getPerformanceMetrics()`
+- Metrics include: `page_load_time`, `dom_processing_time`, `time_to_first_byte`, etc.
+- Tracked on every page view via `trackPageView()`
+
+**Rules**:
+- ✅ **Page load time tracking is automatic** - No additional code needed
+- ✅ **All pages automatically track** performance metrics
+- ✅ **Metrics sent to Google Analytics** with page view events
+
+**Available Metrics** (automatically tracked):
+- `page_load_time` - Total page load time
+- `dom_processing_time` - DOM processing duration
+- `time_to_first_byte` - Server response time
+- `dns_lookup_time` - DNS lookup duration
+- `server_connection_time` - Connection establishment time
+- `download_time` - Resource download time
+- `connection_type` - Network connection type (4g, 3g, etc.)
+
+### 3.2 UI Freeze Detection
+
+**Rules**:
+- ✅ **Implement UI freeze detection** for all heavy operations
+- ✅ **Track freeze duration** in analytics
+- ✅ **Log freeze events** to Sentry
+- ✅ **Threshold**: Log if UI is frozen for > 100ms
+
+**Implementation Pattern**:
+```javascript
+// UI Freeze Detection Utility
+function detectUIFreeze(operationName, operationFunction) {
+  return new Promise((resolve, reject) => {
+    const startTime = performance.now();
+    let lastCheckTime = startTime;
+    let maxFreezeDuration = 0;
+    
+    // Use requestIdleCallback or setTimeout to detect freezes
+    function checkFreeze() {
+      const currentTime = performance.now();
+      const timeSinceLastCheck = currentTime - lastCheckTime;
+      
+      // If more than 100ms passed, UI was likely frozen
+      if (timeSinceLastCheck > 100) {
+        const freezeDuration = timeSinceLastCheck;
+        maxFreezeDuration = Math.max(maxFreezeDuration, freezeDuration);
+        
+        // Track freeze event
+        trackUIFreeze({
+          operation: operationName,
+          freeze_duration_ms: freezeDuration,
+          page: getCurrentPageNameForAnalytics(),
+          timestamp: currentTime
+        });
+        
+        // Log to Sentry
+        if (typeof Sentry !== 'undefined') {
+          Sentry.addBreadcrumb({
+            message: 'UI freeze detected',
+            category: 'performance',
+            level: 'warning',
+            data: {
+              operation: operationName,
+              freezeDuration: freezeDuration,
+              page: getCurrentPageNameForAnalytics()
+            }
+          });
+        }
+      }
+      
+      lastCheckTime = currentTime;
+    }
+    
+    // Check for freezes periodically
+    const checkInterval = setInterval(checkFreeze, 50);
+    
+    // Run the operation
+    try {
+      const result = operationFunction();
+      
+      // If it's a promise, wait for it
+      if (result instanceof Promise) {
+        result.then((data) => {
+          clearInterval(checkInterval);
+          const totalTime = performance.now() - startTime;
+          
+          // Track completion with freeze info
+          if (maxFreezeDuration > 0) {
+            trackOperationComplete({
+              operation: operationName,
+              total_time_ms: totalTime,
+              max_freeze_duration_ms: maxFreezeDuration,
+              page: getCurrentPageNameForAnalytics()
+            });
+          }
+          
+          resolve(data);
+        }).catch((error) => {
+          clearInterval(checkInterval);
+          reject(error);
+        });
+      } else {
+        clearInterval(checkInterval);
+        const totalTime = performance.now() - startTime;
+        
+        if (maxFreezeDuration > 0) {
+          trackOperationComplete({
+            operation: operationName,
+            total_time_ms: totalTime,
+            max_freeze_duration_ms: maxFreezeDuration,
+            page: getCurrentPageNameForAnalytics()
+          });
+        }
+        
+        resolve(result);
+      }
+    } catch (error) {
+      clearInterval(checkInterval);
+      reject(error);
+    }
+  });
+}
+
+// Usage in handlers
+function formatHandler() {
+  const src = inputEditor.getValue();
+  
+  // Wrap heavy operation with freeze detection
+  detectUIFreeze('format_json', () => {
+    return formatJSON(src);
+  }).then((result) => {
+    outputEditor.setValue(result);
+  }).catch((error) => {
+    handleFormatError(error);
+  });
+}
+
+// Analytics helper
+function trackUIFreeze(context) {
+  if (typeof window.Analytics !== 'undefined') {
+    window.Analytics.track('ui_freeze', {
+      ...context,
+      severity: context.freeze_duration_ms > 500 ? 'high' : 'medium'
+    });
+  }
+}
+```
+
+**Alternative: Using Long Task API** (if available):
+```javascript
+// Long Task API for detecting UI freezes
+if ('PerformanceObserver' in window) {
+  try {
+    const observer = new PerformanceObserver((list) => {
+      for (const entry of list.getEntries()) {
+        // Long tasks are > 50ms
+        if (entry.duration > 50) {
+          trackUIFreeze({
+            operation: 'long_task',
+            freeze_duration_ms: entry.duration,
+            page: getCurrentPageNameForAnalytics(),
+            task_name: entry.name || 'unknown'
+          });
+        }
+      }
+    });
+    
+    observer.observe({ entryTypes: ['longtask'] });
+  } catch (e) {
+    // Long Task API not supported
+  }
+}
+```
+
+---
+
+## 4️⃣ Additional Quality Improvements
+
+### 4.1 Code Organization
+
+**Rules**:
+- ✅ **Single Responsibility** - Each function does one thing
+- ✅ **DRY (Don't Repeat Yourself)** - Extract common logic
+- ✅ **KISS (Keep It Simple, Stupid)** - Prefer simple solutions
+- ✅ **YAGNI (You Aren't Gonna Need It)** - Don't over-engineer
+
+### 4.2 Performance Best Practices
+
+**Rules**:
+- ✅ **Debounce user input** - Use debouncing for search, input validation
+- ✅ **Throttle scroll/resize events** - Limit event handler frequency
+- ✅ **Lazy load non-critical resources** - Load on demand
+- ✅ **Use Web Workers** for heavy computations
+- ✅ **Batch DOM updates** - Minimize reflows/repaints
+- ✅ **Cache expensive computations** - Memoize when appropriate
+
+**Example - Debouncing**:
+```javascript
+// ✅ GOOD: Debounced input handler
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+// Usage
+const debouncedSearch = debounce((query) => {
+  performSearch(query);
+  trackSearchEvent({ query, page: getCurrentPageNameForAnalytics() });
+}, 300);
+
+searchInput.addEventListener('input', (e) => {
+  debouncedSearch(e.target.value);
+});
+```
+
+### 4.3 Memory Management
+
+**Rules**:
+- ✅ **Remove event listeners** when components are destroyed
+- ✅ **Clear intervals/timeouts** to prevent memory leaks
+- ✅ **Avoid global variables** - Use modules/namespaces
+- ✅ **Clean up large objects** when no longer needed
+
+**Example**:
+```javascript
+// ✅ GOOD: Cleanup on destroy
+class MyComponent {
+  constructor() {
+    this.handlers = [];
+    this.intervals = [];
+  }
+  
+  addEventListener(element, event, handler) {
+    element.addEventListener(event, handler);
+    this.handlers.push({ element, event, handler });
+  }
+  
+  destroy() {
+    // Clean up event listeners
+    this.handlers.forEach(({ element, event, handler }) => {
+      element.removeEventListener(event, handler);
+    });
+    
+    // Clear intervals
+    this.intervals.forEach(id => clearInterval(id));
+    
+    this.handlers = [];
+    this.intervals = [];
+  }
+}
+```
+
+### 4.4 Accessibility (a11y)
+
+**Rules**:
+- ✅ **Semantic HTML** - Use proper HTML elements
+- ✅ **ARIA labels** - Add aria-label, aria-describedby where needed
+- ✅ **Keyboard navigation** - Ensure all interactive elements are keyboard accessible
+- ✅ **Focus management** - Manage focus for modals, dynamic content
+- ✅ **Screen reader support** - Test with screen readers
+
+### 4.8 UI/UX with Animations
+
+**Rules**:
+- ✅ **Create good UI** with modern, clean design
+- ✅ **Add minor animations** where they enhance UX (not distract)
+- ✅ **Never compromise performance** for animations
+- ✅ **Use CSS animations** (prefer over JavaScript animations)
+- ✅ **Use `transform` and `opacity`** for smooth, performant animations
+- ✅ **Respect `prefers-reduced-motion`** for accessibility
+
+**Animation Best Practices**:
+```css
+/* ✅ GOOD: Performant CSS animations */
+.button {
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.button:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* ✅ GOOD: Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+```
+
+**JavaScript Animation Pattern** (if needed):
+```javascript
+// ✅ GOOD: Use requestAnimationFrame for smooth animations
+function animateElement(element, from, to, duration) {
+  const startTime = performance.now();
+  
+  function animate(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    
+    // Use ease function
+    const eased = easeInOutQuad(progress);
+    const current = from + (to - from) * eased;
+    
+    // Use transform for performance
+    element.style.transform = `translateY(${current}px)`;
+    
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    }
+  }
+  
+  requestAnimationFrame(animate);
+}
+
+// ✅ GOOD: Check for reduced motion preference
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (!prefersReducedMotion) {
+  animateElement(element, 0, 100, 300);
+}
+```
+
+**Animation Guidelines**:
+- ✅ **Subtle hover effects** - Scale, opacity, shadow changes
+- ✅ **Smooth transitions** - Button clicks, form interactions
+- ✅ **Loading states** - Spinner, skeleton screens
+- ✅ **Feedback animations** - Success checkmarks, error shakes
+- ✅ **Page transitions** - Fade in/out (if applicable)
+- ❌ **Avoid**: Heavy animations, too many simultaneous animations
+- ❌ **Avoid**: Animations that block user interaction
+- ❌ **Avoid**: Long-duration animations (> 1 second)
+
+**Performance Considerations**:
+- ✅ Use `will-change` sparingly and remove after animation
+- ✅ Use `transform` and `opacity` (GPU accelerated)
+- ✅ Avoid animating `width`, `height`, `top`, `left` (causes reflow)
+- ✅ Keep animations under 60fps (16.67ms per frame)
+- ✅ Test on low-end devices
+
+### 4.5 Security
+
+**Rules**:
+- ✅ **Input validation** - Validate all user input
+- ✅ **Output encoding** - Escape HTML/JS in output
+- ✅ **CSP headers** - Use Content Security Policy
+- ✅ **XSS prevention** - Never use innerHTML with user input
+- ✅ **CSRF protection** - For any forms/submissions
+
+### 4.6 Testing
+
+**Rules**:
+- ✅ **Unit tests** for all utility functions
+- ✅ **Integration tests** for user flows
+- ✅ **Edge case testing** - Test boundary conditions
+- ✅ **Error scenario testing** - Test error handling
+- ✅ **Performance testing** - Test with large inputs
+
+### 4.7 Documentation
+
+**Rules**:
+- ✅ **JSDoc comments** for all exported functions
+- ✅ **Inline comments** for complex logic
+- ✅ **README updates** for new features
+- ✅ **API documentation** for public functions
+
+**Example - JSDoc**:
+```javascript
+/**
+ * Formats a JSON string with proper indentation
+ * @param {string} text - The JSON string to format
+ * @returns {string} Formatted JSON string
+ * @throws {Error} If input is not valid JSON
+ * @example
+ * const formatted = formatJSON('{"name":"John"}');
+ * // Returns: '{\n  "name": "John"\n}'
+ */
+export function formatJSON(text) {
+  // Implementation
+}
+```
+
+---
+
+## 5️⃣ Project Structure
+
+### Directory Organization
+
+```
+/
+├── assets/
+│   ├── css/
+│   │   ├── common.css          # Theme variables, shared styles
+│   │   └── style.css           # Page-specific styles
+│   ├── js/
+│   │   ├── analytics.js        # GA4 analytics (centralized)
+│   │   ├── app.js              # Main application logic
+│   │   ├── config.js           # App configuration constants
+│   │   ├── formatter.js        # JSON formatting utilities
+│   │   ├── logo-loader.js      # Logo loading utility
+│   │   ├── theme.js            # Theme management
+│   │   └── version.js          # Version tracking & Sentry init
+│   └── img/
+│       └── og/                 # Open Graph images
+├── components/
+│   ├── footer.css              # Footer component styles
+│   ├── footer.js               # Footer component (reusable)
+│   ├── header.css              # Header component styles
+│   └── header.js                # Header component (reusable)
+├── test/
+│   ├── run-all-tests.js        # Comprehensive test runner
+│   ├── run-individual-tests.js # Individual test runner
+│   └── ...                     # Test files
+└── index.html                  # Main pages
+```
+
+### Key Rules
+
+- ✅ **Header & Footer MUST be reused from `/components`**
+- ✅ **Every page must NOT duplicate layout**
+- ✅ **Shared logic MUST live in `/assets/js`**
+- ✅ **Shared logic MUST NEVER be duplicated**
+- ✅ **Do not create unnecessary Markdown documentation**
+
+---
+
+## 6️⃣ Analytics & Observability
+
+### Google Analytics 4 (GA4)
+
+**Configuration**: `/assets/js/analytics.js`
+
+**Rules**:
+- ✅ Every new page MUST include Analytics script
+- ✅ NO inline GA config
+- ✅ NO duplicated GA instances
+- ✅ Analytics automatically disabled on localhost
+- ✅ **Page load time automatically tracked** ✅
+
+**Error Event Tracking**:
+Add these events to `ANALYTICS_EVENTS` in `analytics.js`:
+```javascript
+VALIDATION_ERROR: 'validation_error',
+FORMAT_ERROR: 'format_error',
+UI_FREEZE: 'ui_freeze',
+OPERATION_FAILED: 'operation_failed'
+```
+
+### Sentry Error Tracking
+
+**Rules**:
+- ✅ MUST track crashes, traces & important events
+- ✅ Config in `/assets/js/version.js`
+- ✅ Use `logErrorToSentry()` helper pattern
+- ✅ Include context (tags, extra data)
+
+---
+
+## 7️⃣ Coding Standards
+
+### JavaScript
+
+- ✅ **ES6+ only**
+- ✅ **`const` / `let` ONLY** - No `var`
+- ✅ **Modular code** - Use ES6 modules
+- ✅ **2-space indentation**
+- ✅ **Semicolons required**
+
+### Function Naming
+
+- ✅ **Verb-noun pattern**: `formatJSON`, `validateInput`
+- ✅ **Boolean functions**: `isValid`, `hasError`
+- ✅ **Event handlers**: `formatHandler`, `minifyHandler`
+- ✅ **Clear, descriptive names** - No abbreviations
+
+### Complexity Reduction
+
+- ✅ **Early returns** - Reduce nesting
+- ✅ **Guard clauses** - Validate early
+- ✅ **Extract complex conditions** - Named functions
+- ✅ **Max 2-3 levels of nesting**
+
+---
+
+## 8️⃣ Page Creation Checklist
+
+When creating a new page:
+
+### 8.1 Core Requirements
+
+1. ✅ Include Header + Footer components
+2. ✅ Include Analytics script (defer)
+3. ✅ Include Sentry script (defer)
+4. ✅ Include Theme script
+5. ✅ Add page to `PAGE_NAMES` in `analytics.js`
+6. ✅ Implement UI freeze detection for heavy operations
+7. ✅ Add error tracking with analytics
+8. ✅ Create test file in `/test/`
+9. ✅ Register tests in `run-all-tests.js`
+10. ✅ Ensure mobile responsive
+11. ✅ **Register tool on "Our Developer Tools" page** (`tools.html`) - See Section 8.4
+
+### 8.2 SEO Requirements
+
+**CRITICAL - Every page MUST include:**
+
+1. ✅ **Title with "Free" keyword**:
+   ```html
+   <title>Free [Tool Name] Online | [Description] | No Sign Up Required</title>
+   ```
+   Example: `Free JSON Formatter Online | Beautify, Minify & Validate JSON | No Sign Up`
+
+2. ✅ **Meta Description with "Free" keyword**:
+   ```html
+   <meta name="description" content="Free [tool description]. [Key features]. No sign up required. [Benefits].">
+   ```
+
+3. ✅ **FAQ Section with SEO Keywords**:
+   - ✅ Include **important and common keywords** in FAQ questions
+   - ✅ FAQ should answer **common user queries**
+   - ✅ Use **natural language** with target keywords
+   - ✅ Include **structured data (FAQPage schema)** for rich snippets
+   
+   **FAQ Pattern**:
+   ```html
+   <!-- FAQ Section -->
+   <section class="faq-section" id="faq">
+     <div class="faq-container">
+       <h2 class="section-title">Frequently Asked Questions</h2>
+       <div class="faq-list">
+         <div class="faq-item">
+           <button class="faq-question" aria-expanded="false">
+             <span>What is [tool name] and how does it work?</span>
+             <span class="faq-icon">+</span>
+           </button>
+           <div class="faq-answer">
+             <p>[Answer with keywords naturally integrated]</p>
+           </div>
+         </div>
+         <!-- More FAQ items -->
+       </div>
+     </div>
+   </section>
+   
+   <!-- FAQPage Schema for SEO -->
+   <script type="application/ld+json">
+   {
+     "@context": "https://schema.org",
+     "@type": "FAQPage",
+     "mainEntity": [
+       {
+         "@type": "Question",
+         "name": "What is [tool name]?",
+         "acceptedAnswer": {
+           "@type": "Answer",
+           "text": "[Answer with keywords]"
+         }
+       }
+     ]
+   }
+   </script>
+   ```
+
+4. ✅ **Structured Data (JSON-LD)**:
+   - ✅ WebApplication schema
+   - ✅ BreadcrumbList schema
+   - ✅ FAQPage schema (if FAQ exists)
+   - ✅ HowTo schema (if applicable)
+
+5. ✅ **Open Graph & Twitter Cards**:
+   ```html
+   <meta property="og:title" content="Free [Tool Name] Online | [Description]">
+   <meta property="og:description" content="[Description with Free keyword]">
+   <meta property="og:type" content="website">
+   <meta property="og:url" content="https://bharatdevtool.com/[page].html">
+   <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+   <meta name="twitter:card" content="summary_large_image">
+   ```
+
+6. ✅ **Canonical URL**:
+   ```html
+   <link rel="canonical" href="https://bharatdevtool.com/[page].html">
+   ```
+
+7. ✅ **Sitemap Registration**:
+   - ✅ Add page to `sitemap.xml`
+   - ✅ Ensure proper priority and changefreq
+
+8. ✅ **Robots Meta** (if needed):
+   ```html
+   <meta name="robots" content="index, follow">
+   <meta name="googlebot" content="index, follow">
+   ```
+
+### 8.3 SEO Keyword Strategy
+
+**Title/Subtitle Pattern**:
+- ✅ **Always include "Free"** in title
+- ✅ Include **primary keyword** (tool name)
+- ✅ Include **action keywords** (Online, Tool, Generator, Converter, etc.)
+- ✅ Include **benefit keywords** (No Sign Up, Instant, Secure, etc.)
+
+**Examples**:
+- ✅ `Free JSON Formatter Online | Beautify, Minify & Validate JSON | No Sign Up`
+- ✅ `Free Base64 Encoder/Decoder | Encode & Decode Base64 Online | Instant Results`
+- ✅ `Free QR Code Generator | Create QR Codes Online | No Registration Required`
+
+**FAQ Keywords**:
+- Include questions with: "How to", "What is", "Can I", "Does it"
+- Include answers with: tool name, "free", "online", "no sign up", key features
+- Use natural language, not keyword stuffing
+
+### 8.4 Register Tool on "Our Developer Tools" Page
+
+**CRITICAL - Every new tool MUST be added to `/tools.html`:**
+
+When creating a new tool/page from scratch, you MUST:
+
+1. ✅ **Add Feature Card** to `tools.html`:
+   - Add a new `<div class="feature-card">` in the features grid
+   - Include: icon, title, description, example, action buttons
+   - Follow the existing pattern from other tools
+
+2. ✅ **Update ItemList Schema** in `tools.html`:
+   - Add new entry to the `ItemList` structured data (JSON-LD)
+   - Include: position, name, URL
+   - Update position numbers for all subsequent items
+
+3. ✅ **Feature Card Template**:
+   ```html
+   <div class="feature-card">
+     <div class="feature-icon">[ICON]</div>
+     <h3 class="feature-title">[Tool Name]</h3>
+     <p class="feature-description">[Brief description of what the tool does and its key features]</p>
+     <div class="feature-example">
+       <strong>Example:</strong>
+       <code>[Input example]</code> → <code>[Output example]</code>
+     </div>
+     <div class="feature-actions">
+       <a href="[tool-page].html" class="feature-btn">Try [Tool Name] →</a>
+       <a href="[documentation-url]" target="_blank" rel="noopener noreferrer" class="feature-link">[Documentation Link Text] →</a>
+     </div>
+   </div>
+   ```
+
+4. ✅ **ItemList Schema Entry**:
+   ```json
+   {
+     "@type": "ListItem",
+     "position": [NEXT_NUMBER],
+     "name": "[Tool Name]",
+     "url": "https://bharatdevtool.com/[tool-page].html"
+   }
+   ```
+
+5. ✅ **Icon Selection**:
+   - Choose appropriate emoji icon that represents the tool
+   - Examples: 📄 (JSON), 🔗 (URL/Deeplink), 📱 (QR Code), 🔍 (Decoder), etc.
+
+6. ✅ **Description Guidelines**:
+   - Keep description concise (2-3 sentences)
+   - Highlight key features and benefits
+   - Mention "free" and "online" naturally
+   - Include what makes it useful for developers
+
+**Example - Adding a new Base64 tool**:
+```html
+<!-- Feature Card -->
+<div class="feature-card">
+  <div class="feature-icon">🔐</div>
+  <h3 class="feature-title">Base64 Encoder/Decoder</h3>
+  <p class="feature-description">Encode and decode Base64 strings instantly. Perfect for encoding binary data, API tokens, and data transmission. Supports text, images, and files.</p>
+  <div class="feature-example">
+    <strong>Example:</strong>
+    <code>Hello World</code> → <code>SGVsbG8gV29ybGQ=</code>
+  </div>
+  <div class="feature-actions">
+    <a href="base64.html" class="feature-btn">Try Base64 Encoder →</a>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/API/btoa" target="_blank" rel="noopener noreferrer" class="feature-link">Base64 Docs (MDN) →</a>
+  </div>
+</div>
+```
+
+```json
+// ItemList Schema Entry
+{
+  "@type": "ListItem",
+  "position": 8,
+  "name": "Base64 Encoder/Decoder",
+  "url": "https://bharatdevtool.com/base64.html"
+}
+```
+
+**Checklist**:
+- ✅ Feature card added to `tools.html`
+- ✅ ItemList schema updated in `tools.html`
+- ✅ Icon selected and added
+- ✅ Description written with SEO keywords
+- ✅ Example provided
+- ✅ Action buttons link to correct pages
+- ✅ Documentation link added (if applicable)
+
+---
+
+## 9️⃣ Quality Checklist
+
+Before committing code:
+
+### 9.1 Code Quality
+
+- ✅ **Loose coupling** - Minimal dependencies
+- ✅ **Clear function names** - Self-documenting
+- ✅ **Reduced complexity** - Early returns, guard clauses
+- ✅ **Error tracking** - All failures logged with analytics
+- ✅ **UI freeze detection** - Heavy operations monitored
+- ✅ **Performance** - Debounced/throttled where needed
+- ✅ **Memory management** - Cleanup on destroy
+- ✅ **Accessibility** - ARIA labels, keyboard navigation
+- ✅ **Security** - Input validation, XSS prevention
+- ✅ **Tests** - Unit + integration tests
+- ✅ **Documentation** - JSDoc comments
+
+### 9.2 Production Readiness
+
+- ✅ **No console.log** - Use analytics or debug scope
+- ✅ **No exposed secrets** - No API keys, credentials, sensitive data
+- ✅ **No debug code** - Or wrapped in debug scope
+- ✅ **Bundle splitting** - Code split for faster loads
+- ✅ **Production-ready** - All code is production-ready
+
+### 9.3 SEO & Page Requirements
+
+- ✅ **Title with "Free" keyword** - Attractive, keyword-rich title
+- ✅ **FAQ section** - With important SEO keywords
+- ✅ **Structured data** - JSON-LD schemas (WebApplication, FAQPage, etc.)
+- ✅ **Open Graph tags** - Social media preview
+- ✅ **Canonical URL** - Proper canonical tag
+- ✅ **Sitemap updated** - Page added to sitemap.xml
+- ✅ **Meta description** - With "Free" keyword and benefits
+- ✅ **Tool registered** - Added to "Our Developer Tools" page (`tools.html`)
+
+### 9.4 UI/UX
+
+- ✅ **Good UI design** - Modern, clean, intuitive
+- ✅ **Minor animations** - Subtle, performant animations
+- ✅ **Performance maintained** - No performance degradation
+- ✅ **Mobile responsive** - Works on all devices
+- ✅ **Accessibility** - Keyboard navigation, screen readers
+
+---
+
+## 🎯 Summary
+
+**Core Quality Principles**:
+1. **Less Coupled Code** - Minimize dependencies
+2. **Clear Function Names** - Self-documenting code
+3. **Reduce Complexity** - Early returns, guard clauses
+4. **Comprehensive Error Tracking** - Analytics on all failures
+5. **Page Load Time** - ✅ Already implemented automatically
+6. **UI Freeze Detection** - Monitor and log UI freezes
+
+**Additional Quality**:
+- Performance optimization (debounce, throttle, Web Workers)
+- Memory management (cleanup, no leaks)
+- Accessibility (a11y standards)
+- Security (input validation, XSS prevention)
+- Testing (unit, integration, edge cases)
+- Documentation (JSDoc, inline comments)
+- Production-ready code (no console.log, no secrets, debug scope)
+- Bundle splitting for faster page loads
+- SEO optimization (FAQ, structured data, "Free" keyword)
+- UI/UX with performant animations
+
+**Production Code Standards**:
+1. **No console.log** - Use analytics or debug scope
+2. **No exposed secrets** - Never expose API keys or sensitive data
+3. **Bundle splitting** - Split code for faster loads
+4. **Debug scope** - All debug code in debug scope
+5. **Production-ready** - All code must be production-ready
+
+**Page Creation Requirements**:
+1. **FAQ with SEO keywords** - Include important keywords naturally
+2. **SEO optimization** - Title with "Free", structured data, sitemap
+3. **Good UI with animations** - Modern design with subtle, performant animations
+4. **Register on Tools page** - Add feature card and ItemList entry to `tools.html`
+
+**Remember**: This is a pure JavaScript project. Keep it simple, modular, performant, maintainable, and production-ready.

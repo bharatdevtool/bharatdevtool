@@ -182,6 +182,7 @@
                 <li><strong>JSON Formatter:</strong> Basic formatting, minification, validation, repair, hex colors</li>
                 <li><strong>DeepLink Launcher:</strong> URL encoding/decoding, validation, complex scenarios, edge cases</li>
                 <li><strong>URL Encoder/Decoder:</strong> URL encoding/decoding, special characters, complex URLs, edge cases</li>
+                <li><strong>Base64 Encoder/Decoder:</strong> Base64 encoding/decoding, hex interpretation, escape sequences, URL-safe Base64, padding handling, Unicode support</li>
                 <li><strong>QR Code Generator:</strong> URL parameters, QR generation, share functionality, edge cases</li>
                 <li><strong>QR Code Decoder:</strong> Image decoding, camera support, history management, image compression, launch functionality</li>
             <li><strong>JSON Comparison (Diff):</strong> JSON comparison logic, validation, nested structures, type mismatches, missing keys, value differences, edge cases, and integration points</li>
@@ -1414,6 +1415,260 @@
                 return assertEqual(decoded, shareText, 'Share URL encoding should work correctly');
             });
 
+            // Base64 Encoder/Decoder Tests
+            testOutput += '\n============================================================\n';
+            testOutput += '🧪 Base64 Encoder/Decoder Test Suite\n';
+            testOutput += '====================================\n\n';
+
+            // Base64 helper functions
+            function parseHexString(hexString) {
+                const cleaned = hexString.replace(/[^0-9A-Fa-f]/g, '');
+                if (cleaned.length % 2 !== 0) {
+                    throw new Error('Hex string must have even number of digits');
+                }
+                const bytes = new Uint8Array(cleaned.length / 2);
+                for (let i = 0; i < cleaned.length; i += 2) {
+                    bytes[i / 2] = parseInt(cleaned.substring(i, i + 2), 16);
+                }
+                return bytes;
+            }
+
+            function parseEscapeSequences(text) {
+                return text.replace(/\\x([0-9A-Fa-f]{2})/g, function(match, hex) {
+                    return String.fromCharCode(parseInt(hex, 16));
+                });
+            }
+
+            function stringToBytes(text) {
+                if (typeof TextEncoder !== 'undefined') {
+                    const encoder = new TextEncoder();
+                    return encoder.encode(text);
+                } else {
+                    const bytes = new Uint8Array(text.length);
+                    for (let i = 0; i < text.length; i++) {
+                        bytes[i] = text.charCodeAt(i);
+                    }
+                    return bytes;
+                }
+            }
+
+            function bytesToString(bytes) {
+                if (typeof TextDecoder !== 'undefined') {
+                    const decoder = new TextDecoder('utf-8');
+                    return decoder.decode(bytes);
+                } else {
+                    let str = '';
+                    for (let i = 0; i < bytes.length; i++) {
+                        str += String.fromCharCode(bytes[i]);
+                    }
+                    return str;
+                }
+            }
+
+            function toUrlSafeBase64(base64, stripPadding) {
+                let result = base64.replace(/\+/g, '-').replace(/\//g, '_');
+                if (stripPadding) {
+                    result = result.replace(/=/g, '');
+                }
+                return result;
+            }
+
+            function fromUrlSafeBase64(urlSafeBase64) {
+                let base64 = urlSafeBase64.replace(/-/g, '+').replace(/_/g, '/');
+                const padLength = (4 - (base64.length % 4)) % 4;
+                return base64 + '='.repeat(padLength);
+            }
+
+            function encodeBase64(text, options = {}) {
+                if (!text || text.trim().length === 0) {
+                    return null;
+                }
+                
+                let processedText = text;
+                
+                if (options.interpretEscapes) {
+                    processedText = parseEscapeSequences(processedText);
+                }
+                
+                if (options.interpretHex) {
+                    try {
+                        const bytes = parseHexString(processedText);
+                        let binary = '';
+                        for (let i = 0; i < bytes.length; i++) {
+                            binary += String.fromCharCode(bytes[i]);
+                        }
+                        let base64 = btoa(binary);
+                        
+                        if (options.urlSafe) {
+                            base64 = toUrlSafeBase64(base64, options.stripPadding);
+                        } else if (options.stripPadding) {
+                            base64 = base64.replace(/=/g, '');
+                        }
+                        
+                        return base64;
+                    } catch (hexError) {
+                        // Fall through to text encoding
+                    }
+                }
+                
+                const bytes = stringToBytes(processedText);
+                let binary = '';
+                for (let i = 0; i < bytes.length; i++) {
+                    binary += String.fromCharCode(bytes[i]);
+                }
+                
+                let base64 = btoa(binary);
+                
+                if (options.urlSafe) {
+                    base64 = toUrlSafeBase64(base64, options.stripPadding);
+                } else if (options.stripPadding) {
+                    base64 = base64.replace(/=/g, '');
+                }
+                
+                return base64;
+            }
+
+            function decodeBase64(base64String, options = {}) {
+                if (!base64String || base64String.trim().length === 0) {
+                    return null;
+                }
+                
+                let cleaned = base64String.trim().replace(/\s/g, '');
+                
+                if (options.urlSafe || cleaned.includes('-') || cleaned.includes('_')) {
+                    cleaned = fromUrlSafeBase64(cleaned);
+                }
+                
+                if (!/^[A-Za-z0-9+/]*={0,2}$/.test(cleaned)) {
+                    throw new Error('Invalid Base64 format');
+                }
+                
+                const binaryString = atob(cleaned);
+                const bytes = new Uint8Array(binaryString.length);
+                for (let i = 0; i < binaryString.length; i++) {
+                    bytes[i] = binaryString.charCodeAt(i);
+                }
+                
+                if (typeof TextDecoder !== 'undefined') {
+                    const decoder = new TextDecoder('utf-8');
+                    return decoder.decode(bytes);
+                } else {
+                    return bytesToString(bytes);
+                }
+            }
+
+            testOutput += '🧪 Testing Basic Base64 Encoding...\n\n';
+
+            runTest('Base64 - Basic text encoding', () => {
+                const input = 'Hello World';
+                const encoded = encodeBase64(input);
+                const decoded = decodeBase64(encoded);
+                return assertEqual(decoded, input, 'Base64 encoding/decoding should be reversible');
+            });
+
+            runTest('Base64 - Canonical example "Hello, World!"', () => {
+                const input = 'Hello, World!';
+                const encoded = encodeBase64(input);
+                return assertEqual(encoded, 'SGVsbG8sIFdvcmxkIQ==', 'Canonical example should match');
+            });
+
+            runTest('Base64 - Unicode example "Hello, 世界🌍"', () => {
+                const input = 'Hello, 世界🌍';
+                const encoded = encodeBase64(input);
+                const decoded = decodeBase64(encoded);
+                return assertEqual(decoded, input, 'Unicode example should work');
+            });
+
+            testOutput += '\n🧪 Testing Advanced Features...\n\n';
+
+            runTest('Advanced - Hex as binary encoding', () => {
+                const hexInput = 'FB EF FF FF';
+                const encoded = encodeBase64(hexInput, { interpretHex: true });
+                return assertEqual(encoded, '++///w==', 'Hex string should encode to correct Base64');
+            });
+
+            runTest('Advanced - Hex as text (default)', () => {
+                const hexInput = 'FB EF FF FF';
+                const encoded = encodeBase64(hexInput, { interpretHex: false });
+                return assertEqual(encoded, 'RkIgRUYgRkYgRkY=', 'Hex as text should encode differently');
+            });
+
+            runTest('Advanced - Binary bytes 00-1F', () => {
+                const hexBytes = '00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 10 11 12 13 14 15 16 17 18 19 1A 1B 1C 1D 1E 1F';
+                const encoded = encodeBase64(hexBytes, { interpretHex: true });
+                return assertEqual(encoded, 'AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=', 'Binary bytes should encode correctly');
+            });
+
+            runTest('Advanced - Escape sequences encoding', () => {
+                const escapeInput = '\\x48\\x65\\x6C\\x6C\\x6F';
+                const encoded = encodeBase64(escapeInput, { interpretEscapes: true });
+                return assertEqual(encoded, 'SGVsbG8=', 'Escape sequences should convert to "Hello"');
+            });
+
+            runTest('Advanced - Escape sequences without option', () => {
+                const escapeInput = '\\x48\\x65';
+                const encoded = encodeBase64(escapeInput, { interpretEscapes: false });
+                const decoded = decodeBase64(encoded);
+                return assertContains(decoded, '\\x48', 'Without option, escapes should be literal');
+            });
+
+            runTest('Advanced - URL-safe Base64 encoding', () => {
+                // Use input that produces + and / in Base64
+                const hexInput = 'FB EF FF FF';
+                const standard = encodeBase64(hexInput, { interpretHex: true });
+                const urlSafe = encodeBase64(hexInput, { interpretHex: true, urlSafe: true });
+                // Standard should have + and /, URL-safe should have - and _
+                return assertContains(standard, '+') && assertContains(standard, '/') &&
+                       assertContains(urlSafe, '-') && assertContains(urlSafe, '_') &&
+                       !urlSafe.includes('+') && !urlSafe.includes('/');
+            });
+
+            runTest('Advanced - URL-safe Base64 decoding', () => {
+                const input = 'Hello';
+                const urlSafe = encodeBase64(input, { urlSafe: true });
+                const decoded = decodeBase64(urlSafe, { urlSafe: true });
+                return assertEqual(decoded, input, 'URL-safe Base64 should decode correctly');
+            });
+
+            runTest('Advanced - Strip padding from output', () => {
+                const input = 'Hello';
+                const withoutPadding = encodeBase64(input, { stripPadding: true });
+                return assertEqual(withoutPadding.includes('='), false, 'Padding should be stripped');
+            });
+
+            runTest('Advanced - Decode without padding', () => {
+                const input = 'Hello';
+                const encoded = encodeBase64(input, { stripPadding: true });
+                const decoded = decodeBase64(encoded);
+                return assertEqual(decoded, input, 'Should decode Base64 without padding');
+            });
+
+            runTest('Advanced - Padding variations', () => {
+                const input1 = 'any carnal pleasure.';
+                const input2 = 'any carnal pleasure';
+                const input3 = 'any carnal pleasur';
+                
+                const encoded1 = encodeBase64(input1);
+                const encoded2 = encodeBase64(input2);
+                const encoded3 = encodeBase64(input3);
+                
+                return assertEqual(encoded1, 'YW55IGNhcm5hbCBwbGVhc3VyZS4=') &&
+                       assertEqual(encoded2, 'YW55IGNhcm5hbCBwbGVhc3VyZQ==') &&
+                       assertEqual(encoded3, 'YW55IGNhcm5hbCBwbGVhc3Vy');
+            });
+
+            runTest('Advanced - URL-safe with padding removal', () => {
+                const input = 'Hello';
+                const urlSafe = encodeBase64(input, { urlSafe: true, stripPadding: true });
+                return assertEqual(urlSafe.includes('='), false, 'Padding should be removed from URL-safe');
+            });
+
+            runTest('Advanced - Combined hex and URL-safe', () => {
+                const hexInput = 'FB EF FF FF';
+                const encoded = encodeBase64(hexInput, { interpretHex: true, urlSafe: true });
+                return assertEqual(encoded, '--___w==', 'Hex with URL-safe should work');
+            });
+
             // QR Code Generator Tests
             testOutput += '\n============================================================\n';
             testOutput += '🧪 QR Code Generator Test Suite\n';
@@ -2320,6 +2575,7 @@
                         <li>✅ <strong>JSON Formatter:</strong> Formatting, minification, validation, repair, hex colors</li>
                         <li>✅ <strong>DeepLink Launcher:</strong> URL encoding/decoding, validation, complex scenarios</li>
                         <li>✅ <strong>URL Encoder/Decoder:</strong> URL encoding/decoding, special characters, edge cases</li>
+                        <li>✅ <strong>Base64 Encoder/Decoder:</strong> Base64 encoding/decoding, hex interpretation, escape sequences, URL-safe Base64, padding handling</li>
                         <li>✅ <strong>QR Code Generator:</strong> URL parameters, QR generation, share functionality</li>
                         <li>✅ <strong>QR Code Decoder:</strong> Image decoding, camera support, history management, compression</li>
                         <li>✅ <strong>JSON Comparison (Diff):</strong> JSON comparison logic, validation, nested structures, type mismatches, missing keys, value differences, edge cases</li>

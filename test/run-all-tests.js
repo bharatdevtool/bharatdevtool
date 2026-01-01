@@ -33,6 +33,7 @@ import {
 // Import test classes
 import { DeepLinkTester } from './deeplink-tests.js';
 import { URLEncoderTester } from './url-encoder-tests.js';
+import { Base64Tester } from './base64-tests.js';
 import { QRTester } from './qr-tests.js';
 import { QRDecoderTester } from './qr-decoder-tests.js';
 import { JSONDiffTester } from './jsondiff-tests.js';
@@ -454,6 +455,17 @@ const qrDecoderTester = new QRDecoderTester();
 const qrDecoderResults = qrDecoderTester.runAllTests();
 
 // ============================================================================
+// BASE64 ENCODER/DECODER TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+console.log('BASE64 ENCODER/DECODER TEST SUITE');
+console.log('='.repeat(60));
+
+const base64Tester = new Base64Tester();
+const base64Results = base64Tester.runAllTests();
+
+// ============================================================================
 // JSON COMPARISON (DIFF) TESTS
 // ============================================================================
 
@@ -469,9 +481,9 @@ console.log('\n' + '='.repeat(60));
 console.log('📊 COMPREHENSIVE TEST SUMMARY');
 console.log('='.repeat(60));
 
-const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total;
-const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed;
-const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed;
+const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total;
+const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed;
+const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed;
 
 console.log(`Total Tests: ${grandTotal}`);
 console.log(`✅ Passed: ${grandPassed}`);
@@ -482,6 +494,7 @@ console.log('\n📋 Test Suite Breakdown:');
 console.log(`JSON Formatter: ${totalTests} tests (${totalPassed} passed, ${totalFailed} failed)`);
 console.log(`DeepLink Launcher: ${deeplinkResults.total} tests (${deeplinkResults.passed} passed, ${deeplinkResults.failed} failed)`);
 console.log(`URL Encoder/Decoder: ${urlEncoderResults.total} tests (${urlEncoderResults.passed} passed, ${urlEncoderResults.failed} failed)`);
+console.log(`Base64 Encoder/Decoder: ${base64Results.total} tests (${base64Results.passed} passed, ${base64Results.failed} failed)`);
 console.log(`QR Code Generator: ${qrResults.total} tests (${qrResults.passed} passed, ${qrResults.failed} failed)`);
 console.log(`QR Code Decoder: ${qrDecoderResults.total} tests (${qrDecoderResults.passed} passed, ${qrDecoderResults.failed} failed)`);
 console.log(`JSON Comparison (Diff): ${jsonDiffResults.total} tests (${jsonDiffResults.passed} passed, ${jsonDiffResults.failed} failed)`);
@@ -505,6 +518,11 @@ if (grandFailed === 0) {
   if (urlEncoderResults.failed > 0) {
     console.log('\nURL Encoder/Decoder failures:');
     urlEncoderResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  
+  if (base64Results.failed > 0) {
+    console.log('\nBase64 Encoder/Decoder failures:');
+    base64Results.failedTests.forEach(test => console.log(`   - ${test}`));
   }
   
   if (qrResults.failed > 0) {
