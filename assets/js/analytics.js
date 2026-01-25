@@ -96,6 +96,15 @@ const ANALYTICS_EVENTS = {
   ENCODE_ERROR: 'encode_error',
   DECODE_ERROR: 'decode_error',
   
+  // Regex events
+  TEST_REGEX: 'test_regex',
+  GENERATE_REGEX: 'generate_regex',
+  COPY_REGEX_PATTERN: 'copy_regex_pattern',
+  SELECT_PATTERN_TYPE: 'select_pattern_type',
+  LOAD_TEST_EXAMPLE: 'load_test_example',
+  SEARCH_PATTERNS: 'search_patterns',
+  DOWNLOAD_REGEX_JSON: 'download_regex_json',
+  
   // Deeplink specific button events
   DEEPLINK_ENCODE: 'deeplink_encode',
   DEEPLINK_DECODE: 'deeplink_decode',
@@ -125,7 +134,35 @@ const ANALYTICS_EVENTS = {
   JSON_DIFF_FULLSCREEN: 'json_diff_fullscreen',
   JSON_DIFF_UPLOAD_FILE: 'json_diff_upload_file',
   JSON_DIFF_FETCH_URL: 'json_diff_fetch_url',
-  JSON_DIFF_COMPARE_FAILED: 'json_diff_compare_failed'
+  JSON_DIFF_COMPARE_FAILED: 'json_diff_compare_failed',
+  
+  // Color Picker events
+  COLOR_PICKER_COPY: 'color_picker_copy',
+  COLOR_PICKER_COPY_FAILED: 'color_picker_copy_failed',
+  COLOR_PICKER_LOAD_STATE_FAILED: 'color_picker_load_state_failed',
+  COLOR_PICKER_SAVE_STATE_FAILED: 'color_picker_save_state_failed',
+  COLOR_PICKER_IRO_INITIALIZED: 'color_picker_iro_initialized',
+  COLOR_PICKER_IRO_INIT_FAILED: 'color_picker_iro_init_failed',
+  COLOR_PICKER_IRO_CHANGE_ERROR: 'color_picker_iro_change_error',
+  COLOR_PICKER_INIT_FAILED: 'color_picker_init_failed',
+  IMAGE_UPLOADED: 'image_uploaded',
+  IMAGE_UPLOAD_FAILED: 'image_upload_failed',
+  COLOR_PICKED_FROM_IMAGE: 'color_picked_from_image',
+  DOMINANT_COLORS_EXTRACTED: 'dominant_colors_extracted',
+  DOMINANT_COLORS_EXTRACTION_FAILED: 'dominant_colors_extraction_failed',
+  COLOR_BLINDNESS_UPDATE_FAILED: 'color_blindness_update_failed',
+  KEYBOARD_SHORTCUT_UNDO: 'keyboard_shortcut_undo',
+  KEYBOARD_SHORTCUT_REDO: 'keyboard_shortcut_redo',
+  EXPORT_ASE: 'export_ase',
+  EXPORT_ASE_FAILED: 'export_ase_failed',
+  EXPORT_GPL: 'export_gpl',
+  EXPORT_GPL_FAILED: 'export_gpl_failed',
+  
+  // Gradient Generator events
+  GRADIENT_GENERATOR_COPY: 'gradient_generator_copy',
+  GRADIENT_GENERATOR_COPY_FAILED: 'gradient_generator_copy_failed',
+  GRADIENT_GENERATOR_LOAD_STATE_FAILED: 'gradient_generator_load_state_failed',
+  GRADIENT_GENERATOR_SAVE_STATE_FAILED: 'gradient_generator_save_state_failed'
 };
 
 // ============================================================================
@@ -413,6 +450,11 @@ const PAGE_NAMES = {
   'qr-generator-free.html': 'QR Code Generator',
   'simple-qr.html': 'QR Code Generator', // Legacy redirect support
   'qr-decoder.html': 'QR Code Decoder',
+  'regex-tester.html': 'Regex Tester',
+  'regex-generator.html': 'Regex Generator',
+  'regex-library.html': 'Regex Library',
+  'color-picker.html': 'Color Picker',
+  'gradient-generator.html': 'Gradient Generator',
   'tools.html': 'Our Developer Tools',
   'about.html': 'About',
   'feedback.html': 'Feedback',

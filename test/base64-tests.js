@@ -114,7 +114,8 @@ class Base64Tester {
 
   // Helper function to encode Base64 (matching the implementation)
   encodeBase64(text, options = {}) {
-    if (!text || text.trim().length === 0) {
+    // Only return null for truly empty strings, not whitespace-only strings
+    if (!text || (text.length === 0)) {
       return null;
     }
     
@@ -173,6 +174,10 @@ class Base64Tester {
     if (options.urlSafe || cleaned.includes('-') || cleaned.includes('_')) {
       cleaned = this.fromUrlSafeBase64(cleaned);
     }
+    
+    // Add padding if missing (atob requires proper padding)
+    const padLength = (4 - (cleaned.length % 4)) % 4;
+    cleaned = cleaned + '='.repeat(padLength);
     
     if (!/^[A-Za-z0-9+/]*={0,2}$/.test(cleaned)) {
       throw new Error('Invalid Base64 format');
@@ -297,7 +302,8 @@ class Base64Tester {
       const encoded = this.encodeBase64(original);
       // Remove padding if present
       const cleaned = encoded.replace(/=+$/, '');
-      const decoded = this.decodeBase64(cleaned + '=='); // Add padding back
+      // decodeBase64 should automatically add correct padding
+      const decoded = this.decodeBase64(cleaned);
       return this.assertEqual(decoded, original, 'Base64 without padding should decode correctly');
     });
 

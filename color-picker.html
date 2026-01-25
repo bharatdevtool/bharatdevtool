@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Color Picker Online | HEX, RGB, HSL Color Converter | No Sign Up Required</title>
+  <meta name="description" content="Free Color Picker tool. Pick colors, convert between HEX, RGB, HSL formats. Generate color palettes, check contrast ratios, export CSS variables. Perfect for developers and designers. No sign up required.">
+  <meta name="keywords" content="color picker, hex color, rgb color, hsl color, color converter, color palette generator, color contrast checker, css color, free color picker, online color picker">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <link rel="canonical" href="https://bharatdevtool.com/color-picker.html">
+  
+  <!-- Social preview -->
+  <meta property="og:title" content="Free Color Picker Online | HEX, RGB, HSL Color Converter">
+  <meta property="og:description" content="Professional Color Picker tool. Pick colors, convert formats, generate palettes, check contrast. Free online tool for developers and designers.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/color-picker.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free Color Picker Online | HEX, RGB, HSL Color Converter">
+  <meta name="twitter:description" content="Professional Color Picker tool. Pick colors, convert formats, generate palettes, check contrast. Free online tool for developers and designers.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  
+  <!-- Sentry SDK: Defer loading -->
+  <script src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js" crossorigin="anonymous" defer></script>
+  
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+  
+  <!-- Theme Management -->
+  <script src="assets/js/theme.js"></script>
+  
+  <!-- Version Tracking Script: Defer loading -->
+  <script src="assets/js/version.js" defer></script>
+  
+  <!-- Analytics Script: Defer loading -->
+  <script src="assets/js/analytics.js" defer></script>
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+  
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Color Picker",
+    "description": "Professional Color Picker tool. Pick colors, convert between HEX, RGB, HSL formats. Generate color palettes, check contrast ratios.",
+    "url": "https://bharatdevtool.com/color-picker.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "Color Picker",
+      "HEX to RGB Converter",
+      "RGB to HSL Converter",
+      "Color Palette Generator",
+      "Contrast Ratio Checker",
+      "CSS Variable Export"
+    ]
+  }
+  </script>
+  
+  <!-- BreadcrumbList Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Color Picker",
+        "item": "https://bharatdevtool.com/color-picker.html"
+      }
+    ]
+  }
+  </script>
+  
+  <!-- FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a color picker and how does it work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A color picker is a tool that allows you to select colors visually and convert them between different formats like HEX, RGB, and HSL. Our free color picker tool provides an interactive color wheel, sliders, and input fields to pick any color. You can also paste color codes in any format and the tool will automatically detect and convert them."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I convert HEX to RGB or HSL?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Simply enter a HEX color code (like #FF5733) in the input field, and the tool will automatically convert it to RGB and HSL formats. You can also use the color picker wheel or sliders to select a color, and all formats will update in real-time."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I generate color palettes from a single color?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! Our color picker tool can generate various color palettes from a single color including lighter shades, darker shades, complementary colors, monochrome palettes, split complementary, triadic, and tetradic palettes. It also generates Tailwind-style shades (50-900) and Material Design palettes."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I check color contrast for accessibility?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The tool automatically calculates contrast ratios against white and black backgrounds. It shows whether the color meets WCAG AA and AAA accessibility standards for both normal and large text. This helps ensure your color choices are accessible to all users."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I export colors as CSS variables or Tailwind config?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! The tool provides export options for CSS variables, SCSS variables, Tailwind config snippets, JSON format, Adobe Swatch (.ase), GIMP Palette (.gpl), and Figma JSON. Simply select your color and copy or download the generated code to use in your projects."
+        }
+      }
+    ]
+  }
+  </script>
+  
+  <!-- Custom Styles -->
+  <style>
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      padding: 12px 20px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transform: translateX(120%);
+      transition: transform 0.3s ease;
+    }
+    .toast.show {
+      transform: translateX(0);
+    }
+    .color-preview {
+      width: 100%;
+      height: 120px;
+      border-radius: 12px;
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease;
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      background-color: #4A90E2;
+    }
+    .color-preview:hover {
+      transform: scale(1.02);
+    }
+    .palette-item {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .palette-item:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    .shade-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    .shade-item:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+    .dark .shade-item:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    .shade-color {
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .recent-color-item {
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease;
+    }
+    .recent-color-item:hover {
+      transform: scale(1.15);
+    }
+    .preset-color {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 2px solid rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease;
+    }
+    .preset-color:hover {
+      transform: scale(1.1);
+    }
+    /* iro.js color picker container */
+    #iro-color-picker {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-width: 100%;
+      min-height: 400px;
+      overflow: visible;
+    }
+    
+    /* Ensure iro.js components are visible */
+    #iro-color-picker .IroColorPicker {
+      display: block !important;
+      visibility: visible !important;
+    }
+    
+    /* Mobile responsiveness for iro.js */
+    @media (max-width: 640px) {
+      #iro-color-picker {
+        padding: 0 8px;
+        min-height: 350px;
+      }
+      
+      #iro-color-picker .IroColorPicker {
+        width: 100% !important;
+        max-width: 100%;
+      }
+      
+      #iro-color-picker .IroWheel {
+        width: 100% !important;
+        max-width: 280px;
+        margin: 0 auto;
+      }
+    }
+    
+    /* Dark mode support for iro.js */
+    [data-theme="dark"] #iro-color-picker .IroWheel {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
+    
+    [data-theme="dark"] #iro-color-picker .IroSlider {
+      background: rgba(255, 255, 255, 0.05);
+    }
+    
+    .copy-btn {
+      position: relative;
+    }
+    .copy-btn::after {
+      content: 'Copied!';
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #333;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    .copy-btn.copied::after {
+      opacity: 1;
+    }
+    /* Image picker styles */
+    #image-canvas {
+      display: block;
+      max-height: 500px;
+    }
+    #color-magnifier {
+      position: fixed;
+      z-index: 9999;
+      border: 3px solid white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      pointer-events: none;
+    }
+    #color-magnifier canvas {
+      width: 100%;
+      height: 100%;
+    }
+    .dominant-color-item {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease;
+      position: relative;
+    }
+    .dominant-color-item:hover {
+      transform: scale(1.1);
+    }
+    .dominant-color-item::after {
+      content: attr(data-hex);
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      font-family: monospace;
+      white-space: nowrap;
+    }
+    /* Keyboard shortcuts hint */
+    .keyboard-shortcut {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 6px;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+      font-size: 11px;
+      font-family: monospace;
+    }
+    .dark .keyboard-shortcut {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+  <!-- Header Component Script -->
+  <script src="components/header.js"></script>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- SEO Header -->
+    <h1 class="sr-only">Color Picker - HEX, RGB, HSL Color Converter</h1>
+    
+    <!-- Hero Section -->
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        🎨 Color Picker
+      </h2>
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Pick colors, convert formats, generate palettes, and check contrast ratios. Perfect for developers and designers.
+      </p>
+    </div>
+
+    <!-- Color Picker Section -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mb-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Column 1: Color Wheel, Box & Transparency Slider -->
+        <div>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Color Picker</h3>
+          <div class="flex justify-center">
+            <div id="iro-color-picker"></div>
+          </div>
+          <!-- Transparency Value Display -->
+          <div class="flex items-center justify-center gap-2 mt-4">
+            <div class="text-sm text-gray-600 dark:text-gray-400">Transparency</div>
+            <input type="number" id="transparency-value" min="0" max="100" value="100" class="w-20 px-2 py-1 text-lg font-semibold text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 bg-white dark:bg-gray-700 text-center" title="Transparency percentage (0-100)">
+            <span class="text-sm text-gray-600 dark:text-gray-400">%</span>
+          </div>
+        </div>
+
+        <!-- Column 2: Input Controls -->
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Color Values</h3>
+            <div class="text-xs text-gray-500 dark:text-gray-400">
+              <span class="keyboard-shortcut">⌘Z</span> Undo
+              <span class="keyboard-shortcut ml-2">⌘⇧Z</span> Redo
+            </div>
+          </div>
+          <div class="space-y-4">
+            <!-- HEX Input -->
+            <div>
+              <label for="color-hex" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">HEX</label>
+              <div class="flex gap-2">
+                <div class="flex-1 relative">
+                  <input type="text" id="color-hex" value="#4A90E2" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white font-mono" readonly>
+                  <button id="hex-edit-btn" class="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors" title="Edit HEX color">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                    </svg>
+                  </button>
+                  <button id="hex-done-btn" class="absolute right-2 top-1/2 -translate-y-1/2 hidden px-3 py-1.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors text-sm font-medium" title="Apply HEX color">
+                    Done
+                  </button>
+                </div>
+                <button class="copy-btn px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors" data-copy="">Copy</button>
+              </div>
+              <p id="hex-error-msg" class="mt-1 text-sm text-red-600 dark:text-red-400 hidden"></p>
+            </div>
+
+            <!-- RGB Inputs -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">RGB</label>
+              <div class="flex gap-2">
+                <div class="grid grid-cols-4 gap-2 flex-1">
+                  <input type="number" id="color-r" min="0" max="255" value="74" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                  <input type="number" id="color-g" min="0" max="255" value="144" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                  <input type="number" id="color-b" min="0" max="255" value="226" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                  <input type="number" id="color-a" min="0" max="100" value="100" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white" title="Alpha (0-100%)">
+                </div>
+                <button id="rgb-copy-btn" class="copy-btn px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors" title="Copy RGB value">Copy</button>
+              </div>
+            </div>
+
+            <!-- HSL Inputs -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">HSL</label>
+              <div class="flex gap-2">
+                <div class="grid grid-cols-3 gap-2 flex-1">
+                  <input type="number" id="color-h" min="0" max="360" value="212" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white" title="Hue (0-360)">
+                  <input type="number" id="color-s" min="0" max="100" value="72" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white" title="Saturation (0-100%)">
+                  <input type="number" id="color-l" min="0" max="100" value="59" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white" title="Lightness (0-100%)">
+                </div>
+                <button id="hsl-copy-btn" class="copy-btn px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors" title="Copy HSL value">Copy</button>
+              </div>
+            </div>
+
+            <!-- Result Color Preview -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Result</label>
+              <div id="color-preview" class="color-preview"></div>
+            </div>
+
+            <!-- Recent Colors -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Recent Colors</label>
+              <div id="recent-colors" class="flex gap-2 flex-wrap"></div>
+            </div>
+
+            <!-- Preset Colors -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Preset Colors</label>
+              <div class="flex gap-2 flex-wrap">
+                <div class="preset-color" data-color="#FF5733" style="background-color: #FF5733;"></div>
+                <div class="preset-color" data-color="#0099FF" style="background-color: #0099FF;"></div>
+                <div class="preset-color" data-color="#22C55E" style="background-color: #22C55E;"></div>
+                <div class="preset-color" data-color="#FACC15" style="background-color: #FACC15;"></div>
+                <div class="preset-color" data-color="#9333EA" style="background-color: #9333EA;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Image Upload Section (Below all columns) -->
+      <div class="mt-8">
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">📸 Pick Colors from Image</label>
+        <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 text-center hover:border-primary-500 dark:hover:border-primary-500 transition-colors">
+          <input type="file" id="image-upload" accept="image/*" class="hidden">
+          <label for="image-upload" class="cursor-pointer">
+            <div class="flex flex-col items-center">
+              <svg class="w-10 h-10 text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+              <span class="text-sm text-gray-600 dark:text-gray-400 font-medium">Click to upload image</span>
+              <span class="text-xs text-gray-500 dark:text-gray-500 mt-1">or drag and drop</span>
+              <span class="text-xs text-gray-500 dark:text-gray-500 mt-1">PNG, JPG, GIF up to 10MB</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Image Display with Color Picker (shown after upload) -->
+      <div id="image-picker-container" class="hidden mt-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">📸 Pick Colors from Image</h3>
+          <button id="clear-image-btn" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Clear Image</button>
+        </div>
+        <div class="space-y-4">
+          <div class="relative rounded-lg overflow-hidden border-2 border-gray-300 dark:border-gray-600">
+            <canvas id="image-canvas" class="max-w-full h-auto cursor-crosshair"></canvas>
+            <div id="color-magnifier" class="pointer-events-none hidden border-2 border-white shadow-lg rounded-full overflow-hidden" style="width: 100px; height: 100px;"></div>
+            <div id="picked-color-info" class="absolute top-4 right-4 bg-black bg-opacity-70 text-white px-3 py-2 rounded-lg text-sm font-mono hidden">
+              <div id="picked-color-hex"></div>
+              <div id="picked-color-rgb" class="text-xs mt-1"></div>
+            </div>
+          </div>
+          <div>
+            <button id="extract-dominant-colors-btn" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
+              🎨 Extract Dominant Colors
+            </button>
+          </div>
+          <div id="dominant-colors-container" class="flex gap-2 flex-wrap hidden"></div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Color Palettes Section -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mb-8">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">Generated Palettes</h3>
+      <div class="space-y-6">
+        <!-- Lighter Shades -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Lighter Shades</label>
+          <div id="lighter-shades" class="flex gap-2 flex-wrap"></div>
+        </div>
+        
+        <!-- Darker Shades -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Darker Shades</label>
+          <div id="darker-shades" class="flex gap-2 flex-wrap"></div>
+        </div>
+        
+        <!-- Complementary -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Complementary</label>
+          <div id="complementary" class="flex gap-2 flex-wrap"></div>
+        </div>
+        
+        <!-- Monochrome -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Monochrome</label>
+          <div id="monochrome" class="flex gap-2 flex-wrap"></div>
+        </div>
+        
+        <!-- Split Complementary -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Split Complementary</label>
+          <div id="split-complementary" class="flex gap-2 flex-wrap"></div>
+        </div>
+        
+        <!-- Triadic -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Triadic</label>
+          <div id="triadic" class="flex gap-2 flex-wrap"></div>
+        </div>
+        
+        <!-- Tetradic -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tetradic</label>
+          <div id="tetradic" class="flex gap-2 flex-wrap"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tailwind & Material Palettes -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mb-8">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">Design System Palettes</h3>
+      <div class="space-y-6">
+        <!-- Tailwind Shades -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tailwind Shades (50-900)</label>
+          <div id="tailwind-shades" class="grid grid-cols-2 md:grid-cols-5 gap-2"></div>
+        </div>
+        
+        <!-- Material Palette -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Material Design Palette</label>
+          <div id="material-palette" class="grid grid-cols-2 md:grid-cols-7 gap-2"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Color Blindness Simulator Section -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mb-8">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">👁️ Color Blindness Simulator</h3>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">See how your color appears to people with different types of color blindness</p>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div>
+          <div class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Normal Vision</div>
+          <div id="color-blind-normal" class="w-full h-24 rounded-lg border-2 border-gray-300 dark:border-gray-600"></div>
+        </div>
+        <div>
+          <div class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Protanopia (Red-blind)</div>
+          <div id="color-blind-protanopia" class="w-full h-24 rounded-lg border-2 border-gray-300 dark:border-gray-600"></div>
+        </div>
+        <div>
+          <div class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Deuteranopia (Green-blind)</div>
+          <div id="color-blind-deuteranopia" class="w-full h-24 rounded-lg border-2 border-gray-300 dark:border-gray-600"></div>
+        </div>
+        <div>
+          <div class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tritanopia (Blue-blind)</div>
+          <div id="color-blind-tritanopia" class="w-full h-24 rounded-lg border-2 border-gray-300 dark:border-gray-600"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contrast Checker Section -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mb-8">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Contrast Ratio Checker</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">vs White Background</h4>
+          <div class="space-y-2">
+            <div class="flex justify-between">
+              <span class="text-sm text-gray-600 dark:text-gray-400">Contrast Ratio:</span>
+              <span id="contrast-white" class="font-mono font-semibold">4.5</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-sm text-gray-600 dark:text-gray-400">WCAG AA:</span>
+              <span id="contrast-white-aa" class="font-semibold">✓</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-sm text-gray-600 dark:text-gray-400">WCAG AAA:</span>
+              <span id="contrast-white-aaa" class="font-semibold">✗</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">vs Black Background</h4>
+          <div class="space-y-2">
+            <div class="flex justify-between">
+              <span class="text-sm text-gray-600 dark:text-gray-400">Contrast Ratio:</span>
+              <span id="contrast-black" class="font-mono font-semibold">4.5</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-sm text-gray-600 dark:text-gray-400">WCAG AA:</span>
+              <span id="contrast-black-aa" class="font-semibold">✓</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-sm text-gray-600 dark:text-gray-400">WCAG AAA:</span>
+              <span id="contrast-black-aaa" class="font-semibold">✗</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Export Section -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mb-8">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">💾 Export Code</h3>
+      <div class="space-y-4">
+        <!-- CSS Variables -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">CSS Variables</label>
+          <div class="flex gap-2">
+            <pre id="export-css-vars" class="flex-1 px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg font-mono text-sm overflow-x-auto">--primary: #FF5733;</pre>
+            <button class="copy-btn px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors" data-copy="">Copy</button>
+          </div>
+        </div>
+        
+        <!-- SCSS -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">SCSS Variables</label>
+          <div class="flex gap-2">
+            <pre id="export-scss" class="flex-1 px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg font-mono text-sm overflow-x-auto">$primary: #FF5733;</pre>
+            <button class="copy-btn px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors" data-copy="">Copy</button>
+          </div>
+        </div>
+        
+        <!-- Tailwind Config -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tailwind Config</label>
+          <div class="flex gap-2">
+            <pre id="export-tailwind" class="flex-1 px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg font-mono text-sm overflow-x-auto">colors: { primary: { 500: '#FF5733' } }</pre>
+            <button class="copy-btn px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors" data-copy="">Copy</button>
+          </div>
+        </div>
+        
+        <!-- JSON -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">JSON</label>
+          <div class="flex gap-2">
+            <pre id="export-json" class="flex-1 px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg font-mono text-sm overflow-x-auto">{ "primary": "#FF5733" }</pre>
+            <button class="copy-btn px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors" data-copy="">Copy</button>
+          </div>
+        </div>
+        
+        <!-- Adobe Swatch (ASE) -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Adobe Swatch (.ase)</label>
+          <div class="flex gap-2">
+            <div class="flex-1 px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg text-sm text-gray-600 dark:text-gray-400">
+              Click download to save .ase file for Photoshop/Illustrator
+            </div>
+            <button id="export-ase-btn" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Download</button>
+          </div>
+        </div>
+        
+        <!-- GIMP Palette (GPL) -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">GIMP Palette (.gpl)</label>
+          <div class="flex gap-2">
+            <pre id="export-gpl" class="flex-1 px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg font-mono text-sm overflow-x-auto">GIMP Palette</pre>
+            <button class="copy-btn px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors" data-copy="">Copy</button>
+            <button id="export-gpl-download-btn" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">Download</button>
+          </div>
+        </div>
+        
+        <!-- Figma JSON -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Figma JSON</label>
+          <div class="flex gap-2">
+            <pre id="export-figma" class="flex-1 px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg font-mono text-sm overflow-x-auto">{ "colors": [] }</pre>
+            <button class="copy-btn px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors" data-copy="">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mb-8" id="faq">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Frequently Asked Questions</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>What is a color picker and how does it work?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>A color picker is a tool that allows you to select colors visually and convert them between different formats like HEX, RGB, and HSL. Our free color picker tool provides an interactive color wheel, sliders, and input fields to pick any color. You can also paste color codes in any format and the tool will automatically detect and convert them.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>How do I convert HEX to RGB or HSL?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Simply enter a HEX color code (like #FF5733) in the input field, and the tool will automatically convert it to RGB and HSL formats. You can also use the color picker wheel or sliders to select a color, and all formats will update in real-time.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Can I generate color palettes from a single color?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes! Our color picker tool can generate various color palettes from a single color including lighter shades, darker shades, complementary colors, monochrome palettes, split complementary, triadic, and tetradic palettes. It also generates Tailwind-style shades (50-900) and Material Design palettes.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>How do I check color contrast for accessibility?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>The tool automatically calculates contrast ratios against white and black backgrounds. It shows whether the color meets WCAG AA and AAA accessibility standards for both normal and large text. This helps ensure your color choices are accessible to all users.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Can I export colors as CSS variables or Tailwind config?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes! The tool provides export options for CSS variables, SCSS variables, Tailwind config snippets, JSON format, Adobe Swatch (.ase), GIMP Palette (.gpl), and Figma JSON. Simply select your color and copy or download the generated code to use in your projects.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Can I pick colors from images?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes! You can upload an image and click anywhere on it to pick colors. The tool also provides a magnifier to help you select precise colors. Additionally, you can extract dominant colors from the image automatically with one click.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>What is the color blindness simulator?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>The color blindness simulator shows how your selected color appears to people with different types of color vision deficiencies: Protanopia (red-blind), Deuteranopia (green-blind), and Tritanopia (blue-blind). This helps you ensure your color choices are accessible to all users.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <script>
+      // FAQ expandable/collapsable functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(question => {
+          question.addEventListener('click', function() {
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            const faqItem = this.closest('.faq-item');
+            const answer = faqItem.querySelector('.faq-answer');
+            const icon = this.querySelector('.faq-icon');
+            
+            // Close all other FAQ items
+            faqQuestions.forEach(q => {
+              if (q !== this) {
+                q.setAttribute('aria-expanded', 'false');
+                q.closest('.faq-item').classList.remove('active');
+                q.querySelector('.faq-icon').textContent = '+';
+              }
+            });
+            
+            // Toggle current item
+            if (isExpanded) {
+              this.setAttribute('aria-expanded', 'false');
+              faqItem.classList.remove('active');
+              icon.textContent = '+';
+            } else {
+              this.setAttribute('aria-expanded', 'true');
+              faqItem.classList.add('active');
+              icon.textContent = '−';
+            }
+          });
+        });
+      });
+    </script>
+  </main>
+
+  <!-- Footer Component Script -->
+  <script src="components/footer.js"></script>
+
+  <!-- Color Utilities -->
+  <script src="assets/js/color-utils.js"></script>
+  
+  <!-- Image Color Extractor -->
+  <script src="assets/js/image-color-extractor.js"></script>
+  
+  <!-- Color Blindness Simulator -->
+  <script src="assets/js/color-blindness-simulator.js"></script>
+  
+  <!-- iro.js Color Picker Library (lazy loaded, only on this page) -->
+  <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5/dist/iro.min.js"></script>
+  
+  <!-- Color Picker App -->
+  <script src="assets/js/color-picker-app.js" defer></script>
+</body>
+</html>

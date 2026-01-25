@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Regex Generator Online | Generate Regular Expressions | No Sign Up Required</title>
+  <meta name="description" content="Free Regex Generator. Generate regular expressions for email, phone, URL, username, password, date, UUID and custom patterns. AI-like rule builder with human-readable explanations. No sign up required.">
+  <meta name="keywords" content="regex generator, generate regex, regex builder, regular expression generator, regex pattern generator, free regex generator">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <link rel="canonical" href="https://bharatdevtool.com/regex-generator.html">
+  
+  <!-- Social preview -->
+  <meta property="og:title" content="Free Regex Generator Online | Generate Regular Expressions">
+  <meta property="og:description" content="Generate regular expressions for email, phone, URL, username, password, date, UUID and custom patterns. AI-like rule builder with human-readable explanations.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/regex-generator.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free Regex Generator Online | Generate Regular Expressions">
+  <meta name="twitter:description" content="Generate regular expressions for email, phone, URL, username, password, date, UUID and custom patterns. AI-like rule builder with human-readable explanations.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  
+  <!-- Sentry SDK: Defer loading -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+  
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+  
+  <!-- Theme Management (load early to prevent flash) -->
+  <script src="assets/js/theme.js"></script>
+  
+  <!-- Version Tracking Script: Defer loading -->
+  <script src="assets/js/version.js" defer></script>
+  
+  <!-- Analytics Script: Defer loading -->
+  <script src="assets/js/analytics.js" defer></script>
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+  
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Regex Generator",
+    "description": "Generate regular expressions for email, phone, URL, username, password, date, UUID and custom patterns. AI-like rule builder with human-readable explanations.",
+    "url": "https://bharatdevtool.com/regex-generator.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "Email Regex Generator",
+      "Phone Regex Generator",
+      "URL Regex Generator",
+      "Username Regex Generator",
+      "Password Regex Generator",
+      "Date Regex Generator",
+      "UUID Regex Generator",
+      "Custom Regex Builder"
+    ]
+  }
+  </script>
+  
+  <!-- FAQPage Schema for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a regex generator and how does it work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A regex generator is a tool that creates regular expression patterns based on your requirements. Instead of writing complex regex syntax manually, you can use a rule-based interface to specify what you need (like email validation, phone numbers, etc.) and the tool generates the appropriate regex pattern for you. It also provides human-readable explanations of what the generated pattern does."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What patterns can I generate?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can generate regex patterns for common use cases including email validation, phone numbers (Indian, US, or international), URLs, usernames, passwords (with customizable strength rules), dates (in various formats), UUIDs, and custom patterns with your own rules for character sets, length, and anchors."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I customize the generated patterns?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! Each pattern type has customizable options. For example, you can set minimum and maximum lengths for usernames, specify password requirements (uppercase, lowercase, digits, special characters), choose date formats, and for custom patterns, you have full control over character sets, length constraints, and anchors."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I use the generated regex?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Once generated, you can copy the regex pattern and use it in your code. The tool also provides a direct link to test the generated pattern in the Regex Tester tool. You can download the pattern as a JSON preset for later use or integration into your applications."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is the regex generator free to use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the regex generator is completely free to use with no sign up required. All processing happens in your browser, so your data stays private and secure. You can generate as many regex patterns as you need without any limitations."
+        }
+      }
+    ]
+  }
+  </script>
+  
+  <!-- Custom styles -->
+  <style>
+    .pattern-card {
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .pattern-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 min-h-screen">
+  <!-- Header -->
+  <script src="components/header.js"></script>
+  
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Page Header -->
+    <div class="text-center mb-8 animate-fade-in">
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        Free Regex Generator Online
+      </h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Generate regular expressions for common patterns like email, phone, URL, username, password, date, UUID and custom patterns. AI-like rule builder with human-readable explanations.
+      </p>
+    </div>
+    
+    <!-- Pattern Type Selector -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
+      <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+        Select Pattern Type
+      </h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <button
+          class="pattern-type-btn pattern-card p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border-2 border-transparent hover:border-primary-500 transition-all"
+          data-type="email"
+        >
+          <div class="text-2xl mb-2">📧</div>
+          <div class="font-medium text-gray-900 dark:text-white">Email</div>
+        </button>
+        <button
+          class="pattern-type-btn pattern-card p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border-2 border-transparent hover:border-primary-500 transition-all"
+          data-type="phone"
+        >
+          <div class="text-2xl mb-2">📱</div>
+          <div class="font-medium text-gray-900 dark:text-white">Phone</div>
+        </button>
+        <button
+          class="pattern-type-btn pattern-card p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border-2 border-transparent hover:border-primary-500 transition-all"
+          data-type="url"
+        >
+          <div class="text-2xl mb-2">🔗</div>
+          <div class="font-medium text-gray-900 dark:text-white">URL</div>
+        </button>
+        <button
+          class="pattern-type-btn pattern-card p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border-2 border-transparent hover:border-primary-500 transition-all"
+          data-type="username"
+        >
+          <div class="text-2xl mb-2">👤</div>
+          <div class="font-medium text-gray-900 dark:text-white">Username</div>
+        </button>
+        <button
+          class="pattern-type-btn pattern-card p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border-2 border-transparent hover:border-primary-500 transition-all"
+          data-type="password"
+        >
+          <div class="text-2xl mb-2">🔒</div>
+          <div class="font-medium text-gray-900 dark:text-white">Password</div>
+        </button>
+        <button
+          class="pattern-type-btn pattern-card p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border-2 border-transparent hover:border-primary-500 transition-all"
+          data-type="date"
+        >
+          <div class="text-2xl mb-2">📅</div>
+          <div class="font-medium text-gray-900 dark:text-white">Date</div>
+        </button>
+        <button
+          class="pattern-type-btn pattern-card p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border-2 border-transparent hover:border-primary-500 transition-all"
+          data-type="uuid"
+        >
+          <div class="text-2xl mb-2">🆔</div>
+          <div class="font-medium text-gray-900 dark:text-white">UUID</div>
+        </button>
+        <button
+          class="pattern-type-btn pattern-card p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border-2 border-transparent hover:border-primary-500 transition-all"
+          data-type="custom"
+        >
+          <div class="text-2xl mb-2">⚙️</div>
+          <div class="font-medium text-gray-900 dark:text-white">Custom</div>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Options Panel (Hidden by default) -->
+    <div id="options-panel" class="hidden bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
+      <h2 id="options-title" class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+        Configure Pattern
+      </h2>
+      
+      <!-- Email Options -->
+      <div id="email-options" class="hidden">
+        <p class="text-gray-600 dark:text-gray-300 mb-4">
+          Generate regex for email validation. No additional options needed.
+        </p>
+      </div>
+      
+      <!-- Phone Options -->
+      <div id="phone-options" class="hidden">
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Country Format
+          </label>
+          <select
+            id="phone-country"
+            class="w-full md:w-64 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+          >
+            <option value="indian">Indian (+91)</option>
+            <option value="us">US</option>
+            <option value="international">International</option>
+          </select>
+        </div>
+      </div>
+      
+      <!-- URL Options -->
+      <div id="url-options" class="hidden">
+        <p class="text-gray-600 dark:text-gray-300 mb-4">
+          Generate regex for URL validation. No additional options needed.
+        </p>
+      </div>
+      
+      <!-- Username Options -->
+      <div id="username-options" class="hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Min Length
+            </label>
+            <input
+              type="number"
+              id="username-min-length"
+              min="1"
+              max="100"
+              value="3"
+              class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Max Length
+            </label>
+            <input
+              type="number"
+              id="username-max-length"
+              min="1"
+              max="100"
+              value="20"
+              class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            />
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-4">
+          <label class="flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              id="username-allow-underscore"
+              checked
+              class="w-4 h-4 text-primary-600 border-gray-300 rounded"
+            />
+            <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Allow Underscore</span>
+          </label>
+          <label class="flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              id="username-allow-dash"
+              checked
+              class="w-4 h-4 text-primary-600 border-gray-300 rounded"
+            />
+            <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Allow Dash</span>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Password Options -->
+      <div id="password-options" class="hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Min Length
+            </label>
+            <input
+              type="number"
+              id="password-min-length"
+              min="1"
+              max="128"
+              value="8"
+              class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Max Length
+            </label>
+            <input
+              type="number"
+              id="password-max-length"
+              min="1"
+              max="128"
+              value="128"
+              class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            />
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-4">
+          <label class="flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              id="password-require-uppercase"
+              checked
+              class="w-4 h-4 text-primary-600 border-gray-300 rounded"
+            />
+            <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Require Uppercase</span>
+          </label>
+          <label class="flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              id="password-require-lowercase"
+              checked
+              class="w-4 h-4 text-primary-600 border-gray-300 rounded"
+            />
+            <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Require Lowercase</span>
+          </label>
+          <label class="flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              id="password-require-digit"
+              checked
+              class="w-4 h-4 text-primary-600 border-gray-300 rounded"
+            />
+            <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Require Digit</span>
+          </label>
+          <label class="flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              id="password-require-special"
+              class="w-4 h-4 text-primary-600 border-gray-300 rounded"
+            />
+            <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Require Special</span>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Date Options -->
+      <div id="date-options" class="hidden">
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Date Format
+          </label>
+          <select
+            id="date-format"
+            class="w-full md:w-64 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+          >
+            <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+            <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+            <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+          </select>
+        </div>
+      </div>
+      
+      <!-- UUID Options -->
+      <div id="uuid-options" class="hidden">
+        <p class="text-gray-600 dark:text-gray-300 mb-4">
+          Generate regex for UUID validation. No additional options needed.
+        </p>
+      </div>
+      
+      <!-- Custom Options -->
+      <div id="custom-options" class="hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Min Length
+            </label>
+            <input
+              type="number"
+              id="custom-min-length"
+              min="1"
+              max="1000"
+              value="1"
+              class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Max Length
+            </label>
+            <input
+              type="number"
+              id="custom-max-length"
+              min="1"
+              max="1000"
+              value="100"
+              class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            />
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-4 mb-4">
+          <label class="flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              id="custom-include-uppercase"
+              class="w-4 h-4 text-primary-600 border-gray-300 rounded"
+            />
+            <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Include Uppercase</span>
+          </label>
+          <label class="flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              id="custom-include-lowercase"
+              class="w-4 h-4 text-primary-600 border-gray-300 rounded"
+            />
+            <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Include Lowercase</span>
+          </label>
+          <label class="flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              id="custom-include-digits"
+              class="w-4 h-4 text-primary-600 border-gray-300 rounded"
+            />
+            <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Include Digits</span>
+          </label>
+          <label class="flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              id="custom-include-special"
+              class="w-4 h-4 text-primary-600 border-gray-300 rounded"
+            />
+            <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Include Special</span>
+          </label>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Allowed Characters (optional)
+          </label>
+          <input
+            type="text"
+            id="custom-allowed-chars"
+            placeholder="e.g., @#$%"
+            class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+          />
+        </div>
+        <div class="flex gap-4">
+          <label class="flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              id="custom-start-anchor"
+              checked
+              class="w-4 h-4 text-primary-600 border-gray-300 rounded"
+            />
+            <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Start Anchor (^)</span>
+          </label>
+          <label class="flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              id="custom-end-anchor"
+              checked
+              class="w-4 h-4 text-primary-600 border-gray-300 rounded"
+            />
+            <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">End Anchor ($)</span>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Generate Button -->
+      <div class="mt-6">
+        <button
+          id="generate-regex-btn"
+          class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium"
+        >
+          Generate Regex
+        </button>
+      </div>
+    </div>
+    
+    <!-- Generated Regex Display -->
+    <div id="generated-regex-panel" class="hidden bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
+      <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+        Generated Regex
+      </h2>
+      
+      <!-- Regex Pattern -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          Pattern
+        </label>
+        <div class="relative">
+          <input
+            type="text"
+            id="generated-pattern"
+            readonly
+            class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white font-mono"
+          />
+          <button
+            id="copy-pattern-btn"
+            class="absolute right-2 top-2 px-4 py-1 bg-primary-600 text-white rounded hover:bg-primary-700 transition-colors text-sm"
+          >
+            Copy
+          </button>
+        </div>
+      </div>
+      
+      <!-- Explanation -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          Explanation
+        </label>
+        <div
+          id="generated-explanation"
+          class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white"
+        ></div>
+      </div>
+      
+      <!-- Actions -->
+      <div class="flex flex-wrap gap-2">
+        <a
+          href="regex-tester.html"
+          class="px-6 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+        >
+          Test in Regex Tester →
+        </a>
+        <button
+          id="download-json-btn"
+          class="px-6 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+        >
+          Download as JSON
+        </button>
+      </div>
+    </div>
+    
+    <!-- FAQ Section -->
+    <section class="faq-section mt-12 mb-8" id="faq">
+      <div class="faq-container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about Regex Generator</p>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is a regex generator and how does it work?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>A regex generator is a tool that creates regular expression patterns based on your requirements. Instead of writing complex regex syntax manually, you can use a rule-based interface to specify what you need (like email validation, phone numbers, etc.) and the tool generates the appropriate regex pattern for you. It also provides human-readable explanations of what the generated pattern does.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What patterns can I generate?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>You can generate regex patterns for common use cases including email validation, phone numbers (Indian, US, or international), URLs, usernames, passwords (with customizable strength rules), dates (in various formats), UUIDs, and custom patterns with your own rules for character sets, length, and anchors.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Can I customize the generated patterns?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes! Each pattern type has customizable options. For example, you can set minimum and maximum lengths for usernames, specify password requirements (uppercase, lowercase, digits, special characters), choose date formats, and for custom patterns, you have full control over character sets, length constraints, and anchors.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How do I use the generated regex?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Once generated, you can copy the regex pattern and use it in your code. The tool also provides a direct link to test the generated pattern in the Regex Tester tool. You can download the pattern as a JSON preset for later use or integration into your applications.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is the regex generator free to use?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes, the regex generator is completely free to use with no sign up required. All processing happens in your browser, so your data stays private and secure. You can generate as many regex patterns as you need without any limitations.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <!-- Footer -->
+  <script src="components/footer.js"></script>
+  
+  <!-- Scripts -->
+  <script type="module">
+    import {
+      generateEmailRegex,
+      generatePhoneRegex,
+      generateURLRegex,
+      generateUsernameRegex,
+      generatePasswordRegex,
+      generateDateRegex,
+      generateUUIDRegex,
+      generateCustomRegex,
+      explainGeneratedRegex
+    } from './assets/js/regex-generator.js';
+    
+    window.regexGenerator = {
+      generateEmailRegex,
+      generatePhoneRegex,
+      generateURLRegex,
+      generateUsernameRegex,
+      generatePasswordRegex,
+      generateDateRegex,
+      generateUUIDRegex,
+      generateCustomRegex,
+      explainGeneratedRegex
+    };
+  </script>
+  
+  <script src="assets/js/regex-generator-app.js"></script>
+  
+  <!-- FAQ Accordion Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const faqQuestions = document.querySelectorAll('.faq-question');
+      faqQuestions.forEach(question => {
+        question.addEventListener('click', function() {
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          const faqItem = this.closest('.faq-item');
+          const answer = faqItem.querySelector('.faq-answer');
+          const icon = this.querySelector('.faq-icon');
+          
+          // Close all other FAQ items
+          faqQuestions.forEach(q => {
+            if (q !== this) {
+              q.setAttribute('aria-expanded', 'false');
+              q.closest('.faq-item').classList.remove('active');
+              q.querySelector('.faq-icon').textContent = '+';
+            }
+          });
+          
+          // Toggle current item
+          if (isExpanded) {
+            this.setAttribute('aria-expanded', 'false');
+            faqItem.classList.remove('active');
+            icon.textContent = '+';
+          } else {
+            this.setAttribute('aria-expanded', 'true');
+            faqItem.classList.add('active');
+            icon.textContent = '−';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+

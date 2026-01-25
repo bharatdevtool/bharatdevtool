@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free CSS Gradient Generator Online | Linear, Radial & Conic Gradients | No Sign Up Required</title>
+  <meta name="description" content="Free CSS Gradient Generator. Create beautiful linear, radial, and conic gradients. Export CSS code, Tailwind config, and share gradients. Perfect for developers and designers. No sign up required.">
+  <meta name="keywords" content="gradient generator, css gradient, linear gradient, radial gradient, conic gradient, gradient maker, css gradient generator, free gradient generator, online gradient tool">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <link rel="canonical" href="https://bharatdevtool.com/gradient-generator.html">
+  
+  <!-- Social preview -->
+  <meta property="og:title" content="Free CSS Gradient Generator Online | Linear, Radial & Conic Gradients">
+  <meta property="og:description" content="Professional CSS Gradient Generator. Create beautiful linear, radial, and conic gradients. Export CSS code and Tailwind config. Free online tool for developers and designers.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/gradient-generator.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free CSS Gradient Generator Online | Linear, Radial & Conic Gradients">
+  <meta name="twitter:description" content="Professional CSS Gradient Generator. Create beautiful linear, radial, and conic gradients. Export CSS code and Tailwind config. Free online tool for developers and designers.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  
+  <!-- Sentry SDK: Defer loading -->
+  <script src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js" crossorigin="anonymous" defer></script>
+  
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+  
+  <!-- Theme Management -->
+  <script src="assets/js/theme.js"></script>
+  
+  <!-- Version Tracking Script: Defer loading -->
+  <script src="assets/js/version.js" defer></script>
+  
+  <!-- Analytics Script: Defer loading -->
+  <script src="assets/js/analytics.js" defer></script>
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+  
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "CSS Gradient Generator",
+    "description": "Professional CSS Gradient Generator. Create beautiful linear, radial, and conic gradients. Export CSS code and Tailwind config.",
+    "url": "https://bharatdevtool.com/gradient-generator.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "Linear Gradient Generator",
+      "Radial Gradient Generator",
+      "Conic Gradient Generator",
+      "CSS Code Export",
+      "Tailwind Config Export",
+      "Gradient Presets"
+    ]
+  }
+  </script>
+  
+  <!-- BreadcrumbList Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Gradient Generator",
+        "item": "https://bharatdevtool.com/gradient-generator.html"
+      }
+    ]
+  }
+  </script>
+  
+  <!-- FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a CSS gradient generator and how does it work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A CSS gradient generator is a tool that helps you create beautiful gradients for your web projects. Our free gradient generator supports linear, radial, and conic gradients. You can adjust colors, positions, angles, and export the CSS code directly. The tool provides a live preview so you can see your gradient in real-time."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What types of gradients can I create?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can create three types of gradients: Linear gradients (colors flow in a straight line), Radial gradients (colors radiate from a center point), and Conic gradients (colors rotate around a center point). Each type can be customized with multiple color stops, positions, and angles."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I export gradients as Tailwind CSS code?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! The gradient generator provides export options for both standard CSS and Tailwind CSS. You can copy the Tailwind config code and use it directly in your Tailwind projects with the arbitrary value syntax."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I add or remove color stops?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can add color stops by clicking the 'Add Color Stop' button. Each color stop has a color picker, hex input, position slider, and remove button. You need at least 2 color stops for a gradient. Click 'Remove' on any color stop (except when only 2 remain) to delete it."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are there preset gradients I can use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! The tool includes beautiful preset gradients like Instagram gradient, Sunset, Ocean, Neon, and Minimal Pastel. You can also generate random gradients with the 'Random Gradient' button for inspiration."
+        }
+      }
+    ]
+  }
+  </script>
+  
+  <!-- Custom Styles -->
+  <style>
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      padding: 12px 20px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transform: translateX(120%);
+      transition: transform 0.3s ease;
+    }
+    .toast.show {
+      transform: translateX(0);
+    }
+    .gradient-preview {
+      width: 100%;
+      height: 300px;
+      border-radius: 12px;
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease;
+    }
+    .gradient-preview:hover {
+      transform: scale(1.01);
+    }
+    .preset-gradient {
+      width: 100%;
+      height: 80px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .preset-gradient:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    .preset-gradient::after {
+      content: attr(data-name);
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .color-stop-item {
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.02);
+      border-radius: 8px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .dark .color-stop-item {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+    .copy-btn::after {
+      content: 'Copied!';
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #333;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    .copy-btn.copied::after {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+  <!-- Header Component Script -->
+  <script src="components/header.js"></script>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- SEO Header -->
+    <h1 class="sr-only">CSS Gradient Generator - Linear, Radial & Conic Gradients</h1>
+    
+    <!-- Hero Section -->
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        🌈 CSS Gradient Generator
+      </h2>
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Create beautiful linear, radial, and conic gradients. Export CSS code and Tailwind config. Perfect for developers and designers.
+      </p>
+    </div>
+
+    <!-- Gradient Preview Section -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mb-8">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Gradient Preview</h3>
+      <div id="gradient-preview" class="gradient-preview" style="background: linear-gradient(45deg, #FF5733 0%, #4A00E0 100%);"></div>
+    </div>
+
+    <!-- Gradient Controls Section -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mb-8">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">Gradient Controls</h3>
+      
+      <!-- Gradient Type -->
+      <div class="mb-6">
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Gradient Type</label>
+        <div class="flex gap-4">
+          <label class="flex items-center space-x-2 cursor-pointer">
+            <input type="radio" name="gradient-type" value="linear" checked class="w-4 h-4 text-primary-600">
+            <span class="text-sm text-gray-700 dark:text-gray-300">Linear</span>
+          </label>
+          <label class="flex items-center space-x-2 cursor-pointer">
+            <input type="radio" name="gradient-type" value="radial" class="w-4 h-4 text-primary-600">
+            <span class="text-sm text-gray-700 dark:text-gray-300">Radial</span>
+          </label>
+          <label class="flex items-center space-x-2 cursor-pointer">
+            <input type="radio" name="gradient-type" value="conic" class="w-4 h-4 text-primary-600">
+            <span class="text-sm text-gray-700 dark:text-gray-300">Conic</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Angle Control (for linear and conic) -->
+      <div class="mb-6">
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          Angle: <span id="angle-value" class="font-mono">45°</span>
+        </label>
+        <input type="range" id="angle-slider" min="0" max="360" value="45" class="w-full">
+      </div>
+
+      <!-- Color Stops -->
+      <div class="mb-6">
+        <div class="flex justify-between items-center mb-4">
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Color Stops</label>
+          <button id="add-color-stop" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">+ Add Color Stop</button>
+        </div>
+        <div id="color-stops-container" class="space-y-4">
+          <!-- Color stops will be dynamically generated here -->
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex gap-4">
+        <button id="random-gradient" class="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">🎲 Random Gradient</button>
+        <button id="reset-gradient" class="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">🔄 Reset</button>
+      </div>
+    </div>
+
+    <!-- Preset Gradients Section -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mb-8">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Preset Gradients</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="preset-gradient preset-gradient" data-preset="Instagram" data-name="Instagram" style="background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 100%);"></div>
+        <div class="preset-gradient preset-gradient" data-preset="Sunset" data-name="Sunset" style="background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);"></div>
+        <div class="preset-gradient preset-gradient" data-preset="Ocean" data-name="Ocean" style="background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);"></div>
+        <div class="preset-gradient preset-gradient" data-preset="Neon" data-name="Neon" style="background: linear-gradient(60deg, #f093fb 0%, #f5576c 100%);"></div>
+        <div class="preset-gradient preset-gradient" data-preset="Minimal Pastel" data-name="Minimal Pastel" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+      </div>
+    </div>
+
+    <!-- CSS Output Section -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mb-8">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">CSS Code</h3>
+      <div class="space-y-4">
+        <!-- Standard CSS -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">CSS</label>
+          <div class="flex gap-2">
+            <pre id="css-output" class="flex-1 px-4 py-3 bg-gray-100 dark:bg-gray-700 rounded-lg font-mono text-sm overflow-x-auto">background: linear-gradient(45deg, #FF5733 0%, #4A00E0 100%);</pre>
+            <button class="copy-btn relative px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">Copy</button>
+          </div>
+        </div>
+        
+        <!-- Tailwind CSS -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tailwind CSS</label>
+          <div class="flex gap-2">
+            <pre id="tailwind-output" class="flex-1 px-4 py-3 bg-gray-100 dark:bg-gray-700 rounded-lg font-mono text-sm overflow-x-auto">bg-[linear-gradient(45deg,#FF5733 0%,#4A00E0 100%)]</pre>
+            <button class="copy-btn relative px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mb-8" id="faq">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Frequently Asked Questions</h2>
+      <div class="space-y-4">
+        <div>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">What is a CSS gradient generator and how does it work?</h3>
+          <p class="text-gray-600 dark:text-gray-300">A CSS gradient generator is a tool that helps you create beautiful gradients for your web projects. Our free gradient generator supports linear, radial, and conic gradients. You can adjust colors, positions, angles, and export the CSS code directly. The tool provides a live preview so you can see your gradient in real-time.</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">What types of gradients can I create?</h3>
+          <p class="text-gray-600 dark:text-gray-300">You can create three types of gradients: Linear gradients (colors flow in a straight line), Radial gradients (colors radiate from a center point), and Conic gradients (colors rotate around a center point). Each type can be customized with multiple color stops, positions, and angles.</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Can I export gradients as Tailwind CSS code?</h3>
+          <p class="text-gray-600 dark:text-gray-300">Yes! The gradient generator provides export options for both standard CSS and Tailwind CSS. You can copy the Tailwind config code and use it directly in your Tailwind projects with the arbitrary value syntax.</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">How do I add or remove color stops?</h3>
+          <p class="text-gray-600 dark:text-gray-300">You can add color stops by clicking the 'Add Color Stop' button. Each color stop has a color picker, hex input, position slider, and remove button. You need at least 2 color stops for a gradient. Click 'Remove' on any color stop (except when only 2 remain) to delete it.</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Are there preset gradients I can use?</h3>
+          <p class="text-gray-600 dark:text-gray-300">Yes! The tool includes beautiful preset gradients like Instagram gradient, Sunset, Ocean, Neon, and Minimal Pastel. You can also generate random gradients with the 'Random Gradient' button for inspiration.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Component Script -->
+  <script src="components/footer.js"></script>
+
+  <!-- Gradient Generator App -->
+  <script src="assets/js/gradient-generator-app.js"></script>
+</body>
+</html>
+
+

@@ -1208,3 +1208,4 @@ Before committing code:
 4. **Register on Tools page** - Add feature card and ItemList entry to `tools.html`
 
 **Remember**: This is a pure JavaScript project. Keep it simple, modular, performant, maintainable, and production-ready.
+

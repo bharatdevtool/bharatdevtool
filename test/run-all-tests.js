@@ -37,6 +37,7 @@ import { Base64Tester } from './base64-tests.js';
 import { QRTester } from './qr-tests.js';
 import { QRDecoderTester } from './qr-decoder-tests.js';
 import { JSONDiffTester } from './jsondiff-tests.js';
+import { ColorPickerTester } from './color-picker-tests.js';
 
 // Test Results Tracking
 let totalTests = 0;
@@ -474,6 +475,17 @@ const jsonDiffTester = new JSONDiffTester();
 const jsonDiffResults = jsonDiffTester.runAllTests();
 
 // ============================================================================
+// COLOR PICKER TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+console.log('COLOR PICKER TEST SUITE');
+console.log('='.repeat(60));
+
+const colorPickerTester = new ColorPickerTester();
+const colorPickerResults = colorPickerTester.runAllTests();
+
+// ============================================================================
 // FINAL TEST SUMMARY
 // ============================================================================
 
@@ -481,9 +493,9 @@ console.log('\n' + '='.repeat(60));
 console.log('📊 COMPREHENSIVE TEST SUMMARY');
 console.log('='.repeat(60));
 
-const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total;
-const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed;
-const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed;
+const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total;
+const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed;
+const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed;
 
 console.log(`Total Tests: ${grandTotal}`);
 console.log(`✅ Passed: ${grandPassed}`);
@@ -498,6 +510,7 @@ console.log(`Base64 Encoder/Decoder: ${base64Results.total} tests (${base64Resul
 console.log(`QR Code Generator: ${qrResults.total} tests (${qrResults.passed} passed, ${qrResults.failed} failed)`);
 console.log(`QR Code Decoder: ${qrDecoderResults.total} tests (${qrDecoderResults.passed} passed, ${qrDecoderResults.failed} failed)`);
 console.log(`JSON Comparison (Diff): ${jsonDiffResults.total} tests (${jsonDiffResults.passed} passed, ${jsonDiffResults.failed} failed)`);
+console.log(`Color Picker: ${colorPickerResults.total} tests (${colorPickerResults.passed} passed, ${colorPickerResults.failed} failed)`);
 
 if (grandFailed === 0) {
   console.log('\n🎉 ALL TESTS PASSED! All components are working perfectly.');
@@ -538,6 +551,11 @@ if (grandFailed === 0) {
   if (jsonDiffResults.failed > 0) {
     console.log('\nJSON Comparison (Diff) failures:');
     jsonDiffResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  
+  if (colorPickerResults.failed > 0) {
+    console.log('\nColor Picker failures:');
+    colorPickerResults.failedTests.forEach(test => console.log(`   - ${test}`));
   }
   
   console.log('\nPlease review the failed tests above.');
