@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Online cURL Tester – Run & Debug API Requests | No Sign Up Required</title>
+  <meta name="description" content="Test cURL commands online. Run API requests, view responses, analyze headers, measure response time, and detect security issues – all in your browser. Free cURL tester with no sign up required.">
+  <meta name="keywords" content="curl tester online, test curl command, api tester online, curl request runner, curl playground, debug curl, free curl tester, curl command tester, api request tester">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  <meta name="distribution" content="global">
+  <meta name="rating" content="general">
+  <link rel="canonical" href="https://bharatdevtool.com/curl-tester.html">
+  
+  <!-- Social preview -->
+  <meta property="og:title" content="Free Online cURL Tester – Run & Debug API Requests">
+  <meta property="og:description" content="Test cURL commands online. Run API requests, view responses, analyze headers, measure response time, and detect security issues – all in your browser.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/curl-tester.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="cURL Tester - Free Online API Request Tester">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free Online cURL Tester – Run & Debug API Requests">
+  <meta name="twitter:description" content="Test cURL commands online. Run API requests, view responses, analyze headers, measure response time, and detect security issues – all in your browser.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon.svg">
+  
+  <!-- Sentry SDK: Defer loading -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+  
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+  
+  <!-- Theme Management (load early to prevent flash) -->
+  <script src="assets/js/theme.js"></script>
+  
+  <!-- Version Tracking Script: Defer loading -->
+  <script src="assets/js/version.js" defer></script>
+  
+  <!-- Analytics Script: Defer loading (automatically tracks page views) -->
+  <script src="assets/js/analytics.js" defer></script>
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    };
+  </script>
+  
+  <!-- Common CSS for consistent theming -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+  <link rel="stylesheet" href="assets/css/curl-tester.css">
+  
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "cURL Tester & API Debugger",
+    "description": "Test cURL commands online. Run API requests, view responses, analyze headers, measure response time, and detect security issues – all in your browser.",
+    "url": "https://bharatdevtool.com/curl-tester.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "cURL Command Parsing",
+      "API Request Execution",
+      "Response Analysis",
+      "Header Inspection",
+      "Security Suggestions",
+      "Performance Metrics",
+      "Code Generation"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "120"
+    }
+  }
+  </script>
+  
+  <!-- BreadcrumbList Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "cURL Tester",
+        "item": "https://bharatdevtool.com/curl-tester.html"
+      }
+    ]
+  }
+  </script>
+  
+  <!-- FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a cURL tester and how does it work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A cURL tester is an online tool that allows you to test and execute cURL commands directly in your browser. You can paste a cURL command, parse it into its components (method, URL, headers, body), edit it, and execute the request. The tool displays the response body, headers, timing information, and provides security and performance suggestions. All processing happens locally in your browser - your data never leaves your device."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I test a cURL command online?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Simply paste your cURL command into the input field and click 'Parse cURL'. The tool will automatically parse the command into its components. You can then edit the request parameters (method, URL, headers, body) and click 'Run Request' to execute it. The response will be displayed with syntax highlighting, and you'll see timing metrics and security suggestions."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I test API requests without a cURL command?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! You can use the Request Builder mode to manually create API requests. Select the HTTP method (GET, POST, PUT, etc.), enter the URL, add headers, and set the request body. The tool supports JSON, form-urlencoded, and raw body formats. You can also copy your request as a cURL command after building it."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens if an API blocks browser requests (CORS)?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "If an API blocks browser requests due to CORS (Cross-Origin Resource Sharing) restrictions, the tool will display a friendly error message explaining that the API blocks browser requests. This is a security feature of browsers and APIs. For testing APIs with CORS restrictions, you may need to use a browser extension or test from a server environment."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the tool store my API requests or responses?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No, we do not store any of your data. All requests are executed locally in your browser using JavaScript and the Fetch API. Your API requests, responses, headers, and any sensitive data never leave your device. The tool may store your last few requests in browser localStorage for convenience, but this data stays on your device and is never sent to any server."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What security suggestions does the tool provide?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The tool analyzes your requests and responses to provide security suggestions such as: warnings about exposed authorization tokens in headers, detection of Base64-encoded data that might need binary upload, missing Content-Type headers, very large payloads, detection of sensitive fields (password, token, secret), HTTPS usage verification, and slow response time warnings. These suggestions help you identify potential security and performance issues."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I generate code from my requests?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! In Advanced mode, you can generate code snippets in different formats. The tool can generate fetch() code for JavaScript, axios code, and other formats. This is useful for converting cURL commands into code that you can use in your applications."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What HTTP methods are supported?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The tool supports all standard HTTP methods: GET, POST, PUT, PATCH, DELETE, HEAD, and OPTIONS. You can select the method from a dropdown in the Request Builder, or it will be automatically detected when parsing a cURL command."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900">
+  <!-- Header Component -->
+  <script src="components/header.js"></script>
+  
+  <!-- Privacy Banner -->
+  <div class="privacy-banner bg-blue-50 dark:bg-blue-900/20 border-b border-blue-200 dark:border-blue-800 px-4 py-2">
+    <div class="max-w-7xl mx-auto text-center text-sm text-blue-800 dark:text-blue-200">
+      🔒 All requests are executed locally in your browser. Your data never leaves your device.
+    </div>
+  </div>
+  
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Page Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-3">Online cURL Tester & API Debugger</h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300">Test cURL commands, run API requests, and debug responses – all in your browser</p>
+    </div>
+    
+    <!-- cURL Input Section -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-6">
+      <label for="curl-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        Paste cURL Command
+      </label>
+      <textarea
+        id="curl-input"
+        rows="4"
+        class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white font-mono text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+        placeholder="curl -X POST https://api.example.com/users &#10;  -H 'Content-Type: application/json' &#10;  -H 'Authorization: Bearer token123' &#10;  -d '{\"name\": \"John\"}'"
+      ></textarea>
+      <div class="mt-4 flex flex-wrap gap-2">
+        <button id="parse-curl-btn" class="btn-primary px-4 py-2 rounded-lg font-medium transition-colors">
+          Parse cURL
+        </button>
+        <button id="clear-curl-btn" class="btn-secondary px-4 py-2 rounded-lg font-medium transition-colors">
+          Clear
+        </button>
+      </div>
+      
+      <!-- Smart cURL Type Detection -->
+      <div id="curl-type-detection" class="hidden mt-4 p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+        <div class="flex items-center gap-2">
+          <span class="text-blue-600 dark:text-blue-400">ℹ️</span>
+          <span id="curl-type-message" class="text-sm text-blue-800 dark:text-blue-200"></span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Postman-like Request Interface -->
+    <div id="postman-interface" class="hidden">
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 mb-6">
+        <!-- Top Bar: Method, URL, Send Button -->
+        <div class="flex items-center gap-2 p-4 border-b border-gray-200 dark:border-gray-700">
+          <select id="request-method" class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white font-medium text-sm focus:ring-2 focus:ring-primary-500">
+            <option value="GET">GET</option>
+            <option value="POST">POST</option>
+            <option value="PUT">PUT</option>
+            <option value="PATCH">PATCH</option>
+            <option value="DELETE">DELETE</option>
+            <option value="HEAD">HEAD</option>
+            <option value="OPTIONS">OPTIONS</option>
+          </select>
+          <input
+            type="text"
+            id="request-url"
+            class="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white font-mono text-sm focus:ring-2 focus:ring-primary-500"
+            placeholder="https://api.example.com/endpoint"
+          />
+          <button id="send-request-btn" class="btn-primary px-6 py-2 rounded-lg font-medium transition-colors flex items-center gap-2">
+            <span>Send</span>
+          </button>
+        </div>
+        
+        <!-- Request Config Tabs -->
+        <div class="px-4 pt-2">
+          <div class="flex gap-3 overflow-x-auto">
+            <button class="request-config-tab active px-3 py-1.5 text-sm font-medium rounded-md bg-blue-50 text-primary-600 dark:text-primary-400 dark:bg-gray-700/60" data-tab="params">
+              Params
+            </button>
+            <button class="request-config-tab px-3 py-1.5 text-sm font-medium rounded-md text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/40 hover:text-gray-900 dark:hover:text-gray-200" data-tab="headers">
+              Headers <span id="headers-count" class="ml-1 text-gray-400">(0)</span>
+            </button>
+            <button class="request-config-tab px-3 py-1.5 text-sm font-medium rounded-md text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/40 hover:text-gray-900 dark:hover:text-gray-200" data-tab="authorization">
+              Authorization
+            </button>
+            <button class="request-config-tab px-3 py-1.5 text-sm font-medium rounded-md text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/40 hover:text-gray-900 dark:hover:text-gray-200" data-tab="body">
+              Body
+            </button>
+          </div>
+        </div>
+        
+        <!-- Request Config Content -->
+        <div class="p-4">
+          <!-- Params Tab -->
+          <div id="config-params" class="request-config-content">
+            <div class="mb-4">
+              <div class="flex justify-between items-center mb-2">
+                <h3 class="text-sm font-semibold text-gray-900 dark:text-white">Query Params</h3>
+                <button id="add-param-btn" class="text-sm text-primary-600 dark:text-primary-400 px-3 py-1.5 rounded-md border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700/40">
+                  + Add Param
+                </button>
+              </div>
+              <div id="params-container" class="space-y-2">
+                <!-- Params will be added dynamically -->
+              </div>
+            </div>
+          </div>
+          
+          <!-- Headers Tab -->
+          <div id="config-headers" class="request-config-content hidden">
+            <div class="mb-4">
+              <div class="flex justify-between items-center mb-2">
+                <h3 class="text-sm font-semibold text-gray-900 dark:text-white">Headers</h3>
+                <button id="add-header-btn" class="text-sm text-primary-600 dark:text-primary-400 px-3 py-1.5 rounded-md border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700/40">
+                  + Add Header
+                </button>
+              </div>
+              <div id="headers-container" class="space-y-2">
+                <!-- Headers will be added dynamically -->
+              </div>
+            </div>
+          </div>
+          
+          <!-- Authorization Tab -->
+          <div id="config-authorization" class="request-config-content hidden">
+            <div class="mb-4">
+              <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-3">Authorization</h3>
+              <div id="authorization-display" class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <div class="text-sm text-gray-600 dark:text-gray-400">
+                  Authorization header will be displayed here when detected from cURL command.
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Body Tab -->
+          <div id="config-body" class="request-config-content hidden">
+            <div class="mb-4">
+              <div class="flex justify-between items-center mb-2">
+                <h3 class="text-sm font-semibold text-gray-900 dark:text-white">Body</h3>
+                <div class="flex gap-2">
+                  <button id="body-type-raw" class="body-type-btn px-3 py-1 text-sm rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 active">
+                    Raw
+                  </button>
+                  <button id="body-type-json" class="body-type-btn px-3 py-1 text-sm rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    JSON
+                  </button>
+                </div>
+              </div>
+              <textarea
+                id="request-body"
+                rows="8"
+                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white font-mono text-sm focus:ring-2 focus:ring-primary-500"
+                placeholder='{"key": "value"}'
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    <!-- Copy & Advanced Options (Collapsible, mutually exclusive) -->
+    <div class="mb-6">
+      <div class="flex flex-wrap gap-3">
+        <button id="copy-toggle" class="text-sm text-gray-600 dark:text-gray-400 px-3 py-1.5 rounded-md border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700/40 hover:text-gray-900 dark:hover:text-gray-200 flex items-center gap-2">
+          <span>▼</span> Copy
+        </button>
+        <button id="advanced-toggle" class="text-sm text-gray-600 dark:text-gray-400 px-3 py-1.5 rounded-md border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700/40 hover:text-gray-900 dark:hover:text-gray-200 flex items-center gap-2">
+          <span>▼</span> Advanced Options
+        </button>
+      </div>
+
+      <!-- Copy options (hidden by default) -->
+      <div id="copy-options" class="hidden mt-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+        <div class="mb-4">
+          <h3 class="text-md font-semibold text-gray-900 dark:text-white mb-2">Copy Request as cURL</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            Choose how you want to copy this request. The copied command will appear below for quick inspection.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-2 mb-4">
+          <button
+            type="button"
+            class="copy-option-btn text-sm px-3 py-1.5 rounded-md border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700/60 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700"
+            data-copy-type="bash"
+          >
+            cURL – Bash / Linux / Mac
+          </button>
+          <button
+            type="button"
+            class="copy-option-btn text-sm px-3 py-1.5 rounded-md border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700/60"
+            data-copy-type="bash-single"
+          >
+            cURL – single line
+          </button>
+          <button
+            type="button"
+            class="copy-option-btn text-sm px-3 py-1.5 rounded-md border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700/60"
+            data-copy-type="windows"
+          >
+            cURL – Windows CMD
+          </button>
+          <button
+            type="button"
+            class="copy-option-btn text-sm px-3 py-1.5 rounded-md border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700/60"
+            data-copy-type="postman"
+          >
+            cURL – Postman style
+          </button>
+          <button
+            type="button"
+            class="copy-option-btn text-sm px-3 py-1.5 rounded-md border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700/60"
+            data-copy-type="powershell"
+          >
+            PowerShell (Invoke-WebRequest)
+          </button>
+          <button
+            type="button"
+            class="copy-option-btn text-sm px-3 py-1.5 rounded-md border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700/60"
+            data-copy-type="input"
+          >
+            Original cURL input
+          </button>
+        </div>
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label for="copy-preview" id="copy-preview-label" class="text-sm font-medium text-gray-800 dark:text-gray-200">
+              Last copied cURL
+            </label>
+          </div>
+          <textarea
+            id="copy-preview"
+            rows="4"
+            readonly
+            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white font-mono text-xs"
+            placeholder="Copy a variant above to see it here..."
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- Advanced Options -->
+      <div id="advanced-options" class="hidden mt-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+        <!-- Environment Variables -->
+        <div class="mb-6">
+          <h3 class="text-md font-semibold text-gray-900 dark:text-white mb-3">Environment Variables</h3>
+          <div id="env-vars-container" class="space-y-2 mb-3">
+            <!-- Environment variables will be added dynamically -->
+          </div>
+          <button id="add-env-var-btn" class="text-sm text-primary-600 dark:text-primary-400 hover:underline">
+            + Add Variable
+          </button>
+        </div>
+        
+        <!-- Code Generation -->
+        <div class="mb-6">
+          <h3 class="text-md font-semibold text-gray-900 dark:text-white mb-3">Generate Code Snippets</h3>
+          <div class="border-b border-gray-200 dark:border-gray-700 mb-3">
+            <div class="flex gap-2 overflow-x-auto">
+              <button class="code-tab-btn active px-4 py-2 text-sm font-medium border-b-2 border-primary-600 text-primary-600 dark:text-primary-400" data-lang="fetch">
+                JS fetch
+              </button>
+              <button class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200" data-lang="axios">
+                axios
+              </button>
+              <button class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200" data-lang="react-native">
+                React Native
+              </button>
+              <button class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200" data-lang="kotlin">
+                Kotlin
+              </button>
+              <button class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200" data-lang="swift">
+                Swift
+              </button>
+              <button class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200" data-lang="python">
+                Python
+              </button>
+              <button class="code-tab-btn px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200" data-lang="nodejs">
+                Node.js
+              </button>
+            </div>
+          </div>
+          <div class="relative">
+            <textarea
+              id="generated-code"
+              rows="12"
+              readonly
+              class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white font-mono text-sm"
+              placeholder="Select a language tab to generate code..."
+            ></textarea>
+            <button id="copy-code-btn" class="absolute top-2 right-2 btn-secondary px-3 py-1 text-xs rounded">
+              Copy
+            </button>
+          </div>
+        </div>
+        
+        <!-- Request Options -->
+        <div>
+          <h3 class="text-md font-semibold text-gray-900 dark:text-white mb-3">Request Options</h3>
+          <div class="space-y-3">
+            <label class="flex items-center">
+              <input type="number" id="request-timeout" value="30000" min="1000" step="1000" class="w-24 px-2 py-1 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white mr-2" />
+              <span class="text-sm text-gray-700 dark:text-gray-300">Timeout (ms)</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" id="disable-redirects" class="mr-2" />
+              <span class="text-sm text-gray-700 dark:text-gray-300">Disable redirects</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" id="preserve-header-case" class="mr-2" />
+              <span class="text-sm text-gray-700 dark:text-gray-300">Preserve header case</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Response Viewer (Postman-like) -->
+    <div id="response-viewer" class="hidden mt-6">
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+        <!-- Response Status Bar -->
+        <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+          <div class="flex items-center gap-4">
+            <span id="response-status" class="px-3 py-1 rounded-full text-sm font-semibold"></span>
+            <span id="response-time" class="text-sm text-gray-600 dark:text-gray-400"></span>
+            <span id="response-size" class="text-sm text-gray-600 dark:text-gray-400"></span>
+          </div>
+          <div class="flex gap-2">
+            <button id="copy-response-btn" class="btn-secondary px-3 py-1 text-xs rounded-lg">
+              Copy
+            </button>
+            <button id="download-response-btn" class="btn-secondary px-3 py-1 text-xs rounded-lg">
+              Download
+            </button>
+          </div>
+        </div>
+        
+        <!-- Auto Error Explanation -->
+        <div id="error-explanation" class="hidden mx-4 mt-4 p-4 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800">
+          <div class="flex items-start gap-2">
+            <span class="text-yellow-600 dark:text-yellow-400">⚠️</span>
+            <div>
+              <div class="font-semibold text-yellow-800 dark:text-yellow-200 mb-1">Error Explanation</div>
+              <div id="error-explanation-text" class="text-sm text-yellow-700 dark:text-yellow-300"></div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Response Tabs -->
+        <div class="px-4 pt-2">
+          <div class="flex gap-3 overflow-x-auto">
+            <button class="response-tab active px-3 py-1.5 text-sm font-medium rounded-md bg-blue-50 text-primary-600 dark:text-primary-400 dark:bg-gray-700/60" data-tab="body">
+              Body
+            </button>
+            <button class="response-tab px-3 py-1.5 text-sm font-medium rounded-md text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/40 hover:text-gray-900 dark:hover:text-gray-200" data-tab="headers">
+              Headers <span id="response-headers-count" class="ml-1 text-gray-400">(0)</span>
+            </button>
+            <button class="response-tab px-3 py-1.5 text-sm font-medium rounded-md text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/40 hover:text-gray-900 dark:hover:text-gray-200" data-tab="timings">
+              Timings
+            </button>
+          </div>
+        </div>
+        
+        <!-- Response Content -->
+        <div class="p-4">
+          <!-- Body Tab -->
+          <div id="response-body" class="response-content">
+            <!-- Media Preview (for images/videos) -->
+            <div id="media-preview" class="hidden mb-4">
+              <div id="image-preview-container" class="hidden">
+                <img id="image-preview" class="max-w-full rounded-lg border border-gray-200 dark:border-gray-700" alt="Response image" />
+                <div class="mt-2 space-y-1 text-sm text-gray-600 dark:text-gray-400">
+                  <div>Size: <span id="media-size"></span></div>
+                  <div>Fetch time: <span id="media-fetch-time"></span></div>
+                  <div>Decode time: <span id="media-decode-time"></span></div>
+                  <div>Content-Type: <span id="media-content-type"></span></div>
+                </div>
+              </div>
+              <div id="video-preview-container" class="hidden">
+                <video id="video-preview" controls class="max-w-full rounded-lg border border-gray-200 dark:border-gray-700"></video>
+                <div class="mt-2 space-y-1 text-sm text-gray-600 dark:text-gray-400">
+                  <div>Size: <span id="video-size"></span></div>
+                  <div>Content-Type: <span id="video-content-type"></span></div>
+                  <div>Load time: <span id="video-load-time"></span></div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- JSON/Raw Body -->
+            <div id="response-body-content-wrapper" class="relative">
+              <div class="mb-2 flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs text-gray-500 dark:text-gray-400">Format:</span>
+                  <select id="response-format" class="px-2 py-1 text-xs border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                    <option value="json">JSON</option>
+                    <option value="raw">Raw</option>
+                  </select>
+                </div>
+                <div class="flex items-center gap-2">
+                  <input
+                    type="text"
+                    id="response-search"
+                    placeholder="Search..."
+                    class="px-3 py-1 text-xs border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  />
+                  <button
+                    id="response-format-json-btn"
+                    type="button"
+                    class="text-xs px-3 py-1 rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  >
+                    Format JSON →
+                  </button>
+                </div>
+              </div>
+              <pre id="response-body-content" class="font-mono text-sm rounded-lg p-4 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 overflow-x-auto max-h-96 overflow-y-auto"></pre>
+            </div>
+          </div>
+          
+          <!-- Headers Tab -->
+          <div id="response-headers" class="response-content hidden">
+            <div class="mb-2">
+              <button id="copy-headers-btn" class="btn-secondary px-3 py-1 text-xs rounded-lg mb-2">
+                Copy Headers
+              </button>
+            </div>
+            <pre id="response-headers-content" class="font-mono text-sm rounded-lg p-4 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 overflow-x-auto"></pre>
+          </div>
+          
+          <!-- Timings Tab -->
+          <div id="response-timings" class="response-content hidden">
+            <div class="space-y-4">
+              <div class="timing-row">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-sm font-medium text-gray-900 dark:text-white">DNS Resolution</span>
+                  <span class="text-sm text-gray-600 dark:text-gray-400" id="timing-dns">0 ms</span>
+                </div>
+                <div class="timing-bar-container">
+                  <div class="timing-bar timing-bar-blue" id="timing-dns-bar" style="width: 0%"></div>
+                </div>
+              </div>
+              
+              <div class="timing-row">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-sm font-medium text-gray-900 dark:text-white">Connecting</span>
+                  <span class="text-sm text-gray-600 dark:text-gray-400" id="timing-connecting">0 ms</span>
+                </div>
+                <div class="timing-bar-container">
+                  <div class="timing-bar timing-bar-blue" id="timing-connecting-bar" style="width: 0%"></div>
+                </div>
+              </div>
+              
+              <div class="timing-row">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-sm font-medium text-gray-900 dark:text-white">TLS Setup</span>
+                  <span class="text-sm text-gray-600 dark:text-gray-400" id="timing-tls">0 ms</span>
+                </div>
+                <div class="timing-bar-container">
+                  <div class="timing-bar timing-bar-yellow" id="timing-tls-bar" style="width: 0%"></div>
+                </div>
+              </div>
+              
+              <div class="timing-row">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-sm font-medium text-gray-900 dark:text-white">Sending</span>
+                  <span class="text-sm text-gray-600 dark:text-gray-400" id="timing-sending">0 ms</span>
+                </div>
+                <div class="timing-bar-container">
+                  <div class="timing-bar timing-bar-green" id="timing-sending-bar" style="width: 0%"></div>
+                </div>
+              </div>
+              
+              <div class="timing-row">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-sm font-medium text-gray-900 dark:text-white">Waiting (TTFB)</span>
+                  <span class="text-sm text-gray-600 dark:text-gray-400" id="timing-waiting">0 ms</span>
+                </div>
+                <div class="timing-bar-container">
+                  <div class="timing-bar timing-bar-red" id="timing-waiting-bar" style="width: 0%"></div>
+                </div>
+              </div>
+              
+              <div class="timing-row">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-sm font-medium text-gray-900 dark:text-white">Receiving</span>
+                  <span class="text-sm text-gray-600 dark:text-gray-400" id="timing-receiving">0 ms</span>
+                </div>
+                <div class="timing-bar-container">
+                  <div class="timing-bar timing-bar-green" id="timing-receiving-bar" style="width: 0%"></div>
+                </div>
+              </div>
+              
+              <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
+                <div class="flex justify-between items-center">
+                  <span class="text-sm font-semibold text-gray-900 dark:text-white">Total</span>
+                  <span class="text-sm font-semibold text-gray-900 dark:text-white" id="timing-total">0 ms</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  <!-- Suggestions Panel -->
+  <div id="suggestions-panel" class="hidden mt-6">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+      <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Suggestions & Warnings</h2>
+      <div id="suggestions-list" class="space-y-3">
+        <!-- Suggestions will be added dynamically -->
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Request History -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Request History</h2>
+      <button id="clear-history-btn" class="btn-secondary px-3 py-1 text-sm rounded-lg">
+        Clear History
+      </button>
+    </div>
+    <div id="request-history-list" class="space-y-2">
+      <!-- History items will be added dynamically -->
+    </div>
+    <div id="no-history-message" class="text-sm text-gray-500 dark:text-gray-400 text-center py-4">
+      No request history yet. Run requests to see them here.
+    </div>
+  </div>
+</div>
+
+<!-- FAQ Section -->
+<section class="faq-section bg-gray-50 dark:bg-gray-900 py-12 mt-6 border-t border-gray-200 dark:border-gray-800" id="faq">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 faq-container">
+    <h2 class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-8">
+      Frequently Asked Questions about cURL &amp; API Testing
+    </h2>
+
+    <div class="faq-list space-y-4">
+      <!-- FAQ 1 -->
+      <div class="faq-item bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+        <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" aria-expanded="false">
+          <span class="font-medium text-gray-900 dark:text-white">
+            What is this online cURL tester and API testing tool?
+          </span>
+          <span class="faq-icon text-xl text-gray-500 dark:text-gray-400">+</span>
+        </button>
+        <div class="faq-answer hidden px-6 pb-4 text-gray-700 dark:text-gray-300">
+          <p>
+            This tool is a browser-based cURL playground and API debugging tool. You can paste a cURL command, generate a request, and run it as an HTTP request tester for REST APIs. It acts as an online cURL request tester and API tester online, so you can explore and debug endpoints without installing a desktop client.
+          </p>
+        </div>
+      </div>
+
+      <!-- FAQ 2 -->
+      <div class="faq-item bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+        <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" aria-expanded="false">
+          <span class="font-medium text-gray-900 dark:text-white">
+            How do I test cURL commands online without Postman?
+          </span>
+          <span class="faq-icon text-xl text-gray-500 dark:text-gray-400">+</span>
+        </button>
+        <div class="faq-answer hidden px-6 pb-4 text-gray-700 dark:text-gray-300">
+          <p>
+            Paste your command into the <strong>Paste cURL Command</strong> box and click <strong>Parse cURL</strong>. The app will generate a request builder so you can run cURL online, inspect headers and body, and see timings. It is designed as a browser-based API tester and a lightweight Postman alternative online for quickly testing APIs without installing anything.
+          </p>
+        </div>
+      </div>
+
+      <!-- FAQ 3 -->
+      <div class="faq-item bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+        <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" aria-expanded="false">
+          <span class="font-medium text-gray-900 dark:text-white">
+            Is this cURL command generator secure for headers, tokens and API keys?
+          </span>
+          <span class="faq-icon text-xl text-gray-500 dark:text-gray-400">+</span>
+        </button>
+        <div class="faq-answer hidden px-6 pb-4 text-gray-700 dark:text-gray-300">
+          <p>
+            Yes. This curl command generator and HTTP client runs entirely in your browser – there is no backend and no request logging. Sensitive headers like <code>Authorization</code>, <code>Cookie</code> and API keys are masked in the UI, and only a short request history is stored locally in your browser&apos;s localStorage so your API testing workflow stays private.
+          </p>
+        </div>
+      </div>
+
+      <!-- FAQ 4 -->
+      <div class="faq-item bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+        <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" aria-expanded="false">
+          <span class="font-medium text-gray-900 dark:text-white">
+            Can I convert cURL into fetch, axios or other code for my app?
+          </span>
+          <span class="faq-icon text-xl text-gray-500 dark:text-gray-400">+</span>
+        </button>
+        <div class="faq-answer hidden px-6 pb-4 text-gray-700 dark:text-gray-300">
+          <p>
+            Yes. The Advanced Options panel includes a code generator that can turn a cURL request into JavaScript <code>fetch</code>, axios, Node.js and other client snippets. It is useful as a curl to fetch converter, curl to axios converter and general API development tool so you can move quickly from curl to production-ready API requests.
+          </p>
+        </div>
+      </div>
+
+      <!-- FAQ 5 -->
+      <div class="faq-item bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+        <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" aria-expanded="false">
+          <span class="font-medium text-gray-900 dark:text-white">
+            What kinds of HTTP requests can I send with this REST API tester?
+          </span>
+          <span class="faq-icon text-xl text-gray-500 dark:text-gray-400">+</span>
+        </button>
+        <div class="faq-answer hidden px-6 pb-4 text-gray-700 dark:text-gray-300">
+          <p>
+            You can test GET, POST, PUT, PATCH, DELETE, HEAD and OPTIONS requests. The tool works as an online REST API testing tool and http request tester – you can build curl GET and POST examples with headers, JSON bodies, query parameters and authentication to debug real-world APIs.
+          </p>
+        </div>
+      </div>
+
+      <!-- FAQ 6 -->
+      <div class="faq-item bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+        <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" aria-expanded="false">
+          <span class="font-medium text-gray-900 dark:text-white">
+            Can I test private APIs or CORS-restricted endpoints in the browser?
+          </span>
+          <span class="faq-icon text-xl text-gray-500 dark:text-gray-400">+</span>
+        </button>
+        <div class="faq-answer hidden px-6 pb-4 text-gray-700 dark:text-gray-300">
+          <p>
+            The tool runs requests directly from your browser, so normal browser CORS rules still apply. For some private or CORS-locked APIs you may need to use server-side tools like cURL or Postman, a proxy, or enable CORS on the API. We surface clear error explanations so you understand what is blocked and how to continue testing your API safely.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Structured Data for SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is this online cURL tester and API testing tool?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "This tool is an online curl API testing tool and API debugging tool. You can paste a curl command, generate an HTTP request, and run it as a curl request tester and rest API tester directly in your browser without installing any software."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I test curl commands online without Postman?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Paste your curl command into the Paste cURL Command box and click Parse cURL to run curl online. The tool builds a request you can edit and send, acting as a browser-based API tester and lightweight Postman alternative for testing APIs online."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this curl command generator secure for headers, tokens and API keys?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The curl command generator runs entirely in the browser with no backend, so your API keys, tokens and headers never leave your device. Sensitive headers like Authorization, Cookie and x-api-key are masked in the UI, and only a short local request history is stored in localStorage for convenience."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I convert curl into fetch, axios or other client code?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Advanced Options includes a code generator that converts curl to JavaScript fetch, axios, Node.js and other client snippets so you can move quickly from curl examples to real application code."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What kinds of HTTP requests can I send with this REST API tester?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can send GET, POST, PUT, PATCH, DELETE, HEAD and OPTIONS requests with headers, JSON bodies and query parameters. It works as an HTTP request tester and online REST API testing tool for everyday API debugging."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I test private or CORS-restricted APIs in the browser?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The tool issues requests from the browser, so standard browser CORS rules apply. For CORS-restricted or private APIs you may need to test from a server environment, enable CORS on the API or use tools like curl or Postman. The UI explains CORS failures clearly so you know how to proceed."
+      }
+    }
+  ]
+}
+</script>
+
+<!-- Footer Component -->
+<script src="components/footer.js"></script>
+
+<!-- cURL Tester Application Script -->
+<script src="assets/js/curl-tester-app.js"></script>
+
+<!-- FAQ Accordion Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    faqQuestions.forEach(function(question) {
+      question.addEventListener('click', function() {
+        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+        const faqItem = this.closest('.faq-item');
+        const answer = faqItem.querySelector('.faq-answer');
+        const icon = this.querySelector('.faq-icon');
+
+        // Close all other FAQ items
+        faqQuestions.forEach(function(q) {
+          if (q !== question) {
+            q.setAttribute('aria-expanded', 'false');
+            const item = q.closest('.faq-item');
+            const ans = item.querySelector('.faq-answer');
+            const ic = q.querySelector('.faq-icon');
+            item.classList.remove('active');
+            if (ans) ans.classList.add('hidden');
+            if (ic) ic.textContent = '+';
+          }
+        });
+
+        // Toggle current item
+        if (isExpanded) {
+          this.setAttribute('aria-expanded', 'false');
+          faqItem.classList.remove('active');
+          if (answer) answer.classList.add('hidden');
+          if (icon) icon.textContent = '+';
+        } else {
+          this.setAttribute('aria-expanded', 'true');
+          faqItem.classList.add('active');
+          if (answer) answer.classList.remove('hidden');
+          if (icon) icon.textContent = '−';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

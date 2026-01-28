@@ -186,6 +186,7 @@
                 <li><strong>QR Code Generator:</strong> URL parameters, QR generation, share functionality, edge cases</li>
                 <li><strong>QR Code Decoder:</strong> Image decoding, camera support, history management, image compression, launch functionality</li>
             <li><strong>JSON Comparison (Diff):</strong> JSON comparison logic, validation, nested structures, type mismatches, missing keys, value differences, edge cases, and integration points</li>
+            <li><strong>cURL Comparison:</strong> cURL command parsing, method comparison, URL comparison, header diff, query param diff, JSON body comparison, text diff, edge cases</li>
             <li><strong>Analytics & Observability:</strong> GA4 event wiring, URL encoder analytics, version tracking guards</li>
                 <li><strong>Performance Tests:</strong> Large data handling, batch operations, timing constraints</li>
                 <li><strong>Edge Cases:</strong> Empty inputs, malformed data, special characters, Unicode</li>
@@ -236,6 +237,9 @@
             unescapeJSONString, 
             repairJSON 
         } from '../assets/js/formatter.js';
+        
+        // Import test classes
+        import { CurlComparisonTests } from './curl-comparison-tests.js';
 
         // Test Results Tracking
         let testsPassed = 0;
@@ -2526,6 +2530,25 @@
                 return assertEqual(formatted.includes('"name"') && formatted.includes('"value"'), true, 'JSON should be formattable');
             });
 
+            // cURL Comparison Test Suite
+            testOutput += '\n============================================================\n';
+            testOutput += '🧪 cURL Comparison Test Suite\n';
+            testOutput += '============================================================\n\n';
+            
+            const curlComparisonTests = new CurlComparisonTests();
+            const curlComparisonResults = curlComparisonTests.runAllTests();
+            
+            // Capture test results and output
+            testsPassed += curlComparisonResults.passed;
+            testsFailed += curlComparisonResults.failed;
+            totalTests += curlComparisonResults.total;
+            
+            if (curlComparisonResults.output) {
+              testOutput += curlComparisonResults.output;
+            } else {
+              testOutput += `\n📊 cURL Comparison: ${curlComparisonResults.passed} passed, ${curlComparisonResults.failed} failed out of ${curlComparisonResults.total} tests\n`;
+            }
+
             // Analytics & observability sanity checks (for recent issues)
             testOutput += '\n============================================================\n';
             testOutput += '🧪 Analytics & Observability Test Suite\n';
@@ -2579,6 +2602,7 @@
                         <li>✅ <strong>QR Code Generator:</strong> URL parameters, QR generation, share functionality</li>
                         <li>✅ <strong>QR Code Decoder:</strong> Image decoding, camera support, history management, compression</li>
                         <li>✅ <strong>JSON Comparison (Diff):</strong> JSON comparison logic, validation, nested structures, type mismatches, missing keys, value differences, edge cases</li>
+                        <li>✅ <strong>cURL Comparison:</strong> cURL parsing, method/URL/header/body comparison, diff visualization, edge cases</li>
                         <li>✅ <strong>Analytics & Observability:</strong> GA4 events, URL encoder button analytics, version exposure</li>
                         <li>✅ <strong>Performance Tests:</strong> Large data handling, batch operations</li>
                         <li>✅ <strong>Edge Cases:</strong> Empty inputs, malformed data, special characters</li>

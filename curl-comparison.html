@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free cURL Comparison Tool – Compare Two cURL Commands Online | No Sign Up Required</title>
+  <meta name="description" content="Compare two cURL commands online. Detect differences in URLs, headers, body, and parameters. Find API request mismatches instantly. Free cURL comparison tool with no sign up required.">
+  <meta name="keywords" content="curl compare, curl diff, compare curl commands, api request diff, curl header diff, curl body diff, curl comparison tool, free curl compare">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  <meta name="distribution" content="global">
+  <meta name="rating" content="general">
+  <link rel="canonical" href="https://bharatdevtool.com/curl-comparison.html">
+  
+  <!-- Social preview -->
+  <meta property="og:title" content="Free cURL Comparison Tool – Compare Two cURL Commands Online">
+  <meta property="og:description" content="Compare two cURL commands online. Detect differences in URLs, headers, body, and parameters. Find API request mismatches instantly.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/curl-comparison.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="cURL Comparison Tool - Compare Two cURL Commands">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free cURL Comparison Tool – Compare Two cURL Commands Online">
+  <meta name="twitter:description" content="Compare two cURL commands online. Detect differences in URLs, headers, body, and parameters. Find API request mismatches instantly.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon.svg">
+  
+  <!-- Sentry SDK: Defer loading -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+  
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+  
+  <!-- Theme Management (load early to prevent flash) -->
+  <script src="assets/js/theme.js"></script>
+  
+  <!-- Version Tracking Script: Defer loading -->
+  <script src="assets/js/version.js" defer></script>
+  
+  <!-- Analytics Script: Defer loading (automatically tracks page views) -->
+  <script src="assets/js/analytics.js" defer></script>
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    };
+  </script>
+  
+  <!-- Common CSS for consistent theming -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+  <link rel="stylesheet" href="assets/css/curl-comparison.css">
+  
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "cURL Comparison Tool",
+    "description": "Compare two cURL commands online. Detect differences in URLs, headers, body, and parameters. Find API request mismatches instantly.",
+    "url": "https://bharatdevtool.com/curl-comparison.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "cURL Command Parsing",
+      "Side-by-Side Comparison",
+      "Header Diff Analysis",
+      "Body Diff Analysis",
+      "URL Comparison",
+      "Query Parameter Diff",
+      "Method Comparison"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "95"
+    }
+  }
+  </script>
+  
+  <!-- BreadcrumbList Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "cURL Comparison",
+        "item": "https://bharatdevtool.com/curl-comparison.html"
+      }
+    ]
+  }
+  </script>
+  
+  <!-- FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What does this tool compare?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The cURL comparison tool compares all aspects of two cURL commands including HTTP method, URL (including host, path, and query parameters), headers (both keys and values), and request body. It highlights differences, missing keys, extra keys, and value changes to help you spot API request mismatches."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does it send my data to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. All comparisons run locally in your browser. Your cURL data is never sent to any server. All processing happens client-side using JavaScript, ensuring complete privacy and security."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I compare POST and GET requests?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The tool can compare any HTTP methods including GET, POST, PUT, PATCH, DELETE, HEAD, and OPTIONS. Different methods are clearly highlighted in the comparison results."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can it compare JSON bodies?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. JSON bodies are compared structurally, not just as text. The tool detects missing keys, changed values, type mismatches, and nested differences. It provides both inline diff and side-by-side comparison views for JSON."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I ignore headers like Authorization?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. In the Advanced Options section, you can specify header keys to ignore (comma-separated). This is useful for ignoring dynamic headers like Authorization tokens, timestamps, or request IDs that change between requests but aren't relevant to your comparison."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What formats of cURL commands are supported?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The tool supports various cURL command formats including single-line commands, multi-line commands with backslashes, commands with quotes, escaped characters, and different header/data flag styles (-H, --header, -d, --data, --data-raw, etc.)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does the diff visualization work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The tool uses color coding to show differences: green for matching values, red for differences, yellow for missing keys (only in one command), and blue for extra keys. Headers are shown in a comparison table, JSON bodies use tree diff visualization, and text bodies use line-by-line diff."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900">
+  <!-- Header Component -->
+  <script src="components/header.js"></script>
+  
+  <!-- Privacy Banner -->
+  <div class="privacy-banner bg-blue-50 dark:bg-blue-900/20 border-b border-blue-200 dark:border-blue-800 px-4 py-2">
+    <div class="max-w-7xl mx-auto text-center text-sm text-blue-800 dark:text-blue-200">
+      🔒 All comparisons run locally in your browser. Your cURL data is never sent to any server.
+    </div>
+  </div>
+  
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Page Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-3">Online cURL Comparison Tool</h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300">Compare two cURL commands and detect differences in URLs, headers, body, and parameters</p>
+    </div>
+    
+    <!-- Input Section: Side-by-Side -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+      <!-- cURL A -->
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+        <div class="flex justify-between items-center mb-3">
+          <label for="curl-a-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            cURL A
+          </label>
+          <button id="swap-btn" class="text-sm text-primary-600 dark:text-primary-400 hover:underline" title="Swap A ↔ B">
+            🔄 Swap
+          </button>
+        </div>
+        <textarea
+          id="curl-a-input"
+          rows="8"
+          class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white font-mono text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+          placeholder="curl -X POST https://api.example.com/users &#10;  -H 'Content-Type: application/json' &#10;  -H 'Authorization: Bearer token123' &#10;  -d '{\"name\": \"John\"}'"
+        ></textarea>
+        <div class="mt-3 flex gap-2">
+          <button id="clear-a-btn" class="text-xs text-gray-600 dark:text-gray-400 hover:underline">
+            Clear
+          </button>
+        </div>
+      </div>
+      
+      <!-- cURL B -->
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+        <div class="flex justify-between items-center mb-3">
+          <label for="curl-b-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            cURL B
+          </label>
+        </div>
+        <textarea
+          id="curl-b-input"
+          rows="8"
+          class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white font-mono text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+          placeholder="curl -X POST https://api.example.com/users &#10;  -H 'Content-Type: application/json' &#10;  -H 'Authorization: Bearer token456' &#10;  -d '{\"name\": \"Jane\"}'"
+        ></textarea>
+        <div class="mt-3 flex gap-2">
+          <button id="clear-b-btn" class="text-xs text-gray-600 dark:text-gray-400 hover:underline">
+            Clear
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Action Buttons -->
+    <div class="flex justify-center gap-3 mb-6">
+      <button id="compare-btn" class="btn-primary px-6 py-3 rounded-lg font-medium transition-colors flex items-center gap-2">
+        🔍 Compare
+      </button>
+      <button id="reset-btn" class="btn-secondary px-4 py-3 rounded-lg font-medium transition-colors">
+        ♻ Reset
+      </button>
+    </div>
+    
+    <!-- Advanced Options Toggle -->
+    <div class="mb-6">
+      <button id="advanced-toggle" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 flex items-center gap-2">
+        <span>▼</span> Advanced Options
+      </button>
+      <div id="advanced-options" class="hidden mt-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="ignore-headers" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Ignore Header Keys (comma-separated)
+            </label>
+            <input
+              type="text"
+              id="ignore-headers"
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm"
+              placeholder="Authorization, X-Request-ID"
+            />
+          </div>
+          <div>
+            <label for="ignore-query-params" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Ignore Query Params (comma-separated)
+            </label>
+            <input
+              type="text"
+              id="ignore-query-params"
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm"
+              placeholder="timestamp, nonce"
+            />
+          </div>
+          <div>
+            <label for="ignore-json-keys" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Ignore JSON Keys (comma-separated)
+            </label>
+            <input
+              type="text"
+              id="ignore-json-keys"
+              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm"
+              placeholder="id, createdAt"
+            />
+          </div>
+          <div class="space-y-2">
+            <label class="flex items-center">
+              <input type="checkbox" id="ignore-order" class="mr-2" />
+              <span class="text-sm text-gray-700 dark:text-gray-300">Ignore order</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" id="trim-whitespace" class="mr-2" checked />
+              <span class="text-sm text-gray-700 dark:text-gray-300">Trim whitespace</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" id="case-insensitive" class="mr-2" />
+              <span class="text-sm text-gray-700 dark:text-gray-300">Case-insensitive compare</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" id="normalize-urls" class="mr-2" />
+              <span class="text-sm text-gray-700 dark:text-gray-300">Normalize URLs (trailing slash)</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" id="decode-url-encoding" class="mr-2" />
+              <span class="text-sm text-gray-700 dark:text-gray-300">Decode URL encoding before compare</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Parsed View Tabs -->
+    <div id="parsed-view-container" class="hidden mb-6">
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Parsed View</h2>
+          <button id="toggle-parsed-view" class="text-sm text-primary-600 dark:text-primary-400 hover:underline">
+            Toggle Raw/Structured
+          </button>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div>
+            <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">cURL A</h3>
+            <div id="parsed-a-display" class="parsed-curl-display font-mono text-sm rounded-lg p-4 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 overflow-x-auto"></div>
+          </div>
+          <div>
+            <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">cURL B</h3>
+            <div id="parsed-b-display" class="parsed-curl-display font-mono text-sm rounded-lg p-4 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 overflow-x-auto"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Diff Result Panel -->
+    <div id="diff-result-container" class="hidden">
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Comparison Results</h2>
+          <div class="flex gap-2">
+            <button id="toggle-diff-view" class="text-sm text-primary-600 dark:text-primary-400 hover:underline">
+              Toggle Inline/Side-by-Side
+            </button>
+          </div>
+        </div>
+        
+        <!-- Summary Panel -->
+        <div id="summary-panel" class="mb-6 p-4 rounded-lg border border-gray-200 dark:border-gray-700">
+          <div id="summary-content" class="text-sm"></div>
+        </div>
+        
+        <!-- Diff Sections -->
+        <div id="diff-sections" class="space-y-6">
+          <!-- Method Diff -->
+          <div id="method-diff-section" class="diff-section"></div>
+          
+          <!-- URL Diff -->
+          <div id="url-diff-section" class="diff-section"></div>
+          
+          <!-- Headers Diff -->
+          <div id="headers-diff-section" class="diff-section"></div>
+          
+          <!-- Body Diff -->
+          <div id="body-diff-section" class="diff-section"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <!-- FAQ Section -->
+  <section class="faq-section bg-gray-50 dark:bg-gray-800 py-12" id="faq">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-center text-gray-900 dark:text-white mb-8">Frequently Asked Questions</h2>
+      <div class="faq-list space-y-4">
+        <div class="faq-item bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+          <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors" aria-expanded="false">
+            <span class="font-medium text-gray-900 dark:text-white">What does this tool compare?</span>
+            <span class="faq-icon text-xl text-gray-500 dark:text-gray-400">+</span>
+          </button>
+          <div class="faq-answer hidden px-6 pb-4 text-gray-600 dark:text-gray-300">
+            <p>The cURL comparison tool compares all aspects of two cURL commands including HTTP method, URL (including host, path, and query parameters), headers (both keys and values), and request body. It highlights differences, missing keys, extra keys, and value changes to help you spot API request mismatches.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+          <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors" aria-expanded="false">
+            <span class="font-medium text-gray-900 dark:text-white">Does it send my data to a server?</span>
+            <span class="faq-icon text-xl text-gray-500 dark:text-gray-400">+</span>
+          </button>
+          <div class="faq-answer hidden px-6 pb-4 text-gray-600 dark:text-gray-300">
+            <p>No. All comparisons run locally in your browser. Your cURL data is never sent to any server. All processing happens client-side using JavaScript, ensuring complete privacy and security.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+          <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors" aria-expanded="false">
+            <span class="font-medium text-gray-900 dark:text-white">Can I compare POST and GET requests?</span>
+            <span class="faq-icon text-xl text-gray-500 dark:text-gray-400">+</span>
+          </button>
+          <div class="faq-answer hidden px-6 pb-4 text-gray-600 dark:text-gray-300">
+            <p>Yes. The tool can compare any HTTP methods including GET, POST, PUT, PATCH, DELETE, HEAD, and OPTIONS. Different methods are clearly highlighted in the comparison results.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+          <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors" aria-expanded="false">
+            <span class="font-medium text-gray-900 dark:text-white">Can it compare JSON bodies?</span>
+            <span class="faq-icon text-xl text-gray-500 dark:text-gray-400">+</span>
+          </button>
+          <div class="faq-answer hidden px-6 pb-4 text-gray-600 dark:text-gray-300">
+            <p>Yes. JSON bodies are compared structurally, not just as text. The tool detects missing keys, changed values, type mismatches, and nested differences. It provides both inline diff and side-by-side comparison views for JSON.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+          <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors" aria-expanded="false">
+            <span class="font-medium text-gray-900 dark:text-white">Can I ignore headers like Authorization?</span>
+            <span class="faq-icon text-xl text-gray-500 dark:text-gray-400">+</span>
+          </button>
+          <div class="faq-answer hidden px-6 pb-4 text-gray-600 dark:text-gray-300">
+            <p>Yes. In the Advanced Options section, you can specify header keys to ignore (comma-separated). This is useful for ignoring dynamic headers like Authorization tokens, timestamps, or request IDs that change between requests but aren't relevant to your comparison.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+          <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors" aria-expanded="false">
+            <span class="font-medium text-gray-900 dark:text-white">What formats of cURL commands are supported?</span>
+            <span class="faq-icon text-xl text-gray-500 dark:text-gray-400">+</span>
+          </button>
+          <div class="faq-answer hidden px-6 pb-4 text-gray-600 dark:text-gray-300">
+            <p>The tool supports various cURL command formats including single-line commands, multi-line commands with backslashes, commands with quotes, escaped characters, and different header/data flag styles (-H, --header, -d, --data, --data-raw, etc.).</p>
+          </div>
+        </div>
+        
+        <div class="faq-item bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+          <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors" aria-expanded="false">
+            <span class="font-medium text-gray-900 dark:text-white">How does the diff visualization work?</span>
+            <span class="faq-icon text-xl text-gray-500 dark:text-gray-400">+</span>
+          </button>
+          <div class="faq-answer hidden px-6 pb-4 text-gray-600 dark:text-gray-300">
+            <p>The tool uses color coding to show differences: green for matching values, red for differences, yellow for missing keys (only in one command), and blue for extra keys. Headers are shown in a comparison table, JSON bodies use tree diff visualization, and text bodies use line-by-line diff.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Footer Component -->
+  <script src="components/footer.js"></script>
+  
+  <!-- cURL Comparison Application Script -->
+  <script src="assets/js/curl-comparison-app.js"></script>
+</body>
+</html>

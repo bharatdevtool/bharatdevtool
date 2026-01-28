@@ -162,7 +162,33 @@ const ANALYTICS_EVENTS = {
   GRADIENT_GENERATOR_COPY: 'gradient_generator_copy',
   GRADIENT_GENERATOR_COPY_FAILED: 'gradient_generator_copy_failed',
   GRADIENT_GENERATOR_LOAD_STATE_FAILED: 'gradient_generator_load_state_failed',
-  GRADIENT_GENERATOR_SAVE_STATE_FAILED: 'gradient_generator_save_state_failed'
+  GRADIENT_GENERATOR_SAVE_STATE_FAILED: 'gradient_generator_save_state_failed',
+  
+  // cURL Tester events
+  CURL_PARSE: 'curl_parse',
+  CURL_RUN_REQUEST: 'curl_run_request',
+  CURL_REQUEST_SUCCESS: 'curl_request_success',
+  CURL_COPY_CURL: 'curl_copy_curl',
+  CURL_COPY_RESPONSE: 'curl_copy_response',
+  CURL_DOWNLOAD_RESPONSE: 'curl_download_response',
+  CURL_GENERATE_CODE: 'curl_generate_code',
+  CURL_MODE_SWITCH: 'curl_mode_switch',
+  CURL_LOAD_EXAMPLE: 'curl_load_example',
+  CURL_RESET_BUILDER: 'curl_reset_builder',
+  CURL_ERROR: 'curl_error',
+  
+  // cURL Comparison events
+  COMPARISON_COMPARE: 'comparison_compare',
+  COMPARISON_COMPARE_SUCCESS: 'comparison_compare_success',
+  COMPARISON_ERROR: 'comparison_error',
+  COMPARISON_SWAP: 'comparison_swap',
+  COMPARISON_RESET: 'comparison_reset',
+  COMPARISON_LOAD_EXAMPLE: 'comparison_load_example',
+  COMPARISON_CLEAR_INPUT: 'comparison_clear_input',
+  
+  // UI Freeze events
+  UI_FREEZE: 'ui_freeze',
+  OPERATION_COMPLETE: 'operation_complete'
 };
 
 // ============================================================================
@@ -455,6 +481,8 @@ const PAGE_NAMES = {
   'regex-library.html': 'Regex Library',
   'color-picker.html': 'Color Picker',
   'gradient-generator.html': 'Gradient Generator',
+  'curl-tester.html': 'cURL Tester',
+  'curl-comparison.html': 'cURL Comparison',
   'tools.html': 'Our Developer Tools',
   'about.html': 'About',
   'feedback.html': 'Feedback',

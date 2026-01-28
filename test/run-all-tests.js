@@ -38,6 +38,8 @@ import { QRTester } from './qr-tests.js';
 import { QRDecoderTester } from './qr-decoder-tests.js';
 import { JSONDiffTester } from './jsondiff-tests.js';
 import { ColorPickerTester } from './color-picker-tests.js';
+import { CurlTesterTests } from './curl-tester-tests.js';
+import { CurlComparisonTests } from './curl-comparison-tests.js';
 
 // Test Results Tracking
 let totalTests = 0;
@@ -486,6 +488,28 @@ const colorPickerTester = new ColorPickerTester();
 const colorPickerResults = colorPickerTester.runAllTests();
 
 // ============================================================================
+// CURL TESTER TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+console.log('CURL TESTER TEST SUITE');
+console.log('='.repeat(60));
+
+const curlTesterTests = new CurlTesterTests();
+const curlTesterResults = curlTesterTests.runAllTests();
+
+// ============================================================================
+// CURL COMPARISON TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+console.log('CURL COMPARISON TEST SUITE');
+console.log('='.repeat(60));
+
+const curlComparisonTests = new CurlComparisonTests();
+const curlComparisonResults = curlComparisonTests.runAllTests();
+
+// ============================================================================
 // FINAL TEST SUMMARY
 // ============================================================================
 
@@ -493,9 +517,9 @@ console.log('\n' + '='.repeat(60));
 console.log('📊 COMPREHENSIVE TEST SUMMARY');
 console.log('='.repeat(60));
 
-const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total;
-const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed;
-const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed;
+const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total;
+const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed;
+const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed;
 
 console.log(`Total Tests: ${grandTotal}`);
 console.log(`✅ Passed: ${grandPassed}`);
@@ -511,6 +535,8 @@ console.log(`QR Code Generator: ${qrResults.total} tests (${qrResults.passed} pa
 console.log(`QR Code Decoder: ${qrDecoderResults.total} tests (${qrDecoderResults.passed} passed, ${qrDecoderResults.failed} failed)`);
 console.log(`JSON Comparison (Diff): ${jsonDiffResults.total} tests (${jsonDiffResults.passed} passed, ${jsonDiffResults.failed} failed)`);
 console.log(`Color Picker: ${colorPickerResults.total} tests (${colorPickerResults.passed} passed, ${colorPickerResults.failed} failed)`);
+console.log(`cURL Tester: ${curlTesterResults.total} tests (${curlTesterResults.passed} passed, ${curlTesterResults.failed} failed)`);
+console.log(`cURL Comparison: ${curlComparisonResults.total} tests (${curlComparisonResults.passed} passed, ${curlComparisonResults.failed} failed)`);
 
 if (grandFailed === 0) {
   console.log('\n🎉 ALL TESTS PASSED! All components are working perfectly.');
@@ -556,6 +582,16 @@ if (grandFailed === 0) {
   if (colorPickerResults.failed > 0) {
     console.log('\nColor Picker failures:');
     colorPickerResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  
+  if (curlTesterResults.failed > 0) {
+    console.log('\ncURL Tester failures:');
+    curlTesterResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  
+  if (curlComparisonResults.failed > 0) {
+    console.log('\ncURL Comparison failures:');
+    curlComparisonResults.failedTests.forEach(test => console.log(`   - ${test}`));
   }
   
   console.log('\nPlease review the failed tests above.');
