@@ -1,12 +1,21 @@
 {
   "version": "2.0",
   "buildDate": "2026-01-29",
-  "releaseName": "Introduces Json Diff Tool",
+  "releaseName": "Bharat Dev Tools 2.0",
   "features": [
     "JSON Formatter",
     "QR Code Generator",
     "DeepLink Launcher",
     "Json Diff Tool",
-    "Url Encoder/Decoder"
+    "Url Encoder/Decoder",
+    "Curl Tester",  
+    "cURL Comparison",
+    "Base64 Encoder/Decoder",
+    "QR Code Decoder",
+    "Regex Tester",
+    "Regex Generator",
+    "Regex Library",
+    "Color Picker",
+    "Gradient Generator"
   ]
 }
