@@ -252,6 +252,152 @@
     .toast.info {
       background: linear-gradient(135deg, #3b82f6, #2563eb);
     }
+    /* Mobile dropdown styles */
+    .mobile-dropdown {
+      position: relative;
+    }
+    .mobile-dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      margin-top: 8px;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      z-index: 50;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      padding: 4px 0;
+    }
+    .dark .mobile-dropdown-menu {
+      background: #1f2937;
+      border-color: #374151;
+    }
+    .mobile-dropdown-menu.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .mobile-dropdown-item {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 16px 20px;
+      text-align: left;
+      border: none;
+      background: transparent;
+      color: #111827;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    .mobile-dropdown-item:hover {
+      background-color: #f3f4f6;
+    }
+    .dark .mobile-dropdown-item {
+      color: #f9fafb;
+    }
+    .dark .mobile-dropdown-item:hover {
+      background-color: #374151;
+    }
+    .mobile-dropdown-item:not(:last-child) {
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .dark .mobile-dropdown-item:not(:last-child) {
+      border-bottom-color: #374151;
+    }
+    /* History button container */
+    .history-buttons-container {
+      display: flex;
+      flex: 1;
+      gap: 4px;
+    }
+    @media (max-width: 640px) {
+      .history-buttons-container {
+        gap: 2px;
+      }
+    }
+    /* History button styles */
+    .history-btn {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      font-size: 12px;
+      font-weight: 500;
+      flex: 1;
+      width: 0;
+    }
+    .history-btn-icon-only {
+      padding: 8px 10px;
+    }
+    .history-btn span:first-child {
+      font-size: 16px;
+      line-height: 1;
+    }
+    .history-btn-text {
+      display: inline-block;
+      font-size: 12px;
+      line-height: 1.2;
+      text-align: left;
+      white-space: nowrap;
+    }
+    .history-date {
+      display: none;
+    }
+    /* Mobile: Show text labels below icon */
+    @media (max-width: 640px) {
+      .history-btn {
+        flex-direction: column;
+        padding: 6px 4px;
+        gap: 3px;
+        flex: 1;
+        width: 0;
+      }
+      .history-btn span:first-child {
+        font-size: 18px;
+      }
+      .history-btn-text {
+        display: block;
+        font-size: 9px;
+        text-align: center;
+      }
+    }
+    /* Desktop: Show tooltip on hover */
+    @media (min-width: 641px) {
+      .history-btn:hover::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-bottom: 8px;
+        padding: 6px 10px;
+        background: #1f2937;
+        color: white;
+        font-size: 12px;
+        font-weight: 500;
+        white-space: nowrap;
+        border-radius: 4px;
+        pointer-events: none;
+        z-index: 10;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      }
+      .dark .history-btn:hover::after {
+        background: #374151;
+      }
+    }
   </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
@@ -298,18 +444,49 @@
         </div>
 
         <!-- Action Buttons -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <button id="encode-decode-btn" class="flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+        <!-- Desktop Version (hidden on mobile) -->
+        <div class="hidden sm:grid grid-cols-2 lg:grid-cols-3 gap-4">
+          <button id="encode-decode-btn-desktop" class="flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
             <span class="mr-2">🔄</span>
             Encode/Decode
           </button>
-          <button id="generate-qr-btn" class="flex items-center justify-center px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors font-medium">
+          <button id="generate-qr-btn-desktop" class="flex items-center justify-center px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors font-medium">
             <span class="mr-2">📱</span>
             Generate QR
           </button>
-          <button id="launch-btn" class="flex items-center justify-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
+          <button id="launch-btn-desktop" class="flex items-center justify-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
             <span class="mr-2">🚀</span>
             Launch
+          </button>
+        </div>
+
+        <!-- Mobile Version (visible only on mobile) -->
+        <div class="flex gap-3 sm:hidden">
+          <!-- Dropdown for Encode/Decode and Generate QR -->
+          <div class="mobile-dropdown flex-1">
+            <button id="mobile-dropdown-toggle" class="w-full flex items-center justify-center px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+              <span>Options</span>
+              <span class="ml-2">▼</span>
+            </button>
+            <div id="mobile-dropdown-menu" class="mobile-dropdown-menu">
+              <button id="encode-decode-btn-mobile" class="mobile-dropdown-item">
+                <span class="mr-3">🔄</span>
+                <span>Encode/Decode</span>
+              </button>
+              <button id="generate-qr-btn-mobile" class="mobile-dropdown-item">
+                <span class="mr-3">📱</span>
+                <span>Generate QR</span>
+              </button>
+              <button id="share-btn-mobile" class="mobile-dropdown-item">
+                <span class="mr-3">🔗</span>
+                <span>Share</span>
+              </button>
+            </div>
+          </div>
+          <!-- Launch Button -->
+          <button id="launch-btn-mobile" class="flex-1 flex items-center justify-center px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
+            <span class="mr-2">🚀</span>
+            <span>Launch</span>
           </button>
         </div>
 
@@ -805,19 +982,27 @@
             <div class="text-sm font-medium text-gray-900 dark:text-white break-all leading-relaxed">${item.url}</div>
           </div>
           <div class="flex items-center justify-between">
-            <div class="text-xs text-gray-500 dark:text-gray-400">${timeDisplay}</div>
-            <div class="flex items-center space-x-2">
-              <button onclick="editDeepLink('${escapedUrl}')" class="p-2 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900 rounded" title="Edit">
-                ✏️
+            <div class="history-date text-xs text-gray-500 dark:text-gray-400">${timeDisplay}</div>
+            <div class="history-buttons-container">
+              <button onclick="editDeepLink('${escapedUrl}')" class="history-btn history-btn-icon-only text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900" data-tooltip="Edit">
+                <span>✏️</span>
+                <span class="history-btn-text">Edit</span>
               </button>
-              <button onclick="copyDeepLink('${escapedUrl}')" class="p-2 text-green-600 hover:bg-green-100 dark:hover:bg-green-900 rounded" title="Copy">
-                📋
+              <button onclick="copyDeepLink('${escapedUrl}')" class="history-btn history-btn-icon-only text-green-600 hover:bg-green-100 dark:hover:bg-green-900" data-tooltip="Copy">
+                <span>📋</span>
+                <span class="history-btn-text">Copy</span>
               </button>
-              <button onclick="launchDeepLink('${escapedUrl}'); if(typeof window.Analytics !== 'undefined') window.Analytics.trackDeeplinkHistoryLaunch({page:'DeepLink Launcher'});" class="p-2 text-purple-600 hover:bg-purple-100 dark:hover:bg-purple-900 rounded" title="Launch">
-                🚀
+              <button onclick="shareDeepLink('${escapedUrl}')" class="history-btn history-btn-icon-only text-indigo-600 hover:bg-indigo-100 dark:hover:bg-indigo-900" data-tooltip="Share">
+                <span>🔗</span>
+                <span class="history-btn-text">Share</span>
               </button>
-              <button onclick="deleteDeepLinkByUrl('${escapedUrl}')" class="p-2 text-red-600 hover:bg-red-100 dark:hover:bg-red-900 rounded" title="Delete">
-                🗑️
+              <button onclick="launchDeepLink('${escapedUrl}'); if(typeof window.Analytics !== 'undefined') window.Analytics.trackDeeplinkHistoryLaunch({page:'DeepLink Launcher'});" class="history-btn history-btn-icon-only text-purple-600 hover:bg-purple-100 dark:hover:bg-purple-900" data-tooltip="Launch">
+                <span>🚀</span>
+                <span class="history-btn-text">Launch</span>
+              </button>
+              <button onclick="deleteDeepLinkByUrl('${escapedUrl}')" class="history-btn history-btn-icon-only text-red-600 hover:bg-red-100 dark:hover:bg-red-900" data-tooltip="Delete">
+                <span>🗑️</span>
+                <span class="history-btn-text">Delete</span>
               </button>
             </div>
           </div>
@@ -883,6 +1068,50 @@
       }
       
       document.body.removeChild(textArea);
+    }
+
+    function shareDeepLink(url) {
+      // Track share
+      if (typeof window.Analytics !== 'undefined' && window.Analytics.track) {
+        window.Analytics.track('deeplink_share', {
+          page: 'DeepLink Launcher',
+          deeplink_url: url
+        });
+      }
+      
+      // Create shareable URL that opens deeplink.html with the URL pre-filled
+      const shareableUrl = `${window.location.origin}${window.location.pathname}?url=${encodeURIComponent(url)}`;
+      
+      // Try Web Share API first (mobile)
+      if (navigator.share) {
+        navigator.share({
+          title: 'Deep Link',
+          text: '',
+          url: shareableUrl
+        }).then(() => {
+          showToast('Deep link shared successfully', 'success');
+        }).catch((error) => {
+          // User cancelled or error occurred, fallback to copy
+          if (error.name !== 'AbortError') {
+            copyShareableUrl(shareableUrl);
+          }
+        });
+      } else {
+        // Fallback: Copy shareable URL to clipboard
+        copyShareableUrl(shareableUrl);
+      }
+    }
+
+    function copyShareableUrl(shareableUrl) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(shareableUrl).then(() => {
+          showToast('Shareable link copied to clipboard', 'success');
+        }).catch(() => {
+          fallbackCopyToClipboard(shareableUrl);
+        });
+      } else {
+        fallbackCopyToClipboard(shareableUrl);
+      }
     }
 
     function deleteDeepLink(index) {
@@ -1011,9 +1240,17 @@
       }
       
       const input = document.getElementById('deeplink-input');
-      const launchBtn = document.getElementById('launch-btn');
-      const encodeDecodeBtn = document.getElementById('encode-decode-btn');
-      const generateQrBtn = document.getElementById('generate-qr-btn');
+      // Desktop buttons
+      const launchBtnDesktop = document.getElementById('launch-btn-desktop');
+      const encodeDecodeBtnDesktop = document.getElementById('encode-decode-btn-desktop');
+      const generateQrBtnDesktop = document.getElementById('generate-qr-btn-desktop');
+      // Mobile buttons
+      const launchBtnMobile = document.getElementById('launch-btn-mobile');
+      const encodeDecodeBtnMobile = document.getElementById('encode-decode-btn-mobile');
+      const generateQrBtnMobile = document.getElementById('generate-qr-btn-mobile');
+      const shareBtnMobile = document.getElementById('share-btn-mobile');
+      const mobileDropdownToggle = document.getElementById('mobile-dropdown-toggle');
+      const mobileDropdownMenu = document.getElementById('mobile-dropdown-menu');
       const clearBtn = document.getElementById('clear-input');
       const copyResultBtn = document.getElementById('copy-result');
       const launchResultBtn = document.getElementById('launch-result');
@@ -1037,6 +1274,108 @@
         input.addEventListener('input', autoResizeDeeplinkInput);
       }
 
+      // Mobile dropdown toggle
+      if (mobileDropdownToggle && mobileDropdownMenu) {
+        mobileDropdownToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          mobileDropdownMenu.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!mobileDropdownToggle.contains(e.target) && !mobileDropdownMenu.contains(e.target)) {
+            mobileDropdownMenu.classList.remove('show');
+          }
+        });
+
+        // Close dropdown when selecting an option
+        if (encodeDecodeBtnMobile) {
+          encodeDecodeBtnMobile.addEventListener('click', function() {
+            mobileDropdownMenu.classList.remove('show');
+          });
+        }
+        if (generateQrBtnMobile) {
+          generateQrBtnMobile.addEventListener('click', function() {
+            mobileDropdownMenu.classList.remove('show');
+          });
+        }
+        if (shareBtnMobile) {
+          shareBtnMobile.addEventListener('click', function() {
+            mobileDropdownMenu.classList.remove('show');
+          });
+        }
+      }
+
+      // Shared handler functions
+      function handleEncodeDecode() {
+        const url = input.value.trim();
+        const encoderUrl = url ? `url-encoder.html?url=${encodeURIComponent(url)}` : 'url-encoder.html';
+        window.location.href = encoderUrl;
+      }
+
+      function handleGenerateQR() {
+        const url = input.value.trim();
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.trackDeeplinkGenerateQr({
+            page: 'DeepLink Launcher'
+          });
+        }
+        const qrUrl = url ? `qr-generator-free.html?text=${encodeURIComponent(url)}` : 'qr-generator-free.html';
+        window.location.href = qrUrl;
+        showToast('Redirecting to QR Generator...', 'info');
+      }
+
+      function handleLaunch() {
+        const url = input.value.trim();
+        const validation = validateDeepLink(url);
+        if (validation.valid) {
+          if (typeof window.Analytics !== 'undefined') {
+            window.Analytics.trackDeeplinkLaunch({
+              page: 'DeepLink Launcher',
+              deeplink_scheme: url.split(':')[0] || 'unknown'
+            });
+          }
+          launchDeepLink(url);
+          saveToHistory(url);
+        } else {
+          showToast(validation.message, 'error');
+        }
+      }
+
+      function handleShare() {
+        const url = input.value.trim();
+        if (url) {
+          shareDeepLink(url);
+        } else {
+          showToast('Please enter a deep link to share', 'error');
+        }
+      }
+
+      // Wire up desktop buttons
+      if (launchBtnDesktop) {
+        launchBtnDesktop.addEventListener('click', handleLaunch);
+      }
+      if (encodeDecodeBtnDesktop) {
+        encodeDecodeBtnDesktop.addEventListener('click', handleEncodeDecode);
+      }
+      if (generateQrBtnDesktop) {
+        generateQrBtnDesktop.addEventListener('click', handleGenerateQR);
+      }
+
+      // Wire up mobile buttons
+      if (launchBtnMobile) {
+        launchBtnMobile.addEventListener('click', handleLaunch);
+      }
+      if (encodeDecodeBtnMobile) {
+        encodeDecodeBtnMobile.addEventListener('click', handleEncodeDecode);
+      }
+      if (generateQrBtnMobile) {
+        generateQrBtnMobile.addEventListener('click', handleGenerateQR);
+      }
+      if (shareBtnMobile) {
+        shareBtnMobile.addEventListener('click', handleShare);
+      }
+
       // Input validation
       input.addEventListener('input', function() {
         const validation = validateDeepLink(this.value);
@@ -1054,49 +1393,6 @@
         }
       });
 
-      // Launch button
-      launchBtn.addEventListener('click', function() {
-        const url = input.value.trim();
-        const validation = validateDeepLink(url);
-        if (validation.valid) {
-          // Track launch
-          if (typeof window.Analytics !== 'undefined') {
-            window.Analytics.trackDeeplinkLaunch({
-              page: 'DeepLink Launcher',
-              deeplink_scheme: url.split(':')[0] || 'unknown'
-            });
-          }
-          launchDeepLink(url);
-          saveToHistory(url);
-        } else {
-          showToast(validation.message, 'error');
-        }
-      });
-
-      // Encode/Decode button - navigates to URL encoder/decoder screen
-      if (encodeDecodeBtn) {
-        encodeDecodeBtn.addEventListener('click', function() {
-          const url = input.value.trim();
-          // Navigate to URL encoder/decoder screen
-          const encoderUrl = url ? `url-encoder.html?url=${encodeURIComponent(url)}` : 'url-encoder.html';
-          window.location.href = encoderUrl;
-        });
-      }
-
-      // Generate QR button - always navigates, passes text if available
-      generateQrBtn.addEventListener('click', function() {
-        const url = input.value.trim();
-        // Track generate QR
-        if (typeof window.Analytics !== 'undefined') {
-          window.Analytics.trackDeeplinkGenerateQr({
-            page: 'DeepLink Launcher'
-          });
-        }
-        // Navigate to QR page with the deeplink as a parameter if text exists, otherwise just navigate
-        const qrUrl = url ? `qr-generator-free.html?text=${encodeURIComponent(url)}` : 'qr-generator-free.html';
-        window.location.href = qrUrl;
-        showToast('Redirecting to QR Generator...', 'info');
-      });
 
       // Clear input
       clearBtn.addEventListener('click', function() {
@@ -1161,6 +1457,7 @@
     // Make functions globally available
     window.editDeepLink = editDeepLink;
     window.copyDeepLink = copyDeepLink;
+    window.shareDeepLink = shareDeepLink;
     window.launchDeepLink = launchDeepLink;
     window.deleteDeepLink = deleteDeepLink;
     window.deleteDeepLinkByUrl = deleteDeepLinkByUrl;
