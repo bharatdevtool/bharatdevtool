@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Regex Tester Online | Test & Debug Regular Expressions | No Sign Up Required</title>
+  <meta name="description" content="Free Regex Tester and Debugger. Test regular expressions in real-time with syntax highlighting, match groups, and performance analysis. Support for JavaScript, Python, Golang, Java, and PCRE. No sign up required.">
+  <meta name="keywords" content="regex tester, regex debugger, regular expression tester, test regex online, regex validator, regex matcher, free regex tester">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <link rel="canonical" href="https://bharatdevtool.com/regex-tester.html">
+  
+  <!-- Social preview -->
+  <meta property="og:title" content="Free Regex Tester Online | Test & Debug Regular Expressions">
+  <meta property="og:description" content="Professional Regex Tester and Debugger. Test regular expressions in real-time with syntax highlighting, match groups, and performance analysis.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/regex-tester.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free Regex Tester Online | Test & Debug Regular Expressions">
+  <meta name="twitter:description" content="Professional Regex Tester and Debugger. Test regular expressions in real-time with syntax highlighting, match groups, and performance analysis.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  
+  <!-- Sentry SDK: Defer loading -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+  
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+  
+  <!-- Theme Management (load early to prevent flash) -->
+  <script src="assets/js/theme.js"></script>
+  
+  <!-- Version Tracking Script: Defer loading -->
+  <script src="assets/js/version.js" defer></script>
+  
+  <!-- Analytics Script: Defer loading -->
+  <script src="assets/js/analytics.js" defer></script>
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+  
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Regex Tester",
+    "description": "Professional Regex Tester and Debugger. Test regular expressions in real-time with syntax highlighting, match groups, and performance analysis.",
+    "url": "https://bharatdevtool.com/regex-tester.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "Regex Testing",
+      "Real-time Highlighting",
+      "Match Groups",
+      "Performance Analysis",
+      "Multiple Regex Flavors"
+    ]
+  }
+  </script>
+  
+  <!-- FAQPage Schema for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a regex tester and how does it work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A regex tester is a tool that allows you to test regular expressions against sample text in real-time. It highlights matches, shows match groups, and provides detailed information about each match including position, length, and captured groups. This tool supports multiple regex flavors including JavaScript, Python, Golang, Java, and PCRE."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What regex flavors are supported?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The tool supports JavaScript (full execution), Python, Golang, Java, and PCRE. While JavaScript regex can be executed directly in the browser, other flavors are validated for syntax correctness. For full execution of non-JavaScript flavors, backend processing would be required."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I use match groups?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Match groups are created using parentheses in your regex pattern. For example, (\\d{3})-(\\d{3})-(\\d{4}) creates three groups for a phone number. The tool will highlight each group with different colors and show their positions in the match details section."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is catastrophic backtracking?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Catastrophic backtracking occurs when a regex pattern causes exponential time complexity, making the regex extremely slow or causing the browser to freeze. The tool detects potential backtracking patterns and warns you about them. Common causes include nested quantifiers and complex alternations."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I test regex offline?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the tool works entirely in your browser using JavaScript. Once the page is loaded, you can test regex patterns offline. Your last used regex pattern and test input are saved in localStorage for convenience."
+        }
+      }
+    ]
+  }
+  </script>
+  
+  <!-- Custom styles -->
+  <style>
+    .regex-match {
+      background-color: rgba(34, 197, 94, 0.2);
+      border-bottom: 2px solid #22c55e;
+      padding: 2px 0;
+    }
+    .regex-group {
+      background-color: rgba(59, 130, 246, 0.2);
+      border-bottom: 2px solid #3b82f6;
+      padding: 2px 0;
+    }
+    .regex-error {
+      background-color: rgba(239, 68, 68, 0.1);
+      border-left: 3px solid #ef4444;
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
+    .regex-warning {
+      background-color: rgba(245, 158, 11, 0.1);
+      border-left: 3px solid #f59e0b;
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
+    .syntax-help-panel {
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+    .match-item {
+      transition: background-color 0.2s;
+    }
+    .match-item:hover {
+      background-color: rgba(59, 130, 246, 0.1);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 min-h-screen">
+  <!-- Header -->
+  <script src="components/header.js"></script>
+  
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Page Header -->
+    <div class="text-center mb-8 animate-fade-in">
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        Free Regex Tester Online
+      </h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Test and debug regular expressions in real-time with syntax highlighting, match groups, and performance analysis. Support for JavaScript, Python, Golang, Java, and PCRE.
+      </p>
+    </div>
+    
+    <!-- Regex Input Section -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
+      <div class="flex flex-col md:flex-row gap-4 mb-4">
+        <!-- Regex Pattern Input -->
+        <div class="flex-1">
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Regex Pattern
+          </label>
+          <div class="relative">
+            <input
+              type="text"
+              id="regex-pattern"
+              class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent font-mono"
+              placeholder="Enter regex pattern (e.g., /^[a-z]+$/i)"
+              autocomplete="off"
+            />
+            <button
+              id="escape-toggle"
+              class="absolute right-2 top-2 px-3 py-1 text-sm bg-gray-100 dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-500 rounded text-gray-700 dark:text-gray-300 transition-colors"
+              title="Escape/Unescape"
+            >
+              Esc
+            </button>
+          </div>
+        </div>
+        
+        <!-- Regex Flavor Selector -->
+        <div class="md:w-48">
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Regex Flavor
+          </label>
+          <select
+            id="regex-flavor"
+            class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500"
+          >
+            <option value="javascript">JavaScript</option>
+            <option value="python">Python</option>
+            <option value="golang">Golang</option>
+            <option value="java">Java</option>
+            <option value="pcre">PCRE</option>
+          </select>
+        </div>
+      </div>
+      
+      <!-- Flags Toggle -->
+      <div class="flex flex-wrap gap-4 mb-4">
+        <label class="flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            id="flag-case-sensitive"
+            class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
+            checked
+          />
+          <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Case Sensitive</span>
+        </label>
+        <label class="flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            id="flag-global"
+            class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
+          />
+          <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Global (g)</span>
+        </label>
+        <label class="flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            id="flag-multiline"
+            class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
+          />
+          <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Multiline (m)</span>
+        </label>
+      </div>
+      
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap gap-2">
+        <button
+          id="test-regex-btn"
+          class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium"
+        >
+          Test Regex
+        </button>
+        <button
+          id="format-regex-btn"
+          class="px-6 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+        >
+          Format
+        </button>
+        <button
+          id="explain-regex-btn"
+          class="px-6 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+        >
+          Explain
+        </button>
+        <button
+          id="syntax-help-btn"
+          class="px-6 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+        >
+          Syntax Help
+        </button>
+        <button
+          id="test-examples-btn"
+          class="px-6 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+        >
+          Test Examples
+        </button>
+      </div>
+    </div>
+    
+    <!-- Test Input Section -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
+      <div class="flex justify-between items-center mb-4">
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          Test Input Text
+        </label>
+        <button
+          id="clear-input-btn"
+          class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+        >
+          Clear
+        </button>
+      </div>
+      <textarea
+        id="test-input"
+        class="w-full h-48 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent font-mono resize-y"
+        placeholder="Enter text to test against the regex pattern..."
+      ></textarea>
+    </div>
+    
+    <!-- Results Section -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-6">
+      <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+        Results
+      </h2>
+      
+      <!-- Error/Warning Display -->
+      <div id="error-display" class="hidden mb-4"></div>
+      
+      <!-- Stats -->
+      <div id="stats-display" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+          <div class="text-sm text-gray-600 dark:text-gray-400">Total Matches</div>
+          <div id="match-count" class="text-2xl font-bold text-gray-900 dark:text-white">0</div>
+        </div>
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+          <div class="text-sm text-gray-600 dark:text-gray-400">Execution Time</div>
+          <div id="execution-time" class="text-2xl font-bold text-gray-900 dark:text-white">0ms</div>
+        </div>
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+          <div class="text-sm text-gray-600 dark:text-gray-400">Pattern Valid</div>
+          <div id="pattern-valid" class="text-2xl font-bold text-green-600 dark:text-green-400">Yes</div>
+        </div>
+      </div>
+      
+      <!-- Highlighted Output -->
+      <div class="mb-6">
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          Highlighted Matches
+        </label>
+        <div
+          id="highlighted-output"
+          class="w-full min-h-32 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white font-mono whitespace-pre-wrap break-words"
+        ></div>
+      </div>
+      
+      <!-- Match Details -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          Match Details
+        </label>
+        <div
+          id="match-details"
+          class="w-full max-h-96 overflow-y-auto border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 p-4"
+        ></div>
+      </div>
+    </div>
+    
+    <!-- Syntax Help Panel (Hidden by default) -->
+    <div
+      id="syntax-help-panel"
+      class="hidden fixed inset-y-0 right-0 w-96 bg-white dark:bg-gray-800 shadow-xl z-50 overflow-y-auto"
+    >
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Regex Syntax Help</h3>
+          <button
+            id="close-syntax-help"
+            class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+          >
+            ✕
+          </button>
+        </div>
+        <div class="syntax-help-panel space-y-6">
+          <!-- Character Classes -->
+          <div>
+            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Character Classes</h4>
+            <div class="space-y-2 text-sm">
+              <div><code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">.</code> - Any character except newline</div>
+              <div><code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">\d</code> - Any digit (0-9)</div>
+              <div><code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">\w</code> - Word character (letter, digit, underscore)</div>
+              <div><code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">\s</code> - Whitespace character</div>
+              <div><code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">[abc]</code> - Any character in brackets</div>
+              <div><code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">[^abc]</code> - Any character NOT in brackets</div>
+            </div>
+          </div>
+          
+          <!-- Quantifiers -->
+          <div>
+            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Quantifiers</h4>
+            <div class="space-y-2 text-sm">
+              <div><code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">*</code> - Zero or more</div>
+              <div><code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">+</code> - One or more</div>
+              <div><code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">?</code> - Zero or one</div>
+              <div><code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">{n}</code> - Exactly n times</div>
+              <div><code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">{n,}</code> - n or more times</div>
+              <div><code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">{n,m}</code> - Between n and m times</div>
+            </div>
+          </div>
+          
+          <!-- Anchors -->
+          <div>
+            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Anchors</h4>
+            <div class="space-y-2 text-sm">
+              <div><code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">^</code> - Start of string</div>
+              <div><code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">$</code> - End of string</div>
+              <div><code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">\b</code> - Word boundary</div>
+            </div>
+          </div>
+          
+          <!-- Groups -->
+          <div>
+            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Groups</h4>
+            <div class="space-y-2 text-sm">
+              <div><code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">(abc)</code> - Capturing group</div>
+              <div><code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">(?:abc)</code> - Non-capturing group</div>
+              <div><code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">(?&lt;name&gt;abc)</code> - Named group</div>
+            </div>
+          </div>
+          
+          <!-- Lookahead/Lookbehind -->
+          <div>
+            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Lookahead/Lookbehind</h4>
+            <div class="space-y-2 text-sm">
+              <div><code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">(?=abc)</code> - Positive lookahead</div>
+              <div><code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">(?!abc)</code> - Negative lookahead</div>
+              <div><code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">(?&lt;=abc)</code> - Positive lookbehind</div>
+              <div><code class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">(?&lt;!abc)</code> - Negative lookbehind</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- FAQ Section -->
+    <section class="faq-section mt-12 mb-8" id="faq">
+      <div class="faq-container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about Regex Tester</p>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is a regex tester and how does it work?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>A regex tester is a tool that allows you to test regular expressions against sample text in real-time. It highlights matches, shows match groups, and provides detailed information about each match including position, length, and captured groups. This tool supports multiple regex flavors including JavaScript, Python, Golang, Java, and PCRE.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What regex flavors are supported?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>The tool supports JavaScript (full execution), Python, Golang, Java, and PCRE. While JavaScript regex can be executed directly in the browser, other flavors are validated for syntax correctness. For full execution of non-JavaScript flavors, backend processing would be required.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How do I use match groups?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Match groups are created using parentheses in your regex pattern. For example, <code>(\d{3})-(\d{3})-(\d{4})</code> creates three groups for a phone number. The tool will highlight each group with different colors and show their positions in the match details section.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is catastrophic backtracking?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Catastrophic backtracking occurs when a regex pattern causes exponential time complexity, making the regex extremely slow or causing the browser to freeze. The tool detects potential backtracking patterns and warns you about them. Common causes include nested quantifiers and complex alternations.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Can I test regex offline?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes, the tool works entirely in your browser using JavaScript. Once the page is loaded, you can test regex patterns offline. Your last used regex pattern and test input are saved in localStorage for convenience.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <!-- Footer -->
+  <script src="components/footer.js"></script>
+  
+  <!-- Scripts -->
+  <script type="module">
+    import { testRegex, escapeRegex, unescapeRegex, validateRegexPattern, detectCatastrophicBacktracking, formatRegexPattern, explainRegexPattern } from './assets/js/regex-engine.js';
+    
+    // Make functions available globally
+    window.regexEngine = {
+      testRegex,
+      escapeRegex,
+      unescapeRegex,
+      validateRegexPattern,
+      detectCatastrophicBacktracking,
+      formatRegexPattern,
+      explainRegexPattern
+    };
+  </script>
+  
+  <script src="assets/js/regex-tester-app.js"></script>
+  
+  <!-- FAQ Accordion Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const faqQuestions = document.querySelectorAll('.faq-question');
+      faqQuestions.forEach(question => {
+        question.addEventListener('click', function() {
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          const faqItem = this.closest('.faq-item');
+          const answer = faqItem.querySelector('.faq-answer');
+          const icon = this.querySelector('.faq-icon');
+          
+          // Close all other FAQ items
+          faqQuestions.forEach(q => {
+            if (q !== this) {
+              q.setAttribute('aria-expanded', 'false');
+              q.closest('.faq-item').classList.remove('active');
+              q.querySelector('.faq-icon').textContent = '+';
+            }
+          });
+          
+          // Toggle current item
+          if (isExpanded) {
+            this.setAttribute('aria-expanded', 'false');
+            faqItem.classList.remove('active');
+            icon.textContent = '+';
+          } else {
+            this.setAttribute('aria-expanded', 'true');
+            faqItem.classList.add('active');
+            icon.textContent = '−';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+

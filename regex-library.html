@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Regex Library | Common Regular Expression Patterns | No Sign Up Required</title>
+  <meta name="description" content="Free Regex Library with common regular expression patterns. Ready-to-use regex for email, phone, password, URL, date, credit card, and more. Copy and use instantly. No sign up required.">
+  <meta name="keywords" content="regex library, regex patterns, common regex, regex examples, regex cheatsheet, regular expression library, free regex patterns">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <link rel="canonical" href="https://bharatdevtool.com/regex-library.html">
+  
+  <!-- Social preview -->
+  <meta property="og:title" content="Free Regex Library | Common Regular Expression Patterns">
+  <meta property="og:description" content="Ready-to-use regex patterns for email, phone, password, URL, date, credit card, and more. Copy and use instantly.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/regex-library.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free Regex Library | Common Regular Expression Patterns">
+  <meta name="twitter:description" content="Ready-to-use regex patterns for email, phone, password, URL, date, credit card, and more. Copy and use instantly.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  
+  <!-- Sentry SDK: Defer loading -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+  
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+  
+  <!-- Theme Management (load early to prevent flash) -->
+  <script src="assets/js/theme.js"></script>
+  
+  <!-- Version Tracking Script: Defer loading -->
+  <script src="assets/js/version.js" defer></script>
+  
+  <!-- Analytics Script: Defer loading -->
+  <script src="assets/js/analytics.js" defer></script>
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+  
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Regex Library",
+    "description": "Ready-to-use regex patterns for email, phone, password, URL, date, credit card, and more. Copy and use instantly.",
+    "url": "https://bharatdevtool.com/regex-library.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "Email Validation",
+      "Phone Number Validation",
+      "URL Validation",
+      "Password Validation",
+      "Date Validation",
+      "Credit Card Validation",
+      "Common Regex Patterns"
+    ]
+  }
+  </script>
+  
+  <!-- FAQPage Schema for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a regex library?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A regex library is a collection of pre-written regular expression patterns for common use cases. Instead of writing regex from scratch, you can browse the library, find the pattern you need, copy it, and use it directly in your code. This saves time and ensures you're using well-tested patterns."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I use these regex patterns?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Simply click the \"Copy\" button next to any pattern to copy it to your clipboard. Then paste it into your code. You can also click \"Test\" to open the pattern in the Regex Tester tool where you can test it against sample text and see how it works."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are these patterns tested and reliable?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, all patterns in the library are well-tested and commonly used in production applications. However, you should always test patterns with your specific use case and data to ensure they work as expected. Some patterns may need slight modifications based on your requirements."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I customize these patterns?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely! These patterns are starting points. You can modify them to suit your specific needs. For more complex customizations, use the Regex Generator tool which provides a rule-based interface for creating custom patterns."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What regex flavors are supported?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most patterns in the library are written for JavaScript regex, which is compatible with many other regex engines. However, some patterns may need slight modifications for Python, Java, or other languages. You can test patterns in the Regex Tester tool which supports multiple flavors."
+        }
+      }
+    ]
+  }
+  </script>
+  
+  <!-- Custom styles -->
+  <style>
+    .regex-card {
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .regex-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .pattern-code {
+      font-family: 'Courier New', monospace;
+      word-break: break-all;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 min-h-screen">
+  <!-- Header -->
+  <script src="components/header.js"></script>
+  
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Page Header -->
+    <div class="text-center mb-8 animate-fade-in">
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        Free Regex Library
+      </h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Ready-to-use regular expression patterns for common use cases. Copy and use instantly in your projects.
+      </p>
+    </div>
+    
+    <!-- Search Bar -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 mb-6">
+      <input
+        type="text"
+        id="search-input"
+        placeholder="Search regex patterns..."
+        class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500"
+      />
+    </div>
+    
+    <!-- Regex Patterns Grid -->
+    <div id="regex-patterns-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+      <!-- Patterns will be dynamically inserted here -->
+    </div>
+    
+    <!-- FAQ Section -->
+    <section class="faq-section mt-12 mb-8" id="faq">
+      <div class="faq-container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about Regex Library</p>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is a regex library?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>A regex library is a collection of pre-written regular expression patterns for common use cases. Instead of writing regex from scratch, you can browse the library, find the pattern you need, copy it, and use it directly in your code. This saves time and ensures you're using well-tested patterns.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How do I use these regex patterns?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Simply click the "Copy" button next to any pattern to copy it to your clipboard. Then paste it into your code. You can also click "Test" to open the pattern in the Regex Tester tool where you can test it against sample text and see how it works.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Are these patterns tested and reliable?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes, all patterns in the library are well-tested and commonly used in production applications. However, you should always test patterns with your specific use case and data to ensure they work as expected. Some patterns may need slight modifications based on your requirements.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Can I customize these patterns?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Absolutely! These patterns are starting points. You can modify them to suit your specific needs. For more complex customizations, use the Regex Generator tool which provides a rule-based interface for creating custom patterns.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What regex flavors are supported?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Most patterns in the library are written for JavaScript regex, which is compatible with many other regex engines. However, some patterns may need slight modifications for Python, Java, or other languages. You can test patterns in the Regex Tester tool which supports multiple flavors.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <!-- Footer -->
+  <script src="components/footer.js"></script>
+  
+  <!-- Scripts -->
+  <script src="assets/js/regex-library-app.js"></script>
+  
+  <!-- FAQ Accordion Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const faqQuestions = document.querySelectorAll('.faq-question');
+      faqQuestions.forEach(question => {
+        question.addEventListener('click', function() {
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          const faqItem = this.closest('.faq-item');
+          const answer = faqItem.querySelector('.faq-answer');
+          const icon = this.querySelector('.faq-icon');
+          
+          // Close all other FAQ items
+          faqQuestions.forEach(q => {
+            if (q !== this) {
+              q.setAttribute('aria-expanded', 'false');
+              q.closest('.faq-item').classList.remove('active');
+              q.querySelector('.faq-icon').textContent = '+';
+            }
+          });
+          
+          // Toggle current item
+          if (isExpanded) {
+            this.setAttribute('aria-expanded', 'false');
+            faqItem.classList.remove('active');
+            icon.textContent = '+';
+          } else {
+            this.setAttribute('aria-expanded', 'true');
+            faqItem.classList.add('active');
+            icon.textContent = '−';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+

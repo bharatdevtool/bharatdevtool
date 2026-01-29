@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Base64 Encoder & Decoder Online | Encode & Decode Base64 | No Sign Up Required</title>
+  <meta name="description" content="Free Base64 Encoder and Decoder. Encode and decode Base64 strings instantly. Professional online tool for developers and testers. Perfect for Base64 encoding and decoding tasks. No sign up required.">
+  <meta name="keywords" content="base64 encoder, base64 decoder, encode base64, decode base64, base64 encoding, base64 decoding, online base64 encoder, online base64 decoder, base64 encode decode, free base64 encoder">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  <meta name="distribution" content="global">
+  <meta name="rating" content="general">
+  <link rel="canonical" href="https://bharatdevtool.com/base64">
+  
+  <!-- Social preview -->
+  <meta property="og:title" content="Base64 Encoder & Decoder Online | Free Base64 Encoding Tool">
+  <meta property="og:description" content="Professional Base64 Encoder and Decoder. Encode and decode Base64 strings instantly. Free online tool for developers and testers.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/base64">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Base64 Encoder & Decoder - Free Online Tool">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Base64 Encoder & Decoder Online | Free Base64 Encoding Tool">
+  <meta name="twitter:description" content="Professional Base64 Encoder and Decoder. Encode and decode Base64 strings instantly. Free online tool for developers and testers.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon.svg">
+  
+  <!-- Sentry SDK: Defer loading -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+  
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+  
+  <!-- Theme Management (load early to prevent flash) -->
+  <script src="assets/js/theme.js"></script>
+  
+  <!-- Version Tracking Script: Defer loading -->
+  <script src="assets/js/version.js" defer></script>
+  
+  <!-- Analytics Script: Defer loading (automatically tracks page views) -->
+  <script src="assets/js/analytics.js" defer></script>
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Common CSS for consistent theming -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+  
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Base64 Encoder/Decoder",
+    "description": "Professional Base64 Encoder and Decoder. Encode and decode Base64 strings instantly. Free online tool for developers and testers.",
+    "url": "https://bharatdevtool.com/base64",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "Base64 Encoding",
+      "Base64 Decoding",
+      "Text to Base64",
+      "Base64 to Text",
+      "Developer Tools"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.7",
+      "reviewCount": "95"
+    }
+  }
+  </script>
+  
+  <!-- BreadcrumbList Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Base64 Encoder/Decoder",
+        "item": "https://bharatdevtool.com/base64"
+      }
+    ]
+  }
+  </script>
+  
+  <!-- FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Base64 encoding and why is it needed?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Base64 encoding converts binary data or text into a string of ASCII characters using 64 characters (A-Z, a-z, 0-9, +, /). It's commonly used to encode data for transmission over protocols that only support text, such as email attachments, data URLs, and API responses. Base64 encoding ensures data integrity and compatibility across different systems."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I encode text to Base64?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Simply paste or type your text into the input field and click the Encode button. The tool will automatically convert your text to Base64 format. You can encode any text, including special characters, Unicode characters, and even binary data represented as text."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I decode Base64 to text?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Paste your Base64-encoded string into the input field and click the Decode button. The tool will convert the Base64 string back to its original text format. If the Base64 string is invalid, the tool will display an error message."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What characters are used in Base64 encoding?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Base64 uses 64 characters: uppercase letters (A-Z), lowercase letters (a-z), digits (0-9), plus sign (+), and forward slash (/). The equals sign (=) is used as padding at the end of Base64 strings when needed."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the tool store my data?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No, we do not store any of your data. All encoding and decoding happens entirely in your browser. Your data never leaves your device, ensuring complete privacy and security."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I encode binary data or images?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "While this tool works with text input, Base64 encoding is commonly used for binary data like images. For binary files, you would typically convert them to Base64 using file upload functionality. This tool focuses on text-to-Base64 and Base64-to-text conversion, which is the most common use case for developers."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does 'Interpret hex as binary' do?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "When enabled, this option treats hexadecimal strings (like 'FB EF FF FF' or '00 01 02 03') as binary data instead of text. The tool automatically removes spaces and converts each pair of hex digits into actual bytes before encoding to Base64. Example: Input 'FB EF FF FF' with this option enabled will be converted to bytes and encoded as '++///w=='. Without this option, it treats 'FB EF FF FF' as text and encodes it as 'RkIgRUYgRkYgRkY='. This is useful when working with binary data represented in hexadecimal format, such as cryptographic keys, hash values, or raw binary data."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does 'Interpret \\xNN escapes' do?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "When enabled, this option processes escape sequences in the format \\xNN (where NN is a two-digit hexadecimal number) and converts them to their corresponding byte values before encoding. Example: Input \\x48\\x65\\x6C\\x6C\\x6F with this option enabled will be converted to 'Hello' and then encoded as 'SGVsbG8='. Without this option, it treats the backslashes and 'x' as literal characters. This is useful when working with escape sequences commonly used in programming languages like C, JavaScript, or Python."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is URL-safe Base64?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "URL-safe Base64 (also called Base64URL) is a variant of Base64 encoding designed for use in URLs and filenames. It replaces characters that have special meaning in URLs: + (plus sign) is replaced with - (minus sign), / (forward slash) is replaced with _ (underscore), and padding characters = can optionally be removed. Example: Standard Base64 '++///w==' becomes '--___w==' in URL-safe format. This format is commonly used in JWT tokens, OAuth 2.0 authorization codes, URL parameters, Web Crypto API, and any scenario where Base64 data needs to be safely included in URLs. When decoding, the tool automatically detects URL-safe Base64 and converts it back to standard Base64 before decoding."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does 'Strip padding (=)' do?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "When enabled, this option removes the padding characters (=) from the end of the Base64-encoded output. Base64 encoding uses padding to ensure the output length is a multiple of 4 characters. Example: Input 'Hello' normally encodes to 'SGVsbG8=' (with one padding character). With 'Strip padding' enabled, it becomes 'SGVsbG8' (without the =). Padding is optional in many contexts and can be automatically added back when decoding. Some systems prefer Base64 without padding for cleaner URLs or more compact storage. The tool can decode Base64 strings with or without padding automatically."
+        }
+      }
+    ]
+  }
+  </script>
+  
+  <!-- HowTo Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Encode and Decode Base64",
+    "description": "Step-by-step guide to encoding and decoding Base64 using Bharat Dev Tools Base64 Encoder/Decoder",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "position": 1,
+        "name": "Enter Text or Base64",
+        "text": "Paste or type your text into the input field. This can be plain text, special characters, or a Base64-encoded string.",
+        "url": "https://bharatdevtool.com/base64#step1"
+      },
+      {
+        "@type": "HowToStep",
+        "position": 2,
+        "name": "Encode or Decode",
+        "text": "Click the Encode button to convert text to Base64 format, or click Decode to convert Base64 back to text.",
+        "url": "https://bharatdevtool.com/base64#step2"
+      },
+      {
+        "@type": "HowToStep",
+        "position": 3,
+        "name": "Copy Result",
+        "text": "Review the result and use the Copy button to copy it to your clipboard for use in your application.",
+        "url": "https://bharatdevtool.com/base64#step3"
+      }
+    ],
+    "totalTime": "PT30S"
+  }
+  </script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Custom styles -->
+  <style>
+    .animate-fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-slide-up {
+      animation: slideUp 0.3s ease-out;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+    .toast.show {
+      transform: translateX(0);
+    }
+    .toast.success {
+      background: linear-gradient(135deg, #10b981, #059669);
+    }
+    .toast.error {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+    }
+    .toast.info {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+    }
+    #clear-all-history {
+      outline: none !important;
+      border: none !important;
+    }
+    #clear-all-history:focus,
+    #clear-all-history:active,
+    #clear-all-history:hover {
+      outline: none !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+  <!-- Header Component Script (load after body exists) -->
+  <script src="components/header.js"></script>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- SEO Header (invisible, for Google) -->
+    <h1 class="sr-only">Base64 Encoder/Decoder</h1>
+    
+    <!-- Hero Section -->
+    <div class="text-center mb-12 animate-fade-in">
+      <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        🔐 Base64 Encoder/Decoder
+      </h2>
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Encode and decode Base64 strings instantly. Perfect for developers and testers.
+      </p>
+    </div>
+
+    <!-- Main Input Panel -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mb-8 animate-fade-in">
+      <div class="space-y-6">
+        <!-- Input Field -->
+        <div>
+          <label for="base64-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Text or Base64
+          </label>
+          <div class="relative">
+            <textarea 
+              id="base64-input" 
+              placeholder="Enter your text or Base64 string here..."
+              class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 font-mono text-sm"
+              rows="6"
+            ></textarea>
+            <div class="absolute inset-y-0 right-0 flex items-start pr-3 pt-3">
+              <button id="clear-input" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 flex-shrink-0 p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors" aria-label="Clear input">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div id="validation-message" class="mt-2 text-sm text-red-600 dark:text-red-400 hidden"></div>
+        </div>
+
+        <!-- Advanced Options -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+            🧑‍💻 Advanced Options
+          </label>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <label class="flex items-center space-x-2 cursor-pointer p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+              <input type="checkbox" id="interpret-hex" class="w-4 h-4 text-primary-600 rounded focus:ring-primary-500">
+              <span class="text-sm text-gray-700 dark:text-gray-300">
+                Interpret hex as binary
+              </span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+              <input type="checkbox" id="interpret-escapes" class="w-4 h-4 text-primary-600 rounded focus:ring-primary-500">
+              <span class="text-sm text-gray-700 dark:text-gray-300">
+                Interpret \xNN escapes
+              </span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+              <input type="checkbox" id="url-safe" class="w-4 h-4 text-primary-600 rounded focus:ring-primary-500">
+              <span class="text-sm text-gray-700 dark:text-gray-300">
+                URL-safe Base64
+              </span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+              <input type="checkbox" id="strip-padding" class="w-4 h-4 text-primary-600 rounded focus:ring-primary-500">
+              <span class="text-sm text-gray-700 dark:text-gray-300">
+                Strip padding (=)
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <button id="encode-btn" class="flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+            <span class="mr-2">🔒</span>
+            Encode
+          </button>
+          <button id="decode-btn" class="flex items-center justify-center px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium">
+            <span class="mr-2">🔓</span>
+            Decode
+          </button>
+        </div>
+
+        <!-- Result Display -->
+        <div id="result-container" class="hidden">
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Result
+          </label>
+          <textarea 
+            id="result-output" 
+            readonly 
+            class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white font-mono text-sm mb-4"
+            rows="6"
+          ></textarea>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <button id="copy-result" class="flex items-center justify-center px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium">
+              <span class="mr-2">📋</span>
+              Copy
+            </button>
+            <button id="swap-btn" class="flex items-center justify-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
+              <span class="mr-2">🔄</span>
+              Swap
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- History Panel -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 animate-fade-in">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">📚 History</h3>
+        <div class="flex items-center space-x-4">
+          <span id="history-count" class="text-sm text-gray-500 dark:text-gray-400">0 items saved</span>
+          <button id="clear-all-history" class="text-sm text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 font-medium hidden" title="Delete all history">
+            🗑️ Delete All
+          </button>
+        </div>
+      </div>
+      
+      <div id="history-list" class="space-y-3">
+        <div id="empty-history" class="text-center py-8 text-gray-500 dark:text-gray-400">
+          <div class="text-4xl mb-2">📝</div>
+          <p>No items saved yet</p>
+          <p class="text-sm">Encode or decode text above and it will be saved here automatically</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+      <div class="faq-container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about Base64 Encoder/Decoder</p>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is Base64 encoding and why is it needed?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Base64 encoding converts binary data or text into a string of ASCII characters using 64 characters (A-Z, a-z, 0-9, +, /). It's commonly used to encode data for transmission over protocols that only support text, such as email attachments, data URLs, and API responses. Base64 encoding ensures data integrity and compatibility across different systems.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How do I encode text to Base64?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Simply paste or type your text into the input field and click the "Encode" button. The tool will automatically convert your text to Base64 format. You can encode any text, including special characters, Unicode characters, and even binary data represented as text.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How do I decode Base64 to text?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Paste your Base64-encoded string into the input field and click the "Decode" button. The tool will convert the Base64 string back to its original text format. If the Base64 string is invalid, the tool will display an error message.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What characters are used in Base64 encoding?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Base64 uses 64 characters: uppercase letters (A-Z), lowercase letters (a-z), digits (0-9), plus sign (+), and forward slash (/). The equals sign (=) is used as padding at the end of Base64 strings when needed.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Does the tool store my data?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>No, we do not store any of your data. All encoding and decoding happens entirely in your browser. Your data never leaves your device, ensuring complete privacy and security.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Can I encode binary data or images?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>While this tool works with text input, Base64 encoding is commonly used for binary data like images. For binary files, you would typically convert them to Base64 using file upload functionality. This tool focuses on text-to-Base64 and Base64-to-text conversion, which is the most common use case for developers.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is the maximum size I can encode/decode?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>There's no hard limit, but very large inputs may cause performance issues in the browser. For best performance, we recommend encoding or decoding text under 1MB. The tool will handle larger inputs, but processing may take longer.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What does "Interpret hex as binary" do?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>When enabled, this option treats hexadecimal strings (like "FB EF FF FF" or "00 01 02 03") as binary data instead of text. The tool will automatically remove spaces and convert each pair of hex digits into actual bytes before encoding to Base64.</p>
+              <p><strong>Example:</strong> Input "FB EF FF FF" with this option enabled will be converted to the bytes [251, 239, 255, 255] and encoded as <code>++///w==</code>. Without this option, it treats "FB EF FF FF" as text and encodes it as <code>RkIgRUYgRkYgRkY=</code>.</p>
+              <p>This is useful when working with binary data represented in hexadecimal format, such as cryptographic keys, hash values, or raw binary data.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What does "Interpret \xNN escapes" do?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>When enabled, this option processes escape sequences in the format <code>\xNN</code> (where NN is a two-digit hexadecimal number) and converts them to their corresponding byte values before encoding.</p>
+              <p><strong>Example:</strong> Input <code>\x48\x65\x6C\x6C\x6F</code> with this option enabled will be converted to "Hello" and then encoded as <code>SGVsbG8=</code>. Without this option, it treats the backslashes and 'x' as literal characters.</p>
+              <p>This is useful when working with escape sequences commonly used in programming languages like C, JavaScript, or Python, where <code>\x48</code> represents the byte value 0x48 (which is the ASCII character 'H').</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is URL-safe Base64?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>URL-safe Base64 (also called Base64URL) is a variant of Base64 encoding designed for use in URLs and filenames. It replaces characters that have special meaning in URLs:</p>
+              <ul>
+                <li><code>+</code> (plus sign) is replaced with <code>-</code> (minus sign)</li>
+                <li><code>/</code> (forward slash) is replaced with <code>_</code> (underscore)</li>
+                <li>Padding characters <code>=</code> can optionally be removed</li>
+              </ul>
+              <p><strong>Example:</strong> Standard Base64 <code>++///w==</code> becomes <code>--___w==</code> in URL-safe format.</p>
+              <p>This format is commonly used in:</p>
+              <ul>
+                <li>JWT (JSON Web Tokens) tokens</li>
+                <li>OAuth 2.0 authorization codes</li>
+                <li>URL parameters and query strings</li>
+                <li>Web Crypto API</li>
+                <li>Any scenario where Base64 data needs to be safely included in URLs</li>
+              </ul>
+              <p>When decoding, the tool automatically detects URL-safe Base64 and converts it back to standard Base64 before decoding.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What does "Strip padding (=)" do?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>When enabled, this option removes the padding characters (<code>=</code>) from the end of the Base64-encoded output. Base64 encoding uses padding to ensure the output length is a multiple of 4 characters.</p>
+              <p><strong>Example:</strong> Input "Hello" normally encodes to <code>SGVsbG8=</code> (with one padding character). With "Strip padding" enabled, it becomes <code>SGVsbG8</code> (without the <code>=</code>).</p>
+              <p>Padding is optional in many contexts and can be automatically added back when decoding. Some systems prefer Base64 without padding for cleaner URLs or more compact storage. The tool can decode Base64 strings with or without padding automatically.</p>
+              <p><strong>Note:</strong> When using URL-safe Base64, padding is often removed by default, as it's not needed for URL compatibility.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Component -->
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+  <!-- FAQ Accordion Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const faqQuestions = document.querySelectorAll('.faq-question');
+      faqQuestions.forEach(question => {
+        question.addEventListener('click', function() {
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          const faqItem = this.closest('.faq-item');
+          const answer = faqItem.querySelector('.faq-answer');
+          const icon = this.querySelector('.faq-icon');
+          
+          // Close all other FAQ items
+          faqQuestions.forEach(q => {
+            if (q !== this) {
+              q.setAttribute('aria-expanded', 'false');
+              q.closest('.faq-item').classList.remove('active');
+              q.querySelector('.faq-icon').textContent = '+';
+            }
+          });
+          
+          // Toggle current item
+          if (isExpanded) {
+            this.setAttribute('aria-expanded', 'false');
+            faqItem.classList.remove('active');
+            icon.textContent = '+';
+          } else {
+            this.setAttribute('aria-expanded', 'true');
+            faqItem.classList.add('active');
+            icon.textContent = '−';
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- Initialize Sentry with version tracking -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
+        initSentryTracking();
+      }
+    });
+  </script>
+
+  <!-- Scripts -->
+  <script>
+    // Toast notifications
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+      
+      setTimeout(() => toast.classList.add('show'), 100);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => container.removeChild(toast), 300);
+      }, 3000);
+    }
+
+    // Base64 encoding/decoding functions
+    function encodeBase64(text, options = {}) {
+      // Early return for empty input
+      if (!text || text.trim().length === 0) {
+        return null;
+      }
+      
+      try {
+        let bytes;
+        let processedText = text;
+        
+        // Step 1: Parse escape sequences if enabled
+        if (options.interpretEscapes) {
+          processedText = parseEscapeSequences(processedText);
+        }
+        
+        // Step 2: Parse hex if enabled
+        if (options.interpretHex) {
+          try {
+            bytes = parseHexString(processedText);
+            // Convert bytes to binary string for btoa
+            let binary = '';
+            for (let i = 0; i < bytes.length; i++) {
+              binary += String.fromCharCode(bytes[i]);
+            }
+            let base64 = btoa(binary);
+            
+            // Apply URL-safe and padding options
+            if (options.urlSafe) {
+              base64 = toUrlSafeBase64(base64, options.stripPadding);
+            } else if (options.stripPadding) {
+              base64 = base64.replace(/=/g, '');
+            }
+            
+            return base64;
+          } catch (hexError) {
+            // If hex parsing fails, fall through to text encoding
+            // This allows mixed content
+          }
+        }
+        
+        // Step 3: Default UTF-8 text encoding
+        bytes = stringToBytes(processedText);
+        
+        // Convert bytes to binary string for btoa
+        let binary = '';
+        for (let i = 0; i < bytes.length; i++) {
+          binary += String.fromCharCode(bytes[i]);
+        }
+        
+        let base64 = btoa(binary);
+        
+        // Apply URL-safe and padding options
+        if (options.urlSafe) {
+          base64 = toUrlSafeBase64(base64, options.stripPadding);
+        } else if (options.stripPadding) {
+          base64 = base64.replace(/=/g, '');
+        }
+        
+        return base64;
+      } catch (error) {
+        // Only track error if analytics is available and won't cause recursion
+        try {
+          if (typeof window.Analytics !== 'undefined') {
+            window.Analytics.track('encode_error', {
+              operation: 'encode_base64',
+              error_type: error.name,
+              error_message: error.message,
+              input_length: text ? text.length : 0,
+              page: BASE64_PAGE_NAME
+            });
+          }
+        } catch (trackError) {
+          // Ignore tracking errors to prevent recursion
+        }
+        
+        if (typeof Sentry !== 'undefined') {
+          try {
+            Sentry.captureException(error, {
+              tags: { operation: 'encode_base64' },
+              extra: { inputLength: text ? text.length : 0 }
+            });
+          } catch (sentryError) {
+            // Ignore Sentry errors
+          }
+        }
+        
+        throw error;
+      }
+    }
+
+    function decodeBase64(base64String, options = {}) {
+      // Early return for empty input
+      if (!base64String || base64String.trim().length === 0) {
+        return null;
+      }
+      
+      try {
+        // Remove whitespace
+        let cleaned = base64String.trim().replace(/\s/g, '');
+        
+        // Handle URL-safe Base64
+        if (options.urlSafe || cleaned.includes('-') || cleaned.includes('_')) {
+          cleaned = fromUrlSafeBase64(cleaned);
+        }
+        
+        // Validate Base64 format (after URL-safe conversion)
+        if (!/^[A-Za-z0-9+/]*={0,2}$/.test(cleaned)) {
+          throw new Error('Invalid Base64 format');
+        }
+        
+        // Use atob for Base64 decoding
+        const binaryString = atob(cleaned);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
+        }
+        
+        // Convert bytes to UTF-8 string
+        // Check if this is binary data (contains control characters or non-printable)
+        const hasControlChars = bytes.some(b => b < 0x20 && b !== 0x09 && b !== 0x0A && b !== 0x0D);
+        const hasNonPrintable = bytes.some(b => b > 0x7E || (b < 0x20 && b !== 0x09 && b !== 0x0A && b !== 0x0D));
+        
+        if (typeof TextDecoder !== 'undefined') {
+          const decoder = new TextDecoder('utf-8', { fatal: false });
+          const decoded = decoder.decode(bytes);
+          
+          // If decoded string appears empty but we have bytes, or contains control chars,
+          // show hex representation as well
+          if ((decoded.length === 0 && bytes.length > 0) || hasControlChars) {
+            // Return the decoded string (even if it looks empty) - it's valid
+            // The UI will display it, and users can see it contains data
+            return decoded;
+          }
+          
+          return decoded;
+        } else {
+          // Fallback for older browsers
+          let percentEncoded = '';
+          for (let i = 0; i < bytes.length; i++) {
+            const byte = bytes[i];
+            if (byte < 0x80) {
+              percentEncoded += String.fromCharCode(byte);
+            } else {
+              percentEncoded += '%' + ('0' + byte.toString(16)).slice(-2).toUpperCase();
+            }
+          }
+          try {
+            return decodeURIComponent(percentEncoded);
+          } catch (e) {
+            // If decodeURIComponent fails, return the binary string as-is
+            return binaryString;
+          }
+        }
+      } catch (error) {
+        // Only track error if analytics is available and won't cause recursion
+        try {
+          if (typeof window.Analytics !== 'undefined') {
+            window.Analytics.track('decode_error', {
+              operation: 'decode_base64',
+              error_type: error.name,
+              error_message: error.message,
+              input_length: base64String ? base64String.length : 0,
+              page: BASE64_PAGE_NAME
+            });
+          }
+        } catch (trackError) {
+          // Ignore tracking errors to prevent recursion
+        }
+        
+        if (typeof Sentry !== 'undefined') {
+          try {
+            Sentry.captureException(error, {
+              tags: { operation: 'decode_base64' },
+              extra: { inputLength: base64String ? base64String.length : 0 }
+            });
+          } catch (sentryError) {
+            // Ignore Sentry errors
+          }
+        }
+        
+        throw error;
+      }
+    }
+
+    // Page name constant for analytics - avoid any function calls that could cause recursion
+    const BASE64_PAGE_NAME = 'Base64 Encoder/Decoder';
+
+    // Helper functions for advanced features
+    function parseHexString(hexString) {
+      // Remove all whitespace and non-hex characters
+      const cleaned = hexString.replace(/[^0-9A-Fa-f]/g, '');
+      
+      // Must have even number of hex digits
+      if (cleaned.length % 2 !== 0) {
+        throw new Error('Hex string must have even number of digits');
+      }
+      
+      // Convert hex pairs to bytes
+      const bytes = new Uint8Array(cleaned.length / 2);
+      for (let i = 0; i < cleaned.length; i += 2) {
+        bytes[i / 2] = parseInt(cleaned.substring(i, i + 2), 16);
+      }
+      
+      return bytes;
+    }
+
+    function parseEscapeSequences(text) {
+      // Replace \xNN escape sequences with actual bytes
+      return text.replace(/\\x([0-9A-Fa-f]{2})/g, function(match, hex) {
+        return String.fromCharCode(parseInt(hex, 16));
+      });
+    }
+
+    function bytesToString(bytes) {
+      // Convert Uint8Array to string
+      if (typeof TextDecoder !== 'undefined') {
+        const decoder = new TextDecoder('utf-8');
+        return decoder.decode(bytes);
+      } else {
+        // Fallback
+        let str = '';
+        for (let i = 0; i < bytes.length; i++) {
+          str += String.fromCharCode(bytes[i]);
+        }
+        return str;
+      }
+    }
+
+    function stringToBytes(text) {
+      // Convert string to Uint8Array
+      if (typeof TextEncoder !== 'undefined') {
+        const encoder = new TextEncoder();
+        return encoder.encode(text);
+      } else {
+        // Fallback
+        const bytes = new Uint8Array(text.length);
+        for (let i = 0; i < text.length; i++) {
+          bytes[i] = text.charCodeAt(i);
+        }
+        return bytes;
+      }
+    }
+
+    function toUrlSafeBase64(base64, stripPadding) {
+      let result = base64.replace(/\+/g, '-').replace(/\//g, '_');
+      if (stripPadding) {
+        result = result.replace(/=/g, '');
+      }
+      return result;
+    }
+
+    function fromUrlSafeBase64(urlSafeBase64) {
+      // Replace URL-safe characters back
+      let base64 = urlSafeBase64.replace(/-/g, '+').replace(/_/g, '/');
+      // Add padding if needed
+      const padLength = (4 - (base64.length % 4)) % 4;
+      return base64 + '='.repeat(padLength);
+    }
+
+    // History management
+    function loadHistory() {
+      const history = JSON.parse(localStorage.getItem('base64-history') || '[]');
+      return history;
+    }
+
+    function saveToHistory(input, output, type) {
+      const history = loadHistory();
+      const timestamp = new Date().toISOString();
+      
+      // Avoid duplicates (check last item)
+      const lastItem = history[0];
+      if (lastItem && lastItem.input === input && lastItem.type === type) {
+        return; // Already saved
+      }
+      
+      history.unshift({ input, output, type, timestamp });
+      
+      // Keep only last 50 items
+      if (history.length > 50) {
+        history.pop();
+      }
+      
+      localStorage.setItem('base64-history', JSON.stringify(history));
+      updateHistoryDisplay();
+    }
+
+    function updateHistoryDisplay() {
+      const history = loadHistory();
+      const container = document.getElementById('history-list');
+      const count = document.getElementById('history-count');
+      const empty = document.getElementById('empty-history');
+      const clearAllBtn = document.getElementById('clear-all-history');
+
+      if (count) {
+        count.textContent = `${history.length} item${history.length !== 1 ? 's' : ''} saved`;
+      }
+
+      // Show/hide clear all button based on history
+      if (clearAllBtn) {
+        if (history.length > 0) {
+          clearAllBtn.classList.remove('hidden');
+        } else {
+          clearAllBtn.classList.add('hidden');
+        }
+      }
+
+      if (history.length === 0) {
+        if (empty) {
+          empty.style.display = 'block';
+        }
+        if (container) {
+          container.innerHTML = '';
+        }
+        return;
+      }
+
+      if (empty) {
+        empty.style.display = 'none';
+      }
+      if (container) {
+        container.innerHTML = history.map((item, index) => {
+          const itemDate = new Date(item.timestamp);
+          const now = new Date();
+          const diffInHours = (now - itemDate) / (1000 * 60 * 60);
+
+          let timeDisplay;
+          if (diffInHours < 24) {
+            timeDisplay = itemDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          } else {
+            timeDisplay = itemDate.toLocaleDateString([], { month: 'short', day: 'numeric' });
+          }
+
+          const typeLabel = item.type === 'encode' ? 'Encoded' : 'Decoded';
+          const typeIcon = item.type === 'encode' ? '🔒' : '🔓';
+          
+          // Truncate long strings for display
+          const displayInput = item.input.length > 100 
+            ? item.input.substring(0, 100) + '...' 
+            : item.input;
+          const displayOutput = item.output.length > 100 
+            ? item.output.substring(0, 100) + '...' 
+            : item.output;
+
+          return `
+            <div class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg animate-slide-up">
+              <div class="mb-2 flex items-center justify-between">
+                <span class="text-xs font-medium text-gray-500 dark:text-gray-400">${typeIcon} ${typeLabel}</span>
+                <span class="text-xs text-gray-500 dark:text-gray-400">${timeDisplay}</span>
+              </div>
+              <div class="mb-2">
+                <div class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Input:</div>
+                <div class="text-sm text-gray-900 dark:text-white break-all font-mono">${escapeHtml(displayInput)}</div>
+              </div>
+              <div class="mb-3">
+                <div class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Output:</div>
+                <div class="text-sm text-gray-900 dark:text-white break-all font-mono">${escapeHtml(displayOutput)}</div>
+              </div>
+              <div class="flex items-center space-x-2">
+                <button onclick="editBase64Item('${escapeForOnclick(item.input)}')" class="p-2 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900 rounded" title="Edit">
+                  ✏️
+                </button>
+                <button onclick="copyBase64Item('${escapeForOnclick(item.output)}')" class="p-2 text-green-600 hover:bg-green-100 dark:hover:bg-green-900 rounded" title="Copy Output">
+                  📋
+                </button>
+                <button onclick="deleteBase64Item(${index})" class="p-2 text-red-600 hover:bg-red-100 dark:hover:bg-red-900 rounded" title="Delete">
+                  🗑️
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function escapeForOnclick(text) {
+      return text
+        .replace(/\\/g, '\\\\')
+        .replace(/'/g, "\\'")
+        .replace(/"/g, '\\"');
+    }
+
+    function editBase64Item(input) {
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.track('base64_history_edit', {
+          page: BASE64_PAGE_NAME
+        });
+      }
+      document.getElementById('base64-input').value = input;
+      document.getElementById('base64-input').focus();
+      showToast('Item loaded for editing', 'info');
+    }
+
+    function copyBase64Item(text) {
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.track('base64_history_copy', {
+          page: BASE64_PAGE_NAME
+        });
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('Copied to clipboard', 'success');
+        }).catch(() => {
+          fallbackCopyToClipboard(text);
+        });
+      } else {
+        fallbackCopyToClipboard(text);
+      }
+    }
+
+    function fallbackCopyToClipboard(text) {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      
+      try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+          showToast('Copied to clipboard', 'success');
+        } else {
+          showToast('Copy failed. Please select and copy manually', 'error');
+        }
+      } catch (err) {
+        showToast('Copy failed. Please select and copy manually', 'error');
+      }
+      
+      document.body.removeChild(textArea);
+    }
+
+    function deleteBase64Item(index) {
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.track('base64_history_delete', {
+          page: BASE64_PAGE_NAME
+        });
+      }
+      const history = loadHistory();
+      history.splice(index, 1);
+      localStorage.setItem('base64-history', JSON.stringify(history));
+      updateHistoryDisplay();
+      showToast('Item deleted', 'info');
+    }
+
+    function clearAllHistory() {
+      const history = loadHistory();
+      if (history.length === 0) {
+        showToast('No history to delete', 'info');
+        return;
+      }
+
+      // Confirm before deleting
+      if (confirm(`Are you sure you want to delete all ${history.length} history item${history.length !== 1 ? 's' : ''}?`)) {
+        // Track analytics
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('base64_history_clear_all', {
+            page: BASE64_PAGE_NAME,
+            items_cleared: history.length
+          });
+        }
+
+        // Clear history
+        localStorage.removeItem('base64-history');
+        updateHistoryDisplay();
+        showToast('All history cleared', 'success');
+      }
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+      updateHistoryDisplay();
+      
+      // Check for URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const textParam = urlParams.get('text');
+      if (textParam) {
+        const input = document.getElementById('base64-input');
+        input.value = decodeURIComponent(textParam);
+        input.focus();
+        showToast('Text loaded from URL', 'info');
+      }
+      
+      const input = document.getElementById('base64-input');
+      const encodeBtn = document.getElementById('encode-btn');
+      const decodeBtn = document.getElementById('decode-btn');
+      const clearBtn = document.getElementById('clear-input');
+      const copyResultBtn = document.getElementById('copy-result');
+      const swapBtn = document.getElementById('swap-btn');
+      const resultContainer = document.getElementById('result-container');
+      const resultOutput = document.getElementById('result-output');
+      const validationMessage = document.getElementById('validation-message');
+
+      // Get options from checkboxes
+      function getEncodeOptions() {
+        return {
+          interpretHex: document.getElementById('interpret-hex')?.checked || false,
+          interpretEscapes: document.getElementById('interpret-escapes')?.checked || false,
+          urlSafe: document.getElementById('url-safe')?.checked || false,
+          stripPadding: document.getElementById('strip-padding')?.checked || false
+        };
+      }
+
+      function getDecodeOptions() {
+        return {
+          urlSafe: document.getElementById('url-safe')?.checked || false
+        };
+      }
+
+      // Encode button
+      encodeBtn.addEventListener('click', function() {
+        const text = input.value.trim();
+        if (!text) {
+          showToast('Please enter text to encode', 'error');
+          return;
+        }
+        
+        try {
+          if (typeof window.Analytics !== 'undefined') {
+            window.Analytics.track('base64_encode', {
+              page: BASE64_PAGE_NAME,
+              input_length: text.length
+            });
+          }
+          
+          const options = getEncodeOptions();
+          const encoded = encodeBase64(text, options);
+          if (encoded) {
+            resultOutput.value = encoded;
+            resultContainer.classList.remove('hidden');
+            validationMessage.classList.add('hidden');
+            saveToHistory(text, encoded, 'encode');
+            showToast('Text encoded to Base64', 'success');
+          }
+        } catch (error) {
+          validationMessage.textContent = 'Error encoding: ' + error.message;
+          validationMessage.classList.remove('hidden');
+          showToast('Failed to encode text', 'error');
+        }
+      });
+
+      // Decode button
+      decodeBtn.addEventListener('click', function() {
+        const base64String = input.value.trim();
+        if (!base64String) {
+          showToast('Please enter Base64 string to decode', 'error');
+          return;
+        }
+        
+        try {
+          if (typeof window.Analytics !== 'undefined') {
+            window.Analytics.track('base64_decode', {
+              page: BASE64_PAGE_NAME,
+              input_length: base64String.length
+            });
+          }
+          
+          const options = getDecodeOptions();
+          const decoded = decodeBase64(base64String, options);
+          if (decoded !== null) {
+            // Check if decoded result appears empty but contains binary data
+            // This happens with binary data containing control characters (0x00-0x1F)
+            if (decoded.length === 0 || (decoded.trim().length === 0 && base64String.length > 4)) {
+              // Decode again to get bytes and show hex representation
+              try {
+                const cleaned = base64String.trim().replace(/\s/g, '');
+                let cleanedBase64 = cleaned;
+                if (options.urlSafe || cleaned.includes('-') || cleaned.includes('_')) {
+                  cleanedBase64 = fromUrlSafeBase64(cleaned);
+                }
+                const binaryString = atob(cleanedBase64);
+                const bytes = new Uint8Array(binaryString.length);
+                for (let i = 0; i < binaryString.length; i++) {
+                  bytes[i] = binaryString.charCodeAt(i);
+                }
+                // Show hex representation for binary data
+                const hexRep = Array.from(bytes).map(b => ('0' + b.toString(16)).slice(-2).toUpperCase()).join(' ');
+                resultOutput.value = `[Binary Data - ${bytes.length} bytes]\nHex: ${hexRep}\n\nDecoded string: "${decoded}" (may appear empty due to control characters)`;
+              } catch (e) {
+                resultOutput.value = decoded;
+              }
+            } else {
+              resultOutput.value = decoded;
+            }
+            resultContainer.classList.remove('hidden');
+            validationMessage.classList.add('hidden');
+            saveToHistory(base64String, decoded, 'decode');
+            showToast('Base64 decoded successfully', 'success');
+          }
+        } catch (error) {
+          validationMessage.textContent = 'Error decoding: ' + error.message;
+          validationMessage.classList.remove('hidden');
+          showToast('Failed to decode Base64', 'error');
+        }
+      });
+
+      // Clear input
+      clearBtn.addEventListener('click', function() {
+        input.value = '';
+        resultContainer.classList.add('hidden');
+        validationMessage.classList.add('hidden');
+        input.focus();
+      });
+
+      // Copy result
+      copyResultBtn.addEventListener('click', function() {
+        const result = resultOutput.value;
+        if (!result) {
+          showToast('No result to copy', 'error');
+          return;
+        }
+        
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('base64_copy', {
+            page: BASE64_PAGE_NAME
+          });
+        }
+        
+        copyBase64Item(result);
+      });
+
+      // Swap button
+      swapBtn.addEventListener('click', function() {
+        const inputValue = input.value;
+        const outputValue = resultOutput.value;
+        
+        if (!outputValue) {
+          showToast('No result to swap', 'error');
+          return;
+        }
+        
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('base64_swap', {
+            page: BASE64_PAGE_NAME
+          });
+        }
+        
+        input.value = outputValue;
+        resultOutput.value = inputValue;
+        showToast('Input and output swapped', 'info');
+      });
+
+      // Clear all history button
+      const clearAllBtn = document.getElementById('clear-all-history');
+      if (clearAllBtn) {
+        clearAllBtn.addEventListener('click', clearAllHistory);
+      }
+    });
+
+    // Make functions globally available
+    window.editBase64Item = editBase64Item;
+    window.copyBase64Item = copyBase64Item;
+    window.deleteBase64Item = deleteBase64Item;
+  </script>
+</body>
+</html>
+

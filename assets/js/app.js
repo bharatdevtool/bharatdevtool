@@ -20,6 +20,23 @@ window.addEventListener("DOMContentLoaded", () => {
     value: ""
   });
   injectPlaceholder();
+
+  // If cURL Tester sent JSON via localStorage, preload it into the input editor
+  try {
+    const storedFromCurlTester = localStorage.getItem('json_formatter_input');
+    if (storedFromCurlTester && storedFromCurlTester.trim().length > 0) {
+      inputEditor.setValue(storedFromCurlTester);
+      updateStatus();
+      updateValidity();
+      updatePlaceholder();
+      updateFileSizeIndicator();
+      // Clear after use to avoid stale content on future visits
+      localStorage.removeItem('json_formatter_input');
+    }
+  } catch (e) {
+    // Swallow errors silently to avoid breaking formatter if storage is unavailable
+  }
+
   outputEditor = CodeMirror(document.getElementById("output-editor"), {
     mode: "application/json",
     lineNumbers: true,
