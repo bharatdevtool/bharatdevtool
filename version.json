@@ -1,6 +1,6 @@
 {
-  "version": "1.3",
-  "buildDate": "2026-01-25",
+  "version": "2.0",
+  "buildDate": "2026-01-29",
   "releaseName": "Introduces Json Diff Tool",
   "features": [
     "JSON Formatter",
