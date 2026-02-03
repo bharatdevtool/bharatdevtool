@@ -523,7 +523,7 @@ main {
 
 .workspace {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 160px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) 124px minmax(0, 1fr);
   gap: 16px;
   width: 100%;
   margin: 0;
@@ -553,6 +553,11 @@ main {
   height: 100% !important;
   width: 100%;
   background: var(--panel) !important;
+}
+
+/* Reserve scrollbar space so both panes have equal content width */
+.CodeMirror-scroll {
+  scrollbar-gutter: stable;
 }
 .editor .placeholder {
   position: absolute;
@@ -585,7 +590,8 @@ main {
 .status {
   margin-left: auto;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 12px;
+  line-height: 1.25;
   background: transparent;
 }
 
@@ -593,7 +599,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 12px;
+  padding: 5px 10px;
   border-top: 1px solid rgba(0,0,0,0.08);
   background: transparent;
 }
@@ -602,8 +608,8 @@ main {
 .validation-indicator {
   display: inline-flex;
   align-items: center;
-  margin-right: 8px;
-  font-size: 16px;
+  margin-right: 6px;
+  font-size: 14px;
   font-weight: 700;
   line-height: 1;
 }
@@ -858,8 +864,9 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
   border-color: #cccccc;
 }
 
-/* Ensure gutter alignment for color previews */
+/* Ensure gutter alignment and consistent width so both editors match */
 .CodeMirror-gutter.CodeMirror-linenumbers {
+  min-width: 2.5em;
   text-align: center;
 }
 
@@ -954,7 +961,7 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
   gap: 8px;
   align-items: center;
   justify-content: center;
-  width: 160px;
+  width: 124px;
 }
 [data-theme="dark"] .font-controls { border-color: rgba(255,255,255,0.12); }
 [data-theme="dark"] .font-controls { border-color: rgba(255,255,255,0.12); }
