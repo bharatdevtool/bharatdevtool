@@ -3,7 +3,7 @@
 
 export const APP_CONFIG = {
   // Logo Configuration
-  LOGO_URL: 'https://ik.imagekit.io/bdt/bdt_logo.png',
+  LOGO_URL: 'https://ik.imagekit.io/bdt/bdt_logo_v3_400.png',
   LOGO_ALT_TEXT: 'Bharat Dev Tools Logo'
 };
 
