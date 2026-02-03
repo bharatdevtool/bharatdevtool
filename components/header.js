@@ -92,7 +92,7 @@ function createSecondaryHeader() {
       const logoImages = document.querySelectorAll('img[data-logo="true"]');
       logoImages.forEach(img => {
         if (!img.src || img.src === window.location.href || img.src === '') {
-          const logoUrl = (window.APP_CONFIG && window.APP_CONFIG.LOGO_URL) || 'https://ik.imagekit.io/bdt/bdt_logo.png';
+          const logoUrl = (window.APP_CONFIG && window.APP_CONFIG.LOGO_URL) || 'https://ik.imagekit.io/bdt/bdt_logo_v3_400.png';
           img.src = logoUrl;
         }
       });
