@@ -4,8 +4,8 @@
 (function() {
   'use strict';
   
-  // Fallback values
-  const FALLBACK_LOGO_URL = 'https://ik.imagekit.io/bdt/bdt_logo.png';
+  // Fallback values (must match assets/js/config.js LOGO_URL when you change logo)
+  const FALLBACK_LOGO_URL = 'https://ik.imagekit.io/bdt/bdt_logo_v3_400.png';
   const FALLBACK_LOGO_ALT = 'Bharat Dev Tools Logo';
   
   function initLogo() {

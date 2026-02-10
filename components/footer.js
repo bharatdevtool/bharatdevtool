@@ -1,4 +1,76 @@
 // Footer Component JavaScript - Simple and clean
+
+/**
+ * Returns base path for relative URLs (e.g. "" at root, "../" in jsondiff/ or jsondiff/index.html)
+ * @returns {string}
+ */
+function getFooterBasePath() {
+  const pathname = window.location.pathname || '/';
+  const segments = pathname.split('/').filter(function(s) { return s.length > 0; });
+  if (segments.length === 0) return '';
+  const lastSegment = segments[segments.length - 1];
+  const isFile = lastSegment.indexOf('.') > -1;
+  const depth = isFile ? segments.length - 1 : segments.length;
+  return depth > 0 ? '../'.repeat(depth) : '';
+}
+
+/** Alpha for All tools button backgrounds: 0 = fully transparent, 1 = fully opaque. Change this to see effect. */
+const ALL_TOOLS_BUTTON_ALPHA = 0.07;
+
+/**
+ * Returns a random color with given alpha (0–1). Uses HSL for pleasant hues.
+ * @param {number} alpha - 0 = transparent, 1 = opaque
+ * @returns {string} hsla(...) CSS value
+ */
+function getRandomColorWithAlpha(alpha) {
+  const h = Math.floor(Math.random() * 360);
+  const s = 55;
+  const l = 50;
+  return 'hsla(' + h + ',' + s + '%,' + l + '%,' + alpha + ')';
+}
+
+/** Tool list: { label, href } - href is relative to root or full URL for external */
+const ALL_TOOLS_LIST = [
+  { label: 'JSON Formatter', href: 'index.html' },
+  { label: 'JSON Diff', href: 'jsondiff/' },
+  { label: 'DeepLink Launcher', href: 'deeplink.html' },
+  { label: 'URL Encoder', href: 'url-encoder.html' },
+  { label: 'Base64 Encoder', href: 'base64.html' },
+  { label: 'QR Code Generator', href: 'qr-generator-free.html' },
+  { label: 'QR Code Decoder', href: 'qr-decoder.html' },
+  { label: 'Regex Tester', href: 'regex-tester.html' },
+  { label: 'Regex Generator', href: 'regex-generator.html' },
+  { label: 'Regex Library', href: 'regex-library.html' },
+  { label: 'Color Picker', href: 'color-picker.html' },
+  { label: 'Gradient Generator', href: 'gradient-generator.html' },
+  { label: 'cURL Tester', href: 'curl-tester.html' },
+  { label: 'cURL Comparison', href: 'curl-comparison.html' },
+  { label: 'Suggest Tool', href: 'https://forms.gle/TA7WEhzzQ6csQFGZ7', external: true }
+];
+
+function createAllToolsSection() {
+  const base = getFooterBasePath();
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = base + 'components/all-tools.css';
+  document.head.appendChild(link);
+
+  const buttons = ALL_TOOLS_LIST.map(function(tool) {
+    const href = tool.external ? tool.href : base + tool.href;
+    const targetAttr = tool.external ? ' target="_blank" rel="noopener noreferrer"' : '';
+    const bgColor = getRandomColorWithAlpha(ALL_TOOLS_BUTTON_ALPHA);
+    const styleAttr = ' style="background-color:' + bgColor + '"';
+    return '<a href="' + href + '" class="all-tools-btn"' + styleAttr + targetAttr + '>' + tool.label + '</a>';
+  }).join('');
+
+  const html = '<section class="all-tools-section" aria-label="All tools">' +
+    '<div class="all-tools-container">' +
+    '<h2 class="all-tools-title">All tools</h2>' +
+    '<div class="all-tools-grid">' + buttons + '</div>' +
+    '</div></section>';
+  document.body.insertAdjacentHTML('beforeend', html);
+}
+
 function createFooter(version = '1.0') {
   const currentYear = new Date().getFullYear();
   const footerHTML = `
@@ -31,10 +103,9 @@ function createFooter(version = '1.0') {
 
 // Load version and create footer
 function initFooter() {
+  createAllToolsSection();
   // Get version from version.js (already loaded) or use default
   const version = (window.appVersion && window.appVersion.version) || '1.0';
-  
-  // Create footer with version
   createFooter(version);
 }
 

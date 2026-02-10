@@ -826,8 +826,9 @@ export function formatJSON(text) {
 │   └── img/
 │       └── og/                 # Open Graph images
 ├── components/
+│   ├── all-tools.css           # All tools section styles (injected by footer.js)
 │   ├── footer.css              # Footer component styles
-│   ├── footer.js               # Footer component (reusable)
+│   ├── footer.js               # Footer component (injects All tools + footer)
 │   ├── header.css              # Header component styles
 │   └── header.js                # Header component (reusable)
 ├── test/
@@ -840,6 +841,7 @@ export function formatJSON(text) {
 ### Key Rules
 
 - ✅ **Header & Footer MUST be reused from `/components`**
+- ✅ **All tools section** – The Footer component (`footer.js`) automatically injects the **All tools** section (list of tool buttons) above the footer. Including `footer.css` and `footer.js` on every new page ensures the All tools section appears; no separate step is needed.
 - ✅ **Every page must NOT duplicate layout**
 - ✅ **Shared logic MUST live in `/assets/js`**
 - ✅ **Shared logic MUST NEVER be duplicated**
@@ -911,7 +913,13 @@ When creating a new page:
 
 ### 8.1 Core Requirements
 
-1. ✅ Include Header + Footer components
+1. ✅ Include Header + Footer components  
+   - **Footer = All tools + footer**: Loading `footer.css` and `footer.js` adds both the **All tools** section (buttons linking to each tool) and the site footer. Every new page MUST include these so the All tools section appears above the footer:
+   ```html
+   <link rel="stylesheet" href="components/footer.css">
+   <script src="components/footer.js"></script>
+   ```
+   - From a page in a subdirectory (e.g. `jsondiff/index.html`), use `../components/footer.css` and `../components/footer.js`. The footer script resolves asset paths automatically.
 2. ✅ Include Analytics script (defer)
 3. ✅ Include Sentry script (defer)
 4. ✅ Include Theme script
@@ -922,6 +930,7 @@ When creating a new page:
 9. ✅ Register tests in `run-all-tests.js`
 10. ✅ Ensure mobile responsive
 11. ✅ **Register tool on "Our Developer Tools" page** (`tools.html`) - See Section 8.4
+12. ✅ **Update `sitemap.xml`** to include the new page URL with appropriate `priority`, `changefreq`, and `lastmod`
 
 ### 8.2 SEO Requirements
 
