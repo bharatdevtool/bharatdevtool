@@ -1,14 +1,14 @@
 {
-  "version": "2.0",
-  "buildDate": "2026-01-29",
-  "releaseName": "Bharat Dev Tools 2.0",
+  "version": "2.1",
+  "buildDate": "2026-02-10",
+  "releaseName": "Bharat Dev Tools 2.1",
   "features": [
     "JSON Formatter",
     "QR Code Generator",
     "DeepLink Launcher",
     "Json Diff Tool",
     "Url Encoder/Decoder",
-    "Curl Tester",  
+    "Curl Tester",
     "cURL Comparison",
     "Base64 Encoder/Decoder",
     "QR Code Decoder",
