@@ -930,6 +930,7 @@ When creating a new page:
 9. ✅ Register tests in `run-all-tests.js`
 10. ✅ Ensure mobile responsive
 11. ✅ **Register tool on "Our Developer Tools" page** (`tools.html`) - See Section 8.4
+12. ✅ **Update `sitemap.xml`** to include the new page URL with appropriate `priority`, `changefreq`, and `lastmod`
 
 ### 8.2 SEO Requirements
 
