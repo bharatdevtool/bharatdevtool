@@ -1,7 +1,7 @@
 {
-  "version": "2.1",
-  "buildDate": "2026-02-10",
-  "releaseName": "Bharat Dev Tools 2.1",
+  "version": "2.2",
+  "buildDate": "2026-05-05",
+  "releaseName": "Bharat Dev Tools 2.2",
   "features": [
     "JSON Formatter",
     "QR Code Generator",

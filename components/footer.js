@@ -73,6 +73,7 @@ function createAllToolsSection() {
 
 function createFooter(version = '1.0') {
   const currentYear = new Date().getFullYear();
+  const base = getFooterBasePath();
   const footerHTML = `
     <footer class="site-footer">
       <section class="footer-hero">
@@ -82,9 +83,9 @@ function createFooter(version = '1.0') {
       <section class="footer-meta">
         <p class="made-in">Built with ❤️ in India</p>
         <nav class="footer-links" aria-label="Footer links">
-          <a href="about.html">About</a>
+          <a href="${base}about.html">About</a>
           <span class="sep">•</span>
-          <a href="privacy.html">Privacy</a>
+          <a href="${base}privacy.html">Privacy</a>
           <span class="sep">•</span>
           <a href="https://forms.gle/TA7WEhzzQ6csQFGZ7" target="_blank" rel="noopener noreferrer">Contact us</a>
           <span class="sep">•</span>
