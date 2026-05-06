@@ -186,6 +186,10 @@ const ANALYTICS_EVENTS = {
   COMPARISON_LOAD_EXAMPLE: 'comparison_load_example',
   COMPARISON_CLEAR_INPUT: 'comparison_clear_input',
   
+  // WhatsApp Link Generator events
+  WHATSAPP_LINK_GENERATE: 'whatsapp_link_generate',
+  WHATSAPP_LINK_COPY: 'whatsapp_link_copy',
+
   // UI Freeze events
   UI_FREEZE: 'ui_freeze',
   OPERATION_COMPLETE: 'operation_complete'
@@ -486,7 +490,8 @@ const PAGE_NAMES = {
   'tools.html': 'Our Developer Tools',
   'about.html': 'About',
   'feedback.html': 'Feedback',
-  'privacy.html': 'Privacy Policy'
+  'privacy.html': 'Privacy Policy',
+  'whatsapp-link.html': 'WhatsApp Link Generator'
 };
 
 /**
