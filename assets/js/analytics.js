@@ -186,6 +186,15 @@ const ANALYTICS_EVENTS = {
   COMPARISON_LOAD_EXAMPLE: 'comparison_load_example',
   COMPARISON_CLEAR_INPUT: 'comparison_clear_input',
   
+  // Password Generator events
+  PASSWORD_GENERATED: 'password_generated',
+  PASSWORD_COPIED: 'password_copied',
+  PASSWORD_GENERATE_FAILED: 'password_generate_failed',
+  PASSWORD_GENERATE_ERROR: 'password_generate_error',
+  BULK_PASSWORDS_GENERATED: 'bulk_passwords_generated',
+  BULK_PASSWORD_COPIED: 'bulk_password_copied',
+  BULK_ALL_PASSWORDS_COPIED: 'bulk_all_passwords_copied',
+
   // UI Freeze events
   UI_FREEZE: 'ui_freeze',
   OPERATION_COMPLETE: 'operation_complete'
@@ -486,7 +495,8 @@ const PAGE_NAMES = {
   'tools.html': 'Our Developer Tools',
   'about.html': 'About',
   'feedback.html': 'Feedback',
-  'privacy.html': 'Privacy Policy'
+  'privacy.html': 'Privacy Policy',
+  'password-generator.html': 'Password Generator'
 };
 
 /**
