@@ -498,7 +498,8 @@ const PAGE_NAMES = {
   'about.html': 'About',
   'feedback.html': 'Feedback',
   'privacy.html': 'Privacy Policy',
-  'password-generator.html': 'Password Generator'
+  'password-generator.html': 'Password Generator',
+  'text-case-converter.html': 'Text Case Converter'
 };
 
 /**
