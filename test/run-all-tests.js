@@ -40,6 +40,7 @@ import { JSONDiffTester } from './jsondiff-tests.js';
 import { ColorPickerTester } from './color-picker-tests.js';
 import { CurlTesterTests } from './curl-tester-tests.js';
 import { CurlComparisonTests } from './curl-comparison-tests.js';
+import { UUIDGeneratorTester } from './uuid-generator-tests.js';
 
 // Test Results Tracking
 let totalTests = 0;
@@ -510,6 +511,17 @@ const curlComparisonTests = new CurlComparisonTests();
 const curlComparisonResults = curlComparisonTests.runAllTests();
 
 // ============================================================================
+// UUID GENERATOR TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+console.log('UUID GENERATOR TEST SUITE');
+console.log('='.repeat(60));
+
+const uuidTester = new UUIDGeneratorTester();
+const uuidResults = uuidTester.runAll();
+
+// ============================================================================
 // FINAL TEST SUMMARY
 // ============================================================================
 
@@ -517,9 +529,9 @@ console.log('\n' + '='.repeat(60));
 console.log('📊 COMPREHENSIVE TEST SUMMARY');
 console.log('='.repeat(60));
 
-const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total;
-const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed;
-const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed;
+const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + uuidResults.total;
+const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + uuidResults.passed;
+const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + uuidResults.failed;
 
 console.log(`Total Tests: ${grandTotal}`);
 console.log(`✅ Passed: ${grandPassed}`);
@@ -537,6 +549,7 @@ console.log(`JSON Comparison (Diff): ${jsonDiffResults.total} tests (${jsonDiffR
 console.log(`Color Picker: ${colorPickerResults.total} tests (${colorPickerResults.passed} passed, ${colorPickerResults.failed} failed)`);
 console.log(`cURL Tester: ${curlTesterResults.total} tests (${curlTesterResults.passed} passed, ${curlTesterResults.failed} failed)`);
 console.log(`cURL Comparison: ${curlComparisonResults.total} tests (${curlComparisonResults.passed} passed, ${curlComparisonResults.failed} failed)`);
+console.log(`UUID Generator: ${uuidResults.total} tests (${uuidResults.passed} passed, ${uuidResults.failed} failed)`);
 
 if (grandFailed === 0) {
   console.log('\n🎉 ALL TESTS PASSED! All components are working perfectly.');
@@ -593,7 +606,12 @@ if (grandFailed === 0) {
     console.log('\ncURL Comparison failures:');
     curlComparisonResults.failedTests.forEach(test => console.log(`   - ${test}`));
   }
-  
+
+  if (uuidResults.failed > 0) {
+    console.log('\nUUID Generator failures:');
+    uuidResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+
   console.log('\nPlease review the failed tests above.');
   process.exit(1);
 }
