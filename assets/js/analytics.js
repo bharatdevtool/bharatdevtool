@@ -483,6 +483,7 @@ const PAGE_NAMES = {
   'gradient-generator.html': 'Gradient Generator',
   'curl-tester.html': 'cURL Tester',
   'curl-comparison.html': 'cURL Comparison',
+  'word-counter.html': 'Word Counter',
   'tools.html': 'Our Developer Tools',
   'about.html': 'About',
   'feedback.html': 'Feedback',
