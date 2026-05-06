@@ -194,6 +194,9 @@ const ANALYTICS_EVENTS = {
   BULK_PASSWORDS_GENERATED: 'bulk_passwords_generated',
   BULK_PASSWORD_COPIED: 'bulk_password_copied',
   BULK_ALL_PASSWORDS_COPIED: 'bulk_all_passwords_copied',
+  // WhatsApp Link Generator events
+  WHATSAPP_LINK_GENERATE: 'whatsapp_link_generate',
+  WHATSAPP_LINK_COPY: 'whatsapp_link_copy',
 
   // UI Freeze events
   UI_FREEZE: 'ui_freeze',
@@ -500,7 +503,8 @@ const PAGE_NAMES = {
   'privacy.html': 'Privacy Policy',
   'password-generator.html': 'Password Generator',
   'text-case-converter.html': 'Text Case Converter',
-  'uuid-generator.html': 'UUID Generator'
+  'uuid-generator.html': 'UUID Generator',
+  'whatsapp-link.html': 'WhatsApp Link Generator'
 };
 
 /**

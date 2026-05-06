@@ -45,6 +45,7 @@ const ALL_TOOLS_LIST = [
   { label: 'Gradient Generator', href: 'gradient-generator.html' },
   { label: 'cURL Tester', href: 'curl-tester.html' },
   { label: 'cURL Comparison', href: 'curl-comparison.html' },
+  { label: 'WhatsApp Link Generator', href: 'whatsapp-link.html' },
   { label: 'Suggest Tool', href: 'https://forms.gle/TA7WEhzzQ6csQFGZ7', external: true }
 ];
 
