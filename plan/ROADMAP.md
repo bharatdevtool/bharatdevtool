@@ -39,7 +39,7 @@
 | 2 | WhatsApp Link Generator | utility | High (India) | 0.5d | `done` | `whatsapp-link.html` |
 | 3 | Age Calculator | calculator | Very High (India) | 1d | `done` | `age-calculator.html` |
 | 4 | UUID Generator | developer | High | 0.5d | `done` | `uuid-generator.html` |
-| 5 | Password Generator | security | High | 0.5d | `in-progress` | `password-generator.html` |
+| 5 | Password Generator | security | High | 0.5d | `done` | `password-generator.html` |
 | 6 | Text Case Converter | text | High | 0.5d | `not-started` | `text-case-converter.html` |
 
 **Why these first:**
