@@ -498,12 +498,9 @@ const PAGE_NAMES = {
   'about.html': 'About',
   'feedback.html': 'Feedback',
   'privacy.html': 'Privacy Policy',
-<<<<<<< HEAD
   'password-generator.html': 'Password Generator',
-  'text-case-converter.html': 'Text Case Converter'
-=======
+  'text-case-converter.html': 'Text Case Converter',
   'uuid-generator.html': 'UUID Generator'
->>>>>>> origin/tool/uuid-generator
 };
 
 /**
