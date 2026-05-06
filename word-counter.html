@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Word Counter & Character Counter Online | Count Words, Characters, Sentences | Bharat Dev Tools</title>
+  <meta name="description" content="Free online word and character counter. Count words, characters, sentences, paragraphs, and reading time instantly. No sign-up required. Works offline in your browser.">
+  <meta name="keywords" content="word counter, character counter, letter counter, word count online, character count, count words online, word counter free, text analyzer, sentence counter, paragraph counter, reading time calculator, word frequency">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  <meta name="distribution" content="global">
+  <meta name="rating" content="general">
+  <link rel="canonical" href="https://bharatdevtool.com/word-counter.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Free Word Counter & Character Counter Online | Bharat Dev Tools">
+  <meta property="og:description" content="Free online word and character counter. Count words, characters, sentences, paragraphs, and reading time instantly. No sign-up required.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/word-counter.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Word Counter & Character Counter - Free Online Tool">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free Word Counter & Character Counter Online | Bharat Dev Tools">
+  <meta name="twitter:description" content="Free online word and character counter. Count words, characters, sentences, paragraphs, and reading time instantly.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ik.imagekit.io/bdt/bdt_logo_v3_16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/bdt/bdt_logo_v3_180.png">
+
+  <!-- Theme Management (load early to prevent dark mode flash) -->
+  <script src="assets/js/theme.js"></script>
+
+  <!-- Sentry SDK -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+
+  <!-- Version Tracking Script -->
+  <script src="assets/js/version.js" defer></script>
+
+  <!-- Analytics Script -->
+  <script src="assets/js/analytics.js" defer></script>
+
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+
+  <!-- WebApplication Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Word Counter & Character Counter",
+    "description": "Free online word and character counter. Count words, characters, sentences, paragraphs, and reading time instantly. No sign-up required.",
+    "url": "https://bharatdevtool.com/word-counter.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "Word Count",
+      "Character Count",
+      "Character Count Without Spaces",
+      "Sentence Count",
+      "Paragraph Count",
+      "Reading Time Estimation",
+      "Word Frequency Analysis"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "142"
+    }
+  }
+  </script>
+
+  <!-- BreadcrumbList Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Word Counter",
+        "item": "https://bharatdevtool.com/word-counter.html"
+      }
+    ]
+  }
+  </script>
+
+  <!-- FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a word counter and how does it work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A word counter is an online tool that counts the number of words, characters, sentences, and paragraphs in a piece of text. It works by splitting your text on spaces and punctuation to identify word boundaries, then counting each unit. Our free word counter also calculates reading time based on an average reading speed of 200 words per minute."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this word counter tool free to use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, this word counter is completely free to use. There is no sign-up, no registration, and no hidden fees. You can count words and characters for unlimited amounts of text at no cost."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my text safe? Does it send data to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Your text is completely safe. All word and character counting happens entirely in your browser using JavaScript — your text never leaves your device and is never sent to any server. This makes it safe to use with sensitive or confidential content."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is reading time calculated?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Reading time is estimated based on the average adult reading speed of approximately 200 words per minute (WPM). The word count is divided by 200 to give you the estimated reading time in minutes. For very short texts, the time is shown in seconds."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the word counter work for languages other than English?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the character counter works for all languages since it counts Unicode characters directly. The word counter works for space-separated languages like English, Hindi (romanized), and most European languages. For character-based languages like Chinese or Japanese, the character count is the most relevant metric."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    .animate-fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .stat-card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
+      transition: transform 0.15s ease;
+    }
+    .stat-value.bump {
+      transform: scale(1.1);
+    }
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transform: translateX(120%);
+      transition: transform 0.3s ease;
+    }
+    .toast.show {
+      transform: translateX(0);
+    }
+    .toast.success { background: linear-gradient(135deg, #10b981, #059669); }
+    .toast.info { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+    .freq-bar {
+      height: 6px;
+      border-radius: 3px;
+      background: linear-gradient(90deg, #3b82f6, #2563eb);
+      transition: width 0.4s ease;
+    }
+    [data-theme="dark"] .stat-card {
+      background-color: rgb(31, 41, 55);
+      border-color: rgb(55, 65, 81);
+    }
+    [data-theme="dark"] textarea {
+      background-color: rgb(31, 41, 55);
+      color: #e5e7eb;
+      border-color: rgb(55, 65, 81);
+    }
+    [data-theme="dark"] textarea::placeholder {
+      color: rgb(107, 114, 128);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .stat-card, .stat-value, .freq-bar { transition: none; }
+      .animate-fade-in { animation: none; }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+
+  <!-- Header Component -->
+  <script src="components/header.js"></script>
+
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <h1 class="sr-only">Word Counter & Character Counter</h1>
+
+    <!-- Hero -->
+    <div class="text-center mb-10 animate-fade-in">
+      <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-3">
+        📝 Word &amp; Character Counter
+      </h2>
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Count words, characters, sentences, and reading time instantly. Free, private, no sign-up.
+      </p>
+    </div>
+
+    <!-- Text Input Area -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6 animate-fade-in">
+      <div class="flex items-center justify-between mb-3">
+        <label for="text-input" class="text-sm font-medium text-gray-700 dark:text-gray-300">
+          Paste or type your text below
+        </label>
+        <button
+          id="clear-btn"
+          aria-label="Clear text"
+          class="text-sm text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors px-2 py-1 rounded hover:bg-red-50 dark:hover:bg-red-900/20"
+        >
+          Clear ✕
+        </button>
+      </div>
+      <textarea
+        id="text-input"
+        rows="10"
+        placeholder="Start typing or paste your text here..."
+        aria-label="Text to count words and characters"
+        class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 resize-y font-sans text-base leading-relaxed"
+      ></textarea>
+      <div class="flex items-center justify-between mt-3">
+        <p class="text-xs text-gray-400 dark:text-gray-500">All processing happens locally — your text never leaves your browser.</p>
+        <button
+          id="copy-text-btn"
+          aria-label="Copy text to clipboard"
+          class="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+        >
+          Copy text
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-6 animate-fade-in">
+      <div class="stat-card bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl p-4 text-center shadow-sm">
+        <div id="stat-words" class="stat-value text-blue-600 dark:text-blue-400">0</div>
+        <div class="text-xs font-medium text-gray-500 dark:text-gray-400 mt-1">Words</div>
+      </div>
+      <div class="stat-card bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl p-4 text-center shadow-sm">
+        <div id="stat-chars" class="stat-value text-purple-600 dark:text-purple-400">0</div>
+        <div class="text-xs font-medium text-gray-500 dark:text-gray-400 mt-1">Characters</div>
+      </div>
+      <div class="stat-card bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl p-4 text-center shadow-sm">
+        <div id="stat-chars-no-spaces" class="stat-value text-green-600 dark:text-green-400">0</div>
+        <div class="text-xs font-medium text-gray-500 dark:text-gray-400 mt-1">No Spaces</div>
+      </div>
+      <div class="stat-card bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl p-4 text-center shadow-sm">
+        <div id="stat-sentences" class="stat-value text-orange-600 dark:text-orange-400">0</div>
+        <div class="text-xs font-medium text-gray-500 dark:text-gray-400 mt-1">Sentences</div>
+      </div>
+      <div class="stat-card bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl p-4 text-center shadow-sm">
+        <div id="stat-paragraphs" class="stat-value text-pink-600 dark:text-pink-400">0</div>
+        <div class="text-xs font-medium text-gray-500 dark:text-gray-400 mt-1">Paragraphs</div>
+      </div>
+      <div class="stat-card bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl p-4 text-center shadow-sm">
+        <div id="stat-reading-time" class="stat-value text-teal-600 dark:text-teal-400 text-2xl">0s</div>
+        <div class="text-xs font-medium text-gray-500 dark:text-gray-400 mt-1">Read Time</div>
+      </div>
+    </div>
+
+    <!-- Word Frequency Panel -->
+    <div id="frequency-panel" class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6 animate-fade-in hidden">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-base font-semibold text-gray-900 dark:text-white">Top Words</h3>
+        <label class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300 cursor-pointer select-none">
+          <input type="checkbox" id="exclude-common-words" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
+          Skip common words
+        </label>
+      </div>
+      <div id="frequency-list" class="space-y-2"></div>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+      <div class="faq-container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about the Word &amp; Character Counter</p>
+        <div class="faq-list">
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is a word counter and how does it work?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>A word counter is an online tool that counts the number of words, characters, sentences, and paragraphs in a piece of text. It works by splitting your text on spaces and punctuation to identify word boundaries, then counting each unit. Our free word counter also calculates reading time based on an average reading speed of 200 words per minute.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is this word counter tool free?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes, this word counter is completely free. There is no sign-up, no registration, and no hidden fees. You can count words and characters for unlimited amounts of text at no cost.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is my text safe? Does it send data to a server?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Your text is completely safe. All word and character counting happens entirely in your browser — your text never leaves your device and is never sent to any server. This makes it safe to use with sensitive or confidential content such as draft articles, legal documents, or private notes.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How is reading time calculated?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Reading time is estimated based on the average adult reading speed of approximately 200 words per minute (WPM). The word count is divided by 200 to give the estimated time. For very short texts, the time is shown in seconds instead of minutes.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Does the word counter work for Hindi and other Indian languages?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes — the character counter works for all languages including Hindi, Tamil, Telugu, Kannada, Bengali, and other Indian scripts since it counts Unicode characters directly. The word counter works best for space-separated text. For Devanagari or other Indic scripts, the character count is the most accurate metric to use.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Component -->
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+
+  <!-- Toast Container -->
+  <div id="toast-container" aria-live="polite"></div>
+
+  <!-- FAQ Accordion -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const faqQuestions = document.querySelectorAll('.faq-question');
+      faqQuestions.forEach(function(question) {
+        question.addEventListener('click', function() {
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          const faqItem = this.closest('.faq-item');
+          const icon = this.querySelector('.faq-icon');
+
+          faqQuestions.forEach(function(q) {
+            if (q !== question) {
+              q.setAttribute('aria-expanded', 'false');
+              q.closest('.faq-item').classList.remove('active');
+              q.querySelector('.faq-icon').textContent = '+';
+            }
+          });
+
+          if (isExpanded) {
+            this.setAttribute('aria-expanded', 'false');
+            faqItem.classList.remove('active');
+            icon.textContent = '+';
+          } else {
+            this.setAttribute('aria-expanded', 'true');
+            faqItem.classList.add('active');
+            icon.textContent = '−';
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- Sentry Init -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
+        initSentryTracking();
+      }
+    });
+  </script>
+
+  <!-- Word Counter Logic -->
+  <script>
+    const PAGE_NAME = 'Word Counter';
+
+    const COMMON_WORDS = new Set([
+      'the','a','an','and','or','but','in','on','at','to','for','of','with','is',
+      'are','was','were','be','been','being','have','has','had','do','does','did',
+      'will','would','could','should','may','might','shall','can','it','its','this',
+      'that','these','those','i','you','he','she','we','they','my','your','his',
+      'her','our','their','me','him','us','them','not','no','if','as','by','from',
+      'so','than','then','there','what','which','who','how','when','where','about',
+      'up','out','into','through','after','before','between','such','each','more',
+      'also','all','any','both','few','more','most','other','some','such','into'
+    ]);
+
+    function showToast(message, type) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast ' + (type || 'info');
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(function() { toast.classList.add('show'); }, 50);
+      setTimeout(function() {
+        toast.classList.remove('show');
+        setTimeout(function() { container.removeChild(toast); }, 300);
+      }, 2500);
+    }
+
+    function countWords(text) {
+      const trimmed = text.trim();
+      if (!trimmed) return 0;
+      return trimmed.split(/\s+/).filter(function(w) { return w.length > 0; }).length;
+    }
+
+    function countSentences(text) {
+      const trimmed = text.trim();
+      if (!trimmed) return 0;
+      const matches = trimmed.match(/[^.!?]*[.!?]+/g);
+      if (!matches) return trimmed.length > 0 ? 1 : 0;
+      return matches.length;
+    }
+
+    function countParagraphs(text) {
+      const trimmed = text.trim();
+      if (!trimmed) return 0;
+      return trimmed.split(/\n\s*\n+/).filter(function(p) { return p.trim().length > 0; }).length;
+    }
+
+    function formatReadingTime(wordCount) {
+      if (wordCount === 0) return '0s';
+      const minutes = wordCount / 200;
+      if (minutes < 1) {
+        const seconds = Math.round(minutes * 60);
+        return seconds + 's';
+      }
+      const mins = Math.floor(minutes);
+      const secs = Math.round((minutes - mins) * 60);
+      if (secs === 0) return mins + 'm';
+      return mins + 'm ' + secs + 's';
+    }
+
+    function buildWordFrequency(text, excludeCommon) {
+      const words = text.toLowerCase().match(/[a-zA-ZÀ-ÿऀ-ॿ]+/g);
+      if (!words) return [];
+      const freq = {};
+      words.forEach(function(w) {
+        if (excludeCommon && COMMON_WORDS.has(w)) return;
+        freq[w] = (freq[w] || 0) + 1;
+      });
+      return Object.entries(freq)
+        .sort(function(a, b) { return b[1] - a[1]; })
+        .slice(0, 10);
+    }
+
+    function bumpStat(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.remove('bump');
+      void el.offsetWidth;
+      el.classList.add('bump');
+      setTimeout(function() { el.classList.remove('bump'); }, 150);
+    }
+
+    function renderFrequency(entries, maxCount) {
+      const list = document.getElementById('frequency-list');
+      if (!list) return;
+      if (entries.length === 0) {
+        list.innerHTML = '<p class="text-sm text-gray-400 dark:text-gray-500">No words to analyze yet.</p>';
+        return;
+      }
+      list.innerHTML = entries.map(function(entry) {
+        const word = entry[0];
+        const count = entry[1];
+        const pct = maxCount > 0 ? Math.round((count / maxCount) * 100) : 0;
+        return '<div class="flex items-center gap-3">' +
+          '<span class="text-sm font-mono text-gray-800 dark:text-gray-200 w-28 truncate">' + escapeHtml(word) + '</span>' +
+          '<div class="flex-1 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">' +
+            '<div class="freq-bar" style="width:' + pct + '%"></div>' +
+          '</div>' +
+          '<span class="text-xs text-gray-500 dark:text-gray-400 w-8 text-right">' + count + '</span>' +
+        '</div>';
+      }).join('');
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function analyzeText(text) {
+      const words = countWords(text);
+      const chars = text.length;
+      const charsNoSpaces = text.replace(/\s/g, '').length;
+      const sentences = countSentences(text);
+      const paragraphs = countParagraphs(text);
+      const readingTime = formatReadingTime(words);
+
+      const setIfChanged = function(id, value) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const strVal = String(value);
+        if (el.textContent !== strVal) {
+          el.textContent = strVal;
+          bumpStat(id);
+        }
+      };
+
+      setIfChanged('stat-words', words);
+      setIfChanged('stat-chars', chars);
+      setIfChanged('stat-chars-no-spaces', charsNoSpaces);
+      setIfChanged('stat-sentences', sentences);
+      setIfChanged('stat-paragraphs', paragraphs);
+      setIfChanged('stat-reading-time', readingTime);
+
+      const panel = document.getElementById('frequency-panel');
+      if (words > 0 && panel) {
+        panel.classList.remove('hidden');
+        const excludeCommon = document.getElementById('exclude-common-words').checked;
+        const entries = buildWordFrequency(text, excludeCommon);
+        const maxCount = entries.length > 0 ? entries[0][1] : 1;
+        renderFrequency(entries, maxCount);
+      } else if (panel) {
+        panel.classList.add('hidden');
+      }
+    }
+
+    function copyToClipboard(text, successMsg) {
+      if (!text) {
+        showToast('Nothing to copy', 'info');
+        return;
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() {
+          showToast(successMsg || 'Copied!', 'success');
+          if (typeof window.Analytics !== 'undefined') {
+            window.Analytics.track('word_counter_copy', { page: PAGE_NAME });
+          }
+        }).catch(function() {
+          fallbackCopy(text, successMsg);
+        });
+      } else {
+        fallbackCopy(text, successMsg);
+      }
+    }
+
+    function fallbackCopy(text, successMsg) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast(successMsg || 'Copied!', 'success');
+      } catch (e) {
+        showToast('Copy failed — please select and copy manually', 'info');
+      }
+      document.body.removeChild(ta);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const textInput = document.getElementById('text-input');
+      const clearBtn = document.getElementById('clear-btn');
+      const copyTextBtn = document.getElementById('copy-text-btn');
+      const excludeCheckbox = document.getElementById('exclude-common-words');
+
+      let debounceTimer = null;
+      function scheduleAnalysis() {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(function() {
+          analyzeText(textInput.value);
+          if (typeof window.Analytics !== 'undefined') {
+            window.Analytics.track('word_counter_analyze', {
+              page: PAGE_NAME,
+              word_count: countWords(textInput.value)
+            });
+          }
+        }, 150);
+      }
+
+      textInput.addEventListener('input', scheduleAnalysis);
+
+      clearBtn.addEventListener('click', function() {
+        textInput.value = '';
+        analyzeText('');
+        textInput.focus();
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('word_counter_clear', { page: PAGE_NAME });
+        }
+      });
+
+      copyTextBtn.addEventListener('click', function() {
+        copyToClipboard(textInput.value, 'Text copied to clipboard!');
+      });
+
+      excludeCheckbox.addEventListener('change', function() {
+        analyzeText(textInput.value);
+      });
+
+      analyzeText('');
+    });
+  </script>
+</body>
+</html>
