@@ -40,15 +40,9 @@ import { JSONDiffTester } from './jsondiff-tests.js';
 import { ColorPickerTester } from './color-picker-tests.js';
 import { CurlTesterTests } from './curl-tester-tests.js';
 import { CurlComparisonTests } from './curl-comparison-tests.js';
-<<<<<<< HEAD
-<<<<<<< HEAD
 import { PasswordGeneratorTester } from './password-generator-tests.js';
-=======
 import { TextCaseConverterTester } from './text-case-converter-tests.js';
->>>>>>> origin/tool/text-case-converter
-=======
 import { UUIDGeneratorTester } from './uuid-generator-tests.js';
->>>>>>> origin/tool/uuid-generator
 
 // Test Results Tracking
 let totalTests = 0;
@@ -556,15 +550,9 @@ console.log('📊 COMPREHENSIVE TEST SUMMARY');
 console.log('='.repeat(60));
 
 
-const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + passwordGeneratorResults.total;
-const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + passwordGeneratorResults.passed;
-const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + passwordGeneratorResults.failed;
-const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + textCaseConverterResults.total;
-const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + textCaseConverterResults.passed;
-const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + textCaseConverterResults.failed;
-const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + uuidResults.total;
-const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + uuidResults.passed;
-const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + uuidResults.failed;
+const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + passwordGeneratorResults.total + textCaseConverterResults.total + uuidResults.total;
+const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + passwordGeneratorResults.passed + textCaseConverterResults.passed + uuidResults.passed;
+const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + passwordGeneratorResults.failed + textCaseConverterResults.failed + uuidResults.failed;
 
 console.log(`Total Tests: ${grandTotal}`);
 console.log(`✅ Passed: ${grandPassed}`);
