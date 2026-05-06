@@ -484,6 +484,7 @@ const PAGE_NAMES = {
   'curl-tester.html': 'cURL Tester',
   'curl-comparison.html': 'cURL Comparison',
   'tools.html': 'Our Developer Tools',
+  'age-calculator.html': 'Age Calculator',
   'about.html': 'About',
   'feedback.html': 'Feedback',
   'privacy.html': 'Privacy Policy'
