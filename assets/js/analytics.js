@@ -186,6 +186,18 @@ const ANALYTICS_EVENTS = {
   COMPARISON_LOAD_EXAMPLE: 'comparison_load_example',
   COMPARISON_CLEAR_INPUT: 'comparison_clear_input',
   
+  // Password Generator events
+  PASSWORD_GENERATED: 'password_generated',
+  PASSWORD_COPIED: 'password_copied',
+  PASSWORD_GENERATE_FAILED: 'password_generate_failed',
+  PASSWORD_GENERATE_ERROR: 'password_generate_error',
+  BULK_PASSWORDS_GENERATED: 'bulk_passwords_generated',
+  BULK_PASSWORD_COPIED: 'bulk_password_copied',
+  BULK_ALL_PASSWORDS_COPIED: 'bulk_all_passwords_copied',
+  // WhatsApp Link Generator events
+  WHATSAPP_LINK_GENERATE: 'whatsapp_link_generate',
+  WHATSAPP_LINK_COPY: 'whatsapp_link_copy',
+
   // UI Freeze events
   UI_FREEZE: 'ui_freeze',
   OPERATION_COMPLETE: 'operation_complete'
@@ -483,10 +495,16 @@ const PAGE_NAMES = {
   'gradient-generator.html': 'Gradient Generator',
   'curl-tester.html': 'cURL Tester',
   'curl-comparison.html': 'cURL Comparison',
+  'word-counter.html': 'Word Counter',
   'tools.html': 'Our Developer Tools',
+  'age-calculator.html': 'Age Calculator',
   'about.html': 'About',
   'feedback.html': 'Feedback',
-  'privacy.html': 'Privacy Policy'
+  'privacy.html': 'Privacy Policy',
+  'password-generator.html': 'Password Generator',
+  'text-case-converter.html': 'Text Case Converter',
+  'uuid-generator.html': 'UUID Generator',
+  'whatsapp-link.html': 'WhatsApp Link Generator'
 };
 
 /**

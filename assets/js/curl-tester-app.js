@@ -663,9 +663,9 @@ function parseCurl(curlCommand) {
   }
   
   // Extract data/body (-d or --data or --data-raw or --data-binary)
-  const dataMatch = command.match(/-d\s+['"]([^'"]+)['"]|--data\s+['"]([^'"]+)['"]|--data-raw\s+['"]([^'"]+)['"]|--data-binary\s+['"]([^'"]+)['"]/i);
+  const dataMatch = command.match(/(?:-d|--data(?:-raw|-binary)?)\s+(?:'([^']*)'|"([^"]*)")/i);
   if (dataMatch) {
-    result.body = dataMatch[1] || dataMatch[2] || dataMatch[3] || dataMatch[4];
+    result.body = dataMatch[1] !== undefined ? dataMatch[1] : dataMatch[2];
     // If method wasn't specified and body exists, default to POST
     if (!methodMatch) {
       result.method = 'POST';
