@@ -486,7 +486,8 @@ const PAGE_NAMES = {
   'tools.html': 'Our Developer Tools',
   'about.html': 'About',
   'feedback.html': 'Feedback',
-  'privacy.html': 'Privacy Policy'
+  'privacy.html': 'Privacy Policy',
+  'text-case-converter.html': 'Text Case Converter'
 };
 
 /**

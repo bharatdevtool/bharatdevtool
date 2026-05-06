@@ -40,6 +40,7 @@ import { JSONDiffTester } from './jsondiff-tests.js';
 import { ColorPickerTester } from './color-picker-tests.js';
 import { CurlTesterTests } from './curl-tester-tests.js';
 import { CurlComparisonTests } from './curl-comparison-tests.js';
+import { TextCaseConverterTester } from './text-case-converter-tests.js';
 
 // Test Results Tracking
 let totalTests = 0;
@@ -509,6 +510,13 @@ console.log('='.repeat(60));
 const curlComparisonTests = new CurlComparisonTests();
 const curlComparisonResults = curlComparisonTests.runAllTests();
 
+console.log('\n' + '='.repeat(60));
+console.log('TEXT CASE CONVERTER TEST SUITE');
+console.log('='.repeat(60));
+
+const textCaseConverterTester = new TextCaseConverterTester();
+const textCaseConverterResults = textCaseConverterTester.runAllTests();
+
 // ============================================================================
 // FINAL TEST SUMMARY
 // ============================================================================
@@ -517,9 +525,9 @@ console.log('\n' + '='.repeat(60));
 console.log('📊 COMPREHENSIVE TEST SUMMARY');
 console.log('='.repeat(60));
 
-const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total;
-const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed;
-const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed;
+const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + textCaseConverterResults.total;
+const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + textCaseConverterResults.passed;
+const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + textCaseConverterResults.failed;
 
 console.log(`Total Tests: ${grandTotal}`);
 console.log(`✅ Passed: ${grandPassed}`);
@@ -537,6 +545,7 @@ console.log(`JSON Comparison (Diff): ${jsonDiffResults.total} tests (${jsonDiffR
 console.log(`Color Picker: ${colorPickerResults.total} tests (${colorPickerResults.passed} passed, ${colorPickerResults.failed} failed)`);
 console.log(`cURL Tester: ${curlTesterResults.total} tests (${curlTesterResults.passed} passed, ${curlTesterResults.failed} failed)`);
 console.log(`cURL Comparison: ${curlComparisonResults.total} tests (${curlComparisonResults.passed} passed, ${curlComparisonResults.failed} failed)`);
+console.log(`Text Case Converter: ${textCaseConverterResults.total} tests (${textCaseConverterResults.passed} passed, ${textCaseConverterResults.failed} failed)`);
 
 if (grandFailed === 0) {
   console.log('\n🎉 ALL TESTS PASSED! All components are working perfectly.');
@@ -593,7 +602,12 @@ if (grandFailed === 0) {
     console.log('\ncURL Comparison failures:');
     curlComparisonResults.failedTests.forEach(test => console.log(`   - ${test}`));
   }
-  
+
+  if (textCaseConverterResults.failed > 0) {
+    console.log('\nText Case Converter failures:');
+    textCaseConverterResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+
   console.log('\nPlease review the failed tests above.');
   process.exit(1);
 }
