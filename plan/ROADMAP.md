@@ -55,7 +55,7 @@
 
 | # | Tool | Category | Traffic Potential | Effort | Status | File |
 |---|------|----------|-------------------|--------|--------|------|
-| 7 | Percentage Calculator | calculator | High | 1d | `not-started` | `percentage-calculator.html` |
+| 7 | Percentage Calculator | calculator | High | 1d | `in-progress` | `percentage-calculator.html` |
 | 8 | BMI Calculator | calculator | Very High (India) | 0.5d | `not-started` | `bmi-calculator.html` |
 | 9 | GST Calculator | calculator | Very High (India) | 1.5d | `not-started` | `gst-calculator.html` |
 | 10 | EMI / Loan Calculator | calculator | High (India) | 1.5d | `not-started` | `emi-calculator.html` |
