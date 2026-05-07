@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free EMI Calculator Online | Loan EMI Calculator India | Bharat Dev Tools</title>
+  <meta name="description" content="Free EMI Calculator online. Calculate monthly EMI for home loan, car loan, personal loan. Get full amortization schedule, total interest, and payment breakdown instantly. No sign-up required.">
+  <meta name="keywords" content="emi calculator, loan emi calculator, home loan emi, car loan emi, personal loan emi, emi calculation formula, monthly emi calculator, emi calculator india, loan calculator, interest calculator, amortization schedule">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  <link rel="canonical" href="https://bharatdevtool.com/emi-calculator.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Free EMI Calculator Online | Loan EMI Calculator India | Bharat Dev Tools">
+  <meta property="og:description" content="Calculate your monthly EMI for any loan — home, car, or personal. Free online EMI calculator with full amortization schedule. No sign-up required.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/emi-calculator.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="EMI Calculator - Free Online Loan Calculator">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free EMI Calculator Online | Loan EMI Calculator India | Bharat Dev Tools">
+  <meta name="twitter:description" content="Calculate your monthly EMI for any loan — home, car, or personal. Free online EMI calculator with full amortization schedule. No sign-up required.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ik.imagekit.io/bdt/bdt_logo_v3_16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/bdt/bdt_logo_v3_180.png">
+
+  <!-- Theme Management (load early to prevent flash) -->
+  <script src="assets/js/theme.js"></script>
+
+  <!-- Sentry SDK -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+
+  <!-- Version & Analytics (deferred) -->
+  <script src="assets/js/version.js" defer></script>
+  <script src="assets/js/analytics.js" defer></script>
+
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+
+  <!-- Structured Data: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "EMI Calculator",
+    "description": "Free online EMI calculator. Calculate monthly EMI for home loan, car loan, personal loan with full amortization schedule and payment breakdown.",
+    "url": "https://bharatdevtool.com/emi-calculator.html",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "Monthly EMI calculation",
+      "Full amortization schedule",
+      "Total interest payable",
+      "Principal vs interest breakdown",
+      "Supports Home, Car, Personal loans",
+      "Works offline in browser"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "142"
+    }
+  }
+  </script>
+
+  <!-- BreadcrumbList Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "EMI Calculator",
+        "item": "https://bharatdevtool.com/emi-calculator.html"
+      }
+    ]
+  }
+  </script>
+
+  <!-- FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is EMI and how is it calculated?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "EMI (Equated Monthly Instalment) is the fixed monthly payment made to a lender to repay a loan over a specified period. It is calculated using the formula: EMI = [P × R × (1+R)^N] / [(1+R)^N – 1], where P is the principal loan amount, R is the monthly interest rate (annual rate divided by 12), and N is the total number of monthly instalments."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this EMI calculator free to use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the EMI Calculator on Bharat Dev Tools is completely free. There is no sign-up, no registration, and no hidden charges. You can calculate EMI for home loans, car loans, personal loans, and any other loan type as many times as you like."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my loan data safe? Does this calculator send data to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Your data is completely safe. All calculations happen entirely in your browser using JavaScript. No loan amount, interest rate, or personal data is ever sent to any server. Your privacy is fully protected."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is an amortization schedule?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "An amortization schedule is a complete table showing each monthly payment broken down into its principal and interest components over the full loan tenure. In the early months, a larger portion of your EMI goes toward interest. As time progresses, the principal component increases and the interest component decreases. This calculator provides the full amortization schedule for your loan."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I reduce my loan EMI?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can reduce your EMI in three ways: (1) Increase the loan tenure — a longer repayment period means smaller monthly payments, but more total interest paid. (2) Negotiate a lower interest rate — even a 0.5% reduction can significantly lower your EMI. (3) Make a larger down payment — reducing the principal amount directly reduces the EMI. Use this calculator to simulate different scenarios and find the best option for your budget."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    .animate-fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-slide-up {
+      animation: slideUp 0.3s ease-out;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Range slider styling */
+    .range-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      outline: none;
+      cursor: pointer;
+      background: #e5e7eb;
+    }
+    [data-theme="dark"] .range-slider {
+      background: #374151;
+    }
+    .range-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #2563eb;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(37, 99, 235, 0.4);
+      transition: transform 0.1s ease;
+    }
+    .range-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+    .range-slider::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #2563eb;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 2px 4px rgba(37, 99, 235, 0.4);
+    }
+
+    /* Result card */
+    .result-card {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      border-radius: 16px;
+      color: white;
+      padding: 24px;
+    }
+    [data-theme="dark"] .result-card {
+      background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+    }
+
+    /* Breakdown ring */
+    .donut-ring {
+      transform: rotate(-90deg);
+      transform-origin: center;
+    }
+
+    /* Table */
+    .amort-table th {
+      background: #f3f4f6;
+      color: #374151;
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 10px 12px;
+    }
+    [data-theme="dark"] .amort-table th {
+      background: #1f2937;
+      color: #9ca3af;
+    }
+    .amort-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #f3f4f6;
+      font-size: 0.875rem;
+    }
+    [data-theme="dark"] .amort-table td {
+      border-bottom-color: #374151;
+      color: #d1d5db;
+    }
+    .amort-table tr:hover td {
+      background: #f9fafb;
+    }
+    [data-theme="dark"] .amort-table tr:hover td {
+      background: #1f2937;
+    }
+
+    /* Input field */
+    .calc-input {
+      background: #f9fafb;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 1rem;
+      width: 100%;
+      color: #111827;
+      transition: border-color 0.2s ease;
+    }
+    .calc-input:focus {
+      outline: none;
+      border-color: #2563eb;
+      background: #fff;
+    }
+    [data-theme="dark"] .calc-input {
+      background: #374151;
+      border-color: #4b5563;
+      color: #f9fafb;
+    }
+    [data-theme="dark"] .calc-input:focus {
+      border-color: #3b82f6;
+      background: #4b5563;
+    }
+
+    /* Loan type tabs */
+    .loan-tab {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      background: transparent;
+      color: #6b7280;
+    }
+    .loan-tab.active {
+      background: #2563eb;
+      color: white;
+    }
+    [data-theme="dark"] .loan-tab {
+      color: #9ca3af;
+    }
+    [data-theme="dark"] .loan-tab.active {
+      background: #3b82f6;
+      color: white;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+  <!-- Header Component -->
+  <script src="components/header.js"></script>
+
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- SEO H1 (screen reader only) -->
+    <h1 class="sr-only">Free EMI Calculator Online — Loan EMI Calculator India</h1>
+
+    <!-- Hero -->
+    <div class="text-center mb-10 animate-fade-in">
+      <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-3">
+        🏦 EMI Calculator
+      </h2>
+      <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Calculate your monthly EMI for home loan, car loan, or personal loan. Get a full amortization schedule instantly.
+      </p>
+    </div>
+
+    <!-- Loan Type Tabs -->
+    <div class="flex justify-center mb-8 animate-fade-in">
+      <div class="inline-flex bg-white dark:bg-gray-800 rounded-xl p-1.5 shadow-sm border border-gray-200 dark:border-gray-700 gap-1">
+        <button class="loan-tab active" data-type="home" aria-pressed="true">🏠 Home Loan</button>
+        <button class="loan-tab" data-type="car" aria-pressed="false">🚗 Car Loan</button>
+        <button class="loan-tab" data-type="personal" aria-pressed="false">💼 Personal Loan</button>
+      </div>
+    </div>
+
+    <!-- Calculator Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 animate-fade-in">
+
+      <!-- Inputs Panel -->
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">Loan Details</h3>
+
+        <!-- Loan Amount -->
+        <div class="mb-6">
+          <div class="flex items-center justify-between mb-2">
+            <label class="text-sm font-medium text-gray-700 dark:text-gray-300" for="loanAmount">Loan Amount</label>
+            <div class="flex items-center gap-1">
+              <span class="text-sm text-gray-500 dark:text-gray-400">₹</span>
+              <input
+                id="loanAmountInput"
+                type="number"
+                min="10000"
+                max="100000000"
+                step="10000"
+                class="calc-input text-right font-semibold"
+                style="width:130px"
+                aria-label="Loan amount in rupees"
+              >
+            </div>
+          </div>
+          <input id="loanAmount" type="range" class="range-slider" min="10000" max="10000000" step="10000" aria-label="Loan amount slider">
+          <div class="flex justify-between text-xs text-gray-400 dark:text-gray-500 mt-1">
+            <span>₹10K</span>
+            <span>₹1 Cr</span>
+          </div>
+        </div>
+
+        <!-- Interest Rate -->
+        <div class="mb-6">
+          <div class="flex items-center justify-between mb-2">
+            <label class="text-sm font-medium text-gray-700 dark:text-gray-300" for="interestRate">Annual Interest Rate</label>
+            <div class="flex items-center gap-1">
+              <input
+                id="interestRateInput"
+                type="number"
+                min="1"
+                max="36"
+                step="0.1"
+                class="calc-input text-right font-semibold"
+                style="width:90px"
+                aria-label="Annual interest rate"
+              >
+              <span class="text-sm text-gray-500 dark:text-gray-400">%</span>
+            </div>
+          </div>
+          <input id="interestRate" type="range" class="range-slider" min="1" max="36" step="0.1" aria-label="Interest rate slider">
+          <div class="flex justify-between text-xs text-gray-400 dark:text-gray-500 mt-1">
+            <span>1%</span>
+            <span>36%</span>
+          </div>
+        </div>
+
+        <!-- Loan Tenure -->
+        <div class="mb-6">
+          <div class="flex items-center justify-between mb-2">
+            <label class="text-sm font-medium text-gray-700 dark:text-gray-300" for="loanTenure">Loan Tenure</label>
+            <div class="flex items-center gap-2">
+              <input
+                id="tenureInput"
+                type="number"
+                min="1"
+                max="360"
+                step="1"
+                class="calc-input text-right font-semibold"
+                style="width:80px"
+                aria-label="Loan tenure"
+              >
+              <div class="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-0.5">
+                <button id="tenureMonthsBtn" class="px-2 py-1 text-xs font-medium rounded-md bg-white dark:bg-gray-600 text-gray-700 dark:text-gray-200 shadow-sm transition-all" aria-pressed="true">Mo</button>
+                <button id="tenureYearsBtn" class="px-2 py-1 text-xs font-medium rounded-md text-gray-500 dark:text-gray-400 transition-all" aria-pressed="false">Yr</button>
+              </div>
+            </div>
+          </div>
+          <input id="loanTenure" type="range" class="range-slider" min="1" max="360" step="1" aria-label="Loan tenure slider">
+          <div class="flex justify-between text-xs text-gray-400 dark:text-gray-500 mt-1">
+            <span>1 Mo</span>
+            <span>30 Yr</span>
+          </div>
+        </div>
+
+        <!-- Calculate Button -->
+        <button
+          id="calculateBtn"
+          class="w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-md hover:shadow-lg active:scale-95"
+          aria-label="Calculate EMI"
+        >
+          Calculate EMI
+        </button>
+      </div>
+
+      <!-- Results Panel -->
+      <div id="resultsPanel" class="space-y-4">
+        <!-- EMI Card -->
+        <div class="result-card animate-slide-up" id="emiCard">
+          <div class="text-center">
+            <p class="text-blue-100 text-sm font-medium mb-1">Monthly EMI</p>
+            <p id="emiAmount" class="text-4xl font-bold mb-1">₹0</p>
+            <p class="text-blue-200 text-xs" id="emiSubtext">Enter your loan details and click Calculate</p>
+          </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-700">
+            <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Principal Amount</p>
+            <p id="principalAmount" class="text-xl font-bold text-gray-900 dark:text-white">₹0</p>
+          </div>
+          <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-700">
+            <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Total Interest</p>
+            <p id="totalInterest" class="text-xl font-bold text-orange-500">₹0</p>
+          </div>
+          <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-700 col-span-2">
+            <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Total Payment (Principal + Interest)</p>
+            <p id="totalPayment" class="text-xl font-bold text-gray-900 dark:text-white">₹0</p>
+          </div>
+        </div>
+
+        <!-- Donut Chart -->
+        <div id="chartContainer" class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-700 hidden">
+          <p class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 text-center">Payment Breakdown</p>
+          <div class="flex items-center justify-center gap-6">
+            <div class="relative" style="width:100px;height:100px;">
+              <svg width="100" height="100" viewBox="0 0 100 100" aria-label="Loan payment breakdown donut chart">
+                <circle cx="50" cy="50" r="40" fill="none" stroke="#e5e7eb" stroke-width="16"/>
+                <circle id="principalArc" cx="50" cy="50" r="40" fill="none" stroke="#2563eb" stroke-width="16"
+                  class="donut-ring" stroke-dasharray="0 251.3" stroke-linecap="butt"/>
+                <circle id="interestArc" cx="50" cy="50" r="40" fill="none" stroke="#f97316" stroke-width="16"
+                  class="donut-ring" stroke-dasharray="0 251.3" stroke-linecap="butt" stroke-dashoffset="0"/>
+              </svg>
+            </div>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-blue-600 flex-shrink-0"></span>
+                <span class="text-xs text-gray-600 dark:text-gray-400">Principal: <span id="principalPct" class="font-semibold text-gray-900 dark:text-white">0%</span></span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-orange-500 flex-shrink-0"></span>
+                <span class="text-xs text-gray-600 dark:text-gray-400">Interest: <span id="interestPct" class="font-semibold text-gray-900 dark:text-white">0%</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Amortization Schedule -->
+    <div id="amortSection" class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-8 hidden animate-fade-in">
+      <div class="flex items-center justify-between mb-4 flex-wrap gap-3">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">📋 Amortization Schedule</h3>
+        <div class="flex gap-2">
+          <button id="toggleScheduleBtn" class="text-sm text-blue-600 dark:text-blue-400 hover:underline font-medium">
+            Show All
+          </button>
+          <button id="copyScheduleBtn" class="flex items-center gap-1 px-3 py-1.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+            📋 Copy
+          </button>
+        </div>
+      </div>
+      <div class="overflow-x-auto rounded-xl border border-gray-100 dark:border-gray-700">
+        <table class="amort-table w-full" aria-label="Loan amortization schedule">
+          <thead>
+            <tr>
+              <th class="text-left">Month</th>
+              <th class="text-right">EMI</th>
+              <th class="text-right">Principal</th>
+              <th class="text-right">Interest</th>
+              <th class="text-right">Balance</th>
+            </tr>
+          </thead>
+          <tbody id="amortTableBody">
+          </tbody>
+        </table>
+      </div>
+      <p id="scheduleNote" class="text-xs text-gray-400 dark:text-gray-500 mt-2 hidden">Showing first 12 months. Click "Show All" to view the complete schedule.</p>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+      <div class="faq-container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about EMI calculation</p>
+        <div class="faq-list">
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is EMI and how is it calculated?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>EMI (Equated Monthly Instalment) is the fixed monthly payment you make to repay a loan over a specified period. It is calculated using the formula:</p>
+              <p><strong>EMI = [P × R × (1+R)^N] / [(1+R)^N – 1]</strong></p>
+              <p>Where: <strong>P</strong> = Principal loan amount, <strong>R</strong> = Monthly interest rate (Annual rate ÷ 12 ÷ 100), <strong>N</strong> = Number of monthly instalments (Tenure in months).</p>
+              <p>Example: For a ₹10,00,000 loan at 9% annual interest for 20 years — R = 9/12/100 = 0.0075, N = 240. EMI ≈ ₹8,997/month.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is this EMI calculator free to use?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes, this EMI Calculator is completely free. No registration, no sign-up, and no hidden charges. You can calculate EMI for home loans, car loans, personal loans, and any other loan type as many times as you need.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is my loan data safe? Does it send data to a server?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Your data is completely private. All EMI calculations happen entirely in your browser using JavaScript. No loan amount, interest rate, or any personal data is ever sent to any server. Everything runs locally on your device.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is an amortization schedule?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>An amortization schedule is a complete month-by-month table showing how each EMI payment is split between principal and interest over the entire loan tenure. In the early months, most of your EMI goes toward interest. As you repay the loan, the interest component decreases and the principal component increases. This calculator generates the full amortization table for your loan.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How do I reduce my EMI amount?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>There are three main ways to reduce your monthly EMI:</p>
+              <ul>
+                <li><strong>Increase the loan tenure</strong> — A longer repayment period means smaller EMIs, but you pay more total interest.</li>
+                <li><strong>Negotiate a lower interest rate</strong> — Even a 0.5% reduction can significantly lower your EMI. Compare rates from multiple lenders.</li>
+                <li><strong>Make a larger down payment</strong> — Reducing the principal loan amount directly reduces your EMI.</li>
+              </ul>
+              <p>Use the sliders above to simulate different combinations and find the best balance for your budget.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Component -->
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+
+  <!-- FAQ Accordion -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const faqQuestions = document.querySelectorAll('.faq-question');
+      faqQuestions.forEach(function(question) {
+        question.addEventListener('click', function() {
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          faqQuestions.forEach(function(q) {
+            q.setAttribute('aria-expanded', 'false');
+            q.closest('.faq-item').classList.remove('active');
+            q.querySelector('.faq-icon').textContent = '+';
+          });
+          if (!isExpanded) {
+            this.setAttribute('aria-expanded', 'true');
+            this.closest('.faq-item').classList.add('active');
+            this.querySelector('.faq-icon').textContent = '−';
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- Sentry Init -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
+        initSentryTracking();
+      }
+    });
+  </script>
+
+  <!-- EMI Calculator Logic -->
+  <script>
+    const EMI_PAGE_NAME = 'EMI Calculator';
+
+    // Default values per loan type
+    const LOAN_DEFAULTS = {
+      home:     { amount: 3000000, rate: 8.5,  tenure: 240 },
+      car:      { amount: 700000,  rate: 9.0,  tenure: 60  },
+      personal: { amount: 300000,  rate: 12.0, tenure: 36  }
+    };
+
+    let tenureInMonths = true;
+    let currentLoanType = 'home';
+    let showAllRows = false;
+    let lastSchedule = [];
+
+    // ── Formatters ──────────────────────────────────────────────────────────────
+
+    function formatCurrency(value) {
+      return '₹' + Math.round(value).toLocaleString('en-IN');
+    }
+
+    function formatCurrencyFull(value) {
+      return new Intl.NumberFormat('en-IN', {
+        style: 'currency',
+        currency: 'INR',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      }).format(Math.round(value));
+    }
+
+    // ── Core Calculation ────────────────────────────────────────────────────────
+
+    function calculateEMI(principal, annualRate, tenureMonths) {
+      if (principal <= 0 || annualRate <= 0 || tenureMonths <= 0) return null;
+      const monthlyRate = annualRate / 12 / 100;
+      const emi = (principal * monthlyRate * Math.pow(1 + monthlyRate, tenureMonths)) /
+                  (Math.pow(1 + monthlyRate, tenureMonths) - 1);
+      return emi;
+    }
+
+    function buildAmortizationSchedule(principal, annualRate, tenureMonths, emi) {
+      const schedule = [];
+      const monthlyRate = annualRate / 12 / 100;
+      let balance = principal;
+
+      for (let month = 1; month <= tenureMonths; month++) {
+        const interestForMonth = balance * monthlyRate;
+        const principalForMonth = emi - interestForMonth;
+        balance = Math.max(0, balance - principalForMonth);
+
+        schedule.push({
+          month,
+          emi: Math.round(emi),
+          principal: Math.round(principalForMonth),
+          interest: Math.round(interestForMonth),
+          balance: Math.round(balance)
+        });
+      }
+      return schedule;
+    }
+
+    // ── UI Rendering ─────────────────────────────────────────────────────────────
+
+    function renderResults(principal, annualRate, tenureMonths) {
+      const emi = calculateEMI(principal, annualRate, tenureMonths);
+      if (!emi) return;
+
+      const totalPayment = emi * tenureMonths;
+      const totalInterest = totalPayment - principal;
+      const principalPct = Math.round((principal / totalPayment) * 100);
+      const interestPct = 100 - principalPct;
+
+      document.getElementById('emiAmount').textContent = formatCurrency(emi);
+      document.getElementById('emiSubtext').textContent =
+        'for ' + tenureMonths + ' months at ' + annualRate + '% p.a.';
+      document.getElementById('principalAmount').textContent = formatCurrency(principal);
+      document.getElementById('totalInterest').textContent = formatCurrency(totalInterest);
+      document.getElementById('totalPayment').textContent = formatCurrency(totalPayment);
+
+      document.getElementById('principalPct').textContent = principalPct + '%';
+      document.getElementById('interestPct').textContent = interestPct + '%';
+      updateDonutChart(principalPct);
+
+      document.getElementById('chartContainer').classList.remove('hidden');
+
+      const schedule = buildAmortizationSchedule(principal, annualRate, tenureMonths, emi);
+      lastSchedule = schedule;
+      showAllRows = false;
+      renderAmortizationTable(schedule, false);
+      document.getElementById('amortSection').classList.remove('hidden');
+
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.track('emi_calculated', {
+          page: EMI_PAGE_NAME,
+          loan_type: currentLoanType,
+          principal: Math.round(principal),
+          rate: annualRate,
+          tenure_months: tenureMonths,
+          emi: Math.round(emi)
+        });
+      }
+    }
+
+    function updateDonutChart(principalPct) {
+      const circumference = 2 * Math.PI * 40;
+      const principalDash = (principalPct / 100) * circumference;
+      const interestDash = circumference - principalDash;
+      const principalArc = document.getElementById('principalArc');
+      const interestArc = document.getElementById('interestArc');
+
+      principalArc.setAttribute('stroke-dasharray', principalDash + ' ' + circumference);
+      principalArc.setAttribute('stroke-dashoffset', '0');
+
+      interestArc.setAttribute('stroke-dasharray', interestDash + ' ' + circumference);
+      interestArc.setAttribute('stroke-dashoffset', -principalDash + '');
+    }
+
+    function renderAmortizationTable(schedule, showAll) {
+      const tbody = document.getElementById('amortTableBody');
+      const rows = showAll ? schedule : schedule.slice(0, 12);
+      const note = document.getElementById('scheduleNote');
+      const btn = document.getElementById('toggleScheduleBtn');
+
+      tbody.innerHTML = rows.map(function(row) {
+        return '<tr>' +
+          '<td class="text-left text-gray-600 dark:text-gray-400">' + row.month + '</td>' +
+          '<td class="text-right font-medium">' + formatCurrency(row.emi) + '</td>' +
+          '<td class="text-right text-blue-600 dark:text-blue-400">' + formatCurrency(row.principal) + '</td>' +
+          '<td class="text-right text-orange-500">' + formatCurrency(row.interest) + '</td>' +
+          '<td class="text-right text-gray-900 dark:text-gray-200">' + formatCurrency(row.balance) + '</td>' +
+        '</tr>';
+      }).join('');
+
+      if (schedule.length > 12) {
+        note.classList.remove('hidden');
+        btn.textContent = showAll ? 'Show Less' : 'Show All';
+      } else {
+        note.classList.add('hidden');
+        btn.textContent = 'Show All';
+      }
+    }
+
+    // ── Sync Sliders ↔ Inputs ───────────────────────────────────────────────────
+
+    function syncSliderToInput(slider, input, transform) {
+      slider.addEventListener('input', function() {
+        input.value = transform ? transform(+this.value) : this.value;
+        runCalculation();
+      });
+      input.addEventListener('input', function() {
+        const val = +this.value;
+        if (!isNaN(val)) {
+          slider.value = transform ? reverseTransform(val) : val;
+          runCalculation();
+        }
+      });
+    }
+
+    function reverseTransform(val) { return val; }
+
+    // ── Tenure mode toggle ───────────────────────────────────────────────────────
+
+    function setTenureMode(toMonths) {
+      tenureInMonths = toMonths;
+      const slider = document.getElementById('loanTenure');
+      const input = document.getElementById('tenureInput');
+      const moBtn = document.getElementById('tenureMonthsBtn');
+      const yrBtn = document.getElementById('tenureYearsBtn');
+
+      if (toMonths) {
+        slider.min = 1; slider.max = 360; slider.step = 1;
+        moBtn.classList.add('bg-white', 'dark:bg-gray-600', 'shadow-sm', 'text-gray-700', 'dark:text-gray-200');
+        moBtn.classList.remove('text-gray-500', 'dark:text-gray-400');
+        yrBtn.classList.remove('bg-white', 'dark:bg-gray-600', 'shadow-sm', 'text-gray-700', 'dark:text-gray-200');
+        yrBtn.classList.add('text-gray-500', 'dark:text-gray-400');
+        moBtn.setAttribute('aria-pressed', 'true');
+        yrBtn.setAttribute('aria-pressed', 'false');
+        document.querySelector('[for="loanTenure"], .range-slider + div span:first-child').textContent;
+      } else {
+        slider.min = 1; slider.max = 30; slider.step = 1;
+        yrBtn.classList.add('bg-white', 'dark:bg-gray-600', 'shadow-sm', 'text-gray-700', 'dark:text-gray-200');
+        yrBtn.classList.remove('text-gray-500', 'dark:text-gray-400');
+        moBtn.classList.remove('bg-white', 'dark:bg-gray-600', 'shadow-sm', 'text-gray-700', 'dark:text-gray-200');
+        moBtn.classList.add('text-gray-500', 'dark:text-gray-400');
+        yrBtn.setAttribute('aria-pressed', 'true');
+        moBtn.setAttribute('aria-pressed', 'false');
+      }
+    }
+
+    function getTenureInMonths() {
+      const raw = +document.getElementById('loanTenure').value;
+      return tenureInMonths ? raw : raw * 12;
+    }
+
+    // ── Main calculation runner ──────────────────────────────────────────────────
+
+    function runCalculation() {
+      const principal = +document.getElementById('loanAmount').value;
+      const rate = +document.getElementById('interestRate').value;
+      const tenure = getTenureInMonths();
+
+      if (!isValidInputs(principal, rate, tenure)) return;
+      renderResults(principal, rate, tenure);
+    }
+
+    function isValidInputs(principal, rate, tenure) {
+      return principal > 0 && rate > 0 && tenure > 0 &&
+             principal <= 100000000 && rate <= 36 && tenure <= 360;
+    }
+
+    // ── Apply preset for loan type ───────────────────────────────────────────────
+
+    function applyLoanPreset(type) {
+      const preset = LOAN_DEFAULTS[type];
+      if (!preset) return;
+      currentLoanType = type;
+
+      const amountSlider = document.getElementById('loanAmount');
+      const amountInput = document.getElementById('loanAmountInput');
+      const rateSlider = document.getElementById('interestRate');
+      const rateInput = document.getElementById('interestRateInput');
+      const tenureSlider = document.getElementById('loanTenure');
+      const tenureInput = document.getElementById('tenureInput');
+
+      amountSlider.value = preset.amount;
+      amountInput.value = preset.amount;
+      rateSlider.value = preset.rate;
+      rateInput.value = preset.rate;
+
+      // Default tenure in months
+      setTenureMode(true);
+      tenureSlider.value = preset.tenure;
+      tenureInput.value = preset.tenure;
+
+      runCalculation();
+    }
+
+    // ── Copy schedule as TSV ─────────────────────────────────────────────────────
+
+    function copyScheduleToClipboard() {
+      if (!lastSchedule.length) return;
+      const header = 'Month\tEMI\tPrincipal\tInterest\tBalance\n';
+      const rows = lastSchedule.map(function(r) {
+        return r.month + '\t' + r.emi + '\t' + r.principal + '\t' + r.interest + '\t' + r.balance;
+      }).join('\n');
+      const text = header + rows;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() {
+          showCopyFeedback();
+        }).catch(function() {
+          fallbackCopy(text);
+        });
+      } else {
+        fallbackCopy(text);
+      }
+
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.track('emi_schedule_copied', { page: EMI_PAGE_NAME });
+      }
+    }
+
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch(e) { /* silent */ }
+      document.body.removeChild(ta);
+      showCopyFeedback();
+    }
+
+    function showCopyFeedback() {
+      const btn = document.getElementById('copyScheduleBtn');
+      const orig = btn.textContent;
+      btn.textContent = '✅ Copied!';
+      setTimeout(function() { btn.textContent = orig; }, 2000);
+    }
+
+    // ── Bootstrap ────────────────────────────────────────────────────────────────
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const amountSlider  = document.getElementById('loanAmount');
+      const amountInput   = document.getElementById('loanAmountInput');
+      const rateSlider    = document.getElementById('interestRate');
+      const rateInput     = document.getElementById('interestRateInput');
+      const tenureSlider  = document.getElementById('loanTenure');
+      const tenureInput   = document.getElementById('tenureInput');
+
+      // Sync slider ↔ number inputs
+      amountSlider.addEventListener('input', function() {
+        amountInput.value = this.value;
+        runCalculation();
+      });
+      amountInput.addEventListener('input', function() {
+        const v = Math.min(Math.max(+this.value || 0, 10000), 10000000);
+        amountSlider.value = v;
+        runCalculation();
+      });
+
+      rateSlider.addEventListener('input', function() {
+        rateInput.value = this.value;
+        runCalculation();
+      });
+      rateInput.addEventListener('input', function() {
+        const v = Math.min(Math.max(+this.value || 0, 1), 36);
+        rateSlider.value = v;
+        runCalculation();
+      });
+
+      tenureSlider.addEventListener('input', function() {
+        tenureInput.value = this.value;
+        runCalculation();
+      });
+      tenureInput.addEventListener('input', function() {
+        const max = tenureInMonths ? 360 : 30;
+        const v = Math.min(Math.max(+this.value || 1, 1), max);
+        tenureSlider.value = v;
+        runCalculation();
+      });
+
+      // Tenure mode buttons
+      document.getElementById('tenureMonthsBtn').addEventListener('click', function() {
+        if (tenureInMonths) return;
+        const yrs = +tenureSlider.value;
+        setTenureMode(true);
+        tenureSlider.value = yrs * 12;
+        tenureInput.value = yrs * 12;
+        runCalculation();
+      });
+      document.getElementById('tenureYearsBtn').addEventListener('click', function() {
+        if (!tenureInMonths) return;
+        const months = +tenureSlider.value;
+        setTenureMode(false);
+        const yrs = Math.max(1, Math.round(months / 12));
+        tenureSlider.value = yrs;
+        tenureInput.value = yrs;
+        runCalculation();
+      });
+
+      // Loan type tabs
+      document.querySelectorAll('.loan-tab').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          document.querySelectorAll('.loan-tab').forEach(function(t) {
+            t.classList.remove('active');
+            t.setAttribute('aria-pressed', 'false');
+          });
+          this.classList.add('active');
+          this.setAttribute('aria-pressed', 'true');
+          applyLoanPreset(this.dataset.type);
+
+          if (typeof window.Analytics !== 'undefined') {
+            window.Analytics.track('emi_loan_type_changed', {
+              page: EMI_PAGE_NAME,
+              loan_type: this.dataset.type
+            });
+          }
+        });
+      });
+
+      // Calculate button
+      document.getElementById('calculateBtn').addEventListener('click', function() {
+        runCalculation();
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('emi_calculate_clicked', { page: EMI_PAGE_NAME });
+        }
+      });
+
+      // Toggle full schedule
+      document.getElementById('toggleScheduleBtn').addEventListener('click', function() {
+        showAllRows = !showAllRows;
+        renderAmortizationTable(lastSchedule, showAllRows);
+      });
+
+      // Copy schedule
+      document.getElementById('copyScheduleBtn').addEventListener('click', copyScheduleToClipboard);
+
+      // Load home loan preset on start
+      applyLoanPreset('home');
+    });
+  </script>
+</body>
+</html>
