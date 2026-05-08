@@ -75,7 +75,7 @@
 
 | # | Tool | Category | Traffic Potential | Effort | Status | File |
 |---|------|----------|-------------------|--------|--------|------|
-| 13 | PNG ↔ JPG Converter | image | Very High | 1d | `in-progress` | `image-converter.html` |
+| 13 | PNG ↔ JPG Converter | image | Very High | 1d | `not-started` | `image-converter.html` |
 | 14 | Image Resizer | image | High | 1d | `not-started` | `image-resizer.html` |
 | 15 | Image Compressor | image | Very High | 2d | `not-started` | `image-compressor.html` |
 | 16 | Image to PDF | image | Very High | 2d | `not-started` | `image-to-pdf.html` |
