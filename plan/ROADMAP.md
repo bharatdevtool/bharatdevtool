@@ -60,7 +60,7 @@
 | 9 | GST Calculator | calculator | Very High (India) | 1.5d | `done` | `gst-calculator.html` |
 | 10 | EMI / Loan Calculator | calculator | High (India) | 1.5d | `done` | `emi-calculator.html` |
 | 11 | Unix Timestamp Converter | developer | High | 1d | `done` | `timestamp-converter.html` |
-| 12 | JWT Decoder | developer | High | 1d | `in-progress` | `jwt-decoder.html` |
+| 12 | JWT Decoder | developer | High | 1d | `done` | `jwt-decoder.html` |
 
 **Why these next:**
 - GST / EMI / BMI / Age = top searched calculator terms in India
