@@ -43,6 +43,7 @@ import { CurlComparisonTests } from './curl-comparison-tests.js';
 import { PasswordGeneratorTester } from './password-generator-tests.js';
 import { TextCaseConverterTester } from './text-case-converter-tests.js';
 import { UUIDGeneratorTester } from './uuid-generator-tests.js';
+import { CSVJsonConverterTester } from './csv-json-converter-tests.js';
 
 // Test Results Tracking
 let totalTests = 0;
@@ -542,6 +543,17 @@ const uuidTester = new UUIDGeneratorTester();
 const uuidResults = uuidTester.runAll();
 
 // ============================================================================
+// CSV ↔ JSON CONVERTER TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+console.log('CSV JSON CONVERTER TEST SUITE');
+console.log('='.repeat(60));
+
+const csvJsonTester = new CSVJsonConverterTester();
+const csvJsonResults = csvJsonTester.runAllTests();
+
+// ============================================================================
 // FINAL TEST SUMMARY
 // ============================================================================
 
@@ -550,9 +562,9 @@ console.log('📊 COMPREHENSIVE TEST SUMMARY');
 console.log('='.repeat(60));
 
 
-const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + passwordGeneratorResults.total + textCaseConverterResults.total + uuidResults.total;
-const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + passwordGeneratorResults.passed + textCaseConverterResults.passed + uuidResults.passed;
-const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + passwordGeneratorResults.failed + textCaseConverterResults.failed + uuidResults.failed;
+const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + passwordGeneratorResults.total + textCaseConverterResults.total + uuidResults.total + csvJsonResults.total;
+const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + passwordGeneratorResults.passed + textCaseConverterResults.passed + uuidResults.passed + csvJsonResults.passed;
+const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + passwordGeneratorResults.failed + textCaseConverterResults.failed + uuidResults.failed + csvJsonResults.failed;
 
 console.log(`Total Tests: ${grandTotal}`);
 console.log(`✅ Passed: ${grandPassed}`);
@@ -573,6 +585,7 @@ console.log(`cURL Comparison: ${curlComparisonResults.total} tests (${curlCompar
 console.log(`Password Generator: ${passwordGeneratorResults.total} tests (${passwordGeneratorResults.passed} passed, ${passwordGeneratorResults.failed} failed)`);
 console.log(`Text Case Converter: ${textCaseConverterResults.total} tests (${textCaseConverterResults.passed} passed, ${textCaseConverterResults.failed} failed)`);
 console.log(`UUID Generator: ${uuidResults.total} tests (${uuidResults.passed} passed, ${uuidResults.failed} failed)`);
+console.log(`CSV ↔ JSON Converter: ${csvJsonResults.total} tests (${csvJsonResults.passed} passed, ${csvJsonResults.failed} failed)`);
 
 
 if (grandFailed === 0) {
