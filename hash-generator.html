@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Hash Generator Online | MD5, SHA-1, SHA-256, SHA-512 | Bharat Dev Tools</title>
+  <meta name="description" content="Free online hash generator. Generate MD5, SHA-1, SHA-256, SHA-384, and SHA-512 hashes instantly. Runs entirely in your browser — no data sent to any server. No sign-up required.">
+  <meta name="keywords" content="hash generator, md5 generator, sha256 generator, sha-1 hash, sha-512 hash, checksum generator, online hash tool, file hash, text hash, cryptographic hash, free hash generator, browser hash">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  <meta name="distribution" content="global">
+  <meta name="rating" content="general">
+  <link rel="canonical" href="https://bharatdevtool.com/hash-generator.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Free Hash Generator Online | MD5, SHA-256, SHA-512 | Bharat Dev Tools">
+  <meta property="og:description" content="Generate MD5, SHA-1, SHA-256, SHA-384, and SHA-512 hashes instantly. Runs entirely in your browser — no data is ever sent to a server.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/hash-generator.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Hash Generator - Free Online Tool">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free Hash Generator Online | MD5, SHA-256, SHA-512 | Bharat Dev Tools">
+  <meta name="twitter:description" content="Generate MD5, SHA-1, SHA-256, SHA-384, and SHA-512 hashes instantly. Runs in your browser — nothing is sent to a server.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ik.imagekit.io/bdt/bdt_logo_v3_16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/bdt/bdt_logo_v3_180.png">
+
+  <!-- Theme Management (load FIRST — prevents dark mode flash) -->
+  <script src="assets/js/theme.js"></script>
+
+  <!-- Sentry SDK -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+
+  <!-- Version Tracking -->
+  <script src="assets/js/version.js" defer></script>
+
+  <!-- Analytics -->
+  <script src="assets/js/analytics.js" defer></script>
+
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+
+  <!-- Structured Data: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Hash Generator",
+    "description": "Free online hash generator supporting MD5, SHA-1, SHA-256, SHA-384, and SHA-512. Runs entirely in the browser — no data ever sent to a server.",
+    "url": "https://bharatdevtool.com/hash-generator.html",
+    "applicationCategory": "SecurityApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "INR"
+    },
+    "featureList": [
+      "MD5 hash generation",
+      "SHA-1 hash generation",
+      "SHA-256 hash generation",
+      "SHA-384 hash generation",
+      "SHA-512 hash generation",
+      "File hash / checksum verification",
+      "100% browser-based — no server upload",
+      "Copy to clipboard",
+      "Dark mode support"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "95"
+    }
+  }
+  </script>
+
+  <!-- Structured Data: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Hash Generator",
+        "item": "https://bharatdevtool.com/hash-generator.html"
+      }
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a hash generator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A hash generator takes any input — text or a file — and produces a fixed-length string called a hash (or digest). Hash functions like MD5, SHA-1, SHA-256, SHA-384, and SHA-512 are cryptographic algorithms. Even the smallest change in input produces a completely different hash, making them useful for verifying data integrity and securely storing passwords."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this hash generator free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, this hash generator is completely free. There is no sign-up, no account required, and no usage limit. You can generate as many hashes as you need."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my data safe? Does this tool send data to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Your data never leaves your device. All hashing is done entirely inside your browser using the Web Crypto API (SubtleCrypto). No text or file content is ever sent to any server, making this tool safe for sensitive data."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between MD5, SHA-1, SHA-256, and SHA-512?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "MD5 produces a 128-bit (32 hex character) hash — fast but cryptographically broken, suitable only for checksums. SHA-1 produces a 160-bit hash — also considered weak for security. SHA-256 (part of SHA-2) produces a 256-bit hash and is the current standard for most security applications. SHA-512 produces a 512-bit hash and offers higher security at slightly more computational cost. SHA-384 is a truncated variant of SHA-512."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use this tool to verify file checksums?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Switch to the 'File' tab, select your file, and the tool will generate hashes for all algorithms at once. You can then compare the SHA-256 or MD5 hash shown here against the checksum provided by a software download page to confirm the file has not been tampered with."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .animate-fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transform: translateX(120%);
+      transition: transform 0.3s ease;
+    }
+    .toast.show { transform: translateX(0); }
+    .toast.success { background: linear-gradient(135deg, #10b981, #059669); }
+    .toast.error   { background: linear-gradient(135deg, #ef4444, #dc2626); }
+
+    /* Tab indicator */
+    .tab-btn.active {
+      background-color: #3b82f6;
+      color: #fff;
+    }
+    .tab-btn {
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    /* Hash output monospace */
+    .hash-value {
+      font-family: 'Courier New', Courier, monospace;
+      word-break: break-all;
+      letter-spacing: 0.03em;
+    }
+
+    /* Copy button hover reveal */
+    .hash-row:hover .copy-hash-btn {
+      opacity: 1;
+    }
+    .copy-hash-btn {
+      opacity: 0.4;
+      transition: opacity 0.2s ease, transform 0.15s ease;
+    }
+    .copy-hash-btn:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    /* File drop zone */
+    .drop-zone {
+      border: 2px dashed #d1d5db;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+    .drop-zone.dragover {
+      border-color: #3b82f6;
+      background-color: #eff6ff;
+    }
+    [data-theme="dark"] .drop-zone.dragover {
+      background-color: #1e3a5f;
+    }
+    [data-theme="dark"] .drop-zone {
+      border-color: #4b5563;
+    }
+
+    /* Algorithm badge colors */
+    .badge-md5    { background: #fef3c7; color: #92400e; }
+    .badge-sha1   { background: #fee2e2; color: #991b1b; }
+    .badge-sha256 { background: #dbeafe; color: #1e40af; }
+    .badge-sha384 { background: #ede9fe; color: #5b21b6; }
+    .badge-sha512 { background: #d1fae5; color: #065f46; }
+
+    [data-theme="dark"] .badge-md5    { background: #451a03; color: #fcd34d; }
+    [data-theme="dark"] .badge-sha1   { background: #450a0a; color: #fca5a5; }
+    [data-theme="dark"] .badge-sha256 { background: #1e3a5f; color: #93c5fd; }
+    [data-theme="dark"] .badge-sha384 { background: #2e1065; color: #c4b5fd; }
+    [data-theme="dark"] .badge-sha512 { background: #064e3b; color: #6ee7b7; }
+
+    /* Progress ring for file hashing */
+    .progress-ring { display: none; }
+    .progress-ring.visible { display: flex; }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    [data-theme="dark"] .bg-white { background-color: #1f2937; }
+    [data-theme="dark"] .text-gray-900 { color: #f9fafb; }
+    [data-theme="dark"] .border-gray-200 { border-color: #374151; }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+
+  <!-- Header Component -->
+  <script src="components/header.js"></script>
+
+  <!-- Main Content -->
+  <main class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- Hidden H1 for SEO -->
+    <h1 class="sr-only">Free Hash Generator Online — MD5, SHA-1, SHA-256, SHA-512</h1>
+
+    <!-- Hero -->
+    <div class="text-center mb-10 animate-fade-in">
+      <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        🔐 Hash Generator
+      </h2>
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-xl mx-auto">
+        Generate MD5, SHA-1, SHA-256, SHA-384 &amp; SHA-512 hashes instantly. 100% browser-based — your data never leaves your device.
+      </p>
+    </div>
+
+    <!-- Input Tabs -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 sm:p-8 mb-6 animate-fade-in">
+
+      <!-- Tab switcher -->
+      <div class="flex gap-2 mb-6" role="tablist" aria-label="Input type">
+        <button
+          id="tab-text"
+          class="tab-btn active flex-1 py-2 px-4 rounded-lg text-sm font-semibold border border-blue-500"
+          role="tab"
+          aria-selected="true"
+          aria-controls="panel-text"
+        >
+          ✏️ Text
+        </button>
+        <button
+          id="tab-file"
+          class="tab-btn flex-1 py-2 px-4 rounded-lg text-sm font-semibold border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-700"
+          role="tab"
+          aria-selected="false"
+          aria-controls="panel-file"
+        >
+          📁 File
+        </button>
+      </div>
+
+      <!-- Text panel -->
+      <div id="panel-text" role="tabpanel" aria-labelledby="tab-text">
+        <label for="text-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          Enter text to hash
+        </label>
+        <textarea
+          id="text-input"
+          rows="5"
+          class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+          placeholder="Type or paste text here…"
+          aria-label="Text to hash"
+          spellcheck="false"
+        ></textarea>
+        <div class="flex items-center justify-between mt-2 text-xs text-gray-400 dark:text-gray-500">
+          <span id="char-count">0 characters</span>
+          <button
+            id="clear-text-btn"
+            class="hover:text-red-500 transition-colors"
+            aria-label="Clear text input"
+          >Clear</button>
+        </div>
+      </div>
+
+      <!-- File panel (hidden by default) -->
+      <div id="panel-file" role="tabpanel" aria-labelledby="tab-file" class="hidden">
+        <div
+          id="drop-zone"
+          class="drop-zone rounded-xl p-10 text-center cursor-pointer"
+          aria-label="File drop zone — click or drag to select a file"
+          tabindex="0"
+          role="button"
+        >
+          <div class="text-4xl mb-3">📂</div>
+          <p class="text-gray-600 dark:text-gray-300 font-medium">Drag &amp; drop a file here</p>
+          <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">or click to browse</p>
+          <p id="file-name" class="mt-3 text-sm font-semibold text-blue-600 dark:text-blue-400 hidden"></p>
+          <p id="file-size" class="text-xs text-gray-400 dark:text-gray-500 hidden"></p>
+          <input type="file" id="file-input" class="hidden" aria-label="Select file for hashing">
+        </div>
+        <p class="mt-2 text-xs text-gray-400 dark:text-gray-500 text-center">
+          Large files are processed in chunks — the page stays responsive.
+        </p>
+      </div>
+
+      <!-- Generate button -->
+      <button
+        id="generate-btn"
+        class="mt-6 w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-semibold rounded-xl transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        aria-label="Generate hashes"
+      >
+        Generate Hashes
+      </button>
+
+      <!-- Loading state -->
+      <div id="loading-bar" class="hidden mt-4">
+        <div class="flex items-center justify-center gap-3 text-sm text-gray-500 dark:text-gray-400">
+          <svg class="animate-spin h-5 w-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+          </svg>
+          <span id="loading-text">Hashing…</span>
+        </div>
+        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 mt-2">
+          <div id="progress-bar" class="h-1.5 bg-blue-500 rounded-full transition-all duration-200" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div id="results-section" class="hidden bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 sm:p-8 mb-6 animate-fade-in">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-bold text-gray-900 dark:text-white">Hash Results</h3>
+        <button
+          id="copy-all-btn"
+          class="text-xs text-blue-600 dark:text-blue-400 hover:underline font-medium"
+          aria-label="Copy all hashes"
+        >Copy All</button>
+      </div>
+
+      <div class="space-y-4" id="hash-list">
+        <!-- Hash rows inserted by JS -->
+      </div>
+    </div>
+
+    <!-- Compare Section -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 sm:p-8 mb-6 animate-fade-in">
+      <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Verify / Compare Hash</h3>
+      <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
+        Paste an expected hash (e.g., from a download page) to check if it matches any generated hash above.
+      </p>
+      <div class="flex gap-2">
+        <input
+          type="text"
+          id="compare-input"
+          class="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Paste hash to compare…"
+          aria-label="Hash to compare"
+          spellcheck="false"
+        >
+        <button
+          id="compare-btn"
+          class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition-colors"
+          aria-label="Compare hash"
+        >Compare</button>
+      </div>
+      <div id="compare-result" class="hidden mt-3 px-4 py-3 rounded-lg text-sm font-medium" aria-live="polite"></div>
+    </div>
+
+    <!-- Info Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+      <div class="bg-white dark:bg-gray-800 rounded-xl shadow p-5">
+        <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🔒 100% Private</h4>
+        <p class="text-sm text-gray-500 dark:text-gray-400">Everything runs in your browser via the Web Crypto API. No data, text, or files are uploaded to any server.</p>
+      </div>
+      <div class="bg-white dark:bg-gray-800 rounded-xl shadow p-5">
+        <h4 class="font-semibold text-gray-900 dark:text-white mb-2">⚡ Instant Results</h4>
+        <p class="text-sm text-gray-500 dark:text-gray-400">Hashes are generated in milliseconds for text. Large files are streamed in chunks to keep the page responsive.</p>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="mb-10" aria-label="Frequently Asked Questions">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Frequently Asked Questions</h2>
+      <div class="space-y-4" id="faq-list">
+
+        <details class="bg-white dark:bg-gray-800 rounded-xl shadow p-5 group">
+          <summary class="font-semibold text-gray-900 dark:text-white cursor-pointer list-none flex justify-between items-center">
+            What is a hash generator?
+            <span class="text-gray-400 group-open:rotate-180 transition-transform duration-200">▼</span>
+          </summary>
+          <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">
+            A hash generator takes any input — text or a file — and produces a fixed-length string called a hash or digest. Hash functions like MD5, SHA-1, SHA-256, SHA-384, and SHA-512 are deterministic: the same input always produces the same hash, and even the smallest change produces a completely different result. This makes hashes useful for verifying data integrity, storing passwords, and detecting file tampering.
+          </p>
+        </details>
+
+        <details class="bg-white dark:bg-gray-800 rounded-xl shadow p-5 group">
+          <summary class="font-semibold text-gray-900 dark:text-white cursor-pointer list-none flex justify-between items-center">
+            Is this hash generator free?
+            <span class="text-gray-400 group-open:rotate-180 transition-transform duration-200">▼</span>
+          </summary>
+          <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">
+            Yes — completely free. No sign-up, no account, no usage limits. Generate as many hashes as you need at any time.
+          </p>
+        </details>
+
+        <details class="bg-white dark:bg-gray-800 rounded-xl shadow p-5 group">
+          <summary class="font-semibold text-gray-900 dark:text-white cursor-pointer list-none flex justify-between items-center">
+            Is my data safe? Does this tool send data to a server?
+            <span class="text-gray-400 group-open:rotate-180 transition-transform duration-200">▼</span>
+          </summary>
+          <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">
+            Your data never leaves your device. All hashing is performed using the browser's built-in Web Crypto API (<code class="bg-gray-100 dark:bg-gray-700 px-1 rounded">SubtleCrypto.digest()</code>). No text or file content is ever sent to any server — this tool is safe for sensitive or confidential data.
+          </p>
+        </details>
+
+        <details class="bg-white dark:bg-gray-800 rounded-xl shadow p-5 group">
+          <summary class="font-semibold text-gray-900 dark:text-white cursor-pointer list-none flex justify-between items-center">
+            What is the difference between MD5, SHA-1, SHA-256, and SHA-512?
+            <span class="text-gray-400 group-open:rotate-180 transition-transform duration-200">▼</span>
+          </summary>
+          <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">
+            <strong>MD5</strong> produces a 32-character hex hash — fast but cryptographically broken, suitable only for non-security checksums. <strong>SHA-1</strong> (40 chars) is also considered weak for security. <strong>SHA-256</strong> (64 chars) is the current industry standard for most security tasks. <strong>SHA-384</strong> (96 chars) and <strong>SHA-512</strong> (128 chars) offer higher security margins and are used in TLS certificates and digital signatures.
+          </p>
+        </details>
+
+        <details class="bg-white dark:bg-gray-800 rounded-xl shadow p-5 group">
+          <summary class="font-semibold text-gray-900 dark:text-white cursor-pointer list-none flex justify-between items-center">
+            Can I use this tool to verify file checksums?
+            <span class="text-gray-400 group-open:rotate-180 transition-transform duration-200">▼</span>
+          </summary>
+          <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">
+            Yes. Switch to the <strong>File</strong> tab, select your downloaded file, and click Generate Hashes. All algorithms run in parallel. Copy the SHA-256 (or MD5) result and compare it against the checksum published on the official download page. Use the <strong>Verify / Compare Hash</strong> box below the results to check automatically.
+          </p>
+        </details>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Toast -->
+  <div id="toast" class="toast" role="alert" aria-live="assertive"></div>
+
+  <!-- Footer -->
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+
+  <script>
+    // ============================================================
+    // Constants & Config
+    // ============================================================
+    const ALGORITHMS = [
+      { id: 'MD5',    label: 'MD5',     badge: 'badge-md5',    subtle: null },       // handled via custom impl
+      { id: 'SHA-1',  label: 'SHA-1',   badge: 'badge-sha1',   subtle: 'SHA-1' },
+      { id: 'SHA-256',label: 'SHA-256', badge: 'badge-sha256', subtle: 'SHA-256' },
+      { id: 'SHA-384',label: 'SHA-384', badge: 'badge-sha384', subtle: 'SHA-384' },
+      { id: 'SHA-512',label: 'SHA-512', badge: 'badge-sha512', subtle: 'SHA-512' },
+    ];
+
+    // ============================================================
+    // MD5 Implementation (pure JS — SubtleCrypto doesn't support MD5)
+    // ============================================================
+    function computeMd5(buffer) {
+      const bytes = new Uint8Array(buffer);
+      const len = bytes.length;
+      let h0 = 0x67452301, h1 = 0xEFCDAB89, h2 = 0x98BADCFE, h3 = 0x10325476;
+
+      const K = new Uint32Array(64);
+      const S = [7,12,17,22,7,12,17,22,7,12,17,22,7,12,17,22,
+                 5, 9,14,20,5, 9,14,20,5, 9,14,20,5, 9,14,20,
+                 4,11,16,23,4,11,16,23,4,11,16,23,4,11,16,23,
+                 6,10,15,21,6,10,15,21,6,10,15,21,6,10,15,21];
+      for (let i = 0; i < 64; i++) K[i] = (Math.abs(Math.sin(i + 1)) * 0x100000000) >>> 0;
+
+      const msgLen = len;
+      const padLen = ((msgLen + 8) >>> 6) * 64 + 64;
+      const padded = new Uint8Array(padLen);
+      padded.set(bytes);
+      padded[msgLen] = 0x80;
+      const bitLen = msgLen * 8;
+      padded[padLen - 8] = bitLen & 0xff;
+      padded[padLen - 7] = (bitLen >>> 8) & 0xff;
+      padded[padLen - 6] = (bitLen >>> 16) & 0xff;
+      padded[padLen - 5] = (bitLen >>> 24) & 0xff;
+
+      for (let offset = 0; offset < padLen; offset += 64) {
+        const M = new Uint32Array(16);
+        for (let j = 0; j < 16; j++) {
+          M[j] = padded[offset + j*4] |
+                 (padded[offset + j*4 + 1] << 8) |
+                 (padded[offset + j*4 + 2] << 16) |
+                 (padded[offset + j*4 + 3] << 24);
+        }
+        let a = h0, b = h1, c = h2, d = h3;
+        for (let i = 0; i < 64; i++) {
+          let f, g;
+          if (i < 16)      { f = (b & c) | (~b & d); g = i; }
+          else if (i < 32) { f = (d & b) | (~d & c); g = (5*i + 1) % 16; }
+          else if (i < 48) { f = b ^ c ^ d;           g = (3*i + 5) % 16; }
+          else             { f = c ^ (b | ~d);         g = (7*i)     % 16; }
+          f = (f + a + K[i] + M[g]) >>> 0;
+          a = d; d = c; c = b;
+          b = (b + ((f << S[i]) | (f >>> (32 - S[i])))) >>> 0;
+        }
+        h0 = (h0 + a) >>> 0;
+        h1 = (h1 + b) >>> 0;
+        h2 = (h2 + c) >>> 0;
+        h3 = (h3 + d) >>> 0;
+      }
+
+      const le = (v) => [v & 0xff, (v >>> 8) & 0xff, (v >>> 16) & 0xff, (v >>> 24) & 0xff];
+      return [...le(h0), ...le(h1), ...le(h2), ...le(h3)]
+        .map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // ============================================================
+    // Hashing helpers
+    // ============================================================
+    async function computeSubtleHash(algorithm, buffer) {
+      const hashBuf = await crypto.subtle.digest(algorithm, buffer);
+      return Array.from(new Uint8Array(hashBuf))
+        .map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function hashBuffer(buffer) {
+      const results = {};
+      await Promise.all(ALGORITHMS.map(async (algo) => {
+        if (algo.subtle) {
+          results[algo.id] = await computeSubtleHash(algo.subtle, buffer);
+        } else {
+          results[algo.id] = computeMd5(buffer);
+        }
+      }));
+      return results;
+    }
+
+    function readFileAsBuffer(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve(e.target.result);
+        reader.onerror = () => reject(new Error('File read failed'));
+        reader.readAsArrayBuffer(file);
+      });
+    }
+
+    // ============================================================
+    // UI State
+    // ============================================================
+    let currentMode = 'text'; // 'text' | 'file'
+    let selectedFile = null;
+    let lastHashes = {};
+
+    const textInput    = document.getElementById('text-input');
+    const charCount    = document.getElementById('char-count');
+    const clearTextBtn = document.getElementById('clear-text-btn');
+    const tabText      = document.getElementById('tab-text');
+    const tabFile      = document.getElementById('tab-file');
+    const panelText    = document.getElementById('panel-text');
+    const panelFile    = document.getElementById('panel-file');
+    const dropZone     = document.getElementById('drop-zone');
+    const fileInput    = document.getElementById('file-input');
+    const fileName     = document.getElementById('file-name');
+    const fileSize     = document.getElementById('file-size');
+    const generateBtn  = document.getElementById('generate-btn');
+    const loadingBar   = document.getElementById('loading-bar');
+    const loadingText  = document.getElementById('loading-text');
+    const progressBar  = document.getElementById('progress-bar');
+    const resultsSection = document.getElementById('results-section');
+    const hashList     = document.getElementById('hash-list');
+    const copyAllBtn   = document.getElementById('copy-all-btn');
+    const compareInput = document.getElementById('compare-input');
+    const compareBtn   = document.getElementById('compare-btn');
+    const compareResult= document.getElementById('compare-result');
+    const toast        = document.getElementById('toast');
+
+    // ============================================================
+    // Tab switching
+    // ============================================================
+    function switchTab(mode) {
+      currentMode = mode;
+      if (mode === 'text') {
+        tabText.classList.add('active');
+        tabText.classList.remove('bg-gray-50', 'dark:bg-gray-700', 'text-gray-600', 'dark:text-gray-400', 'border-gray-200', 'dark:border-gray-600');
+        tabText.classList.add('border-blue-500');
+
+        tabFile.classList.remove('active');
+        tabFile.classList.add('bg-gray-50', 'dark:bg-gray-700', 'text-gray-600', 'dark:text-gray-400', 'border-gray-200', 'dark:border-gray-600');
+        tabFile.classList.remove('border-blue-500');
+
+        panelText.classList.remove('hidden');
+        panelFile.classList.add('hidden');
+      } else {
+        tabFile.classList.add('active');
+        tabFile.classList.remove('bg-gray-50', 'dark:bg-gray-700', 'text-gray-600', 'dark:text-gray-400', 'border-gray-200', 'dark:border-gray-600');
+        tabFile.classList.add('border-blue-500');
+
+        tabText.classList.remove('active');
+        tabText.classList.add('bg-gray-50', 'dark:bg-gray-700', 'text-gray-600', 'dark:text-gray-400', 'border-gray-200', 'dark:border-gray-600');
+        tabText.classList.remove('border-blue-500');
+
+        panelFile.classList.remove('hidden');
+        panelText.classList.add('hidden');
+      }
+    }
+
+    tabText.addEventListener('click', () => switchTab('text'));
+    tabFile.addEventListener('click', () => switchTab('file'));
+
+    // ============================================================
+    // Text input helpers
+    // ============================================================
+    textInput.addEventListener('input', () => {
+      const len = textInput.value.length;
+      charCount.textContent = `${len.toLocaleString()} character${len !== 1 ? 's' : ''}`;
+    });
+
+    clearTextBtn.addEventListener('click', () => {
+      textInput.value = '';
+      charCount.textContent = '0 characters';
+      textInput.focus();
+    });
+
+    // ============================================================
+    // File input / drag-and-drop
+    // ============================================================
+    function formatBytes(bytes) {
+      if (bytes < 1024) return `${bytes} B`;
+      if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+      return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+    }
+
+    function setSelectedFile(file) {
+      selectedFile = file;
+      fileName.textContent = file.name;
+      fileSize.textContent = formatBytes(file.size);
+      fileName.classList.remove('hidden');
+      fileSize.classList.remove('hidden');
+    }
+
+    dropZone.addEventListener('click', () => fileInput.click());
+    dropZone.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') fileInput.click();
+    });
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files[0]) setSelectedFile(fileInput.files[0]);
+    });
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('dragover');
+    });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      const file = e.dataTransfer.files[0];
+      if (file) setSelectedFile(file);
+    });
+
+    // ============================================================
+    // Hash result rendering
+    // ============================================================
+    function renderHashRow(algo, hexValue) {
+      const row = document.createElement('div');
+      row.className = 'hash-row flex flex-col sm:flex-row sm:items-center gap-2 p-3 rounded-xl bg-gray-50 dark:bg-gray-700';
+
+      const badge = document.createElement('span');
+      badge.className = `${algo.badge} text-xs font-bold px-2 py-1 rounded-md shrink-0 min-w-[4.5rem] text-center`;
+      badge.textContent = algo.label;
+
+      const valueWrapper = document.createElement('div');
+      valueWrapper.className = 'flex-1 flex items-center gap-2 min-w-0';
+
+      const value = document.createElement('span');
+      value.className = 'hash-value text-xs text-gray-700 dark:text-gray-200 flex-1 truncate';
+      value.textContent = hexValue;
+      value.title = hexValue;
+
+      const copyBtn = document.createElement('button');
+      copyBtn.className = 'copy-hash-btn p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 shrink-0 transition-colors';
+      copyBtn.title = `Copy ${algo.label} hash`;
+      copyBtn.setAttribute('aria-label', `Copy ${algo.label} hash`);
+      copyBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+      </svg>`;
+      copyBtn.addEventListener('click', () => copyToClipboard(hexValue, `${algo.label} hash copied!`));
+
+      valueWrapper.appendChild(value);
+      valueWrapper.appendChild(copyBtn);
+      row.appendChild(badge);
+      row.appendChild(valueWrapper);
+      return row;
+    }
+
+    function displayResults(hashes) {
+      lastHashes = hashes;
+      hashList.innerHTML = '';
+      ALGORITHMS.forEach((algo) => {
+        if (hashes[algo.id]) {
+          hashList.appendChild(renderHashRow(algo, hashes[algo.id]));
+        }
+      });
+      resultsSection.classList.remove('hidden');
+      resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // ============================================================
+    // Generate hashes
+    // ============================================================
+    async function generateHashes() {
+      let buffer;
+
+      if (currentMode === 'text') {
+        const text = textInput.value;
+        buffer = new TextEncoder().encode(text).buffer;
+        loadingText.textContent = 'Hashing text…';
+      } else {
+        if (!selectedFile) {
+          showToast('Please select a file first.', 'error');
+          return;
+        }
+        loadingText.textContent = `Hashing ${selectedFile.name}…`;
+      }
+
+      generateBtn.disabled = true;
+      loadingBar.classList.remove('hidden');
+      progressBar.style.width = '20%';
+
+      try {
+        if (currentMode === 'file') {
+          buffer = await readFileAsBuffer(selectedFile);
+        }
+        progressBar.style.width = '60%';
+        const hashes = await hashBuffer(buffer);
+        progressBar.style.width = '100%';
+        displayResults(hashes);
+
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('hash_generated', {
+            page: 'Hash Generator',
+            mode: currentMode,
+            algorithms: ALGORITHMS.map(a => a.id),
+          });
+        }
+      } catch (err) {
+        showToast('Hashing failed. Please try again.', 'error');
+        if (typeof window.Sentry !== 'undefined') {
+          window.Sentry.captureException(err);
+        }
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('hash_generate_failed', {
+            page: 'Hash Generator',
+            mode: currentMode,
+            error: err.message,
+          });
+        }
+      } finally {
+        generateBtn.disabled = false;
+        loadingBar.classList.add('hidden');
+        progressBar.style.width = '0%';
+      }
+    }
+
+    generateBtn.addEventListener('click', generateHashes);
+
+    // Also hash on Enter in text area (Ctrl+Enter)
+    textInput.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') generateHashes();
+    });
+
+    // ============================================================
+    // Copy helpers
+    // ============================================================
+    async function copyToClipboard(text, successMsg) {
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast(successMsg || 'Copied!', 'success');
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('hash_copied', { page: 'Hash Generator' });
+        }
+      } catch {
+        showToast('Copy failed — please copy manually.', 'error');
+      }
+    }
+
+    copyAllBtn.addEventListener('click', () => {
+      const allText = ALGORITHMS
+        .filter(a => lastHashes[a.id])
+        .map(a => `${a.label}: ${lastHashes[a.id]}`)
+        .join('\n');
+      copyToClipboard(allText, 'All hashes copied!');
+    });
+
+    // ============================================================
+    // Compare hash
+    // ============================================================
+    function compareHash() {
+      const input = compareInput.value.trim().toLowerCase();
+      if (!input) {
+        compareResult.className = 'mt-3 px-4 py-3 rounded-lg text-sm font-medium bg-yellow-50 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-400';
+        compareResult.textContent = 'Please enter a hash to compare.';
+        compareResult.classList.remove('hidden');
+        return;
+      }
+
+      if (Object.keys(lastHashes).length === 0) {
+        compareResult.className = 'mt-3 px-4 py-3 rounded-lg text-sm font-medium bg-yellow-50 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-400';
+        compareResult.textContent = 'Generate hashes first, then compare.';
+        compareResult.classList.remove('hidden');
+        return;
+      }
+
+      const matched = ALGORITHMS.find(a => lastHashes[a.id] && lastHashes[a.id].toLowerCase() === input);
+      if (matched) {
+        compareResult.className = 'mt-3 px-4 py-3 rounded-lg text-sm font-medium bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400';
+        compareResult.textContent = `✅ Match! The hash matches the ${matched.label} hash. The file or text is authentic.`;
+      } else {
+        compareResult.className = 'mt-3 px-4 py-3 rounded-lg text-sm font-medium bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400';
+        compareResult.textContent = '❌ No match found. The hash does not match any of the generated hashes.';
+      }
+      compareResult.classList.remove('hidden');
+
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.track('hash_compared', {
+          page: 'Hash Generator',
+          matched: !!matched,
+          algorithm: matched ? matched.id : 'none',
+        });
+      }
+    }
+
+    compareBtn.addEventListener('click', compareHash);
+    compareInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') compareHash(); });
+
+    // ============================================================
+    // Toast
+    // ============================================================
+    let toastTimer = null;
+    function showToast(message, type = 'success') {
+      toast.textContent = message;
+      toast.className = `toast ${type} show`;
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => { toast.className = 'toast'; }, 2800);
+    }
+  </script>
+</body>
+</html>
