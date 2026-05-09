@@ -78,7 +78,7 @@
 | 13 | PNG ↔ JPG Converter | image | Very High | 1d | `done` | `image-converter.html` |
 | 14 | Image Resizer | image | High | 1d | `done` | `image-resizer.html` |
 | 15 | Image Compressor | image | Very High | 2d | `done` | `image-compressor.html` |
-| 16 | Image to PDF | image | Very High | 2d | `not-started` | `image-to-pdf.html` |
+| 16 | Image to PDF | image | Very High | 2d | `in-progress` | `image-to-pdf.html` |
 | 17 | Hash Generator (MD5/SHA) | security | High | 1d | `not-started` | `hash-generator.html` |
 | 18 | CSV ↔ JSON Converter | developer | High | 1d | `not-started` | `csv-json-converter.html` |
 | 19 | YAML ↔ JSON Converter | developer | High | 1.5d | `not-started` | `yaml-json-converter.html` |
