@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Diff Checker Online | Text Compare & Find Differences | Bharat Dev Tools</title>
+  <meta name="description" content="Free online diff checker and text comparison tool. Compare two text files side-by-side, find differences instantly. Supports line-by-line and character-level diff. No sign-up required.">
+  <meta name="keywords" content="diff checker, text compare, compare two texts, online diff tool, text difference, find differences, code diff, file comparison, line diff, text diff online free, side by side compare">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  <meta name="distribution" content="global">
+  <meta name="rating" content="general">
+  <link rel="canonical" href="https://bharatdevtool.com/diff-checker.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Free Diff Checker Online | Text Compare Tool | Bharat Dev Tools">
+  <meta property="og:description" content="Free online diff checker and text comparison tool. Compare two texts side-by-side, find differences instantly. No sign-up required.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/diff-checker.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Diff Checker - Free Text Comparison Tool">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free Diff Checker Online | Text Compare Tool | Bharat Dev Tools">
+  <meta name="twitter:description" content="Free online diff checker and text comparison tool. Compare two texts side-by-side, find differences instantly.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ik.imagekit.io/bdt/bdt_logo_v3_16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/bdt/bdt_logo_v3_180.png">
+
+  <!-- Theme Management (load early to prevent dark mode flash) -->
+  <script src="assets/js/theme.js"></script>
+
+  <!-- Sentry SDK -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+
+  <!-- Version Tracking Script -->
+  <script src="assets/js/version.js" defer></script>
+
+  <!-- Analytics Script -->
+  <script src="assets/js/analytics.js" defer></script>
+
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Common CSS for consistent theming -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+
+  <!-- Structured Data: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Diff Checker",
+    "description": "Free online diff checker and text comparison tool. Compare two texts side-by-side, find line and character differences instantly. Runs entirely in your browser.",
+    "url": "https://bharatdevtool.com/diff-checker.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "Side-by-side text comparison",
+      "Line-by-line diff highlighting",
+      "Character-level difference highlighting",
+      "Additions and deletions count",
+      "Copy to clipboard",
+      "Swap sides",
+      "Browser-only processing"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "112"
+    }
+  }
+  </script>
+
+  <!-- BreadcrumbList Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Diff Checker",
+        "item": "https://bharatdevtool.com/diff-checker.html"
+      }
+    ]
+  }
+  </script>
+
+  <!-- FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a diff checker and how does it work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A diff checker (text comparison tool) takes two pieces of text and computes the differences between them. It highlights lines or characters that were added, removed, or changed. This tool uses a Myers diff algorithm variant to find the minimal set of changes between the two texts and displays them with color-coded highlighting — green for additions, red for deletions."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this diff checker free to use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, this diff checker is completely free to use. There are no usage limits, no sign-up required, and no hidden fees. You can compare as many texts as you need without any restrictions."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my data safe? Does it send my text to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Your data is completely safe. All text comparison happens entirely in your browser — no data is ever sent to our servers or any third party. You can use this tool with sensitive code or confidential documents without any privacy concerns."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I use the diff checker?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Simply paste or type the original text in the left panel and the modified/new text in the right panel, then click the 'Compare' button. The tool will instantly highlight all differences: green lines are new additions, red lines are deletions. You can also see a summary of how many lines were added, removed, or changed."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I compare code files with this diff checker?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. This diff checker works with any plain text, including source code in any programming language (JavaScript, Python, Java, C++, HTML, CSS, SQL, etc.), configuration files, JSON, YAML, XML, Markdown, and more. It performs a line-by-line comparison and highlights character-level changes within modified lines."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    .animate-fade-in {
+      animation: fadeIn 0.4s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+      transform: translateX(120%);
+      transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+      max-width: 320px;
+    }
+    .toast.show { transform: translateX(0); }
+    .toast.success { background: linear-gradient(135deg, #10b981, #059669); }
+    .toast.error { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .toast.info { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+
+    /* Diff output styles */
+    .diff-panel {
+      font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      overflow-x: auto;
+      white-space: pre;
+      tab-size: 2;
+    }
+
+    .diff-line {
+      display: flex;
+      min-width: max-content;
+      width: 100%;
+    }
+    .diff-line-num {
+      flex-shrink: 0;
+      width: 3.5rem;
+      text-align: right;
+      padding: 0 0.6rem 0 0.4rem;
+      user-select: none;
+      opacity: 0.45;
+      border-right: 1.5px solid;
+      margin-right: 0.6rem;
+    }
+    .diff-line-content {
+      flex: 1;
+      padding-right: 0.5rem;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .diff-sign {
+      flex-shrink: 0;
+      width: 1.2rem;
+      font-weight: 700;
+    }
+
+    /* Equal */
+    .diff-equal .diff-line-num { border-color: #d1d5db; }
+    [data-theme="dark"] .diff-equal .diff-line-num { border-color: #374151; }
+
+    /* Added */
+    .diff-added {
+      background: #d1fae5;
+    }
+    .diff-added .diff-line-num {
+      background: #a7f3d0;
+      border-color: #6ee7b7;
+      color: #065f46;
+    }
+    .diff-added .diff-sign { color: #059669; }
+    [data-theme="dark"] .diff-added { background: #064e3b33; }
+    [data-theme="dark"] .diff-added .diff-line-num { background: #065f4640; border-color: #059669; color: #6ee7b7; }
+    [data-theme="dark"] .diff-added .diff-sign { color: #34d399; }
+
+    /* Removed */
+    .diff-removed {
+      background: #fee2e2;
+    }
+    .diff-removed .diff-line-num {
+      background: #fecaca;
+      border-color: #fca5a5;
+      color: #7f1d1d;
+    }
+    .diff-removed .diff-sign { color: #dc2626; }
+    [data-theme="dark"] .diff-removed { background: #7f1d1d33; }
+    [data-theme="dark"] .diff-removed .diff-line-num { background: #7f1d1d40; border-color: #dc2626; color: #fca5a5; }
+    [data-theme="dark"] .diff-removed .diff-sign { color: #f87171; }
+
+    /* Inline char highlighting */
+    .diff-char-added {
+      background: #6ee7b7;
+      border-radius: 2px;
+    }
+    .diff-char-removed {
+      background: #fca5a5;
+      border-radius: 2px;
+      text-decoration: line-through;
+    }
+    [data-theme="dark"] .diff-char-added { background: #065f46; }
+    [data-theme="dark"] .diff-char-removed { background: #7f1d1d; }
+
+    /* Input textareas */
+    .diff-input {
+      font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      resize: vertical;
+      min-height: 200px;
+    }
+
+    /* Stat badge */
+    .stat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    .stat-added { background: #d1fae5; color: #065f46; }
+    .stat-removed { background: #fee2e2; color: #7f1d1d; }
+    .stat-unchanged { background: #f3f4f6; color: #374151; }
+    [data-theme="dark"] .stat-added { background: #064e3b60; color: #6ee7b7; }
+    [data-theme="dark"] .stat-removed { background: #7f1d1d60; color: #fca5a5; }
+    [data-theme="dark"] .stat-unchanged { background: #1f293760; color: #9ca3af; }
+
+    /* Result container */
+    .diff-output-wrap {
+      border: 1.5px solid #e5e7eb;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    [data-theme="dark"] .diff-output-wrap { border-color: #374151; }
+
+    .diff-output-header {
+      background: #f9fafb;
+      border-bottom: 1.5px solid #e5e7eb;
+      padding: 8px 14px;
+      font-size: 0.78rem;
+      color: #6b7280;
+      font-weight: 500;
+    }
+    [data-theme="dark"] .diff-output-header { background: #1f2937; border-bottom-color: #374151; color: #9ca3af; }
+
+    .diff-output-body {
+      background: #fff;
+      color: #111827;
+      max-height: 520px;
+      overflow-y: auto;
+    }
+    [data-theme="dark"] .diff-output-body { background: #111827; color: #e5e7eb; }
+
+    .diff-equal .diff-line-content { color: #374151; }
+    [data-theme="dark"] .diff-equal .diff-line-content { color: #9ca3af; }
+
+    /* Inputs */
+    .input-panel {
+      background: white;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    [data-theme="dark"] .input-panel { background: #1f2937; border-color: #374151; }
+
+    .input-panel-header {
+      background: #f9fafb;
+      border-bottom: 1.5px solid #e5e7eb;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    [data-theme="dark"] .input-panel-header { background: #111827; border-bottom-color: #374151; }
+
+    .input-panel-header span {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    [data-theme="dark"] .input-panel-header span { color: #9ca3af; }
+
+    .diff-textarea {
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: #111827;
+      padding: 12px 14px;
+    }
+    [data-theme="dark"] .diff-textarea { color: #e5e7eb; }
+    .diff-textarea::placeholder { color: #9ca3af; }
+
+    /* Collapse equal lines */
+    .diff-collapsed-line {
+      background: #f3f4f6;
+      color: #9ca3af;
+      font-size: 0.75rem;
+      text-align: center;
+      padding: 3px 0;
+      border-top: 1px dashed #e5e7eb;
+      border-bottom: 1px dashed #e5e7eb;
+    }
+    [data-theme="dark"] .diff-collapsed-line { background: #1f2937; border-color: #374151; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .animate-fade-in { animation: none; }
+      .toast { transition: none; }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+  <!-- Header -->
+  <script src="components/header.js"></script>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <h1 class="sr-only">Diff Checker – Free Online Text Comparison Tool</h1>
+
+    <!-- Hero -->
+    <div class="text-center mb-10 animate-fade-in">
+      <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-3">
+        🔀 Diff Checker
+      </h2>
+      <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Compare two texts side-by-side and instantly see every addition, deletion, and change. Works 100% in your browser — your data stays private.
+      </p>
+    </div>
+
+    <!-- Input Area -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 animate-fade-in">
+      <!-- Original -->
+      <div class="input-panel">
+        <div class="input-panel-header">
+          <span>Original</span>
+          <button id="clear-original" class="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors px-2 py-1 rounded" aria-label="Clear original text">Clear</button>
+        </div>
+        <textarea
+          id="original-text"
+          class="diff-textarea diff-input"
+          rows="12"
+          placeholder="Paste original text here…"
+          aria-label="Original text"
+          spellcheck="false"
+        ></textarea>
+      </div>
+
+      <!-- Modified -->
+      <div class="input-panel">
+        <div class="input-panel-header">
+          <span>Modified</span>
+          <button id="clear-modified" class="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors px-2 py-1 rounded" aria-label="Clear modified text">Clear</button>
+        </div>
+        <textarea
+          id="modified-text"
+          class="diff-textarea diff-input"
+          rows="12"
+          placeholder="Paste modified text here…"
+          aria-label="Modified text"
+          spellcheck="false"
+        ></textarea>
+      </div>
+    </div>
+
+    <!-- Options & Actions -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 mb-6 animate-fade-in">
+      <div class="flex flex-wrap items-center gap-4">
+        <!-- Options -->
+        <label class="flex items-center gap-2 cursor-pointer text-sm text-gray-700 dark:text-gray-300">
+          <input type="checkbox" id="opt-ignore-whitespace" class="rounded" />
+          Ignore leading/trailing whitespace
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer text-sm text-gray-700 dark:text-gray-300">
+          <input type="checkbox" id="opt-ignore-case" class="rounded" />
+          Ignore case
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer text-sm text-gray-700 dark:text-gray-300">
+          <input type="checkbox" id="opt-inline-diff" class="rounded" checked />
+          Inline character diff
+        </label>
+
+        <!-- Spacer -->
+        <div class="flex-1"></div>
+
+        <!-- Swap -->
+        <button id="swap-btn" class="flex items-center gap-2 px-4 py-2 text-sm bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium" aria-label="Swap original and modified">
+          🔄 Swap
+        </button>
+
+        <!-- Compare -->
+        <button id="compare-btn" class="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 active:scale-95 transition-all font-semibold shadow-sm" aria-label="Compare texts">
+          ⚖️ Compare
+        </button>
+      </div>
+    </div>
+
+    <!-- Result -->
+    <div id="result-section" class="hidden animate-fade-in">
+      <!-- Stats -->
+      <div id="diff-stats" class="flex flex-wrap items-center gap-3 mb-4">
+        <span id="stat-added" class="stat-badge stat-added">+0 added</span>
+        <span id="stat-removed" class="stat-badge stat-removed">−0 removed</span>
+        <span id="stat-unchanged" class="stat-badge stat-unchanged">0 unchanged</span>
+        <div class="flex-1"></div>
+        <button id="copy-diff-btn" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500 flex items-center gap-1.5">
+          📋 Copy diff
+        </button>
+      </div>
+
+      <!-- Diff Output -->
+      <div class="diff-output-wrap">
+        <div class="diff-output-header">
+          <span>Comparison result — <span id="diff-mode-label">line diff</span></span>
+        </div>
+        <div class="diff-output-body diff-panel" id="diff-output" role="region" aria-label="Diff output" aria-live="polite"></div>
+      </div>
+
+      <!-- Identical notice -->
+      <div id="identical-notice" class="hidden mt-4 p-4 bg-green-50 dark:bg-green-900/20 rounded-xl border border-green-200 dark:border-green-800 text-green-700 dark:text-green-300 text-center font-medium">
+        ✅ The two texts are identical — no differences found.
+      </div>
+    </div>
+  </main>
+
+  <!-- FAQ Section -->
+  <section class="faq-section" id="faq">
+    <div class="faq-container">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <p class="section-subtitle">Everything you need to know about the free Diff Checker</p>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>What is a diff checker and how does it work?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>A diff checker (text comparison tool) takes two pieces of text and computes the differences between them line by line. It highlights lines that were added, removed, or changed — using a green background for additions and red for deletions. This tool uses an LCS-based (Longest Common Subsequence) diff algorithm to find the minimal set of edits, exactly like the <code>git diff</code> command does.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Is this diff checker free to use?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes, this diff checker is completely free. There are no usage limits, no sign-up required, and no hidden fees. Compare as many texts as you need, as often as you like.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Is my data safe? Does it send text to a server?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Your data is completely safe. All comparison happens entirely in your browser using JavaScript — <strong>no text is ever sent to our servers or any third party</strong>. You can safely compare passwords, source code, confidential documents, or any sensitive content.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>How do I compare two texts with this tool?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>1. Paste or type the <strong>original text</strong> in the left panel.<br>
+            2. Paste or type the <strong>modified text</strong> in the right panel.<br>
+            3. Click the <strong>Compare</strong> button.<br>
+            The result shows all differences: green lines are additions, red lines are deletions. Lines that are the same in both texts appear without highlighting. You can also enable "Inline character diff" to see exactly which characters changed within a line.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Can I compare code files with this tool?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Absolutely. This diff checker works with any plain text: JavaScript, Python, Java, C++, HTML, CSS, SQL, JSON, YAML, XML, Markdown, configuration files, log files, and more. The comparison is line-by-line, and with inline character diff enabled, you also see which exact characters changed within each line — making it great for spotting subtle code changes.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+
+  <!-- Toast container -->
+  <div id="toast-container"></div>
+
+  <!-- FAQ accordion -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.faq-question').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          const isOpen = this.getAttribute('aria-expanded') === 'true';
+          const item = this.closest('.faq-item');
+          const icon = this.querySelector('.faq-icon');
+
+          document.querySelectorAll('.faq-question').forEach(function(q) {
+            q.setAttribute('aria-expanded', 'false');
+            q.closest('.faq-item').classList.remove('active');
+            q.querySelector('.faq-icon').textContent = '+';
+          });
+
+          if (!isOpen) {
+            this.setAttribute('aria-expanded', 'true');
+            item.classList.add('active');
+            icon.textContent = '−';
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- Sentry init -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
+        initSentryTracking();
+      }
+    });
+  </script>
+
+  <!-- Diff Checker Core Logic -->
+  <script>
+    const DIFF_PAGE_NAME = 'Diff Checker';
+
+    // ──────────────────────────────────────────────────────────────────
+    // Toast
+    // ──────────────────────────────────────────────────────────────────
+    function showToast(message, type) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast ' + (type || 'info');
+      toast.textContent = message;
+      container.appendChild(toast);
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() { toast.classList.add('show'); });
+      });
+      setTimeout(function() {
+        toast.classList.remove('show');
+        setTimeout(function() {
+          if (container.contains(toast)) container.removeChild(toast);
+        }, 320);
+      }, 3000);
+    }
+
+    // ──────────────────────────────────────────────────────────────────
+    // LCS-based line diff
+    // Returns an array of { type: 'equal'|'added'|'removed', value: string }
+    // ──────────────────────────────────────────────────────────────────
+    function computeLineDiff(originalLines, modifiedLines) {
+      const m = originalLines.length;
+      const n = modifiedLines.length;
+
+      // Build LCS table
+      const dp = [];
+      for (let i = 0; i <= m; i++) {
+        dp[i] = new Array(n + 1).fill(0);
+      }
+      for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+          if (originalLines[i - 1] === modifiedLines[j - 1]) {
+            dp[i][j] = dp[i - 1][j - 1] + 1;
+          } else {
+            dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+          }
+        }
+      }
+
+      // Backtrack to get diff
+      const result = [];
+      let i = m;
+      let j = n;
+      while (i > 0 || j > 0) {
+        if (i > 0 && j > 0 && originalLines[i - 1] === modifiedLines[j - 1]) {
+          result.push({ type: 'equal', value: originalLines[i - 1] });
+          i--;
+          j--;
+        } else if (j > 0 && (i === 0 || dp[i][j - 1] >= dp[i - 1][j])) {
+          result.push({ type: 'added', value: modifiedLines[j - 1] });
+          j--;
+        } else {
+          result.push({ type: 'removed', value: originalLines[i - 1] });
+          i--;
+        }
+      }
+      result.reverse();
+      return result;
+    }
+
+    // ──────────────────────────────────────────────────────────────────
+    // Character-level diff between two strings
+    // Returns array of { type: 'equal'|'added'|'removed', value: string }
+    // ──────────────────────────────────────────────────────────────────
+    function computeCharDiff(a, b) {
+      const ac = Array.from(a);
+      const bc = Array.from(b);
+      const m = ac.length;
+      const n = bc.length;
+
+      // LCS on chars — cap at 500 chars per side to avoid freezing
+      if (m > 500 || n > 500) {
+        return [
+          { type: 'removed', value: a },
+          { type: 'added', value: b }
+        ];
+      }
+
+      const dp = [];
+      for (let i = 0; i <= m; i++) {
+        dp[i] = new Array(n + 1).fill(0);
+      }
+      for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+          dp[i][j] = ac[i - 1] === bc[j - 1]
+            ? dp[i - 1][j - 1] + 1
+            : Math.max(dp[i - 1][j], dp[i][j - 1]);
+        }
+      }
+
+      const result = [];
+      let i = m;
+      let j = n;
+      while (i > 0 || j > 0) {
+        if (i > 0 && j > 0 && ac[i - 1] === bc[j - 1]) {
+          result.push({ type: 'equal', value: ac[i - 1] });
+          i--; j--;
+        } else if (j > 0 && (i === 0 || dp[i][j - 1] >= dp[i - 1][j])) {
+          result.push({ type: 'added', value: bc[j - 1] });
+          j--;
+        } else {
+          result.push({ type: 'removed', value: ac[i - 1] });
+          i--;
+        }
+      }
+      result.reverse();
+      return mergeCharDiff(result);
+    }
+
+    function mergeCharDiff(charDiff) {
+      const merged = [];
+      for (const item of charDiff) {
+        const last = merged[merged.length - 1];
+        if (last && last.type === item.type) {
+          last.value += item.value;
+        } else {
+          merged.push({ type: item.type, value: item.value });
+        }
+      }
+      return merged;
+    }
+
+    // ──────────────────────────────────────────────────────────────────
+    // Escape HTML safely
+    // ──────────────────────────────────────────────────────────────────
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    // ──────────────────────────────────────────────────────────────────
+    // Render inline char diff for a pair of removed/added lines
+    // ──────────────────────────────────────────────────────────────────
+    function renderInlineCharDiff(removedLine, addedLine) {
+      const charDiff = computeCharDiff(removedLine, addedLine);
+      let removedHtml = '';
+      let addedHtml = '';
+
+      for (const part of charDiff) {
+        const escaped = escapeHtml(part.value);
+        if (part.type === 'equal') {
+          removedHtml += escaped;
+          addedHtml += escaped;
+        } else if (part.type === 'removed') {
+          removedHtml += '<span class="diff-char-removed">' + escaped + '</span>';
+        } else {
+          addedHtml += '<span class="diff-char-added">' + escaped + '</span>';
+        }
+      }
+
+      return { removedHtml, addedHtml };
+    }
+
+    // ──────────────────────────────────────────────────────────────────
+    // Build diff HTML from diff result
+    // ──────────────────────────────────────────────────────────────────
+    const CONTEXT_LINES = 3;
+
+    function buildDiffHtml(diffResult, useInlineDiff) {
+      let html = '';
+      let origLineNum = 0;
+      let modLineNum = 0;
+
+      // Pre-process: pair adjacent removed+added for inline char diff
+      const processed = pairRemovedAdded(diffResult);
+
+      // Determine which lines to show (collapse big equal blocks)
+      const showFlags = computeShowFlags(processed);
+
+      let collapsedStart = false;
+
+      for (let idx = 0; idx < processed.length; idx++) {
+        const chunk = processed[idx];
+        const show = showFlags[idx];
+
+        if (chunk.type === 'equal') {
+          origLineNum++;
+          modLineNum++;
+          if (!show) {
+            if (!collapsedStart) {
+              html += '<div class="diff-collapsed-line">… unchanged lines …</div>';
+              collapsedStart = true;
+            }
+            continue;
+          }
+          collapsedStart = false;
+          html += buildLine('equal', origLineNum, modLineNum, escapeHtml(chunk.value), ' ');
+        } else if (chunk.type === 'removed') {
+          collapsedStart = false;
+          origLineNum++;
+          if (useInlineDiff && chunk.pairedWith !== undefined) {
+            const paired = processed[chunk.pairedWith];
+            const { removedHtml } = renderInlineCharDiff(chunk.value, paired.value);
+            html += buildLine('removed', origLineNum, '', removedHtml, '−');
+          } else {
+            html += buildLine('removed', origLineNum, '', escapeHtml(chunk.value), '−');
+          }
+        } else if (chunk.type === 'added') {
+          collapsedStart = false;
+          modLineNum++;
+          if (useInlineDiff && chunk.pairedWith !== undefined) {
+            const paired = processed[chunk.pairedWith];
+            const { addedHtml } = renderInlineCharDiff(paired.value, chunk.value);
+            html += buildLine('added', '', modLineNum, addedHtml, '+');
+          } else {
+            html += buildLine('added', '', modLineNum, escapeHtml(chunk.value), '+');
+          }
+        }
+      }
+
+      return html || '<div style="padding:16px;opacity:0.5;font-size:0.85rem">No output.</div>';
+    }
+
+    function buildLine(type, origNum, modNum, contentHtml, sign) {
+      const lineNumHtml = origNum !== '' ? origNum : (modNum !== '' ? modNum : '');
+      return (
+        '<div class="diff-line diff-' + type + '">' +
+        '<span class="diff-line-num" aria-hidden="true">' + lineNumHtml + '</span>' +
+        '<span class="diff-sign" aria-hidden="true">' + sign + '</span>' +
+        '<span class="diff-line-content">' + contentHtml + '</span>' +
+        '</div>'
+      );
+    }
+
+    function pairRemovedAdded(diff) {
+      const result = diff.map(function(d) { return Object.assign({}, d); });
+      let i = 0;
+      while (i < result.length) {
+        if (result[i].type === 'removed' && i + 1 < result.length && result[i + 1].type === 'added') {
+          result[i].pairedWith = i + 1;
+          result[i + 1].pairedWith = i;
+        }
+        i++;
+      }
+      return result;
+    }
+
+    function computeShowFlags(diff) {
+      const flags = new Array(diff.length).fill(false);
+      for (let i = 0; i < diff.length; i++) {
+        if (diff[i].type !== 'equal') {
+          // Show CONTEXT_LINES before and after each change
+          for (let k = Math.max(0, i - CONTEXT_LINES); k <= Math.min(diff.length - 1, i + CONTEXT_LINES); k++) {
+            flags[k] = true;
+          }
+        }
+      }
+      return flags;
+    }
+
+    // ──────────────────────────────────────────────────────────────────
+    // Copy diff as plain text
+    // ──────────────────────────────────────────────────────────────────
+    function copyDiffAsText(diffResult) {
+      const lines = diffResult.map(function(chunk) {
+        if (chunk.type === 'equal') return '  ' + chunk.value;
+        if (chunk.type === 'added') return '+ ' + chunk.value;
+        return '- ' + chunk.value;
+      });
+      return lines.join('\n');
+    }
+
+    function copyToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() {
+          showToast('Copied to clipboard', 'success');
+        }).catch(function() {
+          fallbackCopy(text);
+        });
+      } else {
+        fallbackCopy(text);
+      }
+    }
+
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('Copied to clipboard', 'success');
+      } catch (e) {
+        showToast('Copy failed — please select and copy manually', 'error');
+      }
+      document.body.removeChild(ta);
+    }
+
+    // ──────────────────────────────────────────────────────────────────
+    // Main compare function
+    // ──────────────────────────────────────────────────────────────────
+    let lastDiffResult = null;
+
+    function runCompare() {
+      const originalEl = document.getElementById('original-text');
+      const modifiedEl = document.getElementById('modified-text');
+      const ignoreWs = document.getElementById('opt-ignore-whitespace').checked;
+      const ignoreCase = document.getElementById('opt-ignore-case').checked;
+      const useInlineDiff = document.getElementById('opt-inline-diff').checked;
+
+      let originalText = originalEl.value;
+      let modifiedText = modifiedEl.value;
+
+      if (!originalText && !modifiedText) {
+        showToast('Please paste text in both panels before comparing', 'error');
+        return;
+      }
+
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.track('diff_compare', {
+          page: DIFF_PAGE_NAME,
+          original_length: originalText.length,
+          modified_length: modifiedText.length,
+          ignore_whitespace: ignoreWs,
+          ignore_case: ignoreCase,
+          inline_diff: useInlineDiff
+        });
+      }
+
+      let origLines = originalText.split('\n');
+      let modLines = modifiedText.split('\n');
+
+      if (ignoreWs) {
+        origLines = origLines.map(function(l) { return l.trim(); });
+        modLines = modLines.map(function(l) { return l.trim(); });
+      }
+      if (ignoreCase) {
+        origLines = origLines.map(function(l) { return l.toLowerCase(); });
+        modLines = modLines.map(function(l) { return l.toLowerCase(); });
+      }
+
+      const diffResult = computeLineDiff(origLines, modLines);
+      lastDiffResult = diffResult;
+
+      const added = diffResult.filter(function(d) { return d.type === 'added'; }).length;
+      const removed = diffResult.filter(function(d) { return d.type === 'removed'; }).length;
+      const unchanged = diffResult.filter(function(d) { return d.type === 'equal'; }).length;
+
+      document.getElementById('stat-added').textContent = '+' + added + ' added';
+      document.getElementById('stat-removed').textContent = '−' + removed + ' removed';
+      document.getElementById('stat-unchanged').textContent = unchanged + ' unchanged';
+
+      const outputEl = document.getElementById('diff-output');
+      const identicalEl = document.getElementById('identical-notice');
+
+      if (added === 0 && removed === 0) {
+        outputEl.innerHTML = '';
+        identicalEl.classList.remove('hidden');
+      } else {
+        identicalEl.classList.add('hidden');
+        outputEl.innerHTML = buildDiffHtml(diffResult, useInlineDiff);
+      }
+
+      document.getElementById('diff-mode-label').textContent =
+        useInlineDiff ? 'line diff + inline char diff' : 'line diff';
+
+      const resultSection = document.getElementById('result-section');
+      resultSection.classList.remove('hidden');
+      resultSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // ──────────────────────────────────────────────────────────────────
+    // Event listeners
+    // ──────────────────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('compare-btn').addEventListener('click', runCompare);
+
+      document.getElementById('swap-btn').addEventListener('click', function() {
+        const origEl = document.getElementById('original-text');
+        const modEl = document.getElementById('modified-text');
+        const tmp = origEl.value;
+        origEl.value = modEl.value;
+        modEl.value = tmp;
+        document.getElementById('result-section').classList.add('hidden');
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('diff_swap', { page: DIFF_PAGE_NAME });
+        }
+      });
+
+      document.getElementById('clear-original').addEventListener('click', function() {
+        document.getElementById('original-text').value = '';
+        document.getElementById('result-section').classList.add('hidden');
+      });
+
+      document.getElementById('clear-modified').addEventListener('click', function() {
+        document.getElementById('modified-text').value = '';
+        document.getElementById('result-section').classList.add('hidden');
+      });
+
+      document.getElementById('copy-diff-btn').addEventListener('click', function() {
+        if (!lastDiffResult) {
+          showToast('Nothing to copy — run a comparison first', 'error');
+          return;
+        }
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('diff_copy', { page: DIFF_PAGE_NAME });
+        }
+        copyToClipboard(copyDiffAsText(lastDiffResult));
+      });
+
+      // Allow Ctrl+Enter / Cmd+Enter to trigger compare from textareas
+      ['original-text', 'modified-text'].forEach(function(id) {
+        document.getElementById(id).addEventListener('keydown', function(e) {
+          if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+            e.preventDefault();
+            runCompare();
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

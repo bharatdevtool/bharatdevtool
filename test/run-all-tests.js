@@ -43,6 +43,7 @@ import { CurlComparisonTests } from './curl-comparison-tests.js';
 import { PasswordGeneratorTester } from './password-generator-tests.js';
 import { TextCaseConverterTester } from './text-case-converter-tests.js';
 import { UUIDGeneratorTester } from './uuid-generator-tests.js';
+import { DiffCheckerTester } from './diff-checker-tests.js';
 
 // Test Results Tracking
 let totalTests = 0;
@@ -542,6 +543,17 @@ const uuidTester = new UUIDGeneratorTester();
 const uuidResults = uuidTester.runAll();
 
 // ============================================================================
+// DIFF CHECKER TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+console.log('DIFF CHECKER TEST SUITE');
+console.log('='.repeat(60));
+
+const diffCheckerTester = new DiffCheckerTester();
+const diffCheckerResults = diffCheckerTester.runAllTests();
+
+// ============================================================================
 // FINAL TEST SUMMARY
 // ============================================================================
 
@@ -550,9 +562,9 @@ console.log('📊 COMPREHENSIVE TEST SUMMARY');
 console.log('='.repeat(60));
 
 
-const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + passwordGeneratorResults.total + textCaseConverterResults.total + uuidResults.total;
-const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + passwordGeneratorResults.passed + textCaseConverterResults.passed + uuidResults.passed;
-const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + passwordGeneratorResults.failed + textCaseConverterResults.failed + uuidResults.failed;
+const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + passwordGeneratorResults.total + textCaseConverterResults.total + uuidResults.total + diffCheckerResults.total;
+const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + passwordGeneratorResults.passed + textCaseConverterResults.passed + uuidResults.passed + diffCheckerResults.passed;
+const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + passwordGeneratorResults.failed + textCaseConverterResults.failed + uuidResults.failed + diffCheckerResults.failed;
 
 console.log(`Total Tests: ${grandTotal}`);
 console.log(`✅ Passed: ${grandPassed}`);
@@ -573,6 +585,7 @@ console.log(`cURL Comparison: ${curlComparisonResults.total} tests (${curlCompar
 console.log(`Password Generator: ${passwordGeneratorResults.total} tests (${passwordGeneratorResults.passed} passed, ${passwordGeneratorResults.failed} failed)`);
 console.log(`Text Case Converter: ${textCaseConverterResults.total} tests (${textCaseConverterResults.passed} passed, ${textCaseConverterResults.failed} failed)`);
 console.log(`UUID Generator: ${uuidResults.total} tests (${uuidResults.passed} passed, ${uuidResults.failed} failed)`);
+console.log(`Diff Checker: ${diffCheckerResults.total} tests (${diffCheckerResults.passed} passed, ${diffCheckerResults.failed} failed)`);
 
 
 if (grandFailed === 0) {
@@ -642,6 +655,10 @@ if (grandFailed === 0) {
   if (uuidResults.failed > 0) {
     console.log('\nUUID Generator failures:');
     uuidResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  if (diffCheckerResults.failed > 0) {
+    console.log('\nDiff Checker failures:');
+    diffCheckerResults.failedTests.forEach(test => console.log(`   - ${test}`));
   }
 
   console.log('\nPlease review the failed tests above.');
