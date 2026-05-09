@@ -82,7 +82,7 @@
 | 17 | Hash Generator (MD5/SHA) | security | High | 1d | `done` | `hash-generator.html` |
 | 18 | CSV ↔ JSON Converter | developer | High | 1d | `done` | `csv-json-converter.html` |
 | 19 | YAML ↔ JSON Converter | developer | High | 1.5d | `done` | `yaml-json-converter.html` |
-| 20 | Diff Checker (Text Compare) | developer | High | 2d | `not-started` | `diff-checker.html` |
+| 20 | Diff Checker (Text Compare) | developer | High | 2d | `in-progress` | `diff-checker.html` |
 
 **Notes:**
 - Image Compressor: use Canvas API + WebP conversion — match TinyPNG quality for free
