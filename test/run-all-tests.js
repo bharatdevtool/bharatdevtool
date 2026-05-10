@@ -43,6 +43,7 @@ import { CurlComparisonTests } from './curl-comparison-tests.js';
 import { PasswordGeneratorTester } from './password-generator-tests.js';
 import { TextCaseConverterTester } from './text-case-converter-tests.js';
 import { UUIDGeneratorTester } from './uuid-generator-tests.js';
+import { LoremIpsumTester } from './lorem-ipsum-tests.js';
 
 // Test Results Tracking
 let totalTests = 0;
@@ -541,6 +542,10 @@ console.log('='.repeat(60));
 const uuidTester = new UUIDGeneratorTester();
 const uuidResults = uuidTester.runAll();
 
+console.log('\n' + '='.repeat(60));
+const loremTester = new LoremIpsumTester();
+const loremResults = loremTester.runAllTests();
+
 // ============================================================================
 // FINAL TEST SUMMARY
 // ============================================================================
@@ -550,9 +555,9 @@ console.log('📊 COMPREHENSIVE TEST SUMMARY');
 console.log('='.repeat(60));
 
 
-const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + passwordGeneratorResults.total + textCaseConverterResults.total + uuidResults.total;
-const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + passwordGeneratorResults.passed + textCaseConverterResults.passed + uuidResults.passed;
-const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + passwordGeneratorResults.failed + textCaseConverterResults.failed + uuidResults.failed;
+const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + passwordGeneratorResults.total + textCaseConverterResults.total + uuidResults.total + loremResults.total;
+const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + passwordGeneratorResults.passed + textCaseConverterResults.passed + uuidResults.passed + loremResults.passed;
+const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + passwordGeneratorResults.failed + textCaseConverterResults.failed + uuidResults.failed + loremResults.failed;
 
 console.log(`Total Tests: ${grandTotal}`);
 console.log(`✅ Passed: ${grandPassed}`);
@@ -573,6 +578,7 @@ console.log(`cURL Comparison: ${curlComparisonResults.total} tests (${curlCompar
 console.log(`Password Generator: ${passwordGeneratorResults.total} tests (${passwordGeneratorResults.passed} passed, ${passwordGeneratorResults.failed} failed)`);
 console.log(`Text Case Converter: ${textCaseConverterResults.total} tests (${textCaseConverterResults.passed} passed, ${textCaseConverterResults.failed} failed)`);
 console.log(`UUID Generator: ${uuidResults.total} tests (${uuidResults.passed} passed, ${uuidResults.failed} failed)`);
+console.log(`Lorem Ipsum Generator: ${loremResults.total} tests (${loremResults.passed} passed, ${loremResults.failed} failed)`);
 
 
 if (grandFailed === 0) {
@@ -642,6 +648,10 @@ if (grandFailed === 0) {
   if (uuidResults.failed > 0) {
     console.log('\nUUID Generator failures:');
     uuidResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  if (loremResults.failed > 0) {
+    console.log('\nLorem Ipsum Generator failures:');
+    loremResults.failedTests.forEach(test => console.log(`   - ${test}`));
   }
 
   console.log('\nPlease review the failed tests above.');

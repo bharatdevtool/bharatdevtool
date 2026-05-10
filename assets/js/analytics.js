@@ -504,7 +504,8 @@ const PAGE_NAMES = {
   'password-generator.html': 'Password Generator',
   'text-case-converter.html': 'Text Case Converter',
   'uuid-generator.html': 'UUID Generator',
-  'whatsapp-link.html': 'WhatsApp Link Generator'
+  'whatsapp-link.html': 'WhatsApp Link Generator',
+  'lorem-ipsum.html': 'Lorem Ipsum Generator'
 };
 
 /**
