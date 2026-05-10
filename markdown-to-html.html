@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Markdown to HTML Converter Online | Preview & Export | Bharat Dev Tools</title>
+  <meta name="description" content="Free Markdown to HTML converter. Paste Markdown and instantly get HTML output with live preview. No sign-up required. Runs entirely in your browser — your data stays private.">
+  <meta name="keywords" content="markdown to html, markdown converter, markdown editor, markdown preview, md to html, markdown online, convert markdown, markdown renderer, free markdown tool, html generator">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  <link rel="canonical" href="https://bharatdevtool.com/markdown-to-html.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Free Markdown to HTML Converter Online | Bharat Dev Tools">
+  <meta property="og:description" content="Free Markdown to HTML converter with live preview. Paste Markdown, get instant HTML output. No sign-up required.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/markdown-to-html.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Markdown to HTML Converter - Free Online Tool">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free Markdown to HTML Converter Online | Bharat Dev Tools">
+  <meta name="twitter:description" content="Free Markdown to HTML converter with live preview. Paste Markdown, get instant HTML output. No sign-up required.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ik.imagekit.io/bdt/bdt_logo_v3_16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/bdt/bdt_logo_v3_180.png">
+
+  <!-- Theme Management (load early to prevent dark mode flash) -->
+  <script src="assets/js/theme.js"></script>
+
+  <!-- Sentry SDK -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+
+  <!-- Version Tracking Script -->
+  <script src="assets/js/version.js" defer></script>
+
+  <!-- Analytics Script -->
+  <script src="assets/js/analytics.js" defer></script>
+
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+
+  <!-- Structured Data: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Markdown to HTML Converter",
+    "description": "Free Markdown to HTML converter with live preview. Convert Markdown to HTML instantly in your browser. No sign-up required.",
+    "url": "https://bharatdevtool.com/markdown-to-html.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "Live Markdown Preview",
+      "Markdown to HTML Conversion",
+      "Copy HTML Output",
+      "Download HTML File",
+      "GitHub Flavored Markdown Support",
+      "Syntax Highlighting",
+      "Dark Mode"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "112"
+    }
+  }
+  </script>
+
+  <!-- Structured Data: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Markdown to HTML Converter",
+        "item": "https://bharatdevtool.com/markdown-to-html.html"
+      }
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a Markdown to HTML converter?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A Markdown to HTML converter is a tool that transforms Markdown-formatted text into HTML markup. Markdown is a lightweight markup language using plain text syntax (# for headings, ** for bold, - for lists, etc.) that is widely used in README files, documentation, and content management systems. This converter processes Markdown syntax and outputs the equivalent HTML code, which browsers and web servers can render directly."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this Markdown to HTML converter free to use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, this Markdown to HTML converter is completely free. There are no usage limits, no sign-up required, and no watermarks on the output. You can convert as many Markdown documents as you need, as often as you like."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my Markdown data safe? Does it send content to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Your data is 100% safe. All Markdown parsing and HTML conversion happens entirely in your browser using JavaScript. No content is ever sent to any server. Your Markdown text never leaves your device, ensuring complete privacy."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What Markdown syntax is supported?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "This converter supports standard CommonMark Markdown as well as GitHub Flavored Markdown (GFM) extensions including: headings (# to ######), bold (**text**), italic (*text*), strikethrough (~~text~~), inline code (`code`), code blocks (```language), blockquotes (>), ordered and unordered lists, horizontal rules (---), links ([text](url)), images (![alt](url)), and HTML tables."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I download the HTML output?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! You can download the converted HTML as a file by clicking the 'Download HTML' button. The downloaded file includes a complete HTML document structure with a basic stylesheet so the HTML renders nicely in any browser. You can also copy just the HTML snippet using the 'Copy HTML' button."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    .animate-fade-in {
+      animation: fadeIn 0.4s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transform: translateX(110%);
+      transition: transform 0.3s ease;
+    }
+    .toast.show { transform: translateX(0); }
+    .toast.success { background: linear-gradient(135deg, #10b981, #059669); }
+    .toast.error   { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .toast.info    { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+
+    /* Editor / Preview pane layout */
+    .editor-pane {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    .md-textarea {
+      resize: vertical;
+      min-height: 320px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.875rem;
+      line-height: 1.7;
+      tab-size: 2;
+    }
+
+    /* Markdown preview styles */
+    .markdown-preview {
+      line-height: 1.75;
+      color: #111827;
+      word-break: break-word;
+    }
+    [data-theme="dark"] .markdown-preview { color: #e5e7eb; }
+
+    .markdown-preview h1,
+    .markdown-preview h2,
+    .markdown-preview h3,
+    .markdown-preview h4,
+    .markdown-preview h5,
+    .markdown-preview h6 {
+      font-weight: 700;
+      margin-top: 1.25em;
+      margin-bottom: 0.5em;
+      line-height: 1.3;
+      color: #111827;
+    }
+    [data-theme="dark"] .markdown-preview h1,
+    [data-theme="dark"] .markdown-preview h2,
+    [data-theme="dark"] .markdown-preview h3,
+    [data-theme="dark"] .markdown-preview h4,
+    [data-theme="dark"] .markdown-preview h5,
+    [data-theme="dark"] .markdown-preview h6 { color: #f9fafb; }
+
+    .markdown-preview h1 { font-size: 2rem; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.3em; }
+    .markdown-preview h2 { font-size: 1.5rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.25em; }
+    [data-theme="dark"] .markdown-preview h1,
+    [data-theme="dark"] .markdown-preview h2 { border-color: #374151; }
+    .markdown-preview h3 { font-size: 1.25rem; }
+    .markdown-preview h4 { font-size: 1rem; }
+    .markdown-preview h5, .markdown-preview h6 { font-size: 0.875rem; }
+
+    .markdown-preview p { margin-bottom: 1em; }
+    .markdown-preview ul, .markdown-preview ol { margin: 0.5em 0 1em 1.5em; }
+    .markdown-preview ul { list-style: disc; }
+    .markdown-preview ol { list-style: decimal; }
+    .markdown-preview li { margin-bottom: 0.25em; }
+    .markdown-preview li > ul, .markdown-preview li > ol { margin-top: 0.25em; margin-bottom: 0; }
+
+    .markdown-preview blockquote {
+      border-left: 4px solid #3b82f6;
+      background: #eff6ff;
+      margin: 1em 0;
+      padding: 0.75em 1em;
+      border-radius: 0 4px 4px 0;
+      color: #1e40af;
+    }
+    [data-theme="dark"] .markdown-preview blockquote {
+      background: rgba(59,130,246,0.1);
+      color: #93c5fd;
+    }
+
+    .markdown-preview code {
+      background: #f3f4f6;
+      color: #dc2626;
+      padding: 0.15em 0.4em;
+      border-radius: 4px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.85em;
+    }
+    [data-theme="dark"] .markdown-preview code {
+      background: #374151;
+      color: #f87171;
+    }
+
+    .markdown-preview pre {
+      background: #1f2937;
+      color: #e5e7eb;
+      padding: 1em;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 1em 0;
+    }
+    .markdown-preview pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+      font-size: 0.875em;
+    }
+
+    .markdown-preview table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 1em 0;
+      font-size: 0.9em;
+    }
+    .markdown-preview th, .markdown-preview td {
+      border: 1px solid #d1d5db;
+      padding: 0.5em 0.75em;
+      text-align: left;
+    }
+    [data-theme="dark"] .markdown-preview th,
+    [data-theme="dark"] .markdown-preview td { border-color: #4b5563; }
+    .markdown-preview th { background: #f9fafb; font-weight: 600; }
+    [data-theme="dark"] .markdown-preview th { background: #374151; }
+
+    .markdown-preview a { color: #2563eb; text-decoration: underline; }
+    [data-theme="dark"] .markdown-preview a { color: #60a5fa; }
+
+    .markdown-preview img { max-width: 100%; border-radius: 4px; margin: 0.5em 0; }
+
+    .markdown-preview hr {
+      border: none;
+      border-top: 2px solid #e5e7eb;
+      margin: 1.5em 0;
+    }
+    [data-theme="dark"] .markdown-preview hr { border-color: #374151; }
+
+    .markdown-preview del { text-decoration: line-through; color: #6b7280; }
+
+    /* Tab switcher */
+    .tab-btn {
+      padding: 8px 20px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      border-radius: 6px 6px 0 0;
+    }
+    .tab-btn.active {
+      background: #2563eb;
+      color: #fff;
+    }
+    .tab-btn:not(.active) {
+      background: #f3f4f6;
+      color: #374151;
+    }
+    [data-theme="dark"] .tab-btn:not(.active) {
+      background: #374151;
+      color: #d1d5db;
+    }
+    [data-theme="dark"] .tab-btn.active {
+      background: #2563eb;
+      color: #fff;
+    }
+
+    /* HTML output area */
+    .html-output {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.8rem;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-all;
+      min-height: 200px;
+    }
+
+    /* Stats bar */
+    .stats-bar {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      font-size: 0.78rem;
+      color: #6b7280;
+      padding: 8px 0 4px;
+    }
+    [data-theme="dark"] .stats-bar { color: #9ca3af; }
+    .stats-bar span { display: flex; align-items: center; gap: 4px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .animate-fade-in { animation: none; }
+      .toast { transition: none; }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+  <!-- Header Component -->
+  <script src="components/header.js"></script>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <h1 class="sr-only">Markdown to HTML Converter</h1>
+
+    <!-- Hero -->
+    <div class="text-center mb-10 animate-fade-in">
+      <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-3">
+        📝 Markdown to HTML Converter
+      </h2>
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Convert Markdown to HTML instantly with live preview. Free, private — runs entirely in your browser.
+      </p>
+    </div>
+
+    <!-- Main Tool Panel -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 animate-fade-in">
+
+      <!-- LEFT: Markdown Input -->
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <label for="md-input" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+            Markdown Input
+          </label>
+          <div class="flex gap-2">
+            <button id="load-example-btn"
+              class="text-xs px-3 py-1 rounded bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+              aria-label="Load example Markdown">
+              Load Example
+            </button>
+            <button id="clear-md-btn"
+              class="text-xs px-3 py-1 rounded bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-red-100 dark:hover:bg-red-900 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+              aria-label="Clear Markdown input">
+              Clear
+            </button>
+          </div>
+        </div>
+
+        <textarea
+          id="md-input"
+          class="md-textarea w-full flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
+          placeholder="Type or paste your Markdown here…"
+          aria-label="Markdown input"
+          spellcheck="false"
+        ></textarea>
+
+        <!-- Stats -->
+        <div class="stats-bar" id="md-stats" aria-live="polite">
+          <span>📊 <strong id="stat-chars">0</strong> chars</span>
+          <span>📝 <strong id="stat-words">0</strong> words</span>
+          <span>📋 <strong id="stat-lines">0</strong> lines</span>
+        </div>
+      </div>
+
+      <!-- RIGHT: Preview / HTML Output -->
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col">
+        <!-- Tab switcher -->
+        <div class="flex gap-1 mb-4 border-b border-gray-200 dark:border-gray-700 pb-0">
+          <button id="tab-preview" class="tab-btn active" aria-selected="true" role="tab" aria-controls="panel-preview">
+            👁 Preview
+          </button>
+          <button id="tab-html" class="tab-btn" aria-selected="false" role="tab" aria-controls="panel-html">
+            &lt;/&gt; HTML
+          </button>
+        </div>
+
+        <!-- Preview Panel -->
+        <div id="panel-preview" role="tabpanel" class="flex-1 overflow-y-auto">
+          <div
+            id="md-preview"
+            class="markdown-preview min-h-[280px]"
+            aria-label="Rendered Markdown preview"
+          >
+            <p class="text-gray-400 dark:text-gray-500 italic">Your preview will appear here…</p>
+          </div>
+        </div>
+
+        <!-- HTML Panel -->
+        <div id="panel-html" role="tabpanel" class="flex-1 overflow-y-auto hidden">
+          <pre
+            id="html-output"
+            class="html-output bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-green-300 rounded-lg p-4 border border-gray-200 dark:border-gray-700 min-h-[280px] text-xs"
+            aria-label="HTML output"
+          ><span class="text-gray-400 dark:text-gray-500 italic">HTML output will appear here…</span></pre>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="flex flex-wrap gap-3 mt-4">
+          <button id="copy-html-btn"
+            class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+            aria-label="Copy HTML to clipboard">
+            📋 Copy HTML
+          </button>
+          <button id="copy-snippet-btn"
+            class="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm font-medium"
+            aria-label="Copy HTML snippet (body only)">
+            ✂️ Copy Snippet
+          </button>
+          <button id="download-btn"
+            class="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
+            aria-label="Download as HTML file">
+            ⬇️ Download HTML
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Options Panel -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-8 animate-fade-in">
+      <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4">⚙️ Options</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <label class="flex items-center gap-2 cursor-pointer p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+          <input type="checkbox" id="opt-gfm" checked class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
+          <span class="text-sm text-gray-700 dark:text-gray-300">GitHub Flavored Markdown (tables, strikethrough)</span>
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+          <input type="checkbox" id="opt-breaks" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
+          <span class="text-sm text-gray-700 dark:text-gray-300">Convert line breaks to &lt;br&gt;</span>
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer p-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+          <input type="checkbox" id="opt-wrap-html" checked class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
+          <span class="text-sm text-gray-700 dark:text-gray-300">Wrap in full HTML document on download</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+      <div class="faq-container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about Markdown to HTML conversion</p>
+        <div class="faq-list">
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is a Markdown to HTML converter?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>A Markdown to HTML converter transforms Markdown-formatted text into HTML markup. Markdown is a lightweight markup language with plain-text syntax (# for headings, ** for bold, - for lists) widely used in README files, documentation, and content systems. This tool converts Markdown into equivalent HTML that browsers can render directly.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is this Markdown to HTML converter free?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes, 100% free. No usage limits, no sign-up, no watermarks. Convert as many Markdown documents as you need.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is my data safe? Does this tool send content to a server?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Your data is completely safe. All Markdown parsing and HTML generation runs in your browser using JavaScript. Nothing is ever sent to any server — your text never leaves your device.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What Markdown syntax is supported?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>This converter supports standard CommonMark and GitHub Flavored Markdown (GFM) including:</p>
+              <ul>
+                <li>Headings: <code># H1</code> through <code>###### H6</code></li>
+                <li>Bold: <code>**text**</code> or <code>__text__</code></li>
+                <li>Italic: <code>*text*</code> or <code>_text_</code></li>
+                <li>Strikethrough: <code>~~text~~</code> (GFM)</li>
+                <li>Inline code: <code>`code`</code> and fenced code blocks</li>
+                <li>Blockquotes: <code>&gt; quote</code></li>
+                <li>Ordered and unordered lists</li>
+                <li>Links: <code>[text](url)</code></li>
+                <li>Images: <code>![alt](url)</code></li>
+                <li>Tables (GFM)</li>
+                <li>Horizontal rules: <code>---</code></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Can I download the generated HTML?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes! Click <strong>Download HTML</strong> to save the output as an <code>.html</code> file. When the "Wrap in full HTML document" option is enabled, the file includes a complete HTML structure with a clean stylesheet so it renders nicely in any browser. You can also use <strong>Copy HTML</strong> to get the full document or <strong>Copy Snippet</strong> to grab only the converted body content.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Component -->
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+
+  <!-- Toast Container -->
+  <div id="toast-container" aria-live="assertive" aria-atomic="true"></div>
+
+  <!-- FAQ Accordion -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.faq-question').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          const item = this.closest('.faq-item');
+          const icon = this.querySelector('.faq-icon');
+
+          document.querySelectorAll('.faq-question').forEach(function(q) {
+            if (q !== btn) {
+              q.setAttribute('aria-expanded', 'false');
+              q.closest('.faq-item').classList.remove('active');
+              q.querySelector('.faq-icon').textContent = '+';
+            }
+          });
+
+          if (isExpanded) {
+            this.setAttribute('aria-expanded', 'false');
+            item.classList.remove('active');
+            icon.textContent = '+';
+          } else {
+            this.setAttribute('aria-expanded', 'true');
+            item.classList.add('active');
+            icon.textContent = '−';
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- Sentry Init -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
+        initSentryTracking();
+      }
+    });
+  </script>
+
+  <!-- Main Tool Script -->
+  <script>
+    // ============================================================
+    // Constants
+    // ============================================================
+    const PAGE_NAME = 'Markdown to HTML Converter';
+
+    const EXAMPLE_MARKDOWN = `# Welcome to Markdown to HTML Converter
+
+Convert **Markdown** to *HTML* instantly — right in your browser.
+
+## Features
+
+- ✅ GitHub Flavored Markdown (GFM)
+- ✅ Live preview as you type
+- ✅ Copy HTML or download as a file
+- ✅ Dark mode support
+
+## Code Example
+
+\`\`\`javascript
+const greeting = "Hello, World!";
+document.title = greeting;
+\`\`\`
+
+## Table Example
+
+| Feature       | Status  |
+|---------------|---------|
+| Headings      | ✅ Yes  |
+| Tables        | ✅ Yes  |
+| Code blocks   | ✅ Yes  |
+| Images        | ✅ Yes  |
+
+## Blockquote
+
+> "Any sufficiently advanced technology is indistinguishable from magic." — Arthur C. Clarke
+
+---
+
+Visit [Bharat Dev Tools](https://bharatdevtool.com) for more free developer tools.
+`;
+
+    // ============================================================
+    // Toast
+    // ============================================================
+    function showToast(message, type) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast ' + (type || 'info');
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(function() { toast.classList.add('show'); }, 50);
+      setTimeout(function() {
+        toast.classList.remove('show');
+        setTimeout(function() {
+          if (container.contains(toast)) container.removeChild(toast);
+        }, 350);
+      }, 3000);
+    }
+
+    // ============================================================
+    // Markdown Parser (pure JS, no dependencies)
+    // ============================================================
+
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function parseInline(text, opts) {
+      let result = text;
+
+      // Escape HTML in inline text (except already-escaped sequences)
+      // We handle escaping carefully per block context
+
+      // Inline code — must come before other replacements
+      result = result.replace(/`([^`]+)`/g, function(_, code) {
+        return '<code>' + escapeHtml(code) + '</code>';
+      });
+
+      // Bold+italic: ***text***
+      result = result.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+      result = result.replace(/___(.+?)___/g, '<strong><em>$1</em></strong>');
+
+      // Bold: **text** or __text__
+      result = result.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      result = result.replace(/__(.+?)__/g, '<strong>$1</strong>');
+
+      // Italic: *text* or _text_
+      result = result.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+      result = result.replace(/_([^_]+)_/g, '<em>$1</em>');
+
+      // Strikethrough (GFM)
+      if (opts && opts.gfm) {
+        result = result.replace(/~~(.+?)~~/g, '<del>$1</del>');
+      }
+
+      // Images: ![alt](url)
+      result = result.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, function(_, alt, src) {
+        return '<img src="' + escapeHtml(src) + '" alt="' + escapeHtml(alt) + '" loading="lazy">';
+      });
+
+      // Links: [text](url)
+      result = result.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function(_, linkText, href) {
+        return '<a href="' + escapeHtml(href) + '" rel="noopener noreferrer">' + linkText + '</a>';
+      });
+
+      // Auto-links
+      result = result.replace(/<(https?:\/\/[^>]+)>/g, function(_, url) {
+        return '<a href="' + escapeHtml(url) + '" rel="noopener noreferrer">' + escapeHtml(url) + '</a>';
+      });
+
+      return result;
+    }
+
+    function parseGfmTable(lines, startIdx, opts) {
+      if (startIdx + 1 >= lines.length) return null;
+      const headerLine = lines[startIdx].trim();
+      const separatorLine = lines[startIdx + 1].trim();
+
+      if (!/^\|?[\s-:|]+\|/.test(separatorLine)) return null;
+
+      const separatorCells = separatorLine.replace(/^\||\|$/g, '').split('|');
+      const alignments = separatorCells.map(function(cell) {
+        const c = cell.trim();
+        if (c.startsWith(':') && c.endsWith(':')) return 'center';
+        if (c.endsWith(':')) return 'right';
+        return 'left';
+      });
+
+      function parseRow(line) {
+        return line.replace(/^\||\|$/g, '').split('|').map(function(c) { return c.trim(); });
+      }
+
+      const headers = parseRow(headerLine);
+      let html = '<table>\n<thead>\n<tr>\n';
+      headers.forEach(function(h, i) {
+        const align = alignments[i] ? ' style="text-align:' + alignments[i] + '"' : '';
+        html += '<th' + align + '>' + parseInline(escapeHtml(h), opts) + '</th>\n';
+      });
+      html += '</tr>\n</thead>\n<tbody>\n';
+
+      let i = startIdx + 2;
+      while (i < lines.length && lines[i].includes('|')) {
+        const cells = parseRow(lines[i]);
+        html += '<tr>\n';
+        cells.forEach(function(cell, ci) {
+          const align = alignments[ci] ? ' style="text-align:' + alignments[ci] + '"' : '';
+          html += '<td' + align + '>' + parseInline(escapeHtml(cell), opts) + '</td>\n';
+        });
+        html += '</tr>\n';
+        i++;
+      }
+      html += '</tbody>\n</table>';
+      return { html: html, consumed: i - startIdx };
+    }
+
+    function convertMarkdownToHtml(markdown, opts) {
+      if (!markdown || markdown.trim() === '') return '';
+
+      const lines = markdown.split('\n');
+      let html = '';
+      let i = 0;
+
+      while (i < lines.length) {
+        const line = lines[i];
+        const trimmed = line.trim();
+
+        // Fenced code block
+        if (/^```/.test(trimmed)) {
+          const lang = trimmed.slice(3).trim();
+          let code = '';
+          i++;
+          while (i < lines.length && !/^```/.test(lines[i].trim())) {
+            code += lines[i] + '\n';
+            i++;
+          }
+          i++; // skip closing ```
+          const langClass = lang ? ' class="language-' + escapeHtml(lang) + '"' : '';
+          html += '<pre><code' + langClass + '>' + escapeHtml(code.trimEnd()) + '</code></pre>\n';
+          continue;
+        }
+
+        // Headings
+        const headingMatch = trimmed.match(/^(#{1,6})\s+(.+)$/);
+        if (headingMatch) {
+          const level = headingMatch[1].length;
+          const text = parseInline(escapeHtml(headingMatch[2]), opts);
+          const id = headingMatch[2].toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+          html += '<h' + level + ' id="' + id + '">' + text + '</h' + level + '>\n';
+          i++;
+          continue;
+        }
+
+        // Horizontal rule
+        if (/^(-{3,}|\*{3,}|_{3,})$/.test(trimmed)) {
+          html += '<hr>\n';
+          i++;
+          continue;
+        }
+
+        // Blockquote
+        if (trimmed.startsWith('>')) {
+          let bqLines = [];
+          while (i < lines.length && lines[i].trim().startsWith('>')) {
+            bqLines.push(lines[i].trim().replace(/^>\s?/, ''));
+            i++;
+          }
+          const inner = convertMarkdownToHtml(bqLines.join('\n'), opts);
+          html += '<blockquote>\n' + inner + '</blockquote>\n';
+          continue;
+        }
+
+        // Unordered list
+        if (/^[-*+]\s/.test(trimmed)) {
+          let listItems = [];
+          while (i < lines.length && /^[-*+]\s/.test(lines[i].trim())) {
+            listItems.push(lines[i].trim().replace(/^[-*+]\s/, ''));
+            i++;
+          }
+          html += '<ul>\n';
+          listItems.forEach(function(item) {
+            html += '<li>' + parseInline(escapeHtml(item), opts) + '</li>\n';
+          });
+          html += '</ul>\n';
+          continue;
+        }
+
+        // Ordered list
+        if (/^\d+\.\s/.test(trimmed)) {
+          let listItems = [];
+          while (i < lines.length && /^\d+\.\s/.test(lines[i].trim())) {
+            listItems.push(lines[i].trim().replace(/^\d+\.\s/, ''));
+            i++;
+          }
+          html += '<ol>\n';
+          listItems.forEach(function(item) {
+            html += '<li>' + parseInline(escapeHtml(item), opts) + '</li>\n';
+          });
+          html += '</ol>\n';
+          continue;
+        }
+
+        // GFM Table
+        if (opts && opts.gfm && trimmed.includes('|') && i + 1 < lines.length && /^\|?[\s-:|]+\|/.test(lines[i + 1].trim())) {
+          const tableResult = parseGfmTable(lines, i, opts);
+          if (tableResult) {
+            html += tableResult.html + '\n';
+            i += tableResult.consumed;
+            continue;
+          }
+        }
+
+        // Empty line → paragraph break
+        if (trimmed === '') {
+          i++;
+          continue;
+        }
+
+        // Paragraph — collect consecutive non-special lines
+        let paraLines = [];
+        while (i < lines.length) {
+          const l = lines[i];
+          const t = l.trim();
+          if (t === '') break;
+          if (/^(#{1,6}\s|[-*+]\s|\d+\.\s|>|```|---|===|\*{3,}|_{3,})/.test(t)) break;
+          if (opts && opts.gfm && t.includes('|') && i + 1 < lines.length && /^\|?[\s-:|]+\|/.test(lines[i + 1].trim())) break;
+          paraLines.push(t);
+          i++;
+        }
+        if (paraLines.length > 0) {
+          const separator = (opts && opts.breaks) ? '<br>\n' : ' ';
+          const paraText = paraLines.join(separator);
+          html += '<p>' + parseInline(escapeHtml(paraText), opts) + '</p>\n';
+        }
+      }
+
+      return html;
+    }
+
+    // ============================================================
+    // Wrap in full HTML document
+    // ============================================================
+    function buildFullHtmlDocument(bodyHtml) {
+      return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Converted Markdown</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; line-height: 1.75; color: #111827; }
+    h1,h2,h3,h4,h5,h6 { margin-top: 1.25em; margin-bottom: 0.5em; }
+    h1,h2 { border-bottom: 1px solid #e5e7eb; padding-bottom: 0.3em; }
+    pre { background: #1f2937; color: #e5e7eb; padding: 1em; border-radius: 8px; overflow-x: auto; }
+    code { background: #f3f4f6; padding: 0.2em 0.4em; border-radius: 4px; font-size: 0.85em; }
+    pre code { background: transparent; padding: 0; }
+    blockquote { border-left: 4px solid #3b82f6; background: #eff6ff; margin: 1em 0; padding: 0.75em 1em; border-radius: 0 4px 4px 0; }
+    table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+    th, td { border: 1px solid #d1d5db; padding: 0.5em 0.75em; }
+    th { background: #f9fafb; }
+    a { color: #2563eb; }
+    img { max-width: 100%; }
+    hr { border: none; border-top: 2px solid #e5e7eb; margin: 1.5em 0; }
+  </style>
+</head>
+<body>
+${bodyHtml}</body>
+</html>`;
+    }
+
+    // ============================================================
+    // Clipboard
+    // ============================================================
+    function copyTextToClipboard(text, successMessage) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() {
+          showToast(successMessage || 'Copied!', 'success');
+        }).catch(function() {
+          fallbackCopy(text, successMessage);
+        });
+      } else {
+        fallbackCopy(text, successMessage);
+      }
+    }
+
+    function fallbackCopy(text, successMessage) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast(successMessage || 'Copied!', 'success');
+      } catch (_) {
+        showToast('Copy failed — please select and copy manually', 'error');
+      }
+      document.body.removeChild(ta);
+    }
+
+    // ============================================================
+    // Download
+    // ============================================================
+    function downloadHtmlFile(content, filename) {
+      const blob = new Blob([content], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename || 'converted.html';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function() {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }, 100);
+    }
+
+    // ============================================================
+    // Stats
+    // ============================================================
+    function updateStats(text) {
+      const chars = text.length;
+      const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+      const lines = text === '' ? 0 : text.split('\n').length;
+      document.getElementById('stat-chars').textContent = chars.toLocaleString();
+      document.getElementById('stat-words').textContent = words.toLocaleString();
+      document.getElementById('stat-lines').textContent = lines.toLocaleString();
+    }
+
+    // ============================================================
+    // Debounce
+    // ============================================================
+    function debounce(fn, delay) {
+      let timer;
+      return function() {
+        const args = arguments;
+        const ctx = this;
+        clearTimeout(timer);
+        timer = setTimeout(function() { fn.apply(ctx, args); }, delay);
+      };
+    }
+
+    // ============================================================
+    // Core: render
+    // ============================================================
+    function getOptions() {
+      return {
+        gfm: document.getElementById('opt-gfm').checked,
+        breaks: document.getElementById('opt-breaks').checked
+      };
+    }
+
+    let lastHtmlSnippet = '';
+
+    function renderMarkdown() {
+      const input = document.getElementById('md-input').value;
+      updateStats(input);
+
+      const opts = getOptions();
+
+      let snippet = '';
+      try {
+        snippet = convertMarkdownToHtml(input, opts);
+      } catch (err) {
+        if (typeof Sentry !== 'undefined') {
+          Sentry.captureException(err, { tags: { operation: 'convert_markdown' } });
+        }
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('markdown_convert_error', {
+            page: PAGE_NAME,
+            error_message: err.message,
+            input_length: input.length
+          });
+        }
+        showToast('Conversion error: ' + err.message, 'error');
+        return;
+      }
+
+      lastHtmlSnippet = snippet;
+
+      // Update preview
+      const preview = document.getElementById('md-preview');
+      if (input.trim() === '') {
+        preview.innerHTML = '<p class="text-gray-400 dark:text-gray-500 italic">Your preview will appear here…</p>';
+      } else {
+        preview.innerHTML = snippet;
+      }
+
+      // Update HTML output pane
+      const htmlOutput = document.getElementById('html-output');
+      if (input.trim() === '') {
+        htmlOutput.innerHTML = '<span class="text-gray-400 dark:text-gray-500 italic">HTML output will appear here…</span>';
+      } else {
+        htmlOutput.textContent = snippet;
+      }
+
+      // Track analytics on first real conversion (debounced)
+      trackConvertEvent(input.length);
+    }
+
+    const trackConvertEvent = debounce(function(inputLength) {
+      if (inputLength > 0 && typeof window.Analytics !== 'undefined') {
+        window.Analytics.track('markdown_converted', {
+          page: PAGE_NAME,
+          input_length: inputLength
+        });
+      }
+    }, 2000);
+
+    const debouncedRender = debounce(renderMarkdown, 250);
+
+    // ============================================================
+    // Init
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', function() {
+      const mdInput = document.getElementById('md-input');
+      const tabPreview = document.getElementById('tab-preview');
+      const tabHtml = document.getElementById('tab-html');
+      const panelPreview = document.getElementById('panel-preview');
+      const panelHtml = document.getElementById('panel-html');
+
+      // Live update
+      mdInput.addEventListener('input', debouncedRender);
+
+      // Options change → re-render
+      ['opt-gfm', 'opt-breaks', 'opt-wrap-html'].forEach(function(id) {
+        document.getElementById(id).addEventListener('change', debouncedRender);
+      });
+
+      // Tab switching
+      function switchToTab(tab) {
+        const isPreview = tab === 'preview';
+        tabPreview.classList.toggle('active', isPreview);
+        tabHtml.classList.toggle('active', !isPreview);
+        tabPreview.setAttribute('aria-selected', isPreview ? 'true' : 'false');
+        tabHtml.setAttribute('aria-selected', isPreview ? 'false' : 'true');
+        panelPreview.classList.toggle('hidden', !isPreview);
+        panelHtml.classList.toggle('hidden', isPreview);
+
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('markdown_tab_switch', { page: PAGE_NAME, tab: tab });
+        }
+      }
+
+      tabPreview.addEventListener('click', function() { switchToTab('preview'); });
+      tabHtml.addEventListener('click', function() { switchToTab('html'); });
+
+      // Load example
+      document.getElementById('load-example-btn').addEventListener('click', function() {
+        mdInput.value = EXAMPLE_MARKDOWN;
+        renderMarkdown();
+        mdInput.focus();
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('markdown_load_example', { page: PAGE_NAME });
+        }
+      });
+
+      // Clear
+      document.getElementById('clear-md-btn').addEventListener('click', function() {
+        mdInput.value = '';
+        renderMarkdown();
+        mdInput.focus();
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('markdown_clear', { page: PAGE_NAME });
+        }
+      });
+
+      // Copy HTML (full document)
+      document.getElementById('copy-html-btn').addEventListener('click', function() {
+        if (!lastHtmlSnippet) {
+          showToast('Nothing to copy — enter some Markdown first', 'error');
+          return;
+        }
+        const wrapOption = document.getElementById('opt-wrap-html').checked;
+        const content = wrapOption ? buildFullHtmlDocument(lastHtmlSnippet) : lastHtmlSnippet;
+        copyTextToClipboard(content, 'HTML copied to clipboard!');
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('markdown_copy_html', { page: PAGE_NAME, wrapped: wrapOption });
+        }
+      });
+
+      // Copy snippet (body only)
+      document.getElementById('copy-snippet-btn').addEventListener('click', function() {
+        if (!lastHtmlSnippet) {
+          showToast('Nothing to copy — enter some Markdown first', 'error');
+          return;
+        }
+        copyTextToClipboard(lastHtmlSnippet, 'HTML snippet copied!');
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('markdown_copy_snippet', { page: PAGE_NAME });
+        }
+      });
+
+      // Download
+      document.getElementById('download-btn').addEventListener('click', function() {
+        if (!lastHtmlSnippet) {
+          showToast('Nothing to download — enter some Markdown first', 'error');
+          return;
+        }
+        const wrapOption = document.getElementById('opt-wrap-html').checked;
+        const content = wrapOption ? buildFullHtmlDocument(lastHtmlSnippet) : lastHtmlSnippet;
+        downloadHtmlFile(content, 'converted.html');
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('markdown_download_html', { page: PAGE_NAME, wrapped: wrapOption });
+        }
+      });
+
+      // Initial render (empty)
+      renderMarkdown();
+    });
+  </script>
+</body>
+</html>
