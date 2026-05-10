@@ -100,7 +100,7 @@
 | 21 | Cron Expression Generator | developer | High | 1d | `done` | `cron-generator.html` |
 | 22 | Lorem Ipsum Generator | text | High | 0.5d | `done` | `lorem-ipsum.html` |
 | 23 | Timezone Converter | utility | High | 1d | `done` | `timezone-converter.html` |
-| 24 | Markdown to HTML | text | High | 1d | `not-started` | `markdown-to-html.html` |
+| 24 | Markdown to HTML | text | High | 1d | `in-progress` | `markdown-to-html.html` |
 | 25 | JSON → TypeScript Interface | developer | Medium-High | 1.5d | `not-started` | `json-to-typescript.html` |
 | 26 | HTML Formatter/Beautifier | developer | High | 1d | `not-started` | `html-formatter.html` |
 | 27 | Favicon Generator | design | High | 1d | `not-started` | `favicon-generator.html` |
