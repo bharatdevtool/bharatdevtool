@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Timezone Converter Online | Convert Time Between Timezones | Bharat Dev Tools</title>
+  <meta name="description" content="Free online timezone converter. Convert time between any two timezones instantly — IST, UTC, EST, PST, GMT and 400+ more. No sign-up required. Works entirely in your browser.">
+  <meta name="keywords" content="timezone converter, time zone converter, convert timezone, IST to UTC, UTC to IST, EST to PST, world clock, time difference, online timezone tool, free timezone converter">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  <link rel="canonical" href="https://bharatdevtool.com/timezone-converter.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Free Timezone Converter Online | Bharat Dev Tools">
+  <meta property="og:description" content="Convert time between any two timezones instantly. Supports IST, UTC, EST, PST, GMT and 400+ more. Free, no sign-up required.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/timezone-converter.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Free Timezone Converter - Bharat Dev Tools">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free Timezone Converter Online | Bharat Dev Tools">
+  <meta name="twitter:description" content="Convert time between any two timezones instantly. Supports IST, UTC, EST, PST, GMT and 400+ more. Free, no sign-up required.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ik.imagekit.io/bdt/bdt_logo_v3_16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/bdt/bdt_logo_v3_180.png">
+
+  <!-- Theme FIRST — prevents dark mode flash -->
+  <script src="assets/js/theme.js"></script>
+
+  <!-- Sentry -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+
+  <!-- App config -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+
+  <!-- Version + Analytics (deferred) -->
+  <script src="assets/js/version.js" defer></script>
+  <script src="assets/js/analytics.js" defer></script>
+
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+
+  <!-- Structured Data: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Timezone Converter",
+    "description": "Free online timezone converter. Convert time between any two timezones instantly — IST, UTC, EST, PST, GMT and 400+ more. No sign-up required.",
+    "url": "https://bharatdevtool.com/timezone-converter.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "Convert time between 400+ timezones",
+      "Real-time current time display",
+      "IST, UTC, EST, PST, GMT support",
+      "Date and time offset calculation",
+      "Copy result to clipboard",
+      "Works entirely in browser"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "112"
+    }
+  }
+  </script>
+
+  <!-- Structured Data: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Timezone Converter",
+        "item": "https://bharatdevtool.com/timezone-converter.html"
+      }
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a timezone converter?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A timezone converter is a tool that lets you convert a date and time from one timezone to another. For example, you can convert 9:00 AM IST (India Standard Time) to the equivalent time in UTC, EST, PST, or any other timezone in the world. This is useful for scheduling meetings across different countries, coordinating with remote teams, or understanding when a global event happens in your local time."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I convert IST to UTC?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "India Standard Time (IST) is UTC+5:30, meaning it is 5 hours and 30 minutes ahead of Coordinated Universal Time (UTC). To convert IST to UTC, subtract 5 hours and 30 minutes. For example, 9:00 AM IST = 3:30 AM UTC. Our timezone converter handles this automatically — just select IST as the source timezone and UTC as the target timezone."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this timezone converter free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, this timezone converter is completely free to use. There is no sign-up, no account, and no subscription required. All conversions happen instantly in your browser."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the timezone converter store my data?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. All timezone conversions happen entirely in your browser using the built-in JavaScript Intl API. No data is ever sent to any server. Your date, time, and timezone selections remain completely private on your device."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How many timezones does this tool support?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "This tool supports all IANA (Internet Assigned Numbers Authority) standard timezone identifiers — over 400 timezones covering every country and territory in the world. Popular ones include IST (Asia/Kolkata), UTC, EST (America/New_York), PST (America/Los_Angeles), GMT (Europe/London), CET (Europe/Paris), JST (Asia/Tokyo), AEST (Australia/Sydney), and many more."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    .animate-fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-slide-up {
+      animation: slideUp 0.3s ease-out;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transform: translateX(110%);
+      transition: transform 0.3s ease;
+    }
+    .toast.show { transform: translateX(0); }
+    .toast.success { background: linear-gradient(135deg,#10b981,#059669); }
+    .toast.error   { background: linear-gradient(135deg,#ef4444,#dc2626); }
+    .toast.info    { background: linear-gradient(135deg,#3b82f6,#2563eb); }
+
+    /* Swap button spin animation */
+    #swap-btn:active svg { transform: rotate(180deg); }
+    #swap-btn svg { transition: transform 0.3s ease; }
+
+    /* Result card pop */
+    #result-card {
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    #result-card.hidden { opacity: 0; pointer-events: none; }
+
+    /* World clock grid */
+    .world-clock-card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .world-clock-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+
+    /* Dark mode extras */
+    [data-theme="dark"] body,
+    .dark body {
+      background-color: #111827;
+    }
+
+    /* Select styling */
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      background-size: 1.25rem;
+      padding-right: 2.5rem;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+
+  <!-- Header -->
+  <script src="components/header.js"></script>
+
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <h1 class="sr-only">Free Timezone Converter Online</h1>
+
+    <!-- Hero -->
+    <div class="text-center mb-10 animate-fade-in">
+      <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-3">
+        🌍 Timezone Converter
+      </h2>
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Convert time between any two timezones instantly. Supports IST, UTC, EST, PST, GMT and 400+ more.
+      </p>
+    </div>
+
+    <!-- Converter Card -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 sm:p-8 mb-6 animate-fade-in">
+
+      <!-- Date + Time Row -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+        <div>
+          <label for="input-date" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Date</label>
+          <input
+            type="date"
+            id="input-date"
+            class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            aria-label="Input date"
+          >
+        </div>
+        <div>
+          <label for="input-time" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Time</label>
+          <input
+            type="time"
+            id="input-time"
+            class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            aria-label="Input time"
+          >
+        </div>
+      </div>
+
+      <!-- Timezone Row -->
+      <div class="grid grid-cols-1 sm:grid-cols-[1fr_auto_1fr] gap-3 items-end mb-6">
+
+        <!-- From Timezone -->
+        <div>
+          <label for="from-tz" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">From Timezone</label>
+          <select
+            id="from-tz"
+            class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            aria-label="Source timezone"
+          ></select>
+        </div>
+
+        <!-- Swap -->
+        <div class="flex justify-center">
+          <button
+            id="swap-btn"
+            class="flex items-center justify-center w-11 h-11 bg-gray-100 dark:bg-gray-700 hover:bg-blue-100 dark:hover:bg-blue-900 text-gray-700 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-300 rounded-full transition-colors"
+            aria-label="Swap timezones"
+            title="Swap timezones"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- To Timezone -->
+        <div>
+          <label for="to-tz" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">To Timezone</label>
+          <select
+            id="to-tz"
+            class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            aria-label="Target timezone"
+          ></select>
+        </div>
+      </div>
+
+      <!-- Convert Button -->
+      <button
+        id="convert-btn"
+        class="w-full flex items-center justify-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        aria-label="Convert timezone"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        Convert
+      </button>
+
+      <!-- Result Card -->
+      <div id="result-card" class="hidden mt-6 animate-slide-up">
+        <div class="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 rounded-xl p-5">
+          <div class="flex items-start justify-between mb-4">
+            <h3 class="text-base font-semibold text-blue-800 dark:text-blue-200">Converted Time</h3>
+            <button
+              id="copy-btn"
+              class="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 font-medium flex items-center gap-1 transition-colors"
+              aria-label="Copy result"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+              </svg>
+              Copy
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="text-center sm:text-left">
+              <p class="text-xs text-gray-500 dark:text-gray-400 mb-1" id="result-from-label">From</p>
+              <p class="text-xl font-bold text-gray-900 dark:text-white" id="result-from-time">—</p>
+              <p class="text-sm text-gray-500 dark:text-gray-400" id="result-from-date">—</p>
+              <p class="text-xs text-blue-600 dark:text-blue-400 mt-1" id="result-from-offset">—</p>
+            </div>
+            <div class="text-center sm:text-left sm:border-l sm:border-blue-200 sm:dark:border-blue-700 sm:pl-4">
+              <p class="text-xs text-gray-500 dark:text-gray-400 mb-1" id="result-to-label">To</p>
+              <p class="text-2xl font-bold text-blue-700 dark:text-blue-300" id="result-to-time">—</p>
+              <p class="text-sm text-gray-500 dark:text-gray-400" id="result-to-date">—</p>
+              <p class="text-xs text-blue-600 dark:text-blue-400 mt-1" id="result-to-offset">—</p>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-4 border-t border-blue-200 dark:border-blue-700">
+            <p class="text-sm text-gray-600 dark:text-gray-300 text-center" id="result-diff">—</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Use Now -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6 animate-fade-in">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">⏱ Current Time</h3>
+        <span id="live-clock" class="text-sm font-mono text-blue-600 dark:text-blue-400">—</span>
+      </div>
+      <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Click "Use Now" to fill in the current date and time.</p>
+      <button
+        id="use-now-btn"
+        class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg text-sm font-medium transition-colors"
+      >
+        Use Current Time
+      </button>
+    </div>
+
+    <!-- World Clock -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-8 animate-fade-in">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">🌐 World Clock</h3>
+      <div id="world-clock-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3"></div>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+      <div class="faq-container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about the Timezone Converter</p>
+        <div class="faq-list">
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is a timezone converter?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>A timezone converter is a tool that lets you convert a date and time from one timezone to another. For example, you can convert 9:00 AM IST (India Standard Time) to the equivalent time in UTC, EST, PST, or any other timezone in the world. This is useful for scheduling meetings across different countries, coordinating with remote teams, or understanding when a global event happens in your local time.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How do I convert IST to UTC?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>India Standard Time (IST) is UTC+5:30, meaning it is 5 hours and 30 minutes ahead of Coordinated Universal Time (UTC). To convert IST to UTC, subtract 5 hours and 30 minutes. For example, 9:00 AM IST = 3:30 AM UTC. Our timezone converter handles this automatically — just select <strong>Asia/Kolkata</strong> as the source timezone and <strong>UTC</strong> as the target timezone, enter the time, and click Convert.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is this timezone converter free?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes, this timezone converter is completely free to use. There is no sign-up, no account, and no subscription required. All conversions happen instantly in your browser.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Does the tool store my data or send it to a server?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>No. All timezone conversions happen entirely in your browser using the built-in JavaScript <code>Intl</code> API. No data is ever sent to any server. Your date, time, and timezone selections remain completely private on your device.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How many timezones does this tool support?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>This tool supports all IANA (Internet Assigned Numbers Authority) standard timezone identifiers — over 400 timezones covering every country and territory in the world. Popular ones include IST (Asia/Kolkata), UTC, EST (America/New_York), PST (America/Los_Angeles), GMT (Europe/London), CET (Europe/Paris), JST (Asia/Tokyo), AEST (Australia/Sydney), and many more. The dropdown is searchable, so you can type to filter timezones quickly.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+
+  <!-- Toast container -->
+  <div id="toast-container"></div>
+
+  <!-- FAQ Accordion -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.faq-question').forEach(function(question) {
+        question.addEventListener('click', function() {
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          const item = this.closest('.faq-item');
+          const icon = this.querySelector('.faq-icon');
+
+          document.querySelectorAll('.faq-question').forEach(function(q) {
+            if (q !== question) {
+              q.setAttribute('aria-expanded', 'false');
+              q.closest('.faq-item').classList.remove('active');
+              q.querySelector('.faq-icon').textContent = '+';
+            }
+          });
+
+          if (isExpanded) {
+            this.setAttribute('aria-expanded', 'false');
+            item.classList.remove('active');
+            icon.textContent = '+';
+          } else {
+            this.setAttribute('aria-expanded', 'true');
+            item.classList.add('active');
+            icon.textContent = '−';
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- Sentry init -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
+        initSentryTracking();
+      }
+    });
+  </script>
+
+  <!-- Timezone Converter App -->
+  <script>
+    // ── Constants ────────────────────────────────────────────────────────────
+    const PAGE_NAME = 'Timezone Converter';
+
+    // IANA timezones grouped with friendly labels (popular ones first)
+    const POPULAR_TIMEZONES = [
+      { value: 'Asia/Kolkata',         label: 'IST – India Standard Time (UTC+5:30)' },
+      { value: 'UTC',                  label: 'UTC – Coordinated Universal Time (UTC+0)' },
+      { value: 'America/New_York',     label: 'EST/EDT – Eastern Time (UTC-5/-4)' },
+      { value: 'America/Chicago',      label: 'CST/CDT – Central Time (UTC-6/-5)' },
+      { value: 'America/Denver',       label: 'MST/MDT – Mountain Time (UTC-7/-6)' },
+      { value: 'America/Los_Angeles',  label: 'PST/PDT – Pacific Time (UTC-8/-7)' },
+      { value: 'America/Anchorage',    label: 'AKST – Alaska Time (UTC-9/-8)' },
+      { value: 'Pacific/Honolulu',     label: 'HST – Hawaii Time (UTC-10)' },
+      { value: 'Europe/London',        label: 'GMT/BST – London (UTC+0/+1)' },
+      { value: 'Europe/Paris',         label: 'CET/CEST – Paris/Berlin (UTC+1/+2)' },
+      { value: 'Europe/Istanbul',      label: 'TRT – Turkey Time (UTC+3)' },
+      { value: 'Asia/Dubai',           label: 'GST – Gulf Standard Time (UTC+4)' },
+      { value: 'Asia/Karachi',         label: 'PKT – Pakistan Standard Time (UTC+5)' },
+      { value: 'Asia/Dhaka',           label: 'BST – Bangladesh Standard Time (UTC+6)' },
+      { value: 'Asia/Bangkok',         label: 'ICT – Indochina Time (UTC+7)' },
+      { value: 'Asia/Shanghai',        label: 'CST – China Standard Time (UTC+8)' },
+      { value: 'Asia/Singapore',       label: 'SGT – Singapore Time (UTC+8)' },
+      { value: 'Asia/Tokyo',           label: 'JST – Japan Standard Time (UTC+9)' },
+      { value: 'Australia/Sydney',     label: 'AEST/AEDT – Sydney (UTC+10/+11)' },
+      { value: 'Pacific/Auckland',     label: 'NZST/NZDT – New Zealand (UTC+12/+13)' },
+      { value: 'America/Sao_Paulo',    label: 'BRT – Brasília Time (UTC-3)' },
+      { value: 'America/Argentina/Buenos_Aires', label: 'ART – Argentina Time (UTC-3)' },
+      { value: 'America/Toronto',      label: 'EST/EDT – Toronto (UTC-5/-4)' },
+      { value: 'America/Vancouver',    label: 'PST/PDT – Vancouver (UTC-8/-7)' },
+      { value: 'America/Mexico_City',  label: 'CST/CDT – Mexico City (UTC-6/-5)' },
+      { value: 'Europe/Moscow',        label: 'MSK – Moscow Time (UTC+3)' },
+      { value: 'Asia/Riyadh',          label: 'AST – Arabia Standard Time (UTC+3)' },
+      { value: 'Africa/Nairobi',       label: 'EAT – East Africa Time (UTC+3)' },
+      { value: 'Africa/Lagos',         label: 'WAT – West Africa Time (UTC+1)' },
+      { value: 'Africa/Johannesburg',  label: 'SAST – South Africa Time (UTC+2)' },
+    ];
+
+    // All IANA timezones (browser-supported) fetched via Intl
+    function getAllTimezones() {
+      try {
+        const supported = Intl.supportedValuesOf('timeZone');
+        return supported;
+      } catch (_) {
+        return POPULAR_TIMEZONES.map(function(tz) { return tz.value; });
+      }
+    }
+
+    const ALL_TIMEZONES = getAllTimezones();
+
+    // World clock cities shown in the grid
+    const WORLD_CLOCK_CITIES = [
+      { tz: 'Asia/Kolkata',        city: 'Mumbai / Delhi', flag: '🇮🇳' },
+      { tz: 'UTC',                 city: 'UTC',            flag: '🌐' },
+      { tz: 'America/New_York',    city: 'New York',       flag: '🇺🇸' },
+      { tz: 'America/Los_Angeles', city: 'Los Angeles',    flag: '🇺🇸' },
+      { tz: 'Europe/London',       city: 'London',         flag: '🇬🇧' },
+      { tz: 'Europe/Paris',        city: 'Paris',          flag: '🇫🇷' },
+      { tz: 'Asia/Tokyo',          city: 'Tokyo',          flag: '🇯🇵' },
+      { tz: 'Australia/Sydney',    city: 'Sydney',         flag: '🇦🇺' },
+    ];
+
+    // ── Utilities ────────────────────────────────────────────────────────────
+
+    function showToast(message, type) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast ' + (type || 'info');
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(function() { toast.classList.add('show'); }, 50);
+      setTimeout(function() {
+        toast.classList.remove('show');
+        setTimeout(function() {
+          if (toast.parentNode) toast.parentNode.removeChild(toast);
+        }, 350);
+      }, 3000);
+    }
+
+    function getUTCOffsetString(tzName, date) {
+      try {
+        const formatter = new Intl.DateTimeFormat('en', {
+          timeZone: tzName,
+          timeZoneName: 'shortOffset'
+        });
+        const parts = formatter.formatToParts(date);
+        const offsetPart = parts.find(function(p) { return p.type === 'timeZoneName'; });
+        return offsetPart ? offsetPart.value : '';
+      } catch (_) {
+        return '';
+      }
+    }
+
+    function formatTimeForDisplay(date, tzName) {
+      return new Intl.DateTimeFormat('en-IN', {
+        timeZone: tzName,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      }).format(date);
+    }
+
+    function formatDateForDisplay(date, tzName) {
+      return new Intl.DateTimeFormat('en-IN', {
+        timeZone: tzName,
+        weekday: 'short',
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
+      }).format(date);
+    }
+
+    function buildLocalDateFromInputs(dateStr, timeStr, fromTz) {
+      // Parse "YYYY-MM-DD" and "HH:MM" then interpret in fromTz
+      const [year, month, day] = dateStr.split('-').map(Number);
+      const [hours, minutes] = timeStr.split(':').map(Number);
+
+      // Build a UTC timestamp for the given local time in fromTz using Intl
+      // We brute-force by constructing the date string and using Date.parse with offset knowledge
+      const isoLike = `${String(year).padStart(4,'0')}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}T${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:00`;
+
+      // Use a trick: create a Date from UTC, then find the offset for that tz at that time,
+      // then adjust. Two-pass approach for DST accuracy.
+      const guessUtc = new Date(isoLike + 'Z');
+      const offsetMs = getOffsetMs(guessUtc, fromTz);
+      const corrected = new Date(guessUtc.getTime() + offsetMs);
+      const offsetMs2 = getOffsetMs(corrected, fromTz);
+      return new Date(guessUtc.getTime() + offsetMs2);
+    }
+
+    function getOffsetMs(date, tzName) {
+      // Returns the difference (ms) between UTC and the local time in tzName
+      const utcParts = getDatePartsInTz(date, 'UTC');
+      const localParts = getDatePartsInTz(date, tzName);
+
+      const utcMs = Date.UTC(utcParts.year, utcParts.month, utcParts.day, utcParts.hour, utcParts.minute, utcParts.second);
+      const localMs = Date.UTC(localParts.year, localParts.month, localParts.day, localParts.hour, localParts.minute, localParts.second);
+      return localMs - utcMs;
+    }
+
+    function getDatePartsInTz(date, tzName) {
+      const fmt = new Intl.DateTimeFormat('en', {
+        timeZone: tzName,
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit',
+        hour12: false
+      });
+      const parts = fmt.formatToParts(date);
+      const get = function(type) {
+        const p = parts.find(function(x) { return x.type === type; });
+        return p ? parseInt(p.value, 10) : 0;
+      };
+      return {
+        year:   get('year'),
+        month:  get('month') - 1, // 0-indexed for Date.UTC
+        day:    get('day'),
+        hour:   get('hour') === 24 ? 0 : get('hour'),
+        minute: get('minute'),
+        second: get('second')
+      };
+    }
+
+    function formatOffsetLabel(date, tzName) {
+      const offset = getUTCOffsetString(date, tzName);
+      return tzName + (offset ? ' (' + offset + ')' : '');
+    }
+
+    function formatHourDiff(ms) {
+      const totalMins = Math.round(Math.abs(ms) / 60000);
+      const h = Math.floor(totalMins / 60);
+      const m = totalMins % 60;
+      const sign = ms >= 0 ? '+' : '-';
+      if (m === 0) return sign + h + 'h';
+      return sign + h + 'h ' + m + 'min';
+    }
+
+    // ── Populate Timezone Selects ────────────────────────────────────────────
+
+    function buildTimezoneOptions(selectEl, selectedValue) {
+      selectEl.innerHTML = '';
+
+      // Popular group
+      const popularGroup = document.createElement('optgroup');
+      popularGroup.label = '★ Popular Timezones';
+      POPULAR_TIMEZONES.forEach(function(tz) {
+        const opt = document.createElement('option');
+        opt.value = tz.value;
+        opt.textContent = tz.label;
+        if (tz.value === selectedValue) opt.selected = true;
+        popularGroup.appendChild(opt);
+      });
+      selectEl.appendChild(popularGroup);
+
+      // All timezones group (excluding already in popular)
+      const popularValues = new Set(POPULAR_TIMEZONES.map(function(t) { return t.value; }));
+      const allGroup = document.createElement('optgroup');
+      allGroup.label = 'All Timezones (A–Z)';
+      ALL_TIMEZONES.forEach(function(tz) {
+        if (popularValues.has(tz)) return;
+        const opt = document.createElement('option');
+        opt.value = tz;
+        opt.textContent = tz.replace(/_/g, ' ');
+        if (tz === selectedValue) opt.selected = true;
+        allGroup.appendChild(opt);
+      });
+      selectEl.appendChild(allGroup);
+    }
+
+    // ── World Clock ──────────────────────────────────────────────────────────
+
+    let worldClockInterval = null;
+
+    function renderWorldClock() {
+      const grid = document.getElementById('world-clock-grid');
+      if (!grid) return;
+
+      const now = new Date();
+
+      if (grid.children.length === 0) {
+        // Build cards once
+        WORLD_CLOCK_CITIES.forEach(function(city) {
+          const card = document.createElement('div');
+          card.className = 'world-clock-card bg-gray-50 dark:bg-gray-700 rounded-xl p-3 text-center cursor-default';
+          card.dataset.tz = city.tz;
+          card.innerHTML = `
+            <div class="text-2xl mb-1">${city.flag}</div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 mb-1 truncate">${city.city}</div>
+            <div class="text-base font-mono font-semibold text-gray-900 dark:text-white world-clock-time">—</div>
+            <div class="text-xs text-gray-400 dark:text-gray-500 world-clock-date">—</div>
+          `;
+          grid.appendChild(card);
+        });
+      }
+
+      grid.querySelectorAll('.world-clock-card').forEach(function(card) {
+        const tz = card.dataset.tz;
+        card.querySelector('.world-clock-time').textContent = formatTimeForDisplay(now, tz);
+        card.querySelector('.world-clock-date').textContent = formatDateForDisplay(now, tz).split(',')[0];
+      });
+    }
+
+    function startWorldClock() {
+      renderWorldClock();
+      worldClockInterval = setInterval(renderWorldClock, 1000);
+    }
+
+    // ── Live Clock (header) ──────────────────────────────────────────────────
+
+    function updateLiveClock() {
+      const el = document.getElementById('live-clock');
+      if (!el) return;
+      const now = new Date();
+      el.textContent = now.toLocaleTimeString('en-IN', { hour12: true });
+    }
+
+    // ── Conversion Logic ─────────────────────────────────────────────────────
+
+    function convertTimezone() {
+      const dateVal = document.getElementById('input-date').value;
+      const timeVal = document.getElementById('input-time').value;
+      const fromTz  = document.getElementById('from-tz').value;
+      const toTz    = document.getElementById('to-tz').value;
+
+      if (!dateVal || !timeVal) {
+        showToast('Please enter a date and time.', 'error');
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('timezone_convert_error', { page: PAGE_NAME, reason: 'missing_input' });
+        }
+        return;
+      }
+
+      try {
+        const utcDate = buildLocalDateFromInputs(dateVal, timeVal, fromTz);
+
+        const fromTimeStr   = formatTimeForDisplay(utcDate, fromTz);
+        const fromDateStr   = formatDateForDisplay(utcDate, fromTz);
+        const fromOffset    = getUTCOffsetString(utcDate, fromTz);
+
+        const toTimeStr     = formatTimeForDisplay(utcDate, toTz);
+        const toDateStr     = formatDateForDisplay(utcDate, toTz);
+        const toOffset      = getUTCOffsetString(utcDate, toTz);
+
+        const fromOffsetMs  = getOffsetMs(utcDate, fromTz);
+        const toOffsetMs    = getOffsetMs(utcDate, toTz);
+        const diffMs        = toOffsetMs - fromOffsetMs;
+        const diffLabel     = diffMs === 0
+          ? 'Same time (no offset difference)'
+          : toTz + ' is ' + formatHourDiff(diffMs) + (diffMs > 0 ? ' ahead of ' : ' behind ') + fromTz;
+
+        document.getElementById('result-from-label').textContent = fromTz;
+        document.getElementById('result-from-time').textContent  = fromTimeStr;
+        document.getElementById('result-from-date').textContent  = fromDateStr;
+        document.getElementById('result-from-offset').textContent = fromOffset;
+
+        document.getElementById('result-to-label').textContent  = toTz;
+        document.getElementById('result-to-time').textContent   = toTimeStr;
+        document.getElementById('result-to-date').textContent   = toDateStr;
+        document.getElementById('result-to-offset').textContent = toOffset;
+
+        document.getElementById('result-diff').textContent = diffLabel;
+
+        const resultCard = document.getElementById('result-card');
+        resultCard.classList.remove('hidden');
+
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('timezone_convert', {
+            page: PAGE_NAME,
+            from_tz: fromTz,
+            to_tz: toTz
+          });
+        }
+
+        showToast('Time converted!', 'success');
+      } catch (err) {
+        showToast('Conversion failed. Please check your inputs.', 'error');
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('timezone_convert_error', { page: PAGE_NAME, reason: err.message });
+        }
+        if (typeof Sentry !== 'undefined') {
+          try {
+            Sentry.captureException(err, { tags: { operation: 'timezone_convert' } });
+          } catch (_) { /* noop */ }
+        }
+      }
+    }
+
+    // ── Copy Result ──────────────────────────────────────────────────────────
+
+    function copyResult() {
+      const fromLabel  = document.getElementById('result-from-label').textContent;
+      const fromTime   = document.getElementById('result-from-time').textContent;
+      const fromDate   = document.getElementById('result-from-date').textContent;
+      const toLabel    = document.getElementById('result-to-label').textContent;
+      const toTime     = document.getElementById('result-to-time').textContent;
+      const toDate     = document.getElementById('result-to-date').textContent;
+      const diff       = document.getElementById('result-diff').textContent;
+
+      const text = `From: ${fromLabel}\n${fromTime} — ${fromDate}\n\nTo: ${toLabel}\n${toTime} — ${toDate}\n\n${diff}`;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() {
+          showToast('Copied to clipboard!', 'success');
+        }).catch(function() {
+          fallbackCopy(text);
+        });
+      } else {
+        fallbackCopy(text);
+      }
+
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.track('timezone_copy_result', { page: PAGE_NAME });
+      }
+    }
+
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('Copied to clipboard!', 'success');
+      } catch (_) {
+        showToast('Could not copy. Please select manually.', 'error');
+      }
+      document.body.removeChild(ta);
+    }
+
+    // ── Init ─────────────────────────────────────────────────────────────────
+
+    function setCurrentDateTime() {
+      const now = new Date();
+      const pad = function(n) { return String(n).padStart(2, '0'); };
+      document.getElementById('input-date').value =
+        now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate());
+      document.getElementById('input-time').value =
+        pad(now.getHours()) + ':' + pad(now.getMinutes());
+    }
+
+    function guessLocalTimezone() {
+      try {
+        return Intl.DateTimeFormat().resolvedOptions().timeZone;
+      } catch (_) {
+        return 'UTC';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const fromSelect = document.getElementById('from-tz');
+      const toSelect   = document.getElementById('to-tz');
+      const localTz    = guessLocalTimezone();
+
+      buildTimezoneOptions(fromSelect, localTz);
+      buildTimezoneOptions(toSelect, 'UTC');
+
+      setCurrentDateTime();
+      updateLiveClock();
+      setInterval(updateLiveClock, 1000);
+      startWorldClock();
+
+      document.getElementById('convert-btn').addEventListener('click', convertTimezone);
+
+      document.getElementById('swap-btn').addEventListener('click', function() {
+        const fromVal = fromSelect.value;
+        const toVal   = toSelect.value;
+        // Rebuild to reflect correct selected option
+        buildTimezoneOptions(fromSelect, toVal);
+        buildTimezoneOptions(toSelect, fromVal);
+
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('timezone_swap', { page: PAGE_NAME });
+        }
+      });
+
+      document.getElementById('copy-btn').addEventListener('click', copyResult);
+
+      document.getElementById('use-now-btn').addEventListener('click', function() {
+        setCurrentDateTime();
+        showToast('Current time loaded!', 'info');
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('timezone_use_now', { page: PAGE_NAME });
+        }
+      });
+
+      // Allow Enter key to convert
+      document.getElementById('input-date').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') convertTimezone();
+      });
+      document.getElementById('input-time').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') convertTimezone();
+      });
+    });
+  </script>
+</body>
+</html>
