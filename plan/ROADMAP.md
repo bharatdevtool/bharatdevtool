@@ -101,7 +101,7 @@
 | 22 | Lorem Ipsum Generator | text | High | 0.5d | `done` | `lorem-ipsum.html` |
 | 23 | Timezone Converter | utility | High | 1d | `done` | `timezone-converter.html` |
 | 24 | Markdown to HTML | text | High | 1d | `done` | `markdown-to-html.html` |
-| 25 | JSON → TypeScript Interface | developer | Medium-High | 1.5d | `in-progress` | `json-to-typescript.html` |
+| 25 | JSON → TypeScript Interface | developer | Medium-High | 1.5d | `done` | `json-to-typescript.html` |
 | 26 | HTML Formatter/Beautifier | developer | High | 1d | `not-started` | `html-formatter.html` |
 | 27 | Favicon Generator | design | High | 1d | `not-started` | `favicon-generator.html` |
 | 28 | Reading Time Estimator | text | Medium | 0.5d | `not-started` | `reading-time.html` |
