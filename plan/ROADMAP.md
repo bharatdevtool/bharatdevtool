@@ -103,7 +103,7 @@
 | 24 | Markdown to HTML | text | High | 1d | `done` | `markdown-to-html.html` |
 | 25 | JSON → TypeScript Interface | developer | Medium-High | 1.5d | `done` | `json-to-typescript.html` |
 | 26 | HTML Formatter/Beautifier | developer | High | 1d | `done` | `html-formatter.html` |
-| 27 | Favicon Generator | design | High | 1d | `in-progress` | `favicon-generator.html` |
+| 27 | Favicon Generator | design | High | 1d | `done` | `favicon-generator.html` |
 | 28 | Reading Time Estimator | text | Medium | 0.5d | `not-started` | `reading-time.html` |
 
 ---
