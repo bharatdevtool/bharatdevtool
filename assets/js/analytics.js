@@ -524,7 +524,8 @@ const PAGE_NAMES = {
   'timezone-converter.html': 'Timezone Converter',
   'markdown-to-html.html': 'Markdown to HTML Converter',
   'json-to-typescript.html': 'JSON to TypeScript Interface Generator',
-  'html-formatter.html': 'HTML Formatter'
+  'html-formatter.html': 'HTML Formatter',
+  'favicon-generator.html': 'Favicon Generator'
 };
 
 /**
