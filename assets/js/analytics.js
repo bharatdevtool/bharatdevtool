@@ -506,7 +506,8 @@ const PAGE_NAMES = {
   'uuid-generator.html': 'UUID Generator',
   'whatsapp-link.html': 'WhatsApp Link Generator',
   'percentage-calculator.html': 'Percentage Calculator',
-  'bmi-calculator.html': 'BMI Calculator'
+  'bmi-calculator.html': 'BMI Calculator',
+  'gst-calculator.html': 'GST Calculator'
 };
 
 /**
