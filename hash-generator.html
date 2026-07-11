@@ -853,14 +853,36 @@
     // ============================================================
     async function copyToClipboard(text, successMsg) {
       try {
+        if (!navigator.clipboard || !navigator.clipboard.writeText) {
+          throw new Error('clipboard API unavailable');
+        }
         await navigator.clipboard.writeText(text);
         showToast(successMsg || 'Copied!', 'success');
         if (typeof window.Analytics !== 'undefined') {
           window.Analytics.track('hash_copied', { page: 'Hash Generator' });
         }
       } catch {
+        fallbackCopy(text, successMsg);
+      }
+    }
+
+    function fallbackCopy(text, successMsg) {
+      const el = document.createElement('textarea');
+      el.value = text;
+      el.style.cssText = 'position:fixed;left:-9999px;top:-9999px';
+      document.body.appendChild(el);
+      el.focus();
+      el.select();
+      try {
+        document.execCommand('copy');
+        showToast(successMsg || 'Copied!', 'success');
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('hash_copied', { page: 'Hash Generator' });
+        }
+      } catch (e) {
         showToast('Copy failed — please copy manually.', 'error');
       }
+      document.body.removeChild(el);
     }
 
     copyAllBtn.addEventListener('click', () => {

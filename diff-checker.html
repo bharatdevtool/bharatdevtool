@@ -661,7 +661,13 @@
     // LCS-based line diff
     // Returns an array of { type: 'equal'|'added'|'removed', value: string }
     // ──────────────────────────────────────────────────────────────────
-    function computeLineDiff(originalLines, modifiedLines) {
+    function computeLineDiff(originalLines, modifiedLines, compareOriginal, compareModified) {
+      // compareOriginal/compareModified (optional) are normalized copies used
+      // only for equality checks (e.g. ignore-case/ignore-whitespace); the
+      // rendered `value` always comes from the real originalLines/modifiedLines
+      // so the diff output never shows mutated/normalized text to the user.
+      compareOriginal = compareOriginal || originalLines;
+      compareModified = compareModified || modifiedLines;
       const m = originalLines.length;
       const n = modifiedLines.length;
 
@@ -672,7 +678,7 @@
       }
       for (let i = 1; i <= m; i++) {
         for (let j = 1; j <= n; j++) {
-          if (originalLines[i - 1] === modifiedLines[j - 1]) {
+          if (compareOriginal[i - 1] === compareModified[j - 1]) {
             dp[i][j] = dp[i - 1][j - 1] + 1;
           } else {
             dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
@@ -685,7 +691,7 @@
       let i = m;
       let j = n;
       while (i > 0 || j > 0) {
-        if (i > 0 && j > 0 && originalLines[i - 1] === modifiedLines[j - 1]) {
+        if (i > 0 && j > 0 && compareOriginal[i - 1] === compareModified[j - 1]) {
           result.push({ type: 'equal', value: originalLines[i - 1] });
           i--;
           j--;
@@ -964,19 +970,22 @@
         });
       }
 
-      let origLines = originalText.split('\n');
-      let modLines = modifiedText.split('\n');
+      const origLines = originalText.split('\n');
+      const modLines = modifiedText.split('\n');
+
+      let compareOrig = origLines;
+      let compareMod = modLines;
 
       if (ignoreWs) {
-        origLines = origLines.map(function(l) { return l.trim(); });
-        modLines = modLines.map(function(l) { return l.trim(); });
+        compareOrig = compareOrig.map(function(l) { return l.trim(); });
+        compareMod = compareMod.map(function(l) { return l.trim(); });
       }
       if (ignoreCase) {
-        origLines = origLines.map(function(l) { return l.toLowerCase(); });
-        modLines = modLines.map(function(l) { return l.toLowerCase(); });
+        compareOrig = compareOrig.map(function(l) { return l.toLowerCase(); });
+        compareMod = compareMod.map(function(l) { return l.toLowerCase(); });
       }
 
-      const diffResult = computeLineDiff(origLines, modLines);
+      const diffResult = computeLineDiff(origLines, modLines, compareOrig, compareMod);
       lastDiffResult = diffResult;
 
       const added = diffResult.filter(function(d) { return d.type === 'added'; }).length;

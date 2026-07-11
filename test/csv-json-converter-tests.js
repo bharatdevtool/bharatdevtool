@@ -48,7 +48,7 @@ function convertCSVtoJSON(csvText, delimiter, hasHeader, pretty) {
     headers.forEach((header, i) => {
       const key = header.trim() || ('column' + (i + 1));
       const raw = values[i] !== undefined ? values[i].trim() : '';
-      if (raw !== '' && !isNaN(Number(raw))) { obj[key] = Number(raw); }
+      if (raw !== '' && !isNaN(Number(raw)) && String(Number(raw)) === raw) { obj[key] = Number(raw); }
       else if (raw === 'true') { obj[key] = true; }
       else if (raw === 'false') { obj[key] = false; }
       else if (raw === 'null' || raw === '') { obj[key] = null; }
@@ -155,6 +155,13 @@ export class CSVJsonConverterTester {
       const out = JSON.parse(convertCSVtoJSON('val\n42\n3.14', ',', true, false));
       if (out[0].val !== 42) throw new Error('Expected 42');
       if (out[1].val !== 3.14) throw new Error('Expected 3.14');
+      return true;
+    });
+
+    this.runTest('leading-zero fields are kept as strings, not coerced to numbers', () => {
+      const out = JSON.parse(convertCSVtoJSON('zip\n01001\n0091234567', ',', true, false));
+      if (out[0].zip !== '01001') throw new Error('Expected string "01001", got ' + JSON.stringify(out[0].zip));
+      if (out[1].zip !== '0091234567') throw new Error('Expected string "0091234567", got ' + JSON.stringify(out[1].zip));
       return true;
     });
 

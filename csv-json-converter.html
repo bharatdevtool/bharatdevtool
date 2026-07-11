@@ -698,8 +698,10 @@
         headers.forEach(function(header, i) {
           const key = header.trim() || ('column' + (i + 1));
           const raw = values[i] !== undefined ? values[i].trim() : '';
-          // Try numeric coercion
-          if (raw !== '' && !isNaN(Number(raw))) {
+          // Try numeric coercion - only when the string round-trips exactly,
+          // so values like leading-zero zip codes/IDs ('01001') are kept as
+          // strings instead of silently losing their leading zeros.
+          if (raw !== '' && !isNaN(Number(raw)) && String(Number(raw)) === raw) {
             obj[key] = Number(raw);
           } else if (raw === 'true') {
             obj[key] = true;

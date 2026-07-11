@@ -609,7 +609,7 @@
       }, 3000);
     }
 
-    function getUTCOffsetString(tzName, date) {
+    function getUTCOffsetString(date, tzName) {
       try {
         const formatter = new Intl.DateTimeFormat('en', {
           timeZone: tzName,

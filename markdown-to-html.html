@@ -725,15 +725,29 @@ Visit [Bharat Dev Tools](https://bharatdevtool.com) for more free developer tool
         .replace(/'/g, '&#39;');
     }
 
+    // Blocks javascript:/data:/vbscript: URIs (and similar) from reaching an
+    // href/src attribute that later gets injected via innerHTML.
+    function isSafeUrl(url) {
+      return !/^\s*(javascript|data|vbscript):/i.test(url);
+    }
+
+    function sanitizeUrl(url) {
+      return isSafeUrl(url) ? url : '#';
+    }
+
     function parseInline(text, opts) {
       let result = text;
 
-      // Escape HTML in inline text (except already-escaped sequences)
-      // We handle escaping carefully per block context
+      // NOTE: every caller of parseInline() passes text that has already
+      // been through escapeHtml() once (see call sites below), so the
+      // replacements in this function must NOT call escapeHtml() again on
+      // substrings extracted from `result` - doing so double-escapes (e.g.
+      // "&" -> "&amp;" -> "&amp;amp;") and breaks URLs/text containing
+      // entities. Extracted substrings are used as-is.
 
       // Inline code — must come before other replacements
       result = result.replace(/`([^`]+)`/g, function(_, code) {
-        return '<code>' + escapeHtml(code) + '</code>';
+        return '<code>' + code + '</code>';
       });
 
       // Bold+italic: ***text***
@@ -755,17 +769,21 @@ Visit [Bharat Dev Tools](https://bharatdevtool.com) for more free developer tool
 
       // Images: ![alt](url)
       result = result.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, function(_, alt, src) {
-        return '<img src="' + escapeHtml(src) + '" alt="' + escapeHtml(alt) + '" loading="lazy">';
+        return '<img src="' + sanitizeUrl(src) + '" alt="' + alt + '" loading="lazy">';
       });
 
       // Links: [text](url)
       result = result.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function(_, linkText, href) {
-        return '<a href="' + escapeHtml(href) + '" rel="noopener noreferrer">' + linkText + '</a>';
+        return '<a href="' + sanitizeUrl(href) + '" rel="noopener noreferrer">' + linkText + '</a>';
       });
 
-      // Auto-links
-      result = result.replace(/<(https?:\/\/[^>]+)>/g, function(_, url) {
-        return '<a href="' + escapeHtml(url) + '" rel="noopener noreferrer">' + escapeHtml(url) + '</a>';
+      // Auto-links: <https://example.com>
+      // `result` has already been through escapeHtml() by this point (either
+      // by the caller before parseInline, or because this text never had raw
+      // <...> to begin with), so a literal "<...>" written by the user now
+      // appears as the entities "&lt;...&gt;" - match that escaped form.
+      result = result.replace(/&lt;(https?:\/\/[^&]+)&gt;/g, function(_, url) {
+        return '<a href="' + sanitizeUrl(url) + '" rel="noopener noreferrer">' + url + '</a>';
       });
 
       return result;
