@@ -521,7 +521,8 @@ const PAGE_NAMES = {
   'diff-checker.html': 'Diff Checker',
   'cron-generator.html': 'Cron Expression Generator',
   'lorem-ipsum.html': 'Lorem Ipsum Generator',
-  'timezone-converter.html': 'Timezone Converter'
+  'timezone-converter.html': 'Timezone Converter',
+  'markdown-to-html.html': 'Markdown to HTML Converter'
 };
 
 /**
