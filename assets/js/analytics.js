@@ -520,7 +520,8 @@ const PAGE_NAMES = {
   'yaml-json-converter.html': 'YAML JSON Converter',
   'diff-checker.html': 'Diff Checker',
   'cron-generator.html': 'Cron Expression Generator',
-  'lorem-ipsum.html': 'Lorem Ipsum Generator'
+  'lorem-ipsum.html': 'Lorem Ipsum Generator',
+  'timezone-converter.html': 'Timezone Converter'
 };
 
 /**
