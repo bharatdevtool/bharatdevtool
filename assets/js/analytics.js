@@ -523,7 +523,8 @@ const PAGE_NAMES = {
   'lorem-ipsum.html': 'Lorem Ipsum Generator',
   'timezone-converter.html': 'Timezone Converter',
   'markdown-to-html.html': 'Markdown to HTML Converter',
-  'json-to-typescript.html': 'JSON to TypeScript Interface Generator'
+  'json-to-typescript.html': 'JSON to TypeScript Interface Generator',
+  'html-formatter.html': 'HTML Formatter'
 };
 
 /**

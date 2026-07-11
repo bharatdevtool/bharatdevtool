@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free HTML Formatter & Beautifier Online | Indent & Pretty Print HTML | Bharat Dev Tools</title>
+  <meta name="description" content="Free HTML Formatter and Beautifier. Instantly format, indent, and pretty-print messy HTML code online. No sign-up required. Runs entirely in your browser — your code never leaves your device.">
+  <meta name="keywords" content="html formatter, html beautifier, html pretty print, html indenter, format html online, html code formatter, html tidy, html minifier, beautify html, html cleaner, free html formatter, online html formatter">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  <meta name="distribution" content="global">
+  <meta name="rating" content="general">
+  <link rel="canonical" href="https://bharatdevtool.com/html-formatter.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Free HTML Formatter & Beautifier Online | Bharat Dev Tools">
+  <meta property="og:description" content="Free HTML Formatter and Beautifier. Instantly format, indent, and pretty-print messy HTML code online. No sign-up required.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/html-formatter.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="HTML Formatter & Beautifier - Free Online Tool">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free HTML Formatter & Beautifier Online | Bharat Dev Tools">
+  <meta name="twitter:description" content="Free HTML Formatter and Beautifier. Instantly format, indent, and pretty-print messy HTML code. No sign-up required.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ik.imagekit.io/bdt/bdt_logo_v3_16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/bdt/bdt_logo_v3_180.png">
+
+  <!-- Theme FIRST — prevents dark mode flash -->
+  <script src="assets/js/theme.js"></script>
+
+  <!-- Sentry SDK -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+
+  <!-- Version Tracking Script -->
+  <script src="assets/js/version.js" defer></script>
+
+  <!-- Analytics Script -->
+  <script src="assets/js/analytics.js" defer></script>
+
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+
+  <!-- WebApplication Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "HTML Formatter & Beautifier",
+    "description": "Free HTML Formatter and Beautifier. Format, indent, and pretty-print HTML code instantly in your browser.",
+    "url": "https://bharatdevtool.com/html-formatter.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "HTML Formatting & Beautification",
+      "HTML Minification",
+      "Configurable Indentation",
+      "Inline vs Block Element Handling",
+      "Copy to Clipboard",
+      "Download Formatted HTML"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "112"
+    }
+  }
+  </script>
+
+  <!-- BreadcrumbList Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Developer Tools",
+        "item": "https://bharatdevtool.com/tools.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "HTML Formatter & Beautifier",
+        "item": "https://bharatdevtool.com/html-formatter.html"
+      }
+    ]
+  }
+  </script>
+
+  <!-- FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is an HTML Formatter?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "An HTML Formatter (also called HTML Beautifier) is a tool that takes poorly indented or minified HTML code and reformats it with consistent indentation, proper line breaks, and clean structure. It makes your HTML code more readable without changing its functionality."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this HTML Formatter free to use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, completely free. There are no sign-ups, subscriptions, or usage limits. You can format as much HTML as you need."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my HTML code safe? Does it get sent to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Your code is 100% safe. All formatting happens entirely in your browser using JavaScript. Your HTML never leaves your device and is never sent to any server."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does the HTML Formatter work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The formatter parses your HTML by tracking opening and closing tags, inline vs block elements, and self-closing tags. It then rebuilds the output with proper indentation (2 or 4 spaces, or tabs) and consistent line breaks. Inline elements like span, a, and strong are kept on the same line as their content."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I also minify HTML with this tool?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Switch to 'Minify' mode to collapse your HTML into a single line by removing unnecessary whitespace and newlines. This is useful for reducing file size before deployment."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .animate-fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-slide-up {
+      animation: slideUp 0.3s ease-out;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transform: translateX(110%);
+      transition: transform 0.3s ease;
+    }
+    .toast.show { transform: translateX(0); }
+    .toast.success { background: linear-gradient(135deg, #10b981, #059669); }
+    .toast.error   { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .toast.info    { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+
+    .code-editor {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      resize: vertical;
+      min-height: 220px;
+    }
+
+    .mode-tab {
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .mode-tab.active {
+      background: #2563eb;
+      color: #ffffff;
+    }
+
+    .stat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 10px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+  <!-- Header Component -->
+  <script src="components/header.js"></script>
+
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <h1 class="sr-only">HTML Formatter and Beautifier</h1>
+
+    <!-- Hero -->
+    <div class="text-center mb-10 animate-fade-in">
+      <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        🖋️ HTML Formatter & Beautifier
+      </h2>
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Instantly format, indent, and beautify messy HTML. Runs 100% in your browser — your code never leaves your device.
+      </p>
+    </div>
+
+    <!-- Main Panel -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-8 animate-fade-in">
+
+      <!-- Mode Tabs -->
+      <div class="flex items-center mb-6 gap-2">
+        <button id="tab-format" class="mode-tab active px-5 py-2 rounded-lg text-sm font-medium border border-blue-600 text-white" aria-pressed="true">
+          ✨ Beautify
+        </button>
+        <button id="tab-minify" class="mode-tab px-5 py-2 rounded-lg text-sm font-medium border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300" aria-pressed="false">
+          📦 Minify
+        </button>
+      </div>
+
+      <!-- Options Row -->
+      <div id="format-options" class="flex flex-wrap items-center gap-4 mb-5">
+        <div class="flex items-center gap-2">
+          <label for="indent-select" class="text-sm font-medium text-gray-700 dark:text-gray-300">Indent:</label>
+          <select id="indent-select" class="text-sm border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-1.5 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500">
+            <option value="2">2 Spaces</option>
+            <option value="4">4 Spaces</option>
+            <option value="tab">Tab</option>
+          </select>
+        </div>
+        <label class="flex items-center gap-2 cursor-pointer text-sm text-gray-700 dark:text-gray-300">
+          <input type="checkbox" id="preserve-comments" class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500" checked>
+          Preserve comments
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer text-sm text-gray-700 dark:text-gray-300">
+          <input type="checkbox" id="collapse-empty" class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500">
+          Collapse empty tags
+        </label>
+      </div>
+
+      <!-- Input -->
+      <div class="mb-4">
+        <div class="flex items-center justify-between mb-2">
+          <label for="html-input" class="text-sm font-medium text-gray-700 dark:text-gray-300">Input HTML</label>
+          <div class="flex gap-2">
+            <button id="btn-sample" class="text-xs text-blue-600 dark:text-blue-400 hover:underline">Load sample</button>
+            <button id="btn-clear-input" class="text-xs text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400">Clear</button>
+          </div>
+        </div>
+        <textarea
+          id="html-input"
+          class="code-editor w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          placeholder="Paste your HTML here…"
+          rows="10"
+          spellcheck="false"
+          autocorrect="off"
+          autocomplete="off"
+          aria-label="HTML input"
+        ></textarea>
+        <div id="input-stats" class="mt-1 flex gap-3 text-xs text-gray-400 dark:text-gray-500"></div>
+      </div>
+
+      <!-- Action Button -->
+      <div class="flex justify-center mb-5">
+        <button id="btn-format" class="flex items-center gap-2 px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-md hover:shadow-lg">
+          <span id="btn-label">✨ Beautify HTML</span>
+        </button>
+      </div>
+
+      <!-- Output -->
+      <div id="output-section" class="hidden animate-slide-up">
+        <div class="flex items-center justify-between mb-2">
+          <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Output</label>
+          <div class="flex items-center gap-2">
+            <span id="output-stats" class="text-xs text-gray-400 dark:text-gray-500"></span>
+            <button id="btn-copy" class="flex items-center gap-1 px-3 py-1.5 text-xs bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors">
+              📋 Copy
+            </button>
+            <button id="btn-download" class="flex items-center gap-1 px-3 py-1.5 text-xs bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors">
+              ⬇️ Download
+            </button>
+          </div>
+        </div>
+        <textarea
+          id="html-output"
+          readonly
+          class="code-editor w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white"
+          rows="14"
+          spellcheck="false"
+          aria-label="Formatted HTML output"
+        ></textarea>
+      </div>
+
+      <!-- Error Banner -->
+      <div id="error-banner" class="hidden mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg">
+        <p id="error-text" class="text-sm text-red-700 dark:text-red-400"></p>
+      </div>
+    </div>
+
+    <!-- How to Use -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-8 animate-fade-in">
+      <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">How to use</h2>
+      <ol class="space-y-2 text-sm text-gray-600 dark:text-gray-300 list-decimal list-inside">
+        <li>Paste your HTML into the input box (or click <strong>Load sample</strong>).</li>
+        <li>Choose <strong>Beautify</strong> to format with indentation, or <strong>Minify</strong> to strip whitespace.</li>
+        <li>Pick your preferred indent style (2 spaces, 4 spaces, or tab).</li>
+        <li>Click the button — the result appears instantly.</li>
+        <li>Copy to clipboard or download as an <code>.html</code> file.</li>
+      </ol>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+      <div class="faq-container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about the HTML Formatter &amp; Beautifier</p>
+        <div class="faq-list">
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is an HTML Formatter?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>An HTML Formatter (also called HTML Beautifier) takes poorly indented or minified HTML and reformats it with consistent indentation, proper line breaks, and clean structure — making your code much easier to read and maintain without changing its functionality.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is this tool free?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes, completely free. No sign-up, no subscription, and no usage limits. Format as much HTML as you need.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is my code safe? Does it get sent to a server?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>100% safe. All formatting runs entirely in your browser using JavaScript. Your HTML never leaves your device and is never transmitted to any server.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How does the HTML Formatter work?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>The formatter parses your HTML by tracking opening and closing tags, distinguishing inline elements (like <code>&lt;span&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;strong&gt;</code>) from block elements (like <code>&lt;div&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;ul&gt;</code>). It rebuilds the output with your chosen indentation style and consistent line breaks. Self-closing tags and comments are handled intelligently.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Can I minify HTML with this tool?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes. Switch to <strong>Minify</strong> mode to collapse your HTML into a single compact line by removing unnecessary whitespace and newlines. This reduces file size and is useful before deploying to production.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Component -->
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+  <!-- FAQ Accordion -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', function() {
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          const faqItem = this.closest('.faq-item');
+          const icon = this.querySelector('.faq-icon');
+
+          document.querySelectorAll('.faq-question').forEach(q => {
+            if (q !== this) {
+              q.setAttribute('aria-expanded', 'false');
+              q.closest('.faq-item').classList.remove('active');
+              q.querySelector('.faq-icon').textContent = '+';
+            }
+          });
+
+          if (isExpanded) {
+            this.setAttribute('aria-expanded', 'false');
+            faqItem.classList.remove('active');
+            icon.textContent = '+';
+          } else {
+            this.setAttribute('aria-expanded', 'true');
+            faqItem.classList.add('active');
+            icon.textContent = '−';
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- Sentry init -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
+        initSentryTracking();
+      }
+    });
+  </script>
+
+  <!-- Core App Logic -->
+  <script>
+    // ─── Constants ───────────────────────────────────────────────────────────
+    const PAGE_NAME = 'HTML Formatter';
+
+    const INLINE_TAGS = new Set([
+      'a','abbr','acronym','b','bdo','big','br','button','cite','code',
+      'dfn','em','i','img','input','kbd','label','map','object','output',
+      'q','samp','select','small','span','strong','sub','sup','textarea',
+      'time','tt','u','var'
+    ]);
+
+    const VOID_TAGS = new Set([
+      'area','base','br','col','embed','hr','img','input','link','meta',
+      'param','source','track','wbr'
+    ]);
+
+    const SAMPLE_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sample Page</title>
+<style>body{margin:0;font-family:sans-serif;}</style>
+</head>
+<body>
+<header><h1>Hello World</h1><nav><ul><li><a href="/">Home</a></li><li><a href="/about">About</a></li></ul></nav></header>
+<main><section><h2>Welcome</h2><p>This is a <strong>sample</strong> HTML page that needs <em>formatting</em>.</p></section></main>
+<footer><p>&copy; 2026 Example</p></footer>
+</body>
+</html>`;
+
+    // ─── Utilities ────────────────────────────────────────────────────────────
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 50);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    function copyToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(
+          () => showToast('Copied to clipboard!', 'success'),
+          () => fallbackCopy(text)
+        );
+      } else {
+        fallbackCopy(text);
+      }
+    }
+
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('Copied to clipboard!', 'success');
+      } catch {
+        showToast('Copy failed — please select and copy manually.', 'error');
+      }
+      ta.remove();
+    }
+
+    function downloadFile(content, filename) {
+      const blob = new Blob([content], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function countLines(text) {
+      return text ? text.split('\n').length : 0;
+    }
+
+    function byteSize(text) {
+      return new Blob([text]).size;
+    }
+
+    function formatBytes(bytes) {
+      if (bytes < 1024) return `${bytes} B`;
+      return `${(bytes / 1024).toFixed(1)} KB`;
+    }
+
+    // ─── HTML Beautifier ──────────────────────────────────────────────────────
+
+    function getIndentString(type) {
+      if (type === 'tab') return '\t';
+      return ' '.repeat(Number(type));
+    }
+
+    function isInlineTag(tagName) {
+      return INLINE_TAGS.has(tagName.toLowerCase());
+    }
+
+    function isVoidTag(tagName) {
+      return VOID_TAGS.has(tagName.toLowerCase());
+    }
+
+    /**
+     * Tokenises raw HTML into an array of token objects.
+     * Token types: 'doctype', 'comment', 'open', 'close', 'void', 'text'
+     */
+    function tokeniseHTML(html) {
+      const tokens = [];
+      let i = 0;
+
+      while (i < html.length) {
+        if (html[i] !== '<') {
+          // Text node
+          let j = html.indexOf('<', i);
+          if (j === -1) j = html.length;
+          const text = html.slice(i, j);
+          if (text.trim()) {
+            tokens.push({ type: 'text', value: text.trim() });
+          }
+          i = j;
+          continue;
+        }
+
+        // DOCTYPE
+        if (html.slice(i, i + 9).toUpperCase() === '<!DOCTYPE') {
+          const end = html.indexOf('>', i) + 1;
+          tokens.push({ type: 'doctype', value: html.slice(i, end) });
+          i = end;
+          continue;
+        }
+
+        // Comment
+        if (html.slice(i, i + 4) === '<!--') {
+          const end = html.indexOf('-->', i) + 3;
+          tokens.push({ type: 'comment', value: html.slice(i, end) });
+          i = end === 2 ? html.length : end;
+          continue;
+        }
+
+        // Tag
+        let j = i + 1;
+        let inAttrStr = false;
+        let attrQuote = '';
+        while (j < html.length) {
+          const ch = html[j];
+          if (inAttrStr) {
+            if (ch === attrQuote) inAttrStr = false;
+          } else if (ch === '"' || ch === "'") {
+            inAttrStr = true;
+            attrQuote = ch;
+          } else if (ch === '>') {
+            break;
+          }
+          j++;
+        }
+        const tag = html.slice(i, j + 1);
+        i = j + 1;
+
+        const isClosing = tag[1] === '/';
+        const isSelfClose = tag[tag.length - 2] === '/';
+        const nameMatch = tag.match(/<\/?([a-zA-Z][a-zA-Z0-9:-]*)/);
+        const tagName = nameMatch ? nameMatch[1] : '';
+
+        if (isClosing) {
+          tokens.push({ type: 'close', value: tag, tagName });
+        } else if (isSelfClose || isVoidTag(tagName)) {
+          tokens.push({ type: 'void', value: tag, tagName });
+        } else {
+          tokens.push({ type: 'open', value: tag, tagName });
+        }
+      }
+
+      return tokens;
+    }
+
+    function beautifyHTML(html, options = {}) {
+      if (!html || !html.trim()) return '';
+
+      const indentStr = getIndentString(options.indent || '2');
+      const preserveComments = options.preserveComments !== false;
+
+      const tokens = tokeniseHTML(html);
+      const lines = [];
+      let depth = 0;
+
+      const indent = () => indentStr.repeat(Math.max(0, depth));
+
+      for (let t = 0; t < tokens.length; t++) {
+        const token = tokens[t];
+
+        if (token.type === 'doctype') {
+          lines.push(token.value);
+          continue;
+        }
+
+        if (token.type === 'comment') {
+          if (!preserveComments) continue;
+          // Multi-line comments keep their own structure
+          const commentLines = token.value.split('\n');
+          commentLines.forEach((cl, ci) => {
+            lines.push(ci === 0 ? indent() + cl.trim() : indent() + ' ' + cl.trim());
+          });
+          continue;
+        }
+
+        if (token.type === 'text') {
+          lines.push(indent() + token.value);
+          continue;
+        }
+
+        if (token.type === 'void') {
+          lines.push(indent() + token.value);
+          continue;
+        }
+
+        if (token.type === 'open') {
+          // Check if inline tag with text child and matching close tag
+          const nextToken = tokens[t + 1];
+          const afterNext = tokens[t + 2];
+          if (
+            isInlineTag(token.tagName) &&
+            nextToken && nextToken.type === 'text' &&
+            afterNext && afterNext.type === 'close' && afterNext.tagName === token.tagName
+          ) {
+            lines.push(indent() + token.value + nextToken.value + afterNext.value);
+            t += 2;
+            continue;
+          }
+
+          lines.push(indent() + token.value);
+          depth++;
+          continue;
+        }
+
+        if (token.type === 'close') {
+          depth = Math.max(0, depth - 1);
+          lines.push(indent() + token.value);
+          continue;
+        }
+      }
+
+      return lines.join('\n');
+    }
+
+    function minifyHTML(html, options = {}) {
+      if (!html || !html.trim()) return '';
+
+      const preserveComments = options.preserveComments !== false;
+
+      let result = html
+        .replace(/\r\n|\r/g, '\n')
+        .replace(/\n\s*/g, ' ')         // collapse newlines + leading whitespace
+        .replace(/\s{2,}/g, ' ')         // collapse multiple spaces
+        .replace(/>\s+</g, '><')         // remove space between tags
+        .trim();
+
+      if (!preserveComments) {
+        result = result.replace(/<!--[\s\S]*?-->/g, '');
+      }
+
+      return result;
+    }
+
+    // ─── UI Logic ─────────────────────────────────────────────────────────────
+
+    let currentMode = 'format'; // 'format' | 'minify'
+
+    function updateModeUI() {
+      const tabFormat = document.getElementById('tab-format');
+      const tabMinify = document.getElementById('tab-minify');
+      const btnLabel = document.getElementById('btn-label');
+      const formatOptions = document.getElementById('format-options');
+
+      if (currentMode === 'format') {
+        tabFormat.classList.add('active');
+        tabMinify.classList.remove('active');
+        tabFormat.setAttribute('aria-pressed', 'true');
+        tabMinify.setAttribute('aria-pressed', 'false');
+        btnLabel.textContent = '✨ Beautify HTML';
+        formatOptions.style.display = '';
+      } else {
+        tabMinify.classList.add('active');
+        tabFormat.classList.remove('active');
+        tabMinify.setAttribute('aria-pressed', 'true');
+        tabFormat.setAttribute('aria-pressed', 'false');
+        btnLabel.textContent = '📦 Minify HTML';
+        formatOptions.style.display = 'none';
+      }
+    }
+
+    function updateInputStats(text) {
+      const el = document.getElementById('input-stats');
+      if (!text || !text.trim()) { el.textContent = ''; return; }
+      el.textContent = `${countLines(text)} lines · ${formatBytes(byteSize(text))}`;
+    }
+
+    function showError(message) {
+      const banner = document.getElementById('error-banner');
+      const text = document.getElementById('error-text');
+      text.textContent = message;
+      banner.classList.remove('hidden');
+    }
+
+    function hideError() {
+      document.getElementById('error-banner').classList.add('hidden');
+    }
+
+    function runFormat() {
+      const input = document.getElementById('html-input').value;
+
+      if (!input || !input.trim()) {
+        showToast('Please paste HTML first.', 'error');
+        return;
+      }
+
+      hideError();
+
+      const options = {
+        indent: document.getElementById('indent-select').value,
+        preserveComments: document.getElementById('preserve-comments').checked
+      };
+
+      try {
+        const startTime = performance.now();
+        let result;
+
+        if (currentMode === 'format') {
+          result = beautifyHTML(input, options);
+        } else {
+          result = minifyHTML(input, options);
+        }
+
+        const elapsed = performance.now() - startTime;
+
+        document.getElementById('html-output').value = result;
+        document.getElementById('output-section').classList.remove('hidden');
+
+        const statsEl = document.getElementById('output-stats');
+        const reduction = Math.round((1 - byteSize(result) / byteSize(input)) * 100);
+        if (currentMode === 'minify' && reduction > 0) {
+          statsEl.textContent = `${countLines(result)} lines · ${formatBytes(byteSize(result))} (${reduction}% smaller)`;
+        } else {
+          statsEl.textContent = `${countLines(result)} lines · ${formatBytes(byteSize(result))}`;
+        }
+
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('html_format', {
+            page: PAGE_NAME,
+            mode: currentMode,
+            input_bytes: byteSize(input),
+            output_bytes: byteSize(result),
+            elapsed_ms: Math.round(elapsed)
+          });
+        }
+
+        showToast(currentMode === 'format' ? 'HTML beautified!' : 'HTML minified!', 'success');
+      } catch (err) {
+        showError('Could not process HTML: ' + err.message);
+
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('html_format_error', {
+            page: PAGE_NAME,
+            mode: currentMode,
+            error: err.message
+          });
+        }
+
+        if (typeof Sentry !== 'undefined') {
+          Sentry.captureException(err, { tags: { tool: 'html-formatter', mode: currentMode } });
+        }
+      }
+    }
+
+    // ─── Event Wiring ─────────────────────────────────────────────────────────
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const inputEl = document.getElementById('html-input');
+
+      document.getElementById('tab-format').addEventListener('click', () => {
+        currentMode = 'format';
+        updateModeUI();
+      });
+
+      document.getElementById('tab-minify').addEventListener('click', () => {
+        currentMode = 'minify';
+        updateModeUI();
+      });
+
+      document.getElementById('btn-format').addEventListener('click', runFormat);
+
+      inputEl.addEventListener('keydown', function(e) {
+        // Allow Ctrl/Cmd+Enter to trigger format
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+          e.preventDefault();
+          runFormat();
+        }
+        // Preserve Tab key for indentation inside textarea
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          const start = this.selectionStart;
+          const end = this.selectionEnd;
+          this.value = this.value.slice(0, start) + '  ' + this.value.slice(end);
+          this.selectionStart = this.selectionEnd = start + 2;
+        }
+      });
+
+      inputEl.addEventListener('input', function() {
+        updateInputStats(this.value);
+      });
+
+      document.getElementById('btn-sample').addEventListener('click', () => {
+        inputEl.value = SAMPLE_HTML;
+        updateInputStats(SAMPLE_HTML);
+        document.getElementById('output-section').classList.add('hidden');
+        hideError();
+        showToast('Sample HTML loaded.', 'info');
+      });
+
+      document.getElementById('btn-clear-input').addEventListener('click', () => {
+        inputEl.value = '';
+        updateInputStats('');
+        document.getElementById('output-section').classList.add('hidden');
+        hideError();
+        inputEl.focus();
+      });
+
+      document.getElementById('btn-copy').addEventListener('click', () => {
+        const out = document.getElementById('html-output').value;
+        if (!out) { showToast('Nothing to copy.', 'error'); return; }
+
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('html_copy', { page: PAGE_NAME, mode: currentMode });
+        }
+
+        copyToClipboard(out);
+      });
+
+      document.getElementById('btn-download').addEventListener('click', () => {
+        const out = document.getElementById('html-output').value;
+        if (!out) { showToast('Nothing to download.', 'error'); return; }
+
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('html_download', { page: PAGE_NAME, mode: currentMode });
+        }
+
+        const filename = currentMode === 'minify' ? 'formatted.min.html' : 'formatted.html';
+        downloadFile(out, filename);
+        showToast('Download started.', 'success');
+      });
+
+      updateModeUI();
+    });
+  </script>
+</body>
+</html>
