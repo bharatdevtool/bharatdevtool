@@ -50,6 +50,7 @@ import { TimestampConverterTester } from './timestamp-converter-tests.js';
 import { JWTDecoderTester } from './jwt-decoder-tests.js';
 import { ImageConverterTester } from './image-converter-tests.js';
 import { ImageResizerTester } from './image-resizer-tests.js';
+import { CSVJsonConverterTester } from './csv-json-converter-tests.js';
 
 // Test Results Tracking
 let totalTests = 0;
@@ -620,6 +621,17 @@ const imageResizerTester = new ImageResizerTester();
 const imageResizerResults = imageResizerTester.runAll();
 
 // ============================================================================
+// CSV ↔ JSON CONVERTER TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+console.log('CSV JSON CONVERTER TEST SUITE');
+console.log('='.repeat(60));
+
+const csvJsonTester = new CSVJsonConverterTester();
+const csvJsonResults = csvJsonTester.runAllTests();
+
+// ============================================================================
 // FINAL TEST SUMMARY
 // ============================================================================
 
@@ -628,9 +640,9 @@ console.log('📊 COMPREHENSIVE TEST SUMMARY');
 console.log('='.repeat(60));
 
 
-const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + passwordGeneratorResults.total + textCaseConverterResults.total + uuidResults.total + percentageResults.total + bmiResults.total + emiResults.total + timestampResults.total + jwtResults.total + imageConverterResults.total + imageResizerResults.total;
-const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + passwordGeneratorResults.passed + textCaseConverterResults.passed + uuidResults.passed + percentageResults.passed + bmiResults.passed + emiResults.passed + timestampResults.passed + jwtResults.passed + imageConverterResults.passed + imageResizerResults.passed;
-const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + passwordGeneratorResults.failed + textCaseConverterResults.failed + uuidResults.failed + percentageResults.failed + bmiResults.failed + emiResults.failed + timestampResults.failed + jwtResults.failed + imageConverterResults.failed + imageResizerResults.failed;
+const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + passwordGeneratorResults.total + textCaseConverterResults.total + uuidResults.total + percentageResults.total + bmiResults.total + emiResults.total + timestampResults.total + jwtResults.total + imageConverterResults.total + imageResizerResults.total + csvJsonResults.total;
+const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + passwordGeneratorResults.passed + textCaseConverterResults.passed + uuidResults.passed + percentageResults.passed + bmiResults.passed + emiResults.passed + timestampResults.passed + jwtResults.passed + imageConverterResults.passed + imageResizerResults.passed + csvJsonResults.passed;
+const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + passwordGeneratorResults.failed + textCaseConverterResults.failed + uuidResults.failed + percentageResults.failed + bmiResults.failed + emiResults.failed + timestampResults.failed + jwtResults.failed + imageConverterResults.failed + imageResizerResults.failed + csvJsonResults.failed;
 
 console.log(`Total Tests: ${grandTotal}`);
 console.log(`✅ Passed: ${grandPassed}`);
@@ -658,6 +670,7 @@ console.log(`Unix Timestamp Converter: ${timestampResults.total} tests (${timest
 console.log(`JWT Decoder: ${jwtResults.total} tests (${jwtResults.passed} passed, ${jwtResults.failed} failed)`);
 console.log(`Image Converter: ${imageConverterResults.total} tests (${imageConverterResults.passed} passed, ${imageConverterResults.failed} failed)`);
 console.log(`Image Resizer: ${imageResizerResults.total} tests (${imageResizerResults.passed} passed, ${imageResizerResults.failed} failed)`);
+console.log(`CSV ↔ JSON Converter: ${csvJsonResults.total} tests (${csvJsonResults.passed} passed, ${csvJsonResults.failed} failed)`);
 
 
 if (grandFailed === 0) {
@@ -755,6 +768,10 @@ if (grandFailed === 0) {
   if (imageResizerResults.failed > 0) {
     console.log('\nImage Resizer failures:');
     imageResizerResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  if (csvJsonResults.failed > 0) {
+    console.log('\nCSV ↔ JSON Converter failures:');
+    csvJsonResults.failedTests.forEach(test => console.log(`   - ${test}`));
   }
 
   console.log('\nPlease review the failed tests above.');
