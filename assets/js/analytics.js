@@ -507,7 +507,8 @@ const PAGE_NAMES = {
   'whatsapp-link.html': 'WhatsApp Link Generator',
   'percentage-calculator.html': 'Percentage Calculator',
   'bmi-calculator.html': 'BMI Calculator',
-  'gst-calculator.html': 'GST Calculator'
+  'gst-calculator.html': 'GST Calculator',
+  'emi-calculator.html': 'EMI Calculator'
 };
 
 /**
