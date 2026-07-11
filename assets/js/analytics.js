@@ -513,7 +513,8 @@ const PAGE_NAMES = {
   'jwt-decoder.html': 'JWT Decoder',
   'image-converter.html': 'Image Converter',
   'image-resizer.html': 'Image Resizer',
-  'image-compressor.html': 'Image Compressor'
+  'image-compressor.html': 'Image Compressor',
+  'image-to-pdf.html': 'Image to PDF Converter'
 };
 
 /**
