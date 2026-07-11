@@ -512,7 +512,8 @@ const PAGE_NAMES = {
   'timestamp-converter.html': 'Unix Timestamp Converter',
   'jwt-decoder.html': 'JWT Decoder',
   'image-converter.html': 'Image Converter',
-  'image-resizer.html': 'Image Resizer'
+  'image-resizer.html': 'Image Resizer',
+  'image-compressor.html': 'Image Compressor'
 };
 
 /**
