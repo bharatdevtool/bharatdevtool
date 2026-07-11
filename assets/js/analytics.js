@@ -522,7 +522,8 @@ const PAGE_NAMES = {
   'cron-generator.html': 'Cron Expression Generator',
   'lorem-ipsum.html': 'Lorem Ipsum Generator',
   'timezone-converter.html': 'Timezone Converter',
-  'markdown-to-html.html': 'Markdown to HTML Converter'
+  'markdown-to-html.html': 'Markdown to HTML Converter',
+  'json-to-typescript.html': 'JSON to TypeScript Interface Generator'
 };
 
 /**
