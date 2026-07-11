@@ -505,7 +505,8 @@ const PAGE_NAMES = {
   'text-case-converter.html': 'Text Case Converter',
   'uuid-generator.html': 'UUID Generator',
   'whatsapp-link.html': 'WhatsApp Link Generator',
-  'percentage-calculator.html': 'Percentage Calculator'
+  'percentage-calculator.html': 'Percentage Calculator',
+  'bmi-calculator.html': 'BMI Calculator'
 };
 
 /**
