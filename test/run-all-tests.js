@@ -54,6 +54,7 @@ import { CSVJsonConverterTester } from './csv-json-converter-tests.js';
 import { YAMLJSONConverterTester } from './yaml-json-converter-tests.js';
 import { DiffCheckerTester } from './diff-checker-tests.js';
 import { CronGeneratorTester } from './cron-generator-tests.js';
+import { LoremIpsumTester } from './lorem-ipsum-tests.js';
 
 // Test Results Tracking
 let totalTests = 0;
@@ -668,6 +669,17 @@ const cronTester = new CronGeneratorTester();
 const cronResults = cronTester.runAll();
 
 // ============================================================================
+// LOREM IPSUM GENERATOR TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+console.log('LOREM IPSUM GENERATOR TEST SUITE');
+console.log('='.repeat(60));
+
+const loremTester = new LoremIpsumTester();
+const loremResults = loremTester.runAllTests();
+
+// ============================================================================
 // FINAL TEST SUMMARY
 // ============================================================================
 
@@ -676,9 +688,9 @@ console.log('📊 COMPREHENSIVE TEST SUMMARY');
 console.log('='.repeat(60));
 
 
-const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + passwordGeneratorResults.total + textCaseConverterResults.total + uuidResults.total + percentageResults.total + bmiResults.total + emiResults.total + timestampResults.total + jwtResults.total + imageConverterResults.total + imageResizerResults.total + csvJsonResults.total + yamlJsonResults.total + diffCheckerResults.total + cronResults.total;
-const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + passwordGeneratorResults.passed + textCaseConverterResults.passed + uuidResults.passed + percentageResults.passed + bmiResults.passed + emiResults.passed + timestampResults.passed + jwtResults.passed + imageConverterResults.passed + imageResizerResults.passed + csvJsonResults.passed + yamlJsonResults.passed + diffCheckerResults.passed + cronResults.passed;
-const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + passwordGeneratorResults.failed + textCaseConverterResults.failed + uuidResults.failed + percentageResults.failed + bmiResults.failed + emiResults.failed + timestampResults.failed + jwtResults.failed + imageConverterResults.failed + imageResizerResults.failed + csvJsonResults.failed + yamlJsonResults.failed + diffCheckerResults.failed + cronResults.failed;
+const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + passwordGeneratorResults.total + textCaseConverterResults.total + uuidResults.total + percentageResults.total + bmiResults.total + emiResults.total + timestampResults.total + jwtResults.total + imageConverterResults.total + imageResizerResults.total + csvJsonResults.total + yamlJsonResults.total + diffCheckerResults.total + cronResults.total + loremResults.total;
+const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + passwordGeneratorResults.passed + textCaseConverterResults.passed + uuidResults.passed + percentageResults.passed + bmiResults.passed + emiResults.passed + timestampResults.passed + jwtResults.passed + imageConverterResults.passed + imageResizerResults.passed + csvJsonResults.passed + yamlJsonResults.passed + diffCheckerResults.passed + cronResults.passed + loremResults.passed;
+const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + passwordGeneratorResults.failed + textCaseConverterResults.failed + uuidResults.failed + percentageResults.failed + bmiResults.failed + emiResults.failed + timestampResults.failed + jwtResults.failed + imageConverterResults.failed + imageResizerResults.failed + csvJsonResults.failed + yamlJsonResults.failed + diffCheckerResults.failed + cronResults.failed + loremResults.failed;
 
 console.log(`Total Tests: ${grandTotal}`);
 console.log(`✅ Passed: ${grandPassed}`);
@@ -710,6 +722,7 @@ console.log(`CSV ↔ JSON Converter: ${csvJsonResults.total} tests (${csvJsonRes
 console.log(`YAML JSON Converter: ${yamlJsonResults.total} tests (${yamlJsonResults.passed} passed, ${yamlJsonResults.failed} failed)`);
 console.log(`Diff Checker: ${diffCheckerResults.total} tests (${diffCheckerResults.passed} passed, ${diffCheckerResults.failed} failed)`);
 console.log(`Cron Expression Generator: ${cronResults.total} tests (${cronResults.passed} passed, ${cronResults.failed} failed)`);
+console.log(`Lorem Ipsum Generator: ${loremResults.total} tests (${loremResults.passed} passed, ${loremResults.failed} failed)`);
 
 
 if (grandFailed === 0) {
@@ -823,6 +836,10 @@ if (grandFailed === 0) {
   if (cronResults.failed > 0) {
     console.log('\nCron Expression Generator failures:');
     cronResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  if (loremResults.failed > 0) {
+    console.log('\nLorem Ipsum Generator failures:');
+    loremResults.failedTests.forEach(test => console.log(`   - ${test}`));
   }
 
   console.log('\nPlease review the failed tests above.');

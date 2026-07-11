@@ -519,7 +519,8 @@ const PAGE_NAMES = {
   'csv-json-converter.html': 'CSV JSON Converter',
   'yaml-json-converter.html': 'YAML JSON Converter',
   'diff-checker.html': 'Diff Checker',
-  'cron-generator.html': 'Cron Expression Generator'
+  'cron-generator.html': 'Cron Expression Generator',
+  'lorem-ipsum.html': 'Lorem Ipsum Generator'
 };
 
 /**
