@@ -47,6 +47,7 @@ import { PercentageCalculatorTester } from './percentage-calculator-tests.js';
 import { BMICalculatorTester } from './bmi-calculator-tests.js';
 import { EMICalculatorTester } from './emi-calculator-tests.js';
 import { TimestampConverterTester } from './timestamp-converter-tests.js';
+import { JWTDecoderTester } from './jwt-decoder-tests.js';
 
 // Test Results Tracking
 let totalTests = 0;
@@ -545,6 +546,13 @@ console.log('='.repeat(60));
 const uuidTester = new UUIDGeneratorTester();
 const uuidResults = uuidTester.runAll();
 
+console.log('\n' + '='.repeat(60));
+console.log('JWT DECODER TEST SUITE');
+console.log('='.repeat(60));
+
+const jwtTester = new JWTDecoderTester();
+const jwtResults = jwtTester.runAll();
+
 // ============================================================================
 // PERCENTAGE CALCULATOR TESTS
 // ============================================================================
@@ -596,9 +604,9 @@ console.log('📊 COMPREHENSIVE TEST SUMMARY');
 console.log('='.repeat(60));
 
 
-const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + passwordGeneratorResults.total + textCaseConverterResults.total + uuidResults.total + percentageResults.total + bmiResults.total + emiResults.total + timestampResults.total;
-const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + passwordGeneratorResults.passed + textCaseConverterResults.passed + uuidResults.passed + percentageResults.passed + bmiResults.passed + emiResults.passed + timestampResults.passed;
-const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + passwordGeneratorResults.failed + textCaseConverterResults.failed + uuidResults.failed + percentageResults.failed + bmiResults.failed + emiResults.failed + timestampResults.failed;
+const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + passwordGeneratorResults.total + textCaseConverterResults.total + uuidResults.total + percentageResults.total + bmiResults.total + emiResults.total + timestampResults.total + jwtResults.total;
+const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + passwordGeneratorResults.passed + textCaseConverterResults.passed + uuidResults.passed + percentageResults.passed + bmiResults.passed + emiResults.passed + timestampResults.passed + jwtResults.passed;
+const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + passwordGeneratorResults.failed + textCaseConverterResults.failed + uuidResults.failed + percentageResults.failed + bmiResults.failed + emiResults.failed + timestampResults.failed + jwtResults.failed;
 
 console.log(`Total Tests: ${grandTotal}`);
 console.log(`✅ Passed: ${grandPassed}`);
@@ -623,6 +631,7 @@ console.log(`Percentage Calculator: ${percentageResults.total} tests (${percenta
 console.log(`BMI Calculator: ${bmiResults.total} tests (${bmiResults.passed} passed, ${bmiResults.failed} failed)`);
 console.log(`EMI Calculator: ${emiResults.total} tests (${emiResults.passed} passed, ${emiResults.failed} failed)`);
 console.log(`Unix Timestamp Converter: ${timestampResults.total} tests (${timestampResults.passed} passed, ${timestampResults.failed} failed)`);
+console.log(`JWT Decoder: ${jwtResults.total} tests (${jwtResults.passed} passed, ${jwtResults.failed} failed)`);
 
 
 if (grandFailed === 0) {
@@ -708,6 +717,10 @@ if (grandFailed === 0) {
   if (timestampResults.failed > 0) {
     console.log('\nUnix Timestamp Converter failures:');
     timestampResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  if (jwtResults.failed > 0) {
+    console.log('\nJWT Decoder failures:');
+    jwtResults.failedTests.forEach(test => console.log(`   - ${test}`));
   }
 
   console.log('\nPlease review the failed tests above.');

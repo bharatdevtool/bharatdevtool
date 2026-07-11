@@ -509,7 +509,8 @@ const PAGE_NAMES = {
   'bmi-calculator.html': 'BMI Calculator',
   'gst-calculator.html': 'GST Calculator',
   'emi-calculator.html': 'EMI Calculator',
-  'timestamp-converter.html': 'Unix Timestamp Converter'
+  'timestamp-converter.html': 'Unix Timestamp Converter',
+  'jwt-decoder.html': 'JWT Decoder'
 };
 
 /**
