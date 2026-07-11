@@ -511,7 +511,8 @@ const PAGE_NAMES = {
   'emi-calculator.html': 'EMI Calculator',
   'timestamp-converter.html': 'Unix Timestamp Converter',
   'jwt-decoder.html': 'JWT Decoder',
-  'image-converter.html': 'Image Converter'
+  'image-converter.html': 'Image Converter',
+  'image-resizer.html': 'Image Resizer'
 };
 
 /**

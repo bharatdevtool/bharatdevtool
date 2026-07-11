@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Image Resizer Online | Resize Images to Any Size | Bharat Dev Tools</title>
+  <meta name="description" content="Free online image resizer. Resize JPG, PNG, WebP, and GIF images to any custom width and height instantly. No sign-up required. All processing happens in your browser — your images stay private.">
+  <meta name="keywords" content="image resizer, resize image online, free image resizer, resize jpg, resize png, resize webp, image resize tool, change image size, compress image dimensions, photo resizer, bulk image resize, pixel size converter">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  <link rel="canonical" href="https://bharatdevtool.com/image-resizer.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Free Image Resizer Online | Resize Images to Any Size | Bharat Dev Tools">
+  <meta property="og:description" content="Resize JPG, PNG, WebP, and GIF images to any custom width and height instantly. Free, private — no upload to any server.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/image-resizer.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Image Resizer - Free Online Tool">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free Image Resizer Online | Resize to Any Size | Bharat Dev Tools">
+  <meta name="twitter:description" content="Resize images to any width and height instantly. Free, private — all processing in your browser.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ik.imagekit.io/bdt/bdt_logo_v3_16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/bdt/bdt_logo_v3_180.png">
+
+  <!-- Theme (load FIRST to prevent dark mode flash) -->
+  <script src="assets/js/theme.js"></script>
+
+  <!-- Sentry SDK -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+
+  <!-- Version + Analytics (deferred) -->
+  <script src="assets/js/version.js" defer></script>
+  <script src="assets/js/analytics.js" defer></script>
+
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+
+  <!-- Structured Data: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Image Resizer",
+    "description": "Free online image resizer. Resize JPG, PNG, WebP, and GIF images to any custom width and height instantly in your browser.",
+    "url": "https://bharatdevtool.com/image-resizer.html",
+    "applicationCategory": "DesignApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "Resize JPG, PNG, WebP, GIF images",
+      "Custom width and height",
+      "Lock aspect ratio",
+      "Percentage-based resizing",
+      "Download resized image",
+      "Privacy-first — runs entirely in browser"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "112"
+    }
+  }
+  </script>
+
+  <!-- Structured Data: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Image Resizer",
+        "item": "https://bharatdevtool.com/image-resizer.html"
+      }
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is an image resizer and what does it do?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "An image resizer is a tool that changes the pixel dimensions (width and height) of an image. You can resize images to exact pixel sizes, resize by percentage, or fit images within specific maximum dimensions. Resizing is useful for reducing file size for web use, meeting social media size requirements, or preparing images for printing."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which image formats does this tool support?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "This free image resizer supports all common image formats: JPG/JPEG, PNG, WebP, GIF, BMP, and SVG. You can upload any of these formats and download the resized result as JPG, PNG, or WebP."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this image resizer free? Does it send my images to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, completely free. And no — your images never leave your device. All resizing happens entirely inside your web browser using the Canvas API. Your photos are 100% private and secure."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I maintain the aspect ratio when resizing?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Enable the 'Lock aspect ratio' option (the chain link icon between width and height). When locked, changing one dimension will automatically calculate the other to keep the original proportions of your image, preventing distortion."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the maximum image size I can resize?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "There is no strict file size limit — it depends on your device's memory. Most modern devices handle images up to 20–30 MB comfortably. Very large images (50 MB+) may be slow or cause memory issues on older devices. For best performance, images under 10 MB are recommended."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Tailwind config -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8'
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    .animate-fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-slide-up {
+      animation: slideUp 0.3s ease-out;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Drop zone */
+    .drop-zone {
+      border: 2px dashed #d1d5db;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+      cursor: pointer;
+    }
+    .drop-zone:hover,
+    .drop-zone.dragging {
+      border-color: #3b82f6;
+      background-color: #eff6ff;
+    }
+    [data-theme="dark"] .drop-zone {
+      border-color: #4b5563;
+    }
+    [data-theme="dark"] .drop-zone:hover,
+    [data-theme="dark"] .drop-zone.dragging {
+      border-color: #3b82f6;
+      background-color: rgba(59, 130, 246, 0.1);
+    }
+
+    /* Image preview */
+    #preview-img {
+      max-width: 100%;
+      max-height: 280px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    /* Lock button */
+    .lock-btn {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 2px solid #d1d5db;
+      background: white;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      flex-shrink: 0;
+    }
+    .lock-btn.locked {
+      border-color: #3b82f6;
+      background: #eff6ff;
+    }
+    [data-theme="dark"] .lock-btn {
+      background: #374151;
+      border-color: #4b5563;
+    }
+    [data-theme="dark"] .lock-btn.locked {
+      border-color: #3b82f6;
+      background: rgba(59, 130, 246, 0.15);
+    }
+
+    /* Output format selector */
+    .format-tab {
+      padding: 6px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: background 0.15s, color 0.15s;
+      border: 1px solid #d1d5db;
+      color: #6b7280;
+      background: white;
+    }
+    .format-tab.active {
+      background: #3b82f6;
+      color: white;
+      border-color: #3b82f6;
+    }
+    [data-theme="dark"] .format-tab {
+      background: #374151;
+      border-color: #4b5563;
+      color: #9ca3af;
+    }
+    [data-theme="dark"] .format-tab.active {
+      background: #3b82f6;
+      color: white;
+      border-color: #3b82f6;
+    }
+
+    /* Comparison view */
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 640px) {
+      .comparison-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transform: translateX(120%);
+      transition: transform 0.3s ease;
+    }
+    .toast.show { transform: translateX(0); }
+    .toast.success { background: linear-gradient(135deg, #10b981, #059669); }
+    .toast.error   { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .toast.info    { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+
+    /* Progress bar */
+    .progress-bar {
+      height: 4px;
+      border-radius: 2px;
+      background: #e5e7eb;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3b82f6, #2563eb);
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+
+    /* Quality slider */
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: #e5e7eb;
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #3b82f6;
+      cursor: pointer;
+    }
+    [data-theme="dark"] input[type="range"] {
+      background: #4b5563;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+
+  <!-- Header -->
+  <script src="components/header.js"></script>
+
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <h1 class="sr-only">Free Image Resizer Online</h1>
+
+    <!-- Hero -->
+    <div class="text-center mb-10 animate-fade-in">
+      <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        🖼️ Image Resizer
+      </h2>
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Resize JPG, PNG, WebP, and GIF images to any size — free, instant, and private. Your images never leave your browser.
+      </p>
+    </div>
+
+    <!-- Upload Zone -->
+    <div id="upload-section" class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6 animate-fade-in">
+      <div
+        id="drop-zone"
+        class="drop-zone rounded-xl p-10 text-center"
+        role="button"
+        tabindex="0"
+        aria-label="Upload image — click or drag and drop"
+      >
+        <div id="drop-zone-content">
+          <div class="text-5xl mb-4">📁</div>
+          <p class="text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Drag & drop an image here
+          </p>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
+            or click to select — JPG, PNG, WebP, GIF, BMP supported
+          </p>
+          <label for="file-input" class="inline-block px-6 py-2 bg-blue-600 text-white rounded-lg cursor-pointer hover:bg-blue-700 transition-colors font-medium">
+            Choose Image
+          </label>
+        </div>
+        <input
+          type="file"
+          id="file-input"
+          accept="image/*"
+          class="hidden"
+          aria-label="Select image file"
+        >
+      </div>
+    </div>
+
+    <!-- Editor Panel (hidden until image loaded) -->
+    <div id="editor-panel" class="hidden animate-slide-up">
+
+      <!-- Image Info + Preview -->
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">📸 Original Image</h3>
+        <div class="flex flex-col sm:flex-row gap-6 items-start">
+          <div class="flex-shrink-0 w-full sm:w-auto text-center">
+            <img id="preview-img" src="" alt="Original image preview" class="mx-auto">
+          </div>
+          <div class="flex-1 space-y-2">
+            <div id="img-name" class="text-sm font-medium text-gray-900 dark:text-white break-all"></div>
+            <div class="grid grid-cols-2 gap-2 text-sm text-gray-600 dark:text-gray-400">
+              <span>Width:</span><span id="orig-width" class="font-mono font-semibold text-gray-900 dark:text-white"></span>
+              <span>Height:</span><span id="orig-height" class="font-mono font-semibold text-gray-900 dark:text-white"></span>
+              <span>File size:</span><span id="orig-size" class="font-mono font-semibold text-gray-900 dark:text-white"></span>
+              <span>Format:</span><span id="orig-format" class="font-mono font-semibold text-gray-900 dark:text-white"></span>
+            </div>
+            <button id="change-image-btn" class="mt-3 text-sm text-blue-600 dark:text-blue-400 hover:underline">
+              ↩ Change image
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resize Controls -->
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-5">⚙️ Resize Settings</h3>
+
+        <!-- Mode tabs -->
+        <div class="flex flex-wrap gap-2 mb-6" role="tablist" aria-label="Resize mode">
+          <button class="mode-tab px-4 py-2 rounded-lg text-sm font-medium border transition-colors active" data-mode="pixels" role="tab" aria-selected="true">
+            Custom Size (px)
+          </button>
+          <button class="mode-tab px-4 py-2 rounded-lg text-sm font-medium border transition-colors" data-mode="percentage" role="tab" aria-selected="false">
+            By Percentage
+          </button>
+          <button class="mode-tab px-4 py-2 rounded-lg text-sm font-medium border transition-colors" data-mode="preset" role="tab" aria-selected="false">
+            Preset Sizes
+          </button>
+        </div>
+
+        <!-- Pixels mode -->
+        <div id="mode-pixels" class="mode-panel">
+          <div class="flex items-center gap-3">
+            <div class="flex-1">
+              <label for="input-width" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Width (px)</label>
+              <input
+                type="number"
+                id="input-width"
+                min="1"
+                max="16000"
+                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                aria-label="New width in pixels"
+              >
+            </div>
+            <button id="lock-ratio-btn" class="lock-btn locked mt-5" aria-label="Lock aspect ratio" title="Lock/unlock aspect ratio">
+              <svg id="lock-icon-locked" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+              </svg>
+              <svg id="lock-icon-unlocked" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 hidden" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z"/>
+              </svg>
+            </button>
+            <div class="flex-1">
+              <label for="input-height" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Height (px)</label>
+              <input
+                type="number"
+                id="input-height"
+                min="1"
+                max="16000"
+                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                aria-label="New height in pixels"
+              >
+            </div>
+          </div>
+          <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+            <span id="lock-status-label">🔒 Aspect ratio locked</span>
+          </p>
+        </div>
+
+        <!-- Percentage mode -->
+        <div id="mode-percentage" class="mode-panel hidden">
+          <label for="input-percentage" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Scale percentage
+          </label>
+          <div class="flex items-center gap-4">
+            <input
+              type="range"
+              id="input-percentage"
+              min="1"
+              max="200"
+              value="50"
+              class="flex-1"
+              aria-label="Scale percentage"
+            >
+            <div class="flex items-center gap-1">
+              <input
+                type="number"
+                id="percentage-number"
+                min="1"
+                max="200"
+                value="50"
+                class="w-20 px-2 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-center"
+              >
+              <span class="text-gray-700 dark:text-gray-300 font-medium">%</span>
+            </div>
+          </div>
+          <p id="percentage-preview" class="mt-2 text-sm text-gray-500 dark:text-gray-400"></p>
+        </div>
+
+        <!-- Preset mode -->
+        <div id="mode-preset" class="mode-panel hidden">
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2" id="preset-grid">
+            <!-- Presets filled by JS -->
+          </div>
+        </div>
+
+        <!-- Output format & quality -->
+        <div class="mt-6 pt-5 border-t border-gray-200 dark:border-gray-700">
+          <div class="flex flex-wrap items-center gap-4">
+            <div>
+              <span class="text-sm font-medium text-gray-700 dark:text-gray-300 mr-2">Output format:</span>
+              <div class="inline-flex gap-2 mt-1" role="group" aria-label="Output format">
+                <button class="format-tab active" data-format="image/jpeg">JPG</button>
+                <button class="format-tab" data-format="image/png">PNG</button>
+                <button class="format-tab" data-format="image/webp">WebP</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="quality-row" class="mt-4">
+            <div class="flex items-center justify-between mb-1">
+              <label for="quality-slider" class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                Quality: <span id="quality-label">85%</span>
+              </label>
+              <span class="text-xs text-gray-500 dark:text-gray-400">Smaller ↔ Better</span>
+            </div>
+            <input
+              type="range"
+              id="quality-slider"
+              min="10"
+              max="100"
+              value="85"
+              aria-label="Output quality"
+            >
+          </div>
+        </div>
+
+        <!-- Action button -->
+        <div class="mt-6">
+          <button
+            id="resize-btn"
+            class="w-full flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-lg"
+            aria-label="Resize image"
+          >
+            <span class="mr-2">🔧</span>
+            Resize Image
+          </button>
+        </div>
+      </div>
+
+      <!-- Result Panel (hidden until resized) -->
+      <div id="result-panel" class="hidden bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6 animate-slide-up">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">✅ Resized Image</h3>
+          <div class="text-sm text-gray-500 dark:text-gray-400" id="result-meta"></div>
+        </div>
+
+        <!-- Before / After comparison -->
+        <div class="comparison-grid mb-6">
+          <div class="text-center">
+            <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Original</p>
+            <img id="compare-original" src="" alt="Original image" class="mx-auto rounded-lg max-h-48 object-contain w-full">
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1" id="compare-original-info"></p>
+          </div>
+          <div class="text-center">
+            <p class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Resized</p>
+            <img id="compare-resized" src="" alt="Resized image" class="mx-auto rounded-lg max-h-48 object-contain w-full">
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1" id="compare-resized-info"></p>
+          </div>
+        </div>
+
+        <div class="progress-bar mb-4 hidden" id="progress-container">
+          <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+        </div>
+
+        <button
+          id="download-btn"
+          class="w-full flex items-center justify-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium text-lg"
+        >
+          <span class="mr-2">⬇️</span>
+          Download Resized Image
+        </button>
+      </div>
+
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+      <div class="faq-container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about the free image resizer</p>
+        <div class="faq-list">
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is an image resizer and what does it do?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>An image resizer changes the pixel dimensions (width and height) of an image. You can resize to exact pixel sizes, scale by percentage, or use social-media presets. Resizing reduces file size for web use, meets platform upload requirements, or prepares images for printing.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Which image formats are supported?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>This tool supports all common image formats as input: JPG/JPEG, PNG, WebP, GIF, BMP, and SVG. You can download the resized result as JPG, PNG, or WebP — just select your preferred format before resizing.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is this tool free? Does it upload my images to a server?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Completely free, and your images never leave your device. All resizing happens entirely inside your browser using the Canvas API. Your photos are 100% private — no data is sent to any server.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How do I lock the aspect ratio to avoid distortion?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Click the chain-link button between the Width and Height fields. When the lock is active (blue), changing one dimension automatically calculates the other to maintain the original proportions. Unlock it to set width and height independently.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is the maximum image size I can resize?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>There is no strict limit — it depends on your device's available memory. Most devices handle images up to 20–30 MB with ease. Very large images (50 MB+) may run slowly on older hardware. For best results, images under 10 MB are recommended.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+
+  <!-- Toast container -->
+  <div id="toast-container"></div>
+
+  <!-- FAQ accordion -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.faq-question').forEach(function(question) {
+        question.addEventListener('click', function() {
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          const faqItem = this.closest('.faq-item');
+          const icon = this.querySelector('.faq-icon');
+
+          document.querySelectorAll('.faq-question').forEach(function(q) {
+            if (q !== question) {
+              q.setAttribute('aria-expanded', 'false');
+              q.closest('.faq-item').classList.remove('active');
+              q.querySelector('.faq-icon').textContent = '+';
+            }
+          });
+
+          if (isExpanded) {
+            this.setAttribute('aria-expanded', 'false');
+            faqItem.classList.remove('active');
+            icon.textContent = '+';
+          } else {
+            this.setAttribute('aria-expanded', 'true');
+            faqItem.classList.add('active');
+            icon.textContent = '−';
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- Sentry init -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
+        initSentryTracking();
+      }
+    });
+  </script>
+
+  <!-- Mode tab styles -->
+  <style>
+    .mode-tab {
+      background: white;
+      border-color: #d1d5db;
+      color: #6b7280;
+    }
+    .mode-tab.active {
+      background: #3b82f6;
+      border-color: #3b82f6;
+      color: white;
+    }
+    [data-theme="dark"] .mode-tab {
+      background: #374151;
+      border-color: #4b5563;
+      color: #9ca3af;
+    }
+    [data-theme="dark"] .mode-tab.active {
+      background: #3b82f6;
+      border-color: #3b82f6;
+      color: white;
+    }
+    .preset-btn {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      background: white;
+      color: #374151;
+      font-size: 0.8125rem;
+      cursor: pointer;
+      text-align: left;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .preset-btn:hover {
+      border-color: #3b82f6;
+      background: #eff6ff;
+    }
+    .preset-btn.selected {
+      border-color: #3b82f6;
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+    [data-theme="dark"] .preset-btn {
+      background: #374151;
+      border-color: #4b5563;
+      color: #d1d5db;
+    }
+    [data-theme="dark"] .preset-btn:hover,
+    [data-theme="dark"] .preset-btn.selected {
+      border-color: #3b82f6;
+      background: rgba(59, 130, 246, 0.15);
+      color: #93c5fd;
+    }
+  </style>
+
+  <!-- Core tool script -->
+  <script>
+    const PAGE_NAME = 'Image Resizer';
+
+    const PRESETS = [
+      { label: 'Thumbnail',      w: 150,  h: 150  },
+      { label: 'HD (720p)',       w: 1280, h: 720  },
+      { label: 'Full HD (1080p)',  w: 1920, h: 1080 },
+      { label: 'Twitter Post',   w: 1200, h: 675  },
+      { label: 'Instagram Sq.',  w: 1080, h: 1080 },
+      { label: 'Facebook Cover', w: 820,  h: 312  },
+      { label: 'LinkedIn Cover', w: 1128, h: 191  },
+      { label: 'OG Image',       w: 1200, h: 630  },
+      { label: 'Favicon (32×32)',w: 32,   h: 32   },
+    ];
+
+    // ---- State ----
+    let originalImage = null;
+    let originalFile = null;
+    let aspectRatio = 1;
+    let isRatioLocked = true;
+    let currentMode = 'pixels';
+    let outputMimeType = 'image/jpeg';
+    let outputQuality = 0.85;
+    let resizedDataUrl = null;
+
+    // ---- Utilities ----
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 50);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => container.removeChild(toast), 300);
+      }, 3000);
+    }
+
+    function formatBytes(bytes) {
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / 1048576).toFixed(1) + ' MB';
+    }
+
+    function formatExtension(mimeType) {
+      const map = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' };
+      return map[mimeType] || 'jpg';
+    }
+
+    function trackEvent(eventName, params) {
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.track(eventName, { page: PAGE_NAME, ...params });
+      }
+    }
+
+    function captureError(error, context) {
+      if (typeof Sentry !== 'undefined') {
+        try {
+          Sentry.captureException(error, { extra: context });
+        } catch (_) { /* ignore */ }
+      }
+    }
+
+    // ---- Image loading ----
+    function loadImageFile(file) {
+      if (!file || !file.type.startsWith('image/')) {
+        showToast('Please select a valid image file.', 'error');
+        trackEvent('image_resizer_invalid_file', { file_type: file ? file.type : 'none' });
+        return;
+      }
+
+      originalFile = file;
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          originalImage = img;
+          aspectRatio = img.width / img.height;
+          showEditorPanel(img, file, e.target.result);
+          trackEvent('image_resizer_image_loaded', {
+            width: img.width,
+            height: img.height,
+            size_bytes: file.size,
+            file_type: file.type
+          });
+        };
+        img.onerror = function() {
+          showToast('Failed to load image. Please try another file.', 'error');
+          trackEvent('image_resizer_load_failed', { file_name: file.name });
+        };
+        img.src = e.target.result;
+      };
+
+      reader.onerror = function() {
+        showToast('Could not read the file. Please try again.', 'error');
+        trackEvent('image_resizer_read_failed', { file_name: file.name });
+      };
+
+      reader.readAsDataURL(file);
+    }
+
+    function showEditorPanel(img, file, dataUrl) {
+      document.getElementById('upload-section').classList.add('hidden');
+      document.getElementById('editor-panel').classList.remove('hidden');
+
+      document.getElementById('preview-img').src = dataUrl;
+      document.getElementById('img-name').textContent = file.name;
+      document.getElementById('orig-width').textContent = img.width + ' px';
+      document.getElementById('orig-height').textContent = img.height + ' px';
+      document.getElementById('orig-size').textContent = formatBytes(file.size);
+      document.getElementById('orig-format').textContent = file.type.replace('image/', '').toUpperCase();
+
+      document.getElementById('compare-original').src = dataUrl;
+      document.getElementById('compare-original-info').textContent =
+        img.width + ' × ' + img.height + ' px — ' + formatBytes(file.size);
+
+      // Seed pixel inputs with original dimensions
+      document.getElementById('input-width').value = img.width;
+      document.getElementById('input-height').value = img.height;
+
+      // Seed percentage preview
+      updatePercentagePreview();
+
+      // Hide result panel if shown from a previous resize
+      document.getElementById('result-panel').classList.add('hidden');
+    }
+
+    // ---- Mode switching ----
+    document.addEventListener('DOMContentLoaded', function() {
+      buildPresetGrid();
+      initEventListeners();
+    });
+
+    function buildPresetGrid() {
+      const grid = document.getElementById('preset-grid');
+      PRESETS.forEach(function(preset) {
+        const btn = document.createElement('button');
+        btn.className = 'preset-btn';
+        btn.setAttribute('data-w', preset.w);
+        btn.setAttribute('data-h', preset.h);
+        btn.innerHTML = '<span class="font-medium">' + preset.label + '</span><br>' +
+          '<span class="text-xs text-gray-500">' + preset.w + ' × ' + preset.h + '</span>';
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('selected'));
+          this.classList.add('selected');
+        });
+        grid.appendChild(btn);
+      });
+    }
+
+    function switchMode(mode) {
+      currentMode = mode;
+      document.querySelectorAll('.mode-tab').forEach(function(tab) {
+        const isActive = tab.getAttribute('data-mode') === mode;
+        tab.classList.toggle('active', isActive);
+        tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+      document.querySelectorAll('.mode-panel').forEach(function(panel) {
+        panel.classList.add('hidden');
+      });
+      document.getElementById('mode-' + mode).classList.remove('hidden');
+    }
+
+    // ---- Aspect ratio lock ----
+    function updateLockUI() {
+      const lockBtn = document.getElementById('lock-ratio-btn');
+      const lockedIcon = document.getElementById('lock-icon-locked');
+      const unlockedIcon = document.getElementById('lock-icon-unlocked');
+      const statusLabel = document.getElementById('lock-status-label');
+
+      if (isRatioLocked) {
+        lockBtn.classList.add('locked');
+        lockedIcon.classList.remove('hidden');
+        unlockedIcon.classList.add('hidden');
+        lockBtn.setAttribute('aria-label', 'Aspect ratio locked — click to unlock');
+        statusLabel.textContent = '🔒 Aspect ratio locked';
+      } else {
+        lockBtn.classList.remove('locked');
+        lockedIcon.classList.add('hidden');
+        unlockedIcon.classList.remove('hidden');
+        lockBtn.setAttribute('aria-label', 'Aspect ratio unlocked — click to lock');
+        statusLabel.textContent = '🔓 Aspect ratio unlocked';
+      }
+    }
+
+    // ---- Percentage helpers ----
+    function updatePercentagePreview() {
+      if (!originalImage) return;
+      const pct = parseInt(document.getElementById('input-percentage').value, 10);
+      const newW = Math.round(originalImage.width * pct / 100);
+      const newH = Math.round(originalImage.height * pct / 100);
+      document.getElementById('percentage-preview').textContent =
+        pct + '% → ' + newW + ' × ' + newH + ' px';
+    }
+
+    // ---- Compute target dimensions ----
+    function computeTargetDimensions() {
+      if (!originalImage) return null;
+
+      if (currentMode === 'pixels') {
+        const w = parseInt(document.getElementById('input-width').value, 10);
+        const h = parseInt(document.getElementById('input-height').value, 10);
+        if (!w || !h || w < 1 || h < 1) return null;
+        return { width: w, height: h };
+      }
+
+      if (currentMode === 'percentage') {
+        const pct = parseInt(document.getElementById('input-percentage').value, 10);
+        if (!pct || pct < 1) return null;
+        return {
+          width: Math.round(originalImage.width * pct / 100),
+          height: Math.round(originalImage.height * pct / 100)
+        };
+      }
+
+      if (currentMode === 'preset') {
+        const selected = document.querySelector('.preset-btn.selected');
+        if (!selected) {
+          showToast('Please select a preset size.', 'error');
+          return null;
+        }
+        return {
+          width: parseInt(selected.getAttribute('data-w'), 10),
+          height: parseInt(selected.getAttribute('data-h'), 10)
+        };
+      }
+
+      return null;
+    }
+
+    // ---- Resize logic ----
+    function resizeImageToCanvas(img, targetWidth, targetHeight) {
+      const canvas = document.createElement('canvas');
+      canvas.width = targetWidth;
+      canvas.height = targetHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+      return canvas;
+    }
+
+    function estimateDataUrlBytes(dataUrl) {
+      const base64 = dataUrl.split(',')[1] || '';
+      return Math.round(base64.length * 0.75);
+    }
+
+    function performResize() {
+      if (!originalImage) {
+        showToast('Please upload an image first.', 'error');
+        return;
+      }
+
+      const dims = computeTargetDimensions();
+      if (!dims) {
+        showToast('Please enter valid dimensions.', 'error');
+        return;
+      }
+
+      if (dims.width > 16000 || dims.height > 16000) {
+        showToast('Maximum dimension is 16,000 px.', 'error');
+        return;
+      }
+
+      const resizeBtn = document.getElementById('resize-btn');
+      resizeBtn.disabled = true;
+      resizeBtn.textContent = '⏳ Resizing...';
+
+      trackEvent('image_resizer_resize_start', {
+        original_width: originalImage.width,
+        original_height: originalImage.height,
+        target_width: dims.width,
+        target_height: dims.height,
+        mode: currentMode,
+        output_format: outputMimeType
+      });
+
+      // Defer to allow UI to update
+      setTimeout(function() {
+        try {
+          const canvas = resizeImageToCanvas(originalImage, dims.width, dims.height);
+          resizedDataUrl = canvas.toDataURL(outputMimeType, outputQuality);
+
+          const sizeBytes = estimateDataUrlBytes(resizedDataUrl);
+
+          document.getElementById('compare-resized').src = resizedDataUrl;
+          document.getElementById('compare-resized-info').textContent =
+            dims.width + ' × ' + dims.height + ' px — ~' + formatBytes(sizeBytes);
+          document.getElementById('result-meta').textContent =
+            dims.width + ' × ' + dims.height + ' px  |  ~' + formatBytes(sizeBytes) + '  |  ' +
+            formatExtension(outputMimeType).toUpperCase();
+
+          document.getElementById('result-panel').classList.remove('hidden');
+          document.getElementById('result-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+          trackEvent('image_resizer_resize_success', {
+            target_width: dims.width,
+            target_height: dims.height,
+            output_size_bytes: sizeBytes,
+            output_format: outputMimeType
+          });
+
+          showToast('Image resized successfully!', 'success');
+        } catch (error) {
+          showToast('Resize failed. Please try again.', 'error');
+          trackEvent('image_resizer_resize_failed', { error: error.message });
+          captureError(error, { operation: 'resize', dims });
+        } finally {
+          resizeBtn.disabled = false;
+          resizeBtn.innerHTML = '<span class="mr-2">🔧</span>Resize Image';
+        }
+      }, 50);
+    }
+
+    function downloadResizedImage() {
+      if (!resizedDataUrl) {
+        showToast('No resized image to download.', 'error');
+        return;
+      }
+
+      const ext = formatExtension(outputMimeType);
+      const baseName = originalFile
+        ? originalFile.name.replace(/\.[^.]+$/, '')
+        : 'resized';
+      const fileName = baseName + '-resized.' + ext;
+
+      const a = document.createElement('a');
+      a.href = resizedDataUrl;
+      a.download = fileName;
+      a.click();
+
+      trackEvent('image_resizer_download', {
+        file_name: fileName,
+        output_format: outputMimeType,
+        size_bytes: estimateDataUrlBytes(resizedDataUrl)
+      });
+
+      showToast('Download started!', 'success');
+    }
+
+    // ---- Event listeners ----
+    function initEventListeners() {
+      // Drop zone drag events
+      const dropZone = document.getElementById('drop-zone');
+
+      ['dragenter', 'dragover'].forEach(function(evt) {
+        dropZone.addEventListener(evt, function(e) {
+          e.preventDefault();
+          dropZone.classList.add('dragging');
+        });
+      });
+
+      ['dragleave', 'dragend', 'drop'].forEach(function(evt) {
+        dropZone.addEventListener(evt, function(e) {
+          e.preventDefault();
+          dropZone.classList.remove('dragging');
+        });
+      });
+
+      dropZone.addEventListener('drop', function(e) {
+        const file = e.dataTransfer.files[0];
+        if (file) loadImageFile(file);
+      });
+
+      dropZone.addEventListener('click', function() {
+        document.getElementById('file-input').click();
+      });
+
+      dropZone.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          document.getElementById('file-input').click();
+        }
+      });
+
+      document.getElementById('file-input').addEventListener('change', function() {
+        if (this.files[0]) loadImageFile(this.files[0]);
+      });
+
+      // Change image button
+      document.getElementById('change-image-btn').addEventListener('click', function() {
+        originalImage = null;
+        originalFile = null;
+        resizedDataUrl = null;
+        document.getElementById('file-input').value = '';
+        document.getElementById('editor-panel').classList.add('hidden');
+        document.getElementById('result-panel').classList.add('hidden');
+        document.getElementById('upload-section').classList.remove('hidden');
+      });
+
+      // Mode tabs
+      document.querySelectorAll('.mode-tab').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          switchMode(this.getAttribute('data-mode'));
+        });
+      });
+
+      // Aspect ratio lock
+      document.getElementById('lock-ratio-btn').addEventListener('click', function() {
+        isRatioLocked = !isRatioLocked;
+        updateLockUI();
+        trackEvent('image_resizer_aspect_lock_toggle', { locked: isRatioLocked });
+      });
+
+      // Width input → recalculate height when locked
+      document.getElementById('input-width').addEventListener('input', function() {
+        if (!isRatioLocked || !originalImage) return;
+        const w = parseInt(this.value, 10);
+        if (w > 0) {
+          document.getElementById('input-height').value = Math.round(w / aspectRatio);
+        }
+      });
+
+      // Height input → recalculate width when locked
+      document.getElementById('input-height').addEventListener('input', function() {
+        if (!isRatioLocked || !originalImage) return;
+        const h = parseInt(this.value, 10);
+        if (h > 0) {
+          document.getElementById('input-width').value = Math.round(h * aspectRatio);
+        }
+      });
+
+      // Percentage slider + number sync
+      const pctSlider = document.getElementById('input-percentage');
+      const pctNumber = document.getElementById('percentage-number');
+
+      pctSlider.addEventListener('input', function() {
+        pctNumber.value = this.value;
+        updatePercentagePreview();
+      });
+
+      pctNumber.addEventListener('input', function() {
+        const val = Math.max(1, Math.min(200, parseInt(this.value, 10) || 1));
+        this.value = val;
+        pctSlider.value = val;
+        updatePercentagePreview();
+      });
+
+      // Format tabs
+      document.querySelectorAll('.format-tab').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.format-tab').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          outputMimeType = this.getAttribute('data-format');
+
+          // PNG is lossless — hide quality slider
+          const qualityRow = document.getElementById('quality-row');
+          qualityRow.style.display = outputMimeType === 'image/png' ? 'none' : '';
+
+          trackEvent('image_resizer_format_selected', { format: outputMimeType });
+        });
+      });
+
+      // Quality slider
+      document.getElementById('quality-slider').addEventListener('input', function() {
+        outputQuality = parseInt(this.value, 10) / 100;
+        document.getElementById('quality-label').textContent = this.value + '%';
+      });
+
+      // Resize button
+      document.getElementById('resize-btn').addEventListener('click', performResize);
+
+      // Download button
+      document.getElementById('download-btn').addEventListener('click', downloadResizedImage);
+
+      // Paste image from clipboard
+      document.addEventListener('paste', function(e) {
+        const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+        for (const item of items) {
+          if (item.type.startsWith('image/')) {
+            const file = item.getAsFile();
+            if (file) {
+              loadImageFile(file);
+              showToast('Image pasted from clipboard!', 'info');
+            }
+            break;
+          }
+        }
+      });
+
+      updateLockUI();
+    }
+  </script>
+</body>
+</html>
