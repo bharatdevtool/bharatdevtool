@@ -48,6 +48,7 @@ import { BMICalculatorTester } from './bmi-calculator-tests.js';
 import { EMICalculatorTester } from './emi-calculator-tests.js';
 import { TimestampConverterTester } from './timestamp-converter-tests.js';
 import { JWTDecoderTester } from './jwt-decoder-tests.js';
+import { ImageConverterTester } from './image-converter-tests.js';
 
 // Test Results Tracking
 let totalTests = 0;
@@ -596,6 +597,17 @@ const timestampTester = new TimestampConverterTester();
 const timestampResults = timestampTester.runAll();
 
 // ============================================================================
+// IMAGE CONVERTER TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+console.log('IMAGE CONVERTER TEST SUITE');
+console.log('='.repeat(60));
+
+const imageConverterTester = new ImageConverterTester();
+const imageConverterResults = imageConverterTester.runAllTests();
+
+// ============================================================================
 // FINAL TEST SUMMARY
 // ============================================================================
 
@@ -604,9 +616,9 @@ console.log('📊 COMPREHENSIVE TEST SUMMARY');
 console.log('='.repeat(60));
 
 
-const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + passwordGeneratorResults.total + textCaseConverterResults.total + uuidResults.total + percentageResults.total + bmiResults.total + emiResults.total + timestampResults.total + jwtResults.total;
-const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + passwordGeneratorResults.passed + textCaseConverterResults.passed + uuidResults.passed + percentageResults.passed + bmiResults.passed + emiResults.passed + timestampResults.passed + jwtResults.passed;
-const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + passwordGeneratorResults.failed + textCaseConverterResults.failed + uuidResults.failed + percentageResults.failed + bmiResults.failed + emiResults.failed + timestampResults.failed + jwtResults.failed;
+const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + passwordGeneratorResults.total + textCaseConverterResults.total + uuidResults.total + percentageResults.total + bmiResults.total + emiResults.total + timestampResults.total + jwtResults.total + imageConverterResults.total;
+const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + passwordGeneratorResults.passed + textCaseConverterResults.passed + uuidResults.passed + percentageResults.passed + bmiResults.passed + emiResults.passed + timestampResults.passed + jwtResults.passed + imageConverterResults.passed;
+const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + passwordGeneratorResults.failed + textCaseConverterResults.failed + uuidResults.failed + percentageResults.failed + bmiResults.failed + emiResults.failed + timestampResults.failed + jwtResults.failed + imageConverterResults.failed;
 
 console.log(`Total Tests: ${grandTotal}`);
 console.log(`✅ Passed: ${grandPassed}`);
@@ -632,6 +644,7 @@ console.log(`BMI Calculator: ${bmiResults.total} tests (${bmiResults.passed} pas
 console.log(`EMI Calculator: ${emiResults.total} tests (${emiResults.passed} passed, ${emiResults.failed} failed)`);
 console.log(`Unix Timestamp Converter: ${timestampResults.total} tests (${timestampResults.passed} passed, ${timestampResults.failed} failed)`);
 console.log(`JWT Decoder: ${jwtResults.total} tests (${jwtResults.passed} passed, ${jwtResults.failed} failed)`);
+console.log(`Image Converter: ${imageConverterResults.total} tests (${imageConverterResults.passed} passed, ${imageConverterResults.failed} failed)`);
 
 
 if (grandFailed === 0) {
@@ -721,6 +734,10 @@ if (grandFailed === 0) {
   if (jwtResults.failed > 0) {
     console.log('\nJWT Decoder failures:');
     jwtResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  if (imageConverterResults.failed > 0) {
+    console.log('\nImage Converter failures:');
+    imageConverterResults.failedTests.forEach(test => console.log(`   - ${test}`));
   }
 
   console.log('\nPlease review the failed tests above.');

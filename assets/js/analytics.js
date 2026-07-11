@@ -510,7 +510,8 @@ const PAGE_NAMES = {
   'gst-calculator.html': 'GST Calculator',
   'emi-calculator.html': 'EMI Calculator',
   'timestamp-converter.html': 'Unix Timestamp Converter',
-  'jwt-decoder.html': 'JWT Decoder'
+  'jwt-decoder.html': 'JWT Decoder',
+  'image-converter.html': 'Image Converter'
 };
 
 /**
