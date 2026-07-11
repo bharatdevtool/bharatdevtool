@@ -525,7 +525,8 @@ const PAGE_NAMES = {
   'markdown-to-html.html': 'Markdown to HTML Converter',
   'json-to-typescript.html': 'JSON to TypeScript Interface Generator',
   'html-formatter.html': 'HTML Formatter',
-  'favicon-generator.html': 'Favicon Generator'
+  'favicon-generator.html': 'Favicon Generator',
+  'reading-time.html': 'Reading Time Estimator'
 };
 
 /**
