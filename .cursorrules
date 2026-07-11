@@ -932,6 +932,16 @@ When creating a new page:
 11. ✅ **Register tool on "Our Developer Tools" page** (`tools.html`) - See Section 8.4
 12. ✅ **Update `sitemap.xml`** to include the new page URL with appropriate `priority`, `changefreq`, and `lastmod`
 
+**⚠️ Items 11 and 12 are the ones most often skipped.** A checklist item alone does not enforce itself — before committing, run these two greps and treat a `0` as a hard failure, exactly like a failed unit test:
+```bash
+# Fails (prints nothing) if the new page isn't in the sitemap
+grep -c "your-new-page.html" sitemap.xml
+
+# Fails (prints nothing) if the feature card wasn't added to tools.html
+grep -c "your-new-page.html" tools.html
+```
+If either prints `0`, the build is incomplete — go back and add the missing entry before moving on. If you are the scheduled build agent, add these two checks to STEP 7 (self-test) of your routine alongside the canonical/OG/FAQPage/console.log checks — the routine's own self-test currently does not verify sitemap.xml or tools.html, which is why 5+ shipped tools were missing from the sitemap despite this rule existing.
+
 ### 8.2 SEO Requirements
 
 **CRITICAL - Every page MUST include:**
@@ -1167,9 +1177,9 @@ Before committing code:
 - ✅ **Structured data** - JSON-LD schemas (WebApplication, FAQPage, etc.)
 - ✅ **Open Graph tags** - Social media preview
 - ✅ **Canonical URL** - Proper canonical tag
-- ✅ **Sitemap updated** - Page added to sitemap.xml
+- ✅ **Sitemap updated** - Page added to sitemap.xml (verify with grep, see Section 8.1)
 - ✅ **Meta description** - With "Free" keyword and benefits
-- ✅ **Tool registered** - Added to "Our Developer Tools" page (`tools.html`)
+- ✅ **Tool registered** - Added to "Our Developer Tools" page (`tools.html`, verify with grep, see Section 8.1)
 
 ### 9.4 UI/UX
 
