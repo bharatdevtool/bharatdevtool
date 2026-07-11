@@ -82,7 +82,7 @@
 | 17 | Hash Generator (MD5/SHA) | security | High | 1d | `done` | `hash-generator.html` |
 | 18 | CSV ↔ JSON Converter | developer | High | 1d | `done` | `csv-json-converter.html` |
 | 19 | YAML ↔ JSON Converter | developer | High | 1.5d | `done` | `yaml-json-converter.html` |
-| 20 | Diff Checker (Text Compare) | developer | High | 2d | `in-progress` | `diff-checker.html` |
+| 20 | Diff Checker (Text Compare) | developer | High | 2d | `done` | `diff-checker.html` |
 
 **Notes:**
 - Image Compressor: use Canvas API + WebP conversion — match TinyPNG quality for free
@@ -97,7 +97,7 @@
 
 | # | Tool | Category | Traffic Potential | Effort | Status | File |
 |---|------|----------|-------------------|--------|--------|------|
-| 21 | Cron Expression Generator | developer | High | 1d | `not-started` | `cron-generator.html` |
+| 21 | Cron Expression Generator | developer | High | 1d | `in-progress` | `cron-generator.html` |
 | 22 | Lorem Ipsum Generator | text | High | 0.5d | `not-started` | `lorem-ipsum.html` |
 | 23 | Timezone Converter | utility | High | 1d | `not-started` | `timezone-converter.html` |
 | 24 | Markdown to HTML | text | High | 1d | `not-started` | `markdown-to-html.html` |

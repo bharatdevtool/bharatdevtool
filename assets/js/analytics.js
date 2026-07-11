@@ -518,7 +518,8 @@ const PAGE_NAMES = {
   'hash-generator.html': 'Hash Generator',
   'csv-json-converter.html': 'CSV JSON Converter',
   'yaml-json-converter.html': 'YAML JSON Converter',
-  'diff-checker.html': 'Diff Checker'
+  'diff-checker.html': 'Diff Checker',
+  'cron-generator.html': 'Cron Expression Generator'
 };
 
 /**
