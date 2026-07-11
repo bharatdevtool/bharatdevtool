@@ -517,7 +517,8 @@ const PAGE_NAMES = {
   'image-to-pdf.html': 'Image to PDF Converter',
   'hash-generator.html': 'Hash Generator',
   'csv-json-converter.html': 'CSV JSON Converter',
-  'yaml-json-converter.html': 'YAML JSON Converter'
+  'yaml-json-converter.html': 'YAML JSON Converter',
+  'diff-checker.html': 'Diff Checker'
 };
 
 /**

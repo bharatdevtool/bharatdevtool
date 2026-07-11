@@ -52,6 +52,7 @@ import { ImageConverterTester } from './image-converter-tests.js';
 import { ImageResizerTester } from './image-resizer-tests.js';
 import { CSVJsonConverterTester } from './csv-json-converter-tests.js';
 import { YAMLJSONConverterTester } from './yaml-json-converter-tests.js';
+import { DiffCheckerTester } from './diff-checker-tests.js';
 
 // Test Results Tracking
 let totalTests = 0;
@@ -644,6 +645,17 @@ const yamlJsonTester = new YAMLJSONConverterTester();
 const yamlJsonResults = yamlJsonTester.runAll();
 
 // ============================================================================
+// DIFF CHECKER TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+console.log('DIFF CHECKER TEST SUITE');
+console.log('='.repeat(60));
+
+const diffCheckerTester = new DiffCheckerTester();
+const diffCheckerResults = diffCheckerTester.runAllTests();
+
+// ============================================================================
 // FINAL TEST SUMMARY
 // ============================================================================
 
@@ -652,9 +664,9 @@ console.log('📊 COMPREHENSIVE TEST SUMMARY');
 console.log('='.repeat(60));
 
 
-const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + passwordGeneratorResults.total + textCaseConverterResults.total + uuidResults.total + percentageResults.total + bmiResults.total + emiResults.total + timestampResults.total + jwtResults.total + imageConverterResults.total + imageResizerResults.total + csvJsonResults.total + yamlJsonResults.total;
-const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + passwordGeneratorResults.passed + textCaseConverterResults.passed + uuidResults.passed + percentageResults.passed + bmiResults.passed + emiResults.passed + timestampResults.passed + jwtResults.passed + imageConverterResults.passed + imageResizerResults.passed + csvJsonResults.passed + yamlJsonResults.passed;
-const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + passwordGeneratorResults.failed + textCaseConverterResults.failed + uuidResults.failed + percentageResults.failed + bmiResults.failed + emiResults.failed + timestampResults.failed + jwtResults.failed + imageConverterResults.failed + imageResizerResults.failed + csvJsonResults.failed + yamlJsonResults.failed;
+const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + passwordGeneratorResults.total + textCaseConverterResults.total + uuidResults.total + percentageResults.total + bmiResults.total + emiResults.total + timestampResults.total + jwtResults.total + imageConverterResults.total + imageResizerResults.total + csvJsonResults.total + yamlJsonResults.total + diffCheckerResults.total;
+const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + passwordGeneratorResults.passed + textCaseConverterResults.passed + uuidResults.passed + percentageResults.passed + bmiResults.passed + emiResults.passed + timestampResults.passed + jwtResults.passed + imageConverterResults.passed + imageResizerResults.passed + csvJsonResults.passed + yamlJsonResults.passed + diffCheckerResults.passed;
+const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + passwordGeneratorResults.failed + textCaseConverterResults.failed + uuidResults.failed + percentageResults.failed + bmiResults.failed + emiResults.failed + timestampResults.failed + jwtResults.failed + imageConverterResults.failed + imageResizerResults.failed + csvJsonResults.failed + yamlJsonResults.failed + diffCheckerResults.failed;
 
 console.log(`Total Tests: ${grandTotal}`);
 console.log(`✅ Passed: ${grandPassed}`);
@@ -684,6 +696,7 @@ console.log(`Image Converter: ${imageConverterResults.total} tests (${imageConve
 console.log(`Image Resizer: ${imageResizerResults.total} tests (${imageResizerResults.passed} passed, ${imageResizerResults.failed} failed)`);
 console.log(`CSV ↔ JSON Converter: ${csvJsonResults.total} tests (${csvJsonResults.passed} passed, ${csvJsonResults.failed} failed)`);
 console.log(`YAML JSON Converter: ${yamlJsonResults.total} tests (${yamlJsonResults.passed} passed, ${yamlJsonResults.failed} failed)`);
+console.log(`Diff Checker: ${diffCheckerResults.total} tests (${diffCheckerResults.passed} passed, ${diffCheckerResults.failed} failed)`);
 
 
 if (grandFailed === 0) {
@@ -789,6 +802,10 @@ if (grandFailed === 0) {
   if (yamlJsonResults.failed > 0) {
     console.log('\nYAML JSON Converter failures:');
     yamlJsonResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  if (diffCheckerResults.failed > 0) {
+    console.log('\nDiff Checker failures:');
+    diffCheckerResults.failedTests.forEach(test => console.log(`   - ${test}`));
   }
 
   console.log('\nPlease review the failed tests above.');
