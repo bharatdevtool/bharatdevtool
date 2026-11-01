@@ -35,7 +35,10 @@ export function parseCurl(curlCommand: string): ParsedCurl {
 
   // Remove harmless flags
   command = command.replace(/--compressed\s*/gi, '');
-  command = command.replace(/-[vsi]\s+/gi, '');
+  // Strip standalone -v/-s/-i flags, leaving quoted header values and bodies untouched
+  command = command.replace(/'[^']*'|"(?:[^"\\]|\\.)*"|(^|\s)-[vsi](?=\s|$)/gi, (match, lead) =>
+    lead === undefined ? match : lead
+  );
 
   // Extract HTTP method
   const methodMatch = command.match(/-X\s+(\w+)|--request\s+(\w+)/i);
@@ -66,18 +69,21 @@ export function parseCurl(curlCommand: string): ParsedCurl {
     }
   }
 
-  // Extract URL
+  // Extract URL, ignoring URLs inside header values and request bodies
+  const urlSource = command
+    .replace(new RegExp(headerRegex.source, 'gi'), ' ')
+    .replace(new RegExp(dataRegex.source, 'gi'), ' ');
   const urlRegex = /(https?:\/\/[^\s'"]+)/gi;
   const urlMatches: string[] = [];
   let uMatch: RegExpExecArray | null;
-  while ((uMatch = urlRegex.exec(command)) !== null) {
+  while ((uMatch = urlRegex.exec(urlSource)) !== null) {
     urlMatches.push(uMatch[1]);
   }
 
   if (urlMatches.length > 0) {
-    result.url = urlMatches[urlMatches.length - 1];
+    result.url = urlMatches[0];
   } else {
-    const domainMatch = command.match(/([a-zA-Z0-9.-]+\.[a-zA-Z]{2,}[^\s'"]*)/);
+    const domainMatch = urlSource.match(/([a-zA-Z0-9.-]+\.[a-zA-Z]{2,}[^\s'"]*)/);
     if (domainMatch) {
       result.url = 'https://' + domainMatch[1];
     }
@@ -98,26 +104,56 @@ export function parseCurl(curlCommand: string): ParsedCurl {
 }
 
 export function toFetch(p: ParsedCurl): string {
+  const BODY_PLACEHOLDER = '__BODY__';
   const opts: Record<string, unknown> = { method: p.method };
   if (Object.keys(p.headers).length) opts.headers = p.headers;
+  let bodyExpr = '';
   if (p.body) {
+    opts.body = BODY_PLACEHOLDER;
     try {
-      opts.body = JSON.parse(p.body);
+      bodyExpr = `JSON.stringify(${JSON.stringify(JSON.parse(p.body), null, 2).replace(/\n/g, '\n  ')})`;
     } catch {
-      opts.body = p.body;
+      bodyExpr = JSON.stringify(p.body);
     }
   }
-  const optsStr = Object.keys(opts).length > 1 || p.method !== 'GET' ? `, ${JSON.stringify(opts, null, 2)}` : '';
+  const optsStr = Object.keys(opts).length > 1 || p.method !== 'GET'
+    ? `, ${JSON.stringify(opts, null, 2).replace(`"${BODY_PLACEHOLDER}"`, () => bodyExpr)}`
+    : '';
   return `// JavaScript fetch() equivalent\nconst response = await fetch('${p.url}'${optsStr});\nconst data = await response.json();\nconsole.log(data);`;
+}
+
+/** Render a parsed JSON value as a Python literal (True/False/None instead of true/false/null) */
+function toPythonLiteral(value: unknown, indent = ''): string {
+  if (value === null) return 'None';
+  if (value === true) return 'True';
+  if (value === false) return 'False';
+  if (typeof value === 'number' || typeof value === 'string') return JSON.stringify(value);
+  const inner = indent + '    ';
+  if (Array.isArray(value)) {
+    if (!value.length) return '[]';
+    return `[\n${value.map((v) => inner + toPythonLiteral(v, inner)).join(',\n')}\n${indent}]`;
+  }
+  const entries = Object.entries(value as Record<string, unknown>);
+  if (!entries.length) return '{}';
+  return `{\n${entries.map(([k, v]) => `${inner}${JSON.stringify(k)}: ${toPythonLiteral(v, inner)}`).join(',\n')}\n${indent}}`;
 }
 
 export function toPython(p: ParsedCurl): string {
   const headersStr = Object.keys(p.headers).length ? `\nheaders = ${JSON.stringify(p.headers, null, 4)}` : '';
-  const dataStr = p.body ? `\ndata = ${p.body}` : '';
+  let isJson = false;
+  let dataStr = '';
+  if (p.body) {
+    try {
+      dataStr = `\ndata = ${toPythonLiteral(JSON.parse(p.body))}`;
+      isJson = true;
+    } catch {
+      dataStr = `\ndata = ${JSON.stringify(p.body)}`;
+    }
+  }
   const args = [
     `'${p.url}'`,
     Object.keys(p.headers).length ? 'headers=headers' : null,
-    p.body ? (p.body.trim().startsWith('{') ? 'json=data' : 'data=data') : null,
+    p.body ? (isJson ? 'json=data' : 'data=data') : null,
   ]
     .filter(Boolean)
     .join(', ');

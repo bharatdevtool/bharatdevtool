@@ -51,7 +51,8 @@ function diffObjects(
 export function diffJSON(leftStr: string, rightStr: string): DiffNode[] {
   const left = JSON.parse(leftStr);
   const right = JSON.parse(rightStr);
-  if (typeof left !== 'object' || typeof right !== 'object') {
+  const isPlainObject = (v: unknown) => typeof v === 'object' && v !== null && !Array.isArray(v);
+  if (!isPlainObject(left) || !isPlainObject(right)) {
     return [diffValues(left, right, '', 'root')];
   }
   return diffObjects(

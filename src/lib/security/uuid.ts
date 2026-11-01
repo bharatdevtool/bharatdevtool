@@ -45,6 +45,7 @@ function uuidV1(): string {
   bytes[4] = Number((ts >> 40n) & 0xffn);
   bytes[5] = Number((ts >> 32n) & 0xffn);
   bytes[6] = Number((ts >> 56n) & 0x0fn) | 0x10; // version 1
+  bytes[7] = Number((ts >> 48n) & 0xffn);
   bytes[8] = (bytes[8] & 0x3f) | 0x80;
   return formatUUID(bytes);
 }
