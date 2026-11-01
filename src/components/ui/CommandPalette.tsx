@@ -89,7 +89,7 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search all 20 developer tools (e.g. json, qr, base64, curl)..."
+            placeholder={`Search all ${TOOLS.length} developer tools (e.g. json, qr, base64, curl)...`}
             className="w-full bg-transparent text-foreground placeholder:text-muted-foreground text-sm focus:outline-none"
           />
           {query ? (

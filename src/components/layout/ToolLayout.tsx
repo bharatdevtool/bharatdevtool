@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import { ChevronRight, ShieldCheck, Share2, Sparkles } from 'lucide-react';
 import { getToolById, TOOLS } from '@/config/tools';
@@ -13,9 +13,18 @@ interface ToolLayoutProps {
   headingOverride?: string;
 }
 
+const subscribeNoop = () => () => {};
+
 export default function ToolLayout({ toolId, children, headingOverride }: ToolLayoutProps) {
   const tool = getToolById(toolId);
   if (!tool) throw new Error(`ToolLayout: unknown toolId "${toolId}"`);
+
+  // Canonical URL on the server and first render; swap in the live URL (with share params) after hydration
+  const shareUrl = useSyncExternalStore(
+    subscribeNoop,
+    () => window.location.href,
+    () => `https://bharatdevtools.com${tool.route}`,
+  );
 
   // Get other tools in the same category
   const relatedTools = TOOLS.filter((t) => t.category === tool.category && t.id !== tool.id).slice(0, 3);
@@ -59,7 +68,7 @@ export default function ToolLayout({ toolId, children, headingOverride }: ToolLa
         {/* Header Action Tools */}
         <div className="flex items-center gap-2 self-start md:self-auto">
           <CopyButton
-            text={typeof window !== 'undefined' ? window.location.href : `https://bharatdevtools.com${tool.route}`}
+            text={shareUrl}
             label="Share"
             className="text-xs"
           />
@@ -77,7 +86,7 @@ export default function ToolLayout({ toolId, children, headingOverride }: ToolLa
               <Sparkles className="w-3.5 h-3.5 text-primary" /> More {tool.category} Tools
             </h2>
             <Link href="/tools" className="text-xs text-primary hover:underline">
-              View all 20 tools →
+              View all {TOOLS.length} tools →
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">

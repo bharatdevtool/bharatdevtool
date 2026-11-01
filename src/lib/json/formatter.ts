@@ -140,7 +140,7 @@ export function repairJSON(text: string): string {
   t = t.replace(/(^|[,{\s])([A-Za-z_\$][A-Za-z0-9_\$]*)\s*:/g, '$1"$2":');
   t = t.replace(/:\s*'([^'\n\r]*)'/g, ': "$1"');
   t = t.replace(/'([^']+)'\s*:/g, '"$1":');
-  t = t.replace(/\bundefined\b/g, 'null').replace(/\bNaN\b/g, 'null').replace(/\bInfinity\b/g, 'null').replace(/\b-Infinity\b/g, 'null');
+  t = t.replace(/\bundefined\b/g, 'null').replace(/\bNaN\b/g, 'null').replace(/-?\bInfinity\b/g, 'null');
   t = t.replace(/;\s*$/, '');
 
   try {
