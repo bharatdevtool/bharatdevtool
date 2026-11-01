@@ -61,5 +61,25 @@ describe('Cross-Tool Data Passing', () => {
     clearCrossToolData('json-diff');
     expect(getCrossToolData('json-diff')).toBeNull();
   });
+
+  it('safely transfers data via in-memory store when sessionStorage throws QuotaExceededError', () => {
+    // Simulate sessionStorage quota error
+    vi.stubGlobal('window', {
+      sessionStorage: {
+        getItem: () => null,
+        setItem: () => {
+          throw new Error('QuotaExceededError: DOM Exception 22');
+        },
+        removeItem: () => {},
+      },
+    });
+
+    const hugePayload = { lottieJson: '{"huge":"payload-of-many-megabytes"}' };
+    const success = setCrossToolData('lottie-analyzer', hugePayload);
+    expect(success).toBe(true);
+
+    const retrieved = getCrossToolData<typeof hugePayload>('lottie-analyzer');
+    expect(retrieved).toEqual(hugePayload);
+  });
 });
 

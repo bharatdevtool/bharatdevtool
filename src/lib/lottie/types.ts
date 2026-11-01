@@ -137,6 +137,7 @@ export interface LottieLayerStats {
   images: number;
   texts: number;
   nulls: number;
+  audios: number;
   hidden: number;
   hasExpressions: boolean;
   maxNestingDepth: number;
@@ -149,6 +150,7 @@ export interface LottieAnalysisResult {
   totalAssetBytes: number;
   rawJsonBytes: number;
   rasterPercentage: number;
+  hasAudio: boolean;
   isClean: boolean;
 }
 

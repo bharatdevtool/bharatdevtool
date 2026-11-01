@@ -1,12 +1,14 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import ToolLayout from '@/components/layout/ToolLayout';
 import ErrorMessage from '@/components/ui/ErrorMessage';
 import CopyButton from '@/components/ui/CopyButton';
 import { parseLottieJSON, sanitizeAnimationForPrivacy } from '@/lib/lottie/parser';
+import { extractLottieFromFile, createDotLottie } from '@/lib/lottie/dotLottie';
+import { hasLottieAudio, createBrowserAudioFactory } from '@/lib/lottie/audio';
 import { LOTTIE_SAMPLES } from '@/lib/lottie/samples';
 import { getCrossToolData, setCrossToolData } from '@/lib/crossToolData';
 import type { LottieAnimation, LottieMetadata } from '@/lib/lottie/types';
@@ -29,6 +31,8 @@ import {
   Sparkles,
   Maximize2,
   Box,
+  Volume2,
+  VolumeX,
 } from 'lucide-react';
 
 type BgType = 'obsidian' | 'light' | 'grid' | 'custom';
@@ -77,6 +81,13 @@ export default function LottiePlayerClient() {
   const [currentFrame, setCurrentFrame] = useState<number>(0);
   const [totalFrames, setTotalFrames] = useState<number>(120);
 
+  // Audio States
+  const [isMuted, setIsMuted] = useState<boolean>(false);
+  const isMutedRef = useRef<boolean>(false);
+  isMutedRef.current = isMuted;
+
+  const hasAudio = useMemo(() => hasLottieAudio(animationData), [animationData]);
+
   // Viewport States
   const [bgType, setBgType] = useState<BgType>('obsidian');
   const [customBg, setCustomBg] = useState<string>('#1E293B');
@@ -110,6 +121,10 @@ export default function LottiePlayerClient() {
         rendererSettings: {
           preserveAspectRatio: 'xMidYMid meet',
         },
+        audioFactory: createBrowserAudioFactory(
+          () => isMutedRef.current,
+          () => 1
+        ) as any,
       });
 
       anim.setSpeed(speed);
@@ -182,6 +197,19 @@ export default function LottiePlayerClient() {
     }
   }, [direction]);
 
+  useEffect(() => {
+    if (!animItemRef.current) return;
+    try {
+      if (isMuted) {
+        (animItemRef.current as any).mute?.();
+      } else {
+        (animItemRef.current as any).unmute?.();
+      }
+    } catch {
+      // Audio controller may not be active if animation has no sound
+    }
+  }, [isMuted]);
+
   // Handlers
   const handlePlayPause = () => {
     setIsPlaying((prev) => !prev);
@@ -221,34 +249,41 @@ export default function LottiePlayerClient() {
     setIsPlaying(true);
   };
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 25 * 1024 * 1024) {
-      setError('File size exceeds the 25MB browser limit.');
+    const res = await extractLottieFromFile(file);
+    if (!res.success || !res.animation) {
+      setError(res.error || 'Failed to parse animation file.');
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const content = event.target?.result as string;
-      const parsed = parseLottieJSON(content);
-      if (!parsed.success || !parsed.animation) {
-        setError(parsed.error || 'Failed to parse uploaded JSON.');
-        return;
-      }
-      setAnimationData(parsed.animation);
-      setRawJson(content);
-      setMetadata(parsed.metadata || null);
-      setActiveSampleId('');
-      setIsPlaying(true);
-      setError(null);
-    };
-    reader.onerror = () => {
-      setError('Error reading file.');
-    };
-    reader.readAsText(file);
+    setAnimationData(res.animation);
+    const jsonStr = res.rawJson || JSON.stringify(res.animation, null, 2);
+    setRawJson(jsonStr);
+    const parsed = parseLottieJSON(jsonStr);
+    setMetadata(parsed.metadata || null);
+    setActiveSampleId('');
+    setIsPlaying(true);
+    setError(null);
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
+
+  const handleDownloadDotLottie = () => {
+    const bytes = createDotLottie(animationData, {
+      name: metadata?.name || 'animation',
+      id: metadata?.name?.toLowerCase().replace(/\s+/g, '_') || 'animation_1',
+    });
+    const blob = new Blob([bytes as Uint8Array<ArrayBuffer>], { type: 'application/zip' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${metadata?.name || 'animation'}.lottie`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   const handlePasteChange = (text: string) => {
@@ -323,7 +358,7 @@ export default function LottiePlayerClient() {
             <input
               ref={fileInputRef}
               type="file"
-              accept=".json,application/json"
+              accept=".json,.lottie,application/json,application/zip"
               onChange={handleFileUpload}
               className="hidden"
             />
@@ -332,7 +367,7 @@ export default function LottiePlayerClient() {
               onClick={() => fileInputRef.current?.click()}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-xs font-medium hover:bg-primary/90 transition-colors shadow-2xs"
             >
-              <Upload className="w-3.5 h-3.5" /> Upload JSON
+              <Upload className="w-3.5 h-3.5" /> Upload File (.json / .lottie)
             </button>
             <button
               type="button"
@@ -394,6 +429,14 @@ export default function LottiePlayerClient() {
                 {/* SVG Lottie Canvas rendered by lottie-web */}
                 <div ref={containerRef} className="w-full h-full flex items-center justify-center pointer-events-none" />
               </div>
+
+              {/* Viewport Top Left: Audio Presence Badge */}
+              {hasAudio && (
+                <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/60 backdrop-blur-md border border-white/10 text-emerald-400 text-[11px] font-medium z-20">
+                  <Volume2 className="w-3.5 h-3.5" />
+                  <span>Audio Synced</span>
+                </div>
+              )}
 
               {/* Viewport Top Floating Controls: Background & Zoom */}
               <div className="absolute top-3 right-3 flex items-center gap-1.5 p-1 rounded-lg bg-black/60 backdrop-blur-md border border-white/10 z-20">
@@ -566,6 +609,22 @@ export default function LottiePlayerClient() {
                     {direction === 'reverse' && 'Reverse ←'}
                     {direction === 'bounce' && 'Bounce ⇄'}
                   </button>
+
+                  {/* Audio Mute/Unmute toggle (only visible when audio is detected) */}
+                  {hasAudio && (
+                    <button
+                      type="button"
+                      onClick={() => setIsMuted((prev) => !prev)}
+                      title={isMuted ? 'Unmute Audio' : 'Mute Audio'}
+                      className={`p-2 rounded-lg border text-xs font-medium transition-colors ${
+                        isMuted
+                          ? 'bg-destructive/10 border-destructive/30 text-destructive'
+                          : 'bg-primary/10 border-primary/30 text-primary'
+                      }`}
+                    >
+                      {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -622,6 +681,17 @@ export default function LottiePlayerClient() {
                 </div>
               </div>
 
+              {hasAudio && (
+                <div className="flex items-center justify-between p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs">
+                  <span className="flex items-center gap-1.5 font-medium">
+                    <Volume2 className="w-3.5 h-3.5" /> Audio Track Detected
+                  </span>
+                  <span className="font-semibold text-[11px] px-1.5 py-0.5 rounded bg-emerald-500/20">
+                    Synced
+                  </span>
+                </div>
+              )}
+
               {metadata?.missingProperties && metadata.missingProperties.length > 0 && (
                 <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-[11px] space-y-0.5">
                   <span className="font-medium">Missing Root Properties:</span>
@@ -632,13 +702,21 @@ export default function LottiePlayerClient() {
               )}
 
               {/* Action Buttons */}
-              <div className="pt-2 flex items-center gap-2">
+              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                 <button
                   type="button"
                   onClick={handleDownload}
                   className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-secondary hover:bg-muted text-foreground text-xs font-medium transition-colors"
                 >
-                  <Download className="w-3.5 h-3.5" /> Download JSON
+                  <Download className="w-3.5 h-3.5" /> Download .json
+                </button>
+                <button
+                  type="button"
+                  onClick={handleDownloadDotLottie}
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-secondary hover:bg-muted text-foreground text-xs font-medium transition-colors"
+                  title="Export animation as a compressed dotLottie (.lottie) archive"
+                >
+                  <Download className="w-3.5 h-3.5 text-primary" /> Export .lottie
                 </button>
                 <CopyButton text={rawJson} label="Copy JSON" />
               </div>

@@ -10,6 +10,7 @@ import { analyzeLottie } from '@/lib/lottie/analyzer';
 import { parseLottieJSON } from '@/lib/lottie/parser';
 import { LOTTIE_SAMPLES } from '@/lib/lottie/samples';
 import { getCrossToolData, setCrossToolData } from '@/lib/crossToolData';
+import { extractLottieFromFile } from '@/lib/lottie/dotLottie';
 import type { LottieAnalysisResult } from '@/lib/lottie/types';
 import {
   FileText,
@@ -26,6 +27,7 @@ import {
   ShieldCheck,
   Gauge,
   ExternalLink,
+  Volume2,
 } from 'lucide-react';
 
 function formatBytes(bytes: number): string {
@@ -41,6 +43,7 @@ export default function LottieAnalyzerClient() {
   const [activeSampleId, setActiveSampleId] = useState<string>(LOTTIE_SAMPLES[0].id);
   const [rawJson, setRawJson] = useState<string>(JSON.stringify(LOTTIE_SAMPLES[0].data, null, 2));
   const [error, setError] = useState<string | null>(null);
+  const [assetFilter, setAssetFilter] = useState<'all' | 'images' | 'audio' | 'precomps'>('all');
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -71,26 +74,40 @@ export default function LottieAnalyzerClient() {
     }
   }, [rawJson]);
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const imageAssets = useMemo(
+    () => analysis.assets.filter((a) => a.type === 'image-embedded' || a.type === 'image-external'),
+    [analysis.assets]
+  );
+  const audioAssets = useMemo(
+    () => analysis.assets.filter((a) => a.type === 'audio'),
+    [analysis.assets]
+  );
+  const precompAssets = useMemo(
+    () => analysis.assets.filter((a) => a.type === 'precomp'),
+    [analysis.assets]
+  );
+
+  const filteredAssets = useMemo(() => {
+    if (assetFilter === 'images') return imageAssets;
+    if (assetFilter === 'audio') return audioAssets;
+    if (assetFilter === 'precomps') return precompAssets;
+    return analysis.assets;
+  }, [assetFilter, imageAssets, audioAssets, precompAssets, analysis.assets]);
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 25 * 1024 * 1024) {
-      setError('File size exceeds the 25MB browser limit.');
+    const res = await extractLottieFromFile(file);
+    if (!res.success || !res.rawJson) {
+      setError(res.error || 'Failed to parse animation file.');
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const content = event.target?.result as string;
-      setRawJson(content);
-      setActiveSampleId('');
-      setError(null);
-    };
-    reader.onerror = () => {
-      setError('Error reading file.');
-    };
-    reader.readAsText(file);
+    setRawJson(res.rawJson);
+    setActiveSampleId('');
+    setError(null);
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   const handleSampleSelect = (id: string) => {
@@ -132,7 +149,7 @@ export default function LottieAnalyzerClient() {
             <input
               ref={fileInputRef}
               type="file"
-              accept=".json,application/json"
+              accept=".json,.lottie,application/json,application/zip"
               onChange={handleFileUpload}
               className="hidden"
             />
@@ -141,7 +158,7 @@ export default function LottieAnalyzerClient() {
               onClick={() => fileInputRef.current?.click()}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-xs font-medium hover:bg-primary/90 transition-colors shadow-2xs"
             >
-              <Upload className="w-3.5 h-3.5" /> Upload JSON
+              <Upload className="w-3.5 h-3.5" /> Upload File (.json / .lottie)
             </button>
             <CopyButton text={rawJson} label="Copy JSON" />
           </div>
@@ -300,6 +317,16 @@ export default function LottieAnalyzerClient() {
                     {analysis.layerStats.nulls}
                   </span>
                 </div>
+                {analysis.layerStats.audios > 0 && (
+                  <div className="flex items-center justify-between p-2 rounded-lg bg-pink-500/10 border border-pink-500/20 text-pink-600 dark:text-pink-400">
+                    <span className="font-medium flex items-center gap-1.5">
+                      <Volume2 className="w-3.5 h-3.5" /> Audio Layers
+                    </span>
+                    <span className="font-mono font-bold">
+                      {analysis.layerStats.audios}
+                    </span>
+                  </div>
+                )}
                 {analysis.layerStats.hidden > 0 && (
                   <div className="flex items-center justify-between p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400">
                     <span className="font-medium">Hidden / Disabled</span>
@@ -361,7 +388,63 @@ export default function LottieAnalyzerClient() {
                 </span>
               </div>
 
-              {analysis.assets.length === 0 ? (
+              {/* Asset Category Filters */}
+              {analysis.assets.length > 0 && (
+                <div className="flex items-center gap-1.5 flex-wrap text-xs pb-1">
+                  <button
+                    type="button"
+                    onClick={() => setAssetFilter('all')}
+                    className={`px-2.5 py-1 rounded-md border text-[11px] font-medium transition-colors ${
+                      assetFilter === 'all'
+                        ? 'bg-primary text-primary-foreground border-primary shadow-2xs'
+                        : 'bg-secondary/60 text-muted-foreground border-border hover:text-foreground'
+                    }`}
+                  >
+                    All ({analysis.assets.length})
+                  </button>
+                  {imageAssets.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setAssetFilter('images')}
+                      className={`px-2.5 py-1 rounded-md border text-[11px] font-medium transition-colors ${
+                        assetFilter === 'images'
+                          ? 'bg-primary text-primary-foreground border-primary shadow-2xs'
+                          : 'bg-secondary/60 text-muted-foreground border-border hover:text-foreground'
+                      }`}
+                    >
+                      Images ({imageAssets.length})
+                    </button>
+                  )}
+                  {audioAssets.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setAssetFilter('audio')}
+                      className={`px-2.5 py-1 rounded-md border text-[11px] font-medium transition-colors ${
+                        assetFilter === 'audio'
+                          ? 'bg-pink-600 text-white border-pink-600 shadow-2xs'
+                          : 'bg-secondary/60 text-muted-foreground border-border hover:text-foreground'
+                      }`}
+                    >
+                      Audio ({audioAssets.length})
+                    </button>
+                  )}
+                  {precompAssets.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setAssetFilter('precomps')}
+                      className={`px-2.5 py-1 rounded-md border text-[11px] font-medium transition-colors ${
+                        assetFilter === 'precomps'
+                          ? 'bg-blue-600 text-white border-blue-600 shadow-2xs'
+                          : 'bg-secondary/60 text-muted-foreground border-border hover:text-foreground'
+                      }`}
+                    >
+                      Precomps ({precompAssets.length})
+                    </button>
+                  )}
+                </div>
+              )}
+
+              {filteredAssets.length === 0 ? (
                 <div className="p-8 rounded-xl bg-secondary/30 text-center space-y-1.5">
                   <Sparkles className="w-6 h-6 text-emerald-500 mx-auto" />
                   <p className="text-sm font-semibold text-foreground">
@@ -373,14 +456,22 @@ export default function LottieAnalyzerClient() {
                 </div>
               ) : (
                 <div className="space-y-3">
-                  {analysis.assets.map((asset, idx) => (
+                  {filteredAssets.map((asset, idx) => (
                     <div
                       key={asset.id || idx}
                       className="p-3.5 rounded-xl bg-secondary/30 border border-border space-y-2 text-xs"
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex items-center gap-2.5">
-                          {asset.previewUrl ? (
+                          {asset.type === 'audio' ? (
+                            <div className="w-10 h-10 rounded-lg bg-pink-500/10 border border-pink-500/30 flex items-center justify-center shrink-0">
+                              <Volume2 className="w-5 h-5 text-pink-500" />
+                            </div>
+                          ) : asset.type === 'precomp' ? (
+                            <div className="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center shrink-0">
+                              <Layers className="w-5 h-5 text-blue-500" />
+                            </div>
+                          ) : asset.previewUrl ? (
                             // Inline thumbnail
                             /* eslint-disable-next-line @next/next/no-img-element */
                             <img
@@ -399,9 +490,13 @@ export default function LottieAnalyzerClient() {
                               {asset.id}
                             </div>
                             <div className="text-[11px] text-muted-foreground">
-                              {asset.width && asset.height
+                              {asset.type === 'audio'
+                                ? 'Audio Track'
+                                : asset.type === 'precomp'
+                                ? 'Precomposition (Vector Sublayers)'
+                                : asset.width && asset.height
                                 ? `${asset.width} × ${asset.height} px`
-                                : 'Dimensions not specified'}
+                                : 'Embedded Image Asset'}
                             </div>
                           </div>
                         </div>
@@ -409,12 +504,22 @@ export default function LottieAnalyzerClient() {
                         <div className="text-right">
                           <span
                             className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
-                              asset.isEmbedded
+                              asset.type === 'precomp'
+                                ? 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20'
+                                : asset.type === 'audio'
+                                ? 'bg-pink-500/10 text-pink-600 dark:text-pink-400 border border-pink-500/20'
+                                : asset.isEmbedded
                                 ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20'
                                 : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20'
                             }`}
                           >
-                            {asset.isEmbedded ? 'Embedded' : 'External'}
+                            {asset.type === 'precomp'
+                              ? 'Precomp'
+                              : asset.type === 'audio'
+                              ? 'Audio'
+                              : asset.isEmbedded
+                              ? 'Embedded'
+                              : 'External'}
                           </span>
                           {asset.byteSize !== undefined && (
                             <div className="text-[11px] font-mono text-muted-foreground mt-1">
@@ -465,6 +570,7 @@ function createEmptyAnalysis(msg: string): LottieAnalysisResult {
       images: 0,
       texts: 0,
       nulls: 0,
+      audios: 0,
       hidden: 0,
       hasExpressions: false,
       maxNestingDepth: 0,
@@ -473,6 +579,7 @@ function createEmptyAnalysis(msg: string): LottieAnalysisResult {
     totalAssetBytes: 0,
     rawJsonBytes: 0,
     rasterPercentage: 0,
+    hasAudio: false,
     isClean: false,
   };
 }

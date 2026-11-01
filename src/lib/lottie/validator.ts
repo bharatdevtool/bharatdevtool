@@ -260,6 +260,30 @@ export function validateLottie(animation: unknown): ValidationResult {
         }
       }
 
+      // Check audio asset references (ty === 6)
+      if (layer.ty === 6) {
+        if (!layer.refId) {
+          issues.push({
+            id: `audio-missing-refid-${context}-${layer.ind ?? idx}`,
+            severity: 'error',
+            category: 'asset',
+            title: `Audio Layer Missing "refId"`,
+            message: `Audio layer "${layerName}" does not specify an asset "refId".`,
+            location,
+          });
+        } else if (!assetMap.has(layer.refId)) {
+          issues.push({
+            id: `audio-broken-refid-${context}-${layer.refId}`,
+            severity: 'error',
+            category: 'asset',
+            title: `Broken Audio Asset Reference ("${layer.refId}")`,
+            message: `Audio layer "${layerName}" references asset ID "${layer.refId}", but no such asset exists in "assets[]".`,
+            location,
+            suggestion: 'Add the missing audio asset to the assets list or remove the dangling audio layer.',
+          });
+        }
+      }
+
       // Hidden layer check
       if (layer.hd === true) {
         hiddenLayerCount++;

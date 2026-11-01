@@ -10,6 +10,7 @@ import { optimizeLottie, DEFAULT_OPTIMIZATION_OPTIONS } from '@/lib/lottie/optim
 import { parseLottieJSON, sanitizeAnimationForPrivacy } from '@/lib/lottie/parser';
 import { LOTTIE_SAMPLES } from '@/lib/lottie/samples';
 import { setCrossToolData, getCrossToolData } from '@/lib/crossToolData';
+import { extractLottieFromFile, createDotLottie } from '@/lib/lottie/dotLottie';
 import type { LottieAnimation, LottieOptimizationOptions } from '@/lib/lottie/types';
 import type { AnimationItem } from 'lottie-web';
 import {
@@ -185,29 +186,21 @@ export default function LottieOptimizerClient() {
     setIsPlaying(true);
   };
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 25 * 1024 * 1024) {
-      setError('File size exceeds the 25MB browser limit.');
+    const res = await extractLottieFromFile(file);
+    if (!res.success || !res.animation) {
+      setError(res.error || 'Failed to parse animation file.');
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const content = event.target?.result as string;
-      const parsed = parseLottieJSON(content);
-      if (!parsed.success || !parsed.animation) {
-        setError(parsed.error || 'Failed to parse uploaded JSON.');
-        return;
-      }
-      setAnimationData(parsed.animation);
-      setRawJson(content);
-      setActiveSampleId('');
-      setError(null);
-    };
-    reader.readAsText(file);
+    setAnimationData(res.animation);
+    setRawJson(res.rawJson || JSON.stringify(res.animation, null, 2));
+    setActiveSampleId('');
+    setError(null);
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   const handleSampleSelect = (id: string) => {
@@ -225,7 +218,25 @@ export default function LottieOptimizerClient() {
     const a = document.createElement('a');
     a.href = url;
     a.download = `optimized-${animationData.nm || 'animation'}.json`;
+    document.body.appendChild(a);
     a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const handleDownloadDotLottie = () => {
+    const bytes = createDotLottie(optimizationResult.optimizedAnimation, {
+      name: animationData.nm || 'animation',
+      id: animationData.nm?.toLowerCase().replace(/\s+/g, '_') || 'animation_1',
+    });
+    const blob = new Blob([bytes as Uint8Array<ArrayBuffer>], { type: 'application/zip' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `optimized-${animationData.nm || 'animation'}.lottie`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
     URL.revokeObjectURL(url);
   };
 
@@ -260,7 +271,7 @@ export default function LottieOptimizerClient() {
             <input
               ref={fileInputRef}
               type="file"
-              accept=".json,application/json"
+              accept=".json,.lottie,application/json,application/zip"
               onChange={handleFileUpload}
               className="hidden"
             />
@@ -269,14 +280,22 @@ export default function LottieOptimizerClient() {
               onClick={() => fileInputRef.current?.click()}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-xs font-medium hover:bg-primary/90 transition-colors shadow-2xs"
             >
-              <Upload className="w-3.5 h-3.5" /> Upload File
+              <Upload className="w-3.5 h-3.5" /> Upload File (.json / .lottie)
             </button>
             <button
               type="button"
               onClick={handleDownload}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-medium transition-colors shadow-2xs"
             >
-              <Download className="w-3.5 h-3.5" /> Download Optimized
+              <Download className="w-3.5 h-3.5" /> Download .json
+            </button>
+            <button
+              type="button"
+              onClick={handleDownloadDotLottie}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-700 text-white text-xs font-medium transition-colors shadow-2xs"
+              title="Download compressed dotLottie (.lottie) archive"
+            >
+              <Download className="w-3.5 h-3.5" /> Download .lottie
             </button>
           </div>
         </div>

@@ -48,8 +48,36 @@ export function analyzeLottie(
       }
 
       if (asset.p) {
+        // Audio asset check (data:audio/ or audio file extensions)
+        const isAudio =
+          asset.p.startsWith('data:audio/') ||
+          /\.(mp3|wav|ogg|aac|m4a)$/i.test(asset.p);
+
+        if (isAudio) {
+          const isEmbedded = asset.p.startsWith('data:audio/');
+          let byteSize: number | undefined;
+          if (isEmbedded) {
+            const base64Content = asset.p.split(',')[1] || '';
+            const padding = (base64Content.match(/=+$/) || [''])[0].length;
+            byteSize = Math.max(0, Math.floor((base64Content.length * 3) / 4) - padding);
+            totalAssetBytes += byteSize;
+          }
+          const fullPath = (asset.u || '') + asset.p;
+          assetInfos.push({
+            id: asset.id,
+            type: 'audio',
+            path: fullPath,
+            isEmbedded,
+            byteSize,
+            warning: isEmbedded
+              ? undefined
+              : `External audio reference: file "${fullPath}" is not embedded in the JSON payload and must be hosted alongside the animation.`,
+          });
+          return;
+        }
+
         // Image asset
-        const isEmbedded = asset.p.startsWith('data:image/');
+        const isEmbedded = asset.p.startsWith('data:');
         if (isEmbedded) {
           // Estimate decoded byte size from Base64
           const base64Content = asset.p.split(',')[1] || '';
@@ -64,7 +92,7 @@ export function analyzeLottie(
             height: asset.h,
             isEmbedded: true,
             byteSize,
-            previewUrl: asset.p,
+            previewUrl: asset.p.startsWith('data:image/') || asset.p.startsWith('data:application/octet-stream') ? asset.p : undefined,
           });
         } else {
           // External reference
@@ -98,6 +126,7 @@ export function analyzeLottie(
   let images = 0;
   let texts = 0;
   let nulls = 0;
+  let audios = 0;
   let hidden = 0;
   let hasExpressions = false;
   let maxNestingDepth = 1;
@@ -129,6 +158,9 @@ export function analyzeLottie(
           break;
         case 5:
           texts++;
+          break;
+        case 6:
+          audios++;
           break;
         default:
           break;
@@ -164,6 +196,7 @@ export function analyzeLottie(
     images,
     texts,
     nulls,
+    audios,
     hidden,
     hasExpressions,
     maxNestingDepth,
@@ -173,6 +206,8 @@ export function analyzeLottie(
     rawJsonBytes > 0
       ? Math.min(100, Math.round((totalAssetBytes / rawJsonBytes) * 1000) / 10)
       : 0;
+
+  const hasAudio = audios > 0 || assetInfos.some((a) => a.type === 'audio');
 
   const isClean =
     metadata.missingProperties.length === 0 &&
@@ -187,6 +222,7 @@ export function analyzeLottie(
     totalAssetBytes,
     rawJsonBytes,
     rasterPercentage,
+    hasAudio,
     isClean,
   };
 }

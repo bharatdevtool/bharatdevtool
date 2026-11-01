@@ -9,6 +9,7 @@ import CopyButton from '@/components/ui/CopyButton';
 import { validateLottie } from '@/lib/lottie/validator';
 import { LOTTIE_SAMPLES } from '@/lib/lottie/samples';
 import { setCrossToolData, getCrossToolData } from '@/lib/crossToolData';
+import { extractLottieFromFile } from '@/lib/lottie/dotLottie';
 import type { ValidationSeverity, ValidationResult, ValidationIssue } from '@/lib/lottie/types';
 import {
   CheckCircle2,
@@ -121,23 +122,20 @@ export default function LottieValidatorClient() {
     return validationResult.issues.filter((i) => i.severity === filter);
   }, [filter, validationResult.issues]);
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 25 * 1024 * 1024) {
-      setFileError('File size exceeds the 25MB browser limit.');
+    const res = await extractLottieFromFile(file);
+    if (!res.success || !res.rawJson) {
+      setFileError(res.error || 'Failed to parse animation file.');
       return;
     }
-    setFileError(null);
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const content = event.target?.result as string;
-      setRawJson(content);
-      setActiveSampleId('');
-    };
-    reader.readAsText(file);
+    setRawJson(res.rawJson);
+    setActiveSampleId('');
+    setFileError(null);
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   const handleSampleSelect = (id: string) => {
@@ -179,7 +177,7 @@ export default function LottieValidatorClient() {
             <input
               ref={fileInputRef}
               type="file"
-              accept=".json,application/json"
+              accept=".json,.lottie,application/json,application/zip"
               onChange={handleFileUpload}
               className="hidden"
             />
@@ -188,7 +186,7 @@ export default function LottieValidatorClient() {
               onClick={() => fileInputRef.current?.click()}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-xs font-medium hover:bg-primary/90 transition-colors shadow-2xs"
             >
-              <Upload className="w-3.5 h-3.5" /> Upload File
+              <Upload className="w-3.5 h-3.5" /> Upload File (.json / .lottie)
             </button>
             <CopyButton text={rawJson} label="Copy JSON" />
           </div>

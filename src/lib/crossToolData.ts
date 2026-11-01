@@ -8,41 +8,70 @@ interface CrossToolEnvelope<T> {
   payload: T;
 }
 
+// In-memory cache ensures that large payloads (such as unzipped .lottie animations with inlined base64 images)
+// transfer reliably across Next.js client-side router transitions even when the browser's 5MB sessionStorage
+// quota is exceeded.
+const inMemoryStore = new Map<string, CrossToolEnvelope<unknown>>();
+
 /**
- * Stores payload in sessionStorage to pass data seamlessly across tool navigations.
+ * Stores payload in memory and sessionStorage to pass data seamlessly across tool navigations.
  * Safely handles SSR, quotas, and expiration.
  */
 export function setCrossToolData<T>(targetToolId: string, payload: T): boolean {
-  if (typeof window === 'undefined' || !window.sessionStorage) {
-    return false;
+  const envelope: CrossToolEnvelope<T> = {
+    timestamp: Date.now(),
+    payload,
+  };
+
+  // 1. Always store in memory for reliable same-session SPA router navigation
+  inMemoryStore.set(targetToolId, envelope as CrossToolEnvelope<unknown>);
+
+  // 2. Also attempt to persist in sessionStorage for cross-tab or reload survival
+  if (typeof window !== 'undefined' && window.sessionStorage) {
+    try {
+      window.sessionStorage.setItem(
+        `${STORAGE_PREFIX}${targetToolId}`,
+        JSON.stringify(envelope)
+      );
+    } catch {
+      // Gracefully ignored: payload exceeds 5MB sessionStorage quota or private browsing disabled
+    }
   }
 
-  try {
-    const envelope: CrossToolEnvelope<T> = {
-      timestamp: Date.now(),
-      payload,
-    };
-    window.sessionStorage.setItem(
-      `${STORAGE_PREFIX}${targetToolId}`,
-      JSON.stringify(envelope)
-    );
-    return true;
-  } catch (err) {
-    // QuotaExceededError or private browsing restrictions
-    console.warn('Could not store cross-tool data in sessionStorage:', err);
-    return false;
-  }
+  return true;
 }
 
 /**
  * Retrieves and optionally consumes (clears) cross-tool data passed from another tool.
  */
 export function getCrossToolData<T>(toolId: string, consume = true): T | null {
+  const key = `${STORAGE_PREFIX}${toolId}`;
+
+  // 1. Check in-memory store first
+  const memEnvelope = inMemoryStore.get(toolId) as CrossToolEnvelope<T> | undefined;
+  if (memEnvelope && typeof memEnvelope === 'object' && typeof memEnvelope.timestamp === 'number') {
+    if (Date.now() - memEnvelope.timestamp <= MAX_AGE_MS) {
+      if (consume) {
+        inMemoryStore.delete(toolId);
+        if (typeof window !== 'undefined' && window.sessionStorage) {
+          try {
+            window.sessionStorage.removeItem(key);
+          } catch {
+            // Ignore
+          }
+        }
+      }
+      return memEnvelope.payload;
+    } else {
+      inMemoryStore.delete(toolId);
+    }
+  }
+
+  // 2. Fall back to sessionStorage (e.g. after hard page reload)
   if (typeof window === 'undefined' || !window.sessionStorage) {
     return null;
   }
 
-  const key = `${STORAGE_PREFIX}${toolId}`;
   try {
     const raw = window.sessionStorage.getItem(key);
     if (!raw) return null;
@@ -71,8 +100,12 @@ export function getCrossToolData<T>(toolId: string, consume = true): T | null {
  * Clears any pending cross-tool data for a specific tool.
  */
 export function clearCrossToolData(toolId: string): void {
+  inMemoryStore.delete(toolId);
   if (typeof window !== 'undefined' && window.sessionStorage) {
-    window.sessionStorage.removeItem(`${STORAGE_PREFIX}${toolId}`);
+    try {
+      window.sessionStorage.removeItem(`${STORAGE_PREFIX}${toolId}`);
+    } catch {
+      // Ignore
+    }
   }
 }
-
