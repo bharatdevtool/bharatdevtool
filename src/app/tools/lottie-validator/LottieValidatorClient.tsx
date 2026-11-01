@@ -29,8 +29,20 @@ type FilterSeverity = 'all' | 'error' | 'warning' | 'info';
 
 export default function LottieValidatorClient() {
   const router = useRouter();
-  const [activeSampleId, setActiveSampleId] = useState<string>(LOTTIE_SAMPLES[0].id);
-  const [rawJson, setRawJson] = useState<string>(JSON.stringify(LOTTIE_SAMPLES[0].data, null, 2));
+  const [activeSampleId, setActiveSampleId] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const incoming = getCrossToolData<{ lottieJson?: string }>('lottie-validator', false);
+      if (incoming?.lottieJson) return '';
+    }
+    return LOTTIE_SAMPLES[0].id;
+  });
+  const [rawJson, setRawJson] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const incoming = getCrossToolData<{ lottieJson?: string }>('lottie-validator', false);
+      if (incoming?.lottieJson) return incoming.lottieJson;
+    }
+    return JSON.stringify(LOTTIE_SAMPLES[0].data, null, 2);
+  });
   const [filter, setFilter] = useState<FilterSeverity>('all');
   const [fileError, setFileError] = useState<string | null>(null);
 
@@ -38,7 +50,7 @@ export default function LottieValidatorClient() {
 
   // Read incoming cross-tool data on mount
   useEffect(() => {
-    const incoming = getCrossToolData<{ lottieJson?: string }>('lottie-validator');
+    const incoming = getCrossToolData<{ lottieJson?: string }>('lottie-validator', false);
     if (incoming?.lottieJson) {
       setRawJson(incoming.lottieJson);
       setActiveSampleId('');

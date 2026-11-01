@@ -39,14 +39,35 @@ function formatBytes(bytes: number): string {
 
 export default function LottieOptimizerClient() {
   const router = useRouter();
-  const [activeSampleId, setActiveSampleId] = useState<string>(LOTTIE_SAMPLES[0].id);
-  const [animationData, setAnimationData] = useState<LottieAnimation>(LOTTIE_SAMPLES[0].data);
-  const [rawJson, setRawJson] = useState<string>(JSON.stringify(LOTTIE_SAMPLES[0].data, null, 2));
+  const [activeSampleId, setActiveSampleId] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const incoming = getCrossToolData<{ lottieJson?: string }>('lottie-optimizer', false);
+      if (incoming?.lottieJson) return '';
+    }
+    return LOTTIE_SAMPLES[0].id;
+  });
+  const [animationData, setAnimationData] = useState<LottieAnimation>(() => {
+    if (typeof window !== 'undefined') {
+      const incoming = getCrossToolData<{ lottieJson?: string }>('lottie-optimizer', false);
+      if (incoming?.lottieJson) {
+        const parsed = parseLottieJSON(incoming.lottieJson);
+        if (parsed.success && parsed.animation) return parsed.animation;
+      }
+    }
+    return LOTTIE_SAMPLES[0].data;
+  });
+  const [rawJson, setRawJson] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const incoming = getCrossToolData<{ lottieJson?: string }>('lottie-optimizer', false);
+      if (incoming?.lottieJson) return incoming.lottieJson;
+    }
+    return JSON.stringify(LOTTIE_SAMPLES[0].data, null, 2);
+  });
   const [error, setError] = useState<string | null>(null);
 
   // Check for incoming cross-tool data on mount
   useEffect(() => {
-    const incoming = getCrossToolData<{ lottieJson?: string }>('lottie-optimizer');
+    const incoming = getCrossToolData<{ lottieJson?: string }>('lottie-optimizer', false);
     if (incoming?.lottieJson) {
       const parsed = parseLottieJSON(incoming.lottieJson);
       if (parsed.success && parsed.animation) {

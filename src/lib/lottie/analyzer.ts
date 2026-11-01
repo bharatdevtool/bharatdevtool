@@ -6,27 +6,36 @@ import type {
   LottieLayerStats,
   LottieAnalysisResult,
   LottieLayer,
+  LottieMetadata,
 } from './types';
 import { parseLottieJSON } from './parser';
 
 export function analyzeLottie(
   animation: LottieAnimation,
-  rawJsonString: string
+  rawJsonString: string,
+  providedMetadata?: LottieMetadata
 ): LottieAnalysisResult {
-  const rawJsonBytes = new TextEncoder().encode(rawJsonString).length;
-  const parseRes = parseLottieJSON(rawJsonString);
-  const metadata = parseRes.metadata || {
-    version: null,
-    framerate: null,
-    inPoint: null,
-    outPoint: null,
-    totalFrames: null,
-    durationSeconds: null,
-    width: null,
-    height: null,
-    name: null,
-    missingProperties: ['Failed to read metadata'],
-  };
+  const rawJsonBytes =
+    typeof Blob !== 'undefined'
+      ? new Blob([rawJsonString]).size
+      : typeof Buffer !== 'undefined'
+      ? Buffer.byteLength(rawJsonString, 'utf8')
+      : rawJsonString.length;
+
+  const metadata =
+    providedMetadata ||
+    parseLottieJSON(rawJsonString).metadata || {
+      version: null,
+      framerate: null,
+      inPoint: null,
+      outPoint: null,
+      totalFrames: null,
+      durationSeconds: null,
+      width: null,
+      height: null,
+      name: null,
+      missingProperties: ['Failed to read metadata'],
+    };
 
   // ── Asset Auditing ──────────────────────────────────────────────
   const assetInfos: LottieAssetInfo[] = [];
@@ -128,7 +137,9 @@ export function analyzeLottie(
   let nulls = 0;
   let audios = 0;
   let hidden = 0;
-  let hasExpressions = false;
+  const hasExpressions =
+    rawJsonString.includes('"x"') &&
+    (/"x"\s*:\s*"[^"]+"/.test(rawJsonString) || /"x"\s*:\s*\[/.test(rawJsonString));
   let maxNestingDepth = 1;
 
   function countLayers(layers: LottieLayer[], currentDepth: number) {
@@ -164,13 +175,6 @@ export function analyzeLottie(
           break;
         default:
           break;
-      }
-
-      if (!hasExpressions) {
-        const s = JSON.stringify(layer);
-        if (s.includes('"x"') && /"x"\s*:\s*"[^"]+"/.test(s)) {
-          hasExpressions = true;
-        }
       }
     });
   }

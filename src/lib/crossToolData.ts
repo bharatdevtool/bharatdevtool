@@ -23,18 +23,19 @@ export function setCrossToolData<T>(targetToolId: string, payload: T): boolean {
     payload,
   };
 
-  // 1. Always store in memory for reliable same-session SPA router navigation
+  // 1. Always store in memory for reliable, instantaneous same-session SPA router navigation
   inMemoryStore.set(targetToolId, envelope as CrossToolEnvelope<unknown>);
 
-  // 2. Also attempt to persist in sessionStorage for cross-tab or reload survival
+  // 2. Only attempt to persist in sessionStorage for lightweight payloads (< 1MB)
+  // to avoid freezing the browser main thread with synchronous serialization of massive files
   if (typeof window !== 'undefined' && window.sessionStorage) {
     try {
-      window.sessionStorage.setItem(
-        `${STORAGE_PREFIX}${targetToolId}`,
-        JSON.stringify(envelope)
-      );
+      const jsonStr = JSON.stringify(envelope);
+      if (jsonStr.length < 1_000_000) {
+        window.sessionStorage.setItem(`${STORAGE_PREFIX}${targetToolId}`, jsonStr);
+      }
     } catch {
-      // Gracefully ignored: payload exceeds 5MB sessionStorage quota or private browsing disabled
+      // Gracefully ignored: payload exceeds quota or private browsing restrictions
     }
   }
 

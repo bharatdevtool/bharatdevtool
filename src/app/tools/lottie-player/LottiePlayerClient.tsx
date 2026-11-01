@@ -54,7 +54,7 @@ export default function LottiePlayerClient() {
 
   // Cross-tool data ingestion
   useEffect(() => {
-    const incoming = getCrossToolData<{ lottieJson?: string }>('lottie-player');
+    const incoming = getCrossToolData<{ lottieJson?: string }>('lottie-player', false);
     if (incoming?.lottieJson) {
       const parsed = parseLottieJSON(incoming.lottieJson);
       if (parsed.success && parsed.animation) {

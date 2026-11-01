@@ -40,8 +40,20 @@ function formatBytes(bytes: number): string {
 
 export default function LottieAnalyzerClient() {
   const router = useRouter();
-  const [activeSampleId, setActiveSampleId] = useState<string>(LOTTIE_SAMPLES[0].id);
-  const [rawJson, setRawJson] = useState<string>(JSON.stringify(LOTTIE_SAMPLES[0].data, null, 2));
+  const [activeSampleId, setActiveSampleId] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const incoming = getCrossToolData<{ lottieJson?: string }>('lottie-analyzer', false);
+      if (incoming?.lottieJson) return '';
+    }
+    return LOTTIE_SAMPLES[0].id;
+  });
+  const [rawJson, setRawJson] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const incoming = getCrossToolData<{ lottieJson?: string }>('lottie-analyzer', false);
+      if (incoming?.lottieJson) return incoming.lottieJson;
+    }
+    return JSON.stringify(LOTTIE_SAMPLES[0].data, null, 2);
+  });
   const [error, setError] = useState<string | null>(null);
   const [assetFilter, setAssetFilter] = useState<'all' | 'images' | 'audio' | 'precomps'>('all');
 
@@ -49,7 +61,7 @@ export default function LottieAnalyzerClient() {
 
   // Cross-tool data ingestion
   useEffect(() => {
-    const incoming = getCrossToolData<{ lottieJson?: string }>('lottie-analyzer');
+    const incoming = getCrossToolData<{ lottieJson?: string }>('lottie-analyzer', false);
     if (incoming?.lottieJson) {
       setRawJson(incoming.lottieJson);
       setActiveSampleId('');
@@ -68,7 +80,7 @@ export default function LottieAnalyzerClient() {
       if (!parsed.success || !parsed.animation) {
         return createEmptyAnalysis(parsed.error || 'Invalid Lottie JSON');
       }
-      return analyzeLottie(parsed.animation, rawJson);
+      return analyzeLottie(parsed.animation, rawJson, parsed.metadata);
     } catch (err) {
       return createEmptyAnalysis((err as Error).message);
     }
