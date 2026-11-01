@@ -11,7 +11,7 @@ export default function Footer() {
   const categories = [
     {
       title: 'Lottie Tools',
-      toolIds: ['lottie-player', 'lottie-editor', 'lottie-converter', 'lottie-validator', 'lottie-optimizer'],
+      toolIds: ['lottie-player', 'lottie-converter', 'lottie-validator', 'lottie-optimizer'],
     },
     {
       title: 'JSON & APIs',
@@ -19,15 +19,15 @@ export default function Footer() {
     },
     {
       title: 'Encoding & Security',
-      toolIds: ['base64', 'url-encoder', 'uuid-generator', 'password-generator'],
+      toolIds: ['base64', 'url-encoder', 'uuid-generator'],
     },
     {
-      title: 'Regex & Text',
-      toolIds: ['regex-tester', 'regex-generator', 'regex-library', 'word-counter', 'text-case-converter'],
+      title: 'Regex Tools',
+      toolIds: ['regex-tester', 'regex-generator', 'regex-library'],
     },
     {
-      title: 'Design & Utilities',
-      toolIds: ['qr-generator', 'qr-decoder', 'color-picker', 'gradient-generator', 'whatsapp-link', 'age-calculator'],
+      title: 'Design & Social',
+      toolIds: ['qr-generator', 'qr-decoder', 'color-picker', 'gradient-generator', 'whatsapp-link'],
     },
   ];
 

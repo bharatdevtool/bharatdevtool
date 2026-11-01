@@ -42,6 +42,10 @@ import {
   CheckCircle2,
   Image as ImageIcon,
   Undo2,
+  Code2,
+  Braces,
+  Check,
+  Package,
 } from 'lucide-react';
 
 function formatBytes(bytes: number): string {
@@ -76,6 +80,9 @@ function getLayerTypeInfo(ty: number) {
 type BgType = 'obsidian' | 'light' | 'grid' | 'custom';
 type DirectionType = 'forward' | 'reverse' | 'bounce';
 type InspectorTab = 'info' | 'layers' | 'colors' | 'warnings' | 'assets';
+type StudioView = 'inspector' | 'editor';
+type ActiveMenu = 'file' | 'edit' | 'lottie' | 'view' | 'renderer' | null;
+type RendererChoice = 'svg' | 'canvas';
 
 const SPEED_OPTIONS = [0.25, 0.5, 1, 1.5, 2];
 
@@ -93,9 +100,154 @@ export default function LottiePlayerClient({
     return parseLottieJSON(JSON.stringify(LOTTIE_SAMPLES[0].data)).metadata || null;
   });
 
+  const [studioView, setStudioView] = useState<StudioView>('inspector');
   const [inspectorTab, setInspectorTab] = useState<InspectorTab>(initialInspectorTab);
   const originalAnimationRef = useRef<LottieAnimation>(LOTTIE_SAMPLES[0].data);
   const [isColorModified, setIsColorModified] = useState<boolean>(false);
+
+  // Editor states & refs
+  const [syntaxError, setSyntaxError] = useState<{ message: string; line?: number; column?: number } | null>(null);
+  const [editorFontSize, setEditorFontSize] = useState<'xs' | 'sm'>('xs');
+  const [wrapLines, setWrapLines] = useState<boolean>(false);
+  const [activeMenu, setActiveMenu] = useState<ActiveMenu>(null);
+  const [rendererChoice, setRendererChoice] = useState<RendererChoice>('svg');
+
+  const editorTextareaRef = useRef<HTMLTextAreaElement>(null);
+  const lineNumbersRef = useRef<HTMLDivElement>(null);
+  const menuContainerRef = useRef<HTMLDivElement>(null);
+
+  // Close open dropdown menu when clicking outside
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (menuContainerRef.current && !menuContainerRef.current.contains(e.target as Node)) {
+        setActiveMenu(null);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, []);
+
+  // Sync line numbers scroll with editor textarea
+  const handleEditorScroll = () => {
+    if (editorTextareaRef.current && lineNumbersRef.current) {
+      lineNumbersRef.current.scrollTop = editorTextareaRef.current.scrollTop;
+    }
+  };
+
+  // Tab Key indentation support inside textarea
+  const handleEditorKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      const target = e.currentTarget;
+      const start = target.selectionStart;
+      const end = target.selectionEnd;
+      const nextValue = rawJson.substring(0, start) + '  ' + rawJson.substring(end);
+      setRawJson(nextValue);
+      setTimeout(() => {
+        target.selectionStart = target.selectionEnd = start + 2;
+      }, 0);
+    }
+  };
+
+  // Debounced AST validation when rawJson changes
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!rawJson.trim()) {
+        setSyntaxError({ message: 'JSON buffer is empty.' });
+        return;
+      }
+      try {
+        const parsed = JSON.parse(rawJson);
+        const parseCheck = parseLottieJSON(rawJson);
+        if (!parseCheck.success || !parseCheck.animation) {
+          setSyntaxError({ message: parseCheck.error || 'Invalid Lottie format.' });
+        } else {
+          setSyntaxError(null);
+          setAnimationData(parseCheck.animation);
+          setMetadata(parseCheck.metadata || null);
+        }
+      } catch (err: unknown) {
+        const e = err as Error;
+        let line: number | undefined;
+        let col: number | undefined;
+        const match = e.message.match(/position (\d+)/i);
+        if (match && match[1]) {
+          const pos = parseInt(match[1], 10);
+          const lines = rawJson.slice(0, pos).split('\n');
+          line = lines.length;
+          col = lines[lines.length - 1].length + 1;
+        }
+        setSyntaxError({ message: e.message, line, column: col });
+      }
+    }, 180);
+
+    return () => clearTimeout(timer);
+  }, [rawJson]);
+
+  const lineCount = useMemo(() => rawJson.split('\n').length, [rawJson]);
+
+  const handlePrettify = () => {
+    try {
+      const parsed = JSON.parse(rawJson);
+      setRawJson(JSON.stringify(parsed, null, 2));
+      setSyntaxError(null);
+    } catch {}
+    setActiveMenu(null);
+  };
+
+  const handleMinify = () => {
+    try {
+      const parsed = JSON.parse(rawJson);
+      setRawJson(JSON.stringify(parsed));
+      setSyntaxError(null);
+    } catch {}
+    setActiveMenu(null);
+  };
+
+  const handleJumpToNode = (nodeName: string) => {
+    if (!editorTextareaRef.current) return;
+    const targetQuery = `"${nodeName}":`;
+    const index = rawJson.indexOf(targetQuery);
+    if (index !== -1) {
+      editorTextareaRef.current.focus();
+      editorTextareaRef.current.setSelectionRange(index, index + targetQuery.length);
+      const linesBefore = rawJson.substring(0, index).split('\n').length;
+      const lineHeight = editorFontSize === 'xs' ? 18 : 20;
+      editorTextareaRef.current.scrollTop = Math.max(0, (linesBefore - 4) * lineHeight);
+    }
+    setActiveMenu(null);
+  };
+
+  const handleQuickScale = (factor: number) => {
+    try {
+      const anim = JSON.parse(rawJson);
+      if (typeof anim.w === 'number') anim.w = Math.round(anim.w * factor);
+      if (typeof anim.h === 'number') anim.h = Math.round(anim.h * factor);
+      setRawJson(JSON.stringify(anim, null, 2));
+    } catch {}
+    setActiveMenu(null);
+  };
+
+  const handleQuickFramerate = (fps: number) => {
+    try {
+      const anim = JSON.parse(rawJson);
+      anim.fr = fps;
+      setRawJson(JSON.stringify(anim, null, 2));
+    } catch {}
+    setActiveMenu(null);
+  };
+
+  const handleResetToOriginal = () => {
+    if (!originalAnimationRef.current) return;
+    const origJson = JSON.stringify(originalAnimationRef.current, null, 2);
+    setRawJson(origJson);
+    setAnimationData(originalAnimationRef.current);
+    const parsed = parseLottieJSON(origJson);
+    setMetadata(parsed.metadata || null);
+    setSyntaxError(null);
+    setIsColorModified(false);
+    setActiveMenu(null);
+  };
 
   useEffect(() => {
     if (initialInspectorTab) {
@@ -103,14 +255,14 @@ export default function LottiePlayerClient({
     }
   }, [initialInspectorTab]);
 
-  const [inputTab, setInputTab] = useState<'samples' | 'paste'>('samples');
   const [error, setError] = useState<string | null>(null);
 
   // Cross-tool data ingestion
   useEffect(() => {
     const incoming =
       getCrossToolData<{ lottieJson?: string }>('lottie-player', false) ||
-      getCrossToolData<{ lottieJson?: string }>('lottie-analyzer', false);
+      getCrossToolData<{ lottieJson?: string }>('lottie-analyzer', false) ||
+      getCrossToolData<{ lottieJson?: string }>('lottie-editor', false);
     if (incoming?.lottieJson) {
       const parsed = parseLottieJSON(incoming.lottieJson);
       if (parsed.success && parsed.animation) {
@@ -120,7 +272,6 @@ export default function LottiePlayerClient({
         setRawJson(incoming.lottieJson);
         setMetadata(parsed.metadata || null);
         setActiveSampleId('');
-        setInputTab('paste');
         setError(null);
       }
     }
@@ -266,7 +417,7 @@ export default function LottiePlayerClient({
       const lottie = (await import('lottie-web')).default;
       const anim = lottie.loadAnimation({
         container: containerRef.current,
-        renderer: 'svg',
+        renderer: rendererChoice,
         loop: direction === 'bounce' ? false : isLooping,
         autoplay: isPlaying,
         animationData: sanitizeAnimationForPrivacy(data),
@@ -306,7 +457,7 @@ export default function LottiePlayerClient({
     } catch (err) {
       setError(`Failed to render Lottie animation: ${(err as Error).message}`);
     }
-  }, [direction, isLooping, isPlaying, speed]);
+  }, [direction, isLooping, isPlaying, speed, rendererChoice]);
 
   // Initial and data-change mount
   useEffect(() => {
@@ -511,8 +662,8 @@ export default function LottiePlayerClient({
             ))}
           </div>
 
-          {/* Action Tabs & Upload */}
-          <div className="flex items-center gap-2">
+          {/* Action Tabs & Studio Mode Switcher */}
+          <div className="flex items-center gap-2 flex-wrap">
             <input
               ref={fileInputRef}
               type="file"
@@ -523,47 +674,45 @@ export default function LottiePlayerClient({
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-xs font-medium hover:bg-primary/90 transition-colors shadow-2xs"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-xs font-medium hover:bg-primary/90 transition-colors shadow-2xs cursor-pointer"
             >
               <Upload className="w-3.5 h-3.5" /> Upload File (.json / .lottie)
             </button>
-            <button
-              type="button"
-              onClick={() => setInputTab((prev) => (prev === 'paste' ? 'samples' : 'paste'))}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-medium transition-colors ${
-                inputTab === 'paste'
-                  ? 'bg-secondary border-primary/40 text-foreground'
-                  : 'bg-muted border-border text-muted-foreground hover:text-foreground'
-              }`}
-            >
-              <FileCode className="w-3.5 h-3.5" /> {inputTab === 'paste' ? 'Hide Code' : 'Edit Code'}
-            </button>
+
+            {/* Mode Switcher: Inspector vs JSON Editor */}
+            <div className="flex items-center p-0.5 rounded-lg bg-secondary border border-border">
+              <button
+                type="button"
+                onClick={() => setStudioView('inspector')}
+                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-colors cursor-pointer ${
+                  studioView === 'inspector'
+                    ? 'bg-card text-foreground shadow-2xs font-semibold'
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                <SlidersHorizontal className="w-3.5 h-3.5 text-primary" /> Inspector
+              </button>
+              <button
+                type="button"
+                onClick={() => setStudioView('editor')}
+                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-colors cursor-pointer ${
+                  studioView === 'editor'
+                    ? 'bg-card text-foreground shadow-2xs font-semibold'
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                <Code2 className="w-3.5 h-3.5 text-primary" /> JSON Editor
+              </button>
+            </div>
           </div>
         </div>
 
         {error && <ErrorMessage message={error} />}
 
-        {/* Collapsible JSON Editor Panel */}
-        {inputTab === 'paste' && (
-          <div className="p-4 rounded-xl bg-card border border-border space-y-2">
-            <div className="flex items-center justify-between text-xs text-muted-foreground">
-              <span className="font-medium text-foreground">Raw Bodymovin JSON Code:</span>
-              <span>100% Client-Side. Code never leaves your browser.</span>
-            </div>
-            <textarea
-              value={rawJson}
-              onChange={(e) => handlePasteChange(e.target.value)}
-              rows={8}
-              placeholder="Paste Lottie JSON payload here..."
-              className="w-full p-3 font-mono text-xs rounded-lg bg-background border border-border focus:outline-hidden focus:ring-1 focus:ring-primary developer-scrollbar"
-            />
-          </div>
-        )}
-
-        {/* Main Studio Viewport (2-Column Grid on Desktop) */}
+        {/* Main Studio Viewport (2-Column Split Playground on Desktop) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Column 1: Animation Player Viewport (8 Cols) */}
-          <div className="lg:col-span-8 flex flex-col space-y-3">
+          {/* Column 1: Animation Player Viewport (6 Cols) */}
+          <div className="lg:col-span-6 flex flex-col space-y-3">
             {/* Viewport Canvas Container */}
             <div
               className={`relative h-[380px] sm:h-[460px] w-full rounded-2xl border border-border overflow-hidden flex items-center justify-center transition-colors shadow-inner ${getViewportBgClass()}`}
@@ -788,11 +937,12 @@ export default function LottiePlayerClient({
             </div>
           </div>
 
-          {/* Column 2: Flagship Unified Inspector (Info, Layers, Colors, Warnings, Assets) */}
-          <div className="lg:col-span-4 space-y-4">
-            <div className="rounded-2xl bg-card border border-border shadow-xs overflow-hidden">
-              {/* Top Tab Bar matching reference image */}
-              <div className="flex items-center gap-0.5 border-b border-border bg-card px-2.5 pt-1.5 overflow-x-auto overflow-y-hidden no-scrollbar">
+          {/* Column 2: Flagship Unified Inspector or JSON Code Editor (6 Cols) */}
+          <div className="lg:col-span-6 space-y-4">
+            {studioView === 'inspector' ? (
+              <div className="rounded-2xl bg-card border border-border shadow-xs overflow-hidden">
+                {/* Top Tab Bar matching reference image with hidden scrollbars */}
+                <div className="flex items-center gap-0.5 border-b border-border bg-card px-2.5 pt-1.5 overflow-x-auto overflow-y-hidden [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                 {(
                   [
                     { id: 'info' as const, label: 'Info' },
@@ -1197,43 +1347,439 @@ export default function LottiePlayerClient({
                 )}
               </div>
             </div>
+          ) : (
+            /* JSON Code Editor Card (Split Playground View) */
+            <div className="rounded-2xl bg-card border border-border shadow-xs overflow-hidden flex flex-col">
+              {/* Menu Bar (File, Edit, Lottie, View, Renderer) */}
+              <div ref={menuContainerRef} className="relative flex items-center border-b border-border bg-card px-2 py-1">
+                {/* File Menu */}
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setActiveMenu((prev) => (prev === 'file' ? null : 'file'))}
+                    className={`px-2.5 py-1.5 text-xs font-medium rounded-md transition-colors cursor-pointer ${
+                      activeMenu === 'file'
+                        ? 'bg-secondary text-foreground font-semibold'
+                        : 'text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    File
+                  </button>
 
-            {/* Quick Bridge to Next Lottie Tools */}
-            <div className="p-4 rounded-xl bg-card border border-border space-y-2.5">
-              <span className="font-semibold text-xs text-foreground uppercase tracking-wider block">
-                Next Lottie Workflows
-              </span>
+                  {activeMenu === 'file' && (
+                    <div className="absolute left-0 top-full mt-1 w-52 rounded-xl bg-card border border-border shadow-lg p-1.5 z-50 space-y-0.5 text-xs">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          fileInputRef.current?.click();
+                          setActiveMenu(null);
+                        }}
+                        className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg hover:bg-secondary text-foreground transition-colors text-left cursor-pointer"
+                      >
+                        <Upload className="w-3.5 h-3.5 text-primary" /> Open File (.json / .lottie)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          handleDownload();
+                          setActiveMenu(null);
+                        }}
+                        className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg hover:bg-secondary text-foreground transition-colors text-left cursor-pointer"
+                      >
+                        <Download className="w-3.5 h-3.5" /> Download .json
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          handleDownloadDotLottie();
+                          setActiveMenu(null);
+                        }}
+                        className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg hover:bg-secondary text-foreground transition-colors text-left cursor-pointer"
+                      >
+                        <Package className="w-3.5 h-3.5 text-primary" /> Export .lottie Archive
+                      </button>
+
+                      <div className="border-t border-border my-1" />
+                      <div className="text-[10px] text-muted-foreground px-2.5 py-1 font-semibold uppercase tracking-wider">
+                        Load Sample Animation:
+                      </div>
+                      {LOTTIE_SAMPLES.map((s) => (
+                        <button
+                          key={s.id}
+                          type="button"
+                          onClick={() => {
+                            handleSampleSelect(s.id);
+                            setActiveMenu(null);
+                          }}
+                          className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg hover:bg-secondary text-foreground transition-colors text-left cursor-pointer"
+                        >
+                          <span>{s.name}</span>
+                          {activeSampleId === s.id && <Check className="w-3.5 h-3.5 text-primary" />}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Edit Menu */}
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setActiveMenu((prev) => (prev === 'edit' ? null : 'edit'))}
+                    className={`px-2.5 py-1.5 text-xs font-medium rounded-md transition-colors cursor-pointer ${
+                      activeMenu === 'edit'
+                        ? 'bg-secondary text-foreground font-semibold'
+                        : 'text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    Edit
+                  </button>
+
+                  {activeMenu === 'edit' && (
+                    <div className="absolute left-0 top-full mt-1 w-48 rounded-xl bg-card border border-border shadow-lg p-1.5 z-50 space-y-0.5 text-xs">
+                      <button
+                        type="button"
+                        onClick={handlePrettify}
+                        className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg hover:bg-secondary text-foreground transition-colors text-left cursor-pointer"
+                      >
+                        <Braces className="w-3.5 h-3.5 text-blue-500" /> Prettify / Format (2 Spaces)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleMinify}
+                        className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg hover:bg-secondary text-foreground transition-colors text-left cursor-pointer"
+                      >
+                        <Code2 className="w-3.5 h-3.5 text-purple-500" /> Minify JSON
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleResetToOriginal}
+                        className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg hover:bg-secondary text-foreground transition-colors text-left cursor-pointer"
+                      >
+                        <Undo2 className="w-3.5 h-3.5 text-amber-500" /> Reset to Original
+                      </button>
+                      <div className="border-t border-border my-1" />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setRawJson('{\n  "v": "5.7.0",\n  "fr": 60,\n  "ip": 0,\n  "op": 60,\n  "w": 500,\n  "h": 500,\n  "layers": []\n}');
+                          setActiveMenu(null);
+                        }}
+                        className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg hover:bg-destructive/10 text-destructive transition-colors text-left cursor-pointer"
+                      >
+                        Clear to Empty Skeleton
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {/* Lottie Jump Menu */}
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setActiveMenu((prev) => (prev === 'lottie' ? null : 'lottie'))}
+                    className={`px-2.5 py-1.5 text-xs font-medium rounded-md transition-colors cursor-pointer ${
+                      activeMenu === 'lottie'
+                        ? 'bg-secondary text-foreground font-semibold'
+                        : 'text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    Lottie
+                  </button>
+
+                  {activeMenu === 'lottie' && (
+                    <div className="absolute left-0 top-full mt-1 w-52 rounded-xl bg-card border border-border shadow-lg p-1.5 z-50 space-y-0.5 text-xs">
+                      <div className="text-[10px] text-muted-foreground px-2.5 py-1 font-semibold uppercase tracking-wider">
+                        Jump to JSON Block:
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => handleJumpToNode('fr')}
+                        className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg hover:bg-secondary text-foreground transition-colors text-left cursor-pointer"
+                      >
+                        <span>Root Dimensions & FPS</span>
+                        <span className="font-mono text-[10px] text-muted-foreground">w, h, fr</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleJumpToNode('layers')}
+                        className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg hover:bg-secondary text-foreground transition-colors text-left cursor-pointer"
+                      >
+                        <span>Layers Array</span>
+                        <span className="font-mono text-[10px] text-muted-foreground">layers: []</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleJumpToNode('assets')}
+                        className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg hover:bg-secondary text-foreground transition-colors text-left cursor-pointer"
+                      >
+                        <span>Assets (Precomps/Images)</span>
+                        <span className="font-mono text-[10px] text-muted-foreground">assets: []</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleJumpToNode('markers')}
+                        className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg hover:bg-secondary text-foreground transition-colors text-left cursor-pointer"
+                      >
+                        <span>Timeline Markers</span>
+                        <span className="font-mono text-[10px] text-muted-foreground">markers: []</span>
+                      </button>
+
+                      <div className="border-t border-border my-1" />
+                      <div className="text-[10px] text-muted-foreground px-2.5 py-1 font-semibold uppercase tracking-wider">
+                        Quick Modifications:
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => handleQuickScale(2)}
+                        className="w-full px-2.5 py-1.5 rounded-lg hover:bg-secondary text-foreground transition-colors text-left cursor-pointer"
+                      >
+                        Double Resolution (2x w & h)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleQuickScale(0.5)}
+                        className="w-full px-2.5 py-1.5 rounded-lg hover:bg-secondary text-foreground transition-colors text-left cursor-pointer"
+                      >
+                        Halve Resolution (0.5x w & h)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleQuickFramerate(60)}
+                        className="w-full px-2.5 py-1.5 rounded-lg hover:bg-secondary text-foreground transition-colors text-left cursor-pointer"
+                      >
+                        Set Framerate to 60 FPS
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleQuickFramerate(30)}
+                        className="w-full px-2.5 py-1.5 rounded-lg hover:bg-secondary text-foreground transition-colors text-left cursor-pointer"
+                      >
+                        Set Framerate to 30 FPS
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {/* View Menu */}
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setActiveMenu((prev) => (prev === 'view' ? null : 'view'))}
+                    className={`px-2.5 py-1.5 text-xs font-medium rounded-md transition-colors cursor-pointer ${
+                      activeMenu === 'view'
+                        ? 'bg-secondary text-foreground font-semibold'
+                        : 'text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    View
+                  </button>
+
+                  {activeMenu === 'view' && (
+                    <div className="absolute left-0 top-full mt-1 w-44 rounded-xl bg-card border border-border shadow-lg p-1.5 z-50 space-y-0.5 text-xs">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setWrapLines((prev) => !prev);
+                          setActiveMenu(null);
+                        }}
+                        className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg hover:bg-secondary text-foreground transition-colors text-left cursor-pointer"
+                      >
+                        <span>Line Wrap</span>
+                        {wrapLines && <Check className="w-3.5 h-3.5 text-primary" />}
+                      </button>
+                      <div className="border-t border-border my-1" />
+                      <div className="text-[10px] text-muted-foreground px-2.5 py-1 font-semibold uppercase tracking-wider">
+                        Font Size:
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setEditorFontSize('xs');
+                          setActiveMenu(null);
+                        }}
+                        className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg hover:bg-secondary text-foreground transition-colors text-left cursor-pointer"
+                      >
+                        <span>Small (12px)</span>
+                        {editorFontSize === 'xs' && <Check className="w-3.5 h-3.5 text-primary" />}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setEditorFontSize('sm');
+                          setActiveMenu(null);
+                        }}
+                        className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg hover:bg-secondary text-foreground transition-colors text-left cursor-pointer"
+                      >
+                        <span>Medium (14px)</span>
+                        {editorFontSize === 'sm' && <Check className="w-3.5 h-3.5 text-primary" />}
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {/* Renderer Menu */}
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setActiveMenu((prev) => (prev === 'renderer' ? null : 'renderer'))}
+                    className={`px-2.5 py-1.5 text-xs font-medium rounded-md transition-colors cursor-pointer ${
+                      activeMenu === 'renderer'
+                        ? 'bg-secondary text-foreground font-semibold'
+                        : 'text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    Renderer: {rendererChoice.toUpperCase()}
+                  </button>
+
+                  {activeMenu === 'renderer' && (
+                    <div className="absolute left-0 top-full mt-1 w-44 rounded-xl bg-card border border-border shadow-lg p-1.5 z-50 space-y-0.5 text-xs">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setRendererChoice('svg');
+                          setActiveMenu(null);
+                        }}
+                        className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg hover:bg-secondary text-foreground transition-colors text-left cursor-pointer"
+                      >
+                        <span>SVG (Bodymovin)</span>
+                        {rendererChoice === 'svg' && <Check className="w-3.5 h-3.5 text-primary" />}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setRendererChoice('canvas');
+                          setActiveMenu(null);
+                        }}
+                        className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg hover:bg-secondary text-foreground transition-colors text-left cursor-pointer"
+                      >
+                        <span>HTML5 Canvas</span>
+                        {rendererChoice === 'canvas' && <Check className="w-3.5 h-3.5 text-primary" />}
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {/* Right utility buttons */}
+                <div className="ml-auto flex items-center gap-1.5">
+                  <CopyButton text={rawJson} label="Copy" />
+                </div>
+              </div>
+
+              {/* Editor Surface with Line Numbers Gutter */}
+              <div className="relative flex h-[460px] bg-background">
+                {/* Line Numbers Column */}
+                <div
+                  ref={lineNumbersRef}
+                  className="w-12 select-none overflow-hidden py-3 text-right font-mono text-muted-foreground/50 border-r border-border bg-muted/20"
+                  style={{
+                    fontSize: editorFontSize === 'xs' ? '12px' : '14px',
+                    lineHeight: editorFontSize === 'xs' ? '1.5rem' : '1.6rem',
+                  }}
+                >
+                  <div className="pr-2">
+                    {Array.from({ length: Math.min(lineCount, 5000) }, (_, i) => (
+                      <div
+                        key={i + 1}
+                        className={syntaxError?.line === i + 1 ? 'text-destructive font-bold' : ''}
+                      >
+                        {i + 1}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Interactive Code Textarea */}
+                <textarea
+                  ref={editorTextareaRef}
+                  value={rawJson}
+                  onChange={(e) => setRawJson(e.target.value)}
+                  onKeyDown={handleEditorKeyDown}
+                  onScroll={handleEditorScroll}
+                  spellCheck={false}
+                  wrap={wrapLines ? 'soft' : 'off'}
+                  placeholder="Paste Bodymovin Lottie JSON here..."
+                  className={`w-full h-full p-3 font-mono bg-transparent text-foreground resize-none focus:outline-hidden developer-scrollbar ${
+                    wrapLines ? 'overflow-y-auto overflow-x-hidden' : 'overflow-auto whitespace-pre'
+                  }`}
+                  style={{
+                    fontSize: editorFontSize === 'xs' ? '12px' : '14px',
+                    lineHeight: editorFontSize === 'xs' ? '1.5rem' : '1.6rem',
+                  }}
+                />
+              </div>
+
+              {/* Diagnostic Footer Bar */}
+              <div className="px-3.5 py-2 border-t border-border bg-card flex items-center justify-between text-xs">
+                {syntaxError ? (
+                  <div className="flex items-center gap-1.5 text-destructive truncate">
+                    <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                    <span className="font-mono text-[11px] truncate">
+                      {syntaxError.line ? `Line ${syntaxError.line}:${syntaxError.column || 1} — ` : ''}
+                      {syntaxError.message}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+                    <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                    <span className="text-[11px]">Valid Bodymovin AST &bull; Live Synchronization Active</span>
+                  </div>
+                )}
+
+                <div className="text-[11px] font-mono text-muted-foreground shrink-0 pl-2">
+                  {lineCount} lines &bull; {rawJson.length} chars
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Quick Bridge to Next Lottie Tools */}
+          <div className="p-4 rounded-xl bg-card border border-border space-y-2.5">
+            <span className="font-semibold text-xs text-foreground uppercase tracking-wider block">
+              Next Lottie Workflows
+            </span>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <button
+                type="button"
+                onClick={() => handleNavigateToTool('lottie-converter', '/tools/lottie-converter')}
+                className="flex flex-col p-2.5 rounded-lg bg-secondary/50 hover:bg-secondary border border-border transition-colors text-xs text-left group cursor-pointer"
+              >
+                <div className="flex items-center justify-between mb-1">
+                  <Package className="w-4 h-4 text-primary" />
+                  <span className="text-muted-foreground group-hover:text-foreground">→</span>
+                </div>
+                <div className="font-medium text-foreground">Converter</div>
+                <div className="text-[10px] text-muted-foreground">JSON &harr; .lottie archives</div>
+              </button>
 
               <button
                 type="button"
                 onClick={() => handleNavigateToTool('lottie-validator', '/tools/lottie-validator')}
-                className="w-full flex items-center justify-between p-2.5 rounded-lg bg-secondary/50 hover:bg-secondary border border-border transition-colors text-xs text-left group cursor-pointer"
+                className="flex flex-col p-2.5 rounded-lg bg-secondary/50 hover:bg-secondary border border-border transition-colors text-xs text-left group cursor-pointer"
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-between mb-1">
                   <ShieldCheck className="w-4 h-4 text-emerald-500" />
-                  <div>
-                    <div className="font-medium text-foreground">Lottie Validator</div>
-                    <div className="text-[10px] text-muted-foreground">Check syntax, parent IDs & asset links</div>
-                  </div>
+                  <span className="text-muted-foreground group-hover:text-foreground">→</span>
                 </div>
-                <span className="text-muted-foreground group-hover:text-foreground">→</span>
+                <div className="font-medium text-foreground">Validator</div>
+                <div className="text-[10px] text-muted-foreground">AST & asset link checks</div>
               </button>
 
               <button
                 type="button"
                 onClick={() => handleNavigateToTool('lottie-optimizer', '/tools/lottie-optimizer')}
-                className="w-full flex items-center justify-between p-2.5 rounded-lg bg-secondary/50 hover:bg-secondary border border-border transition-colors text-xs text-left group cursor-pointer"
+                className="flex flex-col p-2.5 rounded-lg bg-secondary/50 hover:bg-secondary border border-border transition-colors text-xs text-left group cursor-pointer"
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-between mb-1">
                   <Gauge className="w-4 h-4 text-purple-500" />
-                  <div>
-                    <div className="font-medium text-foreground">Lottie Optimizer</div>
-                    <div className="text-[10px] text-muted-foreground">Truncate float precision & clean metadata</div>
-                  </div>
+                  <span className="text-muted-foreground group-hover:text-foreground">→</span>
                 </div>
-                <span className="text-muted-foreground group-hover:text-foreground">→</span>
+                <div className="font-medium text-foreground">Optimizer</div>
+                <div className="text-[10px] text-muted-foreground">Precision & size cleanup</div>
               </button>
             </div>
+          </div>
           </div>
         </div>
       </div>

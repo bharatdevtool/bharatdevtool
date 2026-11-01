@@ -16,10 +16,8 @@ export type ToolCategory =
   | 'API/Network'
   | 'Encoding'
   | 'Regex'
-  | 'Text'
   | 'Security'
-  | 'Social'
-  | 'Utility';
+  | 'Social';
 
 export interface Tool {
   id: string;
@@ -201,41 +199,7 @@ export const TOOLS: Tool[] = [
     shortDesc: 'Browse common regex patterns',
     keywords: ['regex library', 'regex patterns', 'common regex', 'regex examples', 'regex cheatsheet'],
   },
-  // ── Text ──────────────────────────────────────────────────
-  {
-    id: 'word-counter',
-    label: 'Word Counter',
-    route: '/tools/word-counter',
-    category: 'Text',
-    icon: '📝',
-    description:
-      'Count words, characters, sentences, and paragraphs. Reading time estimator and keyword density.',
-    shortDesc: 'Count words, characters & sentences',
-    keywords: ['word counter', 'character counter', 'word count online', 'character count', 'text analyzer'],
-  },
-  {
-    id: 'text-case-converter',
-    label: 'Text Case Converter',
-    route: '/tools/text-case-converter',
-    category: 'Text',
-    icon: 'Aa',
-    description:
-      'Convert text between UPPERCASE, lowercase, Title Case, camelCase, snake_case, kebab-case, and more.',
-    shortDesc: 'Convert text case instantly',
-    keywords: ['text case converter', 'uppercase', 'lowercase', 'camelcase', 'snake_case', 'kebab-case', 'title case'],
-  },
   // ── Security ──────────────────────────────────────────────
-  {
-    id: 'password-generator',
-    label: 'Password Generator',
-    route: '/tools/password-generator',
-    category: 'Security',
-    icon: '🔒',
-    description:
-      'Generate strong, secure, random passwords. Customize length, character sets, and complexity.',
-    shortDesc: 'Generate strong random passwords',
-    keywords: ['password generator', 'random password', 'strong password', 'secure password generator'],
-  },
   {
     id: 'uuid-generator',
     label: 'UUID Generator',
@@ -259,18 +223,6 @@ export const TOOLS: Tool[] = [
     shortDesc: 'Create wa.me click-to-chat links',
     keywords: ['whatsapp link generator', 'wa.me link', 'whatsapp click to chat', 'whatsapp api link'],
   },
-  // ── Utility ───────────────────────────────────────────────
-  {
-    id: 'age-calculator',
-    label: 'Age Calculator',
-    route: '/tools/age-calculator',
-    category: 'Utility',
-    icon: '🎂',
-    description:
-      'Calculate exact age in years, months, days, hours, and minutes from a date of birth.',
-    shortDesc: 'Calculate exact age from date of birth',
-    keywords: ['age calculator', 'calculate age', 'date of birth calculator', 'birthday calculator'],
-  },
   // ── Lottie ────────────────────────────────────────────────
   {
     id: 'lottie-player',
@@ -279,9 +231,37 @@ export const TOOLS: Tool[] = [
     category: 'Lottie',
     icon: '🎬',
     description:
-      'Preview, inspect layers, extract & swap colors, audit warnings, and scrub Lottie and .lottie animations online with 100% client-side privacy.',
-    shortDesc: 'Preview, inspect layers, colors & scrub',
-    keywords: ['lottie player', 'lottie previewer', 'lottie viewer online', 'bodymovin preview', 'lottie color editor', 'lottie layer inspector', 'json animation player', 'dotlottie player', 'lottie analyzer'],
+      'Preview, inspect layers, extract & swap colors, audit warnings, and edit Bodymovin Lottie JSON with real-time synchronized canvas preview. 100% client-side privacy.',
+    shortDesc: 'Preview, inspect & edit Lottie animations',
+    keywords: [
+      'lottie player',
+      'lottie studio',
+      'lottie previewer',
+      'lottie viewer online',
+      'bodymovin preview',
+      'lottie color editor',
+      'lottie layer inspector',
+      'json animation player',
+      'dotlottie player',
+      'lottie analyzer',
+      'lottie editor',
+      'lottie json editor',
+      'edit lottie online',
+      'lottie code editor',
+      'lottie playground',
+    ],
+    heavy: true,
+  },
+  {
+    id: 'lottie-converter',
+    label: 'Lottie to dotLottie Converter',
+    route: '/tools/lottie-converter',
+    category: 'Lottie',
+    icon: '📦',
+    description:
+      'Convert Bodymovin JSON to compressed dotLottie (.lottie) archives and unpack .lottie packages to clean JSON. 100% offline client-side compression.',
+    shortDesc: 'Convert between JSON and .lottie archives',
+    keywords: ['lottie converter', 'json to dotlottie', 'lottie to json', 'dotlottie converter', 'compress lottie', 'dotlottie to json'],
     heavy: true,
   },
   {
@@ -308,30 +288,6 @@ export const TOOLS: Tool[] = [
     keywords: ['lottie optimizer', 'compress lottie json', 'reduce lottie file size', 'clean lottie metadata', 'bodymovin optimizer'],
     heavy: true,
   },
-  {
-    id: 'lottie-editor',
-    label: 'Lottie JSON Editor',
-    route: '/tools/lottie-editor',
-    category: 'Lottie',
-    icon: '📝',
-    description:
-      'Edit, format, and debug Bodymovin Lottie JSON with real-time synchronized canvas preview, error diagnostics, and node jump shortcuts.',
-    shortDesc: 'Edit Lottie JSON with live canvas preview',
-    keywords: ['lottie editor', 'lottie json editor', 'edit lottie online', 'lottie code editor', 'bodymovin editor', 'lottie playground'],
-    heavy: true,
-  },
-  {
-    id: 'lottie-converter',
-    label: 'Lottie to dotLottie Converter',
-    route: '/tools/lottie-converter',
-    category: 'Lottie',
-    icon: '📦',
-    description:
-      'Convert Bodymovin JSON to compressed dotLottie (.lottie) archives and unpack .lottie packages to clean JSON. 100% offline client-side compression.',
-    shortDesc: 'Convert between JSON and .lottie archives',
-    keywords: ['lottie converter', 'json to dotlottie', 'lottie to json', 'dotlottie converter', 'compress lottie', 'dotlottie to json'],
-    heavy: true,
-  },
 ];
 
 /** Lookup a tool by its id */
@@ -346,6 +302,6 @@ export function getToolsByCategory(category: ToolCategory): Tool[] {
 
 /** All unique categories in display order */
 export const TOOL_CATEGORIES: ToolCategory[] = [
-  'JSON', 'Lottie', 'QR', 'Color', 'API/Network', 'Encoding', 'Regex', 'Text', 'Security', 'Social', 'Utility',
+  'JSON', 'Lottie', 'QR', 'Color', 'API/Network', 'Encoding', 'Regex', 'Security', 'Social',
 ];
 

@@ -16,9 +16,7 @@ const FILTER_CATEGORIES: ('All' | ToolCategory)[] = [
   'API/Network',
   'QR',
   'Color',
-  'Text',
   'Social',
-  'Utility',
 ];
 
 export default function ToolsDirectoryClient() {
