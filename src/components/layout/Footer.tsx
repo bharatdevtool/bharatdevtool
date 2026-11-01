@@ -11,7 +11,7 @@ export default function Footer() {
   const categories = [
     {
       title: 'Lottie Tools',
-      toolIds: ['lottie-player', 'lottie-validator', 'lottie-optimizer'],
+      toolIds: ['lottie-player', 'lottie-editor', 'lottie-converter', 'lottie-validator', 'lottie-optimizer'],
     },
     {
       title: 'JSON & APIs',

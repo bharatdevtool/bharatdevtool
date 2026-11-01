@@ -25,6 +25,8 @@ import {
   SlidersHorizontal,
   ShieldCheck,
   Gauge,
+  Code2,
+  FolderArchive,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -53,6 +55,8 @@ const ICON_MAP: Record<string, LucideIcon> = {
   'lottie-analyzer': SlidersHorizontal,
   'lottie-validator': ShieldCheck,
   'lottie-optimizer': Gauge,
+  'lottie-editor': Code2,
+  'lottie-converter': FolderArchive,
 };
 
 interface ToolIconProps {

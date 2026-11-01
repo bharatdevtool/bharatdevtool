@@ -304,20 +304,27 @@ export function extractDotLottie(
  */
 export function createDotLottie(
   animation: LottieAnimation,
-  options?: { id?: string; name?: string; author?: string }
+  options?: {
+    id?: string;
+    name?: string;
+    author?: string;
+    speed?: number;
+    loop?: boolean;
+    generator?: string;
+  }
 ): Uint8Array {
   const animId = options?.id || 'animation_1';
   const animJson = JSON.stringify(animation);
 
   const manifest: DotLottieManifest = {
-    generator: 'Bharat Dev Tools (bharatdevtool.com)',
+    generator: options?.generator || 'Bharat Dev Tools (bharatdevtool.com)',
     version: '1.0.0',
     author: options?.author || 'Bharat Dev Tools User',
     animations: [
       {
         id: animId,
-        speed: 1,
-        loop: true,
+        speed: options?.speed ?? 1,
+        loop: options?.loop ?? true,
         direction: 1,
       },
     ],

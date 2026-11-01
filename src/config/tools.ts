@@ -308,6 +308,30 @@ export const TOOLS: Tool[] = [
     keywords: ['lottie optimizer', 'compress lottie json', 'reduce lottie file size', 'clean lottie metadata', 'bodymovin optimizer'],
     heavy: true,
   },
+  {
+    id: 'lottie-editor',
+    label: 'Lottie JSON Editor',
+    route: '/tools/lottie-editor',
+    category: 'Lottie',
+    icon: '📝',
+    description:
+      'Edit, format, and debug Bodymovin Lottie JSON with real-time synchronized canvas preview, error diagnostics, and node jump shortcuts.',
+    shortDesc: 'Edit Lottie JSON with live canvas preview',
+    keywords: ['lottie editor', 'lottie json editor', 'edit lottie online', 'lottie code editor', 'bodymovin editor', 'lottie playground'],
+    heavy: true,
+  },
+  {
+    id: 'lottie-converter',
+    label: 'Lottie to dotLottie Converter',
+    route: '/tools/lottie-converter',
+    category: 'Lottie',
+    icon: '📦',
+    description:
+      'Convert Bodymovin JSON to compressed dotLottie (.lottie) archives and unpack .lottie packages to clean JSON. 100% offline client-side compression.',
+    shortDesc: 'Convert between JSON and .lottie archives',
+    keywords: ['lottie converter', 'json to dotlottie', 'lottie to json', 'dotlottie converter', 'compress lottie', 'dotlottie to json'],
+    heavy: true,
+  },
 ];
 
 /** Lookup a tool by its id */
