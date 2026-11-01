@@ -8,61 +8,7 @@ import ErrorMessage from '@/components/ui/ErrorMessage';
 import CopyButton from '@/components/ui/CopyButton';
 import SegmentedTabs from '@/components/ui/SegmentedTabs';
 import { Terminal, Sparkles, Send, Globe, Code2 } from 'lucide-react';
-
-interface ParsedCurl {
-  method: string;
-  url: string;
-  headers: Record<string, string>;
-  body: string;
-  raw: string;
-}
-
-function parseCurl(cmd: string): ParsedCurl | null {
-  if (!cmd.includes('curl')) return null;
-  const method =
-    (cmd.match(/-X\s+(['"]?)(\w+)\1/) || cmd.match(/--request\s+(['"]?)(\w+)\1/))?.[2]?.toUpperCase() ??
-    (cmd.includes('-d ') || cmd.includes('--data') ? 'POST' : 'GET');
-  const urlMatch = cmd.match(/curl\s+(?:[^\s]*?\s+)*['"]?(https?:\/\/[^\s'"\\]+)['"]?/);
-  const url = urlMatch?.[1] ?? '';
-  const headers: Record<string, string> = {};
-  const headerRe = /-H\s+['"]([^'"]+)['"]/g;
-  let hm;
-  while ((hm = headerRe.exec(cmd)) !== null) {
-    const [k, ...rest] = hm[1].split(': ');
-    headers[k] = rest.join(': ');
-  }
-  const bodyMatch = cmd.match(/(?:-d|--data(?:-raw)?)\s+['"]([^'"]*)['"]/);
-  const body = bodyMatch?.[1] ?? '';
-  return { method, url, headers, body, raw: cmd };
-}
-
-function toFetch(p: ParsedCurl): string {
-  const opts: Record<string, unknown> = { method: p.method };
-  if (Object.keys(p.headers).length) opts.headers = p.headers;
-  if (p.body) {
-    try {
-      opts.body = JSON.parse(p.body);
-    } catch {
-      opts.body = p.body;
-    }
-  }
-  const optsStr = Object.keys(opts).length > 1 || p.method !== 'GET' ? `, ${JSON.stringify(opts, null, 2)}` : '';
-  return `// JavaScript fetch() equivalent\nconst response = await fetch('${p.url}'${optsStr});\nconst data = await response.json();\nconsole.log(data);`;
-}
-
-function toPython(p: ParsedCurl): string {
-  const headersStr = Object.keys(p.headers).length ? `\nheaders = ${JSON.stringify(p.headers, null, 4)}` : '';
-  const dataStr = p.body ? `\ndata = ${p.body}` : '';
-  const args = [
-    `'${p.url}'`,
-    Object.keys(p.headers).length ? 'headers=headers' : null,
-    p.body ? (p.body.trim().startsWith('{') ? 'json=data' : 'data=data') : null,
-  ]
-    .filter(Boolean)
-    .join(', ');
-
-  return `# Python requests equivalent\nimport requests${headersStr}${dataStr}\n\nresponse = requests.${p.method.toLowerCase()}(${args})\nprint(response.json())`;
-}
+import { parseCurl, toFetch, toPython, type ParsedCurl } from '@/lib/curl/parser';
 
 const PRESETS = [
   {
@@ -83,7 +29,7 @@ export default function CurlTesterClient() {
   let parsed: ParsedCurl | null = null;
   if (input.trim()) {
     parsed = parseCurl(input);
-    if (!parsed) {
+    if (!parsed || !parsed.url) {
       if (!error) setError('Could not parse cURL command. Make sure it starts with `curl` and contains an http/https URL.');
     } else if (error) {
       setError(null);

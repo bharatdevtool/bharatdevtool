@@ -4,45 +4,7 @@ import React, { useState } from 'react';
 import ToolLayout from '@/components/layout/ToolLayout';
 import CodeEditor from '@/components/ui/CodeEditor';
 import { ArrowLeftRight, Sparkles, CheckCircle2, AlertCircle } from 'lucide-react';
-
-interface ParsedCurl {
-  method: string;
-  url: string;
-  headers: Record<string, string>;
-  body: string;
-}
-
-function parseCurl(cmd: string): ParsedCurl {
-  const method =
-    (cmd.match(/-X\s+(['"]?)(\w+)\1/) || cmd.match(/--request\s+(['"]?)(\w+)\1/))?.[2]?.toUpperCase() ??
-    (cmd.includes('-d ') || cmd.includes('--data') ? 'POST' : 'GET');
-  const urlMatch = cmd.match(/curl\s+(?:[^\s]*?\s+)*['"]?(https?:\/\/[^\s'"\\]+)['"]?/);
-  const url = urlMatch?.[1] ?? '';
-  const headers: Record<string, string> = {};
-  const headerRe = /-H\s+['"]([^'"]+)['"]/g;
-  let hm;
-  while ((hm = headerRe.exec(cmd)) !== null) {
-    const [k, ...rest] = hm[1].split(': ');
-    headers[k] = rest.join(': ');
-  }
-  const body = cmd.match(/(?:-d|--data(?:-raw)?)\s+['"]([^'"]*)['"]/)?.[1] ?? '';
-  return { method, url, headers, body };
-}
-
-type DiffStatus = 'left' | 'right' | 'diff' | 'same';
-
-function diff(
-  a: Record<string, string>,
-  b: Record<string, string>
-): { key: string; left?: string; right?: string; status: DiffStatus }[] {
-  const keys = new Set([...Object.keys(a), ...Object.keys(b)]);
-  return Array.from(keys).map((key) => {
-    if (!(key in b)) return { key, left: a[key], status: 'left' };
-    if (!(key in a)) return { key, right: b[key], status: 'right' };
-    if (a[key] !== b[key]) return { key, left: a[key], right: b[key], status: 'diff' };
-    return { key, left: a[key], right: b[key], status: 'same' };
-  });
-}
+import { parseCurl, diffHeaders, type DiffStatus } from '@/lib/curl/parser';
 
 const STATUS_COLORS: Record<DiffStatus, string> = {
   left: 'bg-red-500/10 border-l-2 border-red-500 text-red-600 dark:text-red-400',
@@ -63,7 +25,7 @@ export default function CurlComparisonClient() {
   const pLeft = left.trim() ? parseCurl(left) : null;
   const pRight = right.trim() ? parseCurl(right) : null;
 
-  const headerDiffs = pLeft && pRight ? diff(pLeft.headers, pRight.headers) : [];
+  const headerDiffs = pLeft && pRight ? diffHeaders(pLeft.headers, pRight.headers) : [];
 
   return (
     <ToolLayout toolId="curl-comparison">

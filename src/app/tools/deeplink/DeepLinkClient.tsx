@@ -6,36 +6,7 @@ import SegmentedTabs, { TabOption } from '@/components/ui/SegmentedTabs';
 import CopyButton from '@/components/ui/CopyButton';
 import ErrorMessage from '@/components/ui/ErrorMessage';
 import { ExternalLink, Rocket, Sparkles, AlertCircle, CheckCircle2 } from 'lucide-react';
-
-interface ParsedDeepLink {
-  scheme: string;
-  host: string;
-  path: string;
-  query: Record<string, string>;
-  fragment: string;
-  raw: string;
-}
-
-function parseDeepLink(url: string): ParsedDeepLink | null {
-  try {
-    const normalized = url.includes('://') ? url : url.replace(':', '://');
-    const parsed = new URL(normalized);
-    const query: Record<string, string> = {};
-    parsed.searchParams.forEach((value, key) => {
-      query[key] = value;
-    });
-    return {
-      scheme: parsed.protocol.replace(':', ''),
-      host: parsed.hostname,
-      path: parsed.pathname,
-      query,
-      fragment: parsed.hash.replace('#', ''),
-      raw: url,
-    };
-  } catch {
-    return null;
-  }
-}
+import { parseDeepLink, type ParsedDeepLink } from '@/lib/encoding/url';
 
 type TabType = 'parse' | 'encode' | 'decode';
 
