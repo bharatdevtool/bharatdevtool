@@ -409,7 +409,7 @@ export async function extractLottieFromFile(file: File): Promise<{
           resolve({
             success: true,
             animation: parsed as LottieAnimation,
-            rawJson: text,
+            rawJson: JSON.stringify(parsed, null, 2),
             isDotLottie: false,
             inlinedImageCount: 0,
           });

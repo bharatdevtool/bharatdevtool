@@ -46,6 +46,7 @@ import {
   Braces,
   Check,
   Package,
+  GitCompare,
 } from 'lucide-react';
 
 function formatBytes(bytes: number): string {
@@ -80,7 +81,6 @@ function getLayerTypeInfo(ty: number) {
 type BgType = 'obsidian' | 'light' | 'grid' | 'custom';
 type DirectionType = 'forward' | 'reverse' | 'bounce';
 type InspectorTab = 'info' | 'layers' | 'colors' | 'warnings' | 'assets';
-type StudioView = 'inspector' | 'editor';
 type ActiveMenu = 'file' | 'edit' | 'lottie' | 'view' | 'renderer' | null;
 type RendererChoice = 'svg' | 'canvas';
 
@@ -100,7 +100,6 @@ export default function LottiePlayerClient({
     return parseLottieJSON(JSON.stringify(LOTTIE_SAMPLES[0].data)).metadata || null;
   });
 
-  const [studioView, setStudioView] = useState<StudioView>('inspector');
   const [inspectorTab, setInspectorTab] = useState<InspectorTab>(initialInspectorTab);
   const originalAnimationRef = useRef<LottieAnimation>(LOTTIE_SAMPLES[0].data);
   const [isColorModified, setIsColorModified] = useState<boolean>(false);
@@ -269,7 +268,8 @@ export default function LottiePlayerClient({
         setAnimationData(parsed.animation);
         originalAnimationRef.current = parsed.animation;
         setIsColorModified(false);
-        setRawJson(incoming.lottieJson);
+        const jsonStr = JSON.stringify(parsed.animation, null, 2);
+        setRawJson(jsonStr);
         setMetadata(parsed.metadata || null);
         setActiveSampleId('');
         setError(null);
@@ -567,7 +567,7 @@ export default function LottiePlayerClient({
     setAnimationData(res.animation);
     originalAnimationRef.current = res.animation;
     setIsColorModified(false);
-    const jsonStr = res.rawJson || JSON.stringify(res.animation, null, 2);
+    const jsonStr = JSON.stringify(res.animation, null, 2);
     setRawJson(jsonStr);
     const parsed = parseLottieJSON(jsonStr);
     setMetadata(parsed.metadata || null);
@@ -662,8 +662,8 @@ export default function LottiePlayerClient({
             ))}
           </div>
 
-          {/* Action Tabs & Studio Mode Switcher */}
-          <div className="flex items-center gap-2 flex-wrap">
+          {/* Upload Button */}
+          <div className="flex items-center gap-2">
             <input
               ref={fileInputRef}
               type="file"
@@ -678,32 +678,6 @@ export default function LottiePlayerClient({
             >
               <Upload className="w-3.5 h-3.5" /> Upload File (.json / .lottie)
             </button>
-
-            {/* Mode Switcher: Inspector vs JSON Editor */}
-            <div className="flex items-center p-0.5 rounded-lg bg-secondary border border-border">
-              <button
-                type="button"
-                onClick={() => setStudioView('inspector')}
-                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-colors cursor-pointer ${
-                  studioView === 'inspector'
-                    ? 'bg-card text-foreground shadow-2xs font-semibold'
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                <SlidersHorizontal className="w-3.5 h-3.5 text-primary" /> Inspector
-              </button>
-              <button
-                type="button"
-                onClick={() => setStudioView('editor')}
-                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-colors cursor-pointer ${
-                  studioView === 'editor'
-                    ? 'bg-card text-foreground shadow-2xs font-semibold'
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                <Code2 className="w-3.5 h-3.5 text-primary" /> JSON Editor
-              </button>
-            </div>
           </div>
         </div>
 
@@ -935,14 +909,11 @@ export default function LottiePlayerClient({
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Column 2: Flagship Unified Inspector or JSON Code Editor (6 Cols) */}
-          <div className="lg:col-span-6 space-y-4">
-            {studioView === 'inspector' ? (
-              <div className="rounded-2xl bg-card border border-border shadow-xs overflow-hidden">
-                {/* Top Tab Bar matching reference image with hidden scrollbars */}
-                <div className="flex items-center gap-0.5 border-b border-border bg-card px-2.5 pt-1.5 overflow-x-auto overflow-y-hidden [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+            {/* Unified Inspector Card */}
+            <div className="rounded-2xl bg-card border border-border shadow-xs overflow-hidden flex flex-col">
+              {/* Top Tab Bar */}
+              <div className="flex items-center gap-0.5 border-b border-border bg-card px-2.5 pt-1.5 overflow-x-auto overflow-y-hidden [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                 {(
                   [
                     { id: 'info' as const, label: 'Info' },
@@ -967,17 +938,19 @@ export default function LottiePlayerClient({
                       key={tab.id}
                       type="button"
                       onClick={() => setInspectorTab(tab.id)}
-                      className={`flex items-center gap-1 px-2.5 py-2 text-xs transition-colors whitespace-nowrap cursor-pointer border-b-2 ${
+                      className={`flex items-center gap-1.5 px-3 py-2 text-xs transition-colors whitespace-nowrap cursor-pointer border-b-2 font-medium ${
                         isActive
-                          ? 'border-foreground text-foreground font-semibold'
-                          : 'border-transparent text-muted-foreground hover:text-foreground font-medium'
+                          ? 'border-primary text-primary font-semibold'
+                          : 'border-transparent text-muted-foreground hover:text-foreground'
                       }`}
                     >
                       <span>{tab.label}</span>
                       {tab.count !== undefined && (
                         <span
-                          className={`text-[11px] font-mono ${
-                            tab.alert ? 'text-amber-500 font-bold' : 'text-muted-foreground'
+                          className={`text-[11px] font-mono px-1 rounded ${
+                            tab.alert
+                              ? 'bg-amber-500/10 text-amber-500 font-bold'
+                              : 'bg-secondary text-muted-foreground'
                           }`}
                         >
                           {tab.count}
@@ -989,7 +962,7 @@ export default function LottiePlayerClient({
               </div>
 
               {/* Tab Panels */}
-              <div className="p-4">
+              <div className="p-4 flex-1">
                 {/* 1. INFO TAB */}
                 {inspectorTab === 'info' && (
                   <div className="space-y-4">
@@ -999,7 +972,7 @@ export default function LottiePlayerClient({
                           NAME
                         </span>
                         <span
-                          className="font-semibold text-foreground truncate max-w-[180px] text-right font-mono"
+                          className="font-semibold text-foreground truncate max-w-[200px] text-right font-mono"
                           title={animationData.nm || 'Animation'}
                         >
                           {animationData.nm ||
@@ -1085,17 +1058,17 @@ export default function LottiePlayerClient({
                       <button
                         type="button"
                         onClick={handleDownload}
-                        className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-secondary hover:bg-muted text-foreground text-xs font-medium transition-colors"
+                        className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-secondary hover:bg-muted text-foreground text-xs font-medium transition-colors cursor-pointer"
                       >
                         <Download className="w-3.5 h-3.5" /> Download .json
                       </button>
                       <button
                         type="button"
                         onClick={handleDownloadDotLottie}
-                        className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-secondary hover:bg-muted text-foreground text-xs font-medium transition-colors"
+                        className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-secondary hover:bg-muted text-foreground text-xs font-medium transition-colors cursor-pointer"
                         title="Export animation as a compressed dotLottie (.lottie) archive"
                       >
-                        <Download className="w-3.5 h-3.5 text-primary" /> Export .lottie
+                        <Package className="w-3.5 h-3.5 text-primary" /> Export .lottie
                       </button>
                       <CopyButton text={rawJson} label="Copy JSON" />
                     </div>
@@ -1120,17 +1093,23 @@ export default function LottiePlayerClient({
                       </div>
                     </div>
 
-                    <div className="max-h-96 overflow-y-auto space-y-2 pr-1 divide-y divide-border/20 developer-scrollbar">
+                    <div className="max-h-80 overflow-y-auto space-y-1.5 pr-1 divide-y divide-border/20 developer-scrollbar">
                       {allLayers.map((layer, idx) => {
                         const typeInfo = getLayerTypeInfo(layer.ty);
                         return (
-                          <div key={`${layer.composition}-${layer.ind}-${idx}`} className="pt-2 first:pt-0 space-y-1">
+                          <button
+                            key={`${layer.composition}-${layer.ind}-${idx}`}
+                            type="button"
+                            onClick={() => handleJumpToNode(layer.name)}
+                            className="w-full pt-1.5 first:pt-0 space-y-1 text-left rounded-lg p-1.5 hover:bg-secondary/60 transition-colors cursor-pointer group"
+                            title="Click to jump to layer in code editor"
+                          >
                             <div className="flex items-center justify-between text-xs">
                               <div className="flex items-center gap-1.5 min-w-0">
                                 <span className="text-[10px] font-mono text-muted-foreground px-1 py-0.5 rounded bg-secondary">
                                   #{layer.ind}
                                 </span>
-                                <span className="font-medium text-foreground truncate max-w-[140px]" title={layer.name}>
+                                <span className="font-medium text-foreground truncate max-w-[140px] group-hover:text-primary transition-colors" title={layer.name}>
                                   {layer.name}
                                 </span>
                                 {layer.composition !== 'Root' && (
@@ -1156,7 +1135,7 @@ export default function LottiePlayerClient({
                               </span>
                               {layer.parent !== undefined && <span>Parent: #{layer.parent}</span>}
                             </div>
-                          </div>
+                          </button>
                         );
                       })}
                     </div>
@@ -1168,7 +1147,7 @@ export default function LottiePlayerClient({
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
                       <p className="text-xs text-muted-foreground">
-                        Click any color swatch to swap live in the canvas:
+                        Click swatch to swap color live across animation:
                       </p>
                       {isColorModified && (
                         <button
@@ -1186,7 +1165,7 @@ export default function LottiePlayerClient({
                         No vector fill or stroke colors detected in this animation.
                       </div>
                     ) : (
-                      <div className="max-h-96 overflow-y-auto space-y-2 pr-1 developer-scrollbar">
+                      <div className="max-h-80 overflow-y-auto space-y-2 pr-1 developer-scrollbar">
                         {colors.map((c) => (
                           <div
                             key={c.hex}
@@ -1302,7 +1281,7 @@ export default function LottiePlayerClient({
                         No external or embedded raster assets. This animation is 100% vector based.
                       </div>
                     ) : (
-                      <div className="max-h-96 overflow-y-auto space-y-2 pr-1 developer-scrollbar">
+                      <div className="max-h-80 overflow-y-auto space-y-2 pr-1 developer-scrollbar">
                         {analysis.assets.map((asset) => (
                           <div key={asset.id} className="p-2.5 rounded-lg bg-secondary/40 border border-border space-y-1.5">
                             <div className="flex items-center justify-between text-xs">
@@ -1347,13 +1326,18 @@ export default function LottiePlayerClient({
                 )}
               </div>
             </div>
-          ) : (
-            /* JSON Code Editor Card (Split Playground View) */
-            <div className="rounded-2xl bg-card border border-border shadow-xs overflow-hidden flex flex-col">
-              {/* Menu Bar (File, Edit, Lottie, View, Renderer) */}
-              <div ref={menuContainerRef} className="relative flex items-center border-b border-border bg-card px-2 py-1">
-                {/* File Menu */}
-                <div className="relative">
+          </div>
+
+          {/* Column 2: Flagship Unified Studio (Editor with Header Menus for File, Edit, Lottie, View, Renderer) */}
+          <div className="lg:col-span-6 space-y-4">
+            <div className="rounded-2xl bg-card border border-border shadow-xs flex flex-col">
+              {/* Unified Header Menu Bar */}
+              <div
+                ref={menuContainerRef}
+                className="relative z-30 flex items-center border-b border-border bg-card px-2 py-1 rounded-t-2xl"
+              >
+                {/* 1. File Menu */}
+                <div className="relative shrink-0">
                   <button
                     type="button"
                     onClick={() => setActiveMenu((prev) => (prev === 'file' ? null : 'file'))}
@@ -1367,7 +1351,7 @@ export default function LottiePlayerClient({
                   </button>
 
                   {activeMenu === 'file' && (
-                    <div className="absolute left-0 top-full mt-1 w-52 rounded-xl bg-card border border-border shadow-lg p-1.5 z-50 space-y-0.5 text-xs">
+                    <div className="absolute left-0 top-full mt-1 w-52 rounded-xl bg-card border border-border shadow-xl p-1.5 z-50 space-y-0.5 text-xs">
                       <button
                         type="button"
                         onClick={() => {
@@ -1421,8 +1405,8 @@ export default function LottiePlayerClient({
                   )}
                 </div>
 
-                {/* Edit Menu */}
-                <div className="relative">
+                {/* 2. Edit Menu */}
+                <div className="relative shrink-0">
                   <button
                     type="button"
                     onClick={() => setActiveMenu((prev) => (prev === 'edit' ? null : 'edit'))}
@@ -1436,7 +1420,7 @@ export default function LottiePlayerClient({
                   </button>
 
                   {activeMenu === 'edit' && (
-                    <div className="absolute left-0 top-full mt-1 w-48 rounded-xl bg-card border border-border shadow-lg p-1.5 z-50 space-y-0.5 text-xs">
+                    <div className="absolute left-0 top-full mt-1 w-48 rounded-xl bg-card border border-border shadow-xl p-1.5 z-50 space-y-0.5 text-xs">
                       <button
                         type="button"
                         onClick={handlePrettify}
@@ -1473,8 +1457,8 @@ export default function LottiePlayerClient({
                   )}
                 </div>
 
-                {/* Lottie Jump Menu */}
-                <div className="relative">
+                {/* 3. Lottie Menu */}
+                <div className="relative shrink-0">
                   <button
                     type="button"
                     onClick={() => setActiveMenu((prev) => (prev === 'lottie' ? null : 'lottie'))}
@@ -1488,7 +1472,7 @@ export default function LottiePlayerClient({
                   </button>
 
                   {activeMenu === 'lottie' && (
-                    <div className="absolute left-0 top-full mt-1 w-52 rounded-xl bg-card border border-border shadow-lg p-1.5 z-50 space-y-0.5 text-xs">
+                    <div className="absolute left-0 top-full mt-1 w-52 rounded-xl bg-card border border-border shadow-xl p-1.5 z-50 space-y-0.5 text-xs">
                       <div className="text-[10px] text-muted-foreground px-2.5 py-1 font-semibold uppercase tracking-wider">
                         Jump to JSON Block:
                       </div>
@@ -1561,8 +1545,9 @@ export default function LottiePlayerClient({
                   )}
                 </div>
 
-                {/* View Menu */}
-                <div className="relative">
+                {/* 4. View Menu */}
+
+                <div className="relative shrink-0">
                   <button
                     type="button"
                     onClick={() => setActiveMenu((prev) => (prev === 'view' ? null : 'view'))}
@@ -1576,7 +1561,7 @@ export default function LottiePlayerClient({
                   </button>
 
                   {activeMenu === 'view' && (
-                    <div className="absolute left-0 top-full mt-1 w-44 rounded-xl bg-card border border-border shadow-lg p-1.5 z-50 space-y-0.5 text-xs">
+                    <div className="absolute left-0 top-full mt-1 w-44 rounded-xl bg-card border border-border shadow-xl p-1.5 z-50 space-y-0.5 text-xs">
                       <button
                         type="button"
                         onClick={() => {
@@ -1618,8 +1603,8 @@ export default function LottiePlayerClient({
                   )}
                 </div>
 
-                {/* Renderer Menu */}
-                <div className="relative">
+                {/* 5. Renderer Menu */}
+                <div className="relative shrink-0">
                   <button
                     type="button"
                     onClick={() => setActiveMenu((prev) => (prev === 'renderer' ? null : 'renderer'))}
@@ -1633,7 +1618,7 @@ export default function LottiePlayerClient({
                   </button>
 
                   {activeMenu === 'renderer' && (
-                    <div className="absolute left-0 top-full mt-1 w-44 rounded-xl bg-card border border-border shadow-lg p-1.5 z-50 space-y-0.5 text-xs">
+                    <div className="absolute left-0 top-full mt-1 w-44 rounded-xl bg-card border border-border shadow-xl p-1.5 z-50 space-y-0.5 text-xs">
                       <button
                         type="button"
                         onClick={() => {
@@ -1660,14 +1645,14 @@ export default function LottiePlayerClient({
                   )}
                 </div>
 
-                {/* Right utility buttons */}
-                <div className="ml-auto flex items-center gap-1.5">
+                {/* 6. Copy Button on Far Right */}
+                <div className="ml-auto flex items-center gap-1.5 pl-2 shrink-0">
                   <CopyButton text={rawJson} label="Copy" />
                 </div>
               </div>
 
               {/* Editor Surface with Line Numbers Gutter */}
-              <div className="relative flex h-[460px] bg-background">
+              <div className="relative z-10 flex h-[460px] bg-background">
                 {/* Line Numbers Column */}
                 <div
                   ref={lineNumbersRef}
@@ -1710,7 +1695,7 @@ export default function LottiePlayerClient({
               </div>
 
               {/* Diagnostic Footer Bar */}
-              <div className="px-3.5 py-2 border-t border-border bg-card flex items-center justify-between text-xs">
+              <div className="px-3.5 py-2 border-t border-border bg-card flex items-center justify-between text-xs rounded-b-2xl">
                 {syntaxError ? (
                   <div className="flex items-center gap-1.5 text-destructive truncate">
                     <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
@@ -1731,55 +1716,67 @@ export default function LottiePlayerClient({
                 </div>
               </div>
             </div>
-          )}
 
-          {/* Quick Bridge to Next Lottie Tools */}
-          <div className="p-4 rounded-xl bg-card border border-border space-y-2.5">
-            <span className="font-semibold text-xs text-foreground uppercase tracking-wider block">
-              Next Lottie Workflows
-            </span>
+            {/* Quick Bridge to Next Lottie Tools (2x2 Grid) */}
+            <div className="p-4 rounded-xl bg-card border border-border space-y-2.5">
+              <span className="font-semibold text-xs text-foreground uppercase tracking-wider block">
+                Next Lottie Workflows
+              </span>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-              <button
-                type="button"
-                onClick={() => handleNavigateToTool('lottie-converter', '/tools/lottie-converter')}
-                className="flex flex-col p-2.5 rounded-lg bg-secondary/50 hover:bg-secondary border border-border transition-colors text-xs text-left group cursor-pointer"
-              >
-                <div className="flex items-center justify-between mb-1">
-                  <Package className="w-4 h-4 text-primary" />
-                  <span className="text-muted-foreground group-hover:text-foreground">→</span>
-                </div>
-                <div className="font-medium text-foreground">Converter</div>
-                <div className="text-[10px] text-muted-foreground">JSON &harr; .lottie archives</div>
-              </button>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => handleNavigateToTool('lottie-converter', '/tools/lottie-converter')}
+                  className="flex flex-col p-2.5 rounded-lg bg-secondary/50 hover:bg-secondary border border-border transition-colors text-xs text-left group cursor-pointer"
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <Package className="w-4 h-4 text-primary" />
+                    <span className="text-muted-foreground group-hover:text-foreground">→</span>
+                  </div>
+                  <div className="font-medium text-foreground">dotLottie Converter</div>
+                  <div className="text-[10px] text-muted-foreground">JSON &harr; .lottie archives</div>
+                </button>
 
-              <button
-                type="button"
-                onClick={() => handleNavigateToTool('lottie-validator', '/tools/lottie-validator')}
-                className="flex flex-col p-2.5 rounded-lg bg-secondary/50 hover:bg-secondary border border-border transition-colors text-xs text-left group cursor-pointer"
-              >
-                <div className="flex items-center justify-between mb-1">
-                  <ShieldCheck className="w-4 h-4 text-emerald-500" />
-                  <span className="text-muted-foreground group-hover:text-foreground">→</span>
-                </div>
-                <div className="font-medium text-foreground">Validator</div>
-                <div className="text-[10px] text-muted-foreground">AST & asset link checks</div>
-              </button>
+                <button
+                  type="button"
+                  onClick={() => handleNavigateToTool('lottie-validator', '/tools/lottie-validator')}
+                  className="flex flex-col p-2.5 rounded-lg bg-secondary/50 hover:bg-secondary border border-border transition-colors text-xs text-left group cursor-pointer"
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <ShieldCheck className="w-4 h-4 text-emerald-500" />
+                    <span className="text-muted-foreground group-hover:text-foreground">→</span>
+                  </div>
+                  <div className="font-medium text-foreground">Lottie Validator</div>
+                  <div className="text-[10px] text-muted-foreground">AST & asset link checks</div>
+                </button>
 
-              <button
-                type="button"
-                onClick={() => handleNavigateToTool('lottie-optimizer', '/tools/lottie-optimizer')}
-                className="flex flex-col p-2.5 rounded-lg bg-secondary/50 hover:bg-secondary border border-border transition-colors text-xs text-left group cursor-pointer"
-              >
-                <div className="flex items-center justify-between mb-1">
-                  <Gauge className="w-4 h-4 text-purple-500" />
-                  <span className="text-muted-foreground group-hover:text-foreground">→</span>
-                </div>
-                <div className="font-medium text-foreground">Optimizer</div>
-                <div className="text-[10px] text-muted-foreground">Precision & size cleanup</div>
-              </button>
+                <button
+                  type="button"
+                  onClick={() => handleNavigateToTool('lottie-optimizer', '/tools/lottie-optimizer')}
+                  className="flex flex-col p-2.5 rounded-lg bg-secondary/50 hover:bg-secondary border border-border transition-colors text-xs text-left group cursor-pointer"
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <Gauge className="w-4 h-4 text-purple-500" />
+                    <span className="text-muted-foreground group-hover:text-foreground">→</span>
+                  </div>
+                  <div className="font-medium text-foreground">Lottie Optimizer</div>
+                  <div className="text-[10px] text-muted-foreground">Precision & size cleanup</div>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handleNavigateToTool('json-diff', '/tools/json-diff')}
+                  className="flex flex-col p-2.5 rounded-lg bg-secondary/50 hover:bg-secondary border border-border transition-colors text-xs text-left group cursor-pointer"
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <GitCompare className="w-4 h-4 text-blue-500" />
+                    <span className="text-muted-foreground group-hover:text-foreground">→</span>
+                  </div>
+                  <div className="font-medium text-foreground">JSON Diff & Compare</div>
+                  <div className="text-[10px] text-muted-foreground">Compare Lottie variations</div>
+                </button>
+              </div>
             </div>
-          </div>
           </div>
         </div>
       </div>
