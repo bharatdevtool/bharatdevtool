@@ -47,13 +47,31 @@ function diffObjects(
   return nodes;
 }
 
-/** Compute a structural diff between two JSON strings */
-export function diffJSON(leftStr: string, rightStr: string): DiffNode[] {
-  const left = JSON.parse(leftStr);
-  const right = JSON.parse(rightStr);
-  if (typeof left !== 'object' || typeof right !== 'object') {
+/** Compute a structural diff between two JSON strings or parsed objects */
+export function diffJSON(leftInput: string | unknown, rightInput: string | unknown): DiffNode[] {
+  let left = leftInput;
+  let right = rightInput;
+
+  if (typeof left === 'string') {
+    try {
+      left = JSON.parse(left);
+    } catch (err) {
+      throw new Error(`Left input: ${(err as Error).message}`);
+    }
+  }
+
+  if (typeof right === 'string') {
+    try {
+      right = JSON.parse(right);
+    } catch (err) {
+      throw new Error(`Right input: ${(err as Error).message}`);
+    }
+  }
+
+  if (typeof left !== 'object' || left === null || typeof right !== 'object' || right === null) {
     return [diffValues(left, right, '', 'root')];
   }
+
   return diffObjects(
     left as Record<string, unknown>,
     right as Record<string, unknown>,

@@ -21,6 +21,10 @@ import {
   MessageSquare,
   Calendar,
   Wrench,
+  Film,
+  SlidersHorizontal,
+  ShieldCheck,
+  Gauge,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -45,6 +49,10 @@ const ICON_MAP: Record<string, LucideIcon> = {
   'uuid-generator': Fingerprint,
   'whatsapp-link': MessageSquare,
   'age-calculator': Calendar,
+  'lottie-player': Film,
+  'lottie-analyzer': SlidersHorizontal,
+  'lottie-validator': ShieldCheck,
+  'lottie-optimizer': Gauge,
 };
 
 interface ToolIconProps {

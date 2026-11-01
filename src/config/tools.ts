@@ -10,6 +10,7 @@
 
 export type ToolCategory =
   | 'JSON'
+  | 'Lottie'
   | 'QR'
   | 'Color'
   | 'API/Network'
@@ -270,6 +271,55 @@ export const TOOLS: Tool[] = [
     shortDesc: 'Calculate exact age from date of birth',
     keywords: ['age calculator', 'calculate age', 'date of birth calculator', 'birthday calculator'],
   },
+  // ── Lottie ────────────────────────────────────────────────
+  {
+    id: 'lottie-player',
+    label: 'Lottie Player & Studio',
+    route: '/tools/lottie-player',
+    category: 'Lottie',
+    icon: '🎬',
+    description:
+      'Preview, inspect, and test Lottie JSON animations online. Scrub frames, adjust playback speed, test backgrounds, and verify loops with 100% client-side privacy.',
+    shortDesc: 'Preview, scrub & test Lottie animations',
+    keywords: ['lottie player', 'lottie previewer', 'lottie viewer online', 'bodymovin preview', 'json animation player', 'lottie tester'],
+    heavy: true,
+  },
+  {
+    id: 'lottie-analyzer',
+    label: 'Lottie File Analyzer',
+    route: '/tools/lottie-analyzer',
+    category: 'Lottie',
+    icon: '📊',
+    description:
+      'Inspect Lottie animation dimensions, framerate, layer hierarchies, and embedded raster images. Detect file bloat and un-inlined assets with zero server uploads.',
+    shortDesc: 'Audit Lottie layers, assets & composition',
+    keywords: ['lottie analyzer', 'lottie asset inspector', 'lottie file size audit', 'inspect lottie json', 'bodymovin analyzer'],
+    heavy: false,
+  },
+  {
+    id: 'lottie-validator',
+    label: 'Lottie Validator',
+    route: '/tools/lottie-validator',
+    category: 'Lottie',
+    icon: '🛡️',
+    description:
+      'Validate Lottie animation JSON structure, verify layer parent hierarchies, and detect missing asset references online. 100% client-side validation.',
+    shortDesc: 'Validate Lottie structure & asset health',
+    keywords: ['lottie validator', 'validate lottie json', 'lottie syntax check', 'bodymovin validator', 'lottie error checker'],
+    heavy: false,
+  },
+  {
+    id: 'lottie-optimizer',
+    label: 'Lottie Optimizer',
+    route: '/tools/lottie-optimizer',
+    category: 'Lottie',
+    icon: '⚡',
+    description:
+      'Safely compress Lottie animations with configurable coordinate rounding and optional metadata cleanup. Side-by-side preview with zero silent pruning.',
+    shortDesc: 'Safely compress & clean Lottie animations',
+    keywords: ['lottie optimizer', 'compress lottie json', 'reduce lottie file size', 'clean lottie metadata', 'bodymovin optimizer'],
+    heavy: true,
+  },
 ];
 
 /** Lookup a tool by its id */
@@ -284,6 +334,6 @@ export function getToolsByCategory(category: ToolCategory): Tool[] {
 
 /** All unique categories in display order */
 export const TOOL_CATEGORIES: ToolCategory[] = [
-  'JSON', 'QR', 'Color', 'API/Network', 'Encoding', 'Regex', 'Text', 'Security', 'Social', 'Utility',
+  'JSON', 'Lottie', 'QR', 'Color', 'API/Network', 'Encoding', 'Regex', 'Text', 'Security', 'Social', 'Utility',
 ];
 

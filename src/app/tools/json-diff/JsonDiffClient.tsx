@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ToolLayout from '@/components/layout/ToolLayout';
 import CodeEditor from '@/components/ui/CodeEditor';
 import ErrorMessage from '@/components/ui/ErrorMessage';
 import { diffJSON, diffStats, type DiffNode } from '@/lib/json/differ';
+import { getCrossToolData } from '@/lib/crossToolData';
 import { analytics } from '@/lib/analytics';
 import { ANALYTICS_EVENTS } from '@/config/site';
 import { GitCompare, PlusCircle, MinusCircle, RefreshCw, Sparkles, CheckCircle2 } from 'lucide-react';
@@ -77,20 +78,45 @@ export default function JsonDiffClient() {
   const [stats, setStats] = useState<{ added: number; removed: number; changed: number } | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  function handleCompare(leftVal = leftInput, rightVal = rightInput) {
+  useEffect(() => {
+    const incoming = getCrossToolData<{ left?: unknown; right?: unknown }>('json-diff');
+    if (incoming && (incoming.left || incoming.right)) {
+      const l = typeof incoming.left === 'string'
+        ? incoming.left
+        : (incoming.left ? JSON.stringify(incoming.left, null, 2) : '');
+      const r = typeof incoming.right === 'string'
+        ? incoming.right
+        : (incoming.right ? JSON.stringify(incoming.right, null, 2) : '');
+      setLeftInput(l);
+      setRightInput(r);
+      handleCompare(l, r);
+    }
+  }, []);
+
+  function handleCompare(leftVal?: unknown, rightVal?: unknown) {
     setError(null);
     setDiffResult(null);
     setStats(null);
 
-    if (!leftVal.trim() || !rightVal.trim()) {
+    const l = typeof leftVal === 'string'
+      ? leftVal
+      : (leftVal !== undefined && leftVal !== null
+          ? (typeof leftVal === 'object' ? JSON.stringify(leftVal, null, 2) : String(leftVal))
+          : (typeof leftInput === 'string' ? leftInput : JSON.stringify(leftInput, null, 2)));
+
+    const r = typeof rightVal === 'string'
+      ? rightVal
+      : (rightVal !== undefined && rightVal !== null
+          ? (typeof rightVal === 'object' ? JSON.stringify(rightVal, null, 2) : String(rightVal))
+          : (typeof rightInput === 'string' ? rightInput : JSON.stringify(rightInput, null, 2)));
+
+    if (!l.trim() || !r.trim()) {
       setError('Please provide JSON in both left (original) and right (modified) panes to compare.');
       return;
     }
 
     try {
-      const leftObj = JSON.parse(leftVal);
-      const rightObj = JSON.parse(rightVal);
-      const result = diffJSON(leftObj, rightObj);
+      const result = diffJSON(l, r);
       setDiffResult(result);
       setStats(diffStats(result));
       analytics.track(ANALYTICS_EVENTS.COMPARE_JSON);

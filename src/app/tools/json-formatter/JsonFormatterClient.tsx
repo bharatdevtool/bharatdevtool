@@ -14,6 +14,7 @@ import {
   unescapeJSON,
   repairJSON,
 } from '@/lib/json/formatter';
+import { getCrossToolData } from '@/lib/crossToolData';
 import { analytics } from '@/lib/analytics';
 import { ANALYTICS_EVENTS } from '@/config/site';
 import { Sparkles, CheckCircle2, AlertTriangle, ArrowRight, Maximize2, Minimize2, Monitor } from 'lucide-react';
@@ -117,6 +118,17 @@ export default function JsonFormatterClient() {
     },
     []
   );
+
+  // Consume cross-tool payload on mount
+  useEffect(() => {
+    const incoming = getCrossToolData<{ json?: string; tab?: ActiveTab }>('json-formatter');
+    if (incoming?.json) {
+      setInput(incoming.json);
+      const targetTab = incoming.tab || 'format';
+      if (incoming.tab) setActiveTab(incoming.tab);
+      processJson(targetTab, incoming.json, indent);
+    }
+  }, [indent, processJson]);
 
   function handleTabChange(newTab: ActiveTab) {
     setActiveTab(newTab);
