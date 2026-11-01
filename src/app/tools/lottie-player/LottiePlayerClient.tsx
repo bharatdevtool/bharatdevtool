@@ -9,6 +9,8 @@ import CopyButton from '@/components/ui/CopyButton';
 import { parseLottieJSON, sanitizeAnimationForPrivacy } from '@/lib/lottie/parser';
 import { extractLottieFromFile, createDotLottie } from '@/lib/lottie/dotLottie';
 import { hasLottieAudio, createBrowserAudioFactory } from '@/lib/lottie/audio';
+import { extractLottieColors, replaceLottieColor, type LottieColorInfo } from '@/lib/lottie/colors';
+import { analyzeLottie } from '@/lib/lottie/analyzer';
 import { LOTTIE_SAMPLES } from '@/lib/lottie/samples';
 import { getCrossToolData, setCrossToolData } from '@/lib/crossToolData';
 import type { LottieAnimation, LottieMetadata } from '@/lib/lottie/types';
@@ -33,15 +35,57 @@ import {
   Box,
   Volume2,
   VolumeX,
+  Info,
+  Layers,
+  Palette,
+  AlertTriangle,
+  CheckCircle2,
+  Image as ImageIcon,
+  Undo2,
 } from 'lucide-react';
+
+function formatBytes(bytes: number): string {
+  if (bytes === 0) return '0 B';
+  const k = 1024;
+  const sizes = ['B', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(1))} ${sizes[i]}`;
+}
+
+function getLayerTypeInfo(ty: number) {
+  switch (ty) {
+    case 0:
+      return { label: 'Precomp', color: 'bg-blue-500/10 text-blue-500 border-blue-500/20' };
+    case 1:
+      return { label: 'Solid', color: 'bg-slate-500/10 text-slate-400 border-slate-500/20' };
+    case 2:
+      return { label: 'Image', color: 'bg-amber-500/10 text-amber-500 border-amber-500/20' };
+    case 3:
+      return { label: 'Null', color: 'bg-muted text-muted-foreground border-border' };
+    case 4:
+      return { label: 'Shape', color: 'bg-primary/10 text-primary border-primary/20' };
+    case 5:
+      return { label: 'Text', color: 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' };
+    case 6:
+      return { label: 'Audio', color: 'bg-pink-500/10 text-pink-500 border-pink-500/20' };
+    default:
+      return { label: `Type ${ty}`, color: 'bg-muted text-muted-foreground border-border' };
+  }
+}
 
 type BgType = 'obsidian' | 'light' | 'grid' | 'custom';
 type DirectionType = 'forward' | 'reverse' | 'bounce';
+type InspectorTab = 'info' | 'layers' | 'colors' | 'warnings' | 'assets';
 
 const SPEED_OPTIONS = [0.25, 0.5, 1, 1.5, 2];
 
-export default function LottiePlayerClient() {
+export default function LottiePlayerClient({
+  initialInspectorTab = 'info',
+}: {
+  initialInspectorTab?: InspectorTab;
+} = {}) {
   const router = useRouter();
+
   const [activeSampleId, setActiveSampleId] = useState<string>(LOTTIE_SAMPLES[0].id);
   const [animationData, setAnimationData] = useState<LottieAnimation>(LOTTIE_SAMPLES[0].data);
   const [rawJson, setRawJson] = useState<string>(JSON.stringify(LOTTIE_SAMPLES[0].data, null, 2));
@@ -49,16 +93,30 @@ export default function LottiePlayerClient() {
     return parseLottieJSON(JSON.stringify(LOTTIE_SAMPLES[0].data)).metadata || null;
   });
 
+  const [inspectorTab, setInspectorTab] = useState<InspectorTab>(initialInspectorTab);
+  const originalAnimationRef = useRef<LottieAnimation>(LOTTIE_SAMPLES[0].data);
+  const [isColorModified, setIsColorModified] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (initialInspectorTab) {
+      setInspectorTab(initialInspectorTab);
+    }
+  }, [initialInspectorTab]);
+
   const [inputTab, setInputTab] = useState<'samples' | 'paste'>('samples');
   const [error, setError] = useState<string | null>(null);
 
   // Cross-tool data ingestion
   useEffect(() => {
-    const incoming = getCrossToolData<{ lottieJson?: string }>('lottie-player', false);
+    const incoming =
+      getCrossToolData<{ lottieJson?: string }>('lottie-player', false) ||
+      getCrossToolData<{ lottieJson?: string }>('lottie-analyzer', false);
     if (incoming?.lottieJson) {
       const parsed = parseLottieJSON(incoming.lottieJson);
       if (parsed.success && parsed.animation) {
         setAnimationData(parsed.animation);
+        originalAnimationRef.current = parsed.animation;
+        setIsColorModified(false);
         setRawJson(incoming.lottieJson);
         setMetadata(parsed.metadata || null);
         setActiveSampleId('');
@@ -87,6 +145,100 @@ export default function LottiePlayerClient() {
   isMutedRef.current = isMuted;
 
   const hasAudio = useMemo(() => hasLottieAudio(animationData), [animationData]);
+
+  // Inspector & Analysis Computations
+  const colors = useMemo(() => extractLottieColors(animationData), [animationData]);
+
+  const analysis = useMemo(
+    () => analyzeLottie(animationData, rawJson, metadata || undefined),
+    [animationData, rawJson, metadata]
+  );
+
+  const allLayers = useMemo(() => {
+    const list: Array<{
+      name: string;
+      ind: number;
+      ty: number;
+      hd: boolean;
+      ip: number;
+      op: number;
+      parent?: number;
+      composition: string;
+    }> = [];
+
+    if (Array.isArray(animationData.layers)) {
+      animationData.layers.forEach((l, idx) => {
+        list.push({
+          name: l.nm || `Layer ${l.ind ?? idx + 1}`,
+          ind: l.ind ?? idx + 1,
+          ty: l.ty,
+          hd: !!l.hd,
+          ip: l.ip ?? 0,
+          op: l.op ?? 0,
+          parent: l.parent,
+          composition: 'Root',
+        });
+      });
+    }
+
+    if (Array.isArray(animationData.assets)) {
+      animationData.assets.forEach((asset) => {
+        if (Array.isArray(asset.layers)) {
+          asset.layers.forEach((l, idx) => {
+            list.push({
+              name: l.nm || `${asset.id} > Layer ${l.ind ?? idx + 1}`,
+              ind: l.ind ?? idx + 1,
+              ty: l.ty,
+              hd: !!l.hd,
+              ip: l.ip ?? 0,
+              op: l.op ?? 0,
+              parent: l.parent,
+              composition: asset.id,
+            });
+          });
+        }
+      });
+    }
+
+    return list;
+  }, [animationData]);
+
+  const warningCount = useMemo(() => {
+    let count = 0;
+    if (metadata?.missingProperties?.length) count += metadata.missingProperties.length;
+    if (analysis.layerStats.hidden > 0) count++;
+    if (analysis.layerStats.hasExpressions) count++;
+    count += analysis.assets.filter((a) => a.warning).length;
+    return count;
+  }, [metadata, analysis]);
+
+  const fileSizeBytes = useMemo(() => {
+    return typeof Blob !== 'undefined'
+      ? new Blob([rawJson]).size
+      : typeof Buffer !== 'undefined'
+      ? Buffer.byteLength(rawJson, 'utf8')
+      : rawJson.length;
+  }, [rawJson]);
+
+  const handleColorChange = (targetHex: string, newHex: string) => {
+    const { animation: updated } = replaceLottieColor(animationData, targetHex, newHex);
+    setAnimationData(updated);
+    const newJson = JSON.stringify(updated, null, 2);
+    setRawJson(newJson);
+    const parsed = parseLottieJSON(newJson);
+    setMetadata(parsed.metadata || null);
+    setIsColorModified(true);
+  };
+
+  const handleResetColors = () => {
+    if (!originalAnimationRef.current) return;
+    setAnimationData(originalAnimationRef.current);
+    const origJson = JSON.stringify(originalAnimationRef.current, null, 2);
+    setRawJson(origJson);
+    const parsed = parseLottieJSON(origJson);
+    setMetadata(parsed.metadata || null);
+    setIsColorModified(false);
+  };
 
   // Viewport States
   const [bgType, setBgType] = useState<BgType>('obsidian');
@@ -242,6 +394,8 @@ export default function LottiePlayerClient() {
     if (!s) return;
     setActiveSampleId(sampleId);
     setAnimationData(s.data);
+    originalAnimationRef.current = s.data;
+    setIsColorModified(false);
     const jsonStr = JSON.stringify(s.data, null, 2);
     setRawJson(jsonStr);
     const parsed = parseLottieJSON(jsonStr);
@@ -260,6 +414,8 @@ export default function LottiePlayerClient() {
     }
 
     setAnimationData(res.animation);
+    originalAnimationRef.current = res.animation;
+    setIsColorModified(false);
     const jsonStr = res.rawJson || JSON.stringify(res.animation, null, 2);
     setRawJson(jsonStr);
     const parsed = parseLottieJSON(jsonStr);
@@ -296,6 +452,8 @@ export default function LottiePlayerClient() {
       return;
     }
     setAnimationData(parsed.animation);
+    originalAnimationRef.current = parsed.animation;
+    setIsColorModified(false);
     setMetadata(parsed.metadata || null);
     setActiveSampleId('');
     setError(null);
@@ -630,95 +788,413 @@ export default function LottiePlayerClient() {
             </div>
           </div>
 
-          {/* Column 2: Metadata Inspector & Related Tools (4 Cols) */}
+          {/* Column 2: Flagship Unified Inspector (Info, Layers, Colors, Warnings, Assets) */}
           <div className="lg:col-span-4 space-y-4">
-            {/* Composition Metadata Card */}
-            <div className="p-4 rounded-xl bg-card border border-border space-y-3">
-              <div className="flex items-center justify-between pb-2 border-b border-border">
-                <span className="font-semibold text-sm text-foreground flex items-center gap-1.5">
-                  <Eye className="w-4 h-4 text-primary" /> Composition Info
-                </span>
-                <span className="text-[11px] font-mono text-muted-foreground">
-                  v{metadata?.version || 'N/A'}
-                </span>
+            <div className="rounded-2xl bg-card border border-border shadow-xs overflow-hidden">
+              {/* Top Tab Bar matching reference image */}
+              <div className="flex items-center gap-0.5 border-b border-border bg-card px-2.5 pt-1.5 overflow-x-auto overflow-y-hidden no-scrollbar">
+                {(
+                  [
+                    { id: 'info' as const, label: 'Info' },
+                    { id: 'layers' as const, label: 'Layers', count: allLayers.length },
+                    { id: 'colors' as const, label: 'Colors', count: colors.length },
+                    {
+                      id: 'warnings' as const,
+                      label: 'Warnings',
+                      count: warningCount > 0 ? warningCount : undefined,
+                      alert: warningCount > 0,
+                    },
+                    {
+                      id: 'assets' as const,
+                      label: 'Assets',
+                      count: analysis.assets.length > 0 ? analysis.assets.length : undefined,
+                    },
+                  ]
+                ).map((tab) => {
+                  const isActive = inspectorTab === tab.id;
+                  return (
+                    <button
+                      key={tab.id}
+                      type="button"
+                      onClick={() => setInspectorTab(tab.id)}
+                      className={`flex items-center gap-1 px-2.5 py-2 text-xs transition-colors whitespace-nowrap cursor-pointer border-b-2 ${
+                        isActive
+                          ? 'border-foreground text-foreground font-semibold'
+                          : 'border-transparent text-muted-foreground hover:text-foreground font-medium'
+                      }`}
+                    >
+                      <span>{tab.label}</span>
+                      {tab.count !== undefined && (
+                        <span
+                          className={`text-[11px] font-mono ${
+                            tab.alert ? 'text-amber-500 font-bold' : 'text-muted-foreground'
+                          }`}
+                        >
+                          {tab.count}
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
               </div>
 
-              <div className="grid grid-cols-2 gap-2 text-xs">
-                <div className="p-2.5 rounded-lg bg-secondary/50 border border-border">
-                  <div className="text-muted-foreground text-[10px]">Dimensions</div>
-                  <div className="font-semibold text-foreground mt-0.5">
-                    {metadata?.width && metadata?.height ? (
-                      `${metadata.width} × ${metadata.height} px`
+              {/* Tab Panels */}
+              <div className="p-4">
+                {/* 1. INFO TAB */}
+                {inspectorTab === 'info' && (
+                  <div className="space-y-4">
+                    <div className="space-y-2.5 text-xs">
+                      <div className="flex items-center justify-between py-1 border-b border-border/40">
+                        <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+                          NAME
+                        </span>
+                        <span
+                          className="font-semibold text-foreground truncate max-w-[180px] text-right font-mono"
+                          title={animationData.nm || 'Animation'}
+                        >
+                          {animationData.nm ||
+                            (activeSampleId
+                              ? LOTTIE_SAMPLES.find((s) => s.id === activeSampleId)?.name
+                              : null) ||
+                            'animation'}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between py-1 border-b border-border/40">
+                        <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+                          SIZE
+                        </span>
+                        <span className="font-semibold text-foreground font-mono">
+                          {metadata?.width && metadata?.height ? (
+                            `${metadata.width} × ${metadata.height}`
+                          ) : (
+                            <span className="text-amber-500 font-medium">[Missing]</span>
+                          )}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between py-1 border-b border-border/40">
+                        <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+                          DURATION
+                        </span>
+                        <span className="font-semibold text-foreground font-mono">
+                          {metadata?.durationSeconds !== null ? `${metadata?.durationSeconds}s` : 'N/A'}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between py-1 border-b border-border/40">
+                        <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+                          FRAME RATE
+                        </span>
+                        <span className="font-semibold text-foreground font-mono">
+                          {metadata?.framerate ? `${metadata.framerate} fps` : 'N/A'}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between py-1 border-b border-border/40">
+                        <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+                          FRAMES
+                        </span>
+                        <span className="font-semibold text-foreground font-mono">
+                          {metadata?.totalFrames !== null ? metadata?.totalFrames : 'N/A'}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between py-1 border-b border-border/40">
+                        <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+                          FILE SIZE
+                        </span>
+                        <span className="font-semibold text-foreground font-mono">
+                          {formatBytes(fileSizeBytes)}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between py-1 border-b border-border/40">
+                        <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+                          VERSION
+                        </span>
+                        <span className="font-semibold text-foreground font-mono">
+                          {metadata?.version || 'N/A'}
+                        </span>
+                      </div>
+
+                      {hasAudio && (
+                        <div className="flex items-center justify-between py-1 border-b border-border/40">
+                          <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+                            AUDIO
+                          </span>
+                          <span className="inline-flex items-center gap-1 text-emerald-500 font-semibold font-mono text-[11px]">
+                            <Volume2 className="w-3 h-3" /> Synced
+                          </span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={handleDownload}
+                        className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-secondary hover:bg-muted text-foreground text-xs font-medium transition-colors"
+                      >
+                        <Download className="w-3.5 h-3.5" /> Download .json
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleDownloadDotLottie}
+                        className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-secondary hover:bg-muted text-foreground text-xs font-medium transition-colors"
+                        title="Export animation as a compressed dotLottie (.lottie) archive"
+                      >
+                        <Download className="w-3.5 h-3.5 text-primary" /> Export .lottie
+                      </button>
+                      <CopyButton text={rawJson} label="Copy JSON" />
+                    </div>
+                  </div>
+                )}
+
+                {/* 2. LAYERS TAB */}
+                {inspectorTab === 'layers' && (
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-3 gap-1.5 text-center text-xs">
+                      <div className="p-2 rounded-lg bg-secondary/50 border border-border">
+                        <div className="text-[10px] text-muted-foreground uppercase font-medium">Total</div>
+                        <div className="font-bold text-foreground text-sm mt-0.5">{allLayers.length}</div>
+                      </div>
+                      <div className="p-2 rounded-lg bg-secondary/50 border border-border">
+                        <div className="text-[10px] text-muted-foreground uppercase font-medium">Shapes</div>
+                        <div className="font-bold text-primary text-sm mt-0.5">{analysis.layerStats.shapes}</div>
+                      </div>
+                      <div className="p-2 rounded-lg bg-secondary/50 border border-border">
+                        <div className="text-[10px] text-muted-foreground uppercase font-medium">Precomps</div>
+                        <div className="font-bold text-blue-500 text-sm mt-0.5">{analysis.layerStats.precomps}</div>
+                      </div>
+                    </div>
+
+                    <div className="max-h-96 overflow-y-auto space-y-2 pr-1 divide-y divide-border/20 developer-scrollbar">
+                      {allLayers.map((layer, idx) => {
+                        const typeInfo = getLayerTypeInfo(layer.ty);
+                        return (
+                          <div key={`${layer.composition}-${layer.ind}-${idx}`} className="pt-2 first:pt-0 space-y-1">
+                            <div className="flex items-center justify-between text-xs">
+                              <div className="flex items-center gap-1.5 min-w-0">
+                                <span className="text-[10px] font-mono text-muted-foreground px-1 py-0.5 rounded bg-secondary">
+                                  #{layer.ind}
+                                </span>
+                                <span className="font-medium text-foreground truncate max-w-[140px]" title={layer.name}>
+                                  {layer.name}
+                                </span>
+                                {layer.composition !== 'Root' && (
+                                  <span className="text-[9px] px-1 py-0.2 rounded bg-muted text-muted-foreground">
+                                    {layer.composition}
+                                  </span>
+                                )}
+                              </div>
+                              <div className="flex items-center gap-1 shrink-0">
+                                {layer.hd && (
+                                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-500 border border-amber-500/20 font-medium">
+                                    Hidden
+                                  </span>
+                                )}
+                                <span className={`text-[10px] px-1.5 py-0.5 rounded border font-medium ${typeInfo.color}`}>
+                                  {typeInfo.label}
+                                </span>
+                              </div>
+                            </div>
+                            <div className="flex items-center justify-between text-[10px] text-muted-foreground px-0.5">
+                              <span>
+                                Frames: {layer.ip} → {layer.op}
+                              </span>
+                              {layer.parent !== undefined && <span>Parent: #{layer.parent}</span>}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* 3. COLORS TAB */}
+                {inspectorTab === 'colors' && (
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs text-muted-foreground">
+                        Click any color swatch to swap live in the canvas:
+                      </p>
+                      {isColorModified && (
+                        <button
+                          type="button"
+                          onClick={handleResetColors}
+                          className="inline-flex items-center gap-1 px-2 py-1 rounded bg-secondary hover:bg-muted text-foreground text-[11px] font-medium transition-colors cursor-pointer"
+                        >
+                          <Undo2 className="w-3 h-3" /> Reset
+                        </button>
+                      )}
+                    </div>
+
+                    {colors.length === 0 ? (
+                      <div className="p-4 rounded-lg bg-secondary/40 border border-border text-center text-xs text-muted-foreground">
+                        No vector fill or stroke colors detected in this animation.
+                      </div>
                     ) : (
-                      <span className="text-amber-500 font-medium">[Missing]</span>
+                      <div className="max-h-96 overflow-y-auto space-y-2 pr-1 developer-scrollbar">
+                        {colors.map((c) => (
+                          <div
+                            key={c.hex}
+                            className="p-2.5 rounded-lg bg-secondary/40 hover:bg-secondary/70 border border-border flex items-center justify-between gap-3 transition-colors group"
+                          >
+                            <div className="flex items-center gap-2.5 min-w-0">
+                              <label
+                                className="relative w-7 h-7 rounded-lg shadow-2xs cursor-pointer border border-border/80 shrink-0 overflow-hidden ring-1 ring-border hover:ring-primary transition-all"
+                                style={{ backgroundColor: c.hex }}
+                                title={`Click to replace ${c.hex}`}
+                              >
+                                <input
+                                  type="color"
+                                  value={c.hex}
+                                  onChange={(e) => handleColorChange(c.hex, e.target.value)}
+                                  className="opacity-0 absolute inset-0 w-full h-full cursor-pointer"
+                                />
+                              </label>
+                              <div className="min-w-0">
+                                <div className="font-mono text-xs font-semibold text-foreground uppercase">
+                                  {c.hex}
+                                </div>
+                                <div className="text-[10px] text-muted-foreground truncate">
+                                  {c.occurrences} shape{c.occurrences > 1 ? 's' : ''} &bull; {c.layers.slice(0, 2).join(', ')}
+                                  {c.layers.length > 2 ? '...' : ''}
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="flex items-center gap-1.5 shrink-0">
+                              <CopyButton text={c.hex} label="" />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     )}
                   </div>
-                </div>
+                )}
 
-                <div className="p-2.5 rounded-lg bg-secondary/50 border border-border">
-                  <div className="text-muted-foreground text-[10px]">Framerate</div>
-                  <div className="font-semibold text-foreground mt-0.5">
-                    {metadata?.framerate ? (
-                      `${metadata.framerate} FPS`
+                {/* 4. WARNINGS TAB */}
+                {inspectorTab === 'warnings' && (
+                  <div className="space-y-3">
+                    {warningCount === 0 ? (
+                      <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 space-y-1">
+                        <div className="flex items-center gap-2 font-semibold text-xs">
+                          <CheckCircle2 className="w-4 h-4 shrink-0" /> All structural checks passed
+                        </div>
+                        <p className="text-[11px] text-muted-foreground pl-6">
+                          No missing root properties, hidden layers, or external asset warnings detected.
+                        </p>
+                      </div>
                     ) : (
-                      <span className="text-amber-500 font-medium">[Missing]</span>
+                      <div className="space-y-2 text-xs">
+                        {metadata?.missingProperties && metadata.missingProperties.length > 0 && (
+                          <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 space-y-1">
+                            <div className="flex items-center gap-1.5 font-semibold text-xs">
+                              <AlertTriangle className="w-3.5 h-3.5 shrink-0" /> Missing Root Properties
+                            </div>
+                            <p className="text-[11px] text-muted-foreground">
+                              The animation root is missing: {metadata.missingProperties.join(', ')}.
+                            </p>
+                          </div>
+                        )}
+
+                        {analysis.layerStats.hidden > 0 && (
+                          <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 space-y-1">
+                            <div className="flex items-center gap-1.5 font-semibold text-xs">
+                              <AlertTriangle className="w-3.5 h-3.5 shrink-0" /> {analysis.layerStats.hidden} Hidden Layer
+                              {analysis.layerStats.hidden > 1 ? 's' : ''}
+                            </div>
+                            <p className="text-[11px] text-muted-foreground">
+                              Hidden layers add file weight and processing cost without rendering on screen.
+                            </p>
+                          </div>
+                        )}
+
+                        {analysis.layerStats.hasExpressions && (
+                          <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 space-y-1">
+                            <div className="flex items-center gap-1.5 font-semibold text-xs">
+                              <AlertTriangle className="w-3.5 h-3.5 shrink-0" /> JavaScript Expressions Detected
+                            </div>
+                            <p className="text-[11px] text-muted-foreground">
+                              Expressions may cause lag or fail to run on certain native mobile Lottie runtimes.
+                            </p>
+                          </div>
+                        )}
+
+                        {analysis.assets.some((a) => a.warning) && (
+                          <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 space-y-1">
+                            <div className="flex items-center gap-1.5 font-semibold text-xs">
+                              <AlertTriangle className="w-3.5 h-3.5 shrink-0" /> Un-embedded External Assets
+                            </div>
+                            <p className="text-[11px] text-muted-foreground">
+                              External image assets can fail to load when offline or without CORS configuration.
+                            </p>
+                          </div>
+                        )}
+                      </div>
                     )}
                   </div>
-                </div>
+                )}
 
-                <div className="p-2.5 rounded-lg bg-secondary/50 border border-border">
-                  <div className="text-muted-foreground text-[10px]">Total Frames</div>
-                  <div className="font-semibold text-foreground mt-0.5 font-mono">
-                    {metadata?.totalFrames !== null ? metadata?.totalFrames : 'N/A'}
+                {/* 5. ASSETS TAB */}
+                {inspectorTab === 'assets' && (
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between text-xs text-muted-foreground">
+                      <span>Asset Collection ({analysis.assets.length})</span>
+                      <span className="font-mono">Weight: {formatBytes(analysis.totalAssetBytes)}</span>
+                    </div>
+
+                    {analysis.assets.length === 0 ? (
+                      <div className="p-4 rounded-xl bg-secondary/40 border border-border text-center text-xs text-muted-foreground">
+                        No external or embedded raster assets. This animation is 100% vector based.
+                      </div>
+                    ) : (
+                      <div className="max-h-96 overflow-y-auto space-y-2 pr-1 developer-scrollbar">
+                        {analysis.assets.map((asset) => (
+                          <div key={asset.id} className="p-2.5 rounded-lg bg-secondary/40 border border-border space-y-1.5">
+                            <div className="flex items-center justify-between text-xs">
+                              <div className="flex items-center gap-2 min-w-0">
+                                <span className="p-1 rounded bg-secondary text-primary">
+                                  {asset.type.startsWith('image') && <ImageIcon className="w-3.5 h-3.5" />}
+                                  {asset.type === 'audio' && <Volume2 className="w-3.5 h-3.5" />}
+                                  {asset.type === 'precomp' && <Layers className="w-3.5 h-3.5" />}
+                                </span>
+                                <span className="font-semibold text-foreground truncate max-w-[140px]" title={asset.id}>
+                                  {asset.id}
+                                </span>
+                              </div>
+                              <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-primary/10 text-primary border border-primary/20">
+                                {asset.type === 'image-embedded'
+                                  ? 'Image (Embedded)'
+                                  : asset.type === 'image-external'
+                                  ? 'Image (External)'
+                                  : asset.type}
+                              </span>
+                            </div>
+
+                            <div className="flex items-center justify-between text-[11px] text-muted-foreground px-0.5">
+                              <span>
+                                {asset.width && asset.height
+                                  ? `${asset.width} × ${asset.height} px`
+                                  : asset.type === 'precomp'
+                                  ? 'Vector Sublayers'
+                                  : 'N/A'}
+                              </span>
+                              <span className="font-mono">{formatBytes(asset.byteSize || 0)}</span>
+                            </div>
+
+                            {asset.warning && (
+                              <div className="text-[10px] text-amber-500 font-medium">⚠️ {asset.warning}</div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                </div>
-
-                <div className="p-2.5 rounded-lg bg-secondary/50 border border-border">
-                  <div className="text-muted-foreground text-[10px]">Duration</div>
-                  <div className="font-semibold text-foreground mt-0.5 font-mono">
-                    {metadata?.durationSeconds !== null ? `${metadata?.durationSeconds}s` : 'N/A'}
-                  </div>
-                </div>
-              </div>
-
-              {hasAudio && (
-                <div className="flex items-center justify-between p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs">
-                  <span className="flex items-center gap-1.5 font-medium">
-                    <Volume2 className="w-3.5 h-3.5" /> Audio Track Detected
-                  </span>
-                  <span className="font-semibold text-[11px] px-1.5 py-0.5 rounded bg-emerald-500/20">
-                    Synced
-                  </span>
-                </div>
-              )}
-
-              {metadata?.missingProperties && metadata.missingProperties.length > 0 && (
-                <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-[11px] space-y-0.5">
-                  <span className="font-medium">Missing Root Properties:</span>
-                  <p className="text-[10px] text-muted-foreground">
-                    {metadata.missingProperties.join(', ')}
-                  </p>
-                </div>
-              )}
-
-              {/* Action Buttons */}
-              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                <button
-                  type="button"
-                  onClick={handleDownload}
-                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-secondary hover:bg-muted text-foreground text-xs font-medium transition-colors"
-                >
-                  <Download className="w-3.5 h-3.5" /> Download .json
-                </button>
-                <button
-                  type="button"
-                  onClick={handleDownloadDotLottie}
-                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-secondary hover:bg-muted text-foreground text-xs font-medium transition-colors"
-                  title="Export animation as a compressed dotLottie (.lottie) archive"
-                >
-                  <Download className="w-3.5 h-3.5 text-primary" /> Export .lottie
-                </button>
-                <CopyButton text={rawJson} label="Copy JSON" />
+                )}
               </div>
             </div>
 
@@ -727,21 +1203,6 @@ export default function LottiePlayerClient() {
               <span className="font-semibold text-xs text-foreground uppercase tracking-wider block">
                 Next Lottie Workflows
               </span>
-
-              <button
-                type="button"
-                onClick={() => handleNavigateToTool('lottie-analyzer', '/tools/lottie-analyzer')}
-                className="w-full flex items-center justify-between p-2.5 rounded-lg bg-secondary/50 hover:bg-secondary border border-border transition-colors text-xs text-left group cursor-pointer"
-              >
-                <div className="flex items-center gap-2">
-                  <SlidersHorizontal className="w-4 h-4 text-blue-500" />
-                  <div>
-                    <div className="font-medium text-foreground">Lottie Analyzer</div>
-                    <div className="text-[10px] text-muted-foreground">Audit layers, raster assets & weights</div>
-                  </div>
-                </div>
-                <span className="text-muted-foreground group-hover:text-foreground">→</span>
-              </button>
 
               <button
                 type="button"

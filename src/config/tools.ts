@@ -279,22 +279,10 @@ export const TOOLS: Tool[] = [
     category: 'Lottie',
     icon: '🎬',
     description:
-      'Preview, inspect, and test Lottie JSON animations online. Scrub frames, adjust playback speed, test backgrounds, and verify loops with 100% client-side privacy.',
-    shortDesc: 'Preview, scrub & test Lottie animations',
-    keywords: ['lottie player', 'lottie previewer', 'lottie viewer online', 'bodymovin preview', 'json animation player', 'lottie tester'],
+      'Preview, inspect layers, extract & swap colors, audit warnings, and scrub Lottie and .lottie animations online with 100% client-side privacy.',
+    shortDesc: 'Preview, inspect layers, colors & scrub',
+    keywords: ['lottie player', 'lottie previewer', 'lottie viewer online', 'bodymovin preview', 'lottie color editor', 'lottie layer inspector', 'json animation player', 'dotlottie player', 'lottie analyzer'],
     heavy: true,
-  },
-  {
-    id: 'lottie-analyzer',
-    label: 'Lottie File Analyzer',
-    route: '/tools/lottie-analyzer',
-    category: 'Lottie',
-    icon: '📊',
-    description:
-      'Inspect Lottie animation dimensions, framerate, layer hierarchies, and embedded raster images. Detect file bloat and un-inlined assets with zero server uploads.',
-    shortDesc: 'Audit Lottie layers, assets & composition',
-    keywords: ['lottie analyzer', 'lottie asset inspector', 'lottie file size audit', 'inspect lottie json', 'bodymovin analyzer'],
-    heavy: false,
   },
   {
     id: 'lottie-validator',

@@ -75,10 +75,10 @@ describe('Cross-Tool Data Passing', () => {
     });
 
     const hugePayload = { lottieJson: '{"huge":"payload-of-many-megabytes"}' };
-    const success = setCrossToolData('lottie-analyzer', hugePayload);
+    const success = setCrossToolData('lottie-player', hugePayload);
     expect(success).toBe(true);
 
-    const retrieved = getCrossToolData<typeof hugePayload>('lottie-analyzer');
+    const retrieved = getCrossToolData<typeof hugePayload>('lottie-player');
     expect(retrieved).toEqual(hugePayload);
   });
 });

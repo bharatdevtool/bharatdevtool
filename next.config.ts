@@ -28,6 +28,7 @@ const nextConfig: NextConfig = {
       { source: '/whatsapp-link.html',   destination: '/tools/whatsapp-link',  permanent: true },
       { source: '/age-calculator.html',  destination: '/tools/age-calculator', permanent: true },
       { source: '/tools.html',           destination: '/tools',                permanent: true },
+      { source: '/tools/lottie-analyzer', destination: '/tools/lottie-player', permanent: true },
       { source: '/about.html',           destination: '/about',                permanent: true },
       { source: '/privacy.html',         destination: '/privacy',              permanent: true },
       { source: '/feedback.html',        destination: '/feedback',             permanent: true },

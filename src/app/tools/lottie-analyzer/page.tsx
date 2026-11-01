@@ -1,10 +1,8 @@
-import type { Metadata } from 'next';
-import { generateToolMetadata } from '@/config/seo';
-import LottieAnalyzerClient from './LottieAnalyzerClient';
-
-export const metadata: Metadata = generateToolMetadata('lottie-analyzer');
+import { redirect } from 'next/navigation';
 
 export default function LottieAnalyzerPage() {
-  return <LottieAnalyzerClient />;
+  redirect('/tools/lottie-player');
 }
+
+
 

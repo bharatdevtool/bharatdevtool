@@ -23,6 +23,7 @@ import {
   SlidersHorizontal,
   Braces,
   Filter,
+  Gauge,
 } from 'lucide-react';
 
 type FilterSeverity = 'all' | 'error' | 'warning' | 'info';
@@ -62,9 +63,9 @@ export default function LottieValidatorClient() {
     router.push('/tools/lottie-player');
   };
 
-  const handleNavigateToAnalyzer = () => {
-    setCrossToolData('lottie-analyzer', { lottieJson: rawJson });
-    router.push('/tools/lottie-analyzer');
+  const handleNavigateToOptimizer = () => {
+    setCrossToolData('lottie-optimizer', { lottieJson: rawJson });
+    router.push('/tools/lottie-optimizer');
   };
 
   const handleNavigateToFormatter = () => {
@@ -418,14 +419,14 @@ export default function LottieValidatorClient() {
                 onClick={handleNavigateToPlayer}
                 className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-secondary hover:bg-muted text-foreground text-xs font-medium transition-colors border border-border"
               >
-                <Film className="w-3.5 h-3.5 text-primary" /> Preview in Player
+                <Film className="w-3.5 h-3.5 text-primary" /> Open in Studio
               </button>
               <button
                 type="button"
-                onClick={handleNavigateToAnalyzer}
+                onClick={handleNavigateToOptimizer}
                 className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-secondary hover:bg-muted text-foreground text-xs font-medium transition-colors border border-border"
               >
-                <SlidersHorizontal className="w-3.5 h-3.5 text-blue-500" /> Inspect in Analyzer
+                <Gauge className="w-3.5 h-3.5 text-purple-500" /> Optimize Size
               </button>
               <button
                 type="button"
