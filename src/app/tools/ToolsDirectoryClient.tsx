@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { Search, Sparkles, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Search, Sparkles, ArrowRight } from 'lucide-react';
 import { TOOLS, ToolCategory } from '@/config/tools';
 import ToolIcon from '@/components/ui/ToolIcon';
 

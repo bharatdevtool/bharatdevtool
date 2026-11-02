@@ -68,7 +68,8 @@ export function diffJSON(leftInput: string | unknown, rightInput: string | unkno
     }
   }
 
-  if (typeof left !== 'object' || left === null || typeof right !== 'object' || right === null) {
+  const isPlainObject = (v: unknown) => typeof v === 'object' && v !== null && !Array.isArray(v);
+  if (!isPlainObject(left) || !isPlainObject(right)) {
     return [diffValues(left, right, '', 'root')];
   }
 

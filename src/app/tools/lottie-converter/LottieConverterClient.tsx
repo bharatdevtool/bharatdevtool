@@ -4,35 +4,23 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { useRouter } from 'next/navigation';
 import ToolLayout from '@/components/layout/ToolLayout';
 import ErrorMessage from '@/components/ui/ErrorMessage';
-import CopyButton from '@/components/ui/CopyButton';
-import { parseLottieJSON } from '@/lib/lottie/parser';
-import { createDotLottie, extractDotLottie, isDotLottieBuffer, type DotLottieManifest } from '@/lib/lottie/dotLottie';
+import CodeEditor from '@/components/ui/CodeEditor';
+import OutputPane from '@/components/ui/OutputPane';
+import { parseLottieJSON, type LottieParseResult } from '@/lib/lottie/parser';
+import { createDotLottie, extractDotLottie, type DotLottieManifest } from '@/lib/lottie/dotLottie';
 import { LOTTIE_SAMPLES } from '@/lib/lottie/samples';
-import { getCrossToolData, setCrossToolData } from '@/lib/crossToolData';
+import { setCrossToolData } from '@/lib/crossToolData';
+import { useCrossToolData } from '@/hooks/useCrossToolData';
 import type { LottieAnimation } from '@/lib/lottie/types';
 import type { AnimationItem } from 'lottie-web';
+import { loadLottie } from '@/lib/lottie/loader';
 import {
-  Package,
   Download,
   Upload,
-  Play,
-  Pause,
-  RotateCcw,
   Sparkles,
-  CheckCircle2,
-  AlertTriangle,
   FileCode,
   FolderArchive,
-  HardDrive,
-  Percent,
   Film,
-  ShieldCheck,
-  Gauge,
-  Code2,
-  FileText,
-  Layers,
-  ArrowRight,
-  Maximize2,
 } from 'lucide-react';
 
 function formatBytes(bytes: number): string {
@@ -41,6 +29,30 @@ function formatBytes(bytes: number): string {
   const sizes = ['B', 'KB', 'MB', 'GB'];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(1))} ${sizes[i]}`;
+}
+
+interface CompressionResult {
+  bytes: Uint8Array | null;
+  ratio: number;
+  error: string | null;
+}
+
+/** Packs parsed Lottie JSON into a .lottie archive, reporting failures instead of throwing */
+function compressToDotLottie(
+  jsonInput: string,
+  parsed: LottieParseResult,
+  manifest: { id: string; loop: boolean; speed: number }
+): CompressionResult {
+  if (!parsed.success || !parsed.animation) {
+    return { bytes: null, ratio: 0, error: parsed.error || 'Invalid Lottie JSON payload.' };
+  }
+  try {
+    const bytes = createDotLottie(parsed.animation, manifest);
+    const rawSize = new Blob([jsonInput]).size;
+    return { bytes, ratio: Math.round(((rawSize - bytes.byteLength) / rawSize) * 100), error: null };
+  } catch (err) {
+    return { bytes: null, ratio: 0, error: (err as Error).message };
+  }
 }
 
 type Mode = 'json-to-lottie' | 'lottie-to-json';
@@ -54,12 +66,9 @@ export default function LottieConverterClient() {
   const [animationId, setAnimationId] = useState<string>('animation');
   const [loopSetting, setLoopSetting] = useState<boolean>(true);
   const [speedSetting, setSpeedSetting] = useState<number>(1);
-  const [generatedDotLottie, setGeneratedDotLottie] = useState<Uint8Array | null>(null);
-  const [compressionRatio, setCompressionRatio] = useState<number>(0);
-  const [compressError, setCompressError] = useState<string | null>(null);
 
   // Mode 2: .lottie -> JSON states
-  const [extractedJson, setExtractedJson] = useState<string>('');
+  const [extractedAnimation, setExtractedAnimation] = useState<LottieAnimation | null>(null);
   const [extractedManifest, setExtractedManifest] = useState<DotLottieManifest | null>(null);
   const [extractedAnimationId, setExtractedAnimationId] = useState<string>('');
   const [extractedInlinedImages, setExtractedInlinedImages] = useState<number>(0);
@@ -68,25 +77,40 @@ export default function LottieConverterClient() {
   const [archiveOriginalBytes, setArchiveOriginalBytes] = useState<number>(0);
 
   // Canvas Player Preview States
-  const [previewAnimation, setPreviewAnimation] = useState<LottieAnimation | null>(LOTTIE_SAMPLES[0].data);
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [bgType, setBgType] = useState<'grid' | 'obsidian' | 'light'>('grid');
 
   const containerRef = useRef<HTMLDivElement>(null);
   const animItemRef = useRef<AnimationItem | null>(null);
-  const jsonFileInputRef = useRef<HTMLInputElement>(null);
   const lottieFileInputRef = useRef<HTMLInputElement>(null);
 
   // Cross-tool data ingestion
-  useEffect(() => {
-    const incoming =
-      getCrossToolData<{ lottieJson?: string }>('lottie-converter', false) ||
-      getCrossToolData<{ lottieJson?: string }>('lottie-player', false);
-    if (incoming?.lottieJson) {
-      setJsonInput(incoming.lottieJson);
-      setMode('json-to-lottie');
-    }
-  }, []);
+  useCrossToolData<{ lottieJson: string }>('lottie-converter', ({ lottieJson }) => {
+    setJsonInput(lottieJson);
+    setMode('json-to-lottie');
+  });
+
+  // Mode 1: parse and pack the JSON input; Mode 2: format the extracted animation
+  const parsedInput = useMemo(() => parseLottieJSON(jsonInput), [jsonInput]);
+  const compression = useMemo(
+    () =>
+      compressToDotLottie(jsonInput, parsedInput, {
+        id: animationId || 'animation',
+        loop: loopSetting,
+        speed: speedSetting,
+      }),
+    [jsonInput, parsedInput, animationId, loopSetting, speedSetting]
+  );
+  const generatedDotLottie = compression.bytes;
+  const compressionRatio = compression.ratio;
+  const compressError = compression.error;
+
+  const extractedJson = useMemo(
+    () =>
+      extractedAnimation ? JSON.stringify(extractedAnimation, null, jsonFormat === 'pretty' ? 2 : undefined) : '',
+    [extractedAnimation, jsonFormat]
+  );
+
+  const previewAnimation = mode === 'json-to-lottie' ? (parsedInput.animation ?? null) : extractedAnimation;
 
   const handleNavigateToTool = (toolId: string, path: string) => {
     const activePayload = mode === 'json-to-lottie' ? jsonInput : extractedJson;
@@ -105,7 +129,7 @@ export default function LottieConverterClient() {
     }
 
     try {
-      const lottie = (await import('lottie-web')).default;
+      const lottie = await loadLottie();
       const anim = lottie.loadAnimation({
         container: containerRef.current,
         renderer: 'svg',
@@ -131,54 +155,6 @@ export default function LottieConverterClient() {
     };
   }, [previewAnimation, loadPreview]);
 
-  // Initial automatic compression calculation for Mode 1
-  useEffect(() => {
-    if (mode === 'json-to-lottie') {
-      try {
-        const parsed = JSON.parse(jsonInput);
-        const parseCheck = parseLottieJSON(jsonInput);
-        if (parseCheck.success && parseCheck.animation) {
-          setPreviewAnimation(parseCheck.animation);
-          const dotLottieBytes = createDotLottie(parsed, {
-            id: animationId || 'animation',
-            loop: loopSetting,
-            speed: speedSetting,
-          });
-          setGeneratedDotLottie(dotLottieBytes);
-          const rawSize = new Blob([jsonInput]).size;
-          const compressedSize = dotLottieBytes.byteLength;
-          const ratio = Math.round(((rawSize - compressedSize) / rawSize) * 100);
-          setCompressionRatio(ratio);
-          setCompressError(null);
-        } else {
-          setCompressError(parseCheck.error || 'Invalid Lottie JSON payload.');
-          setGeneratedDotLottie(null);
-        }
-      } catch (err) {
-        setCompressError((err as Error).message);
-        setGeneratedDotLottie(null);
-      }
-    }
-  }, [jsonInput, animationId, loopSetting, speedSetting, mode]);
-
-  // Handle JSON File Upload for Mode 1
-  const handleJsonFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    try {
-      const text = await file.text();
-      setJsonInput(text);
-      const name = file.name.replace(/\.json$/i, '');
-      setAnimationId(name);
-      setCompressError(null);
-    } catch (err) {
-      setCompressError(`Failed to read JSON: ${(err as Error).message}`);
-    } finally {
-      if (jsonFileInputRef.current) jsonFileInputRef.current.value = '';
-    }
-  };
-
   // Handle .lottie Archive Upload for Mode 2
   const handleLottieArchiveUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -191,17 +167,15 @@ export default function LottieConverterClient() {
       const result = extractDotLottie(buffer);
       if (!result.success || !result.animation) {
         setExtractError(result.error || 'Failed to extract .lottie archive.');
-        setExtractedJson('');
+        setExtractedAnimation(null);
         setExtractedManifest(null);
         return;
       }
 
-      const formatted = JSON.stringify(result.animation, null, jsonFormat === 'pretty' ? 2 : undefined);
-      setExtractedJson(formatted);
+      setExtractedAnimation(result.animation);
       setExtractedManifest(result.manifest || null);
       setExtractedAnimationId(result.animationId || 'animation');
       setExtractedInlinedImages(result.inlinedImageCount);
-      setPreviewAnimation(result.animation);
       setExtractError(null);
     } catch (err) {
       setExtractError(`Archive decompression failed: ${(err as Error).message}`);
@@ -209,18 +183,6 @@ export default function LottieConverterClient() {
       if (lottieFileInputRef.current) lottieFileInputRef.current.value = '';
     }
   };
-
-  // Re-format extracted JSON when toggle changes
-  useEffect(() => {
-    if (extractedJson) {
-      try {
-        const parsed = JSON.parse(extractedJson);
-        setExtractedJson(JSON.stringify(parsed, null, jsonFormat === 'pretty' ? 2 : undefined));
-      } catch {
-        // Ignore
-      }
-    }
-  }, [jsonFormat]);
 
   // Mode 1: Download .lottie
   const handleDownloadLottie = () => {
@@ -280,13 +242,6 @@ export default function LottieConverterClient() {
 
         {/* Hidden File Inputs */}
         <input
-          ref={jsonFileInputRef}
-          type="file"
-          accept=".json,application/json"
-          onChange={handleJsonFileUpload}
-          className="hidden"
-        />
-        <input
           ref={lottieFileInputRef}
           type="file"
           accept=".lottie,application/zip"
@@ -300,38 +255,18 @@ export default function LottieConverterClient() {
             {/* Left: Input & Manifest Config (7 Cols) */}
             <div className="lg:col-span-7 space-y-4">
               <div className="p-4 rounded-2xl bg-card border border-border shadow-xs space-y-3.5">
-                <div className="flex items-center justify-between">
-                  <span className="font-semibold text-xs text-foreground uppercase tracking-wider flex items-center gap-1.5">
-                    <FileCode className="w-4 h-4 text-primary" /> Source Bodymovin JSON
-                  </span>
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => jsonFileInputRef.current?.click()}
-                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-secondary hover:bg-muted text-foreground text-xs font-medium border border-border transition-colors cursor-pointer"
-                    >
-                      <Upload className="w-3.5 h-3.5 text-primary" /> Upload .json
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const s = LOTTIE_SAMPLES[0];
-                        setJsonInput(JSON.stringify(s.data, null, 2));
-                        setAnimationId(s.id);
-                      }}
-                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-secondary hover:bg-muted text-foreground text-xs font-medium border border-border transition-colors cursor-pointer"
-                    >
-                      <Sparkles className="w-3.5 h-3.5 text-amber-500" /> Sample
-                    </button>
-                  </div>
-                </div>
-
-                <textarea
+                <CodeEditor
+                  title="Source Bodymovin JSON"
+                  language="json"
                   value={jsonInput}
-                  onChange={(e) => setJsonInput(e.target.value)}
-                  rows={8}
+                  onChange={setJsonInput}
                   placeholder="Paste Lottie JSON payload here..."
-                  className="w-full p-3 font-mono text-xs rounded-lg bg-background border border-border focus:outline-hidden focus:ring-1 focus:ring-primary developer-scrollbar"
+                  height={240}
+                  onSample={() => {
+                    const sample = LOTTIE_SAMPLES[0];
+                    setJsonInput(JSON.stringify(sample.data, null, 2));
+                    setAnimationId(sample.id);
+                  }}
                 />
 
                 {compressError && <ErrorMessage message={compressError} />}
@@ -523,47 +458,38 @@ export default function LottieConverterClient() {
             {/* Right: Extracted JSON Code & Download (7 Cols) */}
             <div className="lg:col-span-7 space-y-4">
               <div className="p-4 rounded-2xl bg-card border border-border shadow-xs space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="font-semibold text-xs text-foreground uppercase tracking-wider flex items-center gap-1.5">
-                    <FileText className="w-4 h-4 text-emerald-500" /> Extracted Bodymovin JSON
-                  </span>
-
-                  <div className="flex items-center gap-2">
-                    <div className="flex items-center border border-border rounded-lg bg-secondary/40 p-0.5 text-xs">
-                      <button
-                        type="button"
-                        onClick={() => setJsonFormat('pretty')}
-                        className={`px-2 py-0.5 rounded text-[11px] font-medium transition-colors cursor-pointer ${
-                          jsonFormat === 'pretty'
-                            ? 'bg-primary text-primary-foreground'
-                            : 'text-muted-foreground hover:text-foreground'
-                        }`}
-                      >
-                        Pretty
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setJsonFormat('minify')}
-                        className={`px-2 py-0.5 rounded text-[11px] font-medium transition-colors cursor-pointer ${
-                          jsonFormat === 'minify'
-                            ? 'bg-primary text-primary-foreground'
-                            : 'text-muted-foreground hover:text-foreground'
-                        }`}
-                      >
-                        Minify
-                      </button>
-                    </div>
-
-                    <CopyButton text={extractedJson} label="Copy JSON" />
-                  </div>
-                </div>
-
-                <textarea
-                  value={extractedJson}
-                  readOnly
-                  rows={12}
-                  placeholder="Upload a .lottie archive to extract and decompress JSON code..."
-                  className="w-full p-3 font-mono text-xs rounded-lg bg-background border border-border text-foreground developer-scrollbar"
+                <OutputPane
+                  title="Extracted Bodymovin JSON"
+                  language="json"
+                  content={extractedJson}
+                  emptyMessage="Upload a .lottie archive to extract and decompress JSON code..."
+                  height={300}
+                  actions={
+                      <div className="flex items-center border border-border rounded-lg bg-secondary/40 p-0.5 text-xs">
+                        <button
+                          type="button"
+                          onClick={() => setJsonFormat('pretty')}
+                          className={`px-2 py-0.5 rounded text-[11px] font-medium transition-colors cursor-pointer ${
+                            jsonFormat === 'pretty'
+                              ? 'bg-primary text-primary-foreground'
+                              : 'text-muted-foreground hover:text-foreground'
+                          }`}
+                        >
+                          Pretty
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setJsonFormat('minify')}
+                          className={`px-2 py-0.5 rounded text-[11px] font-medium transition-colors cursor-pointer ${
+                            jsonFormat === 'minify'
+                              ? 'bg-primary text-primary-foreground'
+                              : 'text-muted-foreground hover:text-foreground'
+                          }`}
+                        >
+                          Minify
+                        </button>
+                      </div>
+                  }
                 />
 
                 <div className="flex items-center justify-between pt-1">
@@ -596,13 +522,6 @@ export default function LottieConverterClient() {
               className="px-3 py-1.5 rounded-lg bg-secondary hover:bg-muted border border-border text-foreground font-medium transition-colors cursor-pointer"
             >
               Lottie Player & Studio
-            </button>
-            <button
-              type="button"
-              onClick={() => handleNavigateToTool('lottie-editor', '/tools/lottie-editor')}
-              className="px-3 py-1.5 rounded-lg bg-secondary hover:bg-muted border border-border text-foreground font-medium transition-colors cursor-pointer"
-            >
-              Lottie JSON Editor
             </button>
             <button
               type="button"

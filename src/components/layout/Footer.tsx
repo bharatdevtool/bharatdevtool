@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { ShieldCheck, Heart, Sparkles, Terminal, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { TOOLS } from '@/config/tools';
 import { SITE } from '@/config/site';
 

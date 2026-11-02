@@ -128,12 +128,16 @@ export function extractDotLottie(
   }
 
   // Locate all animation JSON files in archive
+  // dotLottie v1 stores animations in animations/, v2 in a/ (themes and state machines are JSON too),
+  // so only fall back to every JSON file when neither directory exists
+  const allJsonFiles = Object.keys(unzipped).filter(
+    (p) => p.toLowerCase().endsWith('.json') && p.split('/').pop()?.toLowerCase() !== 'manifest.json'
+  );
+  const animationDirFiles = allJsonFiles.filter((p) => /(^|\/)(animations|a)\/[^/]+$/i.test(p));
   const jsonFiles: Record<string, string> = {};
-  for (const [filename] of Object.entries(unzipped)) {
-    if (filename.toLowerCase().endsWith('.json') && !filename.toLowerCase().endsWith('manifest.json')) {
-      const baseName = filename.split('/').pop()?.replace(/\.json$/i, '') || filename;
-      jsonFiles[baseName] = filename;
-    }
+  for (const filename of animationDirFiles.length > 0 ? animationDirFiles : allJsonFiles) {
+    const baseName = filename.split('/').pop()?.replace(/\.json$/i, '') || filename;
+    if (!(baseName in jsonFiles)) jsonFiles[baseName] = filename;
   }
 
   const availableAnimationIds = Object.keys(jsonFiles);
@@ -187,9 +191,9 @@ export function extractDotLottie(
       if (normalizedArchive[cleanCand]) {
         return { file: normalizedArchive[cleanCand], filename: cleanCand };
       }
-      // 2. Ends-with match (e.g. cand is 'icon.png' and archive has 'images/icon.png')
+      // 2. Path-suffix match (e.g. cand is 'icon.png' and archive has 'images/icon.png', not 'bigicon.png')
       for (const [archPath, content] of Object.entries(normalizedArchive)) {
-        if (archPath.endsWith(`/${cleanCand}`) || archPath.endsWith(cleanCand)) {
+        if (archPath.endsWith(`/${cleanCand}`)) {
           return { file: content, filename: archPath };
         }
       }

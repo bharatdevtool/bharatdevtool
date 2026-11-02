@@ -185,4 +185,20 @@ describe('Lottie Color Engine', () => {
     expect(shape.c.k[2]).toBe(1);
     expect(shape.c.k[3]).toBe(0.5); // alpha preserved
   });
+
+  it('keeps the # prefix when replacing a solid layer color', () => {
+    const anim: LottieAnimation = {
+      v: '5.7.0',
+      fr: 30,
+      ip: 0,
+      op: 60,
+      w: 100,
+      h: 100,
+      layers: [{ ind: 1, ty: 1, nm: 'Solid', sc: '#1e293b', ip: 0, op: 60, ks: {} }],
+    };
+
+    const { animation: updated, replacedCount } = replaceLottieColor(anim, '#1E293B', '#ff0000');
+    expect(replacedCount).toBe(1);
+    expect(updated.layers?.[0].sc).toBe('#FF0000');
+  });
 });

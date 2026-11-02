@@ -18,10 +18,8 @@ import {
   MessageSquare,
   Wrench,
   Film,
-  SlidersHorizontal,
   ShieldCheck,
   Gauge,
-  Code2,
   FolderArchive,
   type LucideIcon,
 } from 'lucide-react';

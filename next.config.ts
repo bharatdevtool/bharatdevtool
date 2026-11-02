@@ -32,7 +32,7 @@ const nextConfig: NextConfig = {
       { source: '/tools/password-generator', destination: '/tools',            permanent: true },
       { source: '/uuid-generator.html',  destination: '/tools/uuid-generator', permanent: true },
       { source: '/whatsapp-link.html',   destination: '/tools/whatsapp-link',  permanent: true },
-      { source: '/age-calculator.html',  destination: '/tools/age-calculator', permanent: true },
+      { source: '/age-calculator.html',  destination: '/tools',                permanent: true },
       { source: '/tools/age-calculator', destination: '/tools',                permanent: true },
       { source: '/tools.html',           destination: '/tools',                permanent: true },
       { source: '/tools/lottie-analyzer', destination: '/tools/lottie-player', permanent: true },
