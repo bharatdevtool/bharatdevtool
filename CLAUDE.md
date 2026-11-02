@@ -1,6 +1,6 @@
 # CLAUDE.md — Agent & Developer Instructions
 
-> **Project:** Bharat Dev Tools ([bharatdevtools.com](https://bharatdevtools.com))  
+> **Project:** Bharat Dev Tools ([bharatdevtool.com](https://bharatdevtool.com))  
 > **Repository Nature:** Proprietary commercial developer utility platform (NOT open source).  
 > **Core Mission:** "Free developer tools, no sign-up, privacy-first, blazing fast."
 
@@ -17,7 +17,7 @@ pnpm dev
 # Type check across all TypeScript code
 pnpm exec tsc --noEmit --skipLibCheck
 
-# Compile production build (prerenders all 28 static routes)
+# Compile production build (prerenders every route statically)
 pnpm build
 
 # Serve compiled production build locally
@@ -25,6 +25,9 @@ pnpm start
 
 # Run ESLint
 pnpm lint
+
+# Run unit tests (Vitest)
+pnpm test
 ```
 
 ---
@@ -34,7 +37,8 @@ pnpm lint
 ### 2.1. 100% Client-Side Privacy
 - **Zero Server Relays**: User payloads (JSON, cURL strings, Base64, passwords, regex, QR text) must **NEVER** leave the browser.
 - **No Third-Party APIs**: Never use external third-party web generation endpoints (e.g., `api.qrserver.com`). Always use offline client-side libraries (`qrcode`, `jsqr`, Web Crypto API).
-- **Zero Server-Side Actions**: All 28 routes are pre-rendered statically (`export const dynamic = 'force-static'`). There are no server-side API handlers or databases.
+- **Zero Server-Side Actions**: Every route is pre-rendered statically at build time. There are no server-side API handlers or databases.
+- **Telemetry Never Carries Payloads**: GA4 events (`src/lib/analytics.ts`) and Sentry reports (`src/instrumentation-client.ts`) may only contain fixed labels and counts — never user input, file names, or file contents.
 
 ### 2.2. Strict DRY Architecture
 1. **Single Source of Truth (`src/config/tools.ts`)**:
@@ -63,7 +67,7 @@ d:\Projects\bharatdevtool\
 │   └── skills/         # Agent skills (frontend-design, ui-ux-pro-max)
 ├── public/             # Static public assets (fonts, icons, OG images, robots.txt)
 ├── src/
-│   ├── app/            # Next.js App Router (28 static pages)
+│   ├── app/            # Next.js App Router (static pages, sitemap.ts, global-error.tsx)
 │   ├── components/     # UI components (ui/ and layout/)
 │   ├── config/         # Single source of truth (tools.ts, site.ts, seo.ts)
 │   └── lib/            # Pure utility functions (json, curl, regex, utils)
@@ -104,12 +108,19 @@ When creating a new developer tool:
 1. **Register the tool** in [`src/config/tools.ts`](file:///d:/Projects/bharatdevtool/src/config/tools.ts) with `id`, `label`, `category`, `description`, `route`, and `keywords`.
 2. **Add icon mapping** in [`src/components/ui/ToolIcon.tsx`](file:///d:/Projects/bharatdevtool/src/components/ui/ToolIcon.tsx).
 3. **Write pure business logic** in [`src/lib/<category>/`](file:///d:/Projects/bharatdevtool/src/lib/).
-4. **Create route & client component**:
-   - `src/app/tools/<tool-id>/page.tsx` (Server Component with static metadata).
+4. **Write FAQs** (3–5 entries) in [`src/config/faqs.ts`](file:///d:/Projects/bharatdevtool/src/config/faqs.ts). `ToolLayout` renders them as a visible FAQ section and FAQPage JSON-LD.
+5. **Create route & client component**:
+   - `src/app/tools/<tool-id>/page.tsx` (Server Component with `generateToolMetadata('<tool-id>')`).
    - `src/app/tools/<tool-id>/<ToolName>Client.tsx` (Client Component using `ToolLayout`, `CodeEditor`, `OutputPane`).
-5. **Verify**:
-   - Run `pnpm exec tsc --noEmit --skipLibCheck`.
+6. **Track key actions** with `analytics.track(ANALYTICS_EVENTS.X)` — add the constant to `ANALYTICS_EVENTS` in [`src/config/site.ts`](file:///d:/Projects/bharatdevtool/src/config/site.ts).
+7. **Verify**:
+   - Run `pnpm exec tsc --noEmit --skipLibCheck` and `pnpm test` (SEO tests enforce FAQs, title ≤ 60 chars, description 140–160 chars, sitemap coverage).
    - Run `pnpm build` to verify static pre-rendering.
+
+SEO metadata, JSON-LD, the sitemap, and the error boundary are all generated from the registry — no per-page wiring is needed.
+
+### Error Tracking (Sentry)
+Sentry is initialised in `src/instrumentation-client.ts` and only runs when `NEXT_PUBLIC_SENTRY_DSN` is set at build time (and never on localhost). Each tool is wrapped in `ErrorBoundary` by `ToolLayout`.
 
 ---
 

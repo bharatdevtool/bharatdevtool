@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import ToolLayout from '@/components/layout/ToolLayout';
+import { analytics } from '@/lib/analytics';
+import { ANALYTICS_EVENTS } from '@/config/site';
 import ErrorMessage from '@/components/ui/ErrorMessage';
 import CodeEditor from '@/components/ui/CodeEditor';
 import OutputPane from '@/components/ui/OutputPane';
@@ -177,6 +179,7 @@ export default function LottieConverterClient() {
       setExtractedAnimationId(result.animationId || 'animation');
       setExtractedInlinedImages(result.inlinedImageCount);
       setExtractError(null);
+      analytics.track(ANALYTICS_EVENTS.CONVERT_LOTTIE, { direction: 'lottie_to_json' });
     } catch (err) {
       setExtractError(`Archive decompression failed: ${(err as Error).message}`);
     } finally {
@@ -194,6 +197,10 @@ export default function LottieConverterClient() {
     a.download = `${animationId || 'animation'}.lottie`;
     a.click();
     URL.revokeObjectURL(url);
+    analytics.track(ANALYTICS_EVENTS.CONVERT_LOTTIE, {
+      direction: 'json_to_lottie',
+      compression_percent: compressionRatio,
+    });
   };
 
   // Mode 2: Download .json
@@ -206,6 +213,7 @@ export default function LottieConverterClient() {
     a.download = `${extractedAnimationId || 'extracted'}.json`;
     a.click();
     URL.revokeObjectURL(url);
+    analytics.track(ANALYTICS_EVENTS.DOWNLOAD_LOTTIE, { tool: 'converter', format: 'json' });
   };
 
   const originalJsonBytes = useMemo(() => new Blob([jsonInput]).size, [jsonInput]);

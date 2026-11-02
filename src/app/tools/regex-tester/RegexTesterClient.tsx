@@ -15,16 +15,16 @@ const ALL_FLAGS: { flag: string; title: string; desc: string }[] = [
 ];
 
 const PRESETS = [
-  { label: 'Email', pattern: '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}', test: 'Contact support@bharatdevtools.com or admin@example.org for info.' },
+  { label: 'Email', pattern: '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}', test: 'Contact support@bharatdevtool.com or admin@example.org for info.' },
   { label: 'IPv4', pattern: '\\b(?:\\d{1,3}\\.){3}\\d{1,3}\\b', test: 'Servers live at 192.168.1.1 and 10.0.0.254.' },
-  { label: 'URL', pattern: 'https?:\\/\\/[^\\s/$.?#].[^\\s]*', test: 'Visit https://bharatdevtools.com or http://localhost:3000.' },
+  { label: 'URL', pattern: 'https?:\\/\\/[^\\s/$.?#].[^\\s]*', test: 'Visit https://bharatdevtool.com or http://localhost:3000.' },
   { label: 'Hex Color', pattern: '#(?:[0-9a-fA-F]{3}){1,2}\\b', test: 'Colors used: #3b82f6 for primary, #10b981 for success, and #0f172a.' },
 ];
 
 export default function RegexTesterClient() {
   const [pattern, setPattern] = useState('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}');
   const [flags, setFlags] = useState<string[]>(['g']);
-  const [testStr, setTestStr] = useState('Contact team@bharatdevtools.com or user.name+tag@gmail.com for help.');
+  const [testStr, setTestStr] = useState('Contact team@bharatdevtool.com or user.name+tag@gmail.com for help.');
 
   const flagStr = flags.join('');
   const validation = pattern ? validateRegexPattern(pattern, flagStr) : { valid: true };

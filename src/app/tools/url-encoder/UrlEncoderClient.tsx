@@ -107,8 +107,8 @@ export default function UrlEncoderClient() {
             onSample={() => {
               const sample =
                 mode === 'encode'
-                  ? 'https://bharatdevtools.com/api?query=react & nextjs&lang=en#results'
-                  : 'https%3A%2F%2Fbharatdevtools.com%2Fapi%3Fquery%3Dreact%20%26%20nextjs%26lang%3Den%23results';
+                  ? 'https://bharatdevtool.com/api?query=react & nextjs&lang=en#results'
+                  : 'https%3A%2F%2Fbharatdevtool.com%2Fapi%3Fquery%3Dreact%20%26%20nextjs%26lang%3Den%23results';
               setInput(sample);
               run(sample, mode);
             }}

@@ -3,6 +3,8 @@
 import React, { useState, useMemo, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import ToolLayout from '@/components/layout/ToolLayout';
+import { analytics } from '@/lib/analytics';
+import { ANALYTICS_EVENTS } from '@/config/site';
 import CodeEditor from '@/components/ui/CodeEditor';
 import ErrorMessage from '@/components/ui/ErrorMessage';
 import CopyButton from '@/components/ui/CopyButton';
@@ -131,6 +133,12 @@ export default function LottieValidatorClient() {
     setActiveSampleId('');
     setFileError(null);
     if (fileInputRef.current) fileInputRef.current.value = '';
+    const result = validateLottie(JSON.parse(res.rawJson));
+    analytics.track(ANALYTICS_EVENTS.VALIDATE_LOTTIE, {
+      format: file.name.toLowerCase().endsWith('.lottie') ? 'lottie' : 'json',
+      errors: result.issues.filter((i) => i.severity === 'error').length,
+      warnings: result.issues.filter((i) => i.severity === 'warning').length,
+    });
   };
 
   const handleSampleSelect = (id: string) => {

@@ -21,7 +21,7 @@ const CONTENT_TABS: TabOption<ContentType>[] = [
 
 export default function QrGeneratorClient() {
   const [contentType, setContentType] = useState<ContentType>('url');
-  const [urlInput, setUrlInput] = useState('https://bharatdevtools.com');
+  const [urlInput, setUrlInput] = useState('https://bharatdevtool.com');
   const [textInput, setTextInput] = useState('Hello from Bharat Dev Tools!');
   const [wifiSsid, setWifiSsid] = useState('MyHomeWiFi');
   const [wifiPassword, setWifiPassword] = useState('password123');

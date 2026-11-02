@@ -165,7 +165,7 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
             </span>
           </div>
           <span className="flex items-center gap-1 text-primary">
-            <Sparkles className="w-3 h-3" /> 20 free tools
+            <Sparkles className="w-3 h-3" /> {TOOLS.length} free tools
           </span>
         </div>
       </div>

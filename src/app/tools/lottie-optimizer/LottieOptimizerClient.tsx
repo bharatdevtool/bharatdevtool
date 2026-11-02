@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import ToolLayout from '@/components/layout/ToolLayout';
+import { analytics } from '@/lib/analytics';
+import { ANALYTICS_EVENTS } from '@/config/site';
 import ErrorMessage from '@/components/ui/ErrorMessage';
 import CopyButton from '@/components/ui/CopyButton';
 import { optimizeLottie } from '@/lib/lottie/optimizer';
@@ -208,6 +210,7 @@ export default function LottieOptimizerClient() {
     setActiveSampleId('');
     setError(null);
     if (fileInputRef.current) fileInputRef.current.value = '';
+    analytics.track(ANALYTICS_EVENTS.LOAD_LOTTIE, { tool: 'optimizer', format: file.name.toLowerCase().endsWith('.lottie') ? 'lottie' : 'json' });
   };
 
   const handleSampleSelect = (id: string) => {
@@ -229,6 +232,10 @@ export default function LottieOptimizerClient() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    analytics.track(ANALYTICS_EVENTS.OPTIMIZE_LOTTIE, {
+      format: 'json',
+      savings_percent: optimizationResult.savingsPercentage,
+    });
   };
 
   const handleDownloadDotLottie = () => {
@@ -245,6 +252,10 @@ export default function LottieOptimizerClient() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    analytics.track(ANALYTICS_EVENTS.OPTIMIZE_LOTTIE, {
+      format: 'lottie',
+      savings_percent: optimizationResult.savingsPercentage,
+    });
   };
 
   return (

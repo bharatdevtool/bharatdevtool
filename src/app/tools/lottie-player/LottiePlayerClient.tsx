@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import ToolLayout from '@/components/layout/ToolLayout';
+import { analytics } from '@/lib/analytics';
+import { ANALYTICS_EVENTS } from '@/config/site';
 import ErrorMessage from '@/components/ui/ErrorMessage';
 import CopyButton from '@/components/ui/CopyButton';
 import { parseLottieJSON, sanitizeAnimationForPrivacy } from '@/lib/lottie/parser';
@@ -369,6 +371,7 @@ export default function LottiePlayerClient({
     const parsed = parseLottieJSON(newJson);
     setMetadata(parsed.metadata || null);
     setIsColorModified(true);
+    analytics.track(ANALYTICS_EVENTS.REPLACE_LOTTIE_COLOR);
   };
 
   const handleResetColors = () => {
@@ -562,6 +565,7 @@ export default function LottiePlayerClient({
     setIsPlaying(true);
     setError(null);
     if (fileInputRef.current) fileInputRef.current.value = '';
+    analytics.track(ANALYTICS_EVENTS.LOAD_LOTTIE, { tool: 'player', format: file.name.toLowerCase().endsWith('.lottie') ? 'lottie' : 'json' });
   };
 
   const handleDownloadDotLottie = () => {
@@ -578,6 +582,7 @@ export default function LottiePlayerClient({
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    analytics.track(ANALYTICS_EVENTS.DOWNLOAD_LOTTIE, { tool: 'player', format: 'lottie' });
   };
 
   const handleDownload = () => {
@@ -588,6 +593,7 @@ export default function LottiePlayerClient({
     a.download = `${metadata?.name || 'animation'}.json`;
     a.click();
     URL.revokeObjectURL(url);
+    analytics.track(ANALYTICS_EVENTS.DOWNLOAD_LOTTIE, { tool: 'player', format: 'json' });
   };
 
   // Background styling
