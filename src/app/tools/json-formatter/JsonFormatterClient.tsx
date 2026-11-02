@@ -14,9 +14,10 @@ import {
   unescapeJSON,
   repairJSON,
 } from '@/lib/json/formatter';
+import { useCrossToolData } from '@/hooks/useCrossToolData';
 import { analytics } from '@/lib/analytics';
 import { ANALYTICS_EVENTS } from '@/config/site';
-import { Sparkles, CheckCircle2, AlertTriangle, ArrowRight, Maximize2, Minimize2, Monitor } from 'lucide-react';
+import { Maximize2, Minimize2 } from 'lucide-react';
 
 type ActiveTab = 'format' | 'minify' | 'validate' | 'escape' | 'unescape' | 'repair';
 
@@ -117,6 +118,13 @@ export default function JsonFormatterClient() {
     },
     []
   );
+
+  // Consume cross-tool payload on mount
+  useCrossToolData<{ json: string; tab?: ActiveTab }>('json-formatter', ({ json, tab = activeTab }) => {
+    setInput(json);
+    setActiveTab(tab);
+    processJson(tab, json, indent);
+  });
 
   function handleTabChange(newTab: ActiveTab) {
     setActiveTab(newTab);

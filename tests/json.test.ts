@@ -203,5 +203,24 @@ describe('JSON Differ & Stats', () => {
     const stats = diffStats(diff);
     expect(stats.changed).toBe(1);
   });
+
+  it('safely handles already-parsed objects without throwing "[object Object]" error', () => {
+    const leftObj = { v: '5.7.0', fr: 60, op: 100 };
+    const rightObj = { v: '5.7.0', fr: 60, op: 120 };
+    const diff = diffJSON(leftObj, rightObj);
+    const stats = diffStats(diff);
+    expect(stats.changed).toBe(1);
+    expect(diff.some((n) => n.key === 'op' && n.type === 'changed')).toBe(true);
+  });
+
+  it('handles primitives or null safely', () => {
+    const diffNull = diffJSON(null, { a: 1 });
+    expect(diffNull.length).toBe(1);
+    expect(diffNull[0].key).toBe('root');
+
+    const diffPrimitives = diffJSON('123', '456');
+    expect(diffPrimitives.length).toBe(1);
+    expect(diffPrimitives[0].type).toBe('changed');
+  });
 });
 

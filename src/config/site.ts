@@ -15,12 +15,13 @@ export const SITE = {
 
   // External services
   ga4MeasurementId: 'G-H00TEVH9KG',
-  sentryDsn: 'https://377fa2c5032178b56ab058bb0a0fffbb@o0.ingest.sentry.io/0',
+  // Set NEXT_PUBLIC_SENTRY_DSN at build time to enable error tracking
+  sentryDsn: process.env.NEXT_PUBLIC_SENTRY_DSN ?? '',
 
   // Social / links
   feedbackFormUrl: 'https://forms.gle/TA7WEhzzQ6csQFGZ7',
 
-  // Analytics: disable on these hostnames
+  // Analytics and error tracking: disable on these hostnames
   analyticsDisabledHosts: ['localhost', '127.0.0.1'],
 
   // Default theme
@@ -60,11 +61,14 @@ export const ANALYTICS_EVENTS = {
   COMPARE_CURL: 'compare_curl',
   // DeepLink
   LAUNCH_DEEPLINK: 'launch_deeplink',
-  // Text
-  CONVERT_CASE: 'convert_case',
-  COUNT_WORDS: 'count_words',
+  // Lottie (props are fixed labels and counts only — never file names or content)
+  LOAD_LOTTIE: 'load_lottie',
+  REPLACE_LOTTIE_COLOR: 'replace_lottie_color',
+  DOWNLOAD_LOTTIE: 'download_lottie',
+  VALIDATE_LOTTIE: 'validate_lottie',
+  OPTIMIZE_LOTTIE: 'optimize_lottie',
+  CONVERT_LOTTIE: 'convert_lottie',
   // Security
-  GENERATE_PASSWORD: 'generate_password',
   GENERATE_UUID: 'generate_uuid',
   // Social
   GENERATE_WHATSAPP_LINK: 'generate_whatsapp_link',

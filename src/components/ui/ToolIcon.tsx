@@ -14,13 +14,13 @@ import {
   Regex,
   Zap,
   BookOpen,
-  FileText,
-  CaseSensitive,
-  KeyRound,
   Fingerprint,
   MessageSquare,
-  Calendar,
   Wrench,
+  Film,
+  ShieldCheck,
+  Gauge,
+  FolderArchive,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -39,12 +39,12 @@ const ICON_MAP: Record<string, LucideIcon> = {
   'regex-tester': Regex,
   'regex-generator': Zap,
   'regex-library': BookOpen,
-  'word-counter': FileText,
-  'text-case-converter': CaseSensitive,
-  'password-generator': KeyRound,
   'uuid-generator': Fingerprint,
   'whatsapp-link': MessageSquare,
-  'age-calculator': Calendar,
+  'lottie-player': Film,
+  'lottie-converter': FolderArchive,
+  'lottie-validator': ShieldCheck,
+  'lottie-optimizer': Gauge,
 };
 
 interface ToolIconProps {

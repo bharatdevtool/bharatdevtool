@@ -12,7 +12,7 @@
 
 | # | Tool | Route | Category |
 |---|------|--------|----------|
-| 1 | JSON Formatter / Beautifier / Validator | `/` or `/tools/json-formatter` | JSON |
+| 1 | JSON Formatter / Beautifier / Validator | `/tools/json-formatter` (`/` redirects here) | JSON |
 | 2 | JSON Diff / Comparison | `/tools/json-diff` | JSON |
 | 3 | QR Code Generator | `/tools/qr-generator` | QR |
 | 4 | QR Code Decoder | `/tools/qr-decoder` | QR |
@@ -26,12 +26,14 @@
 | 12 | Regex Tester | `/tools/regex-tester` | Regex |
 | 13 | Regex Generator | `/tools/regex-generator` | Regex |
 | 14 | Regex Library | `/tools/regex-library` | Regex |
-| 15 | Word Counter & Character Counter | `/tools/word-counter` | Text |
-| 16 | Text Case Converter | `/tools/text-case-converter` | Text |
-| 17 | Password Generator | `/tools/password-generator` | Security |
-| 18 | UUID Generator (v1, v4, v7) | `/tools/uuid-generator` | Security |
-| 19 | WhatsApp Link Generator | `/tools/whatsapp-link` | Social |
-| 20 | Age Calculator | `/tools/age-calculator` | Utility |
+| 15 | UUID Generator (v1, v4, v7) | `/tools/uuid-generator` | Security |
+| 16 | WhatsApp Link Generator | `/tools/whatsapp-link` | Social |
+| 17 | Lottie Player & Studio | `/tools/lottie-player` | Lottie |
+| 18 | Lottie to dotLottie Converter | `/tools/lottie-converter` | Lottie |
+| 19 | Lottie Validator | `/tools/lottie-validator` | Lottie |
+| 20 | Lottie Optimizer | `/tools/lottie-optimizer` | Lottie |
+
+Word Counter, Text Case Converter, Password Generator and Age Calculator were retired; their old URLs redirect to `/tools`.
 
 ## Tech Stack
 
@@ -79,7 +81,7 @@
 | Service | Purpose | Key |
 |---------|---------|-----|
 | Google Analytics 4 | Usage tracking | `G-H00TEVH9KG` |
-| Sentry | Error tracking | `377fa2c5032178b56ab058bb0a0fffbb` |
+| Sentry | Error tracking | DSN via `NEXT_PUBLIC_SENTRY_DSN` (old loader key `377fa2c5032178b56ab058bb0a0fffbb`) |
 | ImageKit | Logo/image CDN | `https://ik.imagekit.io/bdt/` |
 | Google Forms | User feedback | `https://forms.gle/TA7WEhzzQ6csQFGZ7` |
 

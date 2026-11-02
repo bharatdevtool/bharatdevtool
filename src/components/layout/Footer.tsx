@@ -1,29 +1,33 @@
 import React from 'react';
 import Link from 'next/link';
-import { ShieldCheck, Heart, Sparkles, Terminal, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { TOOLS } from '@/config/tools';
 import { SITE } from '@/config/site';
 
 export default function Footer() {
   const year = new Date().getFullYear();
 
-  // Group tools into 4 logical dev domains
+  // Group tools into logical dev domains
   const categories = [
+    {
+      title: 'Lottie Tools',
+      toolIds: ['lottie-player', 'lottie-converter', 'lottie-validator', 'lottie-optimizer'],
+    },
     {
       title: 'JSON & APIs',
       toolIds: ['json-formatter', 'json-diff', 'curl-tester', 'curl-comparison', 'deeplink'],
     },
     {
       title: 'Encoding & Security',
-      toolIds: ['base64', 'url-encoder', 'uuid-generator', 'password-generator'],
+      toolIds: ['base64', 'url-encoder', 'uuid-generator'],
     },
     {
-      title: 'Regex & Text',
-      toolIds: ['regex-tester', 'regex-generator', 'regex-library', 'word-counter', 'text-case-converter'],
+      title: 'Regex Tools',
+      toolIds: ['regex-tester', 'regex-generator', 'regex-library'],
     },
     {
-      title: 'Design & Utilities',
-      toolIds: ['qr-generator', 'qr-decoder', 'color-picker', 'gradient-generator', 'whatsapp-link', 'age-calculator'],
+      title: 'Design & Social',
+      toolIds: ['qr-generator', 'qr-decoder', 'color-picker', 'gradient-generator', 'whatsapp-link'],
     },
   ];
 
@@ -31,7 +35,7 @@ export default function Footer() {
     <footer className="border-t border-border bg-card/40 mt-auto">
       {/* Main Footer Links */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-8">
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-1 space-y-3">
             <Link href="/tools" className="text-sm font-bold tracking-tight text-foreground flex items-center gap-2">
@@ -39,7 +43,7 @@ export default function Footer() {
               {SITE.name}
             </Link>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              20 free, open-source, client-side utilities engineered for modern developers.
+              {TOOLS.length} free, privacy-first, client-side utilities engineered for modern developers.
             </p>
             <div className="pt-2 flex items-center gap-2 text-[11px] text-emerald-500 font-medium">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />

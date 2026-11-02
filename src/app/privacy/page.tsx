@@ -4,7 +4,7 @@ import { SITE } from '@/config/site';
 
 export const metadata: Metadata = generateStaticMetadata({
   title: 'Privacy Policy',
-  description: 'Privacy policy for Bharat Dev Tools. We do not collect or store your data.',
+  description: 'Privacy policy for Bharat Dev Tools. Your tool input never leaves your browser; we only use anonymous usage analytics and error reports.',
   path: '/privacy',
 });
 

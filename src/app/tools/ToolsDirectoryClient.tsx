@@ -2,22 +2,21 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { Search, Sparkles, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Search, Sparkles, ArrowRight } from 'lucide-react';
 import { TOOLS, ToolCategory } from '@/config/tools';
 import ToolIcon from '@/components/ui/ToolIcon';
 
 const FILTER_CATEGORIES: ('All' | ToolCategory)[] = [
   'All',
   'JSON',
+  'Lottie',
   'Encoding',
   'Security',
   'Regex',
   'API/Network',
   'QR',
   'Color',
-  'Text',
   'Social',
-  'Utility',
 ];
 
 export default function ToolsDirectoryClient() {
@@ -42,7 +41,7 @@ export default function ToolsDirectoryClient() {
       {/* Hero Section */}
       <div className="text-center max-w-2xl mx-auto mb-10">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-medium mb-3">
-          <Sparkles className="w-3.5 h-3.5" /> 20 Professional Developer Utilities
+          <Sparkles className="w-3.5 h-3.5" /> {TOOLS.length} Professional Developer Utilities
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground">
           Developer Tools, Refined.

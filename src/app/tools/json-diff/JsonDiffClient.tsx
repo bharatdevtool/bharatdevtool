@@ -5,6 +5,7 @@ import ToolLayout from '@/components/layout/ToolLayout';
 import CodeEditor from '@/components/ui/CodeEditor';
 import ErrorMessage from '@/components/ui/ErrorMessage';
 import { diffJSON, diffStats, type DiffNode } from '@/lib/json/differ';
+import { useCrossToolData } from '@/hooks/useCrossToolData';
 import { analytics } from '@/lib/analytics';
 import { ANALYTICS_EVENTS } from '@/config/site';
 import { GitCompare, PlusCircle, MinusCircle, RefreshCw, Sparkles, CheckCircle2 } from 'lucide-react';
@@ -77,6 +78,12 @@ export default function JsonDiffClient() {
   const [stats, setStats] = useState<{ added: number; removed: number; changed: number } | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  useCrossToolData<{ left: string; right: string }>('json-diff', ({ left, right }) => {
+    setLeftInput(left);
+    setRightInput(right);
+    handleCompare(left, right);
+  });
+
   function handleCompare(leftVal = leftInput, rightVal = rightInput) {
     setError(null);
     setDiffResult(null);
@@ -88,9 +95,7 @@ export default function JsonDiffClient() {
     }
 
     try {
-      const leftObj = JSON.parse(leftVal);
-      const rightObj = JSON.parse(rightVal);
-      const result = diffJSON(leftObj, rightObj);
+      const result = diffJSON(leftVal, rightVal);
       setDiffResult(result);
       setStats(diffStats(result));
       analytics.track(ANALYTICS_EVENTS.COMPARE_JSON);

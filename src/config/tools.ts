@@ -10,15 +10,14 @@
 
 export type ToolCategory =
   | 'JSON'
+  | 'Lottie'
   | 'QR'
   | 'Color'
   | 'API/Network'
   | 'Encoding'
   | 'Regex'
-  | 'Text'
   | 'Security'
-  | 'Social'
-  | 'Utility';
+  | 'Social';
 
 export interface Tool {
   id: string;
@@ -29,8 +28,6 @@ export interface Tool {
   /** Short description for footer / cards */
   shortDesc: string;
   keywords: string[];
-  /** Icon emoji for quick visual ID */
-  icon: string;
   /** Whether this tool needs a heavy client-side lib (lazy load) */
   heavy?: boolean;
 }
@@ -42,9 +39,8 @@ export const TOOLS: Tool[] = [
     label: 'JSON Formatter',
     route: '/tools/json-formatter',
     category: 'JSON',
-    icon: '{}',
     description:
-      'Format, beautify, minify, validate, escape, unescape, and repair JSON instantly. Free online tool with syntax highlighting and error detection.',
+      'Format, beautify, minify, validate, escape and repair JSON instantly. Free online JSON formatter with clear error positions. Runs 100% in your browser.',
     shortDesc: 'Format, validate & minify JSON',
     keywords: ['json formatter', 'json beautifier', 'json minifier', 'json validator', 'pretty print json', 'json escape'],
     heavy: true,
@@ -54,9 +50,8 @@ export const TOOLS: Tool[] = [
     label: 'JSON Diff',
     route: '/tools/json-diff',
     category: 'JSON',
-    icon: '⇄',
     description:
-      'Compare two JSON structures side-by-side and highlight differences. Free online JSON comparison tool.',
+      'Compare two JSON documents and see every added, removed and changed key in a clear diff tree. Free online JSON diff tool that runs fully in your browser.',
     shortDesc: 'Compare JSON structures side-by-side',
     keywords: ['json diff', 'json compare', 'json comparison', 'json difference'],
     heavy: true,
@@ -67,9 +62,8 @@ export const TOOLS: Tool[] = [
     label: 'QR Code Generator',
     route: '/tools/qr-generator',
     category: 'QR',
-    icon: '⬛',
     description:
-      'Create QR codes online for URLs, text, WiFi, email, and more. Download as PNG or SVG. Free, no sign-up.',
+      'Create QR codes for URLs, plain text and WiFi networks with custom colors and error correction. Free QR code generator that works offline in your browser.',
     shortDesc: 'Generate QR codes for any content',
     keywords: ['qr code generator', 'create qr code', 'free qr generator', 'qr code maker'],
     heavy: true,
@@ -79,9 +73,8 @@ export const TOOLS: Tool[] = [
     label: 'QR Code Decoder',
     route: '/tools/qr-decoder',
     category: 'QR',
-    icon: '🔍',
     description:
-      'Decode and scan QR codes from images. Extract URLs, text, and data. Free online QR reader, no sign-up.',
+      'Decode QR codes from images and screenshots instantly. Upload or drag and drop a picture to read its content. Free, private, runs in your browser.',
     shortDesc: 'Decode QR code images',
     keywords: ['qr code decoder', 'qr scanner', 'qr reader', 'scan qr code', 'decode qr'],
     heavy: true,
@@ -92,9 +85,8 @@ export const TOOLS: Tool[] = [
     label: 'Color Picker',
     route: '/tools/color-picker',
     category: 'Color',
-    icon: '🎨',
     description:
-      'Professional color picker with HEX, RGB, HSL conversion. Generate palettes, check contrast ratios, export CSS variables.',
+      'Pick colors and convert between HEX, RGB and HSL, explore complementary and triadic palettes, and check WCAG contrast. Free online color picker.',
     shortDesc: 'Pick & convert colors: HEX, RGB, HSL',
     keywords: ['color picker', 'hex color', 'rgb color', 'hsl color', 'color converter', 'color palette generator'],
   },
@@ -103,9 +95,8 @@ export const TOOLS: Tool[] = [
     label: 'CSS Gradient Generator',
     route: '/tools/gradient-generator',
     category: 'Color',
-    icon: '🌈',
     description:
-      'Generate beautiful CSS linear, radial, and conic gradients visually. Copy CSS code instantly.',
+      'Build linear, radial and conic CSS gradients with multiple color stops and a live preview, then copy the CSS. Free online CSS gradient generator.',
     shortDesc: 'Generate CSS linear, radial & conic gradients',
     keywords: ['css gradient generator', 'linear gradient', 'radial gradient', 'gradient css', 'background gradient'],
   },
@@ -115,9 +106,8 @@ export const TOOLS: Tool[] = [
     label: 'cURL Tester',
     route: '/tools/curl-tester',
     category: 'API/Network',
-    icon: '🌐',
     description:
-      'Run and debug API requests with cURL syntax online. Test HTTP endpoints, inspect headers and responses.',
+      'Parse cURL commands into method, URL, headers and body, and convert them to JavaScript fetch or Python requests code. Free and runs in your browser.',
     shortDesc: 'Run & debug cURL API requests',
     keywords: ['curl tester', 'api tester', 'curl online', 'http request tester', 'rest api tester'],
   },
@@ -126,9 +116,8 @@ export const TOOLS: Tool[] = [
     label: 'cURL Comparison',
     route: '/tools/curl-comparison',
     category: 'API/Network',
-    icon: '⇆',
     description:
-      'Compare two cURL commands side-by-side. Highlight differences in headers, methods, params, and body.',
+      'Compare two cURL commands side by side and spot differences in method, URL, query params, headers and body. Free online cURL diff tool, fully private.',
     shortDesc: 'Compare two cURL commands',
     keywords: ['curl comparison', 'compare curl commands', 'curl diff', 'api comparison'],
   },
@@ -137,9 +126,8 @@ export const TOOLS: Tool[] = [
     label: 'DeepLink Launcher',
     route: '/tools/deeplink',
     category: 'API/Network',
-    icon: '🔗',
     description:
-      'Launch and test deep links for Android and iOS apps. Encode, decode, and generate QR codes from deep links.',
+      'Parse, inspect and launch app deep links and custom URL schemes. Check scheme, host, path and query parameters before testing on device. Free tool.',
     shortDesc: 'Test Android & iOS deep links',
     keywords: ['deeplink tester', 'deep link launcher', 'android deep link', 'ios deep link', 'app link tester'],
   },
@@ -149,9 +137,8 @@ export const TOOLS: Tool[] = [
     label: 'Base64 Encoder / Decoder',
     route: '/tools/base64',
     category: 'Encoding',
-    icon: '🔤',
     description:
-      'Encode and decode Base64 strings online. Supports text and file input. Free, no sign-up.',
+      'Encode text to Base64 and decode Base64 back to text instantly, with full Unicode support. Free online Base64 encoder and decoder, private in your browser.',
     shortDesc: 'Encode & decode Base64 strings',
     keywords: ['base64 encoder', 'base64 decoder', 'encode base64', 'decode base64', 'base64 online'],
   },
@@ -160,9 +147,8 @@ export const TOOLS: Tool[] = [
     label: 'URL Encoder / Decoder',
     route: '/tools/url-encoder',
     category: 'Encoding',
-    icon: '🔗',
     description:
-      'Encode and decode URLs with percent encoding. Parse URL components and query parameters.',
+      'Percent-encode URLs and query parameters, or decode and inspect encoded URLs instantly. Free online URL encoder and decoder that runs in your browser.',
     shortDesc: 'URL percent-encode & decode',
     keywords: ['url encoder', 'url decoder', 'percent encoding', 'uri encoder', 'url encode online'],
   },
@@ -172,9 +158,8 @@ export const TOOLS: Tool[] = [
     label: 'Regex Tester',
     route: '/tools/regex-tester',
     category: 'Regex',
-    icon: '.*',
     description:
-      'Test and debug regular expressions with live match highlighting. Supports all JS regex flags.',
+      'Test JavaScript regular expressions live with highlighted matches, capture groups and flags. Free online regex tester with ready-made example patterns.',
     shortDesc: 'Test & debug regex with live highlighting',
     keywords: ['regex tester', 'regular expression tester', 'regex online', 'regex debugger', 'regex match'],
   },
@@ -183,9 +168,8 @@ export const TOOLS: Tool[] = [
     label: 'Regex Generator',
     route: '/tools/regex-generator',
     category: 'Regex',
-    icon: '⚡',
     description:
-      'Generate regular expressions from plain English descriptions. Select pattern types and get ready-to-use regex.',
+      'Generate regex for emails, URLs, phone numbers, dates, UUIDs and more, or build custom patterns, then test them instantly. Free online regex generator.',
     shortDesc: 'Generate regex from descriptions',
     keywords: ['regex generator', 'generate regex', 'regular expression generator', 'regex builder'],
   },
@@ -194,55 +178,19 @@ export const TOOLS: Tool[] = [
     label: 'Regex Library',
     route: '/tools/regex-library',
     category: 'Regex',
-    icon: '📚',
     description:
-      'Browse a curated library of common regex patterns for email, phone, URL, date, and more.',
+      'Browse a curated library of tested regular expressions for emails, URLs, phone numbers and more, with examples. Copy or test any pattern for free.',
     shortDesc: 'Browse common regex patterns',
     keywords: ['regex library', 'regex patterns', 'common regex', 'regex examples', 'regex cheatsheet'],
   },
-  // ── Text ──────────────────────────────────────────────────
-  {
-    id: 'word-counter',
-    label: 'Word Counter',
-    route: '/tools/word-counter',
-    category: 'Text',
-    icon: '📝',
-    description:
-      'Count words, characters, sentences, and paragraphs. Reading time estimator and keyword density.',
-    shortDesc: 'Count words, characters & sentences',
-    keywords: ['word counter', 'character counter', 'word count online', 'character count', 'text analyzer'],
-  },
-  {
-    id: 'text-case-converter',
-    label: 'Text Case Converter',
-    route: '/tools/text-case-converter',
-    category: 'Text',
-    icon: 'Aa',
-    description:
-      'Convert text between UPPERCASE, lowercase, Title Case, camelCase, snake_case, kebab-case, and more.',
-    shortDesc: 'Convert text case instantly',
-    keywords: ['text case converter', 'uppercase', 'lowercase', 'camelcase', 'snake_case', 'kebab-case', 'title case'],
-  },
   // ── Security ──────────────────────────────────────────────
-  {
-    id: 'password-generator',
-    label: 'Password Generator',
-    route: '/tools/password-generator',
-    category: 'Security',
-    icon: '🔒',
-    description:
-      'Generate strong, secure, random passwords. Customize length, character sets, and complexity.',
-    shortDesc: 'Generate strong random passwords',
-    keywords: ['password generator', 'random password', 'strong password', 'secure password generator'],
-  },
   {
     id: 'uuid-generator',
     label: 'UUID Generator',
     route: '/tools/uuid-generator',
     category: 'Security',
-    icon: '🆔',
     description:
-      'Generate UUIDs (v1, v4, v7) online. Bulk generation, formatting options, and validation.',
+      'Generate UUID v1, v4 and v7 in bulk with uppercase and no-hyphen options, using secure browser randomness. Free online UUID generator, nothing stored.',
     shortDesc: 'Generate UUID v1, v4, v7',
     keywords: ['uuid generator', 'guid generator', 'uuid v4', 'uuid v7', 'random uuid', 'unique id generator'],
   },
@@ -252,23 +200,66 @@ export const TOOLS: Tool[] = [
     label: 'WhatsApp Link Generator',
     route: '/tools/whatsapp-link',
     category: 'Social',
-    icon: '💬',
     description:
-      'Create wa.me click-to-chat WhatsApp links with pre-filled messages. Works for any phone number.',
+      'Create WhatsApp click-to-chat links with a pre-filled message and a scannable QR code. No need to save the number. Free WhatsApp link generator.',
     shortDesc: 'Create wa.me click-to-chat links',
     keywords: ['whatsapp link generator', 'wa.me link', 'whatsapp click to chat', 'whatsapp api link'],
   },
-  // ── Utility ───────────────────────────────────────────────
+  // ── Lottie ────────────────────────────────────────────────
   {
-    id: 'age-calculator',
-    label: 'Age Calculator',
-    route: '/tools/age-calculator',
-    category: 'Utility',
-    icon: '🎂',
+    id: 'lottie-player',
+    label: 'Lottie Player & Studio',
+    route: '/tools/lottie-player',
+    category: 'Lottie',
     description:
-      'Calculate exact age in years, months, days, hours, and minutes from a date of birth.',
-    shortDesc: 'Calculate exact age from date of birth',
-    keywords: ['age calculator', 'calculate age', 'date of birth calculator', 'birthday calculator'],
+      'Preview, inspect and edit Lottie animations online. Play .json and .lottie files, swap colors, inspect layers and audit warnings. 100% in your browser.',
+    shortDesc: 'Preview, inspect & edit Lottie animations',
+    keywords: [
+      'lottie player',
+      'lottie viewer online',
+      'lottie previewer',
+      'dotlottie player',
+      'lottie editor',
+      'lottie json editor',
+      'lottie color editor',
+      'lottie layer inspector',
+      'bodymovin preview',
+      'edit lottie online',
+    ],
+    heavy: true,
+  },
+  {
+    id: 'lottie-converter',
+    label: 'Lottie to dotLottie Converter',
+    route: '/tools/lottie-converter',
+    category: 'Lottie',
+    description:
+      'Convert Bodymovin JSON to compressed dotLottie (.lottie) archives and unpack .lottie packages to clean JSON. 100% offline client-side compression.',
+    shortDesc: 'Convert between JSON and .lottie archives',
+    keywords: ['lottie converter', 'json to dotlottie', 'lottie to json', 'dotlottie converter', 'compress lottie', 'dotlottie to json'],
+    heavy: true,
+  },
+  {
+    id: 'lottie-validator',
+    label: 'Lottie Validator',
+    route: '/tools/lottie-validator',
+    category: 'Lottie',
+    description:
+      'Validate Lottie animation JSON structure, verify layer parent hierarchies, and detect missing asset references online. 100% client-side validation.',
+    shortDesc: 'Validate Lottie structure & asset health',
+    keywords: ['lottie validator', 'validate lottie json', 'lottie syntax check', 'bodymovin validator', 'lottie error checker'],
+    heavy: false,
+  },
+  {
+    id: 'lottie-optimizer',
+    label: 'Lottie Optimizer',
+    route: '/tools/lottie-optimizer',
+    category: 'Lottie',
+    description:
+      'Safely compress Lottie animations with configurable coordinate rounding and optional metadata cleanup. Side-by-side preview with zero silent pruning.',
+    shortDesc: 'Safely compress & clean Lottie animations',
+    keywords: ['lottie optimizer', 'compress lottie json', 'reduce lottie file size', 'clean lottie metadata', 'bodymovin optimizer'],
+    heavy: true,
   },
 ];
 
@@ -284,6 +275,6 @@ export function getToolsByCategory(category: ToolCategory): Tool[] {
 
 /** All unique categories in display order */
 export const TOOL_CATEGORIES: ToolCategory[] = [
-  'JSON', 'QR', 'Color', 'API/Network', 'Encoding', 'Regex', 'Text', 'Security', 'Social', 'Utility',
+  'JSON', 'Lottie', 'QR', 'Color', 'API/Network', 'Encoding', 'Regex', 'Security', 'Social',
 ];
 

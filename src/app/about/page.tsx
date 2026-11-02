@@ -2,11 +2,12 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { generateStaticMetadata } from '@/config/seo';
 import { SITE } from '@/config/site';
+import { TOOLS } from '@/config/tools';
 import { ShieldCheck, Zap, HeartHandshake, MapPin, Sparkles, ArrowRight } from 'lucide-react';
 
 export const metadata: Metadata = generateStaticMetadata({
-  title: 'About Bharat Dev Tools — Privacy-First Developer Studio',
-  description: 'Learn about Bharat Dev Tools — 20 free, open-source, client-side developer utilities with zero telemetry.',
+  title: 'About — Privacy-First Developer Tools',
+  description: `Learn about Bharat Dev Tools: ${TOOLS.length} free developer utilities that process your data entirely in your browser. No sign-up, nothing uploaded.`,
   path: '/about',
 });
 
@@ -86,7 +87,7 @@ export default function AboutPage() {
           href="/tools"
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-white text-xs font-semibold hover:bg-primary/90 transition-all shadow-xs"
         >
-          <span>Explore All 20 Tools</span>
+          <span>Explore All {TOOLS.length} Tools</span>
           <ArrowRight className="w-3.5 h-3.5" />
         </Link>
       </div>
