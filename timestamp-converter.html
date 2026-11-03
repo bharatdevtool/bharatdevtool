@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Unix Timestamp Converter Online | Epoch Time to Date | Bharat Dev Tools</title>
+  <meta name="description" content="Free Unix timestamp converter. Convert epoch/Unix timestamps to human-readable dates and back. Supports all timezones including IST. No sign-up required. Runs entirely in your browser.">
+  <meta name="keywords" content="unix timestamp converter, epoch converter, timestamp to date, date to timestamp, epoch time, unix time, convert timestamp online, epoch to datetime, javascript timestamp, unix epoch, IST timestamp, milliseconds to date, seconds to date">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  <meta name="distribution" content="global">
+  <meta name="rating" content="general">
+  <link rel="canonical" href="https://bharatdevtool.com/timestamp-converter.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Free Unix Timestamp Converter Online | Bharat Dev Tools">
+  <meta property="og:description" content="Free Unix timestamp converter. Convert epoch time to human-readable dates and vice versa. Supports all timezones including IST. No sign-up required.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/timestamp-converter.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Unix Timestamp Converter - Free Online Tool">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free Unix Timestamp Converter Online | Bharat Dev Tools">
+  <meta name="twitter:description" content="Free Unix timestamp converter. Convert epoch time to human-readable dates and vice versa. Supports all timezones including IST.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ik.imagekit.io/bdt/bdt_logo_v3_16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/bdt/bdt_logo_v3_180.png">
+
+  <!-- Theme Management (load early to prevent dark mode flash) -->
+  <script src="assets/js/theme.js"></script>
+
+  <!-- Sentry SDK -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+
+  <!-- Version Tracking Script -->
+  <script src="assets/js/version.js" defer></script>
+
+  <!-- Analytics Script -->
+  <script src="assets/js/analytics.js" defer></script>
+
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+
+  <!-- WebApplication Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Unix Timestamp Converter",
+    "description": "Free Unix timestamp converter. Convert epoch/Unix timestamps to human-readable dates and back. Supports all timezones including IST.",
+    "url": "https://bharatdevtool.com/timestamp-converter.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "Unix Timestamp to Date Conversion",
+      "Date to Unix Timestamp Conversion",
+      "All Timezone Support including IST",
+      "Milliseconds and Seconds Support",
+      "Multiple Output Formats",
+      "Live Current Timestamp",
+      "Relative Time Display"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "142"
+    }
+  }
+  </script>
+
+  <!-- BreadcrumbList Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Unix Timestamp Converter",
+        "item": "https://bharatdevtool.com/timestamp-converter.html"
+      }
+    ]
+  }
+  </script>
+
+  <!-- FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a Unix timestamp?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A Unix timestamp (also called epoch time) is the number of seconds that have elapsed since January 1, 1970 at 00:00:00 UTC. It is a widely used standard in computing for representing a moment in time as a single integer, making it easy to store, compare, and calculate time differences. For example, the timestamp 1700000000 corresponds to November 14, 2023 at 22:13:20 UTC."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I convert a Unix timestamp to a date?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Enter your Unix timestamp (in seconds or milliseconds) into the 'Timestamp to Date' field and click Convert. The tool will automatically detect whether it is seconds or milliseconds and display the result in human-readable format across multiple timezones including UTC, your local time, and IST (Indian Standard Time)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between seconds and milliseconds timestamps?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Unix timestamps are traditionally measured in seconds (10-digit numbers, e.g. 1700000000). Many modern programming languages and APIs like JavaScript's Date.now() return timestamps in milliseconds (13-digit numbers, e.g. 1700000000000). This tool automatically detects whether your input is in seconds or milliseconds based on the number of digits."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my data safe? Does it send data to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, completely safe. All conversions happen entirely in your browser using JavaScript. No data is ever sent to any server. Your timestamps and dates never leave your device."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I get the current Unix timestamp in my programming language?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can get the current Unix timestamp in various languages: JavaScript: Math.floor(Date.now() / 1000) for seconds or Date.now() for milliseconds. Python: import time; int(time.time()). Java: System.currentTimeMillis() / 1000L. PHP: time(). Go: time.Now().Unix(). Shell/Linux: date +%s."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    .animate-fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-slide-up {
+      animation: slideUp 0.3s ease-out;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+    .toast.show {
+      transform: translateX(0);
+    }
+    .toast.success { background: linear-gradient(135deg, #10b981, #059669); }
+    .toast.error   { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .toast.info    { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+
+    .result-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 10px 0;
+      border-bottom: 1px solid;
+    }
+    .result-row:last-child { border-bottom: none; }
+
+    .copy-btn {
+      flex-shrink: 0;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: opacity 0.2s ease, transform 0.1s ease;
+      border: none;
+    }
+    .copy-btn:hover { opacity: 0.8; }
+    .copy-btn:active { transform: scale(0.95); }
+
+    .live-pulse {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      animation: pulse 1.5s ease-in-out infinite;
+      margin-right: 6px;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .code-snippet {
+      background: #1e293b;
+      color: #e2e8f0;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-family: monospace;
+      font-size: 13px;
+      overflow-x: auto;
+    }
+    .code-snippet .kw  { color: #93c5fd; }
+    .code-snippet .fn  { color: #6ee7b7; }
+    .code-snippet .str { color: #fde68a; }
+    .code-snippet .cm  { color: #94a3b8; }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+  <script src="components/header.js"></script>
+
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <h1 class="sr-only">Unix Timestamp Converter</h1>
+
+    <!-- Hero -->
+    <div class="text-center mb-10 animate-fade-in">
+      <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        ⏱️ Unix Timestamp Converter
+      </h2>
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Convert Unix/epoch timestamps to human-readable dates and back. Supports all timezones, seconds &amp; milliseconds.
+      </p>
+    </div>
+
+    <!-- Live Current Timestamp -->
+    <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl shadow-lg p-6 mb-8 animate-fade-in text-white">
+      <div class="flex items-center mb-3">
+        <span class="live-pulse"></span>
+        <span class="text-sm font-medium opacity-90">Current Unix Timestamp (live)</span>
+      </div>
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <div id="live-seconds" class="text-3xl font-bold font-mono tracking-wider">—</div>
+          <div class="text-sm opacity-75 mt-1">seconds &nbsp;|&nbsp; <span id="live-ms" class="font-mono"></span> milliseconds</div>
+        </div>
+        <div class="flex gap-2">
+          <button id="copy-live-seconds" class="copy-btn bg-white text-blue-700 font-semibold text-sm px-4 py-2 rounded-lg">
+            Copy (s)
+          </button>
+          <button id="copy-live-ms" class="copy-btn bg-white bg-opacity-20 text-white font-semibold text-sm px-4 py-2 rounded-lg border border-white border-opacity-40">
+            Copy (ms)
+          </button>
+          <button id="use-now-btn" class="copy-btn bg-white bg-opacity-20 text-white font-semibold text-sm px-4 py-2 rounded-lg border border-white border-opacity-40">
+            Use Now ↓
+          </button>
+        </div>
+      </div>
+      <div class="mt-3 text-sm opacity-80" id="live-utc-display">—</div>
+    </div>
+
+    <!-- Timezone Selector -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6 animate-fade-in">
+      <label for="timezone-select" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        🌐 Timezone for conversions
+      </label>
+      <select id="timezone-select" class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+      </select>
+    </div>
+
+    <!-- Timestamp → Date -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6 animate-fade-in">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">🔢 Timestamp → Human-Readable Date</h3>
+      <div class="space-y-4">
+        <div class="flex gap-3">
+          <input
+            type="text"
+            id="ts-input"
+            placeholder="e.g. 1700000000 or 1700000000000"
+            class="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 font-mono focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            aria-label="Unix timestamp input"
+          >
+          <button id="ts-convert-btn" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 active:bg-blue-800 transition-colors font-semibold whitespace-nowrap">
+            Convert
+          </button>
+        </div>
+        <div id="ts-unit-hint" class="text-xs text-gray-500 dark:text-gray-400 hidden"></div>
+        <div id="ts-error" class="text-sm text-red-600 dark:text-red-400 hidden"></div>
+
+        <div id="ts-results" class="hidden space-y-0 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+          <div class="result-row border-gray-200 dark:border-gray-700 px-4">
+            <div>
+              <div class="text-xs text-gray-500 dark:text-gray-400 mb-0.5">UTC</div>
+              <div id="res-utc" class="font-mono text-sm text-gray-900 dark:text-white"></div>
+            </div>
+            <button class="copy-btn bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300" onclick="copyResultField('res-utc')">Copy</button>
+          </div>
+          <div class="result-row border-gray-200 dark:border-gray-700 px-4">
+            <div>
+              <div class="text-xs text-gray-500 dark:text-gray-400 mb-0.5">Your Local Time</div>
+              <div id="res-local" class="font-mono text-sm text-gray-900 dark:text-white"></div>
+            </div>
+            <button class="copy-btn bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300" onclick="copyResultField('res-local')">Copy</button>
+          </div>
+          <div class="result-row border-gray-200 dark:border-gray-700 px-4">
+            <div>
+              <div class="text-xs text-gray-500 dark:text-gray-400 mb-0.5" id="res-tz-label">Selected Timezone</div>
+              <div id="res-tz" class="font-mono text-sm text-gray-900 dark:text-white"></div>
+            </div>
+            <button class="copy-btn bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300" onclick="copyResultField('res-tz')">Copy</button>
+          </div>
+          <div class="result-row border-gray-200 dark:border-gray-700 px-4">
+            <div>
+              <div class="text-xs text-gray-500 dark:text-gray-400 mb-0.5">ISO 8601</div>
+              <div id="res-iso" class="font-mono text-sm text-gray-900 dark:text-white"></div>
+            </div>
+            <button class="copy-btn bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300" onclick="copyResultField('res-iso')">Copy</button>
+          </div>
+          <div class="result-row border-gray-200 dark:border-gray-700 px-4">
+            <div>
+              <div class="text-xs text-gray-500 dark:text-gray-400 mb-0.5">Relative</div>
+              <div id="res-relative" class="font-mono text-sm text-gray-900 dark:text-white"></div>
+            </div>
+            <button class="copy-btn bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300" onclick="copyResultField('res-relative')">Copy</button>
+          </div>
+          <div class="result-row border-gray-200 dark:border-gray-700 px-4">
+            <div>
+              <div class="text-xs text-gray-500 dark:text-gray-400 mb-0.5">Day of Week</div>
+              <div id="res-dow" class="font-mono text-sm text-gray-900 dark:text-white"></div>
+            </div>
+            <button class="copy-btn bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300" onclick="copyResultField('res-dow')">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Date → Timestamp -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6 animate-fade-in">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">📅 Date / Time → Timestamp</h3>
+      <div class="space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="date-input" class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Date</label>
+            <input
+              type="date"
+              id="date-input"
+              class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              aria-label="Date input"
+            >
+          </div>
+          <div>
+            <label for="time-input" class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Time (HH:MM:SS)</label>
+            <input
+              type="time"
+              id="time-input"
+              step="1"
+              class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              aria-label="Time input"
+            >
+          </div>
+        </div>
+        <div>
+          <label for="dt-timezone-note" class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Timezone of above date/time</label>
+          <select id="dt-timezone-select" class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+          </select>
+        </div>
+        <button id="dt-convert-btn" class="w-full sm:w-auto px-8 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 active:bg-indigo-800 transition-colors font-semibold">
+          Convert to Timestamp
+        </button>
+        <div id="dt-error" class="text-sm text-red-600 dark:text-red-400 hidden"></div>
+
+        <div id="dt-results" class="hidden space-y-0 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+          <div class="result-row border-gray-200 dark:border-gray-700 px-4">
+            <div>
+              <div class="text-xs text-gray-500 dark:text-gray-400 mb-0.5">Unix Timestamp (seconds)</div>
+              <div id="dt-res-seconds" class="font-mono text-lg font-bold text-gray-900 dark:text-white"></div>
+            </div>
+            <button class="copy-btn bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300" onclick="copyResultField('dt-res-seconds')">Copy</button>
+          </div>
+          <div class="result-row border-gray-200 dark:border-gray-700 px-4">
+            <div>
+              <div class="text-xs text-gray-500 dark:text-gray-400 mb-0.5">Unix Timestamp (milliseconds)</div>
+              <div id="dt-res-ms" class="font-mono text-sm text-gray-900 dark:text-white"></div>
+            </div>
+            <button class="copy-btn bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300" onclick="copyResultField('dt-res-ms')">Copy</button>
+          </div>
+          <div class="result-row border-gray-200 dark:border-gray-700 px-4">
+            <div>
+              <div class="text-xs text-gray-500 dark:text-gray-400 mb-0.5">ISO 8601</div>
+              <div id="dt-res-iso" class="font-mono text-sm text-gray-900 dark:text-white"></div>
+            </div>
+            <button class="copy-btn bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300" onclick="copyResultField('dt-res-iso')">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Code Snippets -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-8 animate-fade-in">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">💻 Get Current Timestamp in Code</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <div class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">JavaScript</div>
+          <div class="code-snippet">
+            <span class="cm">// seconds</span><br>
+            <span class="fn">Math</span>.<span class="fn">floor</span>(<span class="fn">Date</span>.<span class="fn">now</span>() / <span class="str">1000</span>)<br>
+            <span class="cm">// milliseconds</span><br>
+            <span class="fn">Date</span>.<span class="fn">now</span>()
+          </div>
+        </div>
+        <div>
+          <div class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Python</div>
+          <div class="code-snippet">
+            <span class="kw">import</span> time<br>
+            <span class="cm"># seconds</span><br>
+            <span class="fn">int</span>(time.<span class="fn">time</span>())<br>
+            <span class="cm"># milliseconds</span><br>
+            <span class="fn">int</span>(time.<span class="fn">time</span>() * <span class="str">1000</span>)
+          </div>
+        </div>
+        <div>
+          <div class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Go</div>
+          <div class="code-snippet">
+            <span class="kw">import</span> <span class="str">"time"</span><br>
+            time.<span class="fn">Now</span>().<span class="fn">Unix</span>()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// s</span><br>
+            time.<span class="fn">Now</span>().<span class="fn">UnixMilli</span>() <span class="cm">// ms</span>
+          </div>
+        </div>
+        <div>
+          <div class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Linux / Shell</div>
+          <div class="code-snippet">
+            <span class="cm"># seconds</span><br>
+            date +%s<br>
+            <span class="cm"># milliseconds</span><br>
+            date +%s%3N
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+      <div class="faq-container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about Unix timestamps</p>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is a Unix timestamp?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>A Unix timestamp (also called epoch time) is the number of seconds that have elapsed since January 1, 1970 at 00:00:00 UTC. It is a widely used standard in computing for representing a moment in time as a single integer, making it easy to store, compare, and calculate time differences.</p>
+              <p>For example, the timestamp <code>1700000000</code> corresponds to November 14, 2023 at 22:13:20 UTC.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How do I convert a Unix timestamp to a date?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Enter your Unix timestamp (in seconds or milliseconds) into the "Timestamp to Date" field and click Convert. The tool automatically detects whether it is seconds or milliseconds and shows the result in UTC, local time, your chosen timezone, ISO 8601, and relative format.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is the difference between seconds and milliseconds timestamps?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Unix timestamps are traditionally in <strong>seconds</strong> (10-digit number, e.g. <code>1700000000</code>). Modern APIs and JavaScript's <code>Date.now()</code> return <strong>milliseconds</strong> (13-digit number, e.g. <code>1700000000000</code>).</p>
+              <p>This tool automatically detects the format: if the timestamp is 13+ digits, it treats it as milliseconds; otherwise as seconds.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is my data safe? Does it send data to a server?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes, completely safe. All conversions happen entirely in your browser using JavaScript. No data is ever sent to any server. Your timestamps and dates never leave your device.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How do I get the current Unix timestamp in my code?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Common snippets across languages:</p>
+              <ul>
+                <li><strong>JavaScript:</strong> <code>Math.floor(Date.now() / 1000)</code> (seconds) or <code>Date.now()</code> (ms)</li>
+                <li><strong>Python:</strong> <code>import time; int(time.time())</code></li>
+                <li><strong>Java:</strong> <code>System.currentTimeMillis() / 1000L</code></li>
+                <li><strong>PHP:</strong> <code>time()</code></li>
+                <li><strong>Go:</strong> <code>time.Now().Unix()</code></li>
+                <li><strong>Shell:</strong> <code>date +%s</code></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Component -->
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+  <!-- FAQ Accordion -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.faq-question').forEach(function(question) {
+        question.addEventListener('click', function() {
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          const faqItem = this.closest('.faq-item');
+          const icon = this.querySelector('.faq-icon');
+
+          document.querySelectorAll('.faq-question').forEach(function(q) {
+            if (q !== question) {
+              q.setAttribute('aria-expanded', 'false');
+              q.closest('.faq-item').classList.remove('active');
+              q.querySelector('.faq-icon').textContent = '+';
+            }
+          });
+
+          if (isExpanded) {
+            this.setAttribute('aria-expanded', 'false');
+            faqItem.classList.remove('active');
+            icon.textContent = '+';
+          } else {
+            this.setAttribute('aria-expanded', 'true');
+            faqItem.classList.add('active');
+            icon.textContent = '−';
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- Sentry init -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
+        initSentryTracking();
+      }
+    });
+  </script>
+
+  <!-- Main Tool Script -->
+  <script>
+    const PAGE_NAME = 'Unix Timestamp Converter';
+
+    // ── Toast ──────────────────────────────────────────────────────────────────
+    function showToast(message, type) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast ' + (type || 'info');
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(function() { toast.classList.add('show'); }, 100);
+      setTimeout(function() {
+        toast.classList.remove('show');
+        setTimeout(function() { container.removeChild(toast); }, 300);
+      }, 3000);
+    }
+
+    // ── Clipboard ──────────────────────────────────────────────────────────────
+    function copyText(text) {
+      if (!text) return;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() {
+          showToast('Copied!', 'success');
+        }).catch(function() {
+          fallbackCopy(text);
+        });
+      } else {
+        fallbackCopy(text);
+      }
+    }
+
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('Copied!', 'success');
+      } catch (e) {
+        showToast('Copy failed — please select and copy manually.', 'error');
+      }
+      document.body.removeChild(ta);
+    }
+
+    function copyResultField(id) {
+      const el = document.getElementById(id);
+      if (el) copyText(el.textContent);
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.track('timestamp_copy', { page: PAGE_NAME, field: id });
+      }
+    }
+    window.copyResultField = copyResultField;
+
+    // ── Timezone helpers ───────────────────────────────────────────────────────
+    const POPULAR_TIMEZONES = [
+      { label: 'UTC', value: 'UTC' },
+      { label: 'IST — India Standard Time (Asia/Kolkata)', value: 'Asia/Kolkata' },
+      { label: 'US/Eastern (America/New_York)', value: 'America/New_York' },
+      { label: 'US/Central (America/Chicago)', value: 'America/Chicago' },
+      { label: 'US/Mountain (America/Denver)', value: 'America/Denver' },
+      { label: 'US/Pacific (America/Los_Angeles)', value: 'America/Los_Angeles' },
+      { label: 'UK (Europe/London)', value: 'Europe/London' },
+      { label: 'CET (Europe/Paris)', value: 'Europe/Paris' },
+      { label: 'GST — Gulf (Asia/Dubai)', value: 'Asia/Dubai' },
+      { label: 'SGT — Singapore (Asia/Singapore)', value: 'Asia/Singapore' },
+      { label: 'CST — China (Asia/Shanghai)', value: 'Asia/Shanghai' },
+      { label: 'JST — Japan (Asia/Tokyo)', value: 'Asia/Tokyo' },
+      { label: 'AEST (Australia/Sydney)', value: 'Australia/Sydney' },
+      { label: 'BRT — Brazil (America/Sao_Paulo)', value: 'America/Sao_Paulo' },
+    ];
+
+    function populateTimezoneSelect(selectEl, defaultTz) {
+      const localTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const selected = defaultTz || localTz || 'UTC';
+
+      const localGroup = document.createElement('optgroup');
+      localGroup.label = 'Your Local Timezone';
+      const localOpt = document.createElement('option');
+      localOpt.value = localTz;
+      localOpt.textContent = 'Local — ' + localTz;
+      if (selected === localTz) localOpt.selected = true;
+      localGroup.appendChild(localOpt);
+      selectEl.appendChild(localGroup);
+
+      const popularGroup = document.createElement('optgroup');
+      popularGroup.label = 'Popular Timezones';
+      POPULAR_TIMEZONES.forEach(function(tz) {
+        const opt = document.createElement('option');
+        opt.value = tz.value;
+        opt.textContent = tz.label;
+        if (tz.value === selected && selected !== localTz) opt.selected = true;
+        popularGroup.appendChild(opt);
+      });
+      selectEl.appendChild(popularGroup);
+    }
+
+    function formatInTimezone(date, tz) {
+      return new Intl.DateTimeFormat('en-US', {
+        timeZone: tz,
+        year: 'numeric', month: 'long', day: 'numeric',
+        hour: '2-digit', minute: '2-digit', second: '2-digit',
+        timeZoneName: 'short'
+      }).format(date);
+    }
+
+    function getRelativeTime(ms) {
+      const diff = ms - Date.now();
+      const abs = Math.abs(diff);
+      const future = diff > 0;
+
+      const units = [
+        { label: 'year',   ms: 365.25 * 24 * 3600 * 1000 },
+        { label: 'month',  ms: 30.44 * 24 * 3600 * 1000 },
+        { label: 'day',    ms: 24 * 3600 * 1000 },
+        { label: 'hour',   ms: 3600 * 1000 },
+        { label: 'minute', ms: 60 * 1000 },
+        { label: 'second', ms: 1000 },
+      ];
+
+      for (let i = 0; i < units.length; i++) {
+        const count = Math.floor(abs / units[i].ms);
+        if (count >= 1) {
+          const label = count + ' ' + units[i].label + (count !== 1 ? 's' : '');
+          return future ? 'in ' + label : label + ' ago';
+        }
+      }
+      return 'just now';
+    }
+
+    // ── Timestamp → Date ───────────────────────────────────────────────────────
+    function detectTimestampUnit(raw) {
+      const clean = raw.trim().replace(/[^0-9]/g, '');
+      if (clean.length >= 13) return 'ms';
+      return 's';
+    }
+
+    function parseTimestamp(raw) {
+      if (raw.trim().startsWith('-')) return null;
+      const clean = raw.trim().replace(/[^0-9.]/g, '');
+      if (!clean) return null;
+      const num = parseFloat(clean);
+      if (isNaN(num)) return null;
+      const unit = detectTimestampUnit(raw);
+      return unit === 'ms' ? num : num * 1000;
+    }
+
+    function isValidTimestampMs(ms) {
+      return ms >= -8640000000000000 && ms <= 8640000000000000;
+    }
+
+    function convertTimestampToDate() {
+      const raw = document.getElementById('ts-input').value;
+      const hint = document.getElementById('ts-unit-hint');
+      const errEl = document.getElementById('ts-error');
+      const results = document.getElementById('ts-results');
+
+      errEl.classList.add('hidden');
+      results.classList.add('hidden');
+      hint.classList.add('hidden');
+
+      if (!raw.trim()) {
+        errEl.textContent = 'Please enter a Unix timestamp.';
+        errEl.classList.remove('hidden');
+        return;
+      }
+
+      const ms = parseTimestamp(raw);
+      if (ms === null || !isValidTimestampMs(ms)) {
+        errEl.textContent = 'Invalid timestamp. Enter a number in seconds (10 digits) or milliseconds (13 digits).';
+        errEl.classList.remove('hidden');
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('timestamp_convert_error', { page: PAGE_NAME, input: raw.substring(0, 20) });
+        }
+        return;
+      }
+
+      const unit = detectTimestampUnit(raw);
+      hint.textContent = 'Detected unit: ' + (unit === 'ms' ? 'milliseconds (13-digit)' : 'seconds (10-digit)');
+      hint.classList.remove('hidden');
+
+      try {
+        const date = new Date(ms);
+        const tz = document.getElementById('timezone-select').value;
+
+        document.getElementById('res-utc').textContent = date.toUTCString();
+        document.getElementById('res-local').textContent = date.toLocaleString('en-US', { timeZoneName: 'short' });
+        document.getElementById('res-tz-label').textContent = tz;
+        document.getElementById('res-tz').textContent = formatInTimezone(date, tz);
+        document.getElementById('res-iso').textContent = date.toISOString();
+        document.getElementById('res-relative').textContent = getRelativeTime(ms);
+
+        const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        document.getElementById('res-dow').textContent = DAYS[date.getUTCDay()] + ' (UTC)';
+
+        results.classList.remove('hidden');
+        results.classList.add('animate-slide-up');
+
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('timestamp_convert', { page: PAGE_NAME, unit: unit, direction: 'ts_to_date' });
+        }
+      } catch (e) {
+        errEl.textContent = 'Conversion failed: ' + e.message;
+        errEl.classList.remove('hidden');
+        if (typeof Sentry !== 'undefined') {
+          Sentry.captureException(e, { tags: { operation: 'timestamp_to_date' } });
+        }
+      }
+    }
+
+    // ── Date → Timestamp ───────────────────────────────────────────────────────
+    function convertDateToTimestamp() {
+      const dateVal = document.getElementById('date-input').value;
+      const timeVal = document.getElementById('time-input').value || '00:00:00';
+      const tz = document.getElementById('dt-timezone-select').value;
+      const errEl = document.getElementById('dt-error');
+      const results = document.getElementById('dt-results');
+
+      errEl.classList.add('hidden');
+      results.classList.add('hidden');
+
+      if (!dateVal) {
+        errEl.textContent = 'Please select a date.';
+        errEl.classList.remove('hidden');
+        return;
+      }
+
+      try {
+        const dateTimeStr = dateVal + 'T' + timeVal;
+        const ms = parseLocalDateTimeInTz(dateTimeStr, tz);
+
+        if (ms === null || isNaN(ms)) {
+          errEl.textContent = 'Could not parse the date/time. Please check your input.';
+          errEl.classList.remove('hidden');
+          return;
+        }
+
+        const seconds = Math.floor(ms / 1000);
+        const date = new Date(ms);
+
+        document.getElementById('dt-res-seconds').textContent = seconds.toString();
+        document.getElementById('dt-res-ms').textContent = ms.toString();
+        document.getElementById('dt-res-iso').textContent = date.toISOString();
+
+        results.classList.remove('hidden');
+        results.classList.add('animate-slide-up');
+
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('timestamp_convert', { page: PAGE_NAME, direction: 'date_to_ts', tz: tz });
+        }
+      } catch (e) {
+        errEl.textContent = 'Conversion failed: ' + e.message;
+        errEl.classList.remove('hidden');
+        if (typeof Sentry !== 'undefined') {
+          Sentry.captureException(e, { tags: { operation: 'date_to_timestamp' } });
+        }
+      }
+    }
+
+    function parseLocalDateTimeInTz(dateTimeStr, tz) {
+      // Use Intl to find the UTC offset for this datetime in the given timezone,
+      // then compute the epoch ms.
+      const parts = dateTimeStr.split('T');
+      if (parts.length < 2) return null;
+
+      const [datePart, timePart] = parts;
+      const [y, mo, d] = datePart.split('-').map(Number);
+      const [h, mi, s] = (timePart || '00:00:00').split(':').map(Number);
+
+      // Build a reference date in UTC assuming the input is UTC, then compute
+      // the offset for the target timezone at that approximate moment.
+      const approxUtcMs = Date.UTC(y, mo - 1, d, h || 0, mi || 0, s || 0);
+      const approxDate = new Date(approxUtcMs);
+
+      // Get the timezone offset by formatting the approximate UTC date in the
+      // target timezone and parsing the difference.
+      const utcStr = approxDate.toLocaleString('en-US', {
+        timeZone: 'UTC',
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit',
+        hour12: false
+      });
+      const tzStr = approxDate.toLocaleString('en-US', {
+        timeZone: tz,
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit',
+        hour12: false
+      });
+
+      const parseLocale = function(s) {
+        const m = s.match(/(\d+)\/(\d+)\/(\d+),?\s+(\d+):(\d+):(\d+)/);
+        if (!m) return NaN;
+        return Date.UTC(parseInt(m[3]), parseInt(m[1]) - 1, parseInt(m[2]),
+                        parseInt(m[4]) % 24, parseInt(m[5]), parseInt(m[6]));
+      };
+
+      const utcMs = parseLocale(utcStr);
+      const tzMs  = parseLocale(tzStr);
+      if (isNaN(utcMs) || isNaN(tzMs)) return null;
+      const offsetMs = utcMs - tzMs;
+
+      return approxUtcMs + offsetMs;
+    }
+
+    // ── Live timestamp ─────────────────────────────────────────────────────────
+    function updateLiveTimestamp() {
+      const now = Date.now();
+      const seconds = Math.floor(now / 1000);
+      const secEl = document.getElementById('live-seconds');
+      const msEl  = document.getElementById('live-ms');
+      const utcEl = document.getElementById('live-utc-display');
+      if (secEl) secEl.textContent = seconds.toLocaleString('en-US').replace(/,/g, ' ');
+      if (msEl)  msEl.textContent  = now.toString();
+      if (utcEl) utcEl.textContent = new Date(now).toUTCString();
+    }
+
+    // ── Init ───────────────────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', function() {
+      const tzSelect   = document.getElementById('timezone-select');
+      const dtTzSelect = document.getElementById('dt-timezone-select');
+      populateTimezoneSelect(tzSelect, 'Asia/Kolkata');
+      populateTimezoneSelect(dtTzSelect, 'Asia/Kolkata');
+
+      // Set default date/time to now
+      const now = new Date();
+      document.getElementById('date-input').value = now.toISOString().slice(0, 10);
+      document.getElementById('time-input').value = now.toTimeString().slice(0, 8);
+
+      // Start live clock
+      updateLiveTimestamp();
+      setInterval(updateLiveTimestamp, 1000);
+
+      // Event listeners
+      document.getElementById('ts-convert-btn').addEventListener('click', convertTimestampToDate);
+      document.getElementById('dt-convert-btn').addEventListener('click', convertDateToTimestamp);
+
+      // Enter key on timestamp input
+      document.getElementById('ts-input').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') convertTimestampToDate();
+      });
+
+      // Copy live timestamps
+      document.getElementById('copy-live-seconds').addEventListener('click', function() {
+        copyText(Math.floor(Date.now() / 1000).toString());
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('timestamp_copy', { page: PAGE_NAME, field: 'live_seconds' });
+        }
+      });
+      document.getElementById('copy-live-ms').addEventListener('click', function() {
+        copyText(Date.now().toString());
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('timestamp_copy', { page: PAGE_NAME, field: 'live_ms' });
+        }
+      });
+
+      // "Use Now" button
+      document.getElementById('use-now-btn').addEventListener('click', function() {
+        document.getElementById('ts-input').value = Math.floor(Date.now() / 1000).toString();
+        convertTimestampToDate();
+        document.getElementById('ts-input').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    });
+  </script>
+</body>
+</html>

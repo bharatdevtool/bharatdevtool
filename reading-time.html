@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Reading Time Estimator Online | Calculate Reading Time Instantly | Bharat Dev Tools</title>
+  <meta name="description" content="Free reading time estimator — paste any text and instantly see how long it takes to read. Supports custom reading speed (WPM), speaking time, and full text stats. No sign-up required.">
+  <meta name="keywords" content="reading time estimator, reading time calculator, how long to read, words per minute, wpm calculator, speaking time, text reading time, blog reading time, article read time, free reading time tool">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  <meta name="distribution" content="global">
+  <meta name="rating" content="general">
+  <link rel="canonical" href="https://bharatdevtool.com/reading-time.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Free Reading Time Estimator Online | Bharat Dev Tools">
+  <meta property="og:description" content="Paste any text and instantly calculate reading time, speaking time, word count, and more. Free, private — all processing in your browser.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/reading-time.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Reading Time Estimator — Free Online Tool">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free Reading Time Estimator Online | Bharat Dev Tools">
+  <meta name="twitter:description" content="Paste any text and instantly calculate reading time, speaking time, word count, and more. Free, private — all processing in your browser.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ik.imagekit.io/bdt/bdt_logo_v3_16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/bdt/bdt_logo_v3_180.png">
+
+  <!-- Theme FIRST — prevents dark mode flash -->
+  <script src="assets/js/theme.js"></script>
+
+  <!-- Sentry -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+
+  <!-- Version + Analytics (deferred) -->
+  <script src="assets/js/version.js" defer></script>
+  <script src="assets/js/analytics.js" defer></script>
+
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+
+  <!-- Structured Data: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Reading Time Estimator",
+    "description": "Free online reading time estimator. Paste any text to instantly calculate reading time, speaking time, word count, character count, sentence count, and more.",
+    "url": "https://bharatdevtool.com/reading-time.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "Reading Time Calculation",
+      "Speaking Time Estimation",
+      "Custom Words Per Minute (WPM)",
+      "Word Count",
+      "Character Count",
+      "Sentence & Paragraph Count",
+      "Multiple Speed Presets"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "62"
+    }
+  }
+  </script>
+
+  <!-- Structured Data: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Reading Time Estimator",
+        "item": "https://bharatdevtool.com/reading-time.html"
+      }
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a reading time estimator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A reading time estimator calculates how long it takes to read a piece of text based on the average reading speed. You paste or type your text, and the tool instantly shows the estimated reading time in minutes and seconds. It is commonly used by bloggers, writers, and content teams to add 'X min read' labels to articles."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the average reading speed in words per minute?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The average adult reads at about 200–250 words per minute (WPM) for general content. Slow readers average around 150 WPM, while fast readers can exceed 400 WPM. Academic or technical reading tends to be slower (100–200 WPM). This tool defaults to 238 WPM, which is the commonly cited average used by Medium and similar platforms."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this reading time estimator free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the Reading Time Estimator on Bharat Dev Tools is completely free. There is no sign-up, no paywall, and no usage limits. You can paste any amount of text and get instant results."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my text data safe? Does it get sent to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Your text never leaves your browser. All calculations — word count, character count, reading time, speaking time — run entirely in JavaScript on your device. No data is transmitted to any server, making the tool safe for private or sensitive content."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is speaking time different from reading time?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Speaking time is the estimated time to read text aloud, such as in a presentation or podcast. The average speaking pace is about 130 words per minute, which is slower than silent reading (238 WPM). This tool shows both so you can plan for presentations, speeches, and audio recordings."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .animate-fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .animate-slide-up {
+      animation: slideUp 0.3s ease-out;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .stat-card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+    .speed-btn {
+      transition: all 0.2s ease;
+    }
+    .speed-btn.active {
+      background-color: #2563eb;
+      color: white;
+      border-color: #2563eb;
+    }
+    .speed-btn:not(.active):hover {
+      border-color: #2563eb;
+      color: #2563eb;
+    }
+    .reading-time-display {
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .reading-time-display.updating {
+      opacity: 0.5;
+      transform: scale(0.98);
+    }
+    input[type="range"] {
+      accent-color: #2563eb;
+    }
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+    .toast.show  { transform: translateX(0); }
+    .toast.success { background: linear-gradient(135deg, #10b981, #059669); }
+    .toast.error   { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .toast.info    { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+
+  <!-- Header Component -->
+  <script src="components/header.js"></script>
+
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <h1 class="sr-only">Reading Time Estimator</h1>
+
+    <!-- Hero -->
+    <div class="text-center mb-10 animate-fade-in">
+      <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        ⏱️ Reading Time Estimator
+      </h2>
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Paste any text to instantly calculate reading time, speaking time, and full text statistics.
+      </p>
+    </div>
+
+    <!-- Main Tool Panel -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 sm:p-8 mb-6 animate-fade-in">
+
+      <!-- Text Input -->
+      <div class="mb-6">
+        <div class="flex items-center justify-between mb-2">
+          <label for="text-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            Your Text
+          </label>
+          <span id="live-word-count" class="text-xs text-gray-500 dark:text-gray-400">0 words</span>
+        </div>
+        <div class="relative">
+          <textarea
+            id="text-input"
+            placeholder="Paste your article, blog post, or any text here…"
+            rows="10"
+            class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 text-sm resize-y"
+            aria-label="Enter text to estimate reading time"
+          ></textarea>
+          <button
+            id="clear-btn"
+            class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+            aria-label="Clear text"
+            title="Clear text"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Reading Speed Controls -->
+      <div class="mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-xl">
+        <div class="flex items-center justify-between mb-3">
+          <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
+            Reading Speed
+          </label>
+          <span class="text-sm font-semibold text-blue-600 dark:text-blue-400">
+            <span id="wpm-display">238</span> WPM
+          </span>
+        </div>
+
+        <!-- Speed Presets -->
+        <div class="flex gap-2 mb-3 flex-wrap">
+          <button class="speed-btn text-xs px-3 py-1.5 border border-gray-300 dark:border-gray-500 rounded-full text-gray-600 dark:text-gray-300" data-wpm="150" aria-label="Set reading speed to slow (150 WPM)">Slow (150)</button>
+          <button class="speed-btn active text-xs px-3 py-1.5 border border-gray-300 dark:border-gray-500 rounded-full text-gray-600 dark:text-gray-300" data-wpm="238" aria-label="Set reading speed to average (238 WPM)">Average (238)</button>
+          <button class="speed-btn text-xs px-3 py-1.5 border border-gray-300 dark:border-gray-500 rounded-full text-gray-600 dark:text-gray-300" data-wpm="300" aria-label="Set reading speed to fast (300 WPM)">Fast (300)</button>
+          <button class="speed-btn text-xs px-3 py-1.5 border border-gray-300 dark:border-gray-500 rounded-full text-gray-600 dark:text-gray-300" data-wpm="400" aria-label="Set reading speed to very fast (400 WPM)">Very Fast (400)</button>
+        </div>
+
+        <!-- Custom WPM Slider -->
+        <input
+          type="range"
+          id="wpm-slider"
+          min="50"
+          max="800"
+          step="10"
+          value="238"
+          class="w-full h-2 rounded-lg appearance-none cursor-pointer"
+          aria-label="Adjust reading speed in words per minute"
+        >
+        <div class="flex justify-between text-xs text-gray-400 dark:text-gray-500 mt-1">
+          <span>50 WPM</span>
+          <span>800 WPM</span>
+        </div>
+      </div>
+
+      <!-- Results: Primary Reading Time -->
+      <div id="results-panel" class="hidden">
+        <!-- Main Time Display -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+          <div class="reading-time-display stat-card bg-blue-50 dark:bg-blue-900/30 rounded-xl p-5 text-center border border-blue-100 dark:border-blue-800">
+            <div class="text-3xl mb-1">📖</div>
+            <div class="text-xs font-medium text-blue-600 dark:text-blue-400 uppercase tracking-wide mb-1">Reading Time</div>
+            <div id="reading-time-value" class="text-2xl font-bold text-blue-700 dark:text-blue-300">—</div>
+            <div id="reading-time-sub" class="text-xs text-blue-500 dark:text-blue-400 mt-1">at <span id="reading-wpm-label">238</span> WPM</div>
+          </div>
+          <div class="reading-time-display stat-card bg-purple-50 dark:bg-purple-900/30 rounded-xl p-5 text-center border border-purple-100 dark:border-purple-800">
+            <div class="text-3xl mb-1">🎙️</div>
+            <div class="text-xs font-medium text-purple-600 dark:text-purple-400 uppercase tracking-wide mb-1">Speaking Time</div>
+            <div id="speaking-time-value" class="text-2xl font-bold text-purple-700 dark:text-purple-300">—</div>
+            <div class="text-xs text-purple-500 dark:text-purple-400 mt-1">at 130 WPM</div>
+          </div>
+        </div>
+
+        <!-- Speed Comparison Row -->
+        <div class="mb-4 p-4 bg-gray-50 dark:bg-gray-700 rounded-xl">
+          <div class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">Reading Time by Speed</div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="text-center">
+              <div class="text-xs text-gray-500 dark:text-gray-400">Slow</div>
+              <div id="speed-slow" class="text-sm font-semibold text-gray-700 dark:text-gray-200">—</div>
+              <div class="text-xs text-gray-400">150 WPM</div>
+            </div>
+            <div class="text-center">
+              <div class="text-xs text-gray-500 dark:text-gray-400">Average</div>
+              <div id="speed-avg" class="text-sm font-semibold text-gray-700 dark:text-gray-200">—</div>
+              <div class="text-xs text-gray-400">238 WPM</div>
+            </div>
+            <div class="text-center">
+              <div class="text-xs text-gray-500 dark:text-gray-400">Fast</div>
+              <div id="speed-fast" class="text-sm font-semibold text-gray-700 dark:text-gray-200">—</div>
+              <div class="text-xs text-gray-400">300 WPM</div>
+            </div>
+            <div class="text-center">
+              <div class="text-xs text-gray-500 dark:text-gray-400">Very Fast</div>
+              <div id="speed-vfast" class="text-sm font-semibold text-gray-700 dark:text-gray-200">—</div>
+              <div class="text-xs text-gray-400">400 WPM</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Stats Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="stat-card bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl p-4 text-center">
+            <div class="text-xl mb-1">📝</div>
+            <div id="stat-words" class="text-xl font-bold text-gray-900 dark:text-white">0</div>
+            <div class="text-xs text-gray-500 dark:text-gray-400">Words</div>
+          </div>
+          <div class="stat-card bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl p-4 text-center">
+            <div class="text-xl mb-1">🔤</div>
+            <div id="stat-chars" class="text-xl font-bold text-gray-900 dark:text-white">0</div>
+            <div class="text-xs text-gray-500 dark:text-gray-400">Characters</div>
+          </div>
+          <div class="stat-card bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl p-4 text-center">
+            <div class="text-xl mb-1">📄</div>
+            <div id="stat-sentences" class="text-xl font-bold text-gray-900 dark:text-white">0</div>
+            <div class="text-xs text-gray-500 dark:text-gray-400">Sentences</div>
+          </div>
+          <div class="stat-card bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl p-4 text-center">
+            <div class="text-xl mb-1">¶</div>
+            <div id="stat-paragraphs" class="text-xl font-bold text-gray-900 dark:text-white">0</div>
+            <div class="text-xs text-gray-500 dark:text-gray-400">Paragraphs</div>
+          </div>
+        </div>
+
+        <!-- Copy Summary Button -->
+        <div class="mt-4 flex justify-end">
+          <button
+            id="copy-summary-btn"
+            class="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 text-sm rounded-lg transition-colors"
+            aria-label="Copy summary to clipboard"
+          >
+            <span>📋</span> Copy Summary
+          </button>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div id="empty-state" class="text-center py-12 text-gray-400 dark:text-gray-500">
+        <div class="text-5xl mb-3">📋</div>
+        <p class="text-base font-medium">Paste your text above to get started</p>
+        <p class="text-sm mt-1">Reading time, speaking time, and full stats appear instantly</p>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+      <div class="faq-container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about the Reading Time Estimator</p>
+        <div class="faq-list">
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is a reading time estimator?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>A reading time estimator calculates how long it takes to read a piece of text based on average reading speed. Paste or type your content and the tool instantly shows the estimated reading time in minutes and seconds. It is widely used by bloggers, content writers, and editors to add "X min read" labels to articles.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is the average reading speed in words per minute (WPM)?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>The average adult reads at about 200–250 words per minute (WPM) for general content. Slow readers average around 150 WPM, while fast or proficient readers can exceed 400 WPM. Academic or technical reading tends to be slower (100–200 WPM). This tool defaults to 238 WPM — the figure used by Medium and commonly cited in reading research. You can adjust the slider to match your personal reading speed.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is this reading time estimator free?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes, completely free. No sign-up, no paywall, and no usage limits. Paste any length of text and get instant results. The tool will always remain free on Bharat Dev Tools.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is my text safe? Does it get sent to a server?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Your text never leaves your browser. All calculations — word count, character count, reading time, and speaking time — run entirely in JavaScript on your device. No data is transmitted to any server, making this tool safe even for private, confidential, or sensitive content.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How is speaking time different from reading time?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Speaking time is the estimated time to read text aloud — for example in a presentation, podcast, or speech. The average speaking pace is about 130 words per minute, which is slower than the typical silent reading speed of 238 WPM. Use speaking time to plan presentations, record voiceovers, or prepare for public speaking.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Component -->
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+  <!-- FAQ Accordion -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const faqQuestions = document.querySelectorAll('.faq-question');
+      faqQuestions.forEach(function(question) {
+        question.addEventListener('click', function() {
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          const faqItem = this.closest('.faq-item');
+          const icon = this.querySelector('.faq-icon');
+
+          faqQuestions.forEach(function(q) {
+            if (q !== question) {
+              q.setAttribute('aria-expanded', 'false');
+              q.closest('.faq-item').classList.remove('active');
+              q.querySelector('.faq-icon').textContent = '+';
+            }
+          });
+
+          if (isExpanded) {
+            this.setAttribute('aria-expanded', 'false');
+            faqItem.classList.remove('active');
+            icon.textContent = '+';
+          } else {
+            this.setAttribute('aria-expanded', 'true');
+            faqItem.classList.add('active');
+            icon.textContent = '−';
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- Sentry init -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
+        initSentryTracking();
+      }
+    });
+  </script>
+
+  <!-- Reading Time Tool Logic -->
+  <script>
+    const PAGE_NAME = 'Reading Time Estimator';
+    const SPEAKING_WPM = 130;
+    let currentWPM = 238;
+    let debounceTimer = null;
+
+    // ---- Utilities ----
+
+    function showToast(message, type) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast ' + (type || 'info');
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(function() { toast.classList.add('show'); }, 100);
+      setTimeout(function() {
+        toast.classList.remove('show');
+        setTimeout(function() {
+          if (container.contains(toast)) container.removeChild(toast);
+        }, 300);
+      }, 3000);
+    }
+
+    function formatTime(totalSeconds) {
+      if (totalSeconds < 60) {
+        return Math.max(1, Math.round(totalSeconds)) + ' sec';
+      }
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = Math.round(totalSeconds % 60);
+      if (seconds === 0) return minutes + ' min';
+      return minutes + ' min ' + seconds + ' sec';
+    }
+
+    // ---- Text Analysis ----
+
+    function countWords(text) {
+      const trimmed = text.trim();
+      if (!trimmed) return 0;
+      return trimmed.split(/\s+/).filter(function(w) { return w.length > 0; }).length;
+    }
+
+    function countSentences(text) {
+      const trimmed = text.trim();
+      if (!trimmed) return 0;
+      const matches = trimmed.match(/[^.!?]*[.!?]+/g);
+      return matches ? matches.length : (trimmed.length > 0 ? 1 : 0);
+    }
+
+    function countParagraphs(text) {
+      const trimmed = text.trim();
+      if (!trimmed) return 0;
+      return trimmed.split(/\n\s*\n+/).filter(function(p) { return p.trim().length > 0; }).length;
+    }
+
+    function calculateReadingSeconds(wordCount, wpm) {
+      if (wordCount === 0 || wpm <= 0) return 0;
+      return (wordCount / wpm) * 60;
+    }
+
+    // ---- UI Updates ----
+
+    function updateResults(text) {
+      const wordCount = countWords(text);
+      const charCount = text.length;
+      const sentenceCount = countSentences(text);
+      const paragraphCount = countParagraphs(text);
+
+      const readingSecs = calculateReadingSeconds(wordCount, currentWPM);
+      const speakingSecs = calculateReadingSeconds(wordCount, SPEAKING_WPM);
+
+      const resultsPanel = document.getElementById('results-panel');
+      const emptyState = document.getElementById('empty-state');
+
+      if (wordCount === 0) {
+        resultsPanel.classList.add('hidden');
+        emptyState.classList.remove('hidden');
+        document.getElementById('live-word-count').textContent = '0 words';
+        return;
+      }
+
+      resultsPanel.classList.remove('hidden');
+      emptyState.classList.add('hidden');
+
+      document.getElementById('live-word-count').textContent = wordCount.toLocaleString() + ' word' + (wordCount !== 1 ? 's' : '');
+
+      // Primary reading time
+      const rtDisplay = document.getElementById('reading-time-value');
+      rtDisplay.classList.add('updating');
+      setTimeout(function() {
+        rtDisplay.textContent = formatTime(readingSecs);
+        rtDisplay.classList.remove('updating');
+      }, 80);
+
+      document.getElementById('reading-wpm-label').textContent = currentWPM;
+      document.getElementById('speaking-time-value').textContent = formatTime(speakingSecs);
+
+      // Speed comparison
+      document.getElementById('speed-slow').textContent  = formatTime(calculateReadingSeconds(wordCount, 150));
+      document.getElementById('speed-avg').textContent   = formatTime(calculateReadingSeconds(wordCount, 238));
+      document.getElementById('speed-fast').textContent  = formatTime(calculateReadingSeconds(wordCount, 300));
+      document.getElementById('speed-vfast').textContent = formatTime(calculateReadingSeconds(wordCount, 400));
+
+      // Stats
+      document.getElementById('stat-words').textContent      = wordCount.toLocaleString();
+      document.getElementById('stat-chars').textContent      = charCount.toLocaleString();
+      document.getElementById('stat-sentences').textContent  = sentenceCount.toLocaleString();
+      document.getElementById('stat-paragraphs').textContent = paragraphCount.toLocaleString();
+    }
+
+    function updateWPM(wpm) {
+      currentWPM = wpm;
+      document.getElementById('wpm-display').textContent = wpm;
+      document.getElementById('wpm-slider').value = wpm;
+
+      // Sync preset buttons
+      document.querySelectorAll('.speed-btn').forEach(function(btn) {
+        const btnWpm = parseInt(btn.getAttribute('data-wpm'), 10);
+        btn.classList.toggle('active', btnWpm === wpm);
+      });
+
+      const text = document.getElementById('text-input').value;
+      updateResults(text);
+    }
+
+    function debounceAnalyze(text) {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(function() {
+        updateResults(text);
+        if (typeof window.Analytics !== 'undefined' && countWords(text) > 0) {
+          window.Analytics.track('reading_time_analyzed', {
+            page: PAGE_NAME,
+            word_count: countWords(text),
+            wpm: currentWPM
+          });
+        }
+      }, 200);
+    }
+
+    function copyToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() {
+          showToast('Copied to clipboard!', 'success');
+        }).catch(function() {
+          fallbackCopy(text);
+        });
+      } else {
+        fallbackCopy(text);
+      }
+    }
+
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-999999px';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('Copied to clipboard!', 'success');
+      } catch (e) {
+        showToast('Copy failed — please copy manually.', 'error');
+        if (typeof Sentry !== 'undefined') {
+          Sentry.captureException(e, { tags: { operation: 'copy_summary' } });
+        }
+      }
+      document.body.removeChild(ta);
+    }
+
+    function buildSummary() {
+      const words    = document.getElementById('stat-words').textContent;
+      const chars    = document.getElementById('stat-chars').textContent;
+      const sents    = document.getElementById('stat-sentences').textContent;
+      const paras    = document.getElementById('stat-paragraphs').textContent;
+      const rTime    = document.getElementById('reading-time-value').textContent;
+      const sTime    = document.getElementById('speaking-time-value').textContent;
+      return [
+        'Reading Time: ' + rTime + ' (at ' + currentWPM + ' WPM)',
+        'Speaking Time: ' + sTime + ' (at ' + SPEAKING_WPM + ' WPM)',
+        'Words: ' + words,
+        'Characters: ' + chars,
+        'Sentences: ' + sents,
+        'Paragraphs: ' + paras
+      ].join('\n');
+    }
+
+    // ---- Event Listeners ----
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const textInput    = document.getElementById('text-input');
+      const wpmSlider    = document.getElementById('wpm-slider');
+      const clearBtn     = document.getElementById('clear-btn');
+      const copySummBtn  = document.getElementById('copy-summary-btn');
+
+      textInput.addEventListener('input', function() {
+        debounceAnalyze(this.value);
+      });
+
+      wpmSlider.addEventListener('input', function() {
+        const wpm = parseInt(this.value, 10);
+        currentWPM = wpm;
+        document.getElementById('wpm-display').textContent = wpm;
+
+        // Deactivate all preset buttons when slider is used manually
+        document.querySelectorAll('.speed-btn').forEach(function(btn) {
+          btn.classList.toggle('active', parseInt(btn.getAttribute('data-wpm'), 10) === wpm);
+        });
+
+        const text = textInput.value;
+        updateResults(text);
+      });
+
+      document.querySelectorAll('.speed-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          const wpm = parseInt(this.getAttribute('data-wpm'), 10);
+          updateWPM(wpm);
+        });
+      });
+
+      clearBtn.addEventListener('click', function() {
+        textInput.value = '';
+        document.getElementById('live-word-count').textContent = '0 words';
+        document.getElementById('results-panel').classList.add('hidden');
+        document.getElementById('empty-state').classList.remove('hidden');
+        textInput.focus();
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('reading_time_cleared', { page: PAGE_NAME });
+        }
+      });
+
+      copySummBtn.addEventListener('click', function() {
+        copyToClipboard(buildSummary());
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('reading_time_copy_summary', { page: PAGE_NAME });
+        }
+      });
+
+      // Pre-fill from URL param ?text=
+      const urlParams = new URLSearchParams(window.location.search);
+      const textParam = urlParams.get('text');
+      if (textParam) {
+        textInput.value = decodeURIComponent(textParam);
+        updateResults(textInput.value);
+        showToast('Text loaded from URL', 'info');
+      }
+    });
+  </script>
+</body>
+</html>

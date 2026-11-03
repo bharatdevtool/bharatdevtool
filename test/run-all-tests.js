@@ -43,6 +43,21 @@ import { CurlComparisonTests } from './curl-comparison-tests.js';
 import { PasswordGeneratorTester } from './password-generator-tests.js';
 import { TextCaseConverterTester } from './text-case-converter-tests.js';
 import { UUIDGeneratorTester } from './uuid-generator-tests.js';
+import { PercentageCalculatorTester } from './percentage-calculator-tests.js';
+import { BMICalculatorTester } from './bmi-calculator-tests.js';
+import { EMICalculatorTester } from './emi-calculator-tests.js';
+import { TimestampConverterTester } from './timestamp-converter-tests.js';
+import { JWTDecoderTester } from './jwt-decoder-tests.js';
+import { ImageConverterTester } from './image-converter-tests.js';
+import { ImageResizerTester } from './image-resizer-tests.js';
+import { CSVJsonConverterTester } from './csv-json-converter-tests.js';
+import { YAMLJSONConverterTester } from './yaml-json-converter-tests.js';
+import { DiffCheckerTester } from './diff-checker-tests.js';
+import { CronGeneratorTester } from './cron-generator-tests.js';
+import { LoremIpsumTester } from './lorem-ipsum-tests.js';
+import { JsonToTypeScriptTester } from './json-to-typescript-tests.js';
+import { HTMLFormatterTester } from './html-formatter-tests.js';
+import { ReadingTimeTester } from './reading-time-tests.js';
 
 // Test Results Tracking
 let totalTests = 0;
@@ -541,6 +556,165 @@ console.log('='.repeat(60));
 const uuidTester = new UUIDGeneratorTester();
 const uuidResults = uuidTester.runAll();
 
+console.log('\n' + '='.repeat(60));
+console.log('JWT DECODER TEST SUITE');
+console.log('='.repeat(60));
+
+const jwtTester = new JWTDecoderTester();
+const jwtResults = jwtTester.runAll();
+
+// ============================================================================
+// PERCENTAGE CALCULATOR TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+console.log('PERCENTAGE CALCULATOR TEST SUITE');
+console.log('='.repeat(60));
+
+const percentageTester = new PercentageCalculatorTester();
+const percentageResults = percentageTester.runAll();
+
+// ============================================================================
+// BMI CALCULATOR TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+console.log('BMI CALCULATOR TEST SUITE');
+console.log('='.repeat(60));
+
+const bmiTester = new BMICalculatorTester();
+const bmiResults = bmiTester.runAll();
+
+// ============================================================================
+// EMI CALCULATOR TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+console.log('EMI CALCULATOR TEST SUITE');
+console.log('='.repeat(60));
+
+const emiTester = new EMICalculatorTester();
+const emiResults = emiTester.runAllTests();
+// UNIX TIMESTAMP CONVERTER TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+console.log('UNIX TIMESTAMP CONVERTER TEST SUITE');
+console.log('='.repeat(60));
+
+const timestampTester = new TimestampConverterTester();
+const timestampResults = timestampTester.runAll();
+
+// ============================================================================
+// IMAGE CONVERTER TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+console.log('IMAGE CONVERTER TEST SUITE');
+console.log('='.repeat(60));
+
+const imageConverterTester = new ImageConverterTester();
+const imageConverterResults = imageConverterTester.runAllTests();
+
+// ============================================================================
+// IMAGE RESIZER TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+console.log('IMAGE RESIZER TEST SUITE');
+console.log('='.repeat(60));
+
+const imageResizerTester = new ImageResizerTester();
+const imageResizerResults = imageResizerTester.runAll();
+
+// ============================================================================
+// CSV ↔ JSON CONVERTER TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+console.log('CSV JSON CONVERTER TEST SUITE');
+console.log('='.repeat(60));
+
+const csvJsonTester = new CSVJsonConverterTester();
+const csvJsonResults = csvJsonTester.runAllTests();
+
+// ============================================================================
+// YAML JSON CONVERTER TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+console.log('YAML JSON CONVERTER TEST SUITE');
+console.log('='.repeat(60));
+
+const yamlJsonTester = new YAMLJSONConverterTester();
+const yamlJsonResults = yamlJsonTester.runAll();
+
+// ============================================================================
+// DIFF CHECKER TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+console.log('DIFF CHECKER TEST SUITE');
+console.log('='.repeat(60));
+
+const diffCheckerTester = new DiffCheckerTester();
+const diffCheckerResults = diffCheckerTester.runAllTests();
+
+// ============================================================================
+// CRON EXPRESSION GENERATOR TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+console.log('CRON EXPRESSION GENERATOR TEST SUITE');
+console.log('='.repeat(60));
+
+const cronTester = new CronGeneratorTester();
+const cronResults = cronTester.runAll();
+
+// ============================================================================
+// LOREM IPSUM GENERATOR TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+console.log('LOREM IPSUM GENERATOR TEST SUITE');
+console.log('='.repeat(60));
+
+const loremTester = new LoremIpsumTester();
+const loremResults = loremTester.runAllTests();
+
+// ============================================================================
+// JSON TO TYPESCRIPT TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+console.log('JSON TO TYPESCRIPT TEST SUITE');
+console.log('='.repeat(60));
+
+const jsonToTsTester = new JsonToTypeScriptTester();
+const jsonToTsResults = jsonToTsTester.runAll();
+
+// ============================================================================
+// HTML FORMATTER TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+console.log('HTML FORMATTER TEST SUITE');
+console.log('='.repeat(60));
+
+const htmlFormatterTester = new HTMLFormatterTester();
+const htmlFormatterResults = htmlFormatterTester.runAll();
+
+// ============================================================================
+// READING TIME ESTIMATOR TESTS
+// ============================================================================
+
+console.log('\n' + '='.repeat(60));
+console.log('READING TIME ESTIMATOR TEST SUITE');
+console.log('='.repeat(60));
+
+const readingTimeTester = new ReadingTimeTester();
+const readingTimeResults = readingTimeTester.runAll();
+
 // ============================================================================
 // FINAL TEST SUMMARY
 // ============================================================================
@@ -550,9 +724,9 @@ console.log('📊 COMPREHENSIVE TEST SUMMARY');
 console.log('='.repeat(60));
 
 
-const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + passwordGeneratorResults.total + textCaseConverterResults.total + uuidResults.total;
-const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + passwordGeneratorResults.passed + textCaseConverterResults.passed + uuidResults.passed;
-const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + passwordGeneratorResults.failed + textCaseConverterResults.failed + uuidResults.failed;
+const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + passwordGeneratorResults.total + textCaseConverterResults.total + uuidResults.total + percentageResults.total + bmiResults.total + emiResults.total + timestampResults.total + jwtResults.total + imageConverterResults.total + imageResizerResults.total + csvJsonResults.total + yamlJsonResults.total + diffCheckerResults.total + cronResults.total + loremResults.total + jsonToTsResults.total + htmlFormatterResults.total + readingTimeResults.total;
+const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + passwordGeneratorResults.passed + textCaseConverterResults.passed + uuidResults.passed + percentageResults.passed + bmiResults.passed + emiResults.passed + timestampResults.passed + jwtResults.passed + imageConverterResults.passed + imageResizerResults.passed + csvJsonResults.passed + yamlJsonResults.passed + diffCheckerResults.passed + cronResults.passed + loremResults.passed + jsonToTsResults.passed + htmlFormatterResults.passed + readingTimeResults.passed;
+const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + passwordGeneratorResults.failed + textCaseConverterResults.failed + uuidResults.failed + percentageResults.failed + bmiResults.failed + emiResults.failed + timestampResults.failed + jwtResults.failed + imageConverterResults.failed + imageResizerResults.failed + csvJsonResults.failed + yamlJsonResults.failed + diffCheckerResults.failed + cronResults.failed + loremResults.failed + jsonToTsResults.failed + htmlFormatterResults.failed + readingTimeResults.failed;
 
 console.log(`Total Tests: ${grandTotal}`);
 console.log(`✅ Passed: ${grandPassed}`);
@@ -573,6 +747,21 @@ console.log(`cURL Comparison: ${curlComparisonResults.total} tests (${curlCompar
 console.log(`Password Generator: ${passwordGeneratorResults.total} tests (${passwordGeneratorResults.passed} passed, ${passwordGeneratorResults.failed} failed)`);
 console.log(`Text Case Converter: ${textCaseConverterResults.total} tests (${textCaseConverterResults.passed} passed, ${textCaseConverterResults.failed} failed)`);
 console.log(`UUID Generator: ${uuidResults.total} tests (${uuidResults.passed} passed, ${uuidResults.failed} failed)`);
+console.log(`Percentage Calculator: ${percentageResults.total} tests (${percentageResults.passed} passed, ${percentageResults.failed} failed)`);
+console.log(`BMI Calculator: ${bmiResults.total} tests (${bmiResults.passed} passed, ${bmiResults.failed} failed)`);
+console.log(`EMI Calculator: ${emiResults.total} tests (${emiResults.passed} passed, ${emiResults.failed} failed)`);
+console.log(`Unix Timestamp Converter: ${timestampResults.total} tests (${timestampResults.passed} passed, ${timestampResults.failed} failed)`);
+console.log(`JWT Decoder: ${jwtResults.total} tests (${jwtResults.passed} passed, ${jwtResults.failed} failed)`);
+console.log(`Image Converter: ${imageConverterResults.total} tests (${imageConverterResults.passed} passed, ${imageConverterResults.failed} failed)`);
+console.log(`Image Resizer: ${imageResizerResults.total} tests (${imageResizerResults.passed} passed, ${imageResizerResults.failed} failed)`);
+console.log(`CSV ↔ JSON Converter: ${csvJsonResults.total} tests (${csvJsonResults.passed} passed, ${csvJsonResults.failed} failed)`);
+console.log(`YAML JSON Converter: ${yamlJsonResults.total} tests (${yamlJsonResults.passed} passed, ${yamlJsonResults.failed} failed)`);
+console.log(`Diff Checker: ${diffCheckerResults.total} tests (${diffCheckerResults.passed} passed, ${diffCheckerResults.failed} failed)`);
+console.log(`Cron Expression Generator: ${cronResults.total} tests (${cronResults.passed} passed, ${cronResults.failed} failed)`);
+console.log(`Lorem Ipsum Generator: ${loremResults.total} tests (${loremResults.passed} passed, ${loremResults.failed} failed)`);
+console.log(`JSON to TypeScript: ${jsonToTsResults.total} tests (${jsonToTsResults.passed} passed, ${jsonToTsResults.failed} failed)`);
+console.log(`HTML Formatter: ${htmlFormatterResults.total} tests (${htmlFormatterResults.passed} passed, ${htmlFormatterResults.failed} failed)`);
+console.log(`Reading Time Estimator: ${readingTimeResults.total} tests (${readingTimeResults.passed} passed, ${readingTimeResults.failed} failed)`);
 
 
 if (grandFailed === 0) {
@@ -642,6 +831,66 @@ if (grandFailed === 0) {
   if (uuidResults.failed > 0) {
     console.log('\nUUID Generator failures:');
     uuidResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  if (percentageResults.failed > 0) {
+    console.log('\nPercentage Calculator failures:');
+    percentageResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  if (bmiResults.failed > 0) {
+    console.log('\nBMI Calculator failures:');
+    bmiResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  if (emiResults.failed > 0) {
+    console.log('\nEMI Calculator failures:');
+    emiResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  if (timestampResults.failed > 0) {
+    console.log('\nUnix Timestamp Converter failures:');
+    timestampResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  if (jwtResults.failed > 0) {
+    console.log('\nJWT Decoder failures:');
+    jwtResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  if (imageConverterResults.failed > 0) {
+    console.log('\nImage Converter failures:');
+    imageConverterResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  if (imageResizerResults.failed > 0) {
+    console.log('\nImage Resizer failures:');
+    imageResizerResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  if (csvJsonResults.failed > 0) {
+    console.log('\nCSV ↔ JSON Converter failures:');
+    csvJsonResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  if (yamlJsonResults.failed > 0) {
+    console.log('\nYAML JSON Converter failures:');
+    yamlJsonResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  if (diffCheckerResults.failed > 0) {
+    console.log('\nDiff Checker failures:');
+    diffCheckerResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  if (cronResults.failed > 0) {
+    console.log('\nCron Expression Generator failures:');
+    cronResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  if (loremResults.failed > 0) {
+    console.log('\nLorem Ipsum Generator failures:');
+    loremResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  if (jsonToTsResults.failed > 0) {
+    console.log('\nJSON to TypeScript failures:');
+    jsonToTsResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  if (htmlFormatterResults.failed > 0) {
+    console.log('\nHTML Formatter failures:');
+    htmlFormatterResults.failedTests.forEach(test => console.log(`   - ${test}`));
+  }
+  if (readingTimeResults.failed > 0) {
+    console.log('\nReading Time Estimator failures:');
+    readingTimeResults.failedTests.forEach(test => console.log(`   - ${test}`));
   }
 
   console.log('\nPlease review the failed tests above.');

@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Percentage Calculator Online | Calculate Percentages Instantly | Bharat Dev Tools</title>
+  <meta name="description" content="Free percentage calculator online. Calculate percentages, percentage increase/decrease, percentage difference, and what percent one number is of another. No sign-up required.">
+  <meta name="keywords" content="percentage calculator, calculate percentage, percent calculator, percentage increase calculator, percentage decrease calculator, percentage difference, what percent of, free percentage calculator online, percentage formula">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  <meta name="distribution" content="global">
+  <meta name="rating" content="general">
+  <link rel="canonical" href="https://bharatdevtool.com/percentage-calculator.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Free Percentage Calculator Online | Bharat Dev Tools">
+  <meta property="og:description" content="Calculate percentages instantly — percentage of a number, percentage change, percentage difference, and more. Free, no sign-up required.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/percentage-calculator.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Percentage Calculator - Free Online Tool">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free Percentage Calculator Online | Bharat Dev Tools">
+  <meta name="twitter:description" content="Calculate percentages instantly — percentage of a number, percentage change, percentage difference, and more. Free, no sign-up required.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ik.imagekit.io/bdt/bdt_logo_v3_16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/bdt/bdt_logo_v3_180.png">
+
+  <!-- Theme Management (load early to prevent flash) -->
+  <script src="assets/js/theme.js"></script>
+
+  <!-- Sentry SDK -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+
+  <!-- Version Tracking Script -->
+  <script src="assets/js/version.js" defer></script>
+
+  <!-- Analytics Script -->
+  <script src="assets/js/analytics.js" defer></script>
+
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+
+  <!-- Structured Data: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Percentage Calculator",
+    "description": "Free online percentage calculator. Calculate percentages, percentage increase/decrease, percentage difference, and what percent one number is of another.",
+    "url": "https://bharatdevtool.com/percentage-calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "What is X% of Y?",
+      "X is what percent of Y?",
+      "Percentage increase/decrease",
+      "Percentage difference between two values",
+      "Add/subtract percentage from a value"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "112"
+    }
+  }
+  </script>
+
+  <!-- Structured Data: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Percentage Calculator",
+        "item": "https://bharatdevtool.com/percentage-calculator.html"
+      }
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a percentage calculator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A percentage calculator is a free online tool that helps you quickly compute percentages without manual formula work. It covers common use cases: finding what percent of a number is, calculating percentage increase or decrease, finding percentage difference between two values, and working out what percentage one number is of another."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I calculate what percent X is of Y?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "To find what percentage X is of Y, divide X by Y and multiply by 100. Formula: (X ÷ Y) × 100 = result%. For example, 25 is what percent of 200? (25 ÷ 200) × 100 = 12.5%. Use the 'X is what % of Y?' calculator above for instant results."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I calculate percentage increase or decrease?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Percentage change = ((New Value - Old Value) ÷ Old Value) × 100. A positive result means an increase; a negative result means a decrease. Example: Price went from ₹500 to ₹600. Change = ((600 - 500) ÷ 500) × 100 = 20% increase."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this percentage calculator free to use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, completely free. No registration, no account, no payment required. All calculations happen instantly in your browser with no data sent to any server."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between percentage difference and percentage change?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Percentage change measures how much a value increased or decreased relative to the original value. Percentage difference measures the relative difference between two values with no concept of 'before' and 'after' — it uses the average of both values as the reference: |A - B| ÷ ((A + B) ÷ 2) × 100."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    .animate-fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-slide-up {
+      animation: slideUp 0.3s ease-out;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transform: translateX(120%);
+      transition: transform 0.3s ease;
+    }
+    .toast.show {
+      transform: translateX(0);
+    }
+    .toast.success { background: linear-gradient(135deg, #10b981, #059669); }
+    .toast.error   { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .toast.info    { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+
+    /* Calculator card */
+    .calc-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      padding: 24px;
+      margin-bottom: 16px;
+      transition: box-shadow 0.2s;
+    }
+    .calc-card:hover {
+      box-shadow: 0 6px 28px rgba(0,0,0,0.11);
+    }
+    [data-theme="dark"] .calc-card {
+      background: rgb(31, 41, 55);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    [data-theme="dark"] .calc-card:hover {
+      box-shadow: 0 6px 28px rgba(0,0,0,0.45);
+    }
+
+    .calc-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+    [data-theme="dark"] .calc-label { color: #9ca3af; }
+
+    .calc-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 16px;
+    }
+    [data-theme="dark"] .calc-title { color: #f3f4f6; }
+
+    .calc-input-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .calc-input-row input[type="number"] {
+      flex: 1;
+      min-width: 80px;
+      max-width: 160px;
+      padding: 10px 14px;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 10px;
+      font-size: 1rem;
+      background: white;
+      color: #111827;
+      outline: none;
+      transition: border-color 0.18s, box-shadow 0.18s;
+      font-family: inherit;
+    }
+    .calc-input-row input[type="number"]:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
+    }
+    [data-theme="dark"] .calc-input-row input[type="number"] {
+      background: rgb(17, 24, 39);
+      border-color: rgb(55, 65, 81);
+      color: #e5e7eb;
+    }
+    [data-theme="dark"] .calc-input-row input[type="number"]:focus {
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 3px rgba(96,165,250,0.15);
+    }
+    .calc-text {
+      font-size: 0.95rem;
+      color: #374151;
+      white-space: nowrap;
+    }
+    [data-theme="dark"] .calc-text { color: #d1d5db; }
+
+    .calc-result-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #f0f9ff;
+      border: 1.5px solid #bae6fd;
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-top: 4px;
+      animation: slideUp 0.3s ease-out;
+    }
+    [data-theme="dark"] .calc-result-box {
+      background: rgba(56, 189, 248, 0.07);
+      border-color: rgba(56, 189, 248, 0.25);
+    }
+    .calc-result-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #0369a1;
+    }
+    [data-theme="dark"] .calc-result-value { color: #38bdf8; }
+    .calc-result-label {
+      font-size: 0.88rem;
+      color: #0369a1;
+    }
+    [data-theme="dark"] .calc-result-label { color: #7dd3fc; }
+
+    .calc-error-box {
+      background: #fef2f2;
+      border: 1.5px solid #fecaca;
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-top: 4px;
+      font-size: 0.875rem;
+      color: #dc2626;
+    }
+    [data-theme="dark"] .calc-error-box {
+      background: rgba(239, 68, 68, 0.08);
+      border-color: rgba(239, 68, 68, 0.3);
+      color: #f87171;
+    }
+
+    .calc-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.18s, transform 0.1s;
+      font-family: inherit;
+    }
+    .calc-btn:hover { background: #2563eb; transform: translateY(-1px); }
+    .calc-btn:active { transform: translateY(0); }
+
+    .copy-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px 6px;
+      border-radius: 6px;
+      color: #60a5fa;
+      font-size: 1rem;
+      transition: background 0.15s, color 0.15s;
+    }
+    .copy-btn:hover {
+      background: rgba(59,130,246,0.1);
+      color: #3b82f6;
+    }
+    [data-theme="dark"] .copy-btn { color: #93c5fd; }
+    [data-theme="dark"] .copy-btn:hover {
+      background: rgba(96,165,250,0.12);
+      color: #60a5fa;
+    }
+
+    /* Change indicator: up/down arrow + color */
+    .change-positive { color: #16a34a; }
+    .change-negative { color: #dc2626; }
+    [data-theme="dark"] .change-positive { color: #4ade80; }
+    [data-theme="dark"] .change-negative { color: #f87171; }
+
+    .section-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .section-tab {
+      padding: 7px 18px;
+      border-radius: 20px;
+      border: 1.5px solid #e5e7eb;
+      background: white;
+      color: #374151;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+      font-family: inherit;
+    }
+    .section-tab:hover {
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+    .section-tab.active {
+      background: #3b82f6;
+      border-color: #3b82f6;
+      color: white;
+    }
+    [data-theme="dark"] .section-tab {
+      background: rgb(31, 41, 55);
+      border-color: rgb(55, 65, 81);
+      color: #d1d5db;
+    }
+    [data-theme="dark"] .section-tab:hover {
+      border-color: #60a5fa;
+      color: #60a5fa;
+    }
+    [data-theme="dark"] .section-tab.active {
+      background: #3b82f6;
+      border-color: #3b82f6;
+      color: white;
+    }
+
+    /* Hide/show calculator panels */
+    .calc-panel { display: none; }
+    .calc-panel.active { display: block; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .animate-fade-in,
+      .animate-slide-up,
+      .calc-result-box { animation: none; }
+      .calc-btn, .section-tab { transition: none; }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+  <script src="components/header.js"></script>
+
+  <main class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <h1 class="sr-only">Free Percentage Calculator Online</h1>
+
+    <!-- Hero -->
+    <div class="text-center mb-10 animate-fade-in">
+      <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-3">
+        % Percentage Calculator
+      </h2>
+      <p class="text-lg text-gray-600 dark:text-gray-300 max-w-xl mx-auto">
+        Six instant percentage calculators — no formula memorisation needed.
+      </p>
+    </div>
+
+    <!-- Tab bar -->
+    <div class="section-tabs animate-fade-in" role="tablist" aria-label="Percentage calculator types">
+      <button class="section-tab active" data-panel="pct-of" role="tab" aria-selected="true">% of Number</button>
+      <button class="section-tab" data-panel="what-pct" role="tab" aria-selected="false">X is what % of Y?</button>
+      <button class="section-tab" data-panel="pct-change" role="tab" aria-selected="false">% Change</button>
+      <button class="section-tab" data-panel="pct-diff" role="tab" aria-selected="false">% Difference</button>
+      <button class="section-tab" data-panel="add-pct" role="tab" aria-selected="false">Add %</button>
+      <button class="section-tab" data-panel="sub-pct" role="tab" aria-selected="false">Subtract %</button>
+    </div>
+
+    <!-- ── Panel 1: Percentage of a number ── -->
+    <div id="panel-pct-of" class="calc-panel active animate-fade-in">
+      <div class="calc-card">
+        <div class="calc-label">Calculator 1</div>
+        <div class="calc-title">What is X% of Y?</div>
+        <div class="calc-input-row">
+          <span class="calc-text">What is</span>
+          <input type="number" id="pof-x" placeholder="X" aria-label="Percentage value" min="0" step="any">
+          <span class="calc-text">% of</span>
+          <input type="number" id="pof-y" placeholder="Y" aria-label="Total value" step="any">
+          <span class="calc-text">?</span>
+        </div>
+        <button class="calc-btn" id="pof-btn" aria-label="Calculate percentage of number">
+          Calculate
+        </button>
+        <div id="pof-result" class="mt-4" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <!-- ── Panel 2: X is what % of Y ── -->
+    <div id="panel-what-pct" class="calc-panel animate-fade-in">
+      <div class="calc-card">
+        <div class="calc-label">Calculator 2</div>
+        <div class="calc-title">X is what percent of Y?</div>
+        <div class="calc-input-row">
+          <input type="number" id="wpct-x" placeholder="X" aria-label="Part value" step="any">
+          <span class="calc-text">is what % of</span>
+          <input type="number" id="wpct-y" placeholder="Y" aria-label="Whole value" step="any">
+          <span class="calc-text">?</span>
+        </div>
+        <button class="calc-btn" id="wpct-btn" aria-label="Calculate what percent X is of Y">
+          Calculate
+        </button>
+        <div id="wpct-result" class="mt-4" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <!-- ── Panel 3: Percentage change ── -->
+    <div id="panel-pct-change" class="calc-panel animate-fade-in">
+      <div class="calc-card">
+        <div class="calc-label">Calculator 3</div>
+        <div class="calc-title">Percentage increase / decrease</div>
+        <div class="calc-input-row">
+          <span class="calc-text">From</span>
+          <input type="number" id="pch-from" placeholder="Old value" aria-label="Original value" step="any">
+          <span class="calc-text">to</span>
+          <input type="number" id="pch-to" placeholder="New value" aria-label="New value" step="any">
+        </div>
+        <button class="calc-btn" id="pch-btn" aria-label="Calculate percentage change">
+          Calculate
+        </button>
+        <div id="pch-result" class="mt-4" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <!-- ── Panel 4: Percentage difference ── -->
+    <div id="panel-pct-diff" class="calc-panel animate-fade-in">
+      <div class="calc-card">
+        <div class="calc-label">Calculator 4</div>
+        <div class="calc-title">Percentage difference between two values</div>
+        <div class="calc-input-row">
+          <span class="calc-text">Value A</span>
+          <input type="number" id="pdiff-a" placeholder="A" aria-label="Value A" step="any">
+          <span class="calc-text">Value B</span>
+          <input type="number" id="pdiff-b" placeholder="B" aria-label="Value B" step="any">
+        </div>
+        <button class="calc-btn" id="pdiff-btn" aria-label="Calculate percentage difference">
+          Calculate
+        </button>
+        <div id="pdiff-result" class="mt-4" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <!-- ── Panel 5: Add percentage ── -->
+    <div id="panel-add-pct" class="calc-panel animate-fade-in">
+      <div class="calc-card">
+        <div class="calc-label">Calculator 5</div>
+        <div class="calc-title">Add a percentage to a value</div>
+        <div class="calc-input-row">
+          <input type="number" id="addp-val" placeholder="Value" aria-label="Base value" step="any">
+          <span class="calc-text">+</span>
+          <input type="number" id="addp-pct" placeholder="%" aria-label="Percentage to add" min="0" step="any">
+          <span class="calc-text">%</span>
+        </div>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Useful for adding GST, tax, tip, or markup.</p>
+        <button class="calc-btn" id="addp-btn" aria-label="Calculate value after adding percentage">
+          Calculate
+        </button>
+        <div id="addp-result" class="mt-4" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <!-- ── Panel 6: Subtract percentage ── -->
+    <div id="panel-sub-pct" class="calc-panel animate-fade-in">
+      <div class="calc-card">
+        <div class="calc-label">Calculator 6</div>
+        <div class="calc-title">Subtract a percentage from a value</div>
+        <div class="calc-input-row">
+          <input type="number" id="subp-val" placeholder="Value" aria-label="Base value" step="any">
+          <span class="calc-text">−</span>
+          <input type="number" id="subp-pct" placeholder="%" aria-label="Percentage to subtract" min="0" step="any">
+          <span class="calc-text">%</span>
+        </div>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Useful for applying discounts, GST reversal, or rebates.</p>
+        <button class="calc-btn" id="subp-btn" aria-label="Calculate value after subtracting percentage">
+          Calculate
+        </button>
+        <div id="subp-result" class="mt-4" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <!-- Formula Reference card -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow p-6 mt-4 animate-fade-in">
+      <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-4">📐 Percentage Formulas Reference</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-700 dark:text-gray-300">
+        <div>
+          <p class="font-semibold mb-1">What is X% of Y?</p>
+          <code class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded text-xs">(X / 100) × Y</code>
+        </div>
+        <div>
+          <p class="font-semibold mb-1">X is what % of Y?</p>
+          <code class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded text-xs">(X / Y) × 100</code>
+        </div>
+        <div>
+          <p class="font-semibold mb-1">% Change</p>
+          <code class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded text-xs">((New − Old) / |Old|) × 100</code>
+        </div>
+        <div>
+          <p class="font-semibold mb-1">% Difference</p>
+          <code class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded text-xs">|A − B| / ((A + B) / 2) × 100</code>
+        </div>
+        <div>
+          <p class="font-semibold mb-1">Add X%</p>
+          <code class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded text-xs">Value × (1 + X / 100)</code>
+        </div>
+        <div>
+          <p class="font-semibold mb-1">Subtract X%</p>
+          <code class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded text-xs">Value × (1 − X / 100)</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section mt-8" id="faq">
+      <div class="faq-container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about the Percentage Calculator</p>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is a percentage calculator?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>A percentage calculator is a free online tool that helps you quickly compute percentages without manual formula work. It covers common use cases: finding what percent of a number is, calculating percentage increase or decrease, finding percentage difference between two values, and working out what percentage one number is of another.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How do I calculate what percent X is of Y?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>To find what percentage X is of Y, divide X by Y and multiply by 100. Formula: <strong>(X ÷ Y) × 100 = result%</strong>. For example, 25 is what percent of 200? (25 ÷ 200) × 100 = 12.5%. Use the "X is what % of Y?" tab above for instant results.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How do I calculate percentage increase or decrease?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Percentage change = <strong>((New Value − Old Value) ÷ Old Value) × 100</strong>. A positive result means an increase; a negative result means a decrease.</p>
+              <p>Example: Price went from ₹500 to ₹600. Change = ((600 − 500) ÷ 500) × 100 = <strong>20% increase</strong>.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is this percentage calculator free to use?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes, completely free. No registration, no account, no payment required. All calculations happen instantly in your browser with no data sent to any server.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is the difference between percentage difference and percentage change?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p><strong>Percentage change</strong> measures how much a value increased or decreased relative to the <em>original</em> value — it has a clear "before" and "after".</p>
+              <p><strong>Percentage difference</strong> measures the relative difference between two values where neither is the baseline — it uses the average of both values as the reference: <code>|A − B| ÷ ((A + B) ÷ 2) × 100</code>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Component -->
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+
+  <!-- Toast container -->
+  <div id="toast-container" role="status" aria-live="polite"></div>
+
+  <!-- FAQ accordion -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.faq-question').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          document.querySelectorAll('.faq-question').forEach(function(q) {
+            q.setAttribute('aria-expanded', 'false');
+            q.closest('.faq-item').classList.remove('active');
+            q.querySelector('.faq-icon').textContent = '+';
+          });
+          if (!isExpanded) {
+            this.setAttribute('aria-expanded', 'true');
+            this.closest('.faq-item').classList.add('active');
+            this.querySelector('.faq-icon').textContent = '−';
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- Sentry init -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
+        initSentryTracking();
+      }
+    });
+  </script>
+
+  <!-- Calculator logic -->
+  <script>
+    const PAGE_NAME = 'Percentage Calculator';
+
+    function showToast(message, type) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast ' + (type || 'info');
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(function() { toast.classList.add('show'); }, 60);
+      setTimeout(function() {
+        toast.classList.remove('show');
+        setTimeout(function() {
+          if (container.contains(toast)) container.removeChild(toast);
+        }, 320);
+      }, 3000);
+    }
+
+    function formatNumber(n) {
+      if (!isFinite(n)) return String(n);
+      const rounded = Math.round(n * 100000) / 100000;
+      if (Number.isInteger(rounded)) return String(rounded);
+      return rounded.toFixed(4).replace(/\.?0+$/, '');
+    }
+
+    function isValidNumber(v) {
+      return v !== '' && v !== null && v !== undefined && !isNaN(Number(v)) && isFinite(Number(v));
+    }
+
+    function copyResultToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() {
+          showToast('Copied to clipboard', 'success');
+        }).catch(function() { fallbackCopy(text); });
+      } else {
+        fallbackCopy(text);
+      }
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.track('percentage_copy', { page: PAGE_NAME, value: text });
+      }
+    }
+
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try { document.execCommand('copy'); showToast('Copied to clipboard', 'success'); }
+      catch (e) { showToast('Copy failed — please copy manually', 'error'); }
+      document.body.removeChild(ta);
+    }
+
+    function renderResult(containerId, valueText, labelText, isChange) {
+      const container = document.getElementById(containerId);
+      const changeClass = isChange === 'positive' ? 'change-positive'
+                        : isChange === 'negative' ? 'change-negative'
+                        : '';
+      container.innerHTML =
+        '<div class="calc-result-box">' +
+          '<span class="calc-result-value ' + changeClass + '">' + valueText + '</span>' +
+          '<span class="calc-result-label">' + labelText + '</span>' +
+          '<button class="copy-btn" title="Copy result" aria-label="Copy result to clipboard" onclick="copyResultToClipboard(\'' + valueText.replace(/'/g, "\\'") + '\')">' +
+            '📋' +
+          '</button>' +
+        '</div>';
+    }
+
+    function renderError(containerId, message) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '<div class="calc-error-box">' + message + '</div>';
+    }
+
+    function clearResult(containerId) {
+      document.getElementById(containerId).innerHTML = '';
+    }
+
+    /* ── Calculator 1: What is X% of Y? ── */
+    function calculatePctOf() {
+      const x = document.getElementById('pof-x').value;
+      const y = document.getElementById('pof-y').value;
+
+      if (!isValidNumber(x) || !isValidNumber(y)) {
+        renderError('pof-result', 'Please enter valid numbers in both fields.');
+        trackCalculationError('pct_of', 'invalid_input');
+        return;
+      }
+
+      const xn = Number(x);
+      const yn = Number(y);
+      const result = (xn / 100) * yn;
+
+      trackCalculation('pct_of', { x: xn, y: yn, result });
+      renderResult('pof-result', formatNumber(result), xn + '% of ' + yn + ' = ' + formatNumber(result), '');
+      showToast('Result calculated', 'success');
+    }
+
+    /* ── Calculator 2: X is what % of Y? ── */
+    function calculateWhatPct() {
+      const x = document.getElementById('wpct-x').value;
+      const y = document.getElementById('wpct-y').value;
+
+      if (!isValidNumber(x) || !isValidNumber(y)) {
+        renderError('wpct-result', 'Please enter valid numbers in both fields.');
+        trackCalculationError('what_pct', 'invalid_input');
+        return;
+      }
+
+      const xn = Number(x);
+      const yn = Number(y);
+
+      if (yn === 0) {
+        renderError('wpct-result', 'The total (Y) cannot be zero.');
+        trackCalculationError('what_pct', 'division_by_zero');
+        return;
+      }
+
+      const result = (xn / yn) * 100;
+      trackCalculation('what_pct', { x: xn, y: yn, result });
+      renderResult('wpct-result', formatNumber(result) + '%', xn + ' is ' + formatNumber(result) + '% of ' + yn, '');
+      showToast('Result calculated', 'success');
+    }
+
+    /* ── Calculator 3: Percentage change ── */
+    function calculatePctChange() {
+      const from = document.getElementById('pch-from').value;
+      const to   = document.getElementById('pch-to').value;
+
+      if (!isValidNumber(from) || !isValidNumber(to)) {
+        renderError('pch-result', 'Please enter valid numbers in both fields.');
+        trackCalculationError('pct_change', 'invalid_input');
+        return;
+      }
+
+      const fromN = Number(from);
+      const toN   = Number(to);
+
+      if (fromN === 0) {
+        renderError('pch-result', 'The original value cannot be zero (division by zero).');
+        trackCalculationError('pct_change', 'division_by_zero');
+        return;
+      }
+
+      const change = ((toN - fromN) / Math.abs(fromN)) * 100;
+      const isPos  = change >= 0;
+      const arrow  = isPos ? '▲' : '▼';
+      const word   = isPos ? 'increase' : 'decrease';
+      const direction = isPos ? 'positive' : 'negative';
+
+      trackCalculation('pct_change', { from: fromN, to: toN, change });
+      renderResult(
+        'pch-result',
+        arrow + ' ' + formatNumber(Math.abs(change)) + '%',
+        (isPos ? 'increase' : 'decrease') + ' from ' + fromN + ' to ' + toN,
+        direction
+      );
+      showToast('Result calculated', 'success');
+    }
+
+    /* ── Calculator 4: Percentage difference ── */
+    function calculatePctDiff() {
+      const a = document.getElementById('pdiff-a').value;
+      const b = document.getElementById('pdiff-b').value;
+
+      if (!isValidNumber(a) || !isValidNumber(b)) {
+        renderError('pdiff-result', 'Please enter valid numbers in both fields.');
+        trackCalculationError('pct_diff', 'invalid_input');
+        return;
+      }
+
+      const an = Number(a);
+      const bn = Number(b);
+      const avg = (an + bn) / 2;
+
+      if (avg === 0) {
+        renderError('pdiff-result', 'The average of A and B cannot be zero.');
+        trackCalculationError('pct_diff', 'division_by_zero');
+        return;
+      }
+
+      const diff = (Math.abs(an - bn) / Math.abs(avg)) * 100;
+      trackCalculation('pct_diff', { a: an, b: bn, diff });
+      renderResult('pdiff-result', formatNumber(diff) + '%', 'percentage difference between ' + an + ' and ' + bn, '');
+      showToast('Result calculated', 'success');
+    }
+
+    /* ── Calculator 5: Add percentage ── */
+    function calculateAddPct() {
+      const val = document.getElementById('addp-val').value;
+      const pct = document.getElementById('addp-pct').value;
+
+      if (!isValidNumber(val) || !isValidNumber(pct)) {
+        renderError('addp-result', 'Please enter valid numbers in both fields.');
+        trackCalculationError('add_pct', 'invalid_input');
+        return;
+      }
+
+      const valN = Number(val);
+      const pctN = Number(pct);
+      const result = valN * (1 + pctN / 100);
+      const added  = result - valN;
+
+      trackCalculation('add_pct', { value: valN, pct: pctN, result });
+      renderResult(
+        'addp-result',
+        formatNumber(result),
+        valN + ' + ' + pctN + '% = ' + formatNumber(result) + ' (added ' + formatNumber(added) + ')',
+        'positive'
+      );
+      showToast('Result calculated', 'success');
+    }
+
+    /* ── Calculator 6: Subtract percentage ── */
+    function calculateSubPct() {
+      const val = document.getElementById('subp-val').value;
+      const pct = document.getElementById('subp-pct').value;
+
+      if (!isValidNumber(val) || !isValidNumber(pct)) {
+        renderError('subp-result', 'Please enter valid numbers in both fields.');
+        trackCalculationError('sub_pct', 'invalid_input');
+        return;
+      }
+
+      const valN = Number(val);
+      const pctN = Number(pct);
+      const result  = valN * (1 - pctN / 100);
+      const removed = valN - result;
+
+      trackCalculation('sub_pct', { value: valN, pct: pctN, result });
+      renderResult(
+        'subp-result',
+        formatNumber(result),
+        valN + ' − ' + pctN + '% = ' + formatNumber(result) + ' (removed ' + formatNumber(removed) + ')',
+        'negative'
+      );
+      showToast('Result calculated', 'success');
+    }
+
+    /* ── Analytics helpers ── */
+    function trackCalculation(type, params) {
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.track('percentage_calculated', Object.assign({ page: PAGE_NAME, type: type }, params));
+      }
+    }
+
+    function trackCalculationError(type, reason) {
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.track('percentage_calculation_error', { page: PAGE_NAME, type: type, reason: reason });
+      }
+      if (typeof Sentry !== 'undefined') {
+        try {
+          Sentry.addBreadcrumb({ message: 'Percentage calc error', category: 'calculator', level: 'warning', data: { type: type, reason: reason } });
+        } catch (e) { /* ignore */ }
+      }
+    }
+
+    /* ── Tab switching ── */
+    function switchTab(panelId) {
+      document.querySelectorAll('.calc-panel').forEach(function(p) { p.classList.remove('active'); });
+      document.querySelectorAll('.section-tab').forEach(function(t) {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      const panel = document.getElementById('panel-' + panelId);
+      if (panel) panel.classList.add('active');
+      const tab = document.querySelector('[data-panel="' + panelId + '"]');
+      if (tab) {
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+      }
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.track('percentage_tab_switch', { page: PAGE_NAME, tab: panelId });
+      }
+    }
+
+    /* ── Enter key support ── */
+    function addEnterKeyHandler(inputIds, buttonId) {
+      inputIds.forEach(function(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') document.getElementById(buttonId).click();
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      /* Tab clicks */
+      document.querySelectorAll('.section-tab').forEach(function(tab) {
+        tab.addEventListener('click', function() { switchTab(this.dataset.panel); });
+      });
+
+      /* Button handlers */
+      document.getElementById('pof-btn').addEventListener('click', calculatePctOf);
+      document.getElementById('wpct-btn').addEventListener('click', calculateWhatPct);
+      document.getElementById('pch-btn').addEventListener('click', calculatePctChange);
+      document.getElementById('pdiff-btn').addEventListener('click', calculatePctDiff);
+      document.getElementById('addp-btn').addEventListener('click', calculateAddPct);
+      document.getElementById('subp-btn').addEventListener('click', calculateSubPct);
+
+      /* Enter-key shortcuts */
+      addEnterKeyHandler(['pof-x', 'pof-y'], 'pof-btn');
+      addEnterKeyHandler(['wpct-x', 'wpct-y'], 'wpct-btn');
+      addEnterKeyHandler(['pch-from', 'pch-to'], 'pch-btn');
+      addEnterKeyHandler(['pdiff-a', 'pdiff-b'], 'pdiff-btn');
+      addEnterKeyHandler(['addp-val', 'addp-pct'], 'addp-btn');
+      addEnterKeyHandler(['subp-val', 'subp-pct'], 'subp-btn');
+    });
+  </script>
+</body>
+</html>

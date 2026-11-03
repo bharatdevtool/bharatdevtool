@@ -504,7 +504,29 @@ const PAGE_NAMES = {
   'password-generator.html': 'Password Generator',
   'text-case-converter.html': 'Text Case Converter',
   'uuid-generator.html': 'UUID Generator',
-  'whatsapp-link.html': 'WhatsApp Link Generator'
+  'whatsapp-link.html': 'WhatsApp Link Generator',
+  'percentage-calculator.html': 'Percentage Calculator',
+  'bmi-calculator.html': 'BMI Calculator',
+  'gst-calculator.html': 'GST Calculator',
+  'emi-calculator.html': 'EMI Calculator',
+  'timestamp-converter.html': 'Unix Timestamp Converter',
+  'jwt-decoder.html': 'JWT Decoder',
+  'image-converter.html': 'Image Converter',
+  'image-resizer.html': 'Image Resizer',
+  'image-compressor.html': 'Image Compressor',
+  'image-to-pdf.html': 'Image to PDF Converter',
+  'hash-generator.html': 'Hash Generator',
+  'csv-json-converter.html': 'CSV JSON Converter',
+  'yaml-json-converter.html': 'YAML JSON Converter',
+  'diff-checker.html': 'Diff Checker',
+  'cron-generator.html': 'Cron Expression Generator',
+  'lorem-ipsum.html': 'Lorem Ipsum Generator',
+  'timezone-converter.html': 'Timezone Converter',
+  'markdown-to-html.html': 'Markdown to HTML Converter',
+  'json-to-typescript.html': 'JSON to TypeScript Interface Generator',
+  'html-formatter.html': 'HTML Formatter',
+  'favicon-generator.html': 'Favicon Generator',
+  'reading-time.html': 'Reading Time Estimator'
 };
 
 /**

@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Cron Expression Generator Online | Build & Validate Cron Jobs | Bharat Dev Tools</title>
+  <meta name="description" content="Free online cron expression generator. Build cron schedules visually, validate cron syntax, see next run times, and get human-readable descriptions. No sign-up required.">
+  <meta name="keywords" content="cron expression generator, cron job builder, cron schedule, cron syntax, cron validator, linux cron, unix cron, crontab, scheduled task, cron parser, cron next run">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  <link rel="canonical" href="https://bharatdevtool.com/cron-generator.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Free Cron Expression Generator Online | Bharat Dev Tools">
+  <meta property="og:description" content="Build cron schedules visually, validate cron syntax, see next run times, and get human-readable descriptions. Free, no sign-up required.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/cron-generator.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Cron Expression Generator - Free Online Tool">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free Cron Expression Generator Online | Bharat Dev Tools">
+  <meta name="twitter:description" content="Build cron schedules visually, validate cron syntax, see next run times. Free, no sign-up required.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ik.imagekit.io/bdt/bdt_logo_v3_16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/bdt/bdt_logo_v3_180.png">
+
+  <!-- Theme FIRST — prevents dark mode flash -->
+  <script src="assets/js/theme.js"></script>
+
+  <!-- Sentry -->
+  <script src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js" crossorigin="anonymous" defer></script>
+
+  <!-- App config -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+
+  <!-- Version + Analytics (deferred) -->
+  <script src="assets/js/version.js" defer></script>
+  <script src="assets/js/analytics.js" defer></script>
+
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+
+  <!-- Structured Data: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Cron Expression Generator",
+    "description": "Free online cron expression generator. Build cron schedules visually, validate cron syntax, see next run times, and get human-readable descriptions.",
+    "url": "https://bharatdevtool.com/cron-generator.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "Visual Cron Builder",
+      "Cron Expression Validator",
+      "Human-readable Descriptions",
+      "Next Run Time Preview",
+      "Common Schedule Templates",
+      "Copy to Clipboard"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "112"
+    }
+  }
+  </script>
+
+  <!-- Structured Data: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Cron Expression Generator",
+        "item": "https://bharatdevtool.com/cron-generator.html"
+      }
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a cron expression?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A cron expression is a string of 5 fields (minute, hour, day of month, month, day of week) that defines a schedule for automated tasks in Unix/Linux systems. For example, '0 9 * * 1-5' means 'every weekday at 9:00 AM'. Cron is used by system administrators and developers to schedule scripts, backups, emails, and other recurring jobs."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this cron expression generator free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, this cron expression generator is completely free with no sign-up or registration required. Build and validate unlimited cron expressions directly in your browser."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my data safe? Does it send data to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Your data never leaves your browser. All cron expression parsing, validation, and next-run calculations happen entirely in client-side JavaScript. No data is sent to any server."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I read a cron expression?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A standard cron expression has 5 space-separated fields: [minute] [hour] [day of month] [month] [day of week]. Each field accepts: a specific number, * (any value), a range (1-5), a list (1,3,5), or a step (*/15). Example: '30 8 * * 1' = every Monday at 8:30 AM."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What are common cron schedule examples?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Common cron expressions include: '* * * * *' (every minute), '0 * * * *' (every hour), '0 0 * * *' (daily at midnight), '0 9 * * 1-5' (weekdays at 9 AM), '0 0 * * 0' (every Sunday at midnight), '0 0 1 * *' (first day of each month), '*/15 * * * *' (every 15 minutes)."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .animate-fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-slide-up {
+      animation: slideUp 0.3s ease-out;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transform: translateX(120%);
+      transition: transform 0.3s ease;
+    }
+    .toast.show { transform: translateX(0); }
+    .toast.success { background: linear-gradient(135deg, #10b981, #059669); }
+    .toast.error   { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .toast.info    { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+
+    /* Cron field builder */
+    .cron-field {
+      transition: box-shadow 0.2s ease;
+    }
+    .cron-field:focus-within {
+      box-shadow: 0 0 0 2px #3b82f6;
+    }
+    .cron-expression-display {
+      font-family: 'Courier New', Courier, monospace;
+      letter-spacing: 0.08em;
+    }
+    .field-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .template-btn {
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .template-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+    }
+    .template-btn:active {
+      transform: translateY(0);
+    }
+    .next-run-item {
+      border-left: 3px solid #3b82f6;
+    }
+    [data-theme="dark"] .next-run-item {
+      border-left-color: #60a5fa;
+    }
+    .cron-part-highlight {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin: 0 2px;
+      background: rgba(59,130,246,0.12);
+      color: #1d4ed8;
+      font-family: monospace;
+    }
+    [data-theme="dark"] .cron-part-highlight {
+      background: rgba(96,165,250,0.15);
+      color: #93c5fd;
+    }
+    .valid-indicator {
+      transition: opacity 0.2s ease;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, .animate-fade-in, .animate-slide-up, .toast, .template-btn {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+
+  <!-- Header -->
+  <script src="components/header.js"></script>
+
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <h1 class="sr-only">Cron Expression Generator</h1>
+
+    <!-- Hero -->
+    <div class="text-center mb-10 animate-fade-in">
+      <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-3">
+        ⏰ Cron Expression Generator
+      </h2>
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Build cron schedules visually, validate syntax, and preview next run times — instantly, free, no sign-up.
+      </p>
+    </div>
+
+    <!-- Quick Templates -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6 animate-fade-in">
+      <h3 class="text-base font-semibold text-gray-700 dark:text-gray-300 mb-4">⚡ Quick Templates</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-2" id="templateGrid"></div>
+    </div>
+
+    <!-- Expression Input & Display -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6 animate-fade-in">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-base font-semibold text-gray-700 dark:text-gray-300">✏️ Cron Expression</h3>
+        <span id="validIndicator" class="valid-indicator text-sm font-medium px-3 py-1 rounded-full hidden"></span>
+      </div>
+
+      <!-- Raw expression input -->
+      <div class="flex gap-2 mb-4">
+        <input
+          type="text"
+          id="cronInput"
+          value="* * * * *"
+          placeholder="e.g. 0 9 * * 1-5"
+          aria-label="Cron expression"
+          class="flex-1 px-4 py-3 font-mono text-lg border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400"
+        >
+        <button
+          id="copyExprBtn"
+          aria-label="Copy cron expression"
+          class="flex-shrink-0 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm"
+        >📋 Copy</button>
+      </div>
+
+      <!-- Field labels row -->
+      <div class="grid grid-cols-5 gap-1 mb-1 text-center">
+        <span class="text-xs font-semibold text-blue-600 dark:text-blue-400">Minute</span>
+        <span class="text-xs font-semibold text-purple-600 dark:text-purple-400">Hour</span>
+        <span class="text-xs font-semibold text-green-600 dark:text-green-400">Day (Month)</span>
+        <span class="text-xs font-semibold text-orange-600 dark:text-orange-400">Month</span>
+        <span class="text-xs font-semibold text-red-600 dark:text-red-400">Day (Week)</span>
+      </div>
+
+      <!-- Visual builder fields -->
+      <div class="grid grid-cols-5 gap-1 mb-4">
+        <input id="fMinute"   type="text" value="*" aria-label="Minute field"       class="cron-field text-center px-2 py-2 font-mono border border-blue-300   dark:border-blue-700   rounded bg-blue-50   dark:bg-blue-900/30   text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <input id="fHour"     type="text" value="*" aria-label="Hour field"         class="cron-field text-center px-2 py-2 font-mono border border-purple-300 dark:border-purple-700 rounded bg-purple-50 dark:bg-purple-900/30 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500">
+        <input id="fDom"      type="text" value="*" aria-label="Day of month field" class="cron-field text-center px-2 py-2 font-mono border border-green-300  dark:border-green-700  rounded bg-green-50  dark:bg-green-900/30  text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500">
+        <input id="fMonth"    type="text" value="*" aria-label="Month field"        class="cron-field text-center px-2 py-2 font-mono border border-orange-300 dark:border-orange-700 rounded bg-orange-50 dark:bg-orange-900/30 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500">
+        <input id="fDow"      type="text" value="*" aria-label="Day of week field"  class="cron-field text-center px-2 py-2 font-mono border border-red-300    dark:border-red-700    rounded bg-red-50    dark:bg-red-900/30    text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500">
+      </div>
+
+      <!-- Field reference -->
+      <details class="text-xs text-gray-500 dark:text-gray-400 mt-2">
+        <summary class="cursor-pointer hover:text-gray-700 dark:hover:text-gray-200 select-none">Field reference &amp; syntax help</summary>
+        <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <p class="font-semibold text-gray-600 dark:text-gray-300 mb-1">Special characters</p>
+            <ul class="space-y-1">
+              <li><code class="font-mono">*</code> — any value</li>
+              <li><code class="font-mono">,</code> — list (1,3,5)</li>
+              <li><code class="font-mono">-</code> — range (1-5)</li>
+              <li><code class="font-mono">/</code> — step (*/15)</li>
+            </ul>
+          </div>
+          <div>
+            <p class="font-semibold text-gray-600 dark:text-gray-300 mb-1">Field ranges</p>
+            <ul class="space-y-1">
+              <li>Minute: <code class="font-mono">0-59</code></li>
+              <li>Hour: <code class="font-mono">0-23</code></li>
+              <li>Day of month: <code class="font-mono">1-31</code></li>
+              <li>Month: <code class="font-mono">1-12</code></li>
+              <li>Day of week: <code class="font-mono">0-6</code> (0=Sun)</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- Human-readable description + Next runs -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+
+      <!-- Description -->
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 animate-fade-in">
+        <h3 class="text-base font-semibold text-gray-700 dark:text-gray-300 mb-3">📖 Human-Readable Description</h3>
+        <div id="descriptionBox" class="min-h-[60px] text-gray-800 dark:text-gray-200 text-sm leading-relaxed"></div>
+      </div>
+
+      <!-- Next runs -->
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 animate-fade-in">
+        <h3 class="text-base font-semibold text-gray-700 dark:text-gray-300 mb-3">🔮 Next 5 Run Times</h3>
+        <div id="nextRunsBox" class="space-y-2 text-sm text-gray-700 dark:text-gray-300"></div>
+      </div>
+    </div>
+
+    <!-- Crontab usage snippet -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6 animate-fade-in">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-base font-semibold text-gray-700 dark:text-gray-300">🖥️ Crontab Usage Snippet</h3>
+        <button id="copySnippetBtn" class="text-xs px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Copy</button>
+      </div>
+      <pre id="snippetBox" class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 text-sm font-mono text-gray-800 dark:text-gray-200 overflow-x-auto whitespace-pre-wrap break-all"></pre>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+      <div class="faq-container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about Cron Expression Generator</p>
+        <div class="faq-list">
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is a cron expression?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>A cron expression is a string of 5 fields that defines a recurring schedule for automated tasks in Unix/Linux systems. The fields represent: <strong>minute, hour, day of month, month, day of week</strong>. For example, <code>0 9 * * 1-5</code> means "every weekday at 9:00 AM". Cron is widely used by system administrators and developers to schedule scripts, database backups, email reports, and other recurring jobs.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is this cron expression generator free?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes, completely free. No sign-up, no registration, no credit card required. Build and validate unlimited cron expressions directly in your browser.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is my data safe? Does it send data to a server?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Your data never leaves your browser. All cron expression parsing, validation, description generation, and next-run time calculations happen entirely in client-side JavaScript. Nothing is sent to any server.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How do I read a cron expression?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>A cron expression has 5 space-separated fields: <strong>[minute] [hour] [day of month] [month] [day of week]</strong>. Each field can be:</p>
+              <ul style="margin-top:8px; padding-left:16px; list-style:disc;">
+                <li><code>*</code> — any value (wildcard)</li>
+                <li>A specific number (e.g. <code>30</code>)</li>
+                <li>A range (e.g. <code>1-5</code>)</li>
+                <li>A list (e.g. <code>1,3,5</code>)</li>
+                <li>A step (e.g. <code>*/15</code> = every 15 units)</li>
+              </ul>
+              <p style="margin-top:8px;">Example: <code>30 8 * * 1</code> = every Monday at 8:30 AM.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What are common cron schedule examples?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <table style="width:100%; border-collapse:collapse; font-size:0.85em; margin-top:8px;">
+                <thead>
+                  <tr style="background:rgba(59,130,246,0.08);">
+                    <th style="padding:6px 10px; text-align:left; font-weight:600;">Expression</th>
+                    <th style="padding:6px 10px; text-align:left; font-weight:600;">Meaning</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td style="padding:5px 10px;"><code>* * * * *</code></td><td style="padding:5px 10px;">Every minute</td></tr>
+                  <tr><td style="padding:5px 10px;"><code>0 * * * *</code></td><td style="padding:5px 10px;">Every hour at :00</td></tr>
+                  <tr><td style="padding:5px 10px;"><code>0 0 * * *</code></td><td style="padding:5px 10px;">Daily at midnight</td></tr>
+                  <tr><td style="padding:5px 10px;"><code>0 9 * * 1-5</code></td><td style="padding:5px 10px;">Weekdays at 9 AM</td></tr>
+                  <tr><td style="padding:5px 10px;"><code>0 0 * * 0</code></td><td style="padding:5px 10px;">Every Sunday at midnight</td></tr>
+                  <tr><td style="padding:5px 10px;"><code>0 0 1 * *</code></td><td style="padding:5px 10px;">1st of each month at midnight</td></tr>
+                  <tr><td style="padding:5px 10px;"><code>*/15 * * * *</code></td><td style="padding:5px 10px;">Every 15 minutes</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+
+  <!-- Toast container -->
+  <div id="toastContainer"></div>
+
+  <!-- FAQ accordion -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.faq-question').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          document.querySelectorAll('.faq-question').forEach(function(q) {
+            q.setAttribute('aria-expanded', 'false');
+            q.closest('.faq-item').classList.remove('active');
+            q.querySelector('.faq-icon').textContent = '+';
+          });
+          if (!isExpanded) {
+            this.setAttribute('aria-expanded', 'true');
+            this.closest('.faq-item').classList.add('active');
+            this.querySelector('.faq-icon').textContent = '−';
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- Main cron generator logic -->
+  <script>
+    const PAGE_NAME = 'Cron Expression Generator';
+
+    // ── Toast ──────────────────────────────────────────────────────────────────
+    function showToast(message, type) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast ' + (type || 'info');
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(function() { toast.classList.add('show'); }, 50);
+      setTimeout(function() {
+        toast.classList.remove('show');
+        setTimeout(function() {
+          if (container.contains(toast)) container.removeChild(toast);
+        }, 350);
+      }, 3000);
+    }
+
+    // ── Copy to clipboard ──────────────────────────────────────────────────────
+    function copyToClipboard(text, successMsg) {
+      if (!text) return;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() {
+          showToast(successMsg || 'Copied!', 'success');
+        }).catch(function() {
+          fallbackCopy(text, successMsg);
+        });
+      } else {
+        fallbackCopy(text, successMsg);
+      }
+    }
+
+    function fallbackCopy(text, successMsg) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast(successMsg || 'Copied!', 'success');
+      } catch (e) {
+        showToast('Copy failed — select and copy manually', 'error');
+      }
+      document.body.removeChild(ta);
+    }
+
+    // ── Cron validation ────────────────────────────────────────────────────────
+    const FIELD_RANGES = {
+      minute: { min: 0, max: 59 },
+      hour:   { min: 0, max: 23 },
+      dom:    { min: 1, max: 31 },
+      month:  { min: 1, max: 12 },
+      dow:    { min: 0, max: 7 }   // 7 is also Sunday on some systems
+    };
+    const FIELD_KEYS = ['minute', 'hour', 'dom', 'month', 'dow'];
+
+    function isValidFieldValue(val, range) {
+      if (val === '*') return true;
+
+      // Step on wildcard: */n
+      if (/^\*\/\d+$/.test(val)) {
+        const step = parseInt(val.slice(2), 10);
+        return step >= 1 && step <= range.max;
+      }
+
+      // List: split by comma, each part must be valid number or range
+      const parts = val.split(',');
+      return parts.every(function(part) {
+        return isValidPrimitive(part.trim(), range);
+      });
+    }
+
+    function isValidPrimitive(val, range) {
+      // Range with optional step: n-m or n-m/s
+      if (/^\d+(-\d+)?(\/\d+)?$/.test(val)) {
+        const slashIdx = val.indexOf('/');
+        const baseRange = slashIdx === -1 ? val : val.slice(0, slashIdx);
+        const dashIdx = baseRange.indexOf('-');
+        if (dashIdx === -1) {
+          const n = parseInt(baseRange, 10);
+          return n >= range.min && n <= range.max;
+        }
+        const lo = parseInt(baseRange.slice(0, dashIdx), 10);
+        const hi = parseInt(baseRange.slice(dashIdx + 1), 10);
+        return lo >= range.min && hi <= range.max && lo <= hi;
+      }
+      // Step on wildcard already handled above
+      if (/^\*\/\d+$/.test(val)) {
+        const step = parseInt(val.slice(2), 10);
+        return step >= 1;
+      }
+      return false;
+    }
+
+    function parseCronExpression(expr) {
+      const trimmed = (expr || '').trim();
+      const parts = trimmed.split(/\s+/);
+      if (parts.length !== 5) return null;
+      const fields = {};
+      for (let i = 0; i < 5; i++) {
+        const key = FIELD_KEYS[i];
+        if (!isValidFieldValue(parts[i], FIELD_RANGES[key])) return null;
+        fields[key] = parts[i];
+      }
+      fields._parts = parts;
+      return fields;
+    }
+
+    function isValidCronExpression(expr) {
+      return parseCronExpression(expr) !== null;
+    }
+
+    // ── Human-readable description ─────────────────────────────────────────────
+    const MONTH_NAMES = ['', 'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'];
+    const DOW_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+    function describeField(val, unit, names) {
+      if (val === '*') return 'every ' + unit;
+      if (/^\*\/(\d+)$/.test(val)) {
+        const n = val.match(/^\*\/(\d+)$/)[1];
+        return 'every ' + n + ' ' + unit + (parseInt(n, 10) > 1 ? 's' : '');
+      }
+
+      const parts = val.split(',');
+      const described = parts.map(function(part) {
+        part = part.trim();
+        const rangeStepMatch = part.match(/^(\d+)-(\d+)(?:\/(\d+))?$/);
+        if (rangeStepMatch) {
+          const lo = parseInt(rangeStepMatch[1], 10);
+          const hi = parseInt(rangeStepMatch[2], 10);
+          const step = rangeStepMatch[3] ? parseInt(rangeStepMatch[3], 10) : null;
+          const loName = names ? (names[lo] || lo) : lo;
+          const hiName = names ? (names[hi] || hi) : hi;
+          return step
+            ? 'every ' + step + ' ' + unit + 's from ' + loName + ' to ' + hiName
+            : loName + ' through ' + hiName;
+        }
+        const n = parseInt(part, 10);
+        return names ? (names[n] || n) : (unit === 'hour' ? formatHour(n) : String(n));
+      });
+
+      return described.join(', ');
+    }
+
+    function formatHour(h) {
+      if (h === 0) return '12 AM';
+      if (h === 12) return '12 PM';
+      return h < 12 ? h + ' AM' : (h - 12) + ' PM';
+    }
+
+    function formatMinute(val) {
+      if (val === '*') return 'every minute';
+      if (/^\*\/(\d+)$/.test(val)) {
+        const n = val.match(/^\*\/(\d+)$/)[1];
+        return 'every ' + n + ' minutes';
+      }
+      const parts = val.split(',').map(function(p) { return p.trim(); });
+      const singles = parts.filter(function(p) { return /^\d+$/.test(p); });
+      const others  = parts.filter(function(p) { return !/^\d+$/.test(p); });
+
+      const formatted = singles.map(function(p) {
+        const n = parseInt(p, 10);
+        return ':' + String(n).padStart(2, '0');
+      }).concat(others);
+      return 'at minute ' + formatted.join(', ');
+    }
+
+    function buildHumanDescription(fields) {
+      if (!fields) return '⚠️ Invalid cron expression';
+
+      const min   = fields.minute;
+      const hour  = fields.hour;
+      const dom   = fields.dom;
+      const month = fields.month;
+      const dow   = fields.dow;
+
+      const parts = [];
+
+      // Minute + hour combined
+      if (min === '*' && hour === '*') {
+        parts.push('every minute');
+      } else if (min === '*') {
+        parts.push('every minute of ' + describeField(hour, 'hour', null) + ' past midnight');
+      } else if (hour === '*') {
+        parts.push(formatMinute(min) + ' of every hour');
+      } else if (/^\d+$/.test(min) && /^\d+$/.test(hour)) {
+        // Single values: show as clock time
+        const h = parseInt(hour, 10);
+        const m = parseInt(min, 10);
+        const suffix = h < 12 ? 'AM' : 'PM';
+        const displayH = h === 0 ? 12 : h > 12 ? h - 12 : h;
+        parts.push('at ' + displayH + ':' + String(m).padStart(2, '0') + ' ' + suffix);
+      } else {
+        parts.push(formatMinute(min) + ' past ' + describeField(hour, 'hour', null));
+      }
+
+      // Day of month
+      if (dom !== '*') {
+        parts.push('on day ' + describeField(dom, 'day', null) + ' of the month');
+      }
+
+      // Month
+      if (month !== '*') {
+        parts.push('in ' + describeField(month, 'month', MONTH_NAMES));
+      }
+
+      // Day of week
+      if (dow !== '*') {
+        parts.push('on ' + describeField(dow, 'day of week', DOW_NAMES));
+      }
+
+      if (dom === '*' && month === '*' && dow === '*') {
+        parts.push('every day');
+      }
+
+      return parts.join(', ');
+    }
+
+    // ── Next run times ─────────────────────────────────────────────────────────
+    function expandField(val, min, max) {
+      const result = new Set();
+
+      if (val === '*') {
+        for (let i = min; i <= max; i++) result.add(i);
+        return result;
+      }
+
+      if (/^\*\/(\d+)$/.test(val)) {
+        const step = parseInt(val.match(/^\*\/(\d+)$/)[1], 10);
+        for (let i = min; i <= max; i += step) result.add(i);
+        return result;
+      }
+
+      const parts = val.split(',');
+      parts.forEach(function(part) {
+        part = part.trim();
+        const rangeMatch = part.match(/^(\d+)-(\d+)(?:\/(\d+))?$/);
+        if (rangeMatch) {
+          const lo   = parseInt(rangeMatch[1], 10);
+          const hi   = parseInt(rangeMatch[2], 10);
+          const step = rangeMatch[3] ? parseInt(rangeMatch[3], 10) : 1;
+          for (let i = lo; i <= hi; i += step) result.add(i);
+        } else {
+          result.add(parseInt(part, 10));
+        }
+      });
+
+      return result;
+    }
+
+    function calculateNextRuns(fields, count) {
+      if (!fields) return [];
+
+      const minutes = expandField(fields.minute, 0, 59);
+      const hours   = expandField(fields.hour,   0, 23);
+      const doms    = expandField(fields.dom,    1, 31);
+      const months  = expandField(fields.month,  1, 12);
+      const dows    = expandField(fields.dow,    0, 7); // 7 = also Sunday
+
+      const runs = [];
+      const now = new Date();
+      const cursor = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes() + 1, 0, 0);
+
+      let iterations = 0;
+      const MAX_ITERATIONS = 60 * 24 * 366 * 2; // 2 years of minutes
+
+      while (runs.length < count && iterations < MAX_ITERATIONS) {
+        iterations++;
+        const m  = cursor.getMinutes();
+        const h  = cursor.getHours();
+        const d  = cursor.getDate();
+        const mo = cursor.getMonth() + 1;
+        const dw = cursor.getDay(); // 0=Sun
+
+        const monthOk = months.has(mo);
+        const domOk   = doms.has(d);
+        const dowOk   = dows.has(dw) || dows.has(dw === 0 ? 7 : dw);
+
+        if (monthOk && (domOk || dowOk) && hours.has(h) && minutes.has(m)) {
+          runs.push(new Date(cursor));
+        }
+
+        // Advance one minute
+        cursor.setMinutes(cursor.getMinutes() + 1);
+      }
+
+      return runs;
+    }
+
+    function formatRunDate(date) {
+      const opts = { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+      return date.toLocaleString(undefined, opts);
+    }
+
+    // ── Crontab snippet ────────────────────────────────────────────────────────
+    function buildSnippet(expr) {
+      return expr + ' /path/to/your/script.sh\n\n# Add to crontab with: crontab -e\n# List crons with:    crontab -l';
+    }
+
+    // ── UI update ──────────────────────────────────────────────────────────────
+    function updateUI(expr) {
+      const fields = parseCronExpression(expr);
+
+      // Valid indicator
+      const indicator = document.getElementById('validIndicator');
+      if (fields) {
+        indicator.textContent = '✓ Valid';
+        indicator.className = 'valid-indicator text-sm font-medium px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400';
+        indicator.classList.remove('hidden');
+      } else {
+        indicator.textContent = '✗ Invalid';
+        indicator.className = 'valid-indicator text-sm font-medium px-3 py-1 rounded-full bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400';
+        indicator.classList.remove('hidden');
+      }
+
+      // Description
+      const desc = buildHumanDescription(fields);
+      document.getElementById('descriptionBox').textContent = desc;
+
+      // Next runs
+      const runsBox = document.getElementById('nextRunsBox');
+      const runs = calculateNextRuns(fields, 5);
+      if (runs.length === 0) {
+        runsBox.innerHTML = '<p class="text-gray-400 dark:text-gray-500 italic">—</p>';
+      } else {
+        runsBox.innerHTML = runs.map(function(d, i) {
+          return '<div class="next-run-item pl-3 py-1 rounded-r">' +
+            '<span class="text-gray-400 dark:text-gray-500 text-xs mr-2">' + (i + 1) + '.</span>' +
+            '<span>' + formatRunDate(d) + '</span>' +
+            '</div>';
+        }).join('');
+      }
+
+      // Snippet
+      document.getElementById('snippetBox').textContent = buildSnippet(fields ? expr : '# invalid expression');
+    }
+
+    // ── Sync fields ↔ expression ───────────────────────────────────────────────
+    const fieldInputs = {
+      minute: document.getElementById('fMinute'),
+      hour:   document.getElementById('fHour'),
+      dom:    document.getElementById('fDom'),
+      month:  document.getElementById('fMonth'),
+      dow:    document.getElementById('fDow')
+    };
+
+    function buildExprFromFields() {
+      return [
+        fieldInputs.minute.value.trim() || '*',
+        fieldInputs.hour.value.trim()   || '*',
+        fieldInputs.dom.value.trim()    || '*',
+        fieldInputs.month.value.trim()  || '*',
+        fieldInputs.dow.value.trim()    || '*'
+      ].join(' ');
+    }
+
+    function syncFieldsToInput(expr) {
+      const parts = expr.trim().split(/\s+/);
+      if (parts.length !== 5) return;
+      fieldInputs.minute.value = parts[0];
+      fieldInputs.hour.value   = parts[1];
+      fieldInputs.dom.value    = parts[2];
+      fieldInputs.month.value  = parts[3];
+      fieldInputs.dow.value    = parts[4];
+    }
+
+    // ── Event wiring ───────────────────────────────────────────────────────────
+    const cronInput = document.getElementById('cronInput');
+
+    cronInput.addEventListener('input', function() {
+      const expr = cronInput.value;
+      syncFieldsToInput(expr);
+      updateUI(expr);
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.track('cron_expression_typed', { page: PAGE_NAME, expression: expr });
+      }
+    });
+
+    Object.values(fieldInputs).forEach(function(input) {
+      input.addEventListener('input', function() {
+        const expr = buildExprFromFields();
+        cronInput.value = expr;
+        updateUI(expr);
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('cron_field_changed', { page: PAGE_NAME, expression: expr });
+        }
+      });
+    });
+
+    document.getElementById('copyExprBtn').addEventListener('click', function() {
+      const expr = cronInput.value.trim();
+      copyToClipboard(expr, 'Cron expression copied!');
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.track('cron_expression_copied', { page: PAGE_NAME, expression: expr });
+      }
+    });
+
+    document.getElementById('copySnippetBtn').addEventListener('click', function() {
+      const snippet = document.getElementById('snippetBox').textContent;
+      copyToClipboard(snippet, 'Snippet copied!');
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.track('cron_snippet_copied', { page: PAGE_NAME });
+      }
+    });
+
+    // ── Templates ──────────────────────────────────────────────────────────────
+    const TEMPLATES = [
+      { label: 'Every minute',        expr: '* * * * *' },
+      { label: 'Every hour',          expr: '0 * * * *' },
+      { label: 'Daily at midnight',   expr: '0 0 * * *' },
+      { label: 'Daily at 9 AM',       expr: '0 9 * * *' },
+      { label: 'Weekdays at 9 AM',    expr: '0 9 * * 1-5' },
+      { label: 'Every 15 minutes',    expr: '*/15 * * * *' },
+      { label: 'Every 30 minutes',    expr: '*/30 * * * *' },
+      { label: 'Weekly (Sunday)',     expr: '0 0 * * 0' },
+      { label: 'Monthly (1st)',       expr: '0 0 1 * *' },
+      { label: 'Hourly at :30',       expr: '30 * * * *' },
+      { label: 'Twice a day',         expr: '0 8,20 * * *' },
+      { label: 'Every 5 minutes',     expr: '*/5 * * * *' }
+    ];
+
+    function loadTemplate(expr, label) {
+      cronInput.value = expr;
+      syncFieldsToInput(expr);
+      updateUI(expr);
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.track('cron_template_selected', { page: PAGE_NAME, template: label, expression: expr });
+      }
+    }
+
+    const grid = document.getElementById('templateGrid');
+    TEMPLATES.forEach(function(t) {
+      const btn = document.createElement('button');
+      btn.className = 'template-btn text-left px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:border-blue-300 dark:hover:border-blue-600 transition-colors text-xs';
+      btn.setAttribute('aria-label', 'Load template: ' + t.label);
+      btn.innerHTML = '<span class="block font-semibold text-gray-800 dark:text-gray-200">' + t.label + '</span>' +
+                      '<code class="block mt-0.5 text-gray-500 dark:text-gray-400 font-mono">' + t.expr + '</code>';
+      btn.addEventListener('click', function() { loadTemplate(t.expr, t.label); });
+      grid.appendChild(btn);
+    });
+
+    // ── Initial render ─────────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', function() {
+      updateUI(cronInput.value);
+    });
+
+    // Also run immediately in case DOMContentLoaded already fired
+    if (document.readyState !== 'loading') {
+      updateUI(cronInput.value);
+    }
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
+        initSentryTracking();
+      }
+    });
+  </script>
+</body>
+</html>

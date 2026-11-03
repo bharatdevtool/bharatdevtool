@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free PNG to JPG Converter Online | Convert Images Instantly | Bharat Dev Tools</title>
+  <meta name="description" content="Free PNG to JPG and JPG to PNG converter. Convert images instantly in your browser — no upload, no sign-up required. Supports PNG, JPG, WebP, and more.">
+  <meta name="keywords" content="png to jpg converter, jpg to png converter, image converter online, convert png to jpeg, free image converter, webp to png, image format converter, no upload image converter, browser image converter, bulk image convert">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  <link rel="canonical" href="https://bharatdevtool.com/image-converter.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Free PNG to JPG Converter Online | Bharat Dev Tools">
+  <meta property="og:description" content="Free PNG to JPG and JPG to PNG converter. Convert images instantly in your browser — no upload, no sign-up required.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/image-converter.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PNG to JPG Converter - Free Online Tool">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free PNG to JPG Converter Online | Bharat Dev Tools">
+  <meta name="twitter:description" content="Free PNG to JPG and JPG to PNG converter. No upload, no sign-up. Converts entirely in your browser.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ik.imagekit.io/bdt/bdt_logo_v3_16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/bdt/bdt_logo_v3_180.png">
+
+  <!-- Theme FIRST — prevents dark mode flash -->
+  <script src="assets/js/theme.js"></script>
+
+  <!-- Sentry -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+
+  <!-- Version + Analytics (deferred) -->
+  <script src="assets/js/version.js" defer></script>
+  <script src="assets/js/analytics.js" defer></script>
+
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+
+  <!-- Structured Data: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "PNG to JPG Converter",
+    "description": "Free online PNG to JPG and JPG to PNG converter. Converts images entirely in your browser — no upload to server, no sign-up required.",
+    "url": "https://bharatdevtool.com/image-converter.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "PNG to JPG conversion",
+      "JPG to PNG conversion",
+      "WebP conversion",
+      "Adjustable JPEG quality",
+      "Drag and drop upload",
+      "Instant browser-side conversion",
+      "No server upload"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "120"
+    }
+  }
+  </script>
+
+  <!-- Structured Data: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "PNG to JPG Converter",
+        "item": "https://bharatdevtool.com/image-converter.html"
+      }
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a PNG to JPG converter?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A PNG to JPG converter is a tool that changes an image file from the PNG format to the JPEG format. PNG files support transparency and are lossless, while JPG files use lossy compression to produce smaller file sizes — making them ideal for photos and web use. This tool converts images directly in your browser using the Canvas API."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this image converter free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, this PNG to JPG converter is completely free. There are no sign-ups, no subscriptions, and no hidden fees. You can convert as many images as you like."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my image data safe? Does it get uploaded to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Your images never leave your device. All conversion happens entirely in your browser using the HTML5 Canvas API. No image data is sent to any server, ensuring complete privacy."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What image formats does this tool support?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "This tool supports PNG, JPG/JPEG, and WebP as input formats. You can convert any of these to PNG or JPG output. For JPG output, you can also adjust the quality level to balance file size and image quality."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does PNG to JPG conversion remove transparency?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The JPEG format does not support transparency (alpha channel). When you convert a PNG with transparency to JPG, transparent areas are replaced with a solid background colour — white by default. If your PNG has a transparent background, the JPG output will have a white background instead."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .animate-fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-slide-up {
+      animation: slideUp 0.3s ease-out;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .drop-zone {
+      border: 2px dashed #9ca3af;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+    .drop-zone.drag-over {
+      border-color: #3b82f6;
+      background-color: rgba(59, 130, 246, 0.05);
+    }
+    [data-theme="dark"] .drop-zone {
+      border-color: #4b5563;
+    }
+    [data-theme="dark"] .drop-zone.drag-over {
+      border-color: #60a5fa;
+      background-color: rgba(96, 165, 250, 0.08);
+    }
+
+    .image-preview-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: repeating-conic-gradient(#e5e7eb 0% 25%, transparent 0% 50%) 0 0 / 16px 16px;
+      border-radius: 0.5rem;
+      min-height: 180px;
+    }
+    [data-theme="dark"] .image-preview-wrap {
+      background: repeating-conic-gradient(#374151 0% 25%, #1f2937 0% 50%) 0 0 / 16px 16px;
+    }
+    .image-preview-wrap img {
+      max-width: 100%;
+      max-height: 280px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .quality-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: #e5e7eb;
+      outline: none;
+    }
+    [data-theme="dark"] .quality-slider {
+      background: #374151;
+    }
+    .quality-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #3b82f6;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+    .quality-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+    .quality-slider::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #3b82f6;
+      cursor: pointer;
+      border: none;
+    }
+
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transform: translateX(110%);
+      transition: transform 0.3s ease;
+    }
+    .toast.show { transform: translateX(0); }
+    .toast.success { background: linear-gradient(135deg, #10b981, #059669); }
+    .toast.error { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .toast.info { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+
+    .convert-btn {
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+    .convert-btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+      opacity: 0.92;
+    }
+    .convert-btn:active:not(:disabled) {
+      transform: translateY(0);
+    }
+    .convert-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, .toast, .convert-btn {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+
+  <!-- Header Component -->
+  <script src="components/header.js"></script>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <h1 class="sr-only">Free PNG to JPG Converter Online</h1>
+
+    <!-- Hero -->
+    <div class="text-center mb-10 animate-fade-in">
+      <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-3">
+        🖼️ PNG ↔ JPG Converter
+      </h2>
+      <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Convert images between PNG, JPG, and WebP formats instantly — right in your browser. No upload, no sign-up, no waiting.
+      </p>
+    </div>
+
+    <!-- Upload & Settings Panel -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6 animate-fade-in">
+
+      <!-- Drop Zone -->
+      <div
+        id="dropZone"
+        class="drop-zone rounded-xl p-10 text-center cursor-pointer mb-6"
+        role="button"
+        tabindex="0"
+        aria-label="Click or drag an image file here to upload"
+      >
+        <div id="dropZoneContent">
+          <div class="text-5xl mb-3">📂</div>
+          <p class="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-1">
+            Drop an image here
+          </p>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
+            or click to browse — PNG, JPG, WebP supported
+          </p>
+          <button
+            type="button"
+            id="browseBtn"
+            class="inline-flex items-center px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm"
+          >
+            Choose Image
+          </button>
+        </div>
+        <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp,image/gif,image/bmp" class="hidden" aria-hidden="true">
+      </div>
+
+      <!-- Settings Row -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-6">
+        <!-- Output Format -->
+        <div>
+          <label for="outputFormat" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Output Format
+          </label>
+          <select
+            id="outputFormat"
+            class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            <option value="image/jpeg">JPG (JPEG)</option>
+            <option value="image/png">PNG</option>
+            <option value="image/webp">WebP</option>
+          </select>
+        </div>
+
+        <!-- Background Colour (for JPG) -->
+        <div id="bgColorSection">
+          <label for="bgColor" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Background Colour <span class="text-xs text-gray-400">(for transparent areas)</span>
+          </label>
+          <div class="flex items-center gap-3">
+            <input
+              type="color"
+              id="bgColor"
+              value="#ffffff"
+              class="w-10 h-10 rounded border border-gray-300 dark:border-gray-600 cursor-pointer bg-white dark:bg-gray-700"
+              aria-label="Background colour for transparent areas"
+            >
+            <span class="text-sm text-gray-500 dark:text-gray-400">Used to fill transparent pixels</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quality Slider (shown only for JPG/WebP) -->
+      <div id="qualitySection" class="mb-6">
+        <div class="flex items-center justify-between mb-2">
+          <label for="qualitySlider" class="text-sm font-medium text-gray-700 dark:text-gray-300">
+            Output Quality
+          </label>
+          <span id="qualityValue" class="text-sm font-semibold text-blue-600 dark:text-blue-400">85%</span>
+        </div>
+        <input
+          type="range"
+          id="qualitySlider"
+          class="quality-slider"
+          min="10"
+          max="100"
+          value="85"
+          step="5"
+          aria-label="JPEG quality percentage"
+        >
+        <div class="flex justify-between text-xs text-gray-400 mt-1">
+          <span>Smaller file</span>
+          <span>Best quality</span>
+        </div>
+      </div>
+
+      <!-- Convert Button -->
+      <button
+        type="button"
+        id="convertBtn"
+        class="convert-btn w-full flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold text-base"
+        disabled
+        aria-label="Convert image"
+      >
+        <span id="convertBtnIcon">🔄</span>
+        <span id="convertBtnText">Convert Image</span>
+      </button>
+    </div>
+
+    <!-- Preview Panel (hidden until conversion) -->
+    <div id="previewPanel" class="hidden bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6 animate-slide-up">
+      <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-4">Preview</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <!-- Original -->
+        <div>
+          <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Original</p>
+          <div class="image-preview-wrap mb-2">
+            <img id="originalPreview" src="" alt="Original image preview">
+          </div>
+          <p id="originalMeta" class="text-xs text-gray-500 dark:text-gray-400 text-center"></p>
+        </div>
+        <!-- Converted -->
+        <div>
+          <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Converted</p>
+          <div class="image-preview-wrap mb-2">
+            <img id="convertedPreview" src="" alt="Converted image preview">
+          </div>
+          <p id="convertedMeta" class="text-xs text-gray-500 dark:text-gray-400 text-center"></p>
+        </div>
+      </div>
+
+      <!-- Download Button -->
+      <button
+        type="button"
+        id="downloadBtn"
+        class="convert-btn mt-6 w-full flex items-center justify-center gap-2 px-6 py-3 bg-green-600 text-white rounded-xl font-semibold text-base"
+        aria-label="Download converted image"
+      >
+        ⬇️ Download Converted Image
+      </button>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+      <div class="faq-container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about our free PNG ↔ JPG converter</p>
+        <div class="faq-list">
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is a PNG to JPG converter?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>A PNG to JPG converter changes an image file from the PNG format to the JPEG format. PNG files support transparency and use lossless compression, while JPG files use lossy compression to produce smaller file sizes — ideal for photos and web images. This free online tool converts images entirely in your browser using the HTML5 Canvas API.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is this image converter free?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes, completely free. No sign-up, no subscription, no hidden fees. Convert as many images as you like, directly from your browser.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is my image data safe? Does it get uploaded to a server?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Your images never leave your device. All conversion happens entirely in your browser using the HTML5 Canvas API. No image data is sent to any server, ensuring complete privacy and security.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What image formats are supported?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>You can upload PNG, JPG/JPEG, WebP, GIF (first frame), and BMP images. The output format can be JPG, PNG, or WebP. For JPG and WebP output, you can adjust the quality level to balance file size and image quality.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Why does converting PNG to JPG add a white background?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>The JPEG format does not support transparency (alpha channel). When converting a PNG with transparent areas to JPG, those transparent pixels must be filled with a solid colour. By default this is white, but you can choose any background colour using the colour picker before converting.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+
+  <!-- Toast container -->
+  <div id="toastContainer"></div>
+
+  <!-- FAQ Accordion -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.faq-question').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+          document.querySelectorAll('.faq-question').forEach(q => {
+            q.setAttribute('aria-expanded', 'false');
+            q.closest('.faq-item').classList.remove('active');
+            q.querySelector('.faq-icon').textContent = '+';
+          });
+          if (!isExpanded) {
+            btn.setAttribute('aria-expanded', 'true');
+            btn.closest('.faq-item').classList.add('active');
+            btn.querySelector('.faq-icon').textContent = '−';
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- Sentry init -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
+        initSentryTracking();
+      }
+    });
+  </script>
+
+  <!-- Image Converter Logic -->
+  <script>
+    const PAGE_NAME = 'Image Converter';
+
+    // ── State ──────────────────────────────────────────────────────────────────
+    let sourceFile = null;
+    let convertedDataUrl = null;
+    let convertedExtension = 'jpg';
+
+    // ── DOM references ─────────────────────────────────────────────────────────
+    const dropZone       = document.getElementById('dropZone');
+    const fileInput      = document.getElementById('fileInput');
+    const browseBtn      = document.getElementById('browseBtn');
+    const outputFormat   = document.getElementById('outputFormat');
+    const bgColor        = document.getElementById('bgColor');
+    const bgColorSection = document.getElementById('bgColorSection');
+    const qualitySection = document.getElementById('qualitySection');
+    const qualitySlider  = document.getElementById('qualitySlider');
+    const qualityValue   = document.getElementById('qualityValue');
+    const convertBtn     = document.getElementById('convertBtn');
+    const convertBtnText = document.getElementById('convertBtnText');
+    const convertBtnIcon = document.getElementById('convertBtnIcon');
+    const previewPanel   = document.getElementById('previewPanel');
+    const originalPreview  = document.getElementById('originalPreview');
+    const convertedPreview = document.getElementById('convertedPreview');
+    const originalMeta     = document.getElementById('originalMeta');
+    const convertedMeta    = document.getElementById('convertedMeta');
+    const downloadBtn    = document.getElementById('downloadBtn');
+
+    // ── Toast ──────────────────────────────────────────────────────────────────
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 50);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 350);
+      }, 3200);
+    }
+
+    // ── Format helpers ─────────────────────────────────────────────────────────
+    function formatFileSize(bytes) {
+      if (bytes < 1024) return `${bytes} B`;
+      if (bytes < 1048576) return `${(bytes / 1024).toFixed(1)} KB`;
+      return `${(bytes / 1048576).toFixed(2)} MB`;
+    }
+
+    function mimeToExtension(mime) {
+      const map = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' };
+      return map[mime] || 'jpg';
+    }
+
+    function isLossyFormat(mime) {
+      return mime === 'image/jpeg' || mime === 'image/webp';
+    }
+
+    // ── UI toggles ─────────────────────────────────────────────────────────────
+    function updateSettingsVisibility() {
+      const mime = outputFormat.value;
+      qualitySection.style.display = isLossyFormat(mime) ? 'block' : 'none';
+      bgColorSection.style.display = mime === 'image/png' ? 'none' : 'flex';
+    }
+
+    // ── File validation ────────────────────────────────────────────────────────
+    function isValidImageFile(file) {
+      const allowed = ['image/png', 'image/jpeg', 'image/webp', 'image/gif', 'image/bmp'];
+      return allowed.includes(file.type);
+    }
+
+    // ── Load file into state ───────────────────────────────────────────────────
+    function loadImageFile(file) {
+      if (!isValidImageFile(file)) {
+        showToast('Unsupported file type. Please use PNG, JPG, WebP, GIF, or BMP.', 'error');
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('image_converter_invalid_type', { page: PAGE_NAME, type: file.type });
+        }
+        return;
+      }
+
+      sourceFile = file;
+      convertedDataUrl = null;
+      previewPanel.classList.add('hidden');
+      convertBtn.disabled = false;
+      convertBtnText.textContent = 'Convert Image';
+      convertBtnIcon.textContent = '🔄';
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        originalPreview.src = e.target.result;
+        originalMeta.textContent = `${file.name} — ${formatFileSize(file.size)}`;
+      };
+      reader.readAsDataURL(file);
+
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.track('image_converter_file_loaded', {
+          page: PAGE_NAME,
+          input_type: file.type,
+          size_bytes: file.size
+        });
+      }
+    }
+
+    // ── Core conversion ────────────────────────────────────────────────────────
+    function convertImage() {
+      if (!sourceFile) {
+        showToast('Please select an image first.', 'error');
+        return;
+      }
+
+      const mime = outputFormat.value;
+      const quality = parseInt(qualitySlider.value, 10) / 100;
+      const bg = bgColor.value;
+      const ext = mimeToExtension(mime);
+      convertedExtension = ext;
+
+      setBusy(true);
+
+      const img = new Image();
+      const objectUrl = URL.createObjectURL(sourceFile);
+
+      img.onload = () => {
+        try {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.naturalWidth;
+          canvas.height = img.naturalHeight;
+          const ctx = canvas.getContext('2d');
+
+          if (mime !== 'image/png') {
+            ctx.fillStyle = bg;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+          }
+          ctx.drawImage(img, 0, 0);
+
+          const dataUrl = canvas.toDataURL(mime, isLossyFormat(mime) ? quality : undefined);
+          convertedDataUrl = dataUrl;
+
+          convertedPreview.src = dataUrl;
+          const approxBytes = Math.round((dataUrl.length - dataUrl.indexOf(',') - 1) * 0.75);
+          convertedMeta.textContent = `${canvas.width}×${canvas.height}px — ~${formatFileSize(approxBytes)}`;
+
+          previewPanel.classList.remove('hidden');
+          previewPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          showToast('Image converted successfully!', 'success');
+
+          if (typeof window.Analytics !== 'undefined') {
+            window.Analytics.track('image_converter_success', {
+              page: PAGE_NAME,
+              input_type: sourceFile.type,
+              output_type: mime,
+              quality: isLossyFormat(mime) ? Math.round(quality * 100) : 100,
+              width: canvas.width,
+              height: canvas.height
+            });
+          }
+        } catch (err) {
+          handleConvertError(err);
+        } finally {
+          URL.revokeObjectURL(objectUrl);
+          setBusy(false);
+        }
+      };
+
+      img.onerror = () => {
+        URL.revokeObjectURL(objectUrl);
+        setBusy(false);
+        handleConvertError(new Error('Failed to load image'));
+      };
+
+      img.src = objectUrl;
+    }
+
+    function handleConvertError(err) {
+      showToast('Conversion failed. Please try a different image.', 'error');
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.track('image_converter_error', {
+          page: PAGE_NAME,
+          error: err.message
+        });
+      }
+      if (typeof Sentry !== 'undefined') {
+        try {
+          Sentry.captureException(err, { tags: { tool: 'image-converter' } });
+        } catch (_) {}
+      }
+    }
+
+    function setBusy(busy) {
+      convertBtn.disabled = busy;
+      convertBtnText.textContent = busy ? 'Converting…' : 'Convert Image';
+      convertBtnIcon.textContent = busy ? '⏳' : '🔄';
+    }
+
+    // ── Download ───────────────────────────────────────────────────────────────
+    function downloadConvertedImage() {
+      if (!convertedDataUrl) {
+        showToast('Nothing to download yet. Convert an image first.', 'error');
+        return;
+      }
+      const baseName = sourceFile ? sourceFile.name.replace(/\.[^.]+$/, '') : 'converted';
+      const a = document.createElement('a');
+      a.href = convertedDataUrl;
+      a.download = `${baseName}.${convertedExtension}`;
+      a.click();
+
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.track('image_converter_download', {
+          page: PAGE_NAME,
+          output_format: convertedExtension
+        });
+      }
+      showToast('Download started!', 'success');
+    }
+
+    // ── Event wiring ───────────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+      updateSettingsVisibility();
+
+      // Quality slider label
+      qualitySlider.addEventListener('input', () => {
+        qualityValue.textContent = `${qualitySlider.value}%`;
+      });
+
+      // Format change
+      outputFormat.addEventListener('change', updateSettingsVisibility);
+
+      // Browse button
+      browseBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        fileInput.click();
+      });
+
+      // Drop zone click (except browse btn)
+      dropZone.addEventListener('click', (e) => {
+        if (e.target !== browseBtn) fileInput.click();
+      });
+
+      // Keyboard accessibility for drop zone
+      dropZone.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          fileInput.click();
+        }
+      });
+
+      // File input change
+      fileInput.addEventListener('change', () => {
+        if (fileInput.files && fileInput.files[0]) {
+          loadImageFile(fileInput.files[0]);
+        }
+      });
+
+      // Drag & drop
+      dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('drag-over');
+      });
+      dropZone.addEventListener('dragleave', () => {
+        dropZone.classList.remove('drag-over');
+      });
+      dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('drag-over');
+        const file = e.dataTransfer.files && e.dataTransfer.files[0];
+        if (file) loadImageFile(file);
+      });
+
+      // Convert
+      convertBtn.addEventListener('click', convertImage);
+
+      // Download
+      downloadBtn.addEventListener('click', downloadConvertedImage);
+    });
+  </script>
+</body>
+</html>

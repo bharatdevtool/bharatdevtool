@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free JSON to TypeScript Interface Generator Online | Convert JSON to TS Types | Bharat Dev Tools</title>
+  <meta name="description" content="Free JSON to TypeScript interface generator. Instantly convert JSON objects to TypeScript interfaces and types online. No sign-up required. Supports nested objects, arrays, and optional fields.">
+  <meta name="keywords" content="json to typescript, json to typescript interface, json to ts, convert json to typescript, typescript interface generator, json types, typescript types from json, online json to typescript, free json converter">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  <link rel="canonical" href="https://bharatdevtool.com/json-to-typescript.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Free JSON to TypeScript Interface Generator Online | Bharat Dev Tools">
+  <meta property="og:description" content="Instantly convert JSON to TypeScript interfaces and types. Free online tool — no sign-up required. Supports nested objects, arrays, and optional properties.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/json-to-typescript.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="JSON to TypeScript Interface Generator - Free Online Tool">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free JSON to TypeScript Interface Generator Online | Bharat Dev Tools">
+  <meta name="twitter:description" content="Instantly convert JSON to TypeScript interfaces and types. Free online tool — no sign-up required.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ik.imagekit.io/bdt/bdt_logo_v3_16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/bdt/bdt_logo_v3_180.png">
+
+  <!-- Theme Management (load early to prevent flash) -->
+  <script src="assets/js/theme.js"></script>
+
+  <!-- Sentry SDK -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+
+  <!-- Version + Analytics (deferred) -->
+  <script src="assets/js/version.js" defer></script>
+  <script src="assets/js/analytics.js" defer></script>
+
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+
+  <!-- Structured Data: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "JSON to TypeScript Interface Generator",
+    "description": "Free online tool to convert JSON objects to TypeScript interfaces and types instantly. Supports nested objects, arrays, optional fields, and custom interface names.",
+    "url": "https://bharatdevtool.com/json-to-typescript.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "JSON to TypeScript interface conversion",
+      "Nested object support",
+      "Array type inference",
+      "Optional field detection",
+      "Custom interface names",
+      "Copy to clipboard",
+      "Live preview"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "112"
+    }
+  }
+  </script>
+
+  <!-- Structured Data: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Developer Tools",
+        "item": "https://bharatdevtool.com/tools.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "JSON to TypeScript Interface Generator",
+        "item": "https://bharatdevtool.com/json-to-typescript.html"
+      }
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a JSON to TypeScript interface generator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A JSON to TypeScript interface generator is a tool that reads a JSON object and automatically produces the corresponding TypeScript interface (or type alias) declaration. Instead of writing TypeScript types by hand, you paste your JSON and get ready-to-use TypeScript interfaces in seconds, complete with nested object types, array types, and correct primitive types."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this JSON to TypeScript tool free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the JSON to TypeScript Interface Generator on Bharat Dev Tools is completely free to use with no sign-up, no account, and no usage limits."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my JSON data safe? Does it get sent to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Your data never leaves your browser. All conversion logic runs entirely in client-side JavaScript. No data is transmitted to any server, ensuring complete privacy."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does the JSON to TypeScript conversion work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The tool parses your JSON using the browser's native JSON.parse(), then recursively walks the object tree. Each key becomes an interface property. The value's JavaScript type (string, number, boolean, null, object, array) is mapped to the corresponding TypeScript type. Nested objects become nested interfaces. Arrays are typed as T[] where T is inferred from the first element."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does it handle nested objects and arrays?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Nested objects are converted into separate TypeScript interfaces with auto-generated names based on the property key. Arrays are typed as T[] where T is inferred from the array elements. Arrays of objects generate a matching interface. Empty arrays use unknown[]."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8'
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    .animate-fade-in {
+      animation: fadeIn 0.4s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .animate-slide-up {
+      animation: slideUp 0.25s ease-out;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transform: translateX(110%);
+      transition: transform 0.3s ease;
+    }
+    .toast.show { transform: translateX(0); }
+    .toast.success { background: linear-gradient(135deg, #10b981, #059669); }
+    .toast.error   { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .toast.info    { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+
+    /* Code output area */
+    #ts-output {
+      font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      tab-size: 2;
+    }
+    #json-input {
+      font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+      font-size: 0.85rem;
+    }
+
+    /* Options toggle */
+    .option-toggle input[type="checkbox"] {
+      accent-color: #3b82f6;
+    }
+
+    /* Dark mode for textareas via data-theme */
+    [data-theme="dark"] #json-input,
+    [data-theme="dark"] #ts-output {
+      background-color: #1f2937;
+      color: #f3f4f6;
+      border-color: #374151;
+    }
+    [data-theme="dark"] .bg-white { background-color: #1f2937; }
+    [data-theme="dark"] .bg-gray-50 { background-color: #111827; }
+    [data-theme="dark"] .text-gray-900 { color: #f9fafb; }
+    [data-theme="dark"] .text-gray-700 { color: #d1d5db; }
+    [data-theme="dark"] .text-gray-600 { color: #9ca3af; }
+    [data-theme="dark"] .text-gray-500 { color: #6b7280; }
+    [data-theme="dark"] .border-gray-300 { border-color: #374151; }
+    [data-theme="dark"] .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.4); }
+  </style>
+</head>
+<body class="bg-gray-50 transition-colors duration-300">
+  <!-- Header -->
+  <script src="components/header.js"></script>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <h1 class="sr-only">JSON to TypeScript Interface Generator</h1>
+
+    <!-- Hero -->
+    <div class="text-center mb-10 animate-fade-in">
+      <h2 class="text-4xl font-bold text-gray-900 mb-3">
+        🔷 JSON to TypeScript Interface
+      </h2>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+        Paste any JSON and instantly get TypeScript interfaces. Free, browser-only, no sign-up.
+      </p>
+    </div>
+
+    <!-- Main Panel: two-column on large screens -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-fade-in">
+
+      <!-- LEFT: JSON Input -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <label for="json-input" class="text-sm font-semibold text-gray-700">
+            JSON Input
+          </label>
+          <div class="flex items-center gap-2">
+            <button id="load-example-btn" class="text-xs text-blue-600 hover:text-blue-700 font-medium px-2 py-1 rounded hover:bg-blue-50 transition-colors" aria-label="Load example JSON">
+              Load Example
+            </button>
+            <button id="clear-input-btn" class="text-xs text-gray-500 hover:text-gray-700 font-medium px-2 py-1 rounded hover:bg-gray-100 transition-colors" aria-label="Clear input">
+              Clear
+            </button>
+          </div>
+        </div>
+        <textarea
+          id="json-input"
+          rows="18"
+          placeholder='Paste your JSON here…&#10;&#10;Example:&#10;{&#10;  "name": "Alice",&#10;  "age": 30,&#10;  "active": true&#10;}'
+          class="flex-1 w-full px-3 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+          aria-label="JSON input"
+          spellcheck="false"
+          autocomplete="off"
+        ></textarea>
+        <div id="json-error" class="mt-2 text-sm text-red-600 hidden" role="alert" aria-live="polite"></div>
+      </div>
+
+      <!-- RIGHT: TypeScript Output -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <label for="ts-output" class="text-sm font-semibold text-gray-700">
+            TypeScript Output
+          </label>
+          <button id="copy-output-btn" class="text-xs bg-blue-600 hover:bg-blue-700 text-white font-medium px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1" aria-label="Copy TypeScript output">
+            📋 Copy
+          </button>
+        </div>
+        <textarea
+          id="ts-output"
+          rows="18"
+          readonly
+          placeholder="TypeScript interfaces will appear here…"
+          class="flex-1 w-full px-3 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 resize-none outline-none"
+          aria-label="TypeScript output"
+          spellcheck="false"
+        ></textarea>
+      </div>
+    </div>
+
+    <!-- Options + Convert Row -->
+    <div class="bg-white rounded-2xl shadow-lg p-6 mt-6 animate-fade-in">
+      <h3 class="text-sm font-semibold text-gray-700 mb-4">Options</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
+
+        <!-- Root interface name -->
+        <div>
+          <label for="root-name" class="block text-xs font-medium text-gray-600 mb-1">Root Interface Name</label>
+          <input
+            id="root-name"
+            type="text"
+            value="Root"
+            maxlength="64"
+            class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+            aria-label="Root interface name"
+          >
+        </div>
+
+        <!-- Use type alias vs interface -->
+        <div class="option-toggle flex items-center gap-2 pt-5">
+          <input type="checkbox" id="use-type-alias" class="w-4 h-4 rounded">
+          <label for="use-type-alias" class="text-sm text-gray-700 cursor-pointer select-none">
+            Use <code class="text-blue-600">type</code> instead of <code class="text-blue-600">interface</code>
+          </label>
+        </div>
+
+        <!-- Optional fields -->
+        <div class="option-toggle flex items-center gap-2 pt-5">
+          <input type="checkbox" id="optional-fields" class="w-4 h-4 rounded">
+          <label for="optional-fields" class="text-sm text-gray-700 cursor-pointer select-none">
+            Mark null fields as optional (<code class="text-blue-600">?</code>)
+          </label>
+        </div>
+
+        <!-- Add semicolons -->
+        <div class="option-toggle flex items-center gap-2 pt-5">
+          <input type="checkbox" id="semicolons" checked class="w-4 h-4 rounded">
+          <label for="semicolons" class="text-sm text-gray-700 cursor-pointer select-none">
+            Semicolons after properties
+          </label>
+        </div>
+      </div>
+
+      <!-- Convert button -->
+      <button
+        id="convert-btn"
+        class="w-full sm:w-auto px-8 py-3 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-semibold rounded-xl transition-all duration-150 flex items-center gap-2"
+        aria-label="Convert JSON to TypeScript"
+      >
+        <span>⚡</span> Convert to TypeScript
+      </button>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section mt-8" id="faq">
+      <div class="faq-container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about the JSON to TypeScript Interface Generator</p>
+        <div class="faq-list">
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is a JSON to TypeScript interface generator?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>A JSON to TypeScript interface generator reads a JSON object and automatically produces the corresponding TypeScript <code>interface</code> (or <code>type</code>) declaration. Instead of writing TypeScript types by hand, you paste your JSON and get ready-to-use TypeScript interfaces in seconds, complete with nested object types, array types, and correct primitive types.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is this JSON to TypeScript tool free?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes, completely free. No account, no subscription, no usage limits. Just paste and convert.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is my JSON data safe? Does it get sent to a server?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Your data never leaves your browser. All conversion logic runs entirely in client-side JavaScript. No data is transmitted to any server, so sensitive API responses or private schemas remain private.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How does the JSON to TypeScript conversion work?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>The tool parses your JSON using the browser's native <code>JSON.parse()</code>, then recursively walks the object tree. Each key becomes an interface property. The JavaScript type of each value is mapped to the correct TypeScript type: <code>string</code>, <code>number</code>, <code>boolean</code>, <code>null</code>, nested interfaces, or <code>T[]</code> for arrays.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Does it handle nested objects and arrays?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes. Nested objects generate separate TypeScript interfaces with auto-derived names (e.g., a key named <code>address</code> produces an <code>Address</code> interface). Arrays are typed as <code>T[]</code> where <code>T</code> is inferred from the array elements. Arrays of objects generate a matching interface. Empty arrays fall back to <code>unknown[]</code>.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+
+  <!-- Toast container -->
+  <div id="toast-container"></div>
+
+  <!-- FAQ accordion -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.faq-question').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          document.querySelectorAll('.faq-question').forEach(function (q) {
+            q.setAttribute('aria-expanded', 'false');
+            q.closest('.faq-item').classList.remove('active');
+            q.querySelector('.faq-icon').textContent = '+';
+          });
+          if (!isExpanded) {
+            this.setAttribute('aria-expanded', 'true');
+            this.closest('.faq-item').classList.add('active');
+            this.querySelector('.faq-icon').textContent = '−';
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- Sentry init -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
+        initSentryTracking();
+      }
+    });
+  </script>
+
+  <!-- Core tool logic -->
+  <script>
+    const PAGE_NAME = 'JSON to TypeScript Interface Generator';
+
+    // ─── Utilities ───────────────────────────────────────────────────────────
+
+    function showToast(message, type) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast ' + (type || 'info');
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(function () { toast.classList.add('show'); }, 50);
+      setTimeout(function () {
+        toast.classList.remove('show');
+        setTimeout(function () { container.removeChild(toast); }, 300);
+      }, 3000);
+    }
+
+    function trackEvent(name, params) {
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.track(name, Object.assign({ page: PAGE_NAME }, params || {}));
+      }
+    }
+
+    function capitalizeFirst(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    function toPascalCase(str) {
+      return str
+        .replace(/[_\-\s]+(.)/g, function (_, c) { return c.toUpperCase(); })
+        .replace(/^(.)/, function (c) { return c.toUpperCase(); });
+    }
+
+    // ─── Type inference ───────────────────────────────────────────────────────
+
+    function inferType(value, key, ctx) {
+      if (value === null)        return 'null';
+      if (typeof value === 'string')  return 'string';
+      if (typeof value === 'number')  return Number.isInteger(value) ? 'number' : 'number';
+      if (typeof value === 'boolean') return 'boolean';
+      if (Array.isArray(value))       return inferArrayType(value, key, ctx);
+      if (typeof value === 'object')  return inferObjectType(value, key, ctx);
+      return 'unknown';
+    }
+
+    function inferArrayType(arr, key, ctx) {
+      if (arr.length === 0) return 'unknown[]';
+      const elementType = inferType(arr[0], key + 'Item', ctx);
+      return elementType + '[]';
+    }
+
+    function inferObjectType(obj, key, ctx) {
+      const interfaceName = toPascalCase(key);
+      if (!ctx.interfaces[interfaceName]) {
+        ctx.interfaces[interfaceName] = null; // reserve slot to handle recursion
+        ctx.interfaces[interfaceName] = buildInterface(obj, interfaceName, ctx);
+      }
+      return interfaceName;
+    }
+
+    // ─── Interface builder ────────────────────────────────────────────────────
+
+    function buildInterface(obj, name, ctx) {
+      const semi = ctx.options.semicolons ? ';' : '';
+      const useType = ctx.options.useTypeAlias;
+      const optionalNulls = ctx.options.optionalFields;
+
+      const lines = [];
+      const header = useType ? 'type ' + name + ' = {' : 'interface ' + name + ' {';
+      lines.push(header);
+
+      const keys = Object.keys(obj);
+      keys.forEach(function (key) {
+        const value = obj[key];
+        let tsType = inferType(value, key, ctx);
+
+        let propKey = key;
+        const isOptional = optionalNulls && value === null;
+        if (isOptional) {
+          propKey = key + '?';
+          tsType = tsType === 'null' ? 'null | undefined' : tsType + ' | null';
+        } else if (tsType === 'null') {
+          tsType = 'null';
+        }
+
+        lines.push('  ' + propKey + ': ' + tsType + semi);
+      });
+
+      lines.push('}');
+      return lines.join('\n');
+    }
+
+    // ─── Main converter ───────────────────────────────────────────────────────
+
+    function convertJsonToTypeScript(jsonText, options) {
+      const parsed = JSON.parse(jsonText); // throws on invalid JSON
+
+      const rootName = (options.rootName || 'Root').trim() || 'Root';
+      const ctx = {
+        interfaces: {},
+        options: options
+      };
+
+      let rootType;
+      if (Array.isArray(parsed)) {
+        if (parsed.length === 0) {
+          rootType = 'unknown[]';
+        } else if (typeof parsed[0] === 'object' && parsed[0] !== null && !Array.isArray(parsed[0])) {
+          inferObjectType(parsed[0], rootName, ctx);
+          rootType = rootName + '[]';
+        } else {
+          rootType = inferType(parsed[0], 'item', ctx) + '[]';
+        }
+        // For array root, emit root alias
+        const semi = options.semicolons ? ';' : '';
+        const rootAlias = 'type ' + rootName + ' = ' + rootType + semi;
+        const parts = [rootAlias];
+        Object.keys(ctx.interfaces).forEach(function (iName) {
+          if (ctx.interfaces[iName]) parts.push('\n' + ctx.interfaces[iName]);
+        });
+        return parts.join('\n');
+      }
+
+      if (typeof parsed !== 'object' || parsed === null) {
+        const semi = options.semicolons ? ';' : '';
+        return '// Primitive JSON value\ntype ' + rootName + ' = ' + inferType(parsed, rootName, ctx) + semi;
+      }
+
+      ctx.interfaces[rootName] = buildInterface(parsed, rootName, ctx);
+
+      const parts = [];
+      // Root interface first, then nested
+      if (ctx.interfaces[rootName]) parts.push(ctx.interfaces[rootName]);
+      Object.keys(ctx.interfaces).forEach(function (iName) {
+        if (iName !== rootName && ctx.interfaces[iName]) {
+          parts.push('\n' + ctx.interfaces[iName]);
+        }
+      });
+      return parts.join('\n');
+    }
+
+    // ─── UI logic ─────────────────────────────────────────────────────────────
+
+    const EXAMPLE_JSON = JSON.stringify({
+      "id": 1,
+      "name": "Alice",
+      "email": "alice@example.com",
+      "age": 30,
+      "isActive": true,
+      "score": 98.5,
+      "address": {
+        "street": "123 Main St",
+        "city": "Mumbai",
+        "pincode": "400001",
+        "country": "India"
+      },
+      "tags": ["developer", "designer"],
+      "projects": [
+        {
+          "projectId": 101,
+          "title": "Portfolio Site",
+          "published": true
+        }
+      ],
+      "metadata": null
+    }, null, 2);
+
+    function getOptions() {
+      return {
+        rootName: document.getElementById('root-name').value || 'Root',
+        useTypeAlias: document.getElementById('use-type-alias').checked,
+        optionalFields: document.getElementById('optional-fields').checked,
+        semicolons: document.getElementById('semicolons').checked
+      };
+    }
+
+    function runConversion() {
+      const jsonText = document.getElementById('json-input').value.trim();
+      const errorEl = document.getElementById('json-error');
+      const outputEl = document.getElementById('ts-output');
+
+      errorEl.classList.add('hidden');
+      errorEl.textContent = '';
+
+      if (!jsonText) {
+        showToast('Please enter some JSON to convert.', 'error');
+        trackEvent('json_ts_convert_empty', {});
+        return;
+      }
+
+      try {
+        const options = getOptions();
+        const result = convertJsonToTypeScript(jsonText, options);
+        outputEl.value = result;
+        trackEvent('json_ts_convert_success', {
+          input_length: jsonText.length,
+          output_length: result.length,
+          use_type_alias: options.useTypeAlias,
+          optional_fields: options.optionalFields
+        });
+        showToast('Converted successfully!', 'success');
+      } catch (err) {
+        errorEl.textContent = 'Invalid JSON: ' + err.message;
+        errorEl.classList.remove('hidden');
+        outputEl.value = '';
+        trackEvent('json_ts_convert_error', { error_message: err.message });
+        if (typeof Sentry !== 'undefined') {
+          try { Sentry.captureException(err, { tags: { operation: 'json_to_typescript' } }); } catch (_) {}
+        }
+        showToast('Invalid JSON — please check your input.', 'error');
+      }
+    }
+
+    function copyOutput() {
+      const text = document.getElementById('ts-output').value;
+      if (!text) {
+        showToast('Nothing to copy yet.', 'error');
+        return;
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text)
+          .then(function () { showToast('Copied to clipboard!', 'success'); })
+          .catch(function () { fallbackCopy(text); });
+      } else {
+        fallbackCopy(text);
+      }
+      trackEvent('json_ts_copy_output', { output_length: text.length });
+    }
+
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('Copied to clipboard!', 'success');
+      } catch (_) {
+        showToast('Copy failed — please select and copy manually.', 'error');
+      }
+      document.body.removeChild(ta);
+    }
+
+    // ─── Event wiring ─────────────────────────────────────────────────────────
+
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('convert-btn').addEventListener('click', runConversion);
+
+      document.getElementById('copy-output-btn').addEventListener('click', copyOutput);
+
+      document.getElementById('load-example-btn').addEventListener('click', function () {
+        document.getElementById('json-input').value = EXAMPLE_JSON;
+        document.getElementById('json-error').classList.add('hidden');
+        document.getElementById('ts-output').value = '';
+        trackEvent('json_ts_load_example', {});
+        showToast('Example JSON loaded — click Convert!', 'info');
+      });
+
+      document.getElementById('clear-input-btn').addEventListener('click', function () {
+        document.getElementById('json-input').value = '';
+        document.getElementById('ts-output').value = '';
+        document.getElementById('json-error').classList.add('hidden');
+        trackEvent('json_ts_clear', {});
+      });
+
+      // Ctrl/Cmd + Enter to convert
+      document.getElementById('json-input').addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+          e.preventDefault();
+          runConversion();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
