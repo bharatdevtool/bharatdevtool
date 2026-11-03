@@ -1,0 +1,30 @@
+[build]
+  command = "pnpm build"
+  publish = "out"
+
+# Legacy/Deprecated tool redirects to unified studio
+[[redirects]]
+  from = "/tools/lottie-analyzer"
+  to = "/tools/lottie-player"
+  status = 301
+
+[[redirects]]
+  from = "/tools/lottie-editor"
+  to = "/tools/lottie-player"
+  status = 301
+
+# Clean URL handling for static HTML tools
+[[redirects]]
+  from = "/tools"
+  to = "/tools.html"
+  status = 301
+
+[[redirects]]
+  from = "/jsondiff"
+  to = "/jsondiff/index.html"
+  status = 301
+
+[[redirects]]
+  from = "/jsonformatter"
+  to = "/jsonformatter/index.html"
+  status = 301
