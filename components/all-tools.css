@@ -1,0 +1,99 @@
+/* All Tools Section - Above footer on every page */
+.all-tools-section {
+  padding: 32px 16px 24px;
+  color: var(--fg);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  background: var(--panel);
+}
+
+[data-theme="dark"] .all-tools-section {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+.all-tools-section .all-tools-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.all-tools-section .all-tools-title {
+  margin: 0 0 16px;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--fg);
+}
+
+.all-tools-section .all-tools-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.all-tools-section .all-tools-btn {
+  display: inline-block;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.25;
+  text-align: center;
+  text-decoration: none;
+  color: var(--fg);
+  background: var(--bg);
+  border: 1px solid var(--icon-outline);
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+.all-tools-section .all-tools-btn:hover {
+  background: var(--panel);
+  border-color: var(--muted);
+  transform: translateY(-1px);
+}
+
+.all-tools-section .all-tools-btn:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.all-tools-section .all-tools-btn:active {
+  transform: translateY(0);
+}
+
+/* External link (Suggest Tool) - same visual style */
+.all-tools-section .all-tools-btn[target="_blank"] {
+  color: var(--fg);
+  background: var(--bg);
+  border: 1px solid var(--icon-outline);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .all-tools-section .all-tools-btn {
+    transition: none;
+  }
+  .all-tools-section .all-tools-btn:hover {
+    transform: none;
+  }
+}
+
+/* Mobile: smaller padding and font so buttons wrap nicely */
+@media (max-width: 640px) {
+  .all-tools-section {
+    padding: 24px 12px 20px;
+  }
+  .all-tools-section .all-tools-title {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+  .all-tools-section .all-tools-grid {
+    gap: 8px;
+  }
+  .all-tools-section .all-tools-btn {
+    padding: 8px 14px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+}

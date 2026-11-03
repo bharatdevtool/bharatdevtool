@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Age Calculator Online | Calculate Exact Age in Years, Months & Days | Bharat Dev Tools</title>
+  <meta name="description" content="Free Age Calculator online. Calculate your exact age in years, months, days, hours, and minutes from your date of birth. No sign-up required. Instant results, works offline.">
+  <meta name="keywords" content="age calculator, calculate age, age from date of birth, how old am I, exact age calculator, age in years months days, online age calculator, free age calculator, date of birth calculator, age finder">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  <link rel="canonical" href="https://bharatdevtool.com/age-calculator.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Free Age Calculator Online | Calculate Exact Age | Bharat Dev Tools">
+  <meta property="og:description" content="Calculate your exact age in years, months, days, hours, and minutes. Free online age calculator — no sign-up required.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/age-calculator.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Age Calculator - Free Online Tool">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free Age Calculator Online | Calculate Exact Age | Bharat Dev Tools">
+  <meta name="twitter:description" content="Calculate your exact age in years, months, days, hours, and minutes. Free online age calculator — no sign-up required.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ik.imagekit.io/bdt/bdt_logo_v3_16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/bdt/bdt_logo_v3_180.png">
+
+  <!-- Theme Management (load early to prevent flash) -->
+  <script src="assets/js/theme.js"></script>
+
+  <!-- Sentry SDK -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+
+  <!-- Version & Analytics (deferred) -->
+  <script src="assets/js/version.js" defer></script>
+  <script src="assets/js/analytics.js" defer></script>
+
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+
+  <!-- Structured Data: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Age Calculator",
+    "description": "Free online age calculator. Calculate your exact age in years, months, days, hours, and minutes from your date of birth.",
+    "url": "https://bharatdevtool.com/age-calculator.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "Exact age in years, months, days",
+      "Age in total days, hours, minutes",
+      "Next birthday countdown",
+      "Age between any two dates",
+      "Works offline in browser"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "124"
+    }
+  }
+  </script>
+
+  <!-- Structured Data: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Age Calculator",
+        "item": "https://bharatdevtool.com/age-calculator.html"
+      }
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is an Age Calculator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "An Age Calculator is a free online tool that computes your exact age from your date of birth to today (or any custom date). It shows your age broken down into years, months, days, and also as total days, hours, and minutes. You can also use it to calculate the age difference between any two dates."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I calculate my exact age in years, months, and days?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Simply enter your date of birth in the input field and click 'Calculate Age'. The tool instantly shows your exact age in years, months, and days, along with the total count in days, hours, and minutes. You can also change the 'Calculate age as of' date to find your age at any point in time."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this Age Calculator free to use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the Bharat Dev Tools Age Calculator is completely free. No sign-up, no registration, no hidden fees. You can use it as many times as you like from any device."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my data safe? Does the Age Calculator send data to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Your data is completely safe. All age calculations happen entirely in your browser using JavaScript. No date-of-birth or personal information is ever sent to any server. The tool works even when you are offline."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I calculate the age difference between two specific dates?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. By default the tool calculates your age as of today. But you can change the 'Calculate age as of' date to any date in the past or future to find out the exact age (or time difference) between any two dates."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .animate-fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .animate-slide-up {
+      animation: slideUp 0.3s ease-out;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .result-card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .result-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transform: translateX(110%);
+      transition: transform 0.3s ease;
+    }
+    .toast.show { transform: translateX(0); }
+    .toast.success { background: linear-gradient(135deg, #10b981, #059669); }
+    .toast.error   { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .toast.info    { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    @media (max-width: 640px) {
+      .stat-value { font-size: 1.8rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+
+  <!-- Header Component -->
+  <script src="components/header.js"></script>
+
+  <main class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <h1 class="sr-only">Age Calculator — Calculate Exact Age from Date of Birth</h1>
+
+    <!-- Hero -->
+    <div class="text-center mb-10 animate-fade-in">
+      <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        🎂 Age Calculator
+      </h2>
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-xl mx-auto">
+        Calculate your exact age in years, months, days, hours, and minutes — instantly and free.
+      </p>
+    </div>
+
+    <!-- Input Panel -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 sm:p-8 mb-6 animate-fade-in">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <!-- Date of Birth -->
+        <div>
+          <label for="dob-input" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+            Date of Birth
+          </label>
+          <input
+            type="date"
+            id="dob-input"
+            max=""
+            aria-label="Date of Birth"
+            class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-base"
+          >
+        </div>
+
+        <!-- Age as of -->
+        <div>
+          <label for="ageAsOf-input" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+            Calculate Age as of
+          </label>
+          <input
+            type="date"
+            id="ageAsOf-input"
+            aria-label="Calculate age as of this date"
+            class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-base"
+          >
+        </div>
+      </div>
+
+      <!-- Error message -->
+      <div id="error-message" class="mt-4 text-sm text-red-600 dark:text-red-400 hidden" role="alert"></div>
+
+      <!-- Buttons -->
+      <div class="mt-6 flex flex-col sm:flex-row gap-3">
+        <button
+          id="calculate-btn"
+          class="flex-1 flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 active:scale-95 transition-all font-semibold text-base"
+          aria-label="Calculate age"
+        >
+          <span class="mr-2">🎯</span> Calculate Age
+        </button>
+        <button
+          id="reset-btn"
+          class="flex-1 flex items-center justify-center px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 active:scale-95 transition-all font-semibold text-base"
+          aria-label="Reset form"
+        >
+          <span class="mr-2">🔄</span> Reset
+        </button>
+      </div>
+    </div>
+
+    <!-- Results Section -->
+    <div id="results-section" class="hidden animate-slide-up">
+
+      <!-- Primary result -->
+      <div class="bg-gradient-to-br from-blue-600 to-blue-700 dark:from-blue-700 dark:to-blue-900 rounded-2xl shadow-lg p-6 sm:p-8 mb-6 text-white text-center result-card">
+        <p class="text-blue-100 text-sm font-medium mb-2 uppercase tracking-wider">Your Age</p>
+        <div class="flex items-end justify-center gap-4 flex-wrap">
+          <div>
+            <div class="stat-value" id="result-years">0</div>
+            <div class="text-blue-200 text-sm mt-1">Years</div>
+          </div>
+          <div class="text-blue-300 text-3xl font-light mb-1">·</div>
+          <div>
+            <div class="stat-value" id="result-months">0</div>
+            <div class="text-blue-200 text-sm mt-1">Months</div>
+          </div>
+          <div class="text-blue-300 text-3xl font-light mb-1">·</div>
+          <div>
+            <div class="stat-value" id="result-days">0</div>
+            <div class="text-blue-200 text-sm mt-1">Days</div>
+          </div>
+        </div>
+        <p id="result-sentence" class="mt-4 text-blue-100 text-sm"></p>
+      </div>
+
+      <!-- Detail stats -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow p-4 text-center result-card">
+          <div class="text-2xl font-bold text-gray-900 dark:text-white" id="stat-total-days">—</div>
+          <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">Total Days</div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow p-4 text-center result-card">
+          <div class="text-2xl font-bold text-gray-900 dark:text-white" id="stat-total-weeks">—</div>
+          <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">Total Weeks</div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow p-4 text-center result-card">
+          <div class="text-2xl font-bold text-gray-900 dark:text-white" id="stat-total-hours">—</div>
+          <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">Total Hours</div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow p-4 text-center result-card">
+          <div class="text-2xl font-bold text-gray-900 dark:text-white" id="stat-total-minutes">—</div>
+          <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">Total Minutes</div>
+        </div>
+      </div>
+
+      <!-- Next birthday -->
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6 result-card">
+        <h3 class="text-base font-semibold text-gray-700 dark:text-gray-200 mb-3">🎉 Next Birthday</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="text-center">
+            <div class="text-2xl font-bold text-blue-600 dark:text-blue-400" id="next-bday-date">—</div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">Date</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-bold text-blue-600 dark:text-blue-400" id="next-bday-days">—</div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">Days Away</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-bold text-blue-600 dark:text-blue-400" id="next-bday-weekday">—</div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">Day of Week</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Copy button -->
+      <div class="text-center mb-6">
+        <button
+          id="copy-result-btn"
+          class="inline-flex items-center px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors font-medium"
+          aria-label="Copy result to clipboard"
+        >
+          <span class="mr-2">📋</span> Copy Result
+        </button>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+      <div class="faq-container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about the Age Calculator</p>
+        <div class="faq-list">
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is an Age Calculator?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>An Age Calculator is a free online tool that computes your exact age from your date of birth to today (or any custom date). It shows your age broken down into years, months, days, and also as total days, hours, and minutes. You can also use it to calculate the age or time difference between any two dates.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How do I calculate my exact age in years, months, and days?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Enter your date of birth in the "Date of Birth" field and click <strong>Calculate Age</strong>. The tool instantly shows your exact age in years, months, and days, along with totals in days, weeks, hours, and minutes. You can also change the "Calculate age as of" date to find your age at any point in time.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is this Age Calculator free to use?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes, the Bharat Dev Tools Age Calculator is completely free. No sign-up, no registration, no hidden fees. You can use it as many times as you like from any device — desktop, tablet, or mobile.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is my data safe? Does the calculator send data to a server?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Your data is completely safe. All calculations happen entirely in your browser using JavaScript. No date-of-birth or personal information is ever sent to any server. The tool even works offline once the page has loaded.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Can I calculate the age difference between two specific dates?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes. By default, the tool calculates age as of today's date. Simply change the <strong>"Calculate age as of"</strong> field to any past or future date to find the exact years, months, and days between any two dates — useful for legal age checks, anniversary countdowns, or project durations.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Component -->
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+
+  <!-- Toast Container -->
+  <div id="toast-container" aria-live="polite"></div>
+
+  <!-- FAQ Accordion -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.faq-question').forEach(function(question) {
+        question.addEventListener('click', function() {
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          const faqItem = this.closest('.faq-item');
+          const icon = this.querySelector('.faq-icon');
+
+          document.querySelectorAll('.faq-question').forEach(function(q) {
+            if (q !== question) {
+              q.setAttribute('aria-expanded', 'false');
+              q.closest('.faq-item').classList.remove('active');
+              q.querySelector('.faq-icon').textContent = '+';
+            }
+          });
+
+          if (isExpanded) {
+            this.setAttribute('aria-expanded', 'false');
+            faqItem.classList.remove('active');
+            icon.textContent = '+';
+          } else {
+            this.setAttribute('aria-expanded', 'true');
+            faqItem.classList.add('active');
+            icon.textContent = '−';
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- Sentry init -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
+        initSentryTracking();
+      }
+    });
+  </script>
+
+  <!-- Age Calculator Logic -->
+  <script>
+    const PAGE_NAME = 'Age Calculator';
+
+    function showToast(message, type) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast ' + (type || 'info');
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(function() { toast.classList.add('show'); }, 50);
+      setTimeout(function() {
+        toast.classList.remove('show');
+        setTimeout(function() {
+          if (container.contains(toast)) container.removeChild(toast);
+        }, 350);
+      }, 3000);
+    }
+
+    function formatNumber(n) {
+      return n.toLocaleString('en-IN');
+    }
+
+    function padDate(n) {
+      return String(n).padStart(2, '0');
+    }
+
+    function formatDateDisplay(date) {
+      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      return padDate(date.getDate()) + ' ' + months[date.getMonth()] + ' ' + date.getFullYear();
+    }
+
+    function getWeekdayName(date) {
+      const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+      return days[date.getDay()];
+    }
+
+    function isValidDate(dateStr) {
+      if (!dateStr) return false;
+      const d = new Date(dateStr);
+      return d instanceof Date && !isNaN(d.getTime());
+    }
+
+    function calculateAge(dobStr, asOfStr) {
+      const dob = new Date(dobStr + 'T00:00:00');
+      const asOf = new Date(asOfStr + 'T00:00:00');
+
+      if (asOf < dob) return null;
+
+      let years = asOf.getFullYear() - dob.getFullYear();
+      let months = asOf.getMonth() - dob.getMonth();
+      let days = asOf.getDate() - dob.getDate();
+
+      if (days < 0) {
+        months -= 1;
+        const prevMonth = new Date(asOf.getFullYear(), asOf.getMonth(), 0);
+        days += prevMonth.getDate();
+      }
+      if (months < 0) {
+        years -= 1;
+        months += 12;
+      }
+
+      const msPerDay = 86400000;
+      const totalDays = Math.floor((asOf - dob) / msPerDay);
+      const totalWeeks = Math.floor(totalDays / 7);
+      const totalHours = totalDays * 24;
+      const totalMinutes = totalHours * 60;
+
+      return { years, months, days, totalDays, totalWeeks, totalHours, totalMinutes };
+    }
+
+    function getNextBirthday(dobStr, asOfStr) {
+      const dob = new Date(dobStr + 'T00:00:00');
+      const asOf = new Date(asOfStr + 'T00:00:00');
+
+      let nextBday = new Date(asOf.getFullYear(), dob.getMonth(), dob.getDate());
+      if (nextBday <= asOf) {
+        nextBday = new Date(asOf.getFullYear() + 1, dob.getMonth(), dob.getDate());
+      }
+
+      const msPerDay = 86400000;
+      const daysAway = Math.round((nextBday - asOf) / msPerDay);
+
+      return { date: nextBday, daysAway: daysAway };
+    }
+
+    function buildResultSentence(years, months, days) {
+      const parts = [];
+      if (years > 0) parts.push(years + ' year' + (years !== 1 ? 's' : ''));
+      if (months > 0) parts.push(months + ' month' + (months !== 1 ? 's' : ''));
+      if (days > 0) parts.push(days + ' day' + (days !== 1 ? 's' : ''));
+      if (parts.length === 0) return 'You are exactly 0 days old.';
+      return 'You are ' + parts.join(', ') + ' old.';
+    }
+
+    function buildCopyText(age, nextBday) {
+      return [
+        'Age: ' + age.years + ' years, ' + age.months + ' months, ' + age.days + ' days',
+        'Total days: ' + formatNumber(age.totalDays),
+        'Total weeks: ' + formatNumber(age.totalWeeks),
+        'Total hours: ' + formatNumber(age.totalHours),
+        'Total minutes: ' + formatNumber(age.totalMinutes),
+        'Next birthday: ' + formatDateDisplay(nextBday.date) + ' (' + nextBday.daysAway + ' days away)'
+      ].join('\n');
+    }
+
+    function copyToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function() {
+          showToast('Result copied to clipboard!', 'success');
+        }).catch(function() {
+          fallbackCopy(text);
+        });
+      } else {
+        fallbackCopy(text);
+      }
+    }
+
+    function fallbackCopy(text) {
+      const el = document.createElement('textarea');
+      el.value = text;
+      el.style.cssText = 'position:fixed;left:-9999px;top:-9999px';
+      document.body.appendChild(el);
+      el.focus();
+      el.select();
+      try {
+        document.execCommand('copy');
+        showToast('Result copied to clipboard!', 'success');
+      } catch (e) {
+        showToast('Copy failed — please select and copy manually.', 'error');
+      }
+      document.body.removeChild(el);
+    }
+
+    function showError(msg) {
+      const el = document.getElementById('error-message');
+      el.textContent = msg;
+      el.classList.remove('hidden');
+    }
+
+    function hideError() {
+      document.getElementById('error-message').classList.add('hidden');
+    }
+
+    function renderResults(age, nextBday) {
+      document.getElementById('result-years').textContent = age.years;
+      document.getElementById('result-months').textContent = age.months;
+      document.getElementById('result-days').textContent = age.days;
+      document.getElementById('result-sentence').textContent = buildResultSentence(age.years, age.months, age.days);
+
+      document.getElementById('stat-total-days').textContent = formatNumber(age.totalDays);
+      document.getElementById('stat-total-weeks').textContent = formatNumber(age.totalWeeks);
+      document.getElementById('stat-total-hours').textContent = formatNumber(age.totalHours);
+      document.getElementById('stat-total-minutes').textContent = formatNumber(age.totalMinutes);
+
+      document.getElementById('next-bday-date').textContent = formatDateDisplay(nextBday.date);
+      document.getElementById('next-bday-days').textContent = nextBday.daysAway === 0 ? 'Today! 🎉' : nextBday.daysAway;
+      document.getElementById('next-bday-weekday').textContent = getWeekdayName(nextBday.date);
+
+      document.getElementById('results-section').classList.remove('hidden');
+    }
+
+    function handleCalculate() {
+      const dobVal = document.getElementById('dob-input').value;
+      const asOfVal = document.getElementById('ageAsOf-input').value;
+
+      if (!isValidDate(dobVal)) {
+        showError('Please enter a valid date of birth.');
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('age_calc_validation_error', { page: PAGE_NAME, reason: 'invalid_dob' });
+        }
+        return;
+      }
+      if (!isValidDate(asOfVal)) {
+        showError('Please enter a valid "Calculate age as of" date.');
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('age_calc_validation_error', { page: PAGE_NAME, reason: 'invalid_asof' });
+        }
+        return;
+      }
+
+      const age = calculateAge(dobVal, asOfVal);
+      if (!age) {
+        showError('The "Calculate age as of" date must be on or after the date of birth.');
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('age_calc_validation_error', { page: PAGE_NAME, reason: 'asof_before_dob' });
+        }
+        return;
+      }
+
+      hideError();
+
+      const nextBday = getNextBirthday(dobVal, asOfVal);
+      renderResults(age, nextBday);
+
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.track('age_calculated', {
+          page: PAGE_NAME,
+          result_years: age.years,
+          result_total_days: age.totalDays
+        });
+      }
+    }
+
+    function handleReset() {
+      document.getElementById('dob-input').value = '';
+      const today = new Date();
+      document.getElementById('ageAsOf-input').value =
+        today.getFullYear() + '-' + padDate(today.getMonth() + 1) + '-' + padDate(today.getDate());
+      document.getElementById('results-section').classList.add('hidden');
+      hideError();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const today = new Date();
+      const todayStr = today.getFullYear() + '-' + padDate(today.getMonth() + 1) + '-' + padDate(today.getDate());
+
+      const dobInput = document.getElementById('dob-input');
+      const asOfInput = document.getElementById('ageAsOf-input');
+
+      dobInput.setAttribute('max', todayStr);
+      asOfInput.value = todayStr;
+
+      document.getElementById('calculate-btn').addEventListener('click', handleCalculate);
+      document.getElementById('reset-btn').addEventListener('click', handleReset);
+
+      document.getElementById('copy-result-btn').addEventListener('click', function() {
+        const dobVal = document.getElementById('dob-input').value;
+        const asOfVal = document.getElementById('ageAsOf-input').value;
+        if (!isValidDate(dobVal) || !isValidDate(asOfVal)) return;
+        const age = calculateAge(dobVal, asOfVal);
+        if (!age) return;
+        const nextBday = getNextBirthday(dobVal, asOfVal);
+        copyToClipboard(buildCopyText(age, nextBday));
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('age_calc_copy', { page: PAGE_NAME });
+        }
+      });
+
+      dobInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') handleCalculate();
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DeepLink Launcher & Tester | Android iOS App Links | Free Mobile Deep Link Tool</title>
+  <meta name="description" content="Professional DeepLink Launcher for Android, iOS, and web. Encode, decode, validate, and launch deep links instantly. Free tool for developers, testers, and mobile app teams. Test app links now.">
+  <meta name="keywords" content="deeplink launcher, deep link, android deeplink, ios deeplink, url launcher, mobile deeplink, app link, universal link, custom scheme, deeplink testing, mobile development">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  <meta name="distribution" content="global">
+  <meta name="rating" content="general">
+  <link rel="canonical" href="https://bharatdevtool.com/deeplink">
+  
+  <!-- Social preview -->
+  <meta property="og:title" content="DeepLink Launcher & Tester | Android iOS App Links | Free Tool">
+  <meta property="og:description" content="Professional DeepLink Launcher for Android, iOS, and web. Encode, decode, validate, and launch deep links instantly. Free tool for developers, testers, and mobile app teams.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/deeplink">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="DeepLink Launcher - Free Mobile Deep Link Testing Tool">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DeepLink Launcher & Tester | Android iOS App Links | Free Tool">
+  <meta name="twitter:description" content="Professional DeepLink Launcher for Android, iOS, and web. Encode, decode, validate, and launch deep links instantly. Free tool for developers, testers, and mobile app teams.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ik.imagekit.io/bdt/bdt_logo_v3_16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/bdt/bdt_logo_v3_180.png">
+  
+  <!-- Sentry SDK -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+  ></script>
+  
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+  
+  <!-- Version Tracking Script -->
+  <script src="assets/js/version.js"></script>
+  
+  <!-- Analytics Script -->
+  <script src="assets/js/analytics.js"></script>
+  
+  <!-- Theme Management (load early to prevent flash) -->
+  <script src="assets/js/theme.js"></script>
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Common CSS for consistent theming -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+  
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "DeepLink Launcher",
+    "description": "Professional DeepLink Launcher for Android, iOS, and web. Encode, decode, validate, and launch deep links instantly.",
+    "url": "https://bharatdevtool.com/deeplink",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "Deep Link Encoding",
+      "Deep Link Decoding", 
+      "URL Validation",
+      "Cross-Platform Support",
+      "Mobile App Testing",
+      "Developer Tools"
+    ],
+    "screenshot": "https://bharatdevtool.com/assets/img/deeplink-preview.png",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "120"
+    }
+  }
+  </script>
+  
+  <!-- BreadcrumbList Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "DeepLink Launcher",
+        "item": "https://bharatdevtool.com/deeplink"
+      }
+    ]
+  }
+  </script>
+  
+  <!-- FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a deep link and how does it work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A deep link is a URL that directs users to a specific page or screen within a mobile app, rather than opening a web page. When clicked, it can launch the app (if installed) or redirect to the app store or a web fallback. Deep links use custom URL schemes (like myapp://page) or universal links (iOS) and app links (Android)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I test a deep link?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Simply paste or type your deep link URL into the input field and click the Launch button. The tool will attempt to open the link on your device. Make sure you're accessing this tool from a mobile device or use the QR code feature to scan the link with your phone."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What's the difference between Android and iOS deep links?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Android uses App Links (HTTP/HTTPS URLs) or custom URL schemes. App Links require domain verification and can open apps directly without showing a disambiguation dialog. iOS uses Universal Links (HTTP/HTTPS URLs) or custom URL schemes. Universal Links also require domain verification and provide a seamless experience similar to Android App Links."
+        }
+      }
+    ]
+  }
+  </script>
+  
+  <!-- HowTo Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Test Deep Links",
+    "description": "Step-by-step guide to testing deep links using Bharat Dev Tools DeepLink Launcher",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "position": 1,
+        "name": "Enter Deep Link URL",
+        "text": "Paste or type your deep link URL into the input field. Supported formats include custom schemes (myapp://page), universal links (https://example.com/page), and app links.",
+        "url": "https://bharatdevtool.com/deeplink.html#step1"
+      },
+      {
+        "@type": "HowToStep",
+        "position": 2,
+        "name": "Validate and Launch",
+        "text": "The tool will automatically validate your deep link format. Click the Launch button to test the deep link on your device. Make sure you're on a mobile device or use the QR code feature.",
+        "url": "https://bharatdevtool.com/deeplink.html#step2"
+      },
+      {
+        "@type": "HowToStep",
+        "position": 3,
+        "name": "Review Results",
+        "text": "The tool will attempt to launch your deep link. If the app is installed, it will open. If not, you'll see an error message or be redirected to the app store.",
+        "url": "https://bharatdevtool.com/deeplink.html#step3"
+      }
+    ],
+    "totalTime": "PT1M"
+  }
+  </script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Custom styles -->
+  <style>
+    .animate-fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-slide-up {
+      animation: slideUp 0.3s ease-out;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+    .toast.show {
+      transform: translateX(0);
+    }
+    .toast.success {
+      background: linear-gradient(135deg, #10b981, #059669);
+    }
+    .toast.error {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+    }
+    .toast.info {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+    }
+    /* Mobile dropdown styles */
+    .mobile-dropdown {
+      position: relative;
+    }
+    .mobile-dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      margin-top: 8px;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      z-index: 50;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      padding: 4px 0;
+    }
+    .dark .mobile-dropdown-menu {
+      background: #1f2937;
+      border-color: #374151;
+    }
+    .mobile-dropdown-menu.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .mobile-dropdown-item {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 16px 20px;
+      text-align: left;
+      border: none;
+      background: transparent;
+      color: #111827;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    .mobile-dropdown-item:hover {
+      background-color: #f3f4f6;
+    }
+    .dark .mobile-dropdown-item {
+      color: #f9fafb;
+    }
+    .dark .mobile-dropdown-item:hover {
+      background-color: #374151;
+    }
+    .mobile-dropdown-item:not(:last-child) {
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .dark .mobile-dropdown-item:not(:last-child) {
+      border-bottom-color: #374151;
+    }
+    /* History button container */
+    .history-buttons-container {
+      display: flex;
+      flex: 1;
+      gap: 4px;
+    }
+    @media (max-width: 640px) {
+      .history-buttons-container {
+        gap: 2px;
+      }
+    }
+    /* History button styles */
+    .history-btn {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      font-size: 12px;
+      font-weight: 500;
+      flex: 1;
+      width: 0;
+    }
+    .history-btn-icon-only {
+      padding: 8px 10px;
+    }
+    .history-btn span:first-child {
+      font-size: 16px;
+      line-height: 1;
+    }
+    .history-btn-text {
+      display: inline-block;
+      font-size: 12px;
+      line-height: 1.2;
+      text-align: left;
+      white-space: nowrap;
+    }
+    .history-date {
+      display: none;
+    }
+    /* Mobile: Show text labels below icon */
+    @media (max-width: 640px) {
+      .history-btn {
+        flex-direction: column;
+        padding: 6px 4px;
+        gap: 3px;
+        flex: 1;
+        width: 0;
+      }
+      .history-btn span:first-child {
+        font-size: 18px;
+      }
+      .history-btn-text {
+        display: block;
+        font-size: 9px;
+        text-align: center;
+      }
+    }
+    /* Desktop: Show tooltip on hover */
+    @media (min-width: 641px) {
+      .history-btn:hover::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-bottom: 8px;
+        padding: 6px 10px;
+        background: #1f2937;
+        color: white;
+        font-size: 12px;
+        font-weight: 500;
+        white-space: nowrap;
+        border-radius: 4px;
+        pointer-events: none;
+        z-index: 10;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      }
+      .dark .history-btn:hover::after {
+        background: #374151;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+  <!-- Header Component Script (load after body exists) -->
+  <script src="components/header.js"></script>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Hero Section -->
+    <div class="text-center mb-12 animate-fade-in">
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        🔗 DeepLink Launcher
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Launch, encode, decode, and manage deep links for Android, iOS, and web. 
+        Perfect for developers and testers.
+      </p>
+    </div>
+
+    <!-- Main Input Panel -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mb-8 animate-fade-in">
+      <div class="space-y-6">
+        <!-- Input Field -->
+        <div>
+          <label for="deeplink-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Deep Link URL
+          </label>
+          <div class="relative">
+            <textarea
+              id="deeplink-input"
+              placeholder="Enter your deep link (e.g., myapp://open?param=value, https://example.com, etc.)"
+              class="w-full px-4 pr-10 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 resize-none leading-relaxed"
+              rows="2"
+              style="overflow-y: hidden;"
+            ></textarea>
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+              <button id="clear-input" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 flex-shrink-0">
+                ✕
+              </button>
+            </div>
+          </div>
+          <div id="validation-message" class="mt-2 text-sm text-red-600 dark:text-red-400 hidden"></div>
+          <div id="launch-error-message" class="mt-2 text-sm text-red-600 dark:text-red-400 hidden max-w-2xl"></div>
+        </div>
+
+        <!-- Action Buttons -->
+        <!-- Desktop Version (hidden on mobile) -->
+        <div class="hidden sm:grid grid-cols-2 lg:grid-cols-3 gap-4">
+          <button id="encode-decode-btn-desktop" class="flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+            <span class="mr-2">🔄</span>
+            Encode/Decode
+          </button>
+          <button id="generate-qr-btn-desktop" class="flex items-center justify-center px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors font-medium">
+            <span class="mr-2">📱</span>
+            Generate QR
+          </button>
+          <button id="launch-btn-desktop" class="flex items-center justify-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
+            <span class="mr-2">🚀</span>
+            Launch
+          </button>
+        </div>
+
+        <!-- Mobile Version (visible only on mobile) -->
+        <div class="flex gap-3 sm:hidden">
+          <!-- Dropdown for Encode/Decode and Generate QR -->
+          <div class="mobile-dropdown flex-1">
+            <button id="mobile-dropdown-toggle" class="w-full flex items-center justify-center px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+              <span>Options</span>
+              <span class="ml-2">▼</span>
+            </button>
+            <div id="mobile-dropdown-menu" class="mobile-dropdown-menu">
+              <button id="encode-decode-btn-mobile" class="mobile-dropdown-item">
+                <span class="mr-3">🔄</span>
+                <span>Encode/Decode</span>
+              </button>
+              <button id="generate-qr-btn-mobile" class="mobile-dropdown-item">
+                <span class="mr-3">📱</span>
+                <span>Generate QR</span>
+              </button>
+              <button id="share-btn-mobile" class="mobile-dropdown-item">
+                <span class="mr-3">🔗</span>
+                <span>Share</span>
+              </button>
+            </div>
+          </div>
+          <!-- Launch Button -->
+          <button id="launch-btn-mobile" class="flex-1 flex items-center justify-center px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
+            <span class="mr-2">🚀</span>
+            <span>Launch</span>
+          </button>
+        </div>
+
+        <!-- Result Display -->
+        <div id="result-container" class="hidden">
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Result
+          </label>
+          <div class="relative">
+            <textarea 
+              id="result-output" 
+              readonly 
+              class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white font-mono text-sm"
+              rows="3"
+            ></textarea>
+            <div class="absolute top-2 right-2 flex flex-col space-y-1">
+              <button id="launch-result" class="px-3 py-1 bg-purple-200 dark:bg-purple-600 text-purple-700 dark:text-purple-300 rounded hover:bg-purple-300 dark:hover:bg-purple-500 transition-colors text-sm">
+                🚀 Launch
+              </button>
+              <button id="copy-result" class="px-3 py-1 bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors text-sm">
+                📋 Copy
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- History Panel -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 animate-fade-in">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">📚 Deep Link History</h3>
+        <span id="history-count" class="text-sm text-gray-500 dark:text-gray-400">0 links saved</span>
+      </div>
+      
+      <div id="history-list" class="space-y-3">
+        <div id="empty-history" class="text-center py-8 text-gray-500 dark:text-gray-400">
+          <div class="text-4xl mb-2">📝</div>
+          <p>No deep links saved yet</p>
+          <p class="text-sm">Enter a deep link above and it will be saved here automatically</p>
+        </div>
+      </div>
+      
+      <!-- Upload/Download Section (moved inside history for better grouping) -->
+      <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">📥📤 Import/Export</h3>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <label class="flex items-center justify-center px-6 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors cursor-pointer">
+            <input type="file" id="upload-file" accept=".csv,.txt" class="hidden">
+            <span class="mr-2">📁</span>
+            Upload CSV/TXT
+          </label>
+          <button id="download-btn" class="flex items-center justify-center px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
+            <span class="mr-2">💾</span>
+            Download CSV
+          </button>
+          <button id="clear-all-btn" class="flex items-center justify-center px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+            <span class="mr-2">🗑️</span>
+            Clear All
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+      <div class="faq-container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about DeepLink Launcher</p>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is a deep link and how does it work?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>A deep link is a URL that directs users to a specific page or screen within a mobile app, rather than opening a web page. When clicked, it can launch the app (if installed) or redirect to the app store or a web fallback. Deep links use custom URL schemes (like <code>myapp://page</code>) or universal links (iOS) and app links (Android).</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How do I test a deep link?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Simply paste or type your deep link URL into the input field and click the "Launch" button. The tool will attempt to open the link on your device. Make sure you're accessing this tool from a mobile device or use the QR code feature to scan the link with your phone.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What's the difference between Android and iOS deep links?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p><strong>Android:</strong> Uses App Links (HTTP/HTTPS URLs) or custom URL schemes. App Links require domain verification and can open apps directly without showing a disambiguation dialog.</p>
+              <p><strong>iOS:</strong> Uses Universal Links (HTTP/HTTPS URLs) or custom URL schemes. Universal Links also require domain verification and provide a seamless experience similar to Android App Links.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Can I encode or decode deep link parameters?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes! The DeepLink Launcher automatically handles URL encoding and decoding. Parameters with special characters are properly encoded, and you can use the encode/decode features to manually process URL components if needed.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Does the tool store my deep links?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Deep links are stored locally in your browser's storage for convenience (so you can access your history), but they never leave your device. All processing happens entirely in your browser, ensuring complete privacy and security.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What if the deep link doesn't work?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>If a deep link doesn't work, check the following:</p>
+              <ul>
+                <li>Ensure the app is installed on your device</li>
+                <li>Verify the deep link format is correct</li>
+                <li>Check if the app supports the specific deep link path</li>
+                <li>For Universal/App Links, ensure domain verification is set up correctly</li>
+                <li>Try testing on the actual device rather than an emulator</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Can I generate a QR code for my deep link?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes! After entering your deep link, you can use the QR code generator feature to create a QR code. This is especially useful for testing deep links on physical devices by scanning the QR code with your phone's camera.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Component -->
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+  <!-- FAQ Accordion Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const faqQuestions = document.querySelectorAll('.faq-question');
+      faqQuestions.forEach(question => {
+        question.addEventListener('click', function() {
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          const faqItem = this.closest('.faq-item');
+          const answer = faqItem.querySelector('.faq-answer');
+          const icon = this.querySelector('.faq-icon');
+          
+          // Close all other FAQ items
+          faqQuestions.forEach(q => {
+            if (q !== this) {
+              q.setAttribute('aria-expanded', 'false');
+              q.closest('.faq-item').classList.remove('active');
+              q.querySelector('.faq-icon').textContent = '+';
+            }
+          });
+          
+          // Toggle current item
+          if (isExpanded) {
+            this.setAttribute('aria-expanded', 'false');
+            faqItem.classList.remove('active');
+            icon.textContent = '+';
+          } else {
+            this.setAttribute('aria-expanded', 'true');
+            faqItem.classList.add('active');
+            icon.textContent = '−';
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- Initialize Sentry with version tracking -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
+        initSentryTracking();
+      }
+    });
+  </script>
+
+  <!-- Scripts -->
+  <script>
+    // Theme management is now handled by theme.js utility
+
+    // Toast notifications
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+      
+      setTimeout(() => toast.classList.add('show'), 100);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => container.removeChild(toast), 300);
+      }, 3000);
+    }
+
+    // Show launch error message
+    function showLaunchError(message) {
+      const errorElement = document.getElementById('launch-error-message');
+      if (errorElement) {
+        // Truncate message to max 2 lines (approximately 100 characters)
+        const truncatedMessage = message.length > 100 ? message.substring(0, 97) + '...' : message;
+        errorElement.textContent = truncatedMessage;
+        errorElement.classList.remove('hidden');
+        
+        // Track deeplink launch failure in analytics
+        const input = document.getElementById('deeplink-input');
+        if (typeof window.Analytics !== 'undefined' && input) {
+          window.Analytics.trackDeeplinkLaunchFailed({
+            page: window.getCurrentPageNameForAnalytics ? window.getCurrentPageNameForAnalytics() : 'DeepLink Launcher',
+            error_message: message,
+            deeplink_url: input.value.trim()
+          });
+        }
+        
+        // Hide after 10 seconds
+        setTimeout(() => {
+          errorElement.classList.add('hidden');
+        }, 10000);
+      }
+    }
+
+    // Deep link validation
+    function validateDeepLink(url) {
+      if (!url.trim()) return { valid: false, message: 'Please enter a deep link' };
+      
+      const trimmedUrl = url.trim();
+      
+      // Check for common deep link patterns
+      const patterns = [
+        /^https?:\/\//,  // HTTP/HTTPS
+        /^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//,  // Custom schemes with //
+        /^[a-zA-Z][a-zA-Z0-9+.-]*:/,  // Custom schemes without // (tel:, mailto:, sms:, etc.)
+      ];
+      
+      const isValid = patterns.some(pattern => pattern.test(trimmedUrl));
+      
+      // Additional validation for specific schemes
+      if (isValid) {
+        // Check for well-known schemes that should work
+        const knownSchemes = [
+          'http:', 'https:', 'tel:', 'mailto:', 'sms:', 'facetime:', 'facetime-audio:',
+          'maps:', 'geo:', 'whatsapp:', 'telegram:', 'skype:', 'zoom:', 'teams:',
+          'slack:', 'discord:', 'spotify:', 'youtube:', 'vimeo:', 'instagram:',
+          'twitter:', 'facebook:', 'linkedin:', 'tiktok:', 'snapchat:', 'uber:',
+          'lyft:', 'googlemaps:', 'waze:', 'apple-maps:', 'calendar:', 'reminders:',
+          'notes:', 'photos:', 'camera:', 'settings:', 'prefs:', 'app-settings:'
+        ];
+        
+        const scheme = trimmedUrl.split(':')[0] + ':';
+        if (knownSchemes.includes(scheme.toLowerCase())) {
+          return { valid: true, message: `✅ Valid ${scheme} deeplink` };
+        }
+        
+        return { valid: true, message: '✅ Valid deeplink format' };
+      }
+      
+      return {
+        valid: false,
+        message: 'Invalid deeplink format. Supported: http://, https://, tel:, mailto:, sms:, custom://, etc.'
+      };
+    }
+
+    // URL encoding/decoding
+    function encodeURL(url) {
+      return encodeURIComponent(url);
+    }
+
+    function decodeURL(url) {
+      try {
+        return decodeURIComponent(url);
+      } catch (e) {
+        return url; // Return original if decoding fails
+      }
+    }
+
+    // Launch deep link
+    function launchDeepLink(url) {
+      try {
+        // Check if it's a custom scheme
+        if (url.includes('://') && !url.startsWith('http')) {
+          // For custom schemes, try multiple methods
+          launchCustomScheme(url);
+        } else {
+          // For HTTP/HTTPS, use regular navigation
+          window.location.href = url;
+          showToast('Deep link launched!', 'success');
+        }
+      } catch (e) {
+        const errorMsg = 'Failed to launch deep link: ' + e.message;
+        showLaunchError(errorMsg);
+        showToast('Failed to launch deep link', 'error');
+      }
+    }
+
+    // Launch custom scheme with fallback
+    function launchCustomScheme(url) {
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+      const isAndroid = /Android/.test(navigator.userAgent);
+      const isSimulator = /Simulator|iPhone Simulator|iPad Simulator/.test(navigator.userAgent);
+      
+      if (isSimulator) {
+        showToast('⚠️ Simulator detected! Deep links may not work. Try on real device.', 'error');
+        // Still try to launch
+        setTimeout(() => {
+          window.location.href = url;
+        }, 1000);
+        return;
+      }
+      
+      if (isIOS) {
+        // iOS method - try iframe first, then direct navigation
+        let appLaunched = false;
+        let startTime = Date.now();
+        
+        // Track if page loses focus (indicates app launched)
+        const handleBlur = () => {
+          appLaunched = true;
+          window.removeEventListener('blur', handleBlur);
+        };
+        window.addEventListener('blur', handleBlur);
+        
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = url;
+        document.body.appendChild(iframe);
+        
+        // Also try direct navigation as backup
+        setTimeout(() => {
+          window.location.href = url;
+        }, 100);
+        
+        // Clean up iframe
+        setTimeout(() => {
+          if (document.body.contains(iframe)) {
+            document.body.removeChild(iframe);
+          }
+        }, 2000);
+        
+        showToast('Deep link launched! (iOS)', 'success');
+        
+        // Check for errors after 3 seconds (longer delay for iOS)
+        setTimeout(() => {
+          window.removeEventListener('blur', handleBlur);
+          if (!appLaunched && document.hasFocus()) {
+            showLaunchError('App may not be installed or deeplink not supported on iOS');
+          }
+        }, 3000);
+        
+      } else if (isAndroid) {
+        // Android method
+        let appLaunched = false;
+        
+        // Track if page loses focus (indicates app launched)
+        const handleBlur = () => {
+          appLaunched = true;
+          window.removeEventListener('blur', handleBlur);
+        };
+        window.addEventListener('blur', handleBlur);
+        
+        window.location.href = url;
+        showToast('Deep link launched! (Android)', 'success');
+        
+        // Fallback after 4 seconds (longer delay for Android)
+        setTimeout(() => {
+          window.removeEventListener('blur', handleBlur);
+          if (!appLaunched && document.hasFocus()) {
+            showLaunchError('App may not be installed or deeplink not supported on Android');
+          }
+        }, 4000);
+        
+      } else {
+        // Desktop/other - just try direct navigation
+        let appLaunched = false;
+        
+        // Track if page loses focus (indicates app launched)
+        const handleBlur = () => {
+          appLaunched = true;
+          window.removeEventListener('blur', handleBlur);
+        };
+        window.addEventListener('blur', handleBlur);
+        
+        window.location.href = url;
+        showToast('Deep link launched! (Desktop)', 'success');
+        
+        // Check for errors after 3 seconds (longer delay for desktop)
+        setTimeout(() => {
+          window.removeEventListener('blur', handleBlur);
+          if (!appLaunched && document.hasFocus()) {
+            showLaunchError('App may not be installed or deeplink not supported on desktop');
+          }
+        }, 3000);
+      }
+    }
+
+    // History management
+    function loadHistory() {
+      const history = JSON.parse(localStorage.getItem('deeplink-history') || '[]');
+      return history;
+    }
+
+    function saveToHistory(url) {
+      const history = loadHistory();
+      const timestamp = new Date().toISOString();
+      
+      // Avoid duplicates
+      if (!history.some(item => item.url === url)) {
+        history.unshift({ url, timestamp });
+        localStorage.setItem('deeplink-history', JSON.stringify(history));
+        updateHistoryDisplay();
+        showToast('Deep link saved to history', 'success');
+      }
+    }
+
+    // Escape URL for use in HTML onclick attribute (escapes backslashes, single quotes, double quotes)
+    function escapeUrlForOnclick(url) {
+      return url
+        .replace(/\\/g, '\\\\')  // Escape backslashes first
+        .replace(/'/g, "\\'")     // Escape single quotes
+        .replace(/"/g, '\\"');    // Escape double quotes with backslash for JavaScript string context
+    }
+
+    function updateHistoryDisplay() {
+      const history = loadHistory();
+      const container = document.getElementById('history-list');
+      const count = document.getElementById('history-count');
+      const empty = document.getElementById('empty-history');
+      
+      if (count) {
+        count.textContent = `${history.length} link${history.length !== 1 ? 's' : ''} saved`;
+      }
+      
+      if (history.length === 0) {
+        if (empty) {
+          empty.style.display = 'block';
+        }
+        if (container) {
+          container.innerHTML = ''; // Clear any existing items
+        }
+        return;
+      }
+      
+      if (empty) {
+        empty.style.display = 'none';
+      }
+      if (container) {
+        container.innerHTML = history.map((item, index) => {
+          const itemDate = new Date(item.timestamp);
+          const now = new Date();
+          const diffInHours = (now - itemDate) / (1000 * 60 * 60);
+          
+          let timeDisplay;
+          if (diffInHours < 24) {
+            // Show time only if within 24 hours
+            timeDisplay = itemDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          } else {
+            // Show date only if more than 24 hours
+            timeDisplay = itemDate.toLocaleDateString([], { month: 'short', day: 'numeric' });
+          }
+          
+          const escapedUrl = escapeUrlForOnclick(item.url);
+          
+          return `
+        <div class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg animate-slide-up">
+          <div class="mb-3">
+            <div class="text-sm font-medium text-gray-900 dark:text-white break-all leading-relaxed">${item.url}</div>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="history-date text-xs text-gray-500 dark:text-gray-400">${timeDisplay}</div>
+            <div class="history-buttons-container">
+              <button onclick="editDeepLink('${escapedUrl}')" class="history-btn history-btn-icon-only text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900" data-tooltip="Edit">
+                <span>✏️</span>
+                <span class="history-btn-text">Edit</span>
+              </button>
+              <button onclick="copyDeepLink('${escapedUrl}')" class="history-btn history-btn-icon-only text-green-600 hover:bg-green-100 dark:hover:bg-green-900" data-tooltip="Copy">
+                <span>📋</span>
+                <span class="history-btn-text">Copy</span>
+              </button>
+              <button onclick="shareDeepLink('${escapedUrl}')" class="history-btn history-btn-icon-only text-indigo-600 hover:bg-indigo-100 dark:hover:bg-indigo-900" data-tooltip="Share">
+                <span>🔗</span>
+                <span class="history-btn-text">Share</span>
+              </button>
+              <button onclick="launchDeepLink('${escapedUrl}'); if(typeof window.Analytics !== 'undefined') window.Analytics.trackDeeplinkHistoryLaunch({page:'DeepLink Launcher'});" class="history-btn history-btn-icon-only text-purple-600 hover:bg-purple-100 dark:hover:bg-purple-900" data-tooltip="Launch">
+                <span>🚀</span>
+                <span class="history-btn-text">Launch</span>
+              </button>
+              <button onclick="deleteDeepLinkByUrl('${escapedUrl}')" class="history-btn history-btn-icon-only text-red-600 hover:bg-red-100 dark:hover:bg-red-900" data-tooltip="Delete">
+                <span>🗑️</span>
+                <span class="history-btn-text">Delete</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+        }).join('');
+      }
+    }
+
+    function editDeepLink(url) {
+      // Track edit
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.trackDeeplinkHistoryEdit({
+          page: 'DeepLink Launcher'
+        });
+      }
+      document.getElementById('deeplink-input').value = url;
+      document.getElementById('deeplink-input').focus();
+      showToast('Deep link loaded for editing', 'info');
+    }
+
+    function copyDeepLink(url) {
+      // Track copy
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.trackDeeplinkHistoryCopy({
+          page: 'DeepLink Launcher'
+        });
+      }
+      // Try modern clipboard API first
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(() => {
+          showToast('Deep link copied to clipboard', 'success');
+        }).catch(() => {
+          // Fallback for mobile or when clipboard API fails
+          fallbackCopyToClipboard(url);
+        });
+      } else {
+        // Fallback for older browsers or mobile
+        fallbackCopyToClipboard(url);
+      }
+    }
+
+    function fallbackCopyToClipboard(text) {
+      // Create a temporary textarea element
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      
+      try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+          showToast('Deep link copied to clipboard', 'success');
+        } else {
+          showToast('Copy failed. Please select and copy manually', 'error');
+        }
+      } catch (err) {
+        showToast('Copy failed. Please select and copy manually', 'error');
+      }
+      
+      document.body.removeChild(textArea);
+    }
+
+    function shareDeepLink(url) {
+      // Track share
+      if (typeof window.Analytics !== 'undefined' && window.Analytics.track) {
+        window.Analytics.track('deeplink_share', {
+          page: 'DeepLink Launcher',
+          deeplink_url: url
+        });
+      }
+      
+      // Create shareable URL that opens deeplink.html with the URL pre-filled
+      const shareableUrl = `${window.location.origin}${window.location.pathname}?url=${encodeURIComponent(url)}`;
+      
+      // Try Web Share API first (mobile)
+      if (navigator.share) {
+        navigator.share({
+          title: 'Deep Link',
+          text: '',
+          url: shareableUrl
+        }).then(() => {
+          showToast('Deep link shared successfully', 'success');
+        }).catch((error) => {
+          // User cancelled or error occurred, fallback to copy
+          if (error.name !== 'AbortError') {
+            copyShareableUrl(shareableUrl);
+          }
+        });
+      } else {
+        // Fallback: Copy shareable URL to clipboard
+        copyShareableUrl(shareableUrl);
+      }
+    }
+
+    function copyShareableUrl(shareableUrl) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(shareableUrl).then(() => {
+          showToast('Shareable link copied to clipboard', 'success');
+        }).catch(() => {
+          fallbackCopyToClipboard(shareableUrl);
+        });
+      } else {
+        fallbackCopyToClipboard(shareableUrl);
+      }
+    }
+
+    function deleteDeepLink(index) {
+      const history = loadHistory();
+      history.splice(index, 1);
+      localStorage.setItem('deeplink-history', JSON.stringify(history));
+      updateHistoryDisplay();
+      showToast('Deep link deleted', 'info');
+    }
+
+    function deleteDeepLinkByUrl(url) {
+      // Track delete
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.trackDeeplinkHistoryDelete({
+          page: 'DeepLink Launcher'
+        });
+      }
+      const history = loadHistory();
+      const filteredHistory = history.filter(item => item.url !== url);
+      localStorage.setItem('deeplink-history', JSON.stringify(filteredHistory));
+      
+      // Update display immediately
+      updateHistoryDisplay();
+      showToast('Deep link deleted', 'info');
+    }
+
+    function clearAllHistory() {
+      if (confirm('Are you sure you want to clear all saved deep links?')) {
+        // Track clear all
+        if (typeof window.Analytics !== 'undefined') {
+          const history = loadHistory();
+          window.Analytics.trackDeeplinkClearAll({
+            page: 'DeepLink Launcher',
+            items_cleared: history.length
+          });
+        }
+        localStorage.removeItem('deeplink-history');
+        updateHistoryDisplay();
+        showToast('All deep links cleared', 'info');
+      }
+    }
+
+    // CSV export/import
+    function exportToCSV() {
+      const history = loadHistory();
+      if (history.length === 0) {
+        showToast('No deep links to export', 'error');
+        return;
+      }
+      
+      // Track download CSV
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.trackDeeplinkDownloadCsv({
+          page: 'DeepLink Launcher',
+          items_exported: history.length
+        });
+      }
+      
+      const csvContent = 'DeepLink,DateAdded\n' + 
+        history.map(item => `"${item.url}","${item.timestamp}"`).join('\n');
+      
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `deeplink-history-${new Date().toISOString().split('T')[0]}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('History exported to CSV', 'success');
+    }
+
+    function importFromCSV(file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const content = e.target.result;
+          const lines = content.split('\n').filter(line => line.trim());
+          const history = loadHistory();
+          let imported = 0;
+          
+          lines.forEach((line, index) => {
+            if (index === 0) return; // Skip header
+            
+            const columns = line.split(',');
+            if (columns.length >= 1) {
+              const url = columns[0].replace(/"/g, '');
+              if (url && !history.some(item => item.url === url)) {
+                history.push({ url, timestamp: new Date().toISOString() });
+                imported++;
+              }
+            }
+          });
+          
+          // Track upload CSV
+          if (typeof window.Analytics !== 'undefined') {
+            window.Analytics.trackDeeplinkUploadCsv({
+              page: 'DeepLink Launcher',
+              items_imported: imported
+            });
+          }
+          
+          localStorage.setItem('deeplink-history', JSON.stringify(history));
+          updateHistoryDisplay();
+          showToast(`Imported ${imported} deep links`, 'success');
+        } catch (error) {
+          showToast('Failed to import file', 'error');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+      // Theme initialization is handled by theme.js automatically
+      updateHistoryDisplay();
+      
+      // Check for URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlParam = urlParams.get('url');
+      if (urlParam) {
+        const input = document.getElementById('deeplink-input');
+        input.value = decodeURIComponent(urlParam);
+        input.focus();
+        showToast('Deep link loaded from URL', 'info');
+      }
+      
+      const input = document.getElementById('deeplink-input');
+      // Desktop buttons
+      const launchBtnDesktop = document.getElementById('launch-btn-desktop');
+      const encodeDecodeBtnDesktop = document.getElementById('encode-decode-btn-desktop');
+      const generateQrBtnDesktop = document.getElementById('generate-qr-btn-desktop');
+      // Mobile buttons
+      const launchBtnMobile = document.getElementById('launch-btn-mobile');
+      const encodeDecodeBtnMobile = document.getElementById('encode-decode-btn-mobile');
+      const generateQrBtnMobile = document.getElementById('generate-qr-btn-mobile');
+      const shareBtnMobile = document.getElementById('share-btn-mobile');
+      const mobileDropdownToggle = document.getElementById('mobile-dropdown-toggle');
+      const mobileDropdownMenu = document.getElementById('mobile-dropdown-menu');
+      const clearBtn = document.getElementById('clear-input');
+      const copyResultBtn = document.getElementById('copy-result');
+      const launchResultBtn = document.getElementById('launch-result');
+      const downloadBtn = document.getElementById('download-btn');
+      const clearAllBtn = document.getElementById('clear-all-btn');
+      const uploadFile = document.getElementById('upload-file');
+      const resultContainer = document.getElementById('result-container');
+      const resultOutput = document.getElementById('result-output');
+      const validationMessage = document.getElementById('validation-message');
+
+      // Theme toggle is handled by header.js component
+
+      // Auto-resize deeplink input for long URLs (better mobile experience)
+      function autoResizeDeeplinkInput() {
+        if (!input) return;
+        input.style.height = 'auto';
+        input.style.height = input.scrollHeight + 'px';
+      }
+      if (input && input.tagName === 'TEXTAREA') {
+        autoResizeDeeplinkInput();
+        input.addEventListener('input', autoResizeDeeplinkInput);
+      }
+
+      // Mobile dropdown toggle
+      if (mobileDropdownToggle && mobileDropdownMenu) {
+        mobileDropdownToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          mobileDropdownMenu.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!mobileDropdownToggle.contains(e.target) && !mobileDropdownMenu.contains(e.target)) {
+            mobileDropdownMenu.classList.remove('show');
+          }
+        });
+
+        // Close dropdown when selecting an option
+        if (encodeDecodeBtnMobile) {
+          encodeDecodeBtnMobile.addEventListener('click', function() {
+            mobileDropdownMenu.classList.remove('show');
+          });
+        }
+        if (generateQrBtnMobile) {
+          generateQrBtnMobile.addEventListener('click', function() {
+            mobileDropdownMenu.classList.remove('show');
+          });
+        }
+        if (shareBtnMobile) {
+          shareBtnMobile.addEventListener('click', function() {
+            mobileDropdownMenu.classList.remove('show');
+          });
+        }
+      }
+
+      // Shared handler functions
+      function handleEncodeDecode() {
+        const url = input.value.trim();
+        const encoderUrl = url ? `url-encoder.html?url=${encodeURIComponent(url)}` : 'url-encoder.html';
+        window.location.href = encoderUrl;
+      }
+
+      function handleGenerateQR() {
+        const url = input.value.trim();
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.trackDeeplinkGenerateQr({
+            page: 'DeepLink Launcher'
+          });
+        }
+        const qrUrl = url ? `qr-generator-free.html?text=${encodeURIComponent(url)}` : 'qr-generator-free.html';
+        window.location.href = qrUrl;
+        showToast('Redirecting to QR Generator...', 'info');
+      }
+
+      function handleLaunch() {
+        const url = input.value.trim();
+        const validation = validateDeepLink(url);
+        if (validation.valid) {
+          if (typeof window.Analytics !== 'undefined') {
+            window.Analytics.trackDeeplinkLaunch({
+              page: 'DeepLink Launcher',
+              deeplink_scheme: url.split(':')[0] || 'unknown'
+            });
+          }
+          launchDeepLink(url);
+          saveToHistory(url);
+        } else {
+          showToast(validation.message, 'error');
+        }
+      }
+
+      function handleShare() {
+        const url = input.value.trim();
+        if (url) {
+          shareDeepLink(url);
+        } else {
+          showToast('Please enter a deep link to share', 'error');
+        }
+      }
+
+      // Wire up desktop buttons
+      if (launchBtnDesktop) {
+        launchBtnDesktop.addEventListener('click', handleLaunch);
+      }
+      if (encodeDecodeBtnDesktop) {
+        encodeDecodeBtnDesktop.addEventListener('click', handleEncodeDecode);
+      }
+      if (generateQrBtnDesktop) {
+        generateQrBtnDesktop.addEventListener('click', handleGenerateQR);
+      }
+
+      // Wire up mobile buttons
+      if (launchBtnMobile) {
+        launchBtnMobile.addEventListener('click', handleLaunch);
+      }
+      if (encodeDecodeBtnMobile) {
+        encodeDecodeBtnMobile.addEventListener('click', handleEncodeDecode);
+      }
+      if (generateQrBtnMobile) {
+        generateQrBtnMobile.addEventListener('click', handleGenerateQR);
+      }
+      if (shareBtnMobile) {
+        shareBtnMobile.addEventListener('click', handleShare);
+      }
+
+      // Input validation
+      input.addEventListener('input', function() {
+        const validation = validateDeepLink(this.value);
+        if (this.value.trim()) {
+          if (validation.valid) {
+            validationMessage.classList.add('hidden');
+            validationMessage.textContent = '';
+          } else {
+            validationMessage.classList.remove('hidden');
+            validationMessage.textContent = validation.message;
+          }
+        } else {
+          validationMessage.classList.add('hidden');
+          validationMessage.textContent = '';
+        }
+      });
+
+
+      // Clear input
+      clearBtn.addEventListener('click', function() {
+        input.value = '';
+        resultContainer.classList.add('hidden');
+        validationMessage.classList.add('hidden');
+        input.focus();
+      });
+
+      // Copy result
+      copyResultBtn.addEventListener('click', function() {
+        copyDeepLink(resultOutput.value);
+      });
+
+      // Launch result
+      launchResultBtn.addEventListener('click', function() {
+        const resultValue = resultOutput.value.trim();
+        if (resultValue) {
+          // Check if it's an encoded URL (contains % characters)
+          if (resultValue.includes('%')) {
+            // Decode the URL before launching
+            try {
+              const decodedValue = decodeURIComponent(resultValue);
+              launchDeepLink(decodedValue);
+            } catch (e) {
+              showToast('Failed to decode URL', 'error');
+            }
+          } else {
+            // Launch as-is if not encoded
+            launchDeepLink(resultValue);
+          }
+        } else {
+          showToast('No result to launch', 'error');
+        }
+      });
+
+      // Download CSV
+      downloadBtn.addEventListener('click', exportToCSV);
+
+      // Clear all history
+      clearAllBtn.addEventListener('click', clearAllHistory);
+
+      // Upload file
+      uploadFile.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          importFromCSV(file);
+        }
+      });
+
+
+      // Auto-save on valid input
+      input.addEventListener('blur', function() {
+        const url = this.value.trim();
+        const validation = validateDeepLink(url);
+        if (validation.valid) {
+          saveToHistory(url);
+        }
+      });
+    });
+
+    // Make functions globally available
+    window.editDeepLink = editDeepLink;
+    window.copyDeepLink = copyDeepLink;
+    window.shareDeepLink = shareDeepLink;
+    window.launchDeepLink = launchDeepLink;
+    window.deleteDeepLink = deleteDeepLink;
+    window.deleteDeepLinkByUrl = deleteDeepLinkByUrl;
+  </script>
+</body>
+</html>

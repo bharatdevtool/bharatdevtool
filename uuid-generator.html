@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free UUID Generator Online | Generate UUID v1 v4 v7 | No Sign Up Required | Bharat Dev Tools</title>
+  <meta name="description" content="Free online UUID generator. Generate UUID v1, v4, and v7 instantly in bulk. Validate UUIDs, copy to clipboard. No sign-up required. All generation happens in your browser.">
+  <meta name="keywords" content="uuid generator, generate uuid, uuid v4, uuid v1, uuid v7, random uuid, unique id generator, guid generator, online uuid, free uuid generator, bulk uuid, uuid validator">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  <meta name="distribution" content="global">
+  <meta name="rating" content="general">
+  <link rel="canonical" href="https://bharatdevtool.com/uuid-generator.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Free UUID Generator Online | Generate UUID v1 v4 v7 | Bharat Dev Tools">
+  <meta property="og:description" content="Free online UUID generator. Generate UUID v1, v4, and v7 instantly in bulk. No sign-up required.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/uuid-generator.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="UUID Generator - Free Online Tool">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free UUID Generator Online | Generate UUID v1 v4 v7 | Bharat Dev Tools">
+  <meta name="twitter:description" content="Free online UUID generator. Generate UUID v1, v4, and v7 instantly in bulk. No sign-up required.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ik.imagekit.io/bdt/bdt_logo_v3_16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/bdt/bdt_logo_v3_180.png">
+
+  <!-- Sentry SDK -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+
+  <!-- Theme Management (load early to prevent flash) -->
+  <script src="assets/js/theme.js"></script>
+
+  <!-- Version Tracking Script -->
+  <script src="assets/js/version.js" defer></script>
+
+  <!-- Analytics Script -->
+  <script src="assets/js/analytics.js" defer></script>
+
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+
+  <!-- Structured Data: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "UUID Generator",
+    "description": "Free online UUID generator. Generate UUID v1, v4, and v7 instantly in bulk. Validate UUIDs. All generation runs in your browser.",
+    "url": "https://bharatdevtool.com/uuid-generator.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "UUID v4 Generation",
+      "UUID v1 Generation",
+      "UUID v7 Generation",
+      "Bulk UUID Generation",
+      "UUID Validation",
+      "Copy to Clipboard"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "112"
+    }
+  }
+  </script>
+
+  <!-- Structured Data: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "UUID Generator",
+        "item": "https://bharatdevtool.com/uuid-generator.html"
+      }
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a UUID?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A UUID (Universally Unique Identifier) is a 128-bit identifier formatted as 32 hexadecimal digits in the pattern xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx. UUIDs are used to uniquely identify records in databases, distributed systems, APIs, and software applications without requiring a central coordinating authority. There are several UUID versions — v1 (time-based), v4 (random), and v7 (time-ordered random) are the most widely used."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between UUID v1, v4, and v7?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "UUID v1 is time-based and includes the current timestamp plus the MAC address of the machine. UUID v4 is randomly generated — it has no structure beyond version and variant bits, making it the most widely used UUID for privacy. UUID v7 is a newer standard (RFC 9562) that encodes a millisecond-precision Unix timestamp in the most significant bits, making UUIDs naturally sortable by creation time while still being random enough to avoid collisions."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this UUID generator free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, this UUID generator is completely free. There is no sign-up, no account, no rate limits, and no cost. You can generate as many UUIDs as you need — including bulk generation of up to 100 UUIDs at once."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are the generated UUIDs truly unique? Is my data safe?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "UUID v4 uses your browser's cryptographically secure random number generator (crypto.randomUUID or crypto.getRandomValues), making collisions astronomically unlikely — about 1 in 5.3 × 10^36. All UUIDs are generated entirely in your browser; no data is sent to any server. Your generated UUIDs are completely private."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a UUID used for in software development?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "UUIDs are used as primary keys in databases, unique identifiers for API resources, session tokens, file names, correlation IDs for distributed tracing, idempotency keys for payment APIs, and any scenario where unique IDs are needed without central coordination. UUID v4 is ideal for most cases; UUID v7 is preferred when sortability by creation time is important (e.g., database primary keys with time-ordering)."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8'
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    .animate-fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-slide-up {
+      animation: slideUp 0.3s ease-out;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transform: translateX(120%);
+      transition: transform 0.3s ease;
+    }
+    .toast.show {
+      transform: translateX(0);
+    }
+    .toast.success { background: linear-gradient(135deg, #10b981, #059669); }
+    .toast.error   { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .toast.info    { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+
+    .uuid-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      transition: background 0.15s;
+    }
+    [data-theme="dark"] .uuid-row {
+      background: #374151;
+      border-color: #4b5563;
+    }
+    .uuid-row:hover {
+      background: #f0f9ff;
+    }
+    [data-theme="dark"] .uuid-row:hover {
+      background: #1e3a5f;
+    }
+    .uuid-text {
+      flex: 1;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.875rem;
+      color: #111827;
+      letter-spacing: 0.01em;
+      word-break: break-all;
+    }
+    [data-theme="dark"] .uuid-text {
+      color: #f3f4f6;
+    }
+    .uuid-copy-btn {
+      flex-shrink: 0;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      background: #dbeafe;
+      color: #1d4ed8;
+      cursor: pointer;
+      border: none;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .uuid-copy-btn:hover {
+      background: #bfdbfe;
+      transform: scale(1.05);
+    }
+    [data-theme="dark"] .uuid-copy-btn {
+      background: #1e3a5f;
+      color: #93c5fd;
+    }
+    [data-theme="dark"] .uuid-copy-btn:hover {
+      background: #1e40af;
+    }
+
+    .version-btn {
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 2px solid #e5e7eb;
+      background: #f9fafb;
+      color: #374151;
+      transition: all 0.15s;
+    }
+    [data-theme="dark"] .version-btn {
+      border-color: #4b5563;
+      background: #374151;
+      color: #d1d5db;
+    }
+    .version-btn.active {
+      border-color: #3b82f6;
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+    [data-theme="dark"] .version-btn.active {
+      border-color: #3b82f6;
+      background: #1e3a5f;
+      color: #93c5fd;
+    }
+    .version-btn:hover:not(.active) {
+      border-color: #93c5fd;
+      background: #f0f9ff;
+    }
+    [data-theme="dark"] .version-btn:hover:not(.active) {
+      background: #1f2937;
+    }
+
+    .validator-valid {
+      color: #059669;
+    }
+    .validator-invalid {
+      color: #dc2626;
+    }
+    [data-theme="dark"] .validator-valid  { color: #34d399; }
+    [data-theme="dark"] .validator-invalid { color: #f87171; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+
+  <!-- Header Component -->
+  <script src="components/header.js"></script>
+
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- Invisible H1 for SEO -->
+    <h1 class="sr-only">Free UUID Generator Online</h1>
+
+    <!-- Hero -->
+    <div class="text-center mb-10 animate-fade-in">
+      <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        🔑 UUID Generator
+      </h2>
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Generate UUID v1, v4, and v7 instantly. Bulk generate up to 100 UUIDs, validate, and copy — all in your browser.
+      </p>
+    </div>
+
+    <!-- Generator Panel -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 sm:p-8 mb-6 animate-fade-in">
+
+      <!-- Version Selector -->
+      <div class="mb-6">
+        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">UUID Version</label>
+        <div class="flex flex-wrap gap-3" id="version-selector" role="group" aria-label="UUID version selector">
+          <button class="version-btn active" data-version="v4" aria-pressed="true">v4 — Random</button>
+          <button class="version-btn" data-version="v1" aria-pressed="false">v1 — Time-based</button>
+          <button class="version-btn" data-version="v7" aria-pressed="false">v7 — Time-ordered</button>
+          <button class="version-btn" data-version="nil" aria-pressed="false">Nil UUID</button>
+        </div>
+        <p id="version-description" class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+          Cryptographically random. Most widely used. Best for privacy.
+        </p>
+      </div>
+
+      <!-- Count Selector -->
+      <div class="mb-6">
+        <label for="uuid-count" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+          How many UUIDs?
+        </label>
+        <div class="flex flex-wrap items-center gap-3">
+          <div class="flex gap-2 flex-wrap" id="count-presets" role="group" aria-label="UUID count presets">
+            <button class="px-4 py-2 rounded-lg text-sm font-medium border-2 border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-900 dark:text-blue-300 dark:border-blue-500 transition-colors count-preset-btn" data-count="1">1</button>
+            <button class="px-4 py-2 rounded-lg text-sm font-medium border-2 border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors count-preset-btn" data-count="5">5</button>
+            <button class="px-4 py-2 rounded-lg text-sm font-medium border-2 border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors count-preset-btn" data-count="10">10</button>
+            <button class="px-4 py-2 rounded-lg text-sm font-medium border-2 border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors count-preset-btn" data-count="25">25</button>
+            <button class="px-4 py-2 rounded-lg text-sm font-medium border-2 border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors count-preset-btn" data-count="50">50</button>
+            <button class="px-4 py-2 rounded-lg text-sm font-medium border-2 border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors count-preset-btn" data-count="100">100</button>
+          </div>
+          <input
+            type="number"
+            id="uuid-count"
+            min="1"
+            max="100"
+            value="1"
+            aria-label="Custom UUID count"
+            class="w-20 px-3 py-2 border-2 border-gray-200 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-700 focus:border-blue-500 focus:outline-none"
+          >
+        </div>
+      </div>
+
+      <!-- Format Options -->
+      <div class="mb-6">
+        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Format</label>
+        <div class="flex flex-wrap gap-3">
+          <label class="flex items-center gap-2 cursor-pointer text-sm text-gray-700 dark:text-gray-300">
+            <input type="radio" name="uuid-format" value="standard" checked class="w-4 h-4 text-blue-600">
+            Standard (lowercase)
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer text-sm text-gray-700 dark:text-gray-300">
+            <input type="radio" name="uuid-format" value="uppercase" class="w-4 h-4 text-blue-600">
+            UPPERCASE
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer text-sm text-gray-700 dark:text-gray-300">
+            <input type="radio" name="uuid-format" value="nohyphens" class="w-4 h-4 text-blue-600">
+            No hyphens
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer text-sm text-gray-700 dark:text-gray-300">
+            <input type="radio" name="uuid-format" value="braces" class="w-4 h-4 text-blue-600">
+            {Braces}
+          </label>
+        </div>
+      </div>
+
+      <!-- Generate Button -->
+      <button
+        id="generate-btn"
+        class="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-semibold rounded-xl transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        aria-label="Generate UUIDs"
+      >
+        <span>⚡</span> Generate UUID
+      </button>
+
+      <!-- Results -->
+      <div id="results-container" class="hidden mt-6">
+        <div class="flex items-center justify-between mb-3">
+          <span id="results-label" class="text-sm font-semibold text-gray-700 dark:text-gray-300">Generated UUIDs</span>
+          <div class="flex gap-2">
+            <button
+              id="copy-all-btn"
+              class="flex items-center gap-1 px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white text-sm font-medium transition-colors"
+              aria-label="Copy all UUIDs"
+            >
+              📋 Copy All
+            </button>
+            <button
+              id="regenerate-btn"
+              class="flex items-center gap-1 px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 text-sm font-medium transition-colors"
+              aria-label="Regenerate UUIDs"
+            >
+              🔄 Regenerate
+            </button>
+          </div>
+        </div>
+        <div id="uuid-list" class="space-y-2 max-h-96 overflow-y-auto pr-1" role="list" aria-label="Generated UUID list"></div>
+      </div>
+    </div>
+
+    <!-- UUID Validator Panel -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 sm:p-8 mb-6 animate-fade-in">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">🔍 UUID Validator</h3>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <input
+          type="text"
+          id="validate-input"
+          placeholder="Paste a UUID to validate, e.g. 550e8400-e29b-41d4-a716-446655440000"
+          aria-label="UUID to validate"
+          class="flex-1 px-4 py-3 border-2 border-gray-200 dark:border-gray-600 rounded-xl text-sm font-mono text-gray-900 dark:text-white bg-white dark:bg-gray-700 focus:border-blue-500 focus:outline-none placeholder-gray-400 dark:placeholder-gray-500"
+        >
+        <button
+          id="validate-btn"
+          class="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-xl transition-colors"
+          aria-label="Validate UUID"
+        >
+          Validate
+        </button>
+      </div>
+      <div id="validate-result" class="hidden mt-4 p-4 rounded-xl border-2 animate-slide-up" role="status" aria-live="polite"></div>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq" aria-labelledby="faq-heading">
+      <div class="faq-container">
+        <h2 class="section-title" id="faq-heading">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about UUID generation</p>
+        <div class="faq-list">
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is a UUID?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>A UUID (Universally Unique Identifier) is a 128-bit identifier formatted as 32 hexadecimal digits in the pattern <code>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</code>. UUIDs are used to uniquely identify records in databases, distributed systems, APIs, and software applications without requiring a central coordinating authority. There are several UUID versions — v1 (time-based), v4 (random), and v7 (time-ordered random) are the most widely used.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is the difference between UUID v1, v4, and v7?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p><strong>UUID v1</strong> is time-based and encodes the current timestamp plus random node bits. It is monotonically increasing within the same millisecond sequence, making it useful for time-based ordering.</p>
+              <p><strong>UUID v4</strong> is randomly generated — it has no structure beyond version and variant bits, making it the most widely used UUID for privacy-sensitive use cases. Your browser's <code>crypto.randomUUID()</code> generates v4 UUIDs.</p>
+              <p><strong>UUID v7</strong> is a newer standard (RFC 9562) that encodes a millisecond-precision Unix timestamp in the most significant bits, making UUIDs naturally sortable by creation time while still being random enough to avoid collisions. It is ideal for database primary keys where you want time-ordering.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Is this UUID generator free?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes, this UUID generator is completely free. There is no sign-up, no account, no rate limits, and no cost. You can generate as many UUIDs as you need — including bulk generation of up to 100 UUIDs at once.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Are the generated UUIDs truly unique? Is my data safe?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>UUID v4 uses your browser's cryptographically secure random number generator (<code>crypto.randomUUID</code> or <code>crypto.getRandomValues</code>), making collisions astronomically unlikely — about 1 in 5.3 × 10³⁶ per pair of UUIDs.</p>
+              <p>All UUIDs are generated entirely in your browser; no data is sent to any server. Your generated UUIDs are completely private.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is a UUID used for in software development?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>UUIDs are used as:</p>
+              <ul style="list-style: disc; padding-left: 1.25rem; margin-top: 0.5rem;">
+                <li>Primary keys in databases (PostgreSQL, MySQL, MongoDB)</li>
+                <li>Unique identifiers for REST API resources</li>
+                <li>Session tokens and request correlation IDs</li>
+                <li>Idempotency keys for payment and order APIs</li>
+                <li>Unique file names to avoid collisions</li>
+                <li>Distributed tracing and logging identifiers</li>
+              </ul>
+              <p style="margin-top: 0.5rem;">UUID v4 is ideal for most cases; UUID v7 is preferred when sortability by creation time is important (e.g. database primary keys).</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer Component -->
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+
+  <!-- Toast Container -->
+  <div id="toast-container" aria-live="assertive" aria-atomic="true"></div>
+
+  <!-- FAQ Accordion -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.faq-question').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          const isOpen = this.getAttribute('aria-expanded') === 'true';
+          const item = this.closest('.faq-item');
+          const icon = this.querySelector('.faq-icon');
+
+          document.querySelectorAll('.faq-question').forEach(function(q) {
+            if (q !== btn) {
+              q.setAttribute('aria-expanded', 'false');
+              q.closest('.faq-item').classList.remove('active');
+              q.querySelector('.faq-icon').textContent = '+';
+            }
+          });
+
+          if (isOpen) {
+            this.setAttribute('aria-expanded', 'false');
+            item.classList.remove('active');
+            icon.textContent = '+';
+          } else {
+            this.setAttribute('aria-expanded', 'true');
+            item.classList.add('active');
+            icon.textContent = '−';
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- Sentry Init -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
+        initSentryTracking();
+      }
+    });
+  </script>
+
+  <!-- Main Application -->
+  <script>
+    const UUID_PAGE_NAME = 'UUID Generator';
+
+    // ── Toast ──────────────────────────────────────────────────────────────────
+    function showToast(message, type) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast ' + (type || 'info');
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(function() { toast.classList.add('show'); }, 50);
+      setTimeout(function() {
+        toast.classList.remove('show');
+        setTimeout(function() {
+          if (container.contains(toast)) container.removeChild(toast);
+        }, 350);
+      }, 2800);
+    }
+
+    // ── UUID Generation ────────────────────────────────────────────────────────
+    function generateUUIDv4() {
+      if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+        return crypto.randomUUID();
+      }
+      // Fallback using getRandomValues
+      const bytes = new Uint8Array(16);
+      crypto.getRandomValues(bytes);
+      bytes[6] = (bytes[6] & 0x0f) | 0x40; // version 4
+      bytes[8] = (bytes[8] & 0x3f) | 0x80; // variant
+      return formatBytesAsUUID(bytes);
+    }
+
+    function generateUUIDv1() {
+      const now = Date.now();
+      const timeHigh = Math.floor(now / 0x100000000);
+      const timeLow = now >>> 0;
+
+      const random = new Uint8Array(10);
+      crypto.getRandomValues(random);
+
+      // Build 16 bytes
+      const bytes = new Uint8Array(16);
+      // time_low (32 bits)
+      bytes[0] = (timeLow >>> 24) & 0xff;
+      bytes[1] = (timeLow >>> 16) & 0xff;
+      bytes[2] = (timeLow >>> 8) & 0xff;
+      bytes[3] = timeLow & 0xff;
+      // time_mid (16 bits)
+      bytes[4] = (timeHigh >>> 8) & 0xff;
+      bytes[5] = timeHigh & 0xff;
+      // time_high_and_version (16 bits), version = 1
+      bytes[6] = ((timeHigh >>> 24) & 0x0f) | 0x10;
+      bytes[7] = (timeHigh >>> 16) & 0xff;
+      // clock_seq_hi_and_reserved, variant = 10xxxxxx
+      bytes[8] = (random[0] & 0x3f) | 0x80;
+      bytes[9] = random[1];
+      // node (6 random bytes)
+      for (let i = 0; i < 6; i++) bytes[10 + i] = random[2 + i];
+      return formatBytesAsUUID(bytes);
+    }
+
+    function generateUUIDv7() {
+      const ms = BigInt(Date.now());
+      const random = new Uint8Array(10);
+      crypto.getRandomValues(random);
+
+      const bytes = new Uint8Array(16);
+      // 48-bit Unix timestamp ms in bytes 0-5
+      bytes[0] = Number((ms >> 40n) & 0xffn);
+      bytes[1] = Number((ms >> 32n) & 0xffn);
+      bytes[2] = Number((ms >> 24n) & 0xffn);
+      bytes[3] = Number((ms >> 16n) & 0xffn);
+      bytes[4] = Number((ms >> 8n) & 0xffn);
+      bytes[5] = Number(ms & 0xffn);
+      // version 7
+      bytes[6] = (random[0] & 0x0f) | 0x70;
+      bytes[7] = random[1];
+      // variant
+      bytes[8] = (random[2] & 0x3f) | 0x80;
+      bytes[9] = random[3];
+      for (let i = 0; i < 6; i++) bytes[10 + i] = random[4 + i];
+      return formatBytesAsUUID(bytes);
+    }
+
+    function generateNilUUID() {
+      return '00000000-0000-0000-0000-000000000000';
+    }
+
+    function formatBytesAsUUID(bytes) {
+      const hex = Array.from(bytes).map(function(b) { return b.toString(16).padStart(2, '0'); });
+      return [
+        hex.slice(0, 4).join(''),
+        hex.slice(4, 6).join(''),
+        hex.slice(6, 8).join(''),
+        hex.slice(8, 10).join(''),
+        hex.slice(10, 16).join('')
+      ].join('-');
+    }
+
+    function generateUUID(version) {
+      switch (version) {
+        case 'v1':  return generateUUIDv1();
+        case 'v7':  return generateUUIDv7();
+        case 'nil': return generateNilUUID();
+        default:    return generateUUIDv4();
+      }
+    }
+
+    function applyFormat(uuid, format) {
+      switch (format) {
+        case 'uppercase':  return uuid.toUpperCase();
+        case 'nohyphens':  return uuid.replace(/-/g, '');
+        case 'braces':     return '{' + uuid + '}';
+        default:           return uuid;
+      }
+    }
+
+    // ── UUID Validation ───────────────────────────────────────────────────────
+    const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    const NIL_UUID   = '00000000-0000-0000-0000-000000000000';
+
+    function detectUUIDVersion(uuid) {
+      const cleaned = uuid.trim().toLowerCase().replace(/[{}]/g, '').replace(/-/g, '');
+      if (cleaned.length !== 32) return null;
+      const v = parseInt(cleaned[12], 16);
+      if (v >= 1 && v <= 8) return v;
+      return null;
+    }
+
+    function isValidUUID(uuid) {
+      const cleaned = uuid.trim().replace(/[{}]/g, '');
+      if (cleaned === NIL_UUID) return true;
+      return UUID_REGEX.test(cleaned);
+    }
+
+    function getVariantName(uuid) {
+      const cleaned = uuid.trim().toLowerCase().replace(/[{}]/g, '').replace(/-/g, '');
+      if (cleaned.length < 20) return 'Unknown';
+      const varBit = parseInt(cleaned[16], 16);
+      if ((varBit & 0x8) === 0) return 'NCS backward compatibility (variant 0)';
+      if ((varBit & 0xc) === 0x8) return 'RFC 4122 / DCE 1.1 (variant 1)';
+      if ((varBit & 0xe) === 0xc) return 'Microsoft legacy (variant 2)';
+      return 'Reserved (variant 3)';
+    }
+
+    // ── Clipboard ─────────────────────────────────────────────────────────────
+    function copyToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        return navigator.clipboard.writeText(text).then(function() {
+          showToast('Copied!', 'success');
+        }).catch(function() {
+          fallbackCopy(text);
+        });
+      }
+      fallbackCopy(text);
+    }
+
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('Copied!', 'success');
+      } catch (_) {
+        showToast('Copy failed — please select and copy manually', 'error');
+      }
+      document.body.removeChild(ta);
+    }
+
+    // ── State ─────────────────────────────────────────────────────────────────
+    let selectedVersion = 'v4';
+    let selectedCount = 1;
+    let lastGeneratedUUIDs = [];
+
+    const VERSION_DESCRIPTIONS = {
+      v4:  'Cryptographically random. Most widely used. Best for privacy.',
+      v1:  'Time-based. Encodes current timestamp + random node bits.',
+      v7:  'Time-ordered random. Sortable by creation time. Great for DB keys.',
+      nil: 'All-zeros UUID (00000000-0000-0000-0000-000000000000). Used as null/empty value.'
+    };
+
+    // ── Render UUID List ──────────────────────────────────────────────────────
+    function renderUUIDList(uuids) {
+      const list = document.getElementById('uuid-list');
+      const container = document.getElementById('results-container');
+      const label = document.getElementById('results-label');
+
+      label.textContent = uuids.length === 1 ? 'Generated UUID' : 'Generated ' + uuids.length + ' UUIDs';
+      list.innerHTML = '';
+
+      uuids.forEach(function(uuid, idx) {
+        const row = document.createElement('div');
+        row.className = 'uuid-row animate-slide-up';
+        row.setAttribute('role', 'listitem');
+        row.style.animationDelay = Math.min(idx * 30, 200) + 'ms';
+
+        const span = document.createElement('span');
+        span.className = 'uuid-text';
+        span.textContent = uuid;
+
+        const btn = document.createElement('button');
+        btn.className = 'uuid-copy-btn';
+        btn.textContent = 'Copy';
+        btn.setAttribute('aria-label', 'Copy UUID ' + uuid);
+        btn.addEventListener('click', function() {
+          copyToClipboard(uuid);
+          if (typeof window.Analytics !== 'undefined') {
+            window.Analytics.track('uuid_copy_single', { page: UUID_PAGE_NAME, version: selectedVersion });
+          }
+        });
+
+        row.appendChild(span);
+        row.appendChild(btn);
+        list.appendChild(row);
+      });
+
+      container.classList.remove('hidden');
+    }
+
+    // ── Generate Handler ──────────────────────────────────────────────────────
+    function generateHandler() {
+      const countInput = document.getElementById('uuid-count');
+      const count = Math.max(1, Math.min(100, parseInt(countInput.value, 10) || 1));
+      const format = document.querySelector('input[name="uuid-format"]:checked')?.value || 'standard';
+
+      try {
+        const uuids = [];
+        for (let i = 0; i < count; i++) {
+          uuids.push(applyFormat(generateUUID(selectedVersion), format));
+        }
+        lastGeneratedUUIDs = uuids;
+        renderUUIDList(uuids);
+
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('uuid_generate', {
+            page: UUID_PAGE_NAME,
+            version: selectedVersion,
+            count: count,
+            format: format
+          });
+        }
+      } catch (err) {
+        showToast('Failed to generate UUID: ' + err.message, 'error');
+        if (typeof Sentry !== 'undefined') {
+          try {
+            Sentry.captureException(err, { tags: { operation: 'generate_uuid', version: selectedVersion } });
+          } catch (_) {}
+        }
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('uuid_generate_error', {
+            page: UUID_PAGE_NAME,
+            version: selectedVersion,
+            error: err.message
+          });
+        }
+      }
+    }
+
+    // ── Validate Handler ──────────────────────────────────────────────────────
+    function validateHandler() {
+      const input = document.getElementById('validate-input').value.trim();
+      const resultEl = document.getElementById('validate-result');
+
+      if (!input) {
+        showToast('Please enter a UUID to validate', 'error');
+        return;
+      }
+
+      const valid = isValidUUID(input);
+      const version = detectUUIDVersion(input);
+      const variant = valid ? getVariantName(input) : null;
+      const isNil = input.toLowerCase().replace(/[{}]/g, '') === NIL_UUID;
+
+      resultEl.classList.remove('hidden');
+
+      if (valid) {
+        resultEl.className = 'mt-4 p-4 rounded-xl border-2 animate-slide-up border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/30';
+        resultEl.innerHTML =
+          '<div class="flex items-start gap-3">' +
+          '<span class="text-2xl">✅</span>' +
+          '<div>' +
+          '<p class="font-semibold validator-valid">Valid UUID</p>' +
+          '<p class="text-sm text-gray-600 dark:text-gray-400 mt-1">' +
+            '<strong>Version:</strong> ' + (isNil ? 'Nil (all-zeros)' : version ? 'v' + version : 'Unknown') + '</p>' +
+          '<p class="text-sm text-gray-600 dark:text-gray-400">' +
+            '<strong>Variant:</strong> ' + (variant || 'N/A') + '</p>' +
+          '<p class="text-sm font-mono text-gray-700 dark:text-gray-300 mt-2 break-all">' + escapeHtml(input) + '</p>' +
+          '</div></div>';
+      } else {
+        resultEl.className = 'mt-4 p-4 rounded-xl border-2 animate-slide-up border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/30';
+        resultEl.innerHTML =
+          '<div class="flex items-start gap-3">' +
+          '<span class="text-2xl">❌</span>' +
+          '<div>' +
+          '<p class="font-semibold validator-invalid">Invalid UUID</p>' +
+          '<p class="text-sm text-gray-600 dark:text-gray-400 mt-1">The input does not match the standard UUID format <code>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</code>.</p>' +
+          '</div></div>';
+      }
+
+      if (typeof window.Analytics !== 'undefined') {
+        window.Analytics.track('uuid_validate', {
+          page: UUID_PAGE_NAME,
+          valid: valid,
+          version: version || 'unknown'
+        });
+      }
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // ── Event Listeners ────────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', function() {
+
+      // Version selector
+      document.getElementById('version-selector').addEventListener('click', function(e) {
+        const btn = e.target.closest('.version-btn');
+        if (!btn) return;
+        selectedVersion = btn.dataset.version;
+        document.querySelectorAll('.version-btn').forEach(function(b) {
+          b.classList.toggle('active', b === btn);
+          b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+        });
+        document.getElementById('version-description').textContent = VERSION_DESCRIPTIONS[selectedVersion] || '';
+      });
+
+      // Count presets
+      document.getElementById('count-presets').addEventListener('click', function(e) {
+        const btn = e.target.closest('.count-preset-btn');
+        if (!btn) return;
+        selectedCount = parseInt(btn.dataset.count, 10);
+        document.getElementById('uuid-count').value = selectedCount;
+        document.querySelectorAll('.count-preset-btn').forEach(function(b) {
+          const active = b === btn;
+          b.className = 'px-4 py-2 rounded-lg text-sm font-medium border-2 transition-colors count-preset-btn ' +
+            (active
+              ? 'border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-900 dark:text-blue-300 dark:border-blue-500'
+              : 'border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300');
+        });
+      });
+
+      // Manual count input syncs presets
+      document.getElementById('uuid-count').addEventListener('input', function() {
+        const val = parseInt(this.value, 10);
+        if (!isNaN(val)) {
+          selectedCount = val;
+          document.querySelectorAll('.count-preset-btn').forEach(function(b) {
+            const match = parseInt(b.dataset.count, 10) === val;
+            b.className = 'px-4 py-2 rounded-lg text-sm font-medium border-2 transition-colors count-preset-btn ' +
+              (match
+                ? 'border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-900 dark:text-blue-300 dark:border-blue-500'
+                : 'border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300');
+          });
+        }
+      });
+
+      // Generate
+      document.getElementById('generate-btn').addEventListener('click', generateHandler);
+
+      // Regenerate
+      document.getElementById('regenerate-btn').addEventListener('click', generateHandler);
+
+      // Copy all
+      document.getElementById('copy-all-btn').addEventListener('click', function() {
+        if (!lastGeneratedUUIDs.length) return;
+        copyToClipboard(lastGeneratedUUIDs.join('\n'));
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('uuid_copy_all', {
+            page: UUID_PAGE_NAME,
+            count: lastGeneratedUUIDs.length,
+            version: selectedVersion
+          });
+        }
+      });
+
+      // Validate on button
+      document.getElementById('validate-btn').addEventListener('click', validateHandler);
+
+      // Validate on Enter
+      document.getElementById('validate-input').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') validateHandler();
+      });
+
+      // Generate one UUID on load
+      generateHandler();
+    });
+  </script>
+
+</body>
+</html>

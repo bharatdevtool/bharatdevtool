@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SEO: Descriptive, keyword-rich title -->
+  <title>Contact & Feedback | Bharat Dev Tools | Feature Requests & Support</title>
+  <!-- SEO: Primary meta description for search results -->
+  <meta name="description" content="Contact Bharat Dev Tools - Send feedback, request features, report bugs, or collaborate. We value your input to improve our free developer tools.">
+  <!-- SEO: Helpful keywords (kept concise) -->
+  <meta name="keywords" content="contact bharat dev tools, feedback, feature request, bug report, developer tools support, collaborate, suggestions">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="language" content="English">
+  <!-- SEO: Canonical URL -->
+  <link rel="canonical" href="https://bharatdevtool.com/feedback.html">
+  
+  <!-- Social preview (Open Graph / Twitter) -->
+  <meta property="og:title" content="Contact & Feedback | Bharat Dev Tools">
+  <meta property="og:description" content="Contact Bharat Dev Tools - Send feedback, request features, report bugs, or collaborate. We value your input to improve our free developer tools.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/feedback.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Contact Bharat Dev Tools">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Contact & Feedback | Bharat Dev Tools">
+  <meta name="twitter:description" content="Contact Bharat Dev Tools - Send feedback, request features, report bugs, or collaborate. We value your input to improve our free developer tools.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  
+  <link rel="stylesheet" href="assets/css/style.css">
+  <!-- Analytics Script -->
+  <script src="assets/js/analytics.js"></script>
+  <style>
+    .feedback {
+      max-width: 720px; margin: 40px auto; padding: 16px; background: var(--panel);
+      border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); color: var(--fg);
+    }
+    .feedback h1 { margin: 0 0 6px; }
+    .feedback p { margin: 6px 0 16px; color: var(--muted); }
+    .feedback form { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; }
+    .feedback input, .feedback select, .feedback textarea { padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); background: var(--bg); color: var(--fg); }
+    .feedback textarea { grid-column: 1 / -1; }
+    .feedback button { padding: 10px 14px; border-radius: 8px; border: none; background: var(--accent); color: #fff; cursor: pointer; }
+    .feedback button:hover { opacity: 0.95; }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="feedback">
+      <h1>Contact • Feedback • Requests</h1>
+      <p>Reach out with feedback, feature requests, bugs, or collaboration ideas.</p>
+      <form action="mailto:feedback@bharatdevtool.com" method="post" enctype="text/plain">
+        <select name="topic" required>
+          <option value="" disabled selected>Select topic</option>
+          <option>Contact us</option>
+          <option>Feedback</option>
+          <option>Request feature</option>
+          <option>Report bug</option>
+          <option>Collaborate</option>
+        </select>
+        <input type="text" name="name" placeholder="Your name" required>
+        <input type="email" name="email" placeholder="Your email" required>
+        <input type="tel" name="mobile" placeholder="Mobile (optional)">
+        <input type="text" name="country" placeholder="Country (optional)">
+        <textarea name="message" rows="6" placeholder="Your message..." required></textarea>
+        <button type="submit">Send suggestion</button>
+      </form>
+    </section>
+  </main>
+
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+</body>
+</html>

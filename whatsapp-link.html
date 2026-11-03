@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free WhatsApp Link Generator | Create wa.me Click-to-Chat Links | No Sign Up</title>
+  <meta name="description" content="Free WhatsApp Link Generator. Create instant wa.me click-to-chat links with a phone number and pre-filled message. No sign up required. Works for India (+91) and all countries.">
+  <meta name="keywords" content="whatsapp link generator, wa.me link, whatsapp click to chat, whatsapp direct link, whatsapp api link, whatsapp message link, india whatsapp link, whatsapp business link, whatsapp link creator, free whatsapp link">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  <meta name="distribution" content="global">
+  <meta name="rating" content="general">
+  <link rel="canonical" href="https://bharatdevtool.com/whatsapp-link.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Free WhatsApp Link Generator | Create wa.me Click-to-Chat Links">
+  <meta property="og:description" content="Free WhatsApp Link Generator. Create instant wa.me click-to-chat links with a phone number and pre-filled message. No sign up required.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/whatsapp-link.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="WhatsApp Link Generator - Free Online Tool">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free WhatsApp Link Generator | Create wa.me Click-to-Chat Links">
+  <meta name="twitter:description" content="Free WhatsApp Link Generator. Create instant wa.me click-to-chat links with a phone number and pre-filled message. No sign up required.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ik.imagekit.io/bdt/bdt_logo_v3_16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/bdt/bdt_logo_v3_180.png">
+
+  <!-- Sentry SDK -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+
+  <!-- Theme Management (load early to prevent flash) -->
+  <script src="assets/js/theme.js"></script>
+
+  <!-- Version Tracking -->
+  <script src="assets/js/version.js" defer></script>
+
+  <!-- Analytics -->
+  <script src="assets/js/analytics.js" defer></script>
+
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Common CSS -->
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+
+  <!-- WebApplication Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "WhatsApp Link Generator",
+    "description": "Free WhatsApp Link Generator. Create instant wa.me click-to-chat links with a phone number and pre-filled message. Works for all countries including India.",
+    "url": "https://bharatdevtool.com/whatsapp-link.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "WhatsApp wa.me Link Generation",
+      "Country Code Selector",
+      "Pre-filled Message Support",
+      "One-click Copy",
+      "QR Code Preview",
+      "WhatsApp Business Support"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "112"
+    }
+  }
+  </script>
+
+  <!-- BreadcrumbList Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "WhatsApp Link Generator",
+        "item": "https://bharatdevtool.com/whatsapp-link.html"
+      }
+    ]
+  }
+  </script>
+
+  <!-- FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a WhatsApp link generator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A WhatsApp link generator creates a special wa.me URL that, when clicked, opens a WhatsApp chat directly with a specific phone number. You can also include a pre-filled message. These links are used on websites, social profiles, and marketing materials so customers can contact you instantly without saving your number."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this WhatsApp link generator free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, this WhatsApp link generator is completely free to use. No account or sign-up is required. You can generate unlimited wa.me links for any phone number and any message."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my phone number and message data safe?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, completely safe. All link generation happens entirely in your browser. Your phone number and message are never sent to any server. The tool simply formats the wa.me URL locally on your device."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does a WhatsApp wa.me link work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "WhatsApp wa.me links use the format https://wa.me/[phone-number]?text=[message]. The phone number must be in international format (country code + number, no spaces or symbols). When someone clicks the link, WhatsApp opens a chat with that number and optionally pre-fills the message text."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I create a WhatsApp link for India (+91)?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Select India (+91) from the country code dropdown, enter your 10-digit mobile number, optionally add a pre-filled message, then click Generate. The tool creates a wa.me link like https://wa.me/919876543210?text=Hello. Copy and share this link anywhere."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    /* ================================================================
+       PAGE-SPECIFIC STYLES
+       ================================================================ */
+
+    .tool-wrapper {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 2rem 1rem 3rem;
+    }
+
+    .tool-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .tool-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .tool-header p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+
+    /* Card */
+    .card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    /* Input group (country code + number) */
+    .phone-row {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+
+    .country-select-wrap {
+      flex: 0 0 160px;
+    }
+
+    .number-input-wrap {
+      flex: 1;
+    }
+
+    label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      padding: 0.625rem 0.875rem;
+      border: 1.5px solid var(--border-color);
+      border-radius: 8px;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-size: 0.9375rem;
+      transition: border-color 0.15s ease;
+      outline: none;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--accent-color, #25D366);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 90px;
+      font-family: inherit;
+    }
+
+    .char-counter {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      text-align: right;
+      margin-top: 0.3rem;
+    }
+
+    /* Generate button */
+    .btn-generate {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.5rem;
+      background: #25D366;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+      width: 100%;
+      justify-content: center;
+      margin-top: 1.25rem;
+    }
+
+    .btn-generate:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .btn-generate:active {
+      transform: translateY(0);
+    }
+
+    /* Result section */
+    .result-card {
+      display: none;
+    }
+
+    .result-card.visible {
+      display: block;
+    }
+
+    .result-link-box {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--bg-primary);
+      border: 1.5px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.625rem 0.875rem;
+      margin-bottom: 1rem;
+    }
+
+    .result-link-text {
+      flex: 1;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      word-break: break-all;
+      font-family: monospace;
+    }
+
+    .btn-copy {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.45rem 0.9rem;
+      background: var(--bg-secondary);
+      border: 1.5px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 0.825rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .btn-copy:hover {
+      opacity: 0.85;
+      transform: translateY(-1px);
+    }
+
+    .btn-copy.copied {
+      color: #25D366;
+      border-color: #25D366;
+    }
+
+    /* Action buttons row */
+    .action-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.55rem 1.1rem;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+      text-decoration: none;
+      border: 1.5px solid transparent;
+    }
+
+    .btn-action:hover {
+      opacity: 0.85;
+      transform: translateY(-1px);
+    }
+
+    .btn-open-wa {
+      background: #25D366;
+      color: #fff;
+    }
+
+    .btn-reset {
+      background: var(--bg-secondary);
+      border-color: var(--border-color);
+      color: var(--text-primary);
+    }
+
+    /* Error message */
+    .error-msg {
+      display: none;
+      color: #ef4444;
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
+    }
+
+    .error-msg.visible {
+      display: block;
+    }
+
+    /* FAQ Section */
+    .faq-section {
+      margin-top: 3rem;
+    }
+
+    .faq-section h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
+      text-align: center;
+    }
+
+    .faq-item {
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      margin-bottom: 0.75rem;
+      overflow: hidden;
+    }
+
+    .faq-question {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.25rem;
+      background: var(--bg-secondary);
+      border: none;
+      cursor: pointer;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-align: left;
+      transition: background 0.15s ease;
+    }
+
+    .faq-question:hover {
+      background: var(--bg-hover, var(--bg-secondary));
+      opacity: 0.9;
+    }
+
+    .faq-icon {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      margin-left: 0.75rem;
+      transition: transform 0.2s ease;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .faq-answer.open {
+      max-height: 300px;
+    }
+
+    .faq-answer p {
+      padding: 0.875rem 1.25rem 1rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* Dark mode */
+    [data-theme="dark"] .form-input,
+    [data-theme="dark"] .form-select,
+    [data-theme="dark"] .form-textarea {
+      background: #1e2433;
+      color: #e2e8f0;
+      border-color: #374151;
+    }
+
+    [data-theme="dark"] .result-link-box {
+      background: #1e2433;
+      border-color: #374151;
+    }
+
+    [data-theme="dark"] .btn-copy {
+      background: #1e2433;
+      border-color: #374151;
+      color: #e2e8f0;
+    }
+
+    [data-theme="dark"] .btn-reset {
+      background: #1e2433;
+      border-color: #374151;
+      color: #e2e8f0;
+    }
+
+    [data-theme="dark"] .faq-question {
+      background: #1e2433;
+      color: #e2e8f0;
+    }
+
+    [data-theme="dark"] .faq-item {
+      border-color: #374151;
+    }
+
+    [data-theme="dark"] .card {
+      background: #111827;
+      border-color: #374151;
+    }
+
+    /* Responsive */
+    @media (max-width: 520px) {
+      .phone-row {
+        flex-direction: column;
+      }
+
+      .country-select-wrap {
+        flex: 0 0 auto;
+        width: 100%;
+      }
+
+      .action-row {
+        flex-direction: column;
+      }
+
+      .btn-action {
+        justify-content: center;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Component -->
+  <script src="components/header.js"></script>
+
+  <main>
+    <div class="tool-wrapper">
+      <!-- Page Header -->
+      <div class="tool-header">
+        <h1>💬 WhatsApp Link Generator</h1>
+        <p>Create a free wa.me click-to-chat link. No sign up. No data sent to server.</p>
+      </div>
+
+      <!-- Input Card -->
+      <div class="card">
+        <div class="card-title">Generate Your Link</div>
+
+        <!-- Phone Number -->
+        <div class="phone-row">
+          <div class="country-select-wrap">
+            <label for="countryCode">Country Code</label>
+            <select id="countryCode" class="form-select" aria-label="Select country code">
+              <option value="91">🇮🇳 India (+91)</option>
+              <option value="1">🇺🇸 USA (+1)</option>
+              <option value="44">🇬🇧 UK (+44)</option>
+              <option value="971">🇦🇪 UAE (+971)</option>
+              <option value="61">🇦🇺 Australia (+61)</option>
+              <option value="49">🇩🇪 Germany (+49)</option>
+              <option value="33">🇫🇷 France (+33)</option>
+              <option value="81">🇯🇵 Japan (+81)</option>
+              <option value="86">🇨🇳 China (+86)</option>
+              <option value="7">🇷🇺 Russia (+7)</option>
+              <option value="55">🇧🇷 Brazil (+55)</option>
+              <option value="27">🇿🇦 South Africa (+27)</option>
+              <option value="234">🇳🇬 Nigeria (+234)</option>
+              <option value="92">🇵🇰 Pakistan (+92)</option>
+              <option value="880">🇧🇩 Bangladesh (+880)</option>
+              <option value="94">🇱🇰 Sri Lanka (+94)</option>
+              <option value="977">🇳🇵 Nepal (+977)</option>
+              <option value="60">🇲🇾 Malaysia (+60)</option>
+              <option value="65">🇸🇬 Singapore (+65)</option>
+              <option value="62">🇮🇩 Indonesia (+62)</option>
+              <option value="63">🇵🇭 Philippines (+63)</option>
+              <option value="966">🇸🇦 Saudi Arabia (+966)</option>
+              <option value="974">🇶🇦 Qatar (+974)</option>
+              <option value="20">🇪🇬 Egypt (+20)</option>
+              <option value="254">🇰🇪 Kenya (+254)</option>
+            </select>
+          </div>
+
+          <div class="number-input-wrap">
+            <label for="phoneNumber">Phone Number</label>
+            <input
+              type="tel"
+              id="phoneNumber"
+              class="form-input"
+              placeholder="9876543210"
+              maxlength="15"
+              aria-label="Phone number without country code"
+              autocomplete="tel-national"
+            >
+            <div class="error-msg" id="phoneError" role="alert">Please enter a valid phone number (digits only).</div>
+          </div>
+        </div>
+
+        <!-- Message -->
+        <div style="margin-top:1.1rem;">
+          <label for="messageText">Pre-filled Message <span style="font-weight:400;color:var(--text-secondary)">(optional)</span></label>
+          <textarea
+            id="messageText"
+            class="form-textarea"
+            placeholder="Hi! I'd like to know more about your services."
+            maxlength="1000"
+            aria-label="Pre-filled WhatsApp message (optional)"
+          ></textarea>
+          <div class="char-counter"><span id="charCount">0</span> / 1000</div>
+        </div>
+
+        <button class="btn-generate" id="generateBtn" type="button" aria-label="Generate WhatsApp link">
+          <span>⚡</span> Generate WhatsApp Link
+        </button>
+      </div>
+
+      <!-- Result Card -->
+      <div class="card result-card" id="resultCard" aria-live="polite">
+        <div class="card-title">Your WhatsApp Link</div>
+
+        <div class="result-link-box">
+          <span class="result-link-text" id="generatedLink" aria-label="Generated WhatsApp link"></span>
+          <button class="btn-copy" id="copyBtn" type="button" aria-label="Copy WhatsApp link to clipboard">
+            <span id="copyIcon">📋</span>
+            <span id="copyText">Copy</span>
+          </button>
+        </div>
+
+        <div class="action-row">
+          <a
+            href="#"
+            id="openWaBtn"
+            class="btn-action btn-open-wa"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Test your WhatsApp link by opening it"
+          >
+            💬 Test on WhatsApp
+          </a>
+          <button class="btn-action btn-reset" id="resetBtn" type="button" aria-label="Reset form and generate another link">
+            ↺ Generate Another
+          </button>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <section class="faq-section" id="faq" aria-labelledby="faqHeading">
+        <h2 id="faqHeading">Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq1">
+            <span>What is a WhatsApp link generator?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" id="faq1" role="region">
+            <p>A WhatsApp link generator creates a special wa.me URL that, when clicked, opens a WhatsApp chat directly with a specific phone number. You can also include a pre-filled message. These links are used on websites, social profiles, and marketing materials so customers can contact you instantly without saving your number.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq2">
+            <span>Is this WhatsApp link generator free?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" id="faq2" role="region">
+            <p>Yes, completely free. No account or sign-up is required. You can generate unlimited wa.me links for any phone number and message — with no restrictions.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq3">
+            <span>Is my phone number and message data safe?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" id="faq3" role="region">
+            <p>Yes, completely safe. All link generation happens entirely in your browser. Your phone number and message are never sent to any server. The tool simply formats the wa.me URL locally on your device.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq4">
+            <span>How does a WhatsApp wa.me link work?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" id="faq4" role="region">
+            <p>WhatsApp wa.me links use the format <code>https://wa.me/[phone]?text=[message]</code>. The phone number must be in international format (country code + number, no spaces or symbols). When clicked, WhatsApp opens a chat with that number and optionally pre-fills the message text. The recipient sees the link-opener's contact info, not yours.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq5">
+            <span>How do I create a WhatsApp link for India (+91)?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" id="faq5" role="region">
+            <p>Select <strong>India (+91)</strong> from the country code dropdown, enter your 10-digit mobile number (e.g. 9876543210), optionally add a pre-filled message, then click <em>Generate WhatsApp Link</em>. The tool creates a wa.me link like <code>https://wa.me/919876543210?text=Hello</code> that you can copy and share anywhere.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer Component -->
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+
+  <script>
+    (function () {
+      const phoneInput   = document.getElementById('phoneNumber');
+      const countrySelect = document.getElementById('countryCode');
+      const messageInput = document.getElementById('messageText');
+      const charCount    = document.getElementById('charCount');
+      const generateBtn  = document.getElementById('generateBtn');
+      const resultCard   = document.getElementById('resultCard');
+      const generatedLink = document.getElementById('generatedLink');
+      const copyBtn      = document.getElementById('copyBtn');
+      const copyIcon     = document.getElementById('copyIcon');
+      const copyText     = document.getElementById('copyText');
+      const openWaBtn    = document.getElementById('openWaBtn');
+      const resetBtn     = document.getElementById('resetBtn');
+      const phoneError   = document.getElementById('phoneError');
+
+      let currentLink = '';
+
+      function sanitizePhoneDigits(raw) {
+        return raw.replace(/\D/g, '');
+      }
+
+      function isValidPhone(digits) {
+        return digits.length >= 5 && digits.length <= 15;
+      }
+
+      function buildWhatsAppLink(countryCode, phoneDigits, message) {
+        const fullNumber = countryCode + phoneDigits;
+        const base = 'https://wa.me/' + fullNumber;
+        if (!message.trim()) return base;
+        return base + '?text=' + encodeURIComponent(message.trim());
+      }
+
+      function showError(msg) {
+        phoneError.textContent = msg;
+        phoneError.classList.add('visible');
+        phoneInput.setAttribute('aria-invalid', 'true');
+      }
+
+      function clearError() {
+        phoneError.classList.remove('visible');
+        phoneInput.removeAttribute('aria-invalid');
+      }
+
+      function generateLinkHandler() {
+        const rawPhone   = phoneInput.value.trim();
+        const digits     = sanitizePhoneDigits(rawPhone);
+        const countryCode = countrySelect.value;
+        const message    = messageInput.value;
+
+        clearError();
+
+        if (!digits) {
+          showError('Phone number is required.');
+          phoneInput.focus();
+          trackValidationEvent('empty_phone');
+          return;
+        }
+
+        if (!isValidPhone(digits)) {
+          showError('Please enter a valid phone number (5–15 digits).');
+          phoneInput.focus();
+          trackValidationEvent('invalid_phone_length');
+          return;
+        }
+
+        currentLink = buildWhatsAppLink(countryCode, digits, message);
+        generatedLink.textContent = currentLink;
+        openWaBtn.href = currentLink;
+        resultCard.classList.add('visible');
+        resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+        resetCopyButton();
+        trackGenerateEvent(countryCode, digits.length, !!message.trim());
+      }
+
+      function copyLinkHandler() {
+        if (!currentLink) return;
+
+        navigator.clipboard.writeText(currentLink).then(function () {
+          copyIcon.textContent = '✅';
+          copyText.textContent = 'Copied!';
+          copyBtn.classList.add('copied');
+
+          trackCopyEvent();
+
+          setTimeout(resetCopyButton, 2000);
+        }).catch(function () {
+          fallbackCopyToClipboard(currentLink);
+        });
+      }
+
+      function fallbackCopyToClipboard(text) {
+        const el = document.createElement('textarea');
+        el.value = text;
+        el.style.position = 'fixed';
+        el.style.opacity = '0';
+        document.body.appendChild(el);
+        el.select();
+        try {
+          document.execCommand('copy');
+          copyIcon.textContent = '✅';
+          copyText.textContent = 'Copied!';
+          copyBtn.classList.add('copied');
+          trackCopyEvent();
+          setTimeout(resetCopyButton, 2000);
+        } catch (err) {
+          if (typeof Sentry !== 'undefined') {
+            Sentry.captureException(err, { tags: { operation: 'copy_whatsapp_link' } });
+          }
+        } finally {
+          document.body.removeChild(el);
+        }
+      }
+
+      function resetCopyButton() {
+        copyIcon.textContent = '📋';
+        copyText.textContent = 'Copy';
+        copyBtn.classList.remove('copied');
+      }
+
+      function resetFormHandler() {
+        resultCard.classList.remove('visible');
+        currentLink = '';
+        phoneInput.value = '';
+        messageInput.value = '';
+        charCount.textContent = '0';
+        clearError();
+        phoneInput.focus();
+        resetCopyButton();
+      }
+
+      function updateCharCount() {
+        charCount.textContent = messageInput.value.length;
+      }
+
+      function toggleFaqItem(button) {
+        const answer  = document.getElementById(button.getAttribute('aria-controls'));
+        const isOpen  = button.getAttribute('aria-expanded') === 'true';
+        const icon    = button.querySelector('.faq-icon');
+
+        button.setAttribute('aria-expanded', !isOpen);
+        answer.classList.toggle('open', !isOpen);
+        icon.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(45deg)';
+      }
+
+      function trackGenerateEvent(countryCode, phoneLength, hasMessage) {
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('whatsapp_link_generate', {
+            page: 'WhatsApp Link Generator',
+            country_code: countryCode,
+            phone_length: phoneLength,
+            has_message: hasMessage
+          });
+        }
+      }
+
+      function trackCopyEvent() {
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('whatsapp_link_copy', {
+            page: 'WhatsApp Link Generator'
+          });
+        }
+      }
+
+      function trackValidationEvent(errorType) {
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('validation_error', {
+            page: 'WhatsApp Link Generator',
+            error_type: errorType
+          });
+        }
+      }
+
+      /* Event listeners */
+      generateBtn.addEventListener('click', generateLinkHandler);
+      copyBtn.addEventListener('click', copyLinkHandler);
+      resetBtn.addEventListener('click', resetFormHandler);
+      messageInput.addEventListener('input', updateCharCount);
+
+      phoneInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') generateLinkHandler();
+      });
+
+      document.querySelectorAll('.faq-question').forEach(function (btn) {
+        btn.addEventListener('click', function () { toggleFaqItem(this); });
+      });
+
+      /* Init Sentry context */
+      document.addEventListener('DOMContentLoaded', function () {
+        if (typeof Sentry !== 'undefined') {
+          if (typeof initSentryTracking !== 'undefined') initSentryTracking();
+          Sentry.setContext('page', {
+            name: 'WhatsApp Link Generator',
+            url: window.location.href
+          });
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

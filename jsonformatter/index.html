@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <!-- SEO: Descriptive, keyword-rich title -->
+  <title>JSON Formatter, Beautifier & Validator Online | Minify, Escape & Repair JSON | Free Tool</title>
+  <!-- SEO: Primary meta description for search results -->
+  <meta name="description" content="Professional JSON Formatter & Validator. Format, beautify, minify, validate, and repair JSON instantly. Free online tool with syntax highlighting, error detection, and secure processing. No data stored.">
+  <!-- SEO: Helpful keywords (kept concise) -->
+  <meta name="keywords" content="json formatter, json beautifier, json minifier, json escape, unescape json, online json tool, pretty print json">
+  <!-- SEO: Canonical URL (update to your production domain) -->
+  <link rel="canonical" href="https://bharatdevtool.com/jsonformatter/">
+  <!-- Social preview (Open Graph / Twitter) -->
+  <meta property="og:title" content="JSON Formatter, Beautifier & Validator Online | Free Tool">
+  <meta property="og:description" content="Professional JSON Formatter & Validator. Format, beautify, minify, validate, and repair JSON instantly. Free online tool with syntax highlighting, error detection, and secure processing.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/jsonformatter/">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="JSON Formatter & Beautifier - Free Online Tool">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JSON Formatter, Beautifier & Validator Online | Free Tool">
+  <meta name="twitter:description" content="Professional JSON Formatter & Validator. Format, beautify, minify, validate, and repair JSON instantly. Free online tool with syntax highlighting, error detection, and secure processing.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+
+  <!-- Resource Hints: Preconnect to external domains for faster loading -->
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://js-de.sentry-cdn.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+  <link rel="dns-prefetch" href="https://js-de.sentry-cdn.com">
+
+  <!-- Critical CSS: Load normally for immediate rendering -->
+  <link rel="stylesheet" href="../assets/css/common.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ik.imagekit.io/bdt/bdt_logo_v3_16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/bdt/bdt_logo_v3_180.png">
+  
+  <!-- App Configuration: Critical, keep in head -->
+  <script type="module">
+    import { APP_CONFIG } from '../assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  
+  <!-- Theme Management (load early to prevent flash) -->
+  <script src="../assets/js/theme.js"></script>
+  
+  <!-- CodeMirror CSS: Load early for editor styling -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/fold/foldgutter.min.css">
+
+  <!-- SEO: Structured data to help search engines understand this web application -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "JSON Formatter & Beautifier",
+    "url": "https://bharatdevtool.com/jsonformatter/",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "description": "Free online JSON Formatter, Beautifier, Minifier, and Escape/Unescape tool. No data stored.",
+    "creator": {"@type":"Organization","name":"Bharat Dev Tools"},
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "150"
+    }
+  }
+  </script>
+  
+  <!-- BreadcrumbList Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "JSON Formatter",
+        "item": "https://bharatdevtool.com/"
+      }
+    ]
+  }
+  </script>
+  
+  <!-- FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is JSON Formatter and how does it work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "JSON Formatter is a free online tool that formats, validates, and repairs JSON data. Simply paste your JSON code into the input editor, click Format, and get beautifully formatted, validated JSON output. The tool can also repair common JSON errors like missing quotes, trailing commas, and JavaScript-style objects."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I format minified JSON?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! Our JSON Formatter can format minified JSON (single-line JSON) into readable, indented format. Just paste your minified JSON and click the Format button. The tool will automatically add proper indentation and line breaks."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the tool store my data?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No, we do not store any of your JSON data. All processing happens entirely in your browser. Your data never leaves your device, ensuring complete privacy and security."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What JSON repair features are available?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our JSON Formatter can repair common issues including: fixing quotes and escape characters, removing comments (// and /* */), unwrapping JSONP callbacks, converting JavaScript-style objects to valid JSON (quoting keys, replacing undefined/NaN/Infinity), and removing trailing commas and semicolons."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I minify JSON?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "To minify JSON, paste your formatted JSON into the input editor and click the Minify button. This will remove all unnecessary whitespace and compress your JSON into a single line, reducing file size while maintaining valid JSON structure."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is JSON escaping and unescaping?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "JSON escaping converts special characters in JSON strings to their escape sequences (e.g., quotes become \\\"). Unescaping does the reverse, converting escape sequences back to their original characters. Use the Escape button to escape JSON strings and Unescape to reverse the process."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I upload JSON files?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! You can upload JSON files by clicking the Upload button in the input pane toolbar, or simply drag and drop a .json file onto the input editor. The file content will be loaded automatically."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What other tools are available on Bharat Dev Tools?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Bharat Dev Tools offers multiple developer utilities including: JSON Formatter & Beautifier, DeepLink Launcher for testing mobile deep links, URL Encoder/Decoder for URL encoding and decoding, and QR Code Generator for creating QR codes from URLs or text."
+        }
+      }
+    ]
+  }
+  </script>
+  
+  <!-- HowTo Schema for JSON Formatting Guide -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Format and Validate JSON",
+    "description": "Step-by-step guide to formatting and validating JSON using Bharat Dev Tools JSON Formatter",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "position": 1,
+        "name": "Paste or Upload JSON",
+        "text": "Open the JSON Formatter tool and paste your JSON code into the input editor, or click Upload to select a JSON file from your device. You can also drag and drop a JSON file directly onto the input editor.",
+        "url": "https://bharatdevtool.com/#step1"
+      },
+      {
+        "@type": "HowToStep",
+        "position": 2,
+        "name": "Click Format Button",
+        "text": "Click the Format button (or press Ctrl/Cmd + Enter) to format and validate your JSON. The tool will automatically repair common JSON errors and format it with proper indentation.",
+        "url": "https://bharatdevtool.com/#step2"
+      },
+      {
+        "@type": "HowToStep",
+        "position": 3,
+        "name": "Review Formatted Output",
+        "text": "Review the formatted JSON in the output editor. The tool provides syntax highlighting, error detection, and color previews for hex color codes. You can search within the output using the search bar.",
+        "url": "https://bharatdevtool.com/#step3"
+      },
+      {
+        "@type": "HowToStep",
+        "position": 4,
+        "name": "Download or Copy",
+        "text": "Use the Copy button to copy the formatted JSON to your clipboard, or click Download to save it as a JSON file. You can download in formatted, minified, escaped, or unescaped formats.",
+        "url": "https://bharatdevtool.com/#step4"
+      }
+    ],
+    "totalTime": "PT1M"
+  }
+  </script>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <!-- Logo -->
+    <img src="" 
+         data-logo="true"
+         alt="Bharat Dev Tools Logo" 
+         class="logo">
+    
+    <!-- Brand Text -->
+    <a href="index.html" class="brand-text-link">
+      <span class="brand-text">Bharat Dev Tools</span>
+    </a>
+
+    <!-- Hidden but SEO friendly -->
+    <h1 class="sr-only">Bharat Dev Tools</h1>
+  </div>
+
+  <!-- Header actions on the right -->
+  <div class="header-actions" role="group" aria-label="Quick actions">
+    <!-- DeepLink Launcher Entry Point -->
+    <div class="deeplink-launcher">
+      <a href="../deeplink.html" class="deeplink-btn" title="DeepLink Launcher">
+        <span class="deeplink-icon">🔗</span>
+        <div class="deeplink-label">
+          <span>DeepLink</span>
+          <span>Launcher</span>
+        </div>
+      </a>
+    </div>
+    <span class="v-sep" aria-hidden="true"></span>
+    <!-- Url Encoder/Decoder Entry Point -->
+    <div class="url-encoder-launcher">
+      <a href="../url-encoder.html" class="url-encoder-btn" title="Url Encoder/Decoder">
+        <span class="url-encoder-icon">🔗</span>
+        <div class="url-encoder-label">
+          <span>Url</span>
+          <span>Encoder</span>
+        </div>
+      </a>
+    </div>
+    <span class="v-sep" aria-hidden="true"></span>
+    <!-- QR Code Generator Entry Point -->
+    <div class="qr-generator">
+      <a href="../qr-generator-free.html" class="qr-btn" title="QR Code Generator">
+        <span class="qr-icon">📱</span>
+        <div class="qr-label">
+          <span>QR</span>
+          <span>Generator</span>
+        </div>
+      </a>
+    </div>
+    <span class="v-sep" aria-hidden="true"></span>
+    <!-- All Tools Link -->
+    <div class="tools-link">
+      <a href="tools.html" class="tools-btn" title="All Tools">
+        <span class="tools-icon">🛠️</span>
+        <div class="tools-label">
+          <span>All</span>
+          <span>Tools</span>
+        </div>
+      </a>
+    </div>
+    <span class="v-sep" aria-hidden="true"></span>
+    <div class="theme-switcher">
+      <label class="theme-toggle" title="Toggle theme">
+        <input id="theme-toggle" type="checkbox" aria-label="Toggle theme" />
+        <span class="toggle-track">
+          <span class="toggle-thumb" aria-hidden="true"></span>
+          <span class="toggle-icon" data-light>☀️</span>
+          <span class="toggle-icon" data-dark>🌙</span>
+        </span>
+      </label>
+      <div id="theme-label" class="theme-label" aria-live="polite" role="status">
+        <span>Switch</span>
+        <span>Dark mode</span>
+      </div>
+    </div>
+    <span class="v-sep" aria-hidden="true"></span>
+    <div class="bookmark-switcher">
+      <button id="bookmark-btn" class="icon-btn" title="Bookmark" aria-haspopup="dialog" aria-controls="bookmark-dialog">🔖</button>
+      <button class="theme-label text-btn" id="bookmark-text-btn" aria-label="Add bookmark">
+        <span>Add</span>
+        <span>Bookmark</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Bookmark dialog -->
+  <dialog id="bookmark-dialog" class="modal">
+    <form method="dialog" class="modal-content">
+      <header class="modal-header">
+        <h3>Bookmark this tool</h3>
+        <button class="modal-close" aria-label="Close">✕</button>
+      </header>
+      <div class="modal-body">
+        <p>Your browser may not allow adding bookmarks programmatically.</p>
+        <p>
+          Press <strong>Cmd + D</strong> (Mac) or <strong>Ctrl + D</strong> (Windows) to bookmark, or copy the link below.
+        </p>
+        <div class="copy-row">
+          <input id="bookmark-link" type="text" readonly>
+          <button id="copy-link-btn" type="button">Copy</button>
+        </div>
+      </div>
+      <footer class="modal-footer">
+        <button value="cancel">Close</button>
+      </footer>
+    </form>
+  </dialog>
+</header>
+
+  <main>
+    <div class="workspace">
+      <section class="pane input-pane panel">
+        <div class="pane-header">
+          <div class="pane-toolbar">
+            <button id="input-upload-btn" class="icon-btn" title="Upload JSON" aria-label="Upload JSON" data-tip="Upload JSON">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0-12 4 4m-4-4-4 4M5 15v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"/></svg>
+            </button>
+            <button id="input-fetch-btn" class="icon-btn" title="Fetch from URL" aria-label="Fetch from URL" data-tip="Fetch from URL">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a5 5 0 0 1 0-7l1-1a5 5 0 0 1 7 7l-1 1"/><path d="M14 10a5 5 0 0 1 0 7l-1 1a5 5 0 0 1-7-7l1-1"/></svg>
+            </button>
+            <button id="input-clear-btn" class="icon-btn" title="Clear input" aria-label="Clear input" data-tip="Clear">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18"/><path d="M7 6v14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V6"/><path d="M10 10v8M14 10v8"/><path d="M9 6l1-2h4l1 2"/></svg>
+            </button>
+            <button id="input-copy-btn" class="icon-btn" title="Copy input" aria-label="Copy input" data-tip="Copy">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2Z"/><path d="M6 15H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+            <button id="input-fullscreen-btn" class="icon-btn" title="Fullscreen" aria-label="Fullscreen" data-tip="Fullscreen">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9V3h6M15 3h6v6M21 15v6h-6M9 21H3v-6"/></svg>
+            </button>
+            <input type="file" id="upload-json" accept=".json" hidden>
+            <div class="searchbar" id="input-searchbar">
+              <button class="search-toggle" type="button" aria-label="Search">
+                <span class="icon-search">🔍</span>
+                <span class="icon-clear">✕</span>
+              </button>
+              <input id="input-search" type="text" placeholder="Search" aria-label="Search in input" />
+              <span class="search-count" id="input-search-count">0/0</span>
+              <button id="input-search-prev" class="icon-btn" title="Previous match" aria-label="Previous match" data-tip="Prev">⟨</button>
+              <button id="input-search-next" class="icon-btn" title="Next match" aria-label="Next match" data-tip="Next">⟩</button>
+            </div>
+          </div>
+        </div>
+        <div id="input-editor" class="editor"></div>
+        <div id="input-error" class="error" role="status"></div>
+        <div class="pane-footer">
+          <span class="validation-indicator" id="input-validation-indicator" aria-label="Validation status"></span>
+          <span id="status" class="status">Lines: 0 • Chars: 0</span>
+          <span id="file-size-indicator" class="file-size small">0B</span>
+        </div>
+      </section>
+
+      <div class="center-toolbar">
+        <button id="format-btn" class="btn-primary has-tooltip" title="Format & Repair (Ctrl/Cmd+Enter)">
+          Format <span class="info-icon" aria-describedby="fix-tip" aria-label="What's included" tabindex="0">i</span>
+          <div id="fix-tip" class="tooltip" role="tooltip">
+            <div class="tooltip-title">Also Repairs JSON</div>
+            <ul>
+              <li>Fix quotes and escape characters</li>
+              <li>Remove // and /* */ comments</li>
+              <li>Unwrap JSONP callback(…)</li>
+              <li>Turn JS-style objects into JSON (quote keys, replace undefined/NaN/Infinity)</li>
+              <li>Remove trailing commas and semicolons</li>
+            </ul>
+          </div>
+        </button>
+        <button id="minify-btn" title="Minify">Minify</button>
+        <button id="escape-btn" title="Escape JSON string">Escape</button>
+        <button id="unescape-btn" title="Unescape JSON string">Unescape</button>
+        <div class="font-controls" role="group" aria-label="Editor font size">
+          <button id="font-dec" class="icon-btn" title="Decrease font size" aria-label="Decrease font size" data-tip="Smaller">−</button>
+          <span class="font-label">Font</span>
+          <button id="font-inc" class="icon-btn" title="Increase font size" aria-label="Increase font size" data-tip="Larger">+</button>
+        </div>
+        <button
+          id="jsondiff-btn"
+          type="button"
+          class="btn-secondary"
+          title="Compare two JSON documents side-by-side"
+          onclick="window.location.href='jsondiff/';"
+        >
+          JSON Diff
+        </button>
+      </div>
+
+      <section class="pane output-pane panel">
+        <div class="pane-header">
+          <div class="pane-toolbar">
+            <div class="menu" id="download-menu">
+              <button id="output-download-btn" class="icon-btn" title="Download JSON" aria-label="Download JSON" data-tip="Download">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V9"/><path d="M8 17l4 4 4-4"/><path d="M5 3h14a2 2 0 0 1 2 2v6"/></svg>
+              </button>
+              <ul class="menu-list" role="menu" aria-label="Download as">
+                <li><button type="button" role="menuitem" id="dl-formatted">Formatted</button></li>
+                <li><button type="button" role="menuitem" id="dl-minified">Minify</button></li>
+                <li><button type="button" role="menuitem" id="dl-escaped">Escape</button></li>
+                <li><button type="button" role="menuitem" id="dl-unescaped">Unescape</button></li>
+              </ul>
+            </div>
+            <button id="output-copy-btn" class="icon-btn" title="Copy output" aria-label="Copy output" data-tip="Copy">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2Z"/><path d="M6 15H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+            <button id="output-clear-btn" class="icon-btn" title="Clear output" aria-label="Clear output" data-tip="Clear">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18"/><path d="M7 6v14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V6"/><path d="M10 10v8M14 10v8"/><path d="M9 6l1-2h4l1 2"/></svg>
+            </button>
+            <button id="output-fullscreen-btn" class="icon-btn" title="Fullscreen" aria-label="Fullscreen" data-tip="Fullscreen">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9V3h6M15 3h6v6M21 15v6h-6M9 21H3v-6"/></svg>
+            </button>
+            <div class="searchbar" id="output-searchbar">
+              <button class="search-toggle" type="button" aria-label="Search">
+                <span class="icon-search">🔍</span>
+                <span class="icon-clear">✕</span>
+              </button>
+              <input id="output-search" type="text" placeholder="Search" aria-label="Search in output" />
+              <span class="search-count" id="output-search-count">0/0</span>
+              <button id="output-search-prev" class="icon-btn" title="Previous match" aria-label="Previous match" data-tip="Prev">⟨</button>
+              <button id="output-search-next" class="icon-btn" title="Next match" aria-label="Next match" data-tip="Next">⟩</button>
+            </div>
+          </div>
+        </div>
+        <div id="output-editor" class="editor"></div>
+        <div class="pane-footer">
+          <span class="validation-indicator" id="output-validation-indicator" aria-label="Validation status"></span>
+          <span id="output-status" class="status">Lines: 0 • Chars: 0</span>
+          <span id="output-file-size-indicator" class="file-size small">0B</span>
+        </div>
+      </section>
+    </div>
+    
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+      <div class="faq-container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about our tools</p>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is JSON Formatter and how does it work?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>JSON Formatter is a free online tool that formats, validates, and repairs JSON data. Simply paste your JSON code into the input editor, click Format, and get beautifully formatted, validated JSON output. The tool can also repair common JSON errors like missing quotes, trailing commas, and JavaScript-style objects.</p>
+              <p><strong>Example:</strong> Input: <code>{"name":"John","age":30}</code> → Output: Formatted JSON with proper indentation and line breaks.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Can I format minified JSON?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes! Our JSON Formatter can format minified JSON (single-line JSON) into readable, indented format. Just paste your minified JSON and click the Format button. The tool will automatically add proper indentation and line breaks.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Does the tool store my data?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>No, we do not store any of your JSON data. All processing happens entirely in your browser. Your data never leaves your device, ensuring complete privacy and security.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What JSON repair features are available?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Our JSON Formatter can repair common issues including:</p>
+              <ul>
+                <li>Fixing quotes and escape characters</li>
+                <li>Removing comments (// and /* */)</li>
+                <li>Unwrapping JSONP callbacks</li>
+                <li>Converting JavaScript-style objects to valid JSON (quoting keys, replacing undefined/NaN/Infinity)</li>
+                <li>Removing trailing commas and semicolons</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How do I minify JSON?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>To minify JSON, paste your formatted JSON into the input editor and click the Minify button. This will remove all unnecessary whitespace and compress your JSON into a single line, reducing file size while maintaining valid JSON structure.</p>
+              <p><strong>Example:</strong> <code>{"name": "John", "age": 30}</code> → <code>{"name":"John","age":30}</code></p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is JSON escaping and unescaping?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>JSON escaping converts special characters in JSON strings to their escape sequences (e.g., quotes become \"). Unescaping does the reverse, converting escape sequences back to their original characters. Use the Escape button to escape JSON strings and Unescape to reverse the process.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Can I upload JSON files?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes! You can upload JSON files by clicking the Upload button in the input pane toolbar, or simply drag and drop a .json file onto the input editor. The file content will be loaded automatically.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What other tools are available on Bharat Dev Tools?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Bharat Dev Tools offers multiple developer utilities including:</p>
+              <ul>
+                <li><strong>JSON Formatter & Beautifier</strong> - Format, validate, and repair JSON</li>
+                <li><strong>DeepLink Launcher</strong> - Test mobile deep links for Android and iOS</li>
+                <li><strong>URL Encoder/Decoder</strong> - Encode and decode URLs</li>
+                <li><strong>QR Code Generator</strong> - Create QR codes from URLs or text</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Component -->
+  <link rel="stylesheet" href="../components/footer.css">
+  <script src="../components/footer.js"></script>
+
+  <!-- Initialize Sentry with version tracking -->
+  <script>
+    // Wait for Sentry and version.js to load
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
+        initSentryTracking();
+      }
+    });
+  </script>
+
+  <script type="module" src="../assets/js/app.js"></script>
+  
+  <!-- FAQ Accordion Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const faqQuestions = document.querySelectorAll('.faq-question');
+      faqQuestions.forEach(question => {
+        question.addEventListener('click', function() {
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          const faqItem = this.closest('.faq-item');
+          const answer = faqItem.querySelector('.faq-answer');
+          const icon = this.querySelector('.faq-icon');
+          
+          // Close all other FAQ items
+          faqQuestions.forEach(q => {
+            if (q !== this) {
+              q.setAttribute('aria-expanded', 'false');
+              q.closest('.faq-item').classList.remove('active');
+              q.querySelector('.faq-icon').textContent = '+';
+            }
+          });
+          
+          // Toggle current item
+          if (isExpanded) {
+            this.setAttribute('aria-expanded', 'false');
+            faqItem.classList.remove('active');
+            icon.textContent = '+';
+          } else {
+            this.setAttribute('aria-expanded', 'true');
+            faqItem.classList.add('active');
+            icon.textContent = '−';
+          }
+        });
+      });
+    });
+  </script>
+  
+  <!-- Analytics Tracking for Buttons -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Fullscreen button tracking (input & output)
+      ['input-fullscreen-btn', 'output-fullscreen-btn'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn && typeof window.Analytics !== 'undefined') {
+          btn.addEventListener('click', function() {
+            window.Analytics.trackButtonClickFullscreen({
+              page: 'JSON Formatter',
+              button_location: id.includes('input') ? 'input' : 'output'
+            });
+          });
+        }
+      });
+      
+      // Deeplink launcher button tracking
+      const deeplinkBtn = document.querySelector('.deeplink-btn');
+      if (deeplinkBtn && typeof window.Analytics !== 'undefined') {
+        deeplinkBtn.addEventListener('click', function() {
+          window.Analytics.trackButtonClickDeeplinkLauncher({
+            page: 'JSON Formatter'
+          });
+        });
+      }
+      
+      // Url encoder button tracking
+      const urlEncoderBtn = document.querySelector('.url-encoder-btn');
+      if (urlEncoderBtn && typeof window.Analytics !== 'undefined') {
+        urlEncoderBtn.addEventListener('click', function() {
+          window.Analytics.trackButtonClickUrlEncoder({
+            page: 'JSON Formatter'
+          });
+        });
+      }
+      
+      // QR generator button tracking
+      const qrBtn = document.querySelector('.qr-btn');
+      if (qrBtn && typeof window.Analytics !== 'undefined') {
+        qrBtn.addEventListener('click', function() {
+          window.Analytics.trackButtonClickQrGenerator({
+            page: 'JSON Formatter'
+          });
+        });
+      }
+      
+      // Bookmark button tracking
+      const bookmarkBtn = document.getElementById('bookmark-btn');
+      const bookmarkTextBtn = document.getElementById('bookmark-text-btn');
+      if (bookmarkBtn && typeof window.Analytics !== 'undefined') {
+        bookmarkBtn.addEventListener('click', function() {
+          window.Analytics.trackButtonClickBookmark({
+            page: 'JSON Formatter'
+          });
+        });
+      }
+      if (bookmarkTextBtn && typeof window.Analytics !== 'undefined') {
+        bookmarkTextBtn.addEventListener('click', function() {
+          window.Analytics.trackButtonClickBookmark({
+            page: 'JSON Formatter'
+          });
+        });
+      }
+      
+      // Theme toggle tracking
+      const themeToggle = document.getElementById('theme-toggle');
+      if (themeToggle && typeof window.Analytics !== 'undefined') {
+        themeToggle.addEventListener('change', function() {
+          window.Analytics.trackThemeToggle({
+            page: 'JSON Formatter',
+            theme: this.checked ? 'dark' : 'light'
+          });
+        });
+      }
+    });
+  </script>
+
+  <!-- Non-critical scripts: Load asynchronously to avoid render blocking -->
+  
+  <!-- CodeMirror JS: Load with defer (needed for JSON editor) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/javascript/javascript.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/fold/foldcode.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/fold/foldgutter.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/fold/brace-fold.min.js" defer></script>
+  
+  <!-- Logo Loader: Defer loading -->
+  <script src="../assets/js/logo-loader.js" defer></script>
+
+  <!-- Version Tracking Script: Defer loading -->
+  <script src="../assets/js/version.js" defer></script>
+
+  <!-- Analytics Script: Defer loading -->
+  <script src="../assets/js/analytics.js" defer></script>
+
+  <!-- Sentry SDK: Defer loading -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+
+  <!-- Initialize Sentry with version tracking -->
+  <script>
+    // Wait for Sentry and version.js to load
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
+        initSentryTracking();
+      }
+    });
+  </script>
+</body>
+</html>

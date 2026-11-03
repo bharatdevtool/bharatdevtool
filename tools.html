@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Online Developer Tools | JSON, Calculator, QR, Image & More | Bharat Dev Tools</title>
+  <meta name="description" content="Free online developer tools: JSON Formatter, QR Generator, Age Calculator, GST Calculator, Image Compressor, Regex Tester, Base64, URL Encoder & more. No sign-up required.">
+  <meta name="keywords" content="free developer tools, json formatter, qr code generator, age calculator, gst calculator, image compressor, regex tester, base64 encoder, url encoder, password generator, uuid generator, online tools india">
+  <link rel="canonical" href="https://bharatdevtool.com/tools.html">
+  
+  <!-- Social preview -->
+  <meta property="og:title" content="Free Online Developer Tools | JSON, Calculator, QR, Image & More | Bharat Dev Tools">
+  <meta property="og:description" content="Free online developer tools: JSON Formatter, QR Generator, Age Calculator, GST Calculator, Image Compressor, Regex Tester & more. No sign-up required.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/tools.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Bharat Dev Tools - Free Developer Tools Collection">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free Online Developer Tools | JSON, Calculator, QR, Image & More | Bharat Dev Tools">
+  <meta name="twitter:description" content="Free online developer tools: JSON Formatter, QR Generator, Age Calculator, GST Calculator, Image Compressor, Regex Tester & more. No sign-up required.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="components/header.css">
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Tool filter UI styles -->
+  <style>
+    .tool-filter-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    .tool-search-wrapper {
+      position: relative;
+      max-width: 400px;
+    }
+    .tool-search-icon {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.95rem;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+    .tool-search-input {
+      width: 100%;
+      padding: 10px 16px 10px 38px;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      background: white;
+      color: #111827;
+      outline: none;
+      transition: border-color 0.18s, box-shadow 0.18s;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+    .tool-search-input:focus {
+      border-color: #0069ff;
+      box-shadow: 0 0 0 3px rgba(0, 105, 255, 0.08);
+    }
+    [data-theme="dark"] .tool-search-input {
+      background: rgb(31, 41, 55);
+      border-color: rgb(55, 65, 81);
+      color: #e6edf3;
+    }
+    [data-theme="dark"] .tool-search-input:focus {
+      border-color: #7dd3fc;
+      box-shadow: 0 0 0 3px rgba(125, 211, 252, 0.1);
+    }
+    .tool-search-input::placeholder { color: #9ca3af; }
+    .category-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    #categoryFilters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    .category-btn {
+      padding: 6px 18px;
+      border-radius: 20px;
+      border: 1.5px solid #e5e7eb;
+      background: white;
+      color: #374151;
+      font-size: 0.825rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
+      font-family: inherit;
+      line-height: 1.5;
+    }
+    .category-btn:hover {
+      border-color: #0069ff;
+      color: #0069ff;
+      transform: translateY(-1px);
+    }
+    .category-btn.active {
+      background: #0069ff;
+      border-color: #0069ff;
+      color: white;
+    }
+    [data-theme="dark"] .category-btn {
+      background: rgb(31, 41, 55);
+      border-color: rgb(55, 65, 81);
+      color: #d1d5db;
+    }
+    [data-theme="dark"] .category-btn:hover {
+      border-color: #7dd3fc;
+      color: #7dd3fc;
+    }
+    [data-theme="dark"] .category-btn.active {
+      background: #0069ff;
+      border-color: #0069ff;
+      color: white;
+    }
+    .tools-count-label {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      margin-left: 4px;
+      align-self: center;
+    }
+    .tool-category-badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 2px 8px;
+      border-radius: 20px;
+      background: #eff6ff;
+      color: #2563eb;
+      margin-bottom: 10px;
+    }
+    [data-theme="dark"] .tool-category-badge {
+      background: rgba(37, 99, 235, 0.15);
+      color: #7dd3fc;
+    }
+    .tool-hidden { display: none !important; }
+    .tools-no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      color: #9ca3af;
+      font-size: 1rem;
+      display: none;
+    }
+    .tools-no-results.visible { display: block; }
+    .tool-filter-bar ~ .features-grid { margin-top: 0; }
+    @media (prefers-reduced-motion: reduce) {
+      .category-btn { transition: none; }
+    }
+    @media (max-width: 640px) {
+      .tool-search-wrapper { max-width: 100%; }
+    }
+  </style>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ik.imagekit.io/bdt/bdt_logo_v3_16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/bdt/bdt_logo_v3_180.png">
+
+  <!-- Sentry SDK -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+  ></script>
+  
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+  
+  <!-- Version Tracking Script -->
+  <script src="assets/js/version.js"></script>
+  
+  <!-- Analytics Script -->
+  <script src="assets/js/analytics.js"></script>
+  
+  <!-- Theme Management (load early to prevent flash) -->
+  <script src="assets/js/theme.js"></script>
+  
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Our Developer Tools",
+    "description": "Explore all developer tools from Bharat Dev Tools: JSON Formatter, DeepLink Launcher, URL Encoder/Decoder, and QR Code Generator.",
+    "url": "https://bharatdevtool.com/tools.html",
+    "inLanguage": "en",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    }
+  }
+  </script>
+  
+  <!-- BreadcrumbList Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Developer Tools",
+        "item": "https://bharatdevtool.com/tools.html"
+      }
+    ]
+  }
+  </script>
+  
+  <!-- ItemList Schema for Tools Collection -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Bharat Dev Tools Collection",
+    "description": "Free developer tools collection",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "JSON Formatter & Beautifier",
+        "url": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "JSON Comparison & Diff Tool",
+        "url": "https://bharatdevtool.com/jsondiff/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "DeepLink Launcher",
+        "url": "https://bharatdevtool.com/deeplink.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "URL Encoder/Decoder",
+        "url": "https://bharatdevtool.com/url-encoder.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 5,
+        "name": "Base64 Encoder/Decoder",
+        "url": "https://bharatdevtool.com/base64"
+      },
+      {
+        "@type": "ListItem",
+        "position": 6,
+        "name": "QR Code Generator",
+        "url": "https://bharatdevtool.com/qr-generator-free.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 7,
+        "name": "QR Code Decoder",
+        "url": "https://bharatdevtool.com/qr-decoder.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 8,
+        "name": "Regex Tester",
+        "url": "https://bharatdevtool.com/regex-tester.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 9,
+        "name": "Regex Generator",
+        "url": "https://bharatdevtool.com/regex-generator.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 10,
+        "name": "Regex Library",
+        "url": "https://bharatdevtool.com/regex-library.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 11,
+        "name": "Color Picker",
+        "url": "https://bharatdevtool.com/color-picker.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 12,
+        "name": "Gradient Generator",
+        "url": "https://bharatdevtool.com/gradient-generator.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 13,
+        "name": "cURL Tester",
+        "url": "https://bharatdevtool.com/curl-tester.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 14,
+        "name": "cURL Comparison",
+        "url": "https://bharatdevtool.com/curl-comparison.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 15,
+        "name": "Word Counter & Character Counter",
+        "url": "https://bharatdevtool.com/word-counter.html"
+        "name": "UUID Generator",
+        "url": "https://bharatdevtool.com/uuid-generator.html"
+        "name": "WhatsApp Link Generator",
+        "url": "https://bharatdevtool.com/whatsapp-link.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 16,
+        "name": "Text Case Converter",
+        "url": "https://bharatdevtool.com/text-case-converter.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 17,
+        "name": "Password Generator",
+        "url": "https://bharatdevtool.com/password-generator.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 18,
+        "name": "Age Calculator",
+        "url": "https://bharatdevtool.com/age-calculator.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 19,
+        "name": "Suggest Tool",
+        "url": "https://forms.gle/TA7WEhzzQ6csQFGZ7"
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+
+  <main class="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+      <div class="features-container">
+        <h2 class="section-title">Our Developer Tools</h2>
+        <p class="section-subtitle">Free, fast, and secure tools — search or filter by category</p>
+
+        <!-- Tool Filter Bar -->
+        <div class="tool-filter-bar">
+          <div class="tool-search-wrapper">
+            <span class="tool-search-icon" aria-hidden="true">🔍</span>
+            <input
+              type="search"
+              id="toolSearchInput"
+              class="tool-search-input"
+              placeholder="Search tools..."
+              aria-label="Search developer tools"
+              autocomplete="off"
+            />
+          </div>
+          <div class="category-filters" role="group" aria-label="Filter tools by category">
+            <div id="categoryFilters"></div>
+            <span id="toolsCountLabel" class="tools-count-label"></span>
+          </div>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card" data-category="qr" data-tags="qr code barcode generate customize download free">
+            <div class="feature-icon">📱</div>
+            <h3 class="feature-title">QR Code Generator</h3>
+            <p class="feature-description">Generate QR codes from URLs or text. Customize size and download as images. Perfect for sharing links.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>https://example.com</code> → QR code image
+            </div>
+            <div class="feature-actions">
+              <a href="qr-generator-free.html" class="feature-btn">Try QR Generator →</a>
+              <a href="https://www.qrcode.com/en/about/standards.html" target="_blank" rel="noopener noreferrer" class="feature-link">QR Code Standards →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card" data-category="qr" data-tags="qr code decoder scan read upload image extract">
+            <div class="feature-icon">🔍</div>
+            <h3 class="feature-title">QR Code Decoder</h3>
+            <p class="feature-description">Upload QR code images and extract links instantly. Decode QR codes from screenshots or images with launch functionality.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>QR code image</code> → <code>https://example.com</code>
+            </div>
+            <div class="feature-actions">
+              <a href="qr-decoder.html" class="feature-btn">Try QR Decoder →</a>
+              <a href="https://www.qrcode.com/en/about/standards.html" target="_blank" rel="noopener noreferrer" class="feature-link">QR Code Standards →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card" data-category="json" data-tags="json format beautify minify validate repair syntax highlight">
+            <div class="feature-icon">📄</div>
+            <h3 class="feature-title">JSON Formatter</h3>
+            <p class="feature-description">Format, validate, repair, minify, and escape JSON instantly. Supports large files, syntax highlighting, and error detection.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>{"name":"John","age":30}</code> → Formatted JSON with proper indentation
+            </div>
+            <div class="feature-actions">
+              <a href="index.html" class="feature-btn">Try JSON Formatter →</a>
+              <a href="https://www.json.org/json-en.html" target="_blank" rel="noopener noreferrer" class="feature-link">Learn JSON Specification →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="json" data-tags="json diff compare difference side by side keys mismatch">
+            <div class="feature-icon">🧩</div>
+            <h3 class="feature-title">JSON Comparison & Diff</h3>
+            <p class="feature-description">Compare two JSON documents side-by-side. Highlight missing keys, type mismatches, and value differences in structured JSON responses.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>{\"id\":1,\"name\":\"John\"}</code> ⇄ <code>{\"id\":\"1\",\"fullName\":\"John\"}</code> → Type mismatch & missing keys
+            </div>
+            <div class="feature-actions">
+              <a href="jsondiff/" class="feature-btn">Try JSON Diff →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON" target="_blank" rel="noopener noreferrer" class="feature-link">JSON Basics (MDN) →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card" data-category="developer" data-tags="deeplink mobile app android ios launch url scheme test">
+            <div class="feature-icon">🔗</div>
+            <h3 class="feature-title">DeepLink Launcher</h3>
+            <p class="feature-description">Test and launch deep links for Android and iOS apps. Encode, decode, and validate deep link URLs.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>myapp://product/123</code> → Launch mobile app deep links
+            </div>
+            <div class="feature-actions">
+              <a href="deeplink.html" class="feature-btn">Try DeepLink Launcher →</a>
+              <a href="https://developer.android.com/training/app-links" target="_blank" rel="noopener noreferrer" class="feature-link">Android Deep Links →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card" data-category="developer" data-tags="url encode decode percent encoding special characters query string">
+            <div class="feature-icon">🔗</div>
+            <h3 class="feature-title">URL Encoder/Decoder</h3>
+            <p class="feature-description">Encode and decode URLs with percent encoding. Perfect for handling special characters in URLs.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>hello world</code> → <code>hello%20world</code>
+            </div>
+            <div class="feature-actions">
+              <a href="url-encoder.html" class="feature-btn">Try URL Encoder →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent" target="_blank" rel="noopener noreferrer" class="feature-link">URL Encoding Docs →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card" data-category="developer" data-tags="base64 encode decode binary string token api data transmission">
+            <div class="feature-icon">🔐</div>
+            <h3 class="feature-title">Base64 Encoder/Decoder</h3>
+            <p class="feature-description">Encode and decode Base64 strings instantly. Perfect for encoding binary data, API tokens, and data transmission. Supports text, Unicode, and special characters.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>Hello World</code> → <code>SGVsbG8gV29ybGQ=</code>
+            </div>
+            <div class="feature-actions">
+              <a href="base64.html" class="feature-btn">Try Base64 Encoder →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/API/btoa" target="_blank" rel="noopener noreferrer" class="feature-link">Base64 Docs (MDN) →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card" data-category="regex" data-tags="regex regular expression test match debug highlight javascript python">
+            <div class="feature-icon">🔍</div>
+            <h3 class="feature-title">Regex Tester</h3>
+            <p class="feature-description">Test and debug regular expressions in real-time with syntax highlighting, match groups, and performance analysis. Support for JavaScript, Python, Golang, Java, and PCRE.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>/^[a-z]+$/i</code> → Real-time match highlighting and group analysis
+            </div>
+            <div class="feature-actions">
+              <a href="regex-tester.html" class="feature-btn">Try Regex Tester →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions" target="_blank" rel="noopener noreferrer" class="feature-link">Regex Docs (MDN) →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card" data-category="regex" data-tags="regex generate pattern email phone url password date uuid">
+            <div class="feature-icon">⚙️</div>
+            <h3 class="feature-title">Regex Generator</h3>
+            <p class="feature-description">Generate regular expressions for email, phone, URL, username, password, date, UUID and custom patterns. AI-like rule builder with human-readable explanations.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>Email pattern</code> → <code>^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$</code>
+            </div>
+            <div class="feature-actions">
+              <a href="regex-generator.html" class="feature-btn">Try Regex Generator →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions" target="_blank" rel="noopener noreferrer" class="feature-link">Regex Docs (MDN) →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card" data-category="regex" data-tags="regex library patterns templates common email phone credit card copy ready">
+            <div class="feature-icon">📚</div>
+            <h3 class="feature-title">Regex Library</h3>
+            <p class="feature-description">Browse ready-to-use regex patterns for common use cases. Email, phone, password, URL, date, credit card, and more. Copy and use instantly.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>Email validation</code> → <code>^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$</code>
+            </div>
+            <div class="feature-actions">
+              <a href="regex-library.html" class="feature-btn">Try Regex Library →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions" target="_blank" rel="noopener noreferrer" class="feature-link">Regex Docs (MDN) →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card" data-category="design" data-tags="color picker hex rgb hsl oklch palette contrast css variables designer">
+            <div class="feature-icon">🎨</div>
+            <h3 class="feature-title">Color Picker</h3>
+            <p class="feature-description">Pick colors, convert between HEX, RGB, HSL formats. Generate color palettes, check contrast ratios, and export CSS variables. Perfect for developers and designers.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>#FF5733</code> → <code>rgb(255, 87, 51)</code> → <code>hsl(9, 100%, 60%)</code>
+            </div>
+            <div class="feature-actions">
+              <a href="color-picker.html" class="feature-btn">Try Color Picker →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value" target="_blank" rel="noopener noreferrer" class="feature-link">CSS Colors (MDN) →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card" data-category="design" data-tags="gradient css linear radial conic background tailwind export design">
+            <div class="feature-icon">🌈</div>
+            <h3 class="feature-title">Gradient Generator</h3>
+            <p class="feature-description">Create beautiful linear, radial, and conic gradients. Export CSS code and Tailwind config. Perfect for modern web design and UI development.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>linear-gradient(45deg, #FF5733, #4A00E0)</code> → Beautiful gradient background
+            </div>
+            <div class="feature-actions">
+              <a href="gradient-generator.html" class="feature-btn">Try Gradient Generator →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/gradient" target="_blank" rel="noopener noreferrer" class="feature-link">CSS Gradients (MDN) →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card" data-category="developer" data-tags="curl api test request http headers response local browser">
+            <div class="feature-icon">🔗</div>
+            <h3 class="feature-title">cURL Tester</h3>
+            <p class="feature-description">Test cURL commands online. Parse, beautify, and execute API requests. View responses with syntax highlighting, analyze headers, measure performance, and get security suggestions. All processing happens locally in your browser.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>curl -X POST https://api.example.com/users -H 'Content-Type: application/json' -d '{"name":"John"}'</code> → Execute and view response
+            </div>
+            <div class="feature-actions">
+              <a href="curl-tester.html" class="feature-btn">Try cURL Tester →</a>
+              <a href="https://curl.se/docs/manual.html" target="_blank" rel="noopener noreferrer" class="feature-link">cURL Documentation →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card" data-category="developer" data-tags="curl compare diff api regression staging production headers body">
+            <div class="feature-icon">🔍</div>
+            <h3 class="feature-title">cURL Comparison</h3>
+            <p class="feature-description">Compare two cURL commands side-by-side. Detect differences in URLs, headers, query parameters, and request bodies. Perfect for API regression checking, debugging prod vs staging, and finding header/body mistakes. All comparisons run locally in your browser.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>curl A</code> ⇄ <code>curl B</code> → Highlight differences in method, URL, headers, and body
+            </div>
+            <div class="feature-actions">
+              <a href="curl-comparison.html" class="feature-btn">Try cURL Comparison →</a>
+              <a href="https://curl.se/docs/manual.html" target="_blank" rel="noopener noreferrer" class="feature-link">cURL Documentation →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card" data-category="text" data-tags="word counter character counter letter count words sentences paragraphs reading time text analyzer">
+            <div class="feature-icon">📝</div>
+            <h3 class="feature-title">Word &amp; Character Counter</h3>
+            <p class="feature-description">Count words, characters, sentences, and paragraphs instantly. Get reading time estimates and top word frequency analysis. Free, private — all processing happens in your browser.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>"The quick brown fox jumps"</code> → <code>5 words, 25 chars, ~2s read</code>
+            </div>
+            <div class="feature-actions">
+              <a href="word-counter.html" class="feature-btn">Try Word Counter →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" target="_blank" rel="noopener noreferrer" class="feature-link">JS String Docs →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="security" data-tags="password generator random secure strong password creator complex safe free online">
+            <div class="feature-icon">🔑</div>
+            <h3 class="feature-title">Password Generator</h3>
+            <p class="feature-description">Generate strong, secure, random passwords instantly. Choose length (4–64 chars), character types (uppercase, lowercase, numbers, symbols), and advanced options like excluding ambiguous characters. Bulk-generate up to 50 passwords at once. Runs 100% in your browser — nothing sent to any server.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>Length: 16, All types</code> → <code>kR7#mQz2!vXpL9@w</code>
+            </div>
+            <div class="feature-actions">
+              <a href="password-generator.html" class="feature-btn">Try Password Generator →</a>
+              <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html" target="_blank" rel="noopener noreferrer" class="feature-link">OWASP Password Guide →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="calculator" data-tags="age calculator calculate age date of birth exact age years months days birthday how old">
+            <div class="feature-icon">🎂</div>
+            <h3 class="feature-title">Age Calculator</h3>
+            <p class="feature-description">Calculate your exact age in years, months, and days from your date of birth. Also shows total days, weeks, hours, minutes, and next birthday countdown. Free and works offline.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>01 Jan 1990</code> → <code>36 years, 4 months, 5 days</code>
+            </div>
+            <div class="feature-actions">
+              <a href="age-calculator.html" class="feature-btn">Try Age Calculator →</a>
+              <a href="https://en.wikipedia.org/wiki/Age_calculator" target="_blank" rel="noopener noreferrer" class="feature-link">About Age Calculation →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="text" data-tags="text case converter uppercase lowercase title case camelcase pascalcase snake_case kebab-case constant_case sentence case alternating inverse slug">
+            <div class="feature-icon">🔡</div>
+            <h3 class="feature-title">Text Case Converter</h3>
+            <p class="feature-description">Convert text to UPPERCASE, lowercase, Title Case, Sentence case, camelCase, PascalCase, snake_case, kebab-case and more — instantly in your browser. Free, no sign-up required.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>hello world</code> → <code>helloWorld</code> / <code>HelloWorld</code> / <code>hello_world</code>
+            </div>
+            <div class="feature-actions">
+              <a href="text-case-converter.html" class="feature-btn">Try Text Case Converter →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase" target="_blank" rel="noopener noreferrer" class="feature-link">String Docs (MDN) →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="developer" data-tags="uuid generator generate uuid v4 v1 v7 unique id guid random bulk validate developer">
+            <div class="feature-icon">🔑</div>
+            <h3 class="feature-title">UUID Generator</h3>
+            <p class="feature-description">Generate UUID v1, v4, and v7 instantly. Bulk generate up to 100 UUIDs at once, validate existing UUIDs, and copy with one click. Supports standard, uppercase, no-hyphens, and braces formats. All generation runs locally in your browser — no data sent to any server.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>v4 × 5</code> → <code>550e8400-e29b-41d4-a716-446655440000 …</code>
+            </div>
+            <div class="feature-actions">
+              <a href="uuid-generator.html" class="feature-btn">Try UUID Generator →</a>
+              <a href="https://www.rfc-editor.org/rfc/rfc9562" target="_blank" rel="noopener noreferrer" class="feature-link">UUID RFC 9562 →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="utility" data-tags="whatsapp link generator wa.me click to chat india message url free">
+            <div class="feature-icon">💬</div>
+            <h3 class="feature-title">WhatsApp Link Generator</h3>
+            <p class="feature-description">Generate free wa.me click-to-chat links instantly. Enter a phone number and optional pre-filled message to create a shareable WhatsApp link — no number saving required. Works for India (+91) and all countries.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>+91 9876543210 + "Hello!"</code> → <code>https://wa.me/919876543210?text=Hello!</code>
+            </div>
+            <div class="feature-actions">
+              <a href="whatsapp-link.html" class="feature-btn">Try WhatsApp Link Generator →</a>
+              <a href="https://faq.whatsapp.com/5913398998672934" target="_blank" rel="noopener noreferrer" class="feature-link">WhatsApp Link Docs →</a>
+            </div>
+          </div>
+
+          <div class="tools-no-results" id="toolsNoResults" role="status" aria-live="polite">
+            No tools matched your search. Try a different keyword or category.
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">💡</div>
+            <h3 class="feature-title">Suggest Tool</h3>
+            <p class="feature-description">Have an idea for a new developer tool? Share your suggestions with us. We'd love to hear what tools would be most helpful for your workflow.</p>
+            <div class="feature-example">
+              <strong>Help us improve:</strong>
+              Share your ideas and feedback to help us build better tools for developers.
+            </div>
+            <div class="feature-actions">
+              <a href="https://forms.gle/TA7WEhzzQ6csQFGZ7" target="_blank" rel="noopener noreferrer" class="feature-btn">Suggest a Tool →</a>
+            </div>
+          </div>
+
+          <div class="tools-no-results" id="toolsNoResults" role="status" aria-live="polite">
+            No tools matched your search. Try a different keyword or category.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Header Component Script (load after body exists) -->
+  <script src="components/header.js"></script>
+
+  <!-- Footer Component -->
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+
+  <!-- Initialize Sentry with version tracking -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
+        initSentryTracking();
+      }
+      
+      // Set Sentry context for this page
+      if (typeof Sentry !== 'undefined') {
+        Sentry.setContext('page', {
+          name: 'Our Developer Tools',
+          url: window.location.href
+        });
+      }
+      
+      // Track feature card button clicks (Try buttons)
+      const featureButtons = document.querySelectorAll('.feature-btn');
+      featureButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+          if (typeof window.Analytics !== 'undefined') {
+            const toolName = this.textContent.trim().replace('Try ', '').replace(' →', '');
+            window.Analytics.track('feature_card_button_click', {
+              page: 'Our Developer Tools',
+              tool_name: toolName,
+              button_text: this.textContent.trim(),
+              destination_url: this.href
+            });
+          }
+        });
+      });
+      
+      // Track feature card link clicks (documentation links)
+      const featureLinks = document.querySelectorAll('.feature-link');
+      featureLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          if (typeof window.Analytics !== 'undefined') {
+            const linkText = this.textContent.trim();
+            window.Analytics.track('feature_card_link_click', {
+              page: 'Our Developer Tools',
+              link_text: linkText,
+              destination_url: this.href,
+              is_external: this.target === '_blank'
+            });
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- Tool filter: search + category -->
+  <script>
+    (function initToolFilter() {
+      const CATEGORY_LABELS = {
+        json: 'JSON',
+        qr: 'QR Codes',
+        developer: 'Developer',
+        regex: 'Regex',
+        design: 'Design',
+        calculator: 'Calculator',
+        text: 'Text',
+        image: 'Image',
+        security: 'Security',
+        utility: 'Utility',
+      };
+
+      let activeCategory = 'all';
+      let searchQuery = '';
+
+      function debounce(fn, delay) {
+        let timer;
+        return function(...args) {
+          clearTimeout(timer);
+          timer = setTimeout(() => fn.apply(this, args), delay);
+        };
+      }
+
+      function getFilterableCards() {
+        return Array.from(document.querySelectorAll('.feature-card[data-category]'));
+      }
+
+      function getPresentCategories(cards) {
+        return [...new Set(cards.map(c => c.dataset.category))];
+      }
+
+      function buildCategoryButton(cat, label, isActive) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'category-btn' + (isActive ? ' active' : '');
+        btn.textContent = label;
+        btn.dataset.category = cat;
+        btn.addEventListener('click', () => handleCategoryClick(cat));
+        return btn;
+      }
+
+      function buildCategoryButtons(cards) {
+        const container = document.getElementById('categoryFilters');
+        if (!container) return;
+        container.innerHTML = '';
+
+        container.appendChild(buildCategoryButton('all', 'All Tools', true));
+
+        getPresentCategories(cards).forEach(cat => {
+          const label = CATEGORY_LABELS[cat] || cat;
+          container.appendChild(buildCategoryButton(cat, label, false));
+        });
+      }
+
+      function cardMatchesFilters(card) {
+        const matchesCategory = activeCategory === 'all' || card.dataset.category === activeCategory;
+        if (!matchesCategory) return false;
+        if (!searchQuery) return true;
+
+        const title = (card.querySelector('.feature-title')?.textContent || '').toLowerCase();
+        const desc = (card.querySelector('.feature-description')?.textContent || '').toLowerCase();
+        const tags = (card.dataset.tags || '').toLowerCase();
+        return title.includes(searchQuery) || desc.includes(searchQuery) || tags.includes(searchQuery);
+      }
+
+      function applyFilters(cards) {
+        let visibleCount = 0;
+        cards.forEach(card => {
+          const isVisible = cardMatchesFilters(card);
+          card.classList.toggle('tool-hidden', !isVisible);
+          if (isVisible) visibleCount++;
+        });
+
+        const noResultsEl = document.getElementById('toolsNoResults');
+        if (noResultsEl) noResultsEl.classList.toggle('visible', visibleCount === 0);
+
+        const countEl = document.getElementById('toolsCountLabel');
+        if (countEl) {
+          const total = cards.length;
+          const isFiltered = activeCategory !== 'all' || searchQuery;
+          countEl.textContent = isFiltered ? `Showing ${visibleCount} of ${total}` : `${total} tools`;
+        }
+      }
+
+      function handleCategoryClick(cat) {
+        activeCategory = cat;
+        document.querySelectorAll('.category-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.category === cat);
+        });
+        const cards = getFilterableCards();
+        applyFilters(cards);
+
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('tools_page_category_filter', {
+            page: 'Our Developer Tools',
+            category: cat,
+          });
+        }
+      }
+
+      function handleSearchInput(query) {
+        searchQuery = query.trim().toLowerCase();
+        applyFilters(getFilterableCards());
+
+        if (searchQuery.length >= 2 && typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('tools_page_search', {
+            page: 'Our Developer Tools',
+            query: searchQuery,
+            active_category: activeCategory,
+          });
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        const cards = getFilterableCards();
+        buildCategoryButtons(cards);
+        applyFilters(cards);
+
+        const searchInput = document.getElementById('toolSearchInput');
+        if (searchInput) {
+          searchInput.addEventListener('input', debounce(e => handleSearchInput(e.target.value), 200));
+          searchInput.addEventListener('search', e => handleSearchInput(e.target.value));
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>

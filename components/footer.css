@@ -1,0 +1,62 @@
+/* Footer Component - Exact copy from original home page */
+footer.site-footer { 
+  padding: 32px 16px 40px; 
+  color: var(--fg); 
+  border-top: 1px solid rgba(0,0,0,0.08); 
+  background: transparent; 
+}
+
+.site-footer .footer-hero { 
+  text-align: center; 
+  margin-bottom: 16px; 
+}
+
+.site-footer .footer-hero h2 { 
+  margin: 0 0 8px; 
+  font-size: 28px; 
+}
+
+.site-footer .footer-hero p { 
+  margin: 0; 
+  color: var(--muted); 
+}
+
+.site-footer .footer-meta { 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  gap: 12px; 
+  flex-wrap: wrap; 
+  margin-top: 12px; 
+}
+
+.site-footer .made-in { 
+  margin: 0 12px 0 0; 
+  color: var(--muted); 
+}
+
+.site-footer .footer-links { 
+  display: inline-flex; 
+  gap: 12px; 
+  align-items: center; 
+}
+
+.site-footer .footer-links a { 
+  color: var(--fg); 
+  text-decoration: none; 
+}
+
+.site-footer .footer-links a:hover { 
+  text-decoration: underline; 
+}
+
+.site-footer .sep { 
+  color: var(--muted); 
+}
+
+.site-footer .footer-copy { 
+  text-align: center; 
+  margin-top: 10px; 
+  color: var(--muted); 
+  font-size: 13px; 
+}
