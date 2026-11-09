@@ -234,39 +234,6 @@
 
   <!-- Header actions on the right -->
   <div class="header-actions" role="group" aria-label="Quick actions">
-    <!-- DeepLink Launcher Entry Point -->
-    <div class="deeplink-launcher">
-      <a href="../deeplink.html" class="deeplink-btn" title="DeepLink Launcher">
-        <span class="deeplink-icon">🔗</span>
-        <div class="deeplink-label">
-          <span>DeepLink</span>
-          <span>Launcher</span>
-        </div>
-      </a>
-    </div>
-    <span class="v-sep" aria-hidden="true"></span>
-    <!-- Url Encoder/Decoder Entry Point -->
-    <div class="url-encoder-launcher">
-      <a href="../url-encoder.html" class="url-encoder-btn" title="Url Encoder/Decoder">
-        <span class="url-encoder-icon">🔗</span>
-        <div class="url-encoder-label">
-          <span>Url</span>
-          <span>Encoder</span>
-        </div>
-      </a>
-    </div>
-    <span class="v-sep" aria-hidden="true"></span>
-    <!-- QR Code Generator Entry Point -->
-    <div class="qr-generator">
-      <a href="../qr-generator-free.html" class="qr-btn" title="QR Code Generator">
-        <span class="qr-icon">📱</span>
-        <div class="qr-label">
-          <span>QR</span>
-          <span>Generator</span>
-        </div>
-      </a>
-    </div>
-    <span class="v-sep" aria-hidden="true"></span>
     <!-- All Tools Link -->
     <div class="tools-link">
       <a href="tools.html" class="tools-btn" title="All Tools">
@@ -616,36 +583,6 @@
           });
         }
       });
-      
-      // Deeplink launcher button tracking
-      const deeplinkBtn = document.querySelector('.deeplink-btn');
-      if (deeplinkBtn && typeof window.Analytics !== 'undefined') {
-        deeplinkBtn.addEventListener('click', function() {
-          window.Analytics.trackButtonClickDeeplinkLauncher({
-            page: 'JSON Formatter'
-          });
-        });
-      }
-      
-      // Url encoder button tracking
-      const urlEncoderBtn = document.querySelector('.url-encoder-btn');
-      if (urlEncoderBtn && typeof window.Analytics !== 'undefined') {
-        urlEncoderBtn.addEventListener('click', function() {
-          window.Analytics.trackButtonClickUrlEncoder({
-            page: 'JSON Formatter'
-          });
-        });
-      }
-      
-      // QR generator button tracking
-      const qrBtn = document.querySelector('.qr-btn');
-      if (qrBtn && typeof window.Analytics !== 'undefined') {
-        qrBtn.addEventListener('click', function() {
-          window.Analytics.trackButtonClickQrGenerator({
-            page: 'JSON Formatter'
-          });
-        });
-      }
       
       // Bookmark button tracking
       const bookmarkBtn = document.getElementById('bookmark-btn');

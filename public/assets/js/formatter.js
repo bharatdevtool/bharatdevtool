@@ -1,34 +1,11 @@
 // formatter.js
 
-// Helper function to log errors to Sentry
-function logErrorToSentry(error, context = {}) {
-  if (typeof Sentry !== 'undefined' && typeof Sentry.captureException === 'function') {
-    try {
-      Sentry.captureException(error, {
-        tags: {
-          operation: 'json_formatting',
-          ...context.tags
-        },
-        extra: {
-          errorType: error.name,
-          errorMessage: error.message,
-          ...context.extra
-        }
-      });
-    } catch (sentryErr) {
-      // Fail silently if Sentry is not available
-    }
-  }
-}
 
 export function formatJSON(text) {
   try {
     return JSON.stringify(JSON.parse(text), null, 2);
   } catch (err) {
-    logErrorToSentry(err, {
-      tags: { function: 'formatJSON' },
-      extra: { inputLength: text.length, inputPreview: text.substring(0, 100) }
-    });
+    // Invalid input is expected, not an app bug: never report it (or the text) to Sentry.
     throw new Error("Invalid JSON: " + err.message);
   }
 }
@@ -37,10 +14,6 @@ export function minifyJSON(text) {
   try {
     return JSON.stringify(JSON.parse(text));
   } catch (err) {
-    logErrorToSentry(err, {
-      tags: { function: 'minifyJSON' },
-      extra: { inputLength: text.length, inputPreview: text.substring(0, 100) }
-    });
     throw new Error("Invalid JSON: " + err.message);
   }
 }
@@ -64,15 +37,18 @@ export function escapeJSONString(text) {
 }
 
 export function unescapeJSONString(text) {
+  // A whole JSON string literal, e.g. "{\"a\":1}" copied from a log: return its content.
+  const trimmed = text.trim();
+  if (trimmed.length >= 2 && trimmed[0] === '"' && trimmed[trimmed.length - 1] === '"') {
+    try {
+      const value = JSON.parse(trimmed);
+      if (typeof value === 'string') return value;
+    } catch (e) { /* not a single literal; fall through */ }
+  }
   try {
-    // Safest way: wrap in quotes and JSON.parse
+    // Escaped text without surrounding quotes: wrap in quotes and JSON.parse
     return JSON.parse('"' + text.replace(/"/g, '\\"') + '"');
   } catch (err) {
-    // Log error for debugging
-    logErrorToSentry(err, {
-      tags: { function: 'unescapeJSONString' },
-      extra: { inputLength: text.length, inputPreview: text.substring(0, 100) }
-    });
     // Fallback basic replacements
     return text
       .replace(/\\n/g, "\n")
@@ -189,16 +165,6 @@ export function repairJSON(text) {
       const obj = JSON.parse(wrapped);
       return JSON.stringify(obj, null, 2);
     } catch (innerErr) {
-      // Log the repair failure
-      logErrorToSentry(innerErr, {
-        tags: { function: 'repairJSON', stage: 'final_repair_attempt' },
-        extra: { 
-          originalError: err.message,
-          inputLength: text.length,
-          inputPreview: text.substring(0, 200),
-          repairAttempt: t.substring(0, 200)
-        }
-      });
       throw new Error("Could not repair JSON: " + err.message);
     }
   }

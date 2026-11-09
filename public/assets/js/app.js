@@ -452,12 +452,13 @@ function updateOutputStatus() {
 function formatHandler() {
   const src = inputEditor.getValue();
   if (src.trim().length === 0) {
-    document.getElementById("input-error").textContent = "Empty input";
     outputEditor.setValue(defaultGreetingJSON());
     updateValidity();
     updateOutputStatus();
     updateOutputValidity();
     updateOutputFileSizeIndicator();
+    // Set after the updates above: updateValidity() clears this line for empty input.
+    document.getElementById("input-error").textContent = "Paste or upload JSON first";
     return;
   }
   
@@ -485,19 +486,7 @@ function formatHandler() {
     });
   }
   
-  // Performance safeguard for large files
   const fileSize = src.length;
-  const maxSize = 2 * 1024 * 1024; // 2MB limit for format (more restrictive due to styling)
-  
-  if (fileSize > maxSize) {
-    const shouldContinue = confirm(
-      `Large file detected (${(fileSize / 1024 / 1024).toFixed(1)}MB). ` +
-      `Formatting with styling may be very slow. Continue?`
-    );
-    if (!shouldContinue) {
-      return;
-    }
-  }
   
   // Show processing indicator for large files
   if (fileSize > 512 * 1024) { // 512KB
@@ -517,15 +506,13 @@ function formatHandler() {
     
     // Switch back to JSON mode for format
     outputEditor.setOption("mode", "application/json");
-    outputEditor.clearOverlays();
+    setPlainTextOverlay(false);
     
     // Add URL handlers after formatting (with timeout for large files)
     const timeoutDelay = fileSize > 1024 * 1024 ? 500 : 100;
     setTimeout(() => {
       try {
-        addUrlClickHandlers();
-        applyEscapeStyling();
-        addColorPreviews();
+        decorateEditors();
         updateOutputFileSizeIndicator();
         updateOutputStatus();
         updateOutputValidity();
@@ -548,33 +535,18 @@ function formatHandler() {
     updateValidity();
     // Add URL handlers after repair
     setTimeout(() => {
-      addUrlClickHandlers();
-      applyEscapeStyling();
-      addColorPreviews();
+      decorateEditors();
       updateOutputFileSizeIndicator();
       updateOutputStatus();
       updateOutputValidity();
     }, 100);
   } catch (err) {
-    // Report JSON formatting errors to Sentry (guarded)
-    if (typeof Sentry !== 'undefined' && typeof Sentry.captureException === 'function') {
-      Sentry.captureException(err, {
-        tags: {
-          operation: 'json_format',
-          fileSize: src.length
-        },
-        extra: {
-          inputPreview: src.substring(0, 200) + (src.length > 200 ? '...' : ''),
-          errorMessage: err.message
-        }
-      });
-    }
     
     // Track format failure in analytics
     if (typeof window.Analytics !== 'undefined') {
       window.Analytics.trackFormatFailed({
         page: window.getCurrentPageNameForAnalytics ? window.getCurrentPageNameForAnalytics() : 'JSON Formatter',
-        error_message: err.message,
+        error_message: 'invalid_json', // never the error text: it quotes the user's input
         file_size: src.length,
         lines_before_format: src.split("\n").length
       });
@@ -592,12 +564,13 @@ function formatHandler() {
 function minifyHandler() {
   const src = inputEditor.getValue();
   if (src.trim().length === 0) {
-    document.getElementById("input-error").textContent = "Empty input";
     outputEditor.setValue(defaultGreetingJSON());
     updateValidity();
     updateOutputStatus();
     updateOutputValidity();
     updateOutputFileSizeIndicator();
+    // Set after the updates above: updateValidity() clears this line for empty input.
+    document.getElementById("input-error").textContent = "Paste or upload JSON first";
     return;
   }
   
@@ -635,12 +608,7 @@ function minifyHandler() {
     outputEditor.setValue(minified);
     
     // Apply plain text styling (single green color)
-    outputEditor.addOverlay({
-      token: function(stream) {
-        stream.skipToEnd();
-        return "plain-text";
-      }
-    });
+    setPlainTextOverlay(true);
     
     updateValidity();
     updateOutputFileSizeIndicator();
@@ -648,25 +616,12 @@ function minifyHandler() {
     updateOutputValidity();
     document.getElementById("input-error").textContent = "";
   } catch (err) {
-    // Report minification errors to Sentry (guarded)
-    if (typeof Sentry !== 'undefined' && typeof Sentry.captureException === 'function') {
-      Sentry.captureException(err, {
-        tags: {
-          operation: 'json_minify',
-          fileSize: src.length
-        },
-        extra: {
-          inputPreview: src.substring(0, 200) + (src.length > 200 ? '...' : ''),
-          errorMessage: err.message
-        }
-      });
-    }
     
     // Track minify failure in analytics
     if (typeof window.Analytics !== 'undefined') {
       window.Analytics.trackMinifyFailed({
         page: window.getCurrentPageNameForAnalytics ? window.getCurrentPageNameForAnalytics() : 'JSON Formatter',
-        error_message: err.message,
+        error_message: 'invalid_json',
         file_size: src.length
       });
     }
@@ -685,11 +640,12 @@ function minifyHandler() {
 function escapeHandler() {
   const text = inputEditor.getValue();
   if (text.trim().length === 0) {
-    document.getElementById("input-error").textContent = "Empty input";
     outputEditor.setValue(defaultGreetingJSON());
     updateOutputStatus();
     updateOutputValidity();
     updateOutputFileSizeIndicator();
+    // Set after the updates above: updateValidity() clears this line for empty input.
+    document.getElementById("input-error").textContent = "Paste or upload JSON first";
     return;
   }
   
@@ -727,12 +683,7 @@ function escapeHandler() {
     outputEditor.setValue(escaped);
     
     // Apply plain text styling (single green color)
-    outputEditor.addOverlay({
-      token: function(stream) {
-        stream.skipToEnd();
-        return "plain-text";
-      }
-    });
+    setPlainTextOverlay(true);
     
     document.getElementById("input-error").textContent = "";
     updateOutputFileSizeIndicator();
@@ -743,7 +694,7 @@ function escapeHandler() {
     if (typeof window.Analytics !== 'undefined') {
       window.Analytics.trackEscapeFailed({
         page: window.getCurrentPageNameForAnalytics ? window.getCurrentPageNameForAnalytics() : 'JSON Formatter',
-        error_message: err.message
+        error_message: 'escape_failed'
       });
     }
     
@@ -758,11 +709,12 @@ function escapeHandler() {
 function unescapeHandler() {
   const text = inputEditor.getValue();
   if (text.trim().length === 0) {
-    document.getElementById("input-error").textContent = "Empty input";
     outputEditor.setValue(defaultGreetingJSON());
     updateOutputStatus();
     updateOutputValidity();
     updateOutputFileSizeIndicator();
+    // Set after the updates above: updateValidity() clears this line for empty input.
+    document.getElementById("input-error").textContent = "Paste or upload JSON first";
     return;
   }
   
@@ -794,18 +746,20 @@ function unescapeHandler() {
   
   try {
     const unescaped = unescapeJSONString(text);
-    
-    // Switch to plain text mode for unescape
-    outputEditor.setOption("mode", null);
-    outputEditor.setValue(unescaped);
-    
-    // Apply plain text styling (single green color)
-    outputEditor.addOverlay({
-      token: function(stream) {
-        stream.skipToEnd();
-        return "plain-text";
-      }
-    });
+
+    if (isValidJSON(unescaped)) {
+      // Escaped JSON (e.g. copied from a log): show it as formatted JSON.
+      setPlainTextOverlay(false);
+      outputEditor.setOption("mode", "application/json");
+      outputEditor.setValue(formatJSON(unescaped));
+    } else {
+      // Switch to plain text mode for unescape
+      outputEditor.setOption("mode", null);
+      outputEditor.setValue(unescaped);
+
+      // Apply plain text styling (single green color)
+      setPlainTextOverlay(true);
+    }
     
     document.getElementById("input-error").textContent = "";
     updateOutputFileSizeIndicator();
@@ -816,7 +770,7 @@ function unescapeHandler() {
     if (typeof window.Analytics !== 'undefined') {
       window.Analytics.trackUnescapeFailed({
         page: window.getCurrentPageNameForAnalytics ? window.getCurrentPageNameForAnalytics() : 'JSON Formatter',
-        error_message: err.message
+        error_message: 'unescape_failed'
       });
     }
     
@@ -1052,17 +1006,39 @@ function isUrl(text) {
   return false;
 }
 
-function addUrlClickHandlers() {
-  // Add click handlers to both editors
+// Plain-text overlay used for minified/escaped/unescaped output. CodeMirror
+// only removes an overlay given the same object, so keep a single instance.
+const PLAIN_TEXT_OVERLAY = {
+  token(stream) {
+    stream.skipToEnd();
+    return "plain-text";
+  }
+};
+
+function setPlainTextOverlay(on) {
+  outputEditor.removeOverlay(PLAIN_TEXT_OVERLAY);
+  if (on) outputEditor.addOverlay(PLAIN_TEXT_OVERLAY);
+}
+
+// Decorations (clickable URLs, orange escape sequences, colour swatches) are
+// cosmetic and touch every line, so: batch them in one CodeMirror operation,
+// clear the previous ones first, and skip them on very large documents.
+const DECORATION_MAX_LINES = 5000;
+const DECORATION_MAX_CHARS = 200 * 1024; // e.g. one huge minified line
+const DECORATION_CLASSES = /\bcm-(url|escape|escape-orange|unicode|unicode-orange)\b/;
+
+function decorateEditors() {
   [inputEditor, outputEditor].forEach(editor => {
     if (!editor) return;
-    
-    // Remove existing listeners
     editor.off('mousedown', handleUrlClick);
     editor.on('mousedown', handleUrlClick);
-    
-    // Mark URL strings with data attribute
-    markUrlStrings(editor);
+    editor.operation(() => {
+      editor.getAllMarks().forEach(m => { if (m.className && DECORATION_CLASSES.test(m.className)) m.clear(); });
+      editor.clearGutter('CodeMirror-linenumbers');
+      if (editor.lineCount() > DECORATION_MAX_LINES || editor.getValue().length > DECORATION_MAX_CHARS) return;
+      markUrlStrings(editor);       // also marks escape and unicode sequences
+      addColorPreviewsTo(editor);
+    });
   });
 }
 
@@ -1149,96 +1125,15 @@ function handleUrlClick(cm, event) {
 }
 
 // Apply escape sequence styling directly to DOM elements
-function applyEscapeStyling() {
-  [inputEditor, outputEditor].forEach(editor => {
-    if (!editor) return;
-    
-    // Get all lines in the editor
-    const lineCount = editor.lineCount();
-    
-    for (let i = 0; i < lineCount; i++) {
-      const line = editor.getLine(i);
-      if (line) {
-        // Find escape sequences in this line
-        const escapeRegex = /\\[\\"\/bfnrt]/g;
-        let match;
-        while ((match = escapeRegex.exec(line)) !== null) {
-          const startPos = match.index;
-          const endPos = startPos + match[0].length;
-          
-          // Mark the text with orange color
-          editor.markText(
-            { line: i, ch: startPos },
-            { line: i, ch: endPos },
-            { 
-              className: 'cm-escape-orange',
-              css: 'color: #f59e0b !important; background: transparent !important;'
-            }
-          );
-        }
-        
-        // Find unicode escape sequences
-        const unicodeRegex = /\\u[0-9a-fA-F]{4}/g;
-        while ((match = unicodeRegex.exec(line)) !== null) {
-          const startPos = match.index;
-          const endPos = startPos + match[0].length;
-          
-          // Mark the text with orange color
-          editor.markText(
-            { line: i, ch: startPos },
-            { line: i, ch: endPos },
-            { 
-              className: 'cm-unicode-orange',
-              css: 'color: #f59e0b !important; background: transparent !important;'
-            }
-          );
-        }
-      }
-    }
-  });
-}
-
-// Add color preview for hex color codes
-function addColorPreviews() {
-  [inputEditor, outputEditor].forEach(editor => {
-    if (!editor) return;
-    
-    // Clear existing color previews
-    clearColorPreviews(editor);
-    
-    const lineCount = editor.lineCount();
-    for (let i = 0; i < lineCount; i++) {
-      const line = editor.getLine(i);
-      if (line) {
-        // Find hex color codes in the line - prioritize longer matches first
-        const hexRegex = /#([0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b/g;
-        let match;
-        let firstColor = null;
-        
-        while ((match = hexRegex.exec(line)) !== null) {
-          if (!firstColor) {
-            // match[0] is the full match including #
-            firstColor = match[0];
-          }
-        }
-        
-        if (firstColor) {
-          // Add color preview to this line
-          addColorPreviewToLine(editor, i, firstColor);
-        }
-      }
-    }
-  });
-}
-
-function clearColorPreviews(editor) {
-  // Clear all gutter markers for color previews more efficiently
+function addColorPreviewsTo(editor) {
   const lineCount = editor.lineCount();
+  const hexRegex = /#([0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b/;
   for (let i = 0; i < lineCount; i++) {
-    // Use the correct CodeMirror API to clear gutter markers
-    editor.setGutterMarker(i, 'CodeMirror-linenumbers', null);
+    const match = hexRegex.exec(editor.getLine(i) || '');
+    if (match) addColorPreviewToLine(editor, i, match[0]);
   }
 }
+
 
 function addColorPreviewToLine(editor, lineNumber, hexColor) {
   // Replace the line number with color preview
