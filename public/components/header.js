@@ -1,3 +1,15 @@
+// Track tool visit for returning user routing
+(function () {
+  try {
+    var maxAge = 31536000; // 1 year
+    document.cookie = 'bdt_visited=1;path=/;max-age=' + maxAge + ';SameSite=Lax';
+    var p = window.location.pathname;
+    if (p.indexOf('tools.html') === -1 && p.indexOf('privacy.html') === -1 && p.indexOf('feedback.html') === -1 && p.indexOf('about.html') === -1) {
+      document.cookie = 'bdt_last_tool=' + encodeURIComponent(p) + ';path=/;max-age=' + maxAge + ';SameSite=Lax';
+    }
+  } catch (e) {}
+})();
+
 // Header Component JavaScript for Secondary Pages (using Tailwind CSS)
 function createSecondaryHeader() {
   // Remove any existing headers (hardcoded or previously created) to avoid duplicates

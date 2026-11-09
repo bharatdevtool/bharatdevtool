@@ -35,6 +35,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: `(function(){try{var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);if(t==='dark')document.documentElement.classList.add('dark');else document.documentElement.classList.remove('dark');}catch(e){}})();`,
           }}
         />
+        {/* Track tool visit for returning user routing */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var p=window.location.pathname;var m=31536000;document.cookie='bdt_visited=1;path=/;max-age='+m+';SameSite=Lax';if(p.indexOf('tools.html')===-1&&p.indexOf('privacy.html')===-1&&p.indexOf('feedback.html')===-1&&p.indexOf('about.html')===-1)document.cookie='bdt_last_tool='+encodeURIComponent(p)+';path=/;max-age='+m+';SameSite=Lax';}catch(e){}})();`,
+          }}
+        />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <Header />
