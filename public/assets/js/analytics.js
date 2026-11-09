@@ -502,6 +502,7 @@ const PAGE_NAMES = {
   'image-converter.html': 'Image Converter',
   'image-resizer.html': 'Image Resizer',
   'image-compressor.html': 'Image Compressor',
+  'resize-image-to-kb.html': 'Resize Image to KB',
   'image-to-pdf.html': 'Image to PDF Converter',
   'hash-generator.html': 'Hash Generator',
   'csv-json-converter.html': 'CSV JSON Converter',

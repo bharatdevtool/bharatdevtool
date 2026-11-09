@@ -433,6 +433,16 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     keywords: ['image compressor', 'compress image online', 'compress jpg', 'compress png', 'compress webp', 'reduce image size'],
   },
   {
+    id: 'resize-image-to-kb',
+    label: 'Resize Image to KB',
+    route: '/resize-image-to-kb.html',
+    category: 'Image',
+    description:
+      'Resize photos and signatures to 20 KB, 50 KB or any size for SSC, IBPS, SBI, NEET, JEE and UPSC forms. Batch resize, exact KB, free, nothing uploaded.',
+    shortDesc: 'Exam photo & signature to exact KB',
+    keywords: ['resize image to 20kb', 'compress image to 50kb', 'resize photo in kb', 'signature resize', 'exam photo resizer', 'ssc photo resize'],
+  },
+  {
     id: 'image-to-pdf',
     label: 'Image to PDF Converter',
     route: '/image-to-pdf.html',

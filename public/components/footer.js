@@ -56,6 +56,7 @@ const ALL_TOOLS_LIST = [
   { label: 'PNG ↔ JPG Converter', href: 'image-converter.html' },
   { label: 'Image Resizer', href: 'image-resizer.html' },
   { label: 'Image Compressor', href: 'image-compressor.html' },
+  { label: 'Resize Image to KB', href: 'resize-image-to-kb.html' },
   { label: 'Image to PDF Converter', href: 'image-to-pdf.html' },
   { label: 'Hash Generator', href: 'hash-generator.html' },
   { label: 'CSV ↔ JSON Converter', href: 'csv-json-converter.html' },

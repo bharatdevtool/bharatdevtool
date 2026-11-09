@@ -42,6 +42,7 @@ import {
   Scaling,
   Sheet,
   Shrink,
+  ImageDown,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -82,6 +83,7 @@ const ICON_MAP: Record<string, LucideIcon> = {
   'image-converter': Repeat,
   'image-resizer': Scaling,
   'image-compressor': Shrink,
+  'resize-image-to-kb': ImageDown,
   'image-to-pdf': FileText,
   'favicon-generator': AppWindow,
   'csv-json-converter': Sheet,

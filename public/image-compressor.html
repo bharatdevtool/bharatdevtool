@@ -359,6 +359,10 @@
       <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
         Compress JPG, PNG &amp; WebP images instantly — 100% in your browser, no uploads, no sign-up.
       </p>
+      <p class="text-sm text-gray-500 dark:text-gray-400 mt-3">
+        Need an exact size like 20 KB or 50 KB for an exam form?
+        <a href="resize-image-to-kb.html" class="text-blue-600 dark:text-blue-400 hover:underline">Resize Image to KB</a>
+      </p>
     </div>
 
     <!-- Upload + Settings card -->
@@ -615,11 +619,18 @@
           canvas.width = img.naturalWidth;
           canvas.height = img.naturalHeight;
           const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0);
 
           const mime = outputFormat === 'auto'
             ? (fileObj.file.type || 'image/jpeg')
             : outputFormat;
+
+          // JPEG has no transparency: paint white first, or transparent
+          // pixels (e.g. PNG signatures) come out black.
+          if (mime === 'image/jpeg') {
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+          }
+          ctx.drawImage(img, 0, 0);
 
           const qualityFraction = quality / 100;
 
