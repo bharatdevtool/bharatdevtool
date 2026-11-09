@@ -218,6 +218,10 @@ const TRUST_STRIP_CSS = `
   font-size: 13px;
 }
 .related-tools::-webkit-scrollbar { display: none; }
+.continue-banner { margin: 0; padding: 2px 16px 8px; text-align: center; font-size: 13px; }
+.continue-banner a { color: #2563eb; font-weight: 600; text-decoration: none; }
+.continue-banner a:hover { text-decoration: underline; }
+[data-theme="dark"] .continue-banner a, .dark .continue-banner a { color: #93c5fd; }
 .related-tools .related-title { font-weight: 600; opacity: 0.75; margin-right: 2px; flex-shrink: 0; }
 .related-tools .related-link {
   flex-shrink: 0; padding: 4px 10px; border-radius: 9999px; text-decoration: none;
@@ -236,10 +240,32 @@ const TRUST_STRIP_CSS = `
 }
 `;
 
+/**
+ * Homepage only: if the visitor last used a different tool, offer a one-line
+ * link back to it. Replaces the old automatic redirect, which sent search
+ * visitors (and Google) away from the JSON Formatter.
+ */
+function createContinueBanner() {
+  if (normaliseToolPath(window.location.pathname) !== 'index') return;
+  let last = '';
+  try {
+    const match = document.cookie.split('; ').find(function(c) { return c.indexOf('bdt_last_tool=') === 0; });
+    last = match ? decodeURIComponent(match.split('=').slice(1).join('=')) : '';
+  } catch (e) { return; }
+  if (!last || /^[a-z]+:/i.test(last)) return; // only same-site paths
+  const tool = ALL_TOOLS_LIST.find(function(t) { return t.cat && normaliseToolPath(t.href) === normaliseToolPath(last); });
+  if (!tool || normaliseToolPath(tool.href) === 'index') return;
+  const html = '<p class="continue-banner">Continue where you left off: ' +
+    '<a href="' + getFooterBasePath() + tool.href + '">' + tool.label + ' →</a></p>';
+  const anchor = document.querySelector('.related-tools') || document.querySelector('.trust-strip');
+  if (anchor) anchor.insertAdjacentHTML('afterend', html);
+}
+
 // Load version and create footer
 function initFooter() {
   createTrustBadge();
   createRelatedToolsBar();
+  createContinueBanner();
   createAllToolsSection();
   // Get version from version.js (already loaded) or use default
   const version = (window.appVersion && window.appVersion.version) || '1.0';
