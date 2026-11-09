@@ -79,6 +79,24 @@
   }
 }
 
+/* Category tiles */
+.all-tools-section .all-tools-container:has(.category-grid) { max-width: 1120px; }
+.all-tools-section .category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+.all-tools-section .category-tile {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 14px 10px; white-space: normal;
+}
+.all-tools-section .category-tile-icon { font-size: 22px; line-height: 1; }
+.all-tools-section .category-tile-label { font-weight: 600; }
+.all-tools-section .category-tile-count { font-size: 12px; color: var(--muted); }
+.all-tools-section .all-tools-more { margin: 16px 0 0; text-align: center; font-size: 14px; }
+.all-tools-section .all-tools-more a { color: var(--accent); text-decoration: none; }
+.all-tools-section .all-tools-more a:hover { text-decoration: underline; }
+
 /* Mobile: smaller padding and font so buttons wrap nicely */
 @media (max-width: 640px) {
   .all-tools-section {
@@ -96,4 +114,6 @@
     font-size: 13px;
     white-space: nowrap;
   }
+  .all-tools-section .category-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .all-tools-section .category-tile { padding: 12px 8px; white-space: normal; }
 }

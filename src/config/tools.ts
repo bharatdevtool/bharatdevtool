@@ -9,19 +9,13 @@
 // ============================================================
 
 export type ToolCategory =
-  | 'JSON'
-  | 'Lottie'
-  | 'QR'
-  | 'Color'
-  | 'API/Network'
-  | 'Encoding'
-  | 'Regex'
-  | 'Security'
-  | 'Social'
-  | 'Text'
-  | 'Calculator'
-  | 'Date & Time'
-  | 'Image';
+  | 'JSON & Data'
+  | 'Image'
+  | 'QR & Links'
+  | 'Developer'
+  | 'Encode & Security'
+  | 'Calculators & Time'
+  | 'Design & Animation';
 
 export interface Tool {
   id: string;
@@ -48,7 +42,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'json-formatter',
     label: 'JSON Formatter',
     route: '/index.html',
-    category: 'JSON',
+    category: 'JSON & Data',
     description:
       'Format, beautify, minify, validate, escape and repair JSON instantly. Free online JSON formatter with clear error positions. Runs 100% in your browser.',
     shortDesc: 'Format, validate & minify JSON',
@@ -59,7 +53,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'json-diff',
     label: 'JSON Diff',
     route: '/jsondiff/',
-    category: 'JSON',
+    category: 'JSON & Data',
     description:
       'Compare two JSON documents and see every added, removed and changed key in a clear diff tree. Free online JSON diff tool that runs fully in your browser.',
     shortDesc: 'Compare JSON structures side-by-side',
@@ -71,7 +65,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'qr-generator',
     label: 'QR Code Generator',
     route: '/qr-generator-free.html',
-    category: 'QR',
+    category: 'QR & Links',
     description:
       'Create QR codes for URLs, plain text and WiFi networks with custom colors and error correction. Free QR code generator that works offline in your browser.',
     shortDesc: 'Generate QR codes for any content',
@@ -82,7 +76,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'qr-decoder',
     label: 'QR Code Decoder',
     route: '/qr-decoder.html',
-    category: 'QR',
+    category: 'QR & Links',
     description:
       'Decode QR codes from images and screenshots instantly. Upload or drag and drop a picture to read its content. Free, private, runs in your browser.',
     shortDesc: 'Decode QR code images',
@@ -94,7 +88,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'color-picker',
     label: 'Color Picker',
     route: '/color-picker.html',
-    category: 'Color',
+    category: 'Design & Animation',
     description:
       'Pick colors and convert between HEX, RGB and HSL, explore complementary and triadic palettes, and check WCAG contrast. Free online color picker.',
     shortDesc: 'Pick & convert colors: HEX, RGB, HSL',
@@ -104,7 +98,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'gradient-generator',
     label: 'CSS Gradient Generator',
     route: '/gradient-generator.html',
-    category: 'Color',
+    category: 'Design & Animation',
     description:
       'Build linear, radial and conic CSS gradients with multiple color stops and a live preview, then copy the CSS. Free online CSS gradient generator.',
     shortDesc: 'Generate CSS linear, radial & conic gradients',
@@ -115,7 +109,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'curl-tester',
     label: 'cURL Tester',
     route: '/curl-tester.html',
-    category: 'API/Network',
+    category: 'Developer',
     description:
       'Parse cURL commands into method, URL, headers and body, and convert them to JavaScript fetch or Python requests code. Free and runs in your browser.',
     shortDesc: 'Run & debug cURL API requests',
@@ -125,7 +119,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'curl-comparison',
     label: 'cURL Comparison',
     route: '/curl-comparison.html',
-    category: 'API/Network',
+    category: 'Developer',
     description:
       'Compare two cURL commands side by side and spot differences in method, URL, query params, headers and body. Free online cURL diff tool, fully private.',
     shortDesc: 'Compare two cURL commands',
@@ -135,7 +129,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'deeplink',
     label: 'DeepLink Launcher',
     route: '/deeplink.html',
-    category: 'API/Network',
+    category: 'QR & Links',
     description:
       'Parse, inspect and launch app deep links and custom URL schemes. Check scheme, host, path and query parameters before testing on device. Free tool.',
     shortDesc: 'Test Android & iOS deep links',
@@ -146,7 +140,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'base64',
     label: 'Base64 Encoder / Decoder',
     route: '/base64.html',
-    category: 'Encoding',
+    category: 'Encode & Security',
     description:
       'Encode text to Base64 and decode Base64 back to text instantly, with full Unicode support. Free online Base64 encoder and decoder, private in your browser.',
     shortDesc: 'Encode & decode Base64 strings',
@@ -156,7 +150,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'url-encoder',
     label: 'URL Encoder / Decoder',
     route: '/url-encoder.html',
-    category: 'Encoding',
+    category: 'QR & Links',
     description:
       'Percent-encode URLs and query parameters, or decode and inspect encoded URLs instantly. Free online URL encoder and decoder that runs in your browser.',
     shortDesc: 'URL percent-encode & decode',
@@ -167,7 +161,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'regex-tester',
     label: 'Regex Tester',
     route: '/regex-tester.html',
-    category: 'Regex',
+    category: 'Developer',
     description:
       'Test JavaScript regular expressions live with highlighted matches, capture groups and flags. Free online regex tester with ready-made example patterns.',
     shortDesc: 'Test & debug regex with live highlighting',
@@ -177,7 +171,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'regex-generator',
     label: 'Regex Generator',
     route: '/regex-generator.html',
-    category: 'Regex',
+    category: 'Developer',
     description:
       'Generate regex for emails, URLs, phone numbers, dates, UUIDs and more, or build custom patterns, then test them instantly. Free online regex generator.',
     shortDesc: 'Generate regex from descriptions',
@@ -187,7 +181,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'regex-library',
     label: 'Regex Library',
     route: '/regex-library.html',
-    category: 'Regex',
+    category: 'Developer',
     description:
       'Browse a curated library of tested regular expressions for emails, URLs, phone numbers and more, with examples. Copy or test any pattern for free.',
     shortDesc: 'Browse common regex patterns',
@@ -198,7 +192,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'uuid-generator',
     label: 'UUID Generator',
     route: '/uuid-generator.html',
-    category: 'Security',
+    category: 'Encode & Security',
     description:
       'Generate UUID v1, v4 and v7 in bulk with uppercase and no-hyphen options, using secure browser randomness. Free online UUID generator, nothing stored.',
     shortDesc: 'Generate UUID v1, v4, v7',
@@ -209,7 +203,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'whatsapp-link',
     label: 'WhatsApp Link Generator',
     route: '/whatsapp-link.html',
-    category: 'Social',
+    category: 'QR & Links',
     description:
       'Create WhatsApp click-to-chat links with a pre-filled message and a scannable QR code. No need to save the number. Free WhatsApp link generator.',
     shortDesc: 'Create wa.me click-to-chat links',
@@ -220,7 +214,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'lottie-player',
     label: 'Lottie Player & Studio',
     route: '/tools/lottie-player',
-    category: 'Lottie',
+    category: 'Design & Animation',
     description:
       'Preview, inspect and edit Lottie animations online. Play .json and .lottie files, swap colors, inspect layers and audit warnings. 100% in your browser.',
     shortDesc: 'Preview, inspect & edit Lottie animations',
@@ -242,7 +236,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'lottie-converter',
     label: 'Lottie to dotLottie Converter',
     route: '/tools/lottie-converter',
-    category: 'Lottie',
+    category: 'Design & Animation',
     description:
       'Convert Bodymovin JSON to compressed dotLottie (.lottie) archives and unpack .lottie packages to clean JSON. 100% offline client-side compression.',
     shortDesc: 'Convert between JSON and .lottie archives',
@@ -253,7 +247,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'lottie-validator',
     label: 'Lottie Validator',
     route: '/tools/lottie-validator',
-    category: 'Lottie',
+    category: 'Design & Animation',
     description:
       'Validate Lottie animation JSON structure, verify layer parent hierarchies, and detect missing asset references online. 100% client-side validation.',
     shortDesc: 'Validate Lottie structure & asset health',
@@ -264,7 +258,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'lottie-optimizer',
     label: 'Lottie Optimizer',
     route: '/tools/lottie-optimizer',
-    category: 'Lottie',
+    category: 'Design & Animation',
     description:
       'Safely compress Lottie animations with configurable coordinate rounding and optional metadata cleanup. Side-by-side preview with zero silent pruning.',
     shortDesc: 'Safely compress & clean Lottie animations',
@@ -276,7 +270,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'jwt-decoder',
     label: 'JWT Decoder',
     route: '/jwt-decoder.html',
-    category: 'Security',
+    category: 'Encode & Security',
     description:
       'Free JWT decoder tool. Instantly decode and inspect JSON Web Tokens — view header, payload, and signature. Check expiry, claims, and token validity. No sign-up required. Runs entirely in your browser.',
     shortDesc: 'Free JWT decoder tool',
@@ -286,7 +280,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'hash-generator',
     label: 'Hash Generator',
     route: '/hash-generator.html',
-    category: 'Security',
+    category: 'Encode & Security',
     description:
       'Free online hash generator. Generate MD5, SHA-1, SHA-256, SHA-384, and SHA-512 hashes instantly. Runs entirely in your browser — no data sent to any server. No sign-up required.',
     shortDesc: 'Free online hash generator',
@@ -296,7 +290,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'lorem-ipsum',
     label: 'Lorem Ipsum Generator',
     route: '/lorem-ipsum.html',
-    category: 'Text',
+    category: 'Developer',
     description:
       'Free Lorem Ipsum generator. Generate paragraphs, sentences, or words of placeholder text instantly. No sign-up required. Customize length and copy with one click.',
     shortDesc: 'Free Lorem Ipsum generator',
@@ -306,7 +300,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'markdown-to-html',
     label: 'Markdown to HTML',
     route: '/markdown-to-html.html',
-    category: 'Text',
+    category: 'Developer',
     description:
       'Free Markdown to HTML converter. Paste Markdown and instantly get HTML output with live preview. No sign-up required. Runs entirely in your browser — your data stays private.',
     shortDesc: 'Free Markdown to HTML converter',
@@ -316,7 +310,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'diff-checker',
     label: 'Diff Checker',
     route: '/diff-checker.html',
-    category: 'Text',
+    category: 'Developer',
     description:
       'Free online diff checker and text comparison tool. Compare two text files side-by-side, find differences instantly. Supports line-by-line and character-level diff. No sign-up required.',
     shortDesc: 'Free online diff checker and text comparison tool',
@@ -326,7 +320,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'html-formatter',
     label: 'HTML Formatter & Beautifier',
     route: '/html-formatter.html',
-    category: 'Text',
+    category: 'Developer',
     description:
       'Free HTML Formatter and Beautifier. Instantly format, indent, and pretty-print messy HTML code online. No sign-up required. Runs entirely in your browser — your code never leaves your device.',
     shortDesc: 'Free HTML Formatter and Beautifier',
@@ -336,7 +330,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'percentage-calculator',
     label: 'Percentage Calculator',
     route: '/percentage-calculator.html',
-    category: 'Calculator',
+    category: 'Calculators & Time',
     description:
       'Free percentage calculator online. Calculate percentages, percentage increase/decrease, percentage difference, and what percent one number is of another. No sign-up required.',
     shortDesc: 'Free percentage calculator online',
@@ -346,7 +340,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'bmi-calculator',
     label: 'BMI Calculator',
     route: '/bmi-calculator.html',
-    category: 'Calculator',
+    category: 'Calculators & Time',
     description:
       'Free BMI Calculator online. Calculate your Body Mass Index instantly using height and weight. Supports metric (kg/cm) and imperial (lb/in) units. No sign-up required. Instant results.',
     shortDesc: 'Free BMI Calculator online',
@@ -356,7 +350,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'gst-calculator',
     label: 'GST Calculator',
     route: '/gst-calculator.html',
-    category: 'Calculator',
+    category: 'Calculators & Time',
     description:
       'Free GST Calculator for India. Calculate GST amount, CGST, SGST, IGST instantly. Add or remove GST from any price. Supports all GST slabs: 5%, 12%, 18%, 28%. No sign-up required.',
     shortDesc: 'Free GST Calculator for India',
@@ -366,7 +360,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'emi-calculator',
     label: 'EMI Calculator',
     route: '/emi-calculator.html',
-    category: 'Calculator',
+    category: 'Calculators & Time',
     description:
       'Free EMI Calculator online. Calculate monthly EMI for home loan, car loan, personal loan. Get full amortization schedule, total interest, and payment breakdown instantly. No sign-up required.',
     shortDesc: 'Free EMI Calculator online',
@@ -376,7 +370,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'timestamp-converter',
     label: 'Unix Timestamp Converter',
     route: '/timestamp-converter.html',
-    category: 'Date & Time',
+    category: 'Calculators & Time',
     description:
       'Free Unix timestamp converter. Convert epoch/Unix timestamps to human-readable dates and back. Supports all timezones including IST. No sign-up required. Runs entirely in your browser.',
     shortDesc: 'Free Unix timestamp converter',
@@ -386,7 +380,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'timezone-converter',
     label: 'Timezone Converter',
     route: '/timezone-converter.html',
-    category: 'Date & Time',
+    category: 'Calculators & Time',
     description:
       'Free online timezone converter. Convert time between any two timezones instantly — IST, UTC, EST, PST, GMT and 400+ more. No sign-up required. Works entirely in your browser.',
     shortDesc: 'Free online timezone converter',
@@ -396,7 +390,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'cron-generator',
     label: 'Cron Expression Generator',
     route: '/cron-generator.html',
-    category: 'Date & Time',
+    category: 'Developer',
     description:
       'Free online cron expression generator. Build cron schedules visually, validate cron syntax, see next run times, and get human-readable descriptions. No sign-up required.',
     shortDesc: 'Free online cron expression generator',
@@ -466,7 +460,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'csv-json-converter',
     label: 'CSV ↔ JSON Converter',
     route: '/csv-json-converter.html',
-    category: 'JSON',
+    category: 'JSON & Data',
     description:
       'Free CSV to JSON converter and JSON to CSV converter. Convert data instantly in your browser — no upload, no sign-up. Supports custom delimiters, header detection, and pretty-print output.',
     shortDesc: 'Free CSV to JSON converter and JSON to CSV converter',
@@ -476,7 +470,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'yaml-json-converter',
     label: 'YAML ↔ JSON Converter',
     route: '/yaml-json-converter.html',
-    category: 'JSON',
+    category: 'JSON & Data',
     description:
       'Free YAML to JSON and JSON to YAML converter online. Convert, validate, and format YAML and JSON data instantly in your browser. No sign-up required. 100% private — data never leaves your device.',
     shortDesc: 'Free YAML to JSON and JSON to YAML converter online',
@@ -486,7 +480,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     id: 'json-to-typescript',
     label: 'JSON to TypeScript Interface',
     route: '/json-to-typescript.html',
-    category: 'JSON',
+    category: 'JSON & Data',
     description:
       'Free JSON to TypeScript interface generator. Instantly convert JSON objects to TypeScript interfaces and types online. No sign-up required. Supports nested objects, arrays, and optional fields.',
     shortDesc: 'Free JSON to TypeScript interface generator',
@@ -508,7 +502,17 @@ export function getToolsByCategory(category: ToolCategory): Tool[] {
 
 /** All unique categories in display order */
 export const TOOL_CATEGORIES: ToolCategory[] = [
-  'JSON', 'Lottie', 'Text', 'Encoding', 'Security', 'Regex', 'API/Network', 'Date & Time',
-  'Image', 'QR', 'Color', 'Calculator', 'Social',
+  'JSON & Data', 'Image', 'QR & Links', 'Developer', 'Encode & Security', 'Calculators & Time', 'Design & Animation',
 ];
+
+/** URL-safe id for each category (used by /tools?cat=… and footer.js). */
+export const CATEGORY_SLUGS: Record<ToolCategory, string> = {
+  'JSON & Data': 'json',
+  'Image': 'image',
+  'QR & Links': 'qr-links',
+  'Developer': 'developer',
+  'Encode & Security': 'security',
+  'Calculators & Time': 'calculators',
+  'Design & Animation': 'design',
+};
 

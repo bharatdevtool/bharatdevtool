@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { TOOLS } from '@/config/tools';
+import { TOOLS, TOOL_CATEGORIES, CATEGORY_SLUGS } from '@/config/tools';
 import { TOOL_FAQS } from '@/config/faqs';
 import { SITE } from '@/config/site';
 import { generateToolMetadata, generateToolJsonLd, getToolTitle } from '@/config/seo';
@@ -87,5 +87,38 @@ describe('Shared navigation', () => {
     const pages = readdirSync(PUBLIC_DIR).filter((f) => f.endsWith('.html') && f !== 'index.html' && !nonTools.includes(f));
     const routes = TOOLS.map((t) => t.route);
     for (const page of pages) expect(routes, page).toContain(`/${page}`);
+  });
+
+  it('puts every footer entry in the same category as the registry', () => {
+    const entries = [...footerJs.matchAll(/href: '([^']+)', cat: '([^']+)'/g)];
+    expect(entries.length).toBe(TOOLS.length);
+    for (const [, href, cat] of entries) {
+      const tool = TOOLS.find((t) => toFooterHref(t.route) === href);
+      expect(tool, href).toBeDefined();
+      expect(cat, href).toBe(CATEGORY_SLUGS[tool!.category]);
+    }
+  });
+});
+
+describe('Tool categories', () => {
+  const slugs = TOOL_CATEGORIES.map((c) => CATEGORY_SLUGS[c]);
+  const footerJs = readFileSync(join(PUBLIC_DIR, 'components', 'footer.js'), 'utf8');
+  const toolsHtml = readFileSync(join(PUBLIC_DIR, 'tools.html'), 'utf8');
+
+  it('uses the same category ids, in the same order, in footer.js and tools.html', () => {
+    const footerBlock = footerJs.slice(footerJs.indexOf('const TOOL_CATEGORIES'), footerJs.indexOf('];', footerJs.indexOf('const TOOL_CATEGORIES')));
+    expect([...footerBlock.matchAll(/id: '([^']+)'/g)].map((m) => m[1])).toEqual(slugs);
+    const labelsBlock = toolsHtml.slice(toolsHtml.indexOf('const CATEGORY_LABELS'), toolsHtml.indexOf('};', toolsHtml.indexOf('const CATEGORY_LABELS')));
+    expect([...labelsBlock.matchAll(/^\s+'?([a-z-]+)'?: '/gm)].map((m) => m[1])).toEqual(slugs);
+  });
+
+  it('gives every tools.html card a known category', () => {
+    const cats = [...toolsHtml.matchAll(/class="feature-card" data-category="([^"]+)"/g)].map((m) => m[1]);
+    expect(cats.length).toBe(TOOLS.length);
+    for (const c of cats) expect(slugs).toContain(c);
+  });
+
+  it('has no empty category', () => {
+    for (const c of TOOL_CATEGORIES) expect(TOOLS.some((t) => t.category === c), c).toBe(true);
   });
 });
