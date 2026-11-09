@@ -73,6 +73,10 @@ const ALL_TOOLS_LIST = [
   { label: 'HTML Formatter & Beautifier', href: 'html-formatter.html' },
   { label: 'Favicon Generator', href: 'favicon-generator.html' },
   { label: 'Reading Time Estimator', href: 'reading-time.html' },
+  { label: 'Lottie Player & Studio', href: 'tools/lottie-player' },
+  { label: 'Lottie Converter', href: 'tools/lottie-converter' },
+  { label: 'Lottie Validator', href: 'tools/lottie-validator' },
+  { label: 'Lottie Optimizer', href: 'tools/lottie-optimizer' },
   { label: 'Suggest Tool', href: 'https://forms.gle/TA7WEhzzQ6csQFGZ7', external: true }
 ];
 

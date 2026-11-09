@@ -89,7 +89,7 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search all 20 developer tools (e.g. json, qr, base64, curl)..."
+            placeholder={`Search all ${TOOLS.length} developer tools (e.g. json, qr, base64, curl)...`}
             className="w-full bg-transparent text-foreground placeholder:text-muted-foreground text-sm focus:outline-none"
           />
           {query ? (
@@ -165,7 +165,7 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
             </span>
           </div>
           <span className="flex items-center gap-1 text-primary">
-            <Sparkles className="w-3 h-3" /> 20 free tools
+            <Sparkles className="w-3 h-3" /> {TOOLS.length} free tools
           </span>
         </div>
       </div>

@@ -363,7 +363,7 @@ describe('Lottie Optimizer', () => {
     // Root framerate must be exactly preserved
     expect(res.optimizedAnimation.fr).toBe(29.97003);
     // Keyframe timing t must be exactly preserved
-    const kf = (res.optimizedAnimation.layers?.[0].ks?.p as any).k[0];
+    const kf = (res.optimizedAnimation.layers?.[0].ks?.p as { k: { t: number; s: number[] }[] }).k[0];
     expect(kf.t).toBe(14.5678);
     // Values inside s must be rounded
     expect(kf.s[0]).toBe(10.12);

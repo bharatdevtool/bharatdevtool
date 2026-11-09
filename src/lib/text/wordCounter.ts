@@ -29,7 +29,9 @@ export function analyzeText(text: string): TextStats {
   const readingTimeMin = Math.floor(totalSec / 60);
   const readingTimeSec = totalSec % 60;
 
-  const uniqueWords = new Set(wordList.map((w) => w.toLowerCase().replace(/[^a-z]/g, ''))).size;
+  const uniqueWords = new Set(
+    wordList.map((w) => w.toLowerCase().replace(/[^\p{L}\p{M}\p{N}]/gu, '')).filter(Boolean)
+  ).size;
   const avgWordLength = words > 0
     ? Math.round((wordList.reduce((s, w) => s + w.length, 0) / words) * 10) / 10
     : 0;

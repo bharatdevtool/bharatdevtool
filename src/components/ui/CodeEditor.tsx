@@ -129,25 +129,28 @@ export default function CodeEditor({
     }
   }, [value]);
 
-  // Intercept Ctrl+V / Cmd+V paste so browser NEVER jumps to middle/end of huge payloads
+  // Intercept Ctrl+V / Cmd+V when the paste replaces the whole payload so the browser NEVER jumps
+  // to the middle/end of it. Pastes into existing text stay native to keep the caret and undo stack.
   function handlePasteEvent(e: React.ClipboardEvent<HTMLTextAreaElement>) {
     const text = e.clipboardData.getData('text');
     if (!text) return;
 
+    const el = textareaRef.current;
+    const replacesAll = !value || (!!el && el.selectionStart === 0 && el.selectionEnd === value.length);
+    if (!replacesAll) {
+      shouldStayAtTopRef.current = false;
+      return;
+    }
+
     e.preventDefault();
     shouldStayAtTopRef.current = true;
 
-    const el = textareaRef.current;
     if (!el) {
       onChange(text);
       return;
     }
 
-    const start = el.selectionStart ?? 0;
-    const end = el.selectionEnd ?? 0;
-    const before = value.substring(0, start);
-    const after = value.substring(end);
-    const nextVal = (start === 0 && end === value.length) || !value ? text : before + text + after;
+    const nextVal = text;
 
     // Immediately update DOM node and clamp scroll before state flush
     el.value = nextVal;

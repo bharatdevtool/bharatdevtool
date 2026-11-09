@@ -1,18 +1,21 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import ToolLayout from '@/components/layout/ToolLayout';
+import { analytics } from '@/lib/analytics';
+import { ANALYTICS_EVENTS } from '@/config/site';
 import ErrorMessage from '@/components/ui/ErrorMessage';
 import CopyButton from '@/components/ui/CopyButton';
-import { optimizeLottie, DEFAULT_OPTIMIZATION_OPTIONS } from '@/lib/lottie/optimizer';
+import { optimizeLottie } from '@/lib/lottie/optimizer';
 import { parseLottieJSON, sanitizeAnimationForPrivacy } from '@/lib/lottie/parser';
 import { LOTTIE_SAMPLES } from '@/lib/lottie/samples';
-import { setCrossToolData, getCrossToolData } from '@/lib/crossToolData';
+import { setCrossToolData } from '@/lib/crossToolData';
+import { useCrossToolData } from '@/hooks/useCrossToolData';
 import { extractLottieFromFile, createDotLottie } from '@/lib/lottie/dotLottie';
 import type { LottieAnimation, LottieOptimizationOptions } from '@/lib/lottie/types';
 import type { AnimationItem } from 'lottie-web';
+import { loadLottie } from '@/lib/lottie/loader';
 import {
   Download,
   Upload,
@@ -22,10 +25,8 @@ import {
   Sparkles,
   GitCompare,
   Sliders,
-  CheckCircle2,
   AlertTriangle,
   Info,
-  Maximize2,
   ShieldCheck,
 } from 'lucide-react';
 
@@ -37,54 +38,43 @@ function formatBytes(bytes: number): string {
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`;
 }
 
+/** Runs the optimizer, falling back to the untouched input if it throws on malformed data */
+function optimizeOrPassthrough(
+  animationData: LottieAnimation,
+  rawJson: string,
+  opts: Partial<LottieOptimizationOptions>
+) {
+  try {
+    return optimizeLottie(animationData, opts);
+  } catch {
+    const size = new TextEncoder().encode(rawJson).length;
+    return {
+      optimizedAnimation: animationData,
+      optimizedJson: rawJson,
+      originalSize: size,
+      optimizedSize: size,
+      savedBytes: 0,
+      savingsPercentage: 0,
+    };
+  }
+}
+
 export default function LottieOptimizerClient() {
   const router = useRouter();
-  const [activeSampleId, setActiveSampleId] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      const incoming = getCrossToolData<{ lottieJson?: string }>('lottie-optimizer', false);
-      if (incoming?.lottieJson) return '';
-    }
-    return LOTTIE_SAMPLES[0].id;
-  });
-  const [animationData, setAnimationData] = useState<LottieAnimation>(() => {
-    if (typeof window !== 'undefined') {
-      const incoming = getCrossToolData<{ lottieJson?: string }>('lottie-optimizer', false);
-      if (incoming?.lottieJson) {
-        const parsed = parseLottieJSON(incoming.lottieJson);
-        if (parsed.success && parsed.animation) return parsed.animation;
-      }
-    }
-    return LOTTIE_SAMPLES[0].data;
-  });
-  const [rawJson, setRawJson] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      const incoming = getCrossToolData<{ lottieJson?: string }>('lottie-optimizer', false);
-      if (incoming?.lottieJson) return incoming.lottieJson;
-    }
-    return JSON.stringify(LOTTIE_SAMPLES[0].data, null, 2);
-  });
+  const [activeSampleId, setActiveSampleId] = useState<string>(LOTTIE_SAMPLES[0].id);
+  const [animationData, setAnimationData] = useState<LottieAnimation>(LOTTIE_SAMPLES[0].data);
+  const [rawJson, setRawJson] = useState<string>(() => JSON.stringify(LOTTIE_SAMPLES[0].data, null, 2));
   const [error, setError] = useState<string | null>(null);
 
   // Check for incoming cross-tool data on mount
-  useEffect(() => {
-    const incoming = getCrossToolData<{ lottieJson?: string }>('lottie-optimizer', false);
-    if (incoming?.lottieJson) {
-      const parsed = parseLottieJSON(incoming.lottieJson);
-      if (parsed.success && parsed.animation) {
-        setAnimationData(parsed.animation);
-        setRawJson(incoming.lottieJson);
-        setActiveSampleId('');
-      }
+  useCrossToolData<{ lottieJson: string }>('lottie-optimizer', ({ lottieJson }) => {
+    const parsed = parseLottieJSON(lottieJson);
+    if (parsed.success && parsed.animation) {
+      setAnimationData(parsed.animation);
+      setRawJson(lottieJson);
+      setActiveSampleId('');
     }
-  }, []);
-
-  const handleCompareInJsonDiff = () => {
-    setCrossToolData('json-diff', {
-      left: JSON.stringify(animationData, null, 2),
-      right: optimizationResult.optimizedJson,
-    });
-    router.push('/tools/json-diff');
-  };
+  });
 
   // Optimization Options State
   const [precision, setPrecision] = useState<number | 'off'>(2);
@@ -105,28 +95,26 @@ export default function LottieOptimizerClient() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Calculate optimization result
-  const optimizationResult = useMemo(() => {
-    try {
-      const opts: Partial<LottieOptimizationOptions> = {
+  const optimizationResult = useMemo(
+    () =>
+      optimizeOrPassthrough(animationData, rawJson, {
         roundPrecision: precision === 'off' ? false : precision,
         removeEditorNames: removeNames,
         removeMarkers,
         removeHiddenLayers: removeHidden,
         removeMetadata,
         minifyWhitespace,
-      };
-      return optimizeLottie(animationData, opts);
-    } catch (err) {
-      return {
-        optimizedAnimation: animationData,
-        optimizedJson: rawJson,
-        originalSize: new TextEncoder().encode(rawJson).length,
-        optimizedSize: new TextEncoder().encode(rawJson).length,
-        savedBytes: 0,
-        savingsPercentage: 0,
-      };
-    }
-  }, [animationData, precision, removeNames, removeMarkers, removeHidden, removeMetadata, minifyWhitespace, rawJson]);
+      }),
+    [animationData, precision, removeNames, removeMarkers, removeHidden, removeMetadata, minifyWhitespace, rawJson]
+  );
+
+  const handleCompareInJsonDiff = () => {
+    setCrossToolData('json-diff', {
+      left: JSON.stringify(animationData, null, 2),
+      right: optimizationResult.optimizedJson,
+    });
+    router.push('/tools/json-diff');
+  };
 
   // Load and synchronize side-by-side players
   useEffect(() => {
@@ -139,7 +127,7 @@ export default function LottieOptimizerClient() {
       if (optimizedAnimRef.current) optimizedAnimRef.current.destroy();
 
       try {
-        const lottie = (await import('lottie-web')).default;
+        const lottie = await loadLottie();
         if (isCancelled) return;
 
         // Original Player
@@ -222,6 +210,7 @@ export default function LottieOptimizerClient() {
     setActiveSampleId('');
     setError(null);
     if (fileInputRef.current) fileInputRef.current.value = '';
+    analytics.track(ANALYTICS_EVENTS.LOAD_LOTTIE, { tool: 'optimizer', format: file.name.toLowerCase().endsWith('.lottie') ? 'lottie' : 'json' });
   };
 
   const handleSampleSelect = (id: string) => {
@@ -243,6 +232,10 @@ export default function LottieOptimizerClient() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    analytics.track(ANALYTICS_EVENTS.OPTIMIZE_LOTTIE, {
+      format: 'json',
+      savings_percent: optimizationResult.savingsPercentage,
+    });
   };
 
   const handleDownloadDotLottie = () => {
@@ -259,6 +252,10 @@ export default function LottieOptimizerClient() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    analytics.track(ANALYTICS_EVENTS.OPTIMIZE_LOTTIE, {
+      format: 'lottie',
+      savings_percent: optimizationResult.savingsPercentage,
+    });
   };
 
   return (
@@ -459,8 +456,9 @@ export default function LottieOptimizerClient() {
                 />
                 <div>
                   <span className="font-medium text-foreground block">Remove Disabled Layers (&quot;hd&quot;)</span>
-                  <span className="text-[11px] text-muted-foreground block">
-                    ⚠️ Only check if your application does not dynamically toggle hidden layers with code.
+                  <span className="text-[11px] text-muted-foreground flex items-start gap-1">
+                    <AlertTriangle className="w-3 h-3 mt-0.5 shrink-0 text-amber-500" />
+                    Only check if your application does not dynamically toggle hidden layers with code.
                   </span>
                 </div>
               </label>

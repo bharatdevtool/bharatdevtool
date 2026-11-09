@@ -1,41 +1,23 @@
 import React from 'react';
 import Link from 'next/link';
-import { ShieldCheck, Heart, Sparkles, Terminal, ArrowUpRight } from 'lucide-react';
-import { TOOLS } from '@/config/tools';
+import { ArrowUpRight } from 'lucide-react';
+import { TOOLS, TOOL_CATEGORIES } from '@/config/tools';
 import { SITE } from '@/config/site';
 
 export default function Footer() {
   const year = new Date().getFullYear();
 
-  // Group tools into logical dev domains
-  const categories = [
-    {
-      title: 'Lottie Tools',
-      toolIds: ['lottie-player', 'lottie-converter', 'lottie-validator', 'lottie-optimizer'],
-    },
-    {
-      title: 'JSON & APIs',
-      toolIds: ['json-formatter', 'json-diff', 'curl-tester', 'curl-comparison', 'deeplink'],
-    },
-    {
-      title: 'Encoding & Security',
-      toolIds: ['base64', 'url-encoder', 'uuid-generator'],
-    },
-    {
-      title: 'Regex Tools',
-      toolIds: ['regex-tester', 'regex-generator', 'regex-library'],
-    },
-    {
-      title: 'Design & Social',
-      toolIds: ['qr-generator', 'qr-decoder', 'color-picker', 'gradient-generator', 'whatsapp-link'],
-    },
-  ];
+  // Every registered tool, grouped by category — same set as public/components/footer.js
+  const categories = TOOL_CATEGORIES.map((category) => ({
+    title: category,
+    tools: TOOLS.filter((t) => t.category === category),
+  })).filter((cat) => cat.tools.length > 0);
 
   return (
     <footer className="border-t border-border bg-card/40 mt-auto">
       {/* Main Footer Links */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-8">
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-1 space-y-3">
             <Link href="/tools.html" className="text-sm font-bold tracking-tight text-foreground flex items-center gap-2">
@@ -61,9 +43,7 @@ export default function Footer() {
                 {cat.title}
               </h3>
               <ul className="space-y-1.5 text-xs">
-                {cat.toolIds.map((id) => {
-                  const tool = TOOLS.find((t) => t.id === id);
-                  if (!tool) return null;
+                {cat.tools.map((tool) => {
                   return (
                     <li key={tool.id}>
                       <Link

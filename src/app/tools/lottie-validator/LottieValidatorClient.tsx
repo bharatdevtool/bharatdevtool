@@ -1,26 +1,25 @@
 'use client';
 
-import React, { useState, useMemo, useRef, useEffect } from 'react';
-import Link from 'next/link';
+import React, { useState, useMemo, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import ToolLayout from '@/components/layout/ToolLayout';
+import { analytics } from '@/lib/analytics';
+import { ANALYTICS_EVENTS } from '@/config/site';
+import CodeEditor from '@/components/ui/CodeEditor';
 import ErrorMessage from '@/components/ui/ErrorMessage';
 import CopyButton from '@/components/ui/CopyButton';
 import { validateLottie } from '@/lib/lottie/validator';
 import { LOTTIE_SAMPLES } from '@/lib/lottie/samples';
-import { setCrossToolData, getCrossToolData } from '@/lib/crossToolData';
+import { setCrossToolData } from '@/lib/crossToolData';
+import { useCrossToolData } from '@/hooks/useCrossToolData';
 import { extractLottieFromFile } from '@/lib/lottie/dotLottie';
-import type { ValidationSeverity, ValidationResult, ValidationIssue } from '@/lib/lottie/types';
+import type { ValidationIssue } from '@/lib/lottie/types';
 import {
   CheckCircle2,
-  AlertTriangle,
   AlertCircle,
-  Info,
   Upload,
-  FileCode,
   Sparkles,
   Film,
-  SlidersHorizontal,
   Braces,
   Filter,
   Gauge,
@@ -30,33 +29,18 @@ type FilterSeverity = 'all' | 'error' | 'warning' | 'info';
 
 export default function LottieValidatorClient() {
   const router = useRouter();
-  const [activeSampleId, setActiveSampleId] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      const incoming = getCrossToolData<{ lottieJson?: string }>('lottie-validator', false);
-      if (incoming?.lottieJson) return '';
-    }
-    return LOTTIE_SAMPLES[0].id;
-  });
-  const [rawJson, setRawJson] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      const incoming = getCrossToolData<{ lottieJson?: string }>('lottie-validator', false);
-      if (incoming?.lottieJson) return incoming.lottieJson;
-    }
-    return JSON.stringify(LOTTIE_SAMPLES[0].data, null, 2);
-  });
+  const [activeSampleId, setActiveSampleId] = useState<string>(LOTTIE_SAMPLES[0].id);
+  const [rawJson, setRawJson] = useState<string>(() => JSON.stringify(LOTTIE_SAMPLES[0].data, null, 2));
   const [filter, setFilter] = useState<FilterSeverity>('all');
   const [fileError, setFileError] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Read incoming cross-tool data on mount
-  useEffect(() => {
-    const incoming = getCrossToolData<{ lottieJson?: string }>('lottie-validator', false);
-    if (incoming?.lottieJson) {
-      setRawJson(incoming.lottieJson);
-      setActiveSampleId('');
-    }
-  }, []);
+  useCrossToolData<{ lottieJson: string }>('lottie-validator', ({ lottieJson }) => {
+    setRawJson(lottieJson);
+    setActiveSampleId('');
+  });
 
   const handleNavigateToPlayer = () => {
     setCrossToolData('lottie-player', { lottieJson: rawJson });
@@ -149,6 +133,12 @@ export default function LottieValidatorClient() {
     setActiveSampleId('');
     setFileError(null);
     if (fileInputRef.current) fileInputRef.current.value = '';
+    const result = validateLottie(JSON.parse(res.rawJson));
+    analytics.track(ANALYTICS_EVENTS.VALIDATE_LOTTIE, {
+      format: file.name.toLowerCase().endsWith('.lottie') ? 'lottie' : 'json',
+      errors: result.issues.filter((i) => i.severity === 'error').length,
+      warnings: result.issues.filter((i) => i.severity === 'warning').length,
+    });
   };
 
   const handleSampleSelect = (id: string) => {
@@ -271,22 +261,17 @@ export default function LottieValidatorClient() {
         {/* Main Grid: Code Editor on Left, Detailed Issue Report on Right */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Left Column: Raw JSON Code Input (5 Cols) */}
-          <div className="lg:col-span-5 space-y-2">
-            <div className="flex items-center justify-between text-xs text-muted-foreground px-1">
-              <span className="font-semibold text-foreground flex items-center gap-1.5">
-                <FileCode className="w-3.5 h-3.5 text-primary" /> Animation JSON
-              </span>
-              <span className="text-[11px]">100% In-Browser</span>
-            </div>
-            <textarea
+          <div className="lg:col-span-5">
+            <CodeEditor
+              title="Animation JSON"
+              language="json"
               value={rawJson}
-              onChange={(e) => {
-                setRawJson(e.target.value);
+              onChange={(val) => {
+                setRawJson(val);
                 setActiveSampleId('');
               }}
-              rows={22}
               placeholder="Paste Lottie JSON payload here..."
-              className="w-full p-3 font-mono text-xs rounded-xl bg-card border border-border focus:outline-hidden focus:ring-1 focus:ring-primary developer-scrollbar"
+              height={540}
             />
           </div>
 

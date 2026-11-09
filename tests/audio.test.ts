@@ -77,7 +77,7 @@ describe('Lottie Audio System', () => {
 
   describe('createBrowserAudioFactory', () => {
     it('creates an audio factory object with player methods', () => {
-      let isMuted = false;
+      const isMuted = false;
       const factory = createBrowserAudioFactory(() => isMuted, () => 0.8);
       const player = factory('test-audio.mp3');
 

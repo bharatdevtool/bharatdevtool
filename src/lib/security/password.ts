@@ -19,6 +19,16 @@ const CHARS = {
   symbols: '!@#$%^&*()_+-=[]{}|;:,.<>?',
 };
 
+/** Unbiased cryptographically secure integer in [0, max) */
+function secureRandomInt(max: number): number {
+  const buf = new Uint32Array(1);
+  const limit = Math.floor(0x100000000 / max) * max;
+  do {
+    crypto.getRandomValues(buf);
+  } while (buf[0] >= limit);
+  return buf[0] % max;
+}
+
 export function generatePassword(opts: PasswordOptions): string {
   let charset = '';
   const required: string[] = [];
@@ -26,34 +36,32 @@ export function generatePassword(opts: PasswordOptions): string {
   if (opts.uppercase) {
     const pool = opts.excludeAmbiguous ? CHARS.uppercaseClean : CHARS.uppercase;
     charset += pool;
-    required.push(pool[Math.floor(Math.random() * pool.length)]);
+    required.push(pool[secureRandomInt(pool.length)]);
   }
   if (opts.lowercase) {
     const pool = opts.excludeAmbiguous ? CHARS.lowercaseClean : CHARS.lowercase;
     charset += pool;
-    required.push(pool[Math.floor(Math.random() * pool.length)]);
+    required.push(pool[secureRandomInt(pool.length)]);
   }
   if (opts.numbers) {
     const pool = opts.excludeAmbiguous ? CHARS.numbersClean : CHARS.numbers;
     charset += pool;
-    required.push(pool[Math.floor(Math.random() * pool.length)]);
+    required.push(pool[secureRandomInt(pool.length)]);
   }
   if (opts.symbols) {
     charset += CHARS.symbols;
-    required.push(CHARS.symbols[Math.floor(Math.random() * CHARS.symbols.length)]);
+    required.push(CHARS.symbols[secureRandomInt(CHARS.symbols.length)]);
   }
   if (!charset) charset = CHARS.lowercase;
 
-  const arr = new Uint8Array(opts.length);
-  crypto.getRandomValues(arr);
-  const password = Array.from(arr).map((b) => charset[b % charset.length]);
+  const password = Array.from({ length: opts.length }, () => charset[secureRandomInt(charset.length)]);
 
   // Place required characters at random positions
   required.forEach((ch, i) => { password[i % opts.length] = ch; });
 
   // Shuffle
   for (let i = password.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = secureRandomInt(i + 1);
     [password[i], password[j]] = [password[j], password[i]];
   }
 

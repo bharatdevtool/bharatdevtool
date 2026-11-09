@@ -1,20 +1,23 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import Link from 'next/link';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import ToolLayout from '@/components/layout/ToolLayout';
+import { analytics } from '@/lib/analytics';
+import { ANALYTICS_EVENTS } from '@/config/site';
 import ErrorMessage from '@/components/ui/ErrorMessage';
 import CopyButton from '@/components/ui/CopyButton';
 import { parseLottieJSON, sanitizeAnimationForPrivacy } from '@/lib/lottie/parser';
 import { extractLottieFromFile, createDotLottie } from '@/lib/lottie/dotLottie';
 import { hasLottieAudio, createBrowserAudioFactory } from '@/lib/lottie/audio';
-import { extractLottieColors, replaceLottieColor, type LottieColorInfo } from '@/lib/lottie/colors';
+import { extractLottieColors, replaceLottieColor } from '@/lib/lottie/colors';
 import { analyzeLottie } from '@/lib/lottie/analyzer';
 import { LOTTIE_SAMPLES } from '@/lib/lottie/samples';
-import { getCrossToolData, setCrossToolData } from '@/lib/crossToolData';
+import { setCrossToolData } from '@/lib/crossToolData';
+import { useCrossToolData } from '@/hooks/useCrossToolData';
 import type { LottieAnimation, LottieMetadata } from '@/lib/lottie/types';
-import type { AnimationItem, AnimationDirection } from 'lottie-web';
+import type { AnimationItem, AnimationDirection, AnimationConfig } from 'lottie-web';
+import { loadLottie } from '@/lib/lottie/loader';
 import {
   Play,
   Pause,
@@ -24,10 +27,7 @@ import {
   Repeat,
   Repeat1,
   Upload,
-  FileCode,
   Download,
-  Eye,
-  SlidersHorizontal,
   ShieldCheck,
   Gauge,
   Sparkles,
@@ -35,9 +35,7 @@ import {
   Box,
   Volume2,
   VolumeX,
-  Info,
   Layers,
-  Palette,
   AlertTriangle,
   CheckCircle2,
   Image as ImageIcon,
@@ -83,6 +81,9 @@ type DirectionType = 'forward' | 'reverse' | 'bounce';
 type InspectorTab = 'info' | 'layers' | 'colors' | 'warnings' | 'assets';
 type ActiveMenu = 'file' | 'edit' | 'lottie' | 'view' | 'renderer' | null;
 type RendererChoice = 'svg' | 'canvas';
+// lottie-web's typings omit the audio controller and declare audio player methods without arguments
+type LottieAudioFactory = NonNullable<AnimationConfig['audioFactory']>;
+type AudioAnimationItem = AnimationItem & { mute?: () => void; unmute?: () => void };
 
 const SPEED_OPTIONS = [0.25, 0.5, 1, 1.5, 2];
 
@@ -156,7 +157,7 @@ export default function LottiePlayerClient({
         return;
       }
       try {
-        const parsed = JSON.parse(rawJson);
+        JSON.parse(rawJson); // throws with a character position used to locate the error line
         const parseCheck = parseLottieJSON(rawJson);
         if (!parseCheck.success || !parseCheck.animation) {
           setSyntaxError({ message: parseCheck.error || 'Invalid Lottie format.' });
@@ -248,34 +249,21 @@ export default function LottiePlayerClient({
     setActiveMenu(null);
   };
 
-  useEffect(() => {
-    if (initialInspectorTab) {
-      setInspectorTab(initialInspectorTab);
-    }
-  }, [initialInspectorTab]);
-
   const [error, setError] = useState<string | null>(null);
 
   // Cross-tool data ingestion
-  useEffect(() => {
-    const incoming =
-      getCrossToolData<{ lottieJson?: string }>('lottie-player', false) ||
-      getCrossToolData<{ lottieJson?: string }>('lottie-analyzer', false) ||
-      getCrossToolData<{ lottieJson?: string }>('lottie-editor', false);
-    if (incoming?.lottieJson) {
-      const parsed = parseLottieJSON(incoming.lottieJson);
-      if (parsed.success && parsed.animation) {
-        setAnimationData(parsed.animation);
-        originalAnimationRef.current = parsed.animation;
-        setIsColorModified(false);
-        const jsonStr = JSON.stringify(parsed.animation, null, 2);
-        setRawJson(jsonStr);
-        setMetadata(parsed.metadata || null);
-        setActiveSampleId('');
-        setError(null);
-      }
+  useCrossToolData<{ lottieJson: string }>('lottie-player', ({ lottieJson }) => {
+    const parsed = parseLottieJSON(lottieJson);
+    if (parsed.success && parsed.animation) {
+      setAnimationData(parsed.animation);
+      originalAnimationRef.current = parsed.animation;
+      setIsColorModified(false);
+      setRawJson(JSON.stringify(parsed.animation, null, 2));
+      setMetadata(parsed.metadata || null);
+      setActiveSampleId('');
+      setError(null);
     }
-  }, []);
+  });
 
   const handleNavigateToTool = (toolId: string, path: string) => {
     setCrossToolData(toolId, { lottieJson: rawJson });
@@ -292,8 +280,12 @@ export default function LottiePlayerClient({
 
   // Audio States
   const [isMuted, setIsMuted] = useState<boolean>(false);
-  const isMutedRef = useRef<boolean>(false);
-  isMutedRef.current = isMuted;
+
+  // Latest playback settings, read by the animation instance without reloading it
+  const playbackRef = useRef({ isPlaying, isLooping, speed, direction, isMuted });
+  useEffect(() => {
+    playbackRef.current = { isPlaying, isLooping, speed, direction, isMuted };
+  });
 
   const hasAudio = useMemo(() => hasLottieAudio(animationData), [animationData]);
 
@@ -379,6 +371,7 @@ export default function LottiePlayerClient({
     const parsed = parseLottieJSON(newJson);
     setMetadata(parsed.metadata || null);
     setIsColorModified(true);
+    analytics.track(ANALYTICS_EVENTS.REPLACE_LOTTIE_COLOR);
   };
 
   const handleResetColors = () => {
@@ -401,74 +394,71 @@ export default function LottiePlayerClient({
   const containerRef = useRef<HTMLDivElement>(null);
   const animItemRef = useRef<AnimationItem | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const isBouncingRef = useRef<boolean>(false);
   const currentBounceDirRef = useRef<AnimationDirection>(1);
 
-  // Load Lottie Animation on canvas
-  const loadLottieAnimation = useCallback(async (data: LottieAnimation) => {
-    if (!containerRef.current) return;
-
-    if (animItemRef.current) {
-      animItemRef.current.destroy();
-      animItemRef.current = null;
-    }
-
-    try {
-      const lottie = (await import('lottie-web')).default;
-      const anim = lottie.loadAnimation({
-        container: containerRef.current,
-        renderer: rendererChoice,
-        loop: direction === 'bounce' ? false : isLooping,
-        autoplay: isPlaying,
-        animationData: sanitizeAnimationForPrivacy(data),
-        rendererSettings: {
-          preserveAspectRatio: 'xMidYMid meet',
-        },
-        audioFactory: createBrowserAudioFactory(
-          () => isMutedRef.current,
-          () => 1
-        ) as any,
-      });
-
-      anim.setSpeed(speed);
-      anim.setDirection((direction === 'reverse' ? -1 : 1) as AnimationDirection);
-
-      anim.addEventListener('DOMLoaded', () => {
-        const total = anim.totalFrames || (data.op ? data.op - (data.ip || 0) : 100);
-        setTotalFrames(Math.round(total));
-      });
-
-      anim.addEventListener('enterFrame', () => {
-        setCurrentFrame(Math.round(anim.currentFrame));
-      });
-
-      anim.addEventListener('complete', () => {
-        if (direction === 'bounce') {
-          currentBounceDirRef.current = (currentBounceDirRef.current === 1 ? -1 : 1) as AnimationDirection;
-          anim.setDirection(currentBounceDirRef.current);
-          anim.play();
-        } else if (!isLooping) {
-          setIsPlaying(false);
-        }
-      });
-
-      animItemRef.current = anim;
-      setError(null);
-    } catch (err) {
-      setError(`Failed to render Lottie animation: ${(err as Error).message}`);
-    }
-  }, [direction, isLooping, isPlaying, speed, rendererChoice]);
-
-  // Initial and data-change mount
+  // Mount the animation; playback settings are applied by the control effects below,
+  // so toggling play/speed/direction never reloads it or resets the frame
   useEffect(() => {
-    loadLottieAnimation(animationData);
+    const container = containerRef.current;
+    if (!container) return;
+    let cancelled = false;
+    let anim: AnimationItem | null = null;
+
+    loadLottie(rendererChoice)
+      .then((lottie) => {
+        if (cancelled) return;
+        const playback = playbackRef.current;
+        anim = lottie.loadAnimation({
+          container,
+          renderer: rendererChoice,
+          loop: playback.direction === 'bounce' ? false : playback.isLooping,
+          autoplay: playback.isPlaying,
+          animationData: sanitizeAnimationForPrivacy(animationData),
+          rendererSettings: {
+            preserveAspectRatio: 'xMidYMid meet',
+          },
+          audioFactory: createBrowserAudioFactory(
+            () => playbackRef.current.isMuted,
+            () => 1
+          ) as unknown as LottieAudioFactory,
+        });
+        const item = anim;
+
+        item.setSpeed(playback.speed);
+        item.setDirection((playback.direction === 'reverse' ? -1 : 1) as AnimationDirection);
+
+        item.addEventListener('DOMLoaded', () => {
+          const total = item.totalFrames || (animationData.op ? animationData.op - (animationData.ip || 0) : 100);
+          setTotalFrames(Math.round(total));
+        });
+
+        item.addEventListener('enterFrame', () => {
+          setCurrentFrame(Math.round(item.currentFrame));
+        });
+
+        item.addEventListener('complete', () => {
+          if (playbackRef.current.direction === 'bounce') {
+            currentBounceDirRef.current = (currentBounceDirRef.current === 1 ? -1 : 1) as AnimationDirection;
+            item.setDirection(currentBounceDirRef.current);
+            item.play();
+          } else if (!playbackRef.current.isLooping) {
+            setIsPlaying(false);
+          }
+        });
+
+        animItemRef.current = item;
+        setError(null);
+      })
+      .catch((err: Error) => {
+        if (!cancelled) setError(`Failed to render Lottie animation: ${err.message}`);
+      });
+
     return () => {
-      if (animItemRef.current) {
-        animItemRef.current.destroy();
-        animItemRef.current = null;
-      }
+      cancelled = true;
+      anim?.destroy();
+      if (animItemRef.current === anim) animItemRef.current = null;
     };
-  }, [animationData, loadLottieAnimation]);
+  }, [animationData, rendererChoice]);
 
   // Control effects
   useEffect(() => {
@@ -504,9 +494,9 @@ export default function LottiePlayerClient({
     if (!animItemRef.current) return;
     try {
       if (isMuted) {
-        (animItemRef.current as any).mute?.();
+        (animItemRef.current as AudioAnimationItem).mute?.();
       } else {
-        (animItemRef.current as any).unmute?.();
+        (animItemRef.current as AudioAnimationItem).unmute?.();
       }
     } catch {
       // Audio controller may not be active if animation has no sound
@@ -575,6 +565,7 @@ export default function LottiePlayerClient({
     setIsPlaying(true);
     setError(null);
     if (fileInputRef.current) fileInputRef.current.value = '';
+    analytics.track(ANALYTICS_EVENTS.LOAD_LOTTIE, { tool: 'player', format: file.name.toLowerCase().endsWith('.lottie') ? 'lottie' : 'json' });
   };
 
   const handleDownloadDotLottie = () => {
@@ -591,23 +582,7 @@ export default function LottiePlayerClient({
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-  };
-
-  const handlePasteChange = (text: string) => {
-    setRawJson(text);
-    if (!text.trim()) return;
-
-    const parsed = parseLottieJSON(text);
-    if (!parsed.success || !parsed.animation) {
-      setError(parsed.error || 'Invalid Lottie JSON');
-      return;
-    }
-    setAnimationData(parsed.animation);
-    originalAnimationRef.current = parsed.animation;
-    setIsColorModified(false);
-    setMetadata(parsed.metadata || null);
-    setActiveSampleId('');
-    setError(null);
+    analytics.track(ANALYTICS_EVENTS.DOWNLOAD_LOTTIE, { tool: 'player', format: 'lottie' });
   };
 
   const handleDownload = () => {
@@ -618,6 +593,7 @@ export default function LottiePlayerClient({
     a.download = `${metadata?.name || 'animation'}.json`;
     a.click();
     URL.revokeObjectURL(url);
+    analytics.track(ANALYTICS_EVENTS.DOWNLOAD_LOTTIE, { tool: 'player', format: 'json' });
   };
 
   // Background styling
@@ -1316,7 +1292,9 @@ export default function LottiePlayerClient({
                             </div>
 
                             {asset.warning && (
-                              <div className="text-[10px] text-amber-500 font-medium">⚠️ {asset.warning}</div>
+                              <div className="text-[10px] text-amber-500 font-medium flex items-center gap-1">
+                                <AlertTriangle className="w-3 h-3 shrink-0" /> {asset.warning}
+                              </div>
                             )}
                           </div>
                         ))}

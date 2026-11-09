@@ -1,11 +1,15 @@
 'use client';
 
-import React from 'react';
+import React, { useSyncExternalStore } from 'react';
 import Link from 'next/link';
-import { ChevronRight, ShieldCheck, Share2, Sparkles } from 'lucide-react';
+import { ChevronDown, ChevronRight, HelpCircle, ShieldCheck, Sparkles } from 'lucide-react';
 import { getToolById, TOOLS } from '@/config/tools';
+import { getToolFaqs } from '@/config/faqs';
+import { generateToolJsonLd } from '@/config/seo';
+import { SITE } from '@/config/site';
 import ToolIcon from '@/components/ui/ToolIcon';
 import CopyButton from '@/components/ui/CopyButton';
+import ErrorBoundary from '@/components/ui/ErrorBoundary';
 
 interface ToolLayoutProps {
   toolId: string;
@@ -13,15 +17,29 @@ interface ToolLayoutProps {
   headingOverride?: string;
 }
 
+const subscribeNoop = () => () => {};
+
 export default function ToolLayout({ toolId, children, headingOverride }: ToolLayoutProps) {
   const tool = getToolById(toolId);
   if (!tool) throw new Error(`ToolLayout: unknown toolId "${toolId}"`);
 
+  // Canonical URL on the server and first render; swap in the live URL (with share params) after hydration
+  const shareUrl = useSyncExternalStore(
+    subscribeNoop,
+    () => window.location.href,
+    () => `${SITE.url}${tool.route}`,
+  );
+
   // Get other tools in the same category
   const relatedTools = TOOLS.filter((t) => t.category === tool.category && t.id !== tool.id).slice(0, 3);
+  const faqs = getToolFaqs(tool.id);
+  // Escape '<' so content can never close the script tag early
+  const jsonLd = JSON.stringify(generateToolJsonLd(tool.id)).replace(/</g, '\\u003c');
 
   return (
     <main className="mx-auto w-full max-w-7xl flex-1 px-4 sm:px-6 py-6 sm:py-8">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
+
       {/* Breadcrumb */}
       <nav className="mb-4 flex items-center gap-1.5 text-xs text-muted-foreground" aria-label="Breadcrumb">
         <Link href="/tools" className="hover:text-foreground transition-colors">
@@ -59,7 +77,7 @@ export default function ToolLayout({ toolId, children, headingOverride }: ToolLa
         {/* Header Action Tools */}
         <div className="flex items-center gap-2 self-start md:self-auto">
           <CopyButton
-            text={typeof window !== 'undefined' ? window.location.href : `https://bharatdevtools.com${tool.route}`}
+            text={shareUrl}
             label="Share"
             className="text-xs"
           />
@@ -67,7 +85,32 @@ export default function ToolLayout({ toolId, children, headingOverride }: ToolLa
       </div>
 
       {/* Tool workspace content */}
-      <div className="w-full">{children}</div>
+      <div className="w-full">
+        <ErrorBoundary>{children}</ErrorBoundary>
+      </div>
+
+      {/* Frequently asked questions (mirrored in FAQPage JSON-LD) */}
+      {faqs.length > 0 && (
+        <section className="mt-12 pt-8 border-t border-border" aria-labelledby="tool-faq-heading">
+          <h2
+            id="tool-faq-heading"
+            className="mb-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5"
+          >
+            <HelpCircle className="w-3.5 h-3.5 text-primary" /> Frequently Asked Questions
+          </h2>
+          <div className="rounded-xl border border-border bg-card divide-y divide-border">
+            {faqs.map((faq) => (
+              <details key={faq.question} className="group">
+                <summary className="flex items-center justify-between gap-3 px-4 py-3 cursor-pointer list-none text-sm font-medium text-foreground hover:text-primary transition-colors [&::-webkit-details-marker]:hidden">
+                  <h3 className="text-sm font-medium">{faq.question}</h3>
+                  <ChevronDown className="w-4 h-4 shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
+                </summary>
+                <p className="px-4 pb-4 text-sm leading-relaxed text-muted-foreground">{faq.answer}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Related tools in this category */}
       {relatedTools.length > 0 && (
@@ -77,7 +120,7 @@ export default function ToolLayout({ toolId, children, headingOverride }: ToolLa
               <Sparkles className="w-3.5 h-3.5 text-primary" /> More {tool.category} Tools
             </h2>
             <Link href="/tools" className="text-xs text-primary hover:underline">
-              View all 20 tools →
+              View all {TOOLS.length} tools →
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">

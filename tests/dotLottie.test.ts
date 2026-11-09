@@ -148,5 +148,32 @@ describe('dotLottie Engine', () => {
     expect(photo?.p?.startsWith('data:image/webp;base64,')).toBe(true);
     expect(chime?.p?.startsWith('data:audio/mpeg;base64,')).toBe(true);
   });
-});
 
+  it('ignores dotLottie v2 theme JSON and picks the animation from a/', () => {
+    const zipData = zipSync({
+      'manifest.json': strToU8(JSON.stringify({ version: '2', animations: [] })),
+      't/dark.json': strToU8(JSON.stringify({ rules: [] })),
+      'a/main.json': strToU8(JSON.stringify(TEST_ANIMATION)),
+    });
+
+    const result = extractDotLottie(zipData);
+    expect(result.success).toBe(true);
+    expect(result.availableAnimationIds).toEqual(['main']);
+    expect(result.animation?.layers).toEqual(TEST_ANIMATION.layers);
+  });
+
+  it('does not resolve an image by a partial file-name match', () => {
+    const anim: LottieAnimation = {
+      ...TEST_ANIMATION,
+      assets: [{ id: 'img_0', w: 1, h: 1, u: 'images/', p: 'icon.png' }],
+    };
+    const zipData = zipSync({
+      'animations/a.json': strToU8(JSON.stringify(anim)),
+      'images/bigicon.png': new Uint8Array([137, 80, 78, 71]),
+    });
+
+    const result = extractDotLottie(zipData);
+    const declared = result.animation?.assets?.find((a) => a.id === 'img_0');
+    expect(declared?.p).toBe('icon.png');
+  });
+});

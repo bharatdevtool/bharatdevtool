@@ -1,32 +1,14 @@
 import type { NextConfig } from 'next';
+import { readdirSync } from 'node:fs';
+import { join } from 'node:path';
 
 const isProd = process.env.NODE_ENV === 'production';
 
-const staticHtmlTools = [
-  'about',
-  'privacy',
-  'feedback',
-  'tools',
-  'color-picker',
-  'gradient-generator',
-  'curl-tester',
-  'curl-comparison',
-  'deeplink',
-  'base64',
-  'url-encoder',
-  'regex-tester',
-  'regex-generator',
-  'regex-library',
-  'qr-decoder',
-  'qr-generator-free',
-  'simple-qr',
-  'uuid-generator',
-  'whatsapp-link',
-  'password-generator',
-  'word-counter',
-  'text-case-converter',
-  'age-calculator',
-];
+// Every legacy HTML page in public/ gets a clean URL in dev (/foo -> /foo.html).
+// Netlify does the same in production via Pretty URLs.
+const staticHtmlTools = readdirSync(join(process.cwd(), 'public'))
+  .filter((f) => f.endsWith('.html') && f !== 'index.html')
+  .map((f) => f.replace(/\.html$/, ''));
 
 const nextConfig: NextConfig = {
   ...(isProd

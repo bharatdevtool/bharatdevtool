@@ -1,7 +1,19 @@
 // src/lib/lottie/colors.ts — Extract and manipulate colors in Lottie animations
 
-import type { LottieAnimation } from './types';
+import type { LottieAnimation, LottieLayer } from './types';
 import { hexToRgb } from '../color/utils';
+
+/** Loose view of a shape item while walking untrusted Lottie JSON */
+interface ShapeNode {
+  ty?: string;
+  c?: { k?: unknown };
+  it?: unknown[];
+}
+
+interface ColorKeyframe {
+  s?: unknown;
+  e?: unknown;
+}
 
 export interface LottieColorInfo {
   hex: string;
@@ -73,8 +85,9 @@ export function extractLottieColors(animation: LottieAnimation): LottieColorInfo
     }
   }
 
-  function inspectShape(shape: any, layerName: string) {
-    if (!shape || typeof shape !== 'object') return;
+  function inspectShape(raw: unknown, layerName: string) {
+    if (!raw || typeof raw !== 'object') return;
+    const shape = raw as ShapeNode;
 
     // Fill ('fl') or Stroke ('st') color
     if ((shape.ty === 'fl' || shape.ty === 'st') && shape.c) {
@@ -84,7 +97,7 @@ export function extractLottieColors(animation: LottieAnimation): LottieColorInfo
           registerColor(shape.c.k, layerName);
         } else {
           // Animated keyframes
-          shape.c.k.forEach((kf: any) => {
+          shape.c.k.forEach((kf: ColorKeyframe) => {
             if (Array.isArray(kf.s)) registerColor(kf.s, layerName);
             if (Array.isArray(kf.e)) registerColor(kf.e, layerName);
           });
@@ -94,11 +107,11 @@ export function extractLottieColors(animation: LottieAnimation): LottieColorInfo
 
     // Nested groups ('gr')
     if (shape.ty === 'gr' && Array.isArray(shape.it)) {
-      shape.it.forEach((item: any) => inspectShape(item, layerName));
+      shape.it.forEach((item) => inspectShape(item, layerName));
     }
   }
 
-  function inspectLayer(layer: any) {
+  function inspectLayer(layer: LottieLayer) {
     if (!layer || typeof layer !== 'object') return;
     const layerName = layer.nm || `Layer ${layer.ind ?? '?'}`;
 
@@ -116,7 +129,7 @@ export function extractLottieColors(animation: LottieAnimation): LottieColorInfo
 
     // Shape layers ('ty: 4')
     if (Array.isArray(layer.shapes)) {
-      layer.shapes.forEach((s: any) => inspectShape(s, layerName));
+      layer.shapes.forEach((s) => inspectShape(s, layerName));
     }
   }
 
@@ -163,8 +176,9 @@ export function replaceLottieColor(
   const cloned: LottieAnimation = JSON.parse(JSON.stringify(animation));
   let replacedCount = 0;
 
-  function replaceInShape(shape: any) {
-    if (!shape || typeof shape !== 'object') return;
+  function replaceInShape(raw: unknown) {
+    if (!raw || typeof raw !== 'object') return;
+    const shape = raw as ShapeNode;
 
     if ((shape.ty === 'fl' || shape.ty === 'st') && shape.c) {
       if (Array.isArray(shape.c.k)) {
@@ -176,7 +190,7 @@ export function replaceLottieColor(
           }
         } else {
           // Keyframed
-          shape.c.k.forEach((kf: any) => {
+          shape.c.k.forEach((kf: ColorKeyframe) => {
             if (Array.isArray(kf.s) && isColorMatch(kf.s, targetHex)) {
               const alpha = kf.s[3] ?? 1;
               kf.s = hexToLottieColor(newHex, alpha);
@@ -197,13 +211,13 @@ export function replaceLottieColor(
     }
   }
 
-  function replaceInLayer(layer: any) {
+  function replaceInLayer(layer: LottieLayer) {
     if (!layer || typeof layer !== 'object') return;
 
     if (layer.ty === 1 && typeof layer.sc === 'string') {
       const currentHex = layer.sc.startsWith('#') ? layer.sc : `#${layer.sc}`;
       if (currentHex.toLowerCase() === targetHex.toLowerCase()) {
-        layer.sc = newHex.replace('#', '').toUpperCase();
+        layer.sc = `#${newHex.replace('#', '').toUpperCase()}`;
         replacedCount++;
       }
     }
