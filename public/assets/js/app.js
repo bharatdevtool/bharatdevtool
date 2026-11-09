@@ -1,5 +1,12 @@
 // app.js
-import { formatJSON, minifyJSON, isValidJSON, escapeJSONString, unescapeJSONString, repairJSON } from "./formatter.js";
+import { formatJSON, minifyJSON, isValidJSON, escapeJSONString, unescapeJSONString } from "./formatter.js";
+import {
+  readInput, stringifyWithPrefs, showInputError, showInputNote, clearInputError, goToError,
+  scheduleLiveErrorCheck, initLinkPopover, initPrefs, initQueryBar, initSendTo, initShare,
+  revealPathInCode, toast,
+} from "./formatter-features.js";
+import { parseJSONPrecise } from "./json-raw.js";
+import { collapseRanges } from "./json-tools.js";
 
 let inputEditor;
 let outputEditor;
@@ -71,6 +78,7 @@ window.addEventListener("DOMContentLoaded", () => {
   inputEditor.on("change", () => {
     updateStatus();
     updateValidity();
+    scheduleLiveErrorCheck(inputEditor, document.getElementById("input-error"));
     updatePlaceholder();
     updateFileSizeIndicator();
     // No styling for input changes - only format button should have styling
@@ -126,7 +134,7 @@ window.addEventListener("DOMContentLoaded", () => {
     updateOutputValidity();
     updateOutputFileSizeIndicator();
   });
-  if (outFsBtn) outFsBtn.addEventListener("click", () => toggleFullscreen("output-editor"));
+  if (outFsBtn) outFsBtn.addEventListener("click", () => toggleFullscreen(gridActive ? "output-grid" : "output-editor"));
   document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
   const bookmarkBtn = document.getElementById("bookmark-btn");
   if (bookmarkBtn) bookmarkBtn.addEventListener("click", openBookmarkDialog);
@@ -192,7 +200,27 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Hook up search for input and output
   initSearch({ editor: inputEditor, input: 'input-search', count: 'input-search-count', prev: 'input-search-prev', next: 'input-search-next' });
-  initSearch({ editor: outputEditor, input: 'output-search', count: 'output-search-count', prev: 'output-search-prev', next: 'output-search-next' });
+  outputSearch = initSearch({
+    editor: outputEditor, input: 'output-search', count: 'output-search-count', prev: 'output-search-prev', next: 'output-search-next',
+    // While the Grid is shown, the output search box searches the grid.
+    alt: { isActive: () => gridActive && !!grid, search: (q) => grid.search(q), goto: (i) => grid.gotoMatch(i) },
+  });
+
+  initOutputViewToggle();
+  initFoldToggle();
+  initInputCollapse();
+  initLinkPopover([inputEditor, outputEditor]);
+  initPrefs(reformatOutputWithPrefs);
+  queryBar = initQueryBar({ getOutputText: () => outputEditor.getValue(), reveal: revealPath });
+  initSendTo({ getOutputText: () => outputEditor.getValue() });
+  initShare({
+    getOutputText: () => outputEditor.getValue(),
+    loadShared: (text) => {
+      inputEditor.setValue(text);
+      updatePlaceholder();
+      formatHandler();
+    },
+  });
 
   // Initialize theme
   initTheme();
@@ -211,6 +239,239 @@ window.addEventListener("DOMContentLoaded", () => {
     // No styling on page load - only format button should have styling
   }, 100);
 });
+
+// --- Output view: Code | Grid ---
+// The grid module is only downloaded the first time Grid is opened.
+const OUTPUT_VIEW_KEY = 'json_formatter_output_view';
+let gridActive = false;
+let grid = null;          // API returned by mountGrid()
+let gridLoading = null;   // Promise while json-grid-view.js loads
+let gridStale = true;     // output changed while the grid was hidden
+let gridRenderQueued = false;
+let gridWriting = false;  // true while a grid edit is written into the output editor
+let outputSearch = null;  // { rerun } from initSearch for the output pane
+let queryBar = null;      // { refresh } from initQueryBar
+let queryRefreshTimer = null;
+
+function initOutputViewToggle() {
+  const codeTab = document.getElementById('view-code-tab');
+  const gridTab = document.getElementById('view-grid-tab');
+  if (!codeTab || !gridTab) return;
+  const trackView = (view) => {
+    try { window.Analytics?.trackFormatterFeature?.('view', view); } catch { /* optional */ }
+  };
+  codeTab.addEventListener('click', () => { setOutputView('code'); trackView('code'); });
+  gridTab.addEventListener('click', () => { setOutputView('grid'); trackView('grid'); });
+  outputEditor.on('change', () => {
+    clearTimeout(queryRefreshTimer);
+    queryRefreshTimer = setTimeout(() => queryBar && queryBar.refresh(), 300);
+    if (gridWriting) return; // the grid already shows its own edit
+    gridStale = true;
+    if (gridActive) queueGridRender();
+  });
+  let saved = null;
+  try { saved = localStorage.getItem(OUTPUT_VIEW_KEY); } catch { /* storage blocked */ }
+  if (saved === 'grid') setOutputView('grid', { remember: false });
+}
+
+function setOutputView(view, { remember = true } = {}) {
+  const toGrid = view === 'grid';
+  gridActive = toGrid;
+  document.getElementById('view-code-tab').setAttribute('aria-selected', String(!toGrid));
+  document.getElementById('view-grid-tab').setAttribute('aria-selected', String(toGrid));
+  document.getElementById('output-editor').hidden = toGrid;
+  // Collapse all is for the code view; the grid has its own expand/collapse buttons.
+  const foldBtn = document.getElementById('fold-toggle');
+  if (foldBtn) foldBtn.hidden = toGrid;
+  document.getElementById('output-grid').hidden = !toGrid;
+  if (remember) {
+    try { localStorage.setItem(OUTPUT_VIEW_KEY, view); } catch { /* storage blocked */ }
+  }
+  if (toGrid) {
+    queueGridRender();
+  } else {
+    outputEditor.refresh();
+    revealGridSelectionInCode();
+    if (outputSearch) outputSearch.rerun();
+  }
+}
+
+function loadGrid() {
+  if (grid) return Promise.resolve(grid);
+  if (!gridLoading) {
+    gridLoading = import('./json-grid-view.js').then((mod) => {
+      grid = mod.mountGrid(document.getElementById('output-grid'), {
+        onChange: writeGridEdit,
+        notify: (msg) => toast(msg),
+        onAction: (action, params) => {
+          try { window.Analytics?.trackFormatterFeature?.('grid', action, params || {}); } catch { /* optional */ }
+        },
+      });
+      try { window.Analytics?.trackFormatterFeature?.('grid', 'open'); } catch { /* optional */ }
+      return grid;
+    });
+    gridLoading.catch((err) => {
+      gridLoading = null;
+      try {
+        if (typeof Sentry !== 'undefined' && Sentry.captureMessage) {
+          Sentry.captureMessage('json_grid_load_failed', { level: 'warning', extra: { name: err && err.name } });
+        }
+      } catch { /* monitoring optional */ }
+    });
+  }
+  return gridLoading;
+}
+
+/** A grid edit becomes the new output JSON (2-space, same as Format). */
+function writeGridEdit(value) {
+  gridWriting = true;
+  try {
+    outputEditor.setValue(stringifyWithPrefs(value, { sort: false }));
+  } finally {
+    gridWriting = false;
+  }
+}
+
+function queueGridRender() {
+  if (gridRenderQueued) return;
+  gridRenderQueued = true;
+  loadGrid().then(() => {
+    requestAnimationFrame(() => {
+      gridRenderQueued = false;
+      if (gridActive && gridStale) {
+        renderGrid();
+        if (outputSearch) outputSearch.rerun();
+      }
+    });
+  }, () => {
+    gridRenderQueued = false;
+    const box = document.getElementById('output-grid');
+    box.textContent = '';
+    const p = document.createElement('p');
+    p.className = 'json-grid-message';
+    p.textContent = 'Grid view could not load. Check your connection and try again.';
+    box.appendChild(p);
+  });
+}
+
+function renderGrid() {
+  gridStale = false;
+  const text = outputEditor.getValue();
+  if (text.trim() === '') {
+    grid.showMessage('Nothing to show yet. Paste JSON on the left and press Format.');
+    return;
+  }
+  let value;
+  try {
+    value = parseJSONPrecise(text);
+  } catch {
+    grid.showMessage('The output is not valid JSON, so it cannot be shown as a grid. Press Format to repair it.');
+    return;
+  }
+  grid.setData(value);
+}
+
+// --- Collapse the input panel to give the output more room ---
+const INPUT_COLLAPSED_KEY = 'json_formatter_input_collapsed';
+
+function setInputCollapsed(collapsed) {
+  const workspace = document.querySelector('.workspace');
+  const btn = document.getElementById('input-collapse-btn');
+  if (!workspace || !btn) return;
+  workspace.classList.toggle('input-collapsed', collapsed);
+  btn.setAttribute('aria-expanded', String(!collapsed));
+  btn.title = collapsed ? 'Show the input panel' : 'Collapse the input panel to give the output more room';
+  btn.setAttribute('aria-label', collapsed ? 'Show input panel' : 'Collapse input panel');
+  try { localStorage.setItem(INPUT_COLLAPSED_KEY, collapsed ? '1' : '0'); } catch { /* storage blocked */ }
+  // Editors measure their size; refresh after the layout change.
+  requestAnimationFrame(() => { inputEditor.refresh(); outputEditor.refresh(); });
+}
+
+function initInputCollapse() {
+  const btn = document.getElementById('input-collapse-btn');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const collapse = btn.getAttribute('aria-expanded') === 'true';
+    setInputCollapsed(collapse);
+    try { window.Analytics?.trackFormatterFeature?.('input_panel', collapse ? 'collapse' : 'expand'); } catch { /* optional */ }
+  });
+  let saved = null;
+  try { saved = localStorage.getItem(INPUT_COLLAPSED_KEY); } catch { /* storage blocked */ }
+  if (saved === '1') setInputCollapsed(true);
+}
+
+// --- Code view: collapse all / expand all ---
+let outputCollapsed = false;
+
+function setFoldButton(collapsed) {
+  outputCollapsed = collapsed;
+  const btn = document.getElementById('fold-toggle');
+  if (!btn) return;
+  const label = collapsed ? 'Expand all' : 'Collapse all';
+  btn.classList.toggle('is-collapsed', collapsed);
+  btn.title = label;
+  btn.setAttribute('aria-label', label);
+  btn.dataset.tip = label;
+}
+
+function initFoldToggle() {
+  const btn = document.getElementById('fold-toggle');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const cmds = window.CodeMirror && window.CodeMirror.commands;
+    if (!cmds || !cmds.unfoldAll) return;
+    if (outputCollapsed) {
+      // Clear the fold markers directly (unfoldAll would visit every line).
+      outputEditor.operation(() => {
+        for (const m of outputEditor.getAllMarks()) if (m.__isFold) m.clear();
+      });
+      setFoldButton(false);
+      return;
+    }
+    // One pass finds every bracket pair (CodeMirror's foldAll rescans the document for
+    // each fold and freezes on large files). The outermost { } or [ ] stays open.
+    const ranges = collapseRanges(outputEditor.getValue());
+    outputEditor.operation(() => {
+      for (const r of ranges) {
+        outputEditor.foldCode(window.CodeMirror.Pos(r.from.line, 0), {
+          rangeFinder: () => ({ from: window.CodeMirror.Pos(r.from.line, r.from.ch), to: window.CodeMirror.Pos(r.to.line, r.to.ch) }),
+          scanUp: false,
+        }, 'fold');
+      }
+    });
+    outputEditor.scrollTo(null, 0);
+    setFoldButton(true);
+    try { window.Analytics?.trackFormatterFeature?.('code', 'collapse_all'); } catch { /* optional */ }
+  });
+  // New output starts fully expanded.
+  outputEditor.on('change', (_cm, change) => {
+    if (outputCollapsed && change.origin === 'setValue') setFoldButton(false);
+  });
+}
+
+/** When switching back to Code, select and scroll to the cell picked in the grid. */
+function revealGridSelectionInCode() {
+  const path = grid && grid.getSelectedPath();
+  if (path) revealPathInCode(outputEditor, path);
+}
+
+/** Show a path (from a query result) in whichever view is active. */
+function revealPath(path) {
+  if (gridActive && grid) {
+    grid.reveal(path);
+  } else if (!revealPathInCode(outputEditor, path)) {
+    toast('Press Format to line up the output, then try again.');
+  }
+}
+
+/** Indent or sort-keys changed: re-write the output (keeps grid edits). */
+function reformatOutputWithPrefs() {
+  const text = outputEditor.getValue();
+  let value;
+  try { value = parseJSONPrecise(text); } catch { return; }
+  outputEditor.setValue(stringifyWithPrefs(value));
+  setTimeout(() => decorateEditors(), 50);
+}
 
 // --- Theme Functions ---
 // Theme management is now handled by theme.js utility
@@ -347,7 +608,7 @@ function updateValidity() {
       validationIndicator.classList.remove('valid', 'invalid');
       validationIndicator.textContent = '';
     }
-    errorBox.textContent = "";
+    clearInputError(inputEditor, errorBox);
     return;
   }
   if (isValidJSON(text)) {
@@ -357,7 +618,7 @@ function updateValidity() {
       validationIndicator.classList.remove('invalid');
       validationIndicator.textContent = '✔';
     }
-    errorBox.textContent = "";
+    clearInputError(inputEditor, errorBox);
   } else {
     if (inputPane) { inputPane.classList.add('invalid'); inputPane.classList.remove('valid'); }
     if (validationIndicator) {
@@ -493,72 +754,60 @@ function formatHandler() {
     document.getElementById("input-error").textContent = "Processing large file...";
   }
   
-  // If input is already valid JSON, do a plain pretty-format to avoid over-repairing
-  if (isValidJSON(src)) {
-  try {
-    const formatted = formatJSON(src);
+  // Strict JSON, then NDJSON, then JSON5 / JS objects, then heuristic repair.
+  const result = readInput(src);
+  const errorBox = document.getElementById("input-error");
+  if (result.ok) {
+    let formatted;
+    try {
+      formatted = stringifyWithPrefs(result.value);
+    } catch (err) {
+      showInputNote(inputEditor, errorBox, "Could not format this JSON.");
+      return;
+    }
+    outputEditor.setOption("mode", "application/json");
+    setPlainTextOverlay(false);
     outputEditor.setValue(formatted);
-    document.getElementById("input-error").textContent = "";
     updateValidity();
+    if (result.note) showInputNote(inputEditor, errorBox, result.note);
+    else clearInputError(inputEditor, errorBox);
     updateOutputStatus();
     updateOutputValidity();
     updateOutputFileSizeIndicator();
-    
-    // Switch back to JSON mode for format
-    outputEditor.setOption("mode", "application/json");
-    setPlainTextOverlay(false);
-    
-    // Add URL handlers after formatting (with timeout for large files)
+
+    // Decorations (links, escapes, colour swatches) after the paint; slower for big files.
     const timeoutDelay = fileSize > 1024 * 1024 ? 500 : 100;
     setTimeout(() => {
       try {
         decorateEditors();
-        updateOutputFileSizeIndicator();
-        updateOutputStatus();
-        updateOutputValidity();
-      } catch (stylingErr) {
-        document.getElementById("input-error").textContent = "Formatted (styling skipped for performance)";
-        updateOutputFileSizeIndicator();
-        updateOutputStatus();
-        updateOutputValidity();
+      } catch {
+        showInputNote(inputEditor, errorBox, "Formatted (styling skipped for performance)");
       }
-    }, timeoutDelay);
-    return;
-  } catch (err) {
-    // Fallback to repair if formatting somehow fails
-  }
-  }
-  try {
-    const repaired = repairJSON(src);
-    outputEditor.setValue(repaired);
-    document.getElementById("input-error").textContent = "";
-    updateValidity();
-    // Add URL handlers after repair
-    setTimeout(() => {
-      decorateEditors();
       updateOutputFileSizeIndicator();
       updateOutputStatus();
       updateOutputValidity();
-    }, 100);
-  } catch (err) {
-    
-    // Track format failure in analytics
-    if (typeof window.Analytics !== 'undefined') {
-      window.Analytics.trackFormatFailed({
-        page: window.getCurrentPageNameForAnalytics ? window.getCurrentPageNameForAnalytics() : 'JSON Formatter',
-        error_message: 'invalid_json', // never the error text: it quotes the user's input
-        file_size: src.length,
-        lines_before_format: src.split("\n").length
-      });
-    }
-    
-    document.getElementById("input-error").textContent = err.message;
-    outputEditor.setValue("// Invalid JSON: " + err.message);
-    updateValidity();
-    updateOutputStatus();
-    updateOutputValidity();
-    updateOutputFileSizeIndicator();
+    }, timeoutDelay);
+    return;
   }
+
+  // Track format failure in analytics
+  if (typeof window.Analytics !== 'undefined') {
+    window.Analytics.trackFormatFailed({
+      page: window.getCurrentPageNameForAnalytics ? window.getCurrentPageNameForAnalytics() : 'JSON Formatter',
+      error_message: 'invalid_json', // never the error text: it quotes the user's input
+      file_size: src.length,
+      lines_before_format: src.split("\n").length
+    });
+  }
+
+  const { error } = result;
+  updateValidity();
+  showInputError(inputEditor, errorBox, error);
+  goToError(inputEditor, error);
+  outputEditor.setValue(`// Invalid JSON at line ${error.line}, column ${error.column}: ${error.message}`);
+  updateOutputStatus();
+  updateOutputValidity();
+  updateOutputFileSizeIndicator();
 }
 
 function minifyHandler() {
@@ -981,30 +1230,6 @@ window.addEventListener('resize', () => {
   updatePlaceholder();
 });
 
-// --- URL Detection and Click Handling ---
-function isUrl(text) {
-  // Remove quotes first
-  const cleanText = text.replace(/^["']|["']$/g, '').trim();
-  
-  // Try using URL constructor for validation (most reliable)
-  try {
-    // If it already has a protocol, validate directly
-    if (cleanText.match(/^https?:\/\//i)) {
-      new URL(cleanText);
-      return true;
-    }
-    // If no protocol, try adding https://
-    if (cleanText.match(/^[\da-z][\da-z\.-]*\.[a-z]{2,}/i)) {
-      new URL('https://' + cleanText);
-      return true;
-    }
-  } catch (e) {
-    // URL constructor failed, not a valid URL
-    return false;
-  }
-  
-  return false;
-}
 
 // Plain-text overlay used for minified/escaped/unescaped output. CodeMirror
 // only removes an overlay given the same object, so keep a single instance.
@@ -1030,8 +1255,6 @@ const DECORATION_CLASSES = /\bcm-(url|escape|escape-orange|unicode|unicode-orang
 function decorateEditors() {
   [inputEditor, outputEditor].forEach(editor => {
     if (!editor) return;
-    editor.off('mousedown', handleUrlClick);
-    editor.on('mousedown', handleUrlClick);
     editor.operation(() => {
       editor.getAllMarks().forEach(m => { if (m.className && DECORATION_CLASSES.test(m.className)) m.clear(); });
       editor.clearGutter('CodeMirror-linenumbers');
@@ -1103,24 +1326,6 @@ function markEscapeSequences(editor, line, lineIndex) {
         );
       }
     });
-  }
-}
-
-function handleUrlClick(cm, event) {
-  const pos = cm.coordsChar({ top: event.clientY, left: event.clientX });
-  const token = cm.getTokenAt(pos);
-  
-  if (token && token.type === 'string') {
-    // Check if it's a URL
-    const cleanText = token.string.replace(/^["']|["']$/g, '');
-    if (isUrl(cleanText)) {
-      let url = cleanText;
-      if (!url.startsWith('http://') && !url.startsWith('https://')) {
-        url = 'https://' + url;
-      }
-      window.open(url, '_blank');
-      event.preventDefault();
-    }
   }
 }
 
@@ -1212,6 +1417,7 @@ function initSearch(cfg) {
   let matches = [];
   let activeIndex = -1;
   let markers = [];
+  let altSearchTimer = null;
 
   function clearMarks() {
     markers.forEach(m => m.clear());
@@ -1230,6 +1436,22 @@ function initSearch(cfg) {
     if (bar) bar.classList.toggle('active', !!(query && query.length > 0));
     if (!query || query.length < 1) {
       countEl.textContent = '0/0';
+      clearTimeout(altSearchTimer);
+      if (cfg.alt && cfg.alt.isActive()) cfg.alt.search('');
+      return;
+    }
+    if (cfg.alt && cfg.alt.isActive()) {
+      // The grid re-renders on search, so wait until typing pauses.
+      clearTimeout(altSearchTimer);
+      altSearchTimer = setTimeout(() => {
+        const n = cfg.alt.search(query);
+        matches = new Array(n).fill(null);
+        if (n) {
+          activeIndex = 0;
+          gotoIndex(0);
+        }
+        countEl.textContent = `${n ? 1 : 0}/${n}${n >= 300 ? '+' : ''}`;
+      }, 250);
       return;
     }
     const cm = cfg.editor;
@@ -1254,6 +1476,10 @@ function initSearch(cfg) {
   }
 
   function gotoIndex(i) {
+    if (cfg.alt && cfg.alt.isActive()) {
+      cfg.alt.goto(i);
+      return;
+    }
     const cm = cfg.editor;
     markers.forEach((m, mi) => m.className = mi === i ? 'cm-search-match cm-search-active' : 'cm-search-match');
     if (matches[i]) {
@@ -1318,4 +1544,6 @@ function initSearch(cfg) {
     gotoIndex(activeIndex);
     countEl.textContent = `${activeIndex + 1}/${matches.length}`;
   });
+
+  return { rerun: () => highlightAll(inputEl.value) };
 }

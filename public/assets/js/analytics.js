@@ -367,6 +367,12 @@ function getCurrentPageNameForAnalytics() {
 
 const Analytics = {
   // JSON Formatter helpers
+  /**
+   * Formatter feature usage (grid, query, share, send-to, …).
+   * `feature` and `action` must be fixed labels and params counts only — never user JSON.
+   */
+  trackFormatterFeature: (feature, action, params = {}) =>
+    trackEvent('formatter_feature', { feature, action, ...params }),
   trackFormatJson: (params) => trackEvent(ANALYTICS_EVENTS.FORMAT_JSON, params),
   trackMinifyJson: (params) => trackEvent(ANALYTICS_EVENTS.MINIFY_JSON, params),
   trackEscapeJson: (params) => trackEvent(ANALYTICS_EVENTS.ESCAPE_JSON, params),

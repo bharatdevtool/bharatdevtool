@@ -2,6 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <!-- Share links carry the JSON in #json=… : move it out of the URL before any analytics/Sentry script can read it. -->
+  <script>
+    (function () {
+      try {
+        if (location.hash.indexOf('#json=') === 0) {
+          window.__bdtShared = location.hash.slice(6);
+          history.replaceState(null, '', location.pathname + location.search);
+        }
+      } catch (e) {}
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <!-- Track tool visit for returning user routing -->
   <script>
@@ -14,16 +25,16 @@
     })();
   </script>
   <!-- SEO: Descriptive, keyword-rich title -->
-  <title>Free JSON Formatter &amp; Validator Online | Bharat Dev Tools</title>
+  <title>Free JSON Formatter, Viewer &amp; Grid Editor | Bharat Dev Tools</title>
   <!-- SEO: Primary meta description for search results -->
-  <meta name="description" content="Free JSON formatter and validator. Beautify, minify, validate and repair JSON with clear error messages. No sign-up, and your JSON never leaves your browser.">
+  <meta name="description" content="Free JSON formatter, viewer and grid editor. Validate, repair, query with JSONPath, view as a table and export CSV. No sign-up, runs 100% in your browser.">
   <!-- SEO: Helpful keywords (kept concise) -->
   <meta name="keywords" content="json formatter, json beautifier, json minifier, json escape, unescape json, online json tool, pretty print json">
   <!-- SEO: Canonical URL (update to your production domain) -->
   <link rel="canonical" href="https://bharatdevtool.com/jsonformatter/">
   <!-- Social preview (Open Graph / Twitter) -->
-  <meta property="og:title" content="Free JSON Formatter &amp; Validator Online | Bharat Dev Tools">
-  <meta property="og:description" content="Free JSON formatter and validator. Beautify, minify, validate and repair JSON with clear error messages. No sign-up, and your JSON never leaves your browser.">
+  <meta property="og:title" content="Free JSON Formatter, Viewer &amp; Grid Editor | Bharat Dev Tools">
+  <meta property="og:description" content="Free JSON formatter, viewer and grid editor. Validate, repair, query with JSONPath, view as a table and export CSV. No sign-up, runs 100% in your browser.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://bharatdevtool.com/jsonformatter/">
   <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
@@ -31,8 +42,8 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="JSON Formatter & Beautifier - Free Online Tool">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Free JSON Formatter &amp; Validator Online | Bharat Dev Tools">
-  <meta name="twitter:description" content="Free JSON formatter and validator. Beautify, minify, validate and repair JSON with clear error messages. No sign-up, and your JSON never leaves your browser.">
+  <meta name="twitter:title" content="Free JSON Formatter, Viewer &amp; Grid Editor | Bharat Dev Tools">
+  <meta name="twitter:description" content="Free JSON formatter, viewer and grid editor. Validate, repair, query with JSONPath, view as a table and export CSV. No sign-up, runs 100% in your browser.">
   <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
 
   <!-- Resource Hints: Preconnect to external domains for faster loading -->
@@ -69,11 +80,13 @@
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "JSON Formatter & Beautifier",
+    "name": "JSON Formatter, Viewer & Grid Editor",
     "url": "https://bharatdevtool.com/jsonformatter/",
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "All",
-    "description": "Free online JSON Formatter, Beautifier, Minifier, and Escape/Unescape tool. No data stored.",
+    "description": "Free online JSON formatter, viewer and grid editor: validate, repair, minify, query with JSONPath, view and edit JSON as a table, export CSV. Runs in your browser; no data stored.",
+    "featureList": ["JSON formatting and validation", "Error line and column with Go to error", "JSON5, JavaScript object and NDJSON input", "Grid / table view with editing", "Sort, filter and choose columns", "CSV export", "JSONPath query", "Exact large numbers", "Share link without a server", "Collapse and expand all"],
+    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"},
     "creator": {"@type":"Organization","name":"Bharat Dev Tools"}
   }
   </script>
@@ -106,6 +119,46 @@
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can I view JSON as a table or grid?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Format your JSON, then switch the output from Code to Grid. Objects become key and value tables, and arrays of objects become real tables with a column for every key. You can sort, filter, choose columns, flatten nested data and download any table as CSV."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I edit JSON in the grid view?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Double-click a value or key to edit it, add missing fields, and insert, duplicate or delete rows. Every change is written straight back to the formatted JSON, and undo and redo (Ctrl or Cmd+Z) are supported."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I query JSON with JSONPath?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Click the Query (funnel) button above the output and type a path such as $.users[*].email, $..id or $.items[?(@.price > 100)]. Matching values are listed with their paths, and you can click a result to jump to it or copy all results."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the formatter keep large numbers exact?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Long IDs such as 12345678901234567890 are normally rounded by JavaScript. This formatter keeps them digit for digit in current browsers, through formatting, minifying, grid editing and CSV export."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I share formatted JSON with someone?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Click the Share button to copy a link. The JSON is compressed into the part of the link after #, which browsers never send to a server, so it does not pass through Bharat Dev Tools. Anyone who has the link can read the JSON."
+        }
+      },
       {
         "@type": "Question",
         "name": "What is JSON Formatter and how does it work?",
@@ -234,7 +287,7 @@
     </a>
 
     <!-- Hidden but SEO friendly -->
-    <h1 class="sr-only">Bharat Dev Tools</h1>
+    <h1 class="sr-only">Free JSON Formatter, Viewer &amp; Grid Editor</h1>
   </div>
 
   <!-- Header actions on the right -->
@@ -303,6 +356,10 @@
       <section class="pane input-pane panel">
         <div class="pane-header">
           <div class="pane-toolbar">
+            <button id="input-collapse-btn" type="button" class="collapse-btn" title="Collapse the input panel to give the output more room" aria-expanded="true" aria-controls="input-editor">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></svg>
+              <span>Collapse</span>
+            </button>
             <button id="input-upload-btn" class="icon-btn" title="Upload JSON" aria-label="Upload JSON" data-tip="Upload JSON">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0-12 4 4m-4-4-4 4M5 15v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"/></svg>
             </button>
@@ -362,6 +419,17 @@
           <span class="font-label">Font</span>
           <button id="font-inc" class="icon-btn" title="Increase font size" aria-label="Increase font size" data-tip="Larger">+</button>
         </div>
+        <div class="format-options" role="group" aria-label="Format options">
+          <label class="fo-indent" for="indent-select">Indent</label>
+          <select id="indent-select" title="Indentation used by Format">
+            <option value="2" title="2 spaces">2</option>
+            <option value="4" title="4 spaces">4</option>
+            <option value="tab">Tab</option>
+          </select>
+          <label class="fo-sort" title="Sort object keys alphabetically when formatting">
+            <input type="checkbox" id="sort-keys"> Sort A→Z
+          </label>
+        </div>
         <button
           id="jsondiff-btn"
           type="button"
@@ -375,7 +443,31 @@
 
       <section class="pane output-pane panel">
         <div class="pane-header">
+          <div class="view-toggle" role="tablist" aria-label="Output view">
+            <button type="button" role="tab" id="view-code-tab" aria-controls="output-editor" aria-selected="true">Code</button>
+            <button type="button" role="tab" id="view-grid-tab" aria-controls="output-grid" aria-selected="false">Grid</button>
+          </div>
           <div class="pane-toolbar">
+            <button id="fold-toggle" type="button" class="icon-btn" title="Collapse all" aria-label="Collapse all" data-tip="Collapse all">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path class="fold-icon-collapse" d="m7 20 5-5 5 5M7 4l5 5 5-5"/><path class="fold-icon-expand" d="m7 15 5 5 5-5M7 9l5-5 5 5"/></svg>
+            </button>
+            <button id="query-toggle" type="button" class="icon-btn" title="Query with JSONPath" aria-label="Query with JSONPath" aria-pressed="false" aria-controls="query-bar" data-tip="Query">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18l-7 8.5V19l-4 2v-8.5z"/></svg>
+            </button>
+            <div class="menu" id="send-menu">
+              <button id="send-btn" class="icon-btn" title="Send to another tool" aria-label="Send to another tool" aria-haspopup="menu" aria-expanded="false" data-tip="Send to">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg>
+              </button>
+              <ul class="menu-list" role="menu" aria-label="Send output to">
+                <li><button type="button" role="menuitem" data-send="typescript">JSON → TypeScript</button></li>
+                <li><button type="button" role="menuitem" data-send="yaml">JSON → YAML</button></li>
+                <li><button type="button" role="menuitem" data-send="csv">JSON → CSV</button></li>
+                <li><button type="button" role="menuitem" data-send="diff">Compare in JSON Diff</button></li>
+              </ul>
+            </div>
+            <button id="share-btn" class="icon-btn" title="Copy a share link (the JSON travels inside the link, not through our server)" aria-label="Copy a share link" data-tip="Share link">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4"/><path d="m15.4 6.5-6.8 4"/></svg>
+            </button>
             <div class="menu" id="download-menu">
               <button id="output-download-btn" class="icon-btn" title="Download JSON" aria-label="Download JSON" data-tip="Download">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V9"/><path d="M8 17l4 4 4-4"/><path d="M5 3h14a2 2 0 0 1 2 2v6"/></svg>
@@ -408,7 +500,20 @@
             </div>
           </div>
         </div>
-        <div id="output-editor" class="editor"></div>
+        <div class="query-bar" id="query-bar" hidden>
+          <label for="query-input" class="query-label" title="JSONPath: $ is the root, .name picks a key, [*] every item, .. searches all levels, [?(@.age > 25)] filters">Query</label>
+          <input id="query-input" type="text" autocomplete="off" spellcheck="false" placeholder="$.users[*].email   ·   $..id   ·   $.items[?(@.price > 100)]">
+          <span id="query-count" class="query-count" aria-live="polite"></span>
+          <button id="query-copy" type="button" class="icon-btn" title="Copy results as JSON" aria-label="Copy results as JSON" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2Z"/><path d="M6 15H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+          <button id="query-clear" type="button" class="icon-btn" title="Close query" aria-label="Close query">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
+        </div>
+        <div id="query-results" class="query-results" hidden></div>
+        <div id="output-editor" class="editor" role="tabpanel" aria-labelledby="view-code-tab"></div>
+        <div id="output-grid" class="editor" role="tabpanel" aria-labelledby="view-grid-tab" hidden></div>
         <div class="pane-footer">
           <span class="validation-indicator" id="output-validation-indicator" aria-label="Validation status"></span>
           <span id="output-status" class="status">Lines: 0 • Chars: 0</span>
@@ -423,6 +528,56 @@
         <h2 class="section-title">Frequently Asked Questions</h2>
         <p class="section-subtitle">Everything you need to know about our tools</p>
         <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Can I view JSON as a table or grid?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes. Format your JSON, then switch the output from Code to Grid. Objects become key and value tables, and arrays of objects become real tables with a column for every key. You can sort, filter, choose columns, flatten nested data and download any table as CSV.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Can I edit JSON in the grid view?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes. Double-click a value or key to edit it, add missing fields, and insert, duplicate or delete rows. Every change is written straight back to the formatted JSON, and undo and redo (Ctrl or Cmd+Z) are supported.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How do I query JSON with JSONPath?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Click the Query (funnel) button above the output and type a path such as $.users[*].email, $..id or $.items[?(@.price &gt; 100)]. Matching values are listed with their paths, and you can click a result to jump to it or copy all results.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Does the formatter keep large numbers exact?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes. Long IDs such as 12345678901234567890 are normally rounded by JavaScript. This formatter keeps them digit for digit in current browsers, through formatting, minifying, grid editing and CSV export.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How do I share formatted JSON with someone?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Click the Share button to copy a link. The JSON is compressed into the part of the link after #, which browsers never send to a server, so it does not pass through Bharat Dev Tools. Anyone who has the link can read the JSON.</p>
+            </div>
+          </div>
+
           <div class="faq-item">
             <button class="faq-question" aria-expanded="false">
               <span>What is JSON Formatter and how does it work?</span>

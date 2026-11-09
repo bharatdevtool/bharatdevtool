@@ -44,9 +44,9 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     route: '/index.html',
     category: 'JSON & Data',
     description:
-      'Format, beautify, minify, validate, escape and repair JSON instantly. Free online JSON formatter with clear error positions. Runs 100% in your browser.',
-    shortDesc: 'Format, validate & minify JSON',
-    keywords: ['json formatter', 'json beautifier', 'json minifier', 'json validator', 'pretty print json', 'json escape'],
+      'Free JSON formatter, viewer and grid editor. Validate, repair, query with JSONPath, view as a table and export CSV. No sign-up, runs 100% in your browser.',
+    shortDesc: 'Format, view as grid & query JSON',
+    keywords: ['json formatter', 'json viewer', 'json grid', 'json to table', 'json editor', 'jsonpath', 'json beautifier', 'json minifier', 'json validator', 'pretty print json', 'json escape'],
     heavy: true,
   },
   {

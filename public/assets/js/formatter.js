@@ -1,9 +1,10 @@
 // formatter.js
+import { parseJSONPrecise } from './json-raw.js';
 
 
 export function formatJSON(text) {
   try {
-    return JSON.stringify(JSON.parse(text), null, 2);
+    return JSON.stringify(parseJSONPrecise(text), null, 2);
   } catch (err) {
     // Invalid input is expected, not an app bug: never report it (or the text) to Sentry.
     throw new Error("Invalid JSON: " + err.message);
@@ -12,7 +13,7 @@ export function formatJSON(text) {
 
 export function minifyJSON(text) {
   try {
-    return JSON.stringify(JSON.parse(text));
+    return JSON.stringify(parseJSONPrecise(text));
   } catch (err) {
     throw new Error("Invalid JSON: " + err.message);
   }
@@ -116,7 +117,7 @@ export function repairJSON(text) {
   
   // First, check if the JSON is already valid
   try {
-    const obj = JSON.parse(t);
+    const obj = parseJSONPrecise(t);
     return JSON.stringify(obj, null, 2);
   } catch (initialError) {
     // Only apply repairs if the JSON is actually broken
@@ -157,12 +158,12 @@ export function repairJSON(text) {
   t = t.replace(/\bundefined\b/g, 'null').replace(/\bNaN\b/g, 'null').replace(/\bInfinity\b/g, 'null').replace(/\b-Infinity\b/g, 'null');
   t = t.replace(/;\s*$/, '');
   try {
-    const obj = JSON.parse(t);
+    const obj = parseJSONPrecise(t);
     return JSON.stringify(obj, null, 2);
   } catch (err) {
     try {
       const wrapped = t.trim();
-      const obj = JSON.parse(wrapped);
+      const obj = parseJSONPrecise(wrapped);
       return JSON.stringify(obj, null, 2);
     } catch (innerErr) {
       throw new Error("Could not repair JSON: " + err.message);
