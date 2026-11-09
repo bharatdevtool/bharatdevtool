@@ -18,11 +18,7 @@
     "cURL Tester",
     "cURL Comparison",
     "WhatsApp Link Generator",
-    "Word & Character Counter",
-    "Text Case Converter",
     "UUID Generator",
-    "Password Generator",
-    "Age Calculator",
     "Percentage Calculator",
     "BMI Calculator",
     "GST Calculator",
@@ -43,7 +39,6 @@
     "Markdown to HTML",
     "JSON to TypeScript Interface",
     "HTML Formatter & Beautifier",
-    "Favicon Generator",
-    "Reading Time Estimator"
+    "Favicon Generator"
   ]
 }

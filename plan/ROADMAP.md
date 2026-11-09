@@ -35,18 +35,13 @@
 
 | # | Tool | Category | Traffic Potential | Effort | Status | File |
 |---|------|----------|-------------------|--------|--------|------|
-| 1 | Word / Character Counter | text | Very High | 0.5d | `done` | `word-counter.html` |
 | 2 | WhatsApp Link Generator | utility | High (India) | 0.5d | `done` | `whatsapp-link.html` |
-| 3 | Age Calculator | calculator | Very High (India) | 1d | `done` | `age-calculator.html` |
 | 4 | UUID Generator | developer | High | 0.5d | `done` | `uuid-generator.html` |
-| 5 | Password Generator | security | High | 0.5d | `done` | `password-generator.html` |
-| 6 | Text Case Converter | text | High | 0.5d | `done` | `text-case-converter.html` |
 
 **Why these first:**
 - All are 0.5–1 day builds — fast to ship, fast to get indexed
-- Word Counter + Age Calculator have massive India search volume
 - WhatsApp Link Generator is India-specific with almost no quality free competitors
-- UUID + Password + Text Case are bookmark-worthy dev utilities
+- UUID Generator is a bookmark-worthy dev utility
 
 ---
 
@@ -104,7 +99,6 @@
 | 25 | JSON → TypeScript Interface | developer | Medium-High | 1.5d | `done` | `json-to-typescript.html` |
 | 26 | HTML Formatter/Beautifier | developer | High | 1d | `done` | `html-formatter.html` |
 | 27 | Favicon Generator | design | High | 1d | `done` | `favicon-generator.html` |
-| 28 | Reading Time Estimator | text | Medium | 0.5d | `done` | `reading-time.html` |
 
 ---
 
@@ -206,7 +200,7 @@ Use these exact values in `data-category` on tools.html cards:
 | `regex` | Regex | Regex Tester, Generator, Library |
 | `design` | Design | Color Picker, Gradient Generator, Favicon |
 | `calculator` | Calculator | Age, Percentage, BMI, GST, EMI |
-| `text` | Text | Word Counter, Text Case Converter, Lorem Ipsum, Markdown→HTML, Reading Time |
+| `text` | Text | Lorem Ipsum, Markdown→HTML, Diff Checker, HTML Formatter |
 | `image` | Image | Image Compressor, PNG↔JPG, Image Resizer, Image to PDF |
-| `security` | Security | Password Generator, Hash Generator, JWT Decoder |
+| `security` | Security | Hash Generator, JWT Decoder |
 | `utility` | Utility | WhatsApp Link, Timezone Converter |

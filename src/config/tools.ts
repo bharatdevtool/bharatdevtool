@@ -273,16 +273,6 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
   },
   // ── Static HTML tools added in Phase 2-4 ──────────────────
   {
-    id: 'password-generator',
-    label: 'Password Generator',
-    route: '/password-generator.html',
-    category: 'Security',
-    description:
-      'Free online password generator. Create strong, secure, random passwords instantly with custom length and character sets. No sign-up required. Runs entirely in your browser.',
-    shortDesc: 'Free online password generator',
-    keywords: ['password generator', 'random password generator', 'strong password generator', 'secure password generator', 'free password generator', 'online password generator'],
-  },
-  {
     id: 'jwt-decoder',
     label: 'JWT Decoder',
     route: '/jwt-decoder.html',
@@ -303,26 +293,6 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     keywords: ['hash generator', 'md5 generator', 'sha256 generator', 'sha-1 hash', 'sha-512 hash', 'checksum generator'],
   },
   {
-    id: 'word-counter',
-    label: 'Word & Character Counter',
-    route: '/word-counter.html',
-    category: 'Text',
-    description:
-      'Free online word and character counter. Count words, characters, sentences, paragraphs, and reading time instantly. No sign-up required. Works offline in your browser.',
-    shortDesc: 'Free online word and character counter',
-    keywords: ['word counter', 'character counter', 'letter counter', 'word count online', 'character count', 'count words online'],
-  },
-  {
-    id: 'text-case-converter',
-    label: 'Text Case Converter',
-    route: '/text-case-converter.html',
-    category: 'Text',
-    description:
-      'Free online Text Case Converter. Convert text to UPPERCASE, lowercase, Title Case, Sentence case, camelCase, PascalCase, snake_case, kebab-case and more. No sign-up required. Instant results in your browser.',
-    shortDesc: 'Free online Text Case Converter',
-    keywords: ['text case converter', 'uppercase converter', 'lowercase converter', 'title case', 'sentence case', 'camelCase converter'],
-  },
-  {
     id: 'lorem-ipsum',
     label: 'Lorem Ipsum Generator',
     route: '/lorem-ipsum.html',
@@ -331,16 +301,6 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
       'Free Lorem Ipsum generator. Generate paragraphs, sentences, or words of placeholder text instantly. No sign-up required. Customize length and copy with one click.',
     shortDesc: 'Free Lorem Ipsum generator',
     keywords: ['lorem ipsum generator', 'placeholder text', 'dummy text', 'lorem ipsum online', 'generate lorem ipsum', 'filler text generator'],
-  },
-  {
-    id: 'reading-time',
-    label: 'Reading Time Estimator',
-    route: '/reading-time.html',
-    category: 'Text',
-    description:
-      'Free reading time estimator — paste any text and instantly see how long it takes to read. Supports custom reading speed (WPM), speaking time, and full text stats. No sign-up required.',
-    shortDesc: 'Free reading time estimator — paste any text and instantly s',
-    keywords: ['reading time estimator', 'reading time calculator', 'how long to read', 'words per minute', 'wpm calculator', 'speaking time'],
   },
   {
     id: 'markdown-to-html',
@@ -371,16 +331,6 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
       'Free HTML Formatter and Beautifier. Instantly format, indent, and pretty-print messy HTML code online. No sign-up required. Runs entirely in your browser — your code never leaves your device.',
     shortDesc: 'Free HTML Formatter and Beautifier',
     keywords: ['html formatter', 'html beautifier', 'html pretty print', 'html indenter', 'format html online', 'html code formatter'],
-  },
-  {
-    id: 'age-calculator',
-    label: 'Age Calculator',
-    route: '/age-calculator.html',
-    category: 'Calculator',
-    description:
-      'Free Age Calculator online. Calculate your exact age in years, months, days, hours, and minutes from your date of birth. No sign-up required. Instant results, works offline.',
-    shortDesc: 'Free Age Calculator online',
-    keywords: ['age calculator', 'calculate age', 'age from date of birth', 'how old am I', 'exact age calculator', 'age in years months days'],
   },
   {
     id: 'percentage-calculator',

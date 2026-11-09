@@ -30,14 +30,10 @@
 | **Regex & Text** | **Regex Tester** | [`/tools/regex-tester`](file:///d:/Projects/bharatdevtool/src/app/tools/regex-tester/page.tsx) | Live real-time RegEx engine with visual flag chips and match group highlights. |
 | **Regex & Text** | **Regex Generator** | [`/tools/regex-generator`](file:///d:/Projects/bharatdevtool/src/app/tools/regex-generator/page.tsx) | Build patterns from common templates with interactive variable configuration. |
 | **Regex & Text** | **Regex Pattern Library** | [`/tools/regex-library`](file:///d:/Projects/bharatdevtool/src/app/tools/regex-library/page.tsx) | Curated directory of production-tested regex patterns (email, phone, dates, passwords, etc.). |
-| **Regex & Text** | **Text Case Converter** | [`/tools/text-case-converter`](file:///d:/Projects/bharatdevtool/src/app/tools/text-case-converter/page.tsx) | Simultaneous real-time conversion across 9 cases (camel, snake, kebab, pascal, constant, etc.). |
-| **Regex & Text** | **Word & Character Counter** | [`/tools/word-counter`](file:///d:/Projects/bharatdevtool/src/app/tools/word-counter/page.tsx) | Real-time word count, character count, estimated reading time, and speaking time. |
 | **Design & Color** | **Color Picker & Converter** | [`/tools/color-picker`](file:///d:/Projects/bharatdevtool/src/app/tools/color-picker/page.tsx) | HEX, RGB, HSL conversions, harmonic palettes, and WCAG 2.1 accessibility contrast ratios. |
 | **Design & Color** | **CSS Gradient Studio** | [`/tools/gradient-generator`](file:///d:/Projects/bharatdevtool/src/app/tools/gradient-generator/page.tsx) | Linear & radial gradient designer with multi-stop color controls and CSS/Tailwind export. |
 | **Security & Utilities** | **QR Code Generator** | [`/tools/qr-generator`](file:///d:/Projects/bharatdevtool/src/app/tools/qr-generator/page.tsx) | 100% offline Canvas-based QR generation for URLs, text, and WiFi networks with PNG/SVG export. |
 | **Security & Utilities** | **QR Code Decoder** | [`/tools/qr-decoder`](file:///d:/Projects/bharatdevtool/src/app/tools/qr-decoder/page.tsx) | Drag-and-drop image QR scanner powered entirely in-browser by `jsqr`. |
-| **Security & Utilities** | **Password Generator** | [`/tools/password-generator`](file:///d:/Projects/bharatdevtool/src/app/tools/password-generator/page.tsx) | Cryptographically secure passwords with entropy calculations and custom character sets. |
-| **Security & Utilities** | **Age & Milestone Calculator** | [`/tools/age-calculator`](file:///d:/Projects/bharatdevtool/src/app/tools/age-calculator/page.tsx) | Chronological age calculation down to days, next birthday countdown, and life milestones. |
 
 ---
 

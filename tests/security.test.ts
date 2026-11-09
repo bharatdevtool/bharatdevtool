@@ -7,10 +7,6 @@ import {
   applyUUIDFormat,
   NIL_UUID,
 } from '@/lib/security/uuid';
-import {
-  generatePassword,
-  estimateStrength,
-} from '@/lib/security/password';
 
 describe('UUID Generator & Validator', () => {
   describe('generateUUID & versions', () => {
@@ -68,54 +64,3 @@ describe('UUID Generator & Validator', () => {
     });
   });
 });
-
-describe('Password Generator & Strength Estimator', () => {
-  it('generates password with requested length', () => {
-    const pwd = generatePassword({
-      length: 24,
-      uppercase: true,
-      lowercase: true,
-      numbers: true,
-      symbols: true,
-      excludeAmbiguous: false,
-    });
-    expect(pwd.length).toBe(24);
-  });
-
-  it('includes required character classes', () => {
-    const pwd = generatePassword({
-      length: 16,
-      uppercase: true,
-      lowercase: true,
-      numbers: true,
-      symbols: true,
-      excludeAmbiguous: false,
-    });
-    expect(/[A-Z]/.test(pwd)).toBe(true);
-    expect(/[a-z]/.test(pwd)).toBe(true);
-    expect(/[0-9]/.test(pwd)).toBe(true);
-    expect(/[^A-Za-z0-9]/.test(pwd)).toBe(true);
-  });
-
-  it('excludes ambiguous characters when flag is set', () => {
-    for (let i = 0; i < 20; i++) {
-      const pwd = generatePassword({
-        length: 32,
-        uppercase: true,
-        lowercase: true,
-        numbers: true,
-        symbols: false,
-        excludeAmbiguous: true,
-      });
-      // Ambiguous: 0, 1, I, O, i, l, o
-      expect(/[01IOilo]/.test(pwd)).toBe(false);
-    }
-  });
-
-  it('estimates password strength accurately', () => {
-    expect(estimateStrength('short').label).toBe('Weak');
-    expect(estimateStrength('password123').score).toBeGreaterThanOrEqual(2);
-    expect(estimateStrength('Abc123xyz!@#987654').label).toBe('Very Strong');
-  });
-});
-

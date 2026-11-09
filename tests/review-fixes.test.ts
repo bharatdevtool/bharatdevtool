@@ -3,7 +3,6 @@ import { parseCurl, toFetch, toPython } from '@/lib/curl/parser';
 import { generateUUID } from '@/lib/security/uuid';
 import { diffJSON } from '@/lib/json/differ';
 import { repairJSON } from '@/lib/json/formatter';
-import { analyzeText } from '@/lib/text/wordCounter';
 
 describe('code review regressions', () => {
   it('ignores URLs inside headers and bodies when picking the request URL', () => {
@@ -58,8 +57,4 @@ describe('code review regressions', () => {
     expect(JSON.parse(repairJSON('{a: -Infinity, b: Infinity}'))).toEqual({ a: null, b: null });
   });
 
-  it('counts unique non-Latin words', () => {
-    expect(analyzeText('नमस्ते दुनिया भारत').uniqueWords).toBe(3);
-    expect(analyzeText('1 2 2 three').uniqueWords).toBe(3);
-  });
 });

@@ -40,8 +40,6 @@ import { JSONDiffTester } from './jsondiff-tests.js';
 import { ColorPickerTester } from './color-picker-tests.js';
 import { CurlTesterTests } from './curl-tester-tests.js';
 import { CurlComparisonTests } from './curl-comparison-tests.js';
-import { PasswordGeneratorTester } from './password-generator-tests.js';
-import { TextCaseConverterTester } from './text-case-converter-tests.js';
 import { UUIDGeneratorTester } from './uuid-generator-tests.js';
 import { PercentageCalculatorTester } from './percentage-calculator-tests.js';
 import { BMICalculatorTester } from './bmi-calculator-tests.js';
@@ -57,7 +55,6 @@ import { CronGeneratorTester } from './cron-generator-tests.js';
 import { LoremIpsumTester } from './lorem-ipsum-tests.js';
 import { JsonToTypeScriptTester } from './json-to-typescript-tests.js';
 import { HTMLFormatterTester } from './html-formatter-tests.js';
-import { ReadingTimeTester } from './reading-time-tests.js';
 
 // Test Results Tracking
 let totalTests = 0;
@@ -527,23 +524,6 @@ console.log('='.repeat(60));
 const curlComparisonTests = new CurlComparisonTests();
 const curlComparisonResults = curlComparisonTests.runAllTests();
 
-console.log('\n' + '='.repeat(60));
-console.log('TEXT CASE CONVERTER TEST SUITE');
-console.log('='.repeat(60));
-
-const textCaseConverterTester = new TextCaseConverterTester();
-const textCaseConverterResults = textCaseConverterTester.runAllTests();
-
-// ============================================================================
-// PASSWORD GENERATOR TEST SUITE
-// ============================================================================
-
-console.log('\n' + '='.repeat(60));
-console.log('PASSWORD GENERATOR TEST SUITE');
-console.log('='.repeat(60));
-
-const passwordGeneratorTester = new PasswordGeneratorTester();
-const passwordGeneratorResults = passwordGeneratorTester.runAll();
 
 // ============================================================================
 // UUID GENERATOR TESTS
@@ -708,13 +688,6 @@ const htmlFormatterResults = htmlFormatterTester.runAll();
 // READING TIME ESTIMATOR TESTS
 // ============================================================================
 
-console.log('\n' + '='.repeat(60));
-console.log('READING TIME ESTIMATOR TEST SUITE');
-console.log('='.repeat(60));
-
-const readingTimeTester = new ReadingTimeTester();
-const readingTimeResults = readingTimeTester.runAll();
-
 // ============================================================================
 // FINAL TEST SUMMARY
 // ============================================================================
@@ -724,9 +697,9 @@ console.log('📊 COMPREHENSIVE TEST SUMMARY');
 console.log('='.repeat(60));
 
 
-const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + passwordGeneratorResults.total + textCaseConverterResults.total + uuidResults.total + percentageResults.total + bmiResults.total + emiResults.total + timestampResults.total + jwtResults.total + imageConverterResults.total + imageResizerResults.total + csvJsonResults.total + yamlJsonResults.total + diffCheckerResults.total + cronResults.total + loremResults.total + jsonToTsResults.total + htmlFormatterResults.total + readingTimeResults.total;
-const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + passwordGeneratorResults.passed + textCaseConverterResults.passed + uuidResults.passed + percentageResults.passed + bmiResults.passed + emiResults.passed + timestampResults.passed + jwtResults.passed + imageConverterResults.passed + imageResizerResults.passed + csvJsonResults.passed + yamlJsonResults.passed + diffCheckerResults.passed + cronResults.passed + loremResults.passed + jsonToTsResults.passed + htmlFormatterResults.passed + readingTimeResults.passed;
-const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + passwordGeneratorResults.failed + textCaseConverterResults.failed + uuidResults.failed + percentageResults.failed + bmiResults.failed + emiResults.failed + timestampResults.failed + jwtResults.failed + imageConverterResults.failed + imageResizerResults.failed + csvJsonResults.failed + yamlJsonResults.failed + diffCheckerResults.failed + cronResults.failed + loremResults.failed + jsonToTsResults.failed + htmlFormatterResults.failed + readingTimeResults.failed;
+const grandTotal = totalTests + deeplinkResults.total + urlEncoderResults.total + base64Results.total + qrResults.total + qrDecoderResults.total + jsonDiffResults.total + colorPickerResults.total + curlTesterResults.total + curlComparisonResults.total + uuidResults.total + percentageResults.total + bmiResults.total + emiResults.total + timestampResults.total + jwtResults.total + imageConverterResults.total + imageResizerResults.total + csvJsonResults.total + yamlJsonResults.total + diffCheckerResults.total + cronResults.total + loremResults.total + jsonToTsResults.total + htmlFormatterResults.total;
+const grandPassed = totalPassed + deeplinkResults.passed + urlEncoderResults.passed + base64Results.passed + qrResults.passed + qrDecoderResults.passed + jsonDiffResults.passed + colorPickerResults.passed + curlTesterResults.passed + curlComparisonResults.passed + uuidResults.passed + percentageResults.passed + bmiResults.passed + emiResults.passed + timestampResults.passed + jwtResults.passed + imageConverterResults.passed + imageResizerResults.passed + csvJsonResults.passed + yamlJsonResults.passed + diffCheckerResults.passed + cronResults.passed + loremResults.passed + jsonToTsResults.passed + htmlFormatterResults.passed;
+const grandFailed = totalFailed + deeplinkResults.failed + urlEncoderResults.failed + base64Results.failed + qrResults.failed + qrDecoderResults.failed + jsonDiffResults.failed + colorPickerResults.failed + curlTesterResults.failed + curlComparisonResults.failed + uuidResults.failed + percentageResults.failed + bmiResults.failed + emiResults.failed + timestampResults.failed + jwtResults.failed + imageConverterResults.failed + imageResizerResults.failed + csvJsonResults.failed + yamlJsonResults.failed + diffCheckerResults.failed + cronResults.failed + loremResults.failed + jsonToTsResults.failed + htmlFormatterResults.failed;
 
 console.log(`Total Tests: ${grandTotal}`);
 console.log(`✅ Passed: ${grandPassed}`);
@@ -744,8 +717,6 @@ console.log(`JSON Comparison (Diff): ${jsonDiffResults.total} tests (${jsonDiffR
 console.log(`Color Picker: ${colorPickerResults.total} tests (${colorPickerResults.passed} passed, ${colorPickerResults.failed} failed)`);
 console.log(`cURL Tester: ${curlTesterResults.total} tests (${curlTesterResults.passed} passed, ${curlTesterResults.failed} failed)`);
 console.log(`cURL Comparison: ${curlComparisonResults.total} tests (${curlComparisonResults.passed} passed, ${curlComparisonResults.failed} failed)`);
-console.log(`Password Generator: ${passwordGeneratorResults.total} tests (${passwordGeneratorResults.passed} passed, ${passwordGeneratorResults.failed} failed)`);
-console.log(`Text Case Converter: ${textCaseConverterResults.total} tests (${textCaseConverterResults.passed} passed, ${textCaseConverterResults.failed} failed)`);
 console.log(`UUID Generator: ${uuidResults.total} tests (${uuidResults.passed} passed, ${uuidResults.failed} failed)`);
 console.log(`Percentage Calculator: ${percentageResults.total} tests (${percentageResults.passed} passed, ${percentageResults.failed} failed)`);
 console.log(`BMI Calculator: ${bmiResults.total} tests (${bmiResults.passed} passed, ${bmiResults.failed} failed)`);
@@ -761,7 +732,6 @@ console.log(`Cron Expression Generator: ${cronResults.total} tests (${cronResult
 console.log(`Lorem Ipsum Generator: ${loremResults.total} tests (${loremResults.passed} passed, ${loremResults.failed} failed)`);
 console.log(`JSON to TypeScript: ${jsonToTsResults.total} tests (${jsonToTsResults.passed} passed, ${jsonToTsResults.failed} failed)`);
 console.log(`HTML Formatter: ${htmlFormatterResults.total} tests (${htmlFormatterResults.passed} passed, ${htmlFormatterResults.failed} failed)`);
-console.log(`Reading Time Estimator: ${readingTimeResults.total} tests (${readingTimeResults.passed} passed, ${readingTimeResults.failed} failed)`);
 
 
 if (grandFailed === 0) {
@@ -820,14 +790,6 @@ if (grandFailed === 0) {
     curlComparisonResults.failedTests.forEach(test => console.log(`   - ${test}`));
   }
 
-  if (passwordGeneratorResults.failed > 0) {
-    console.log('\nPassword Generator failures:');
-    passwordGeneratorResults.failedTests.forEach(test => console.log(`   - ${test}`));
-  }
-  if (textCaseConverterResults.failed > 0) {
-    console.log('\nText Case Converter failures:');
-    textCaseConverterResults.failedTests.forEach(test => console.log(`   - ${test}`));
-  }
   if (uuidResults.failed > 0) {
     console.log('\nUUID Generator failures:');
     uuidResults.failedTests.forEach(test => console.log(`   - ${test}`));
@@ -887,10 +849,6 @@ if (grandFailed === 0) {
   if (htmlFormatterResults.failed > 0) {
     console.log('\nHTML Formatter failures:');
     htmlFormatterResults.failedTests.forEach(test => console.log(`   - ${test}`));
-  }
-  if (readingTimeResults.failed > 0) {
-    console.log('\nReading Time Estimator failures:');
-    readingTimeResults.failedTests.forEach(test => console.log(`   - ${test}`));
   }
 
   console.log('\nPlease review the failed tests above.');
