@@ -43,6 +43,33 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </div>
         <Footer />
 
+        {/* Sentry Loader — same loader as the static HTML pages; the full SDK loads
+            lazily on the first error. Skipped on local hosts. Privacy options are
+            applied through sentryOnLoad: no PII, no console or input breadcrumbs. */}
+        <Script id="sentry-loader" strategy="afterInteractive">
+          {`
+            (function(){
+              var disabled = ${JSON.stringify(SITE.analyticsDisabledHosts)};
+              if (disabled.indexOf(location.hostname) !== -1) return;
+              window.sentryOnLoad = function () {
+                Sentry.init({
+                  release: 'bharatdevtools@${SITE.version}',
+                  sendDefaultPii: false,
+                  tracesSampleRate: 0,
+                  beforeBreadcrumb: function (b) {
+                    return b.category === 'console' || b.category === 'ui.input' ? null : b;
+                  }
+                });
+              };
+              var s = document.createElement('script');
+              s.src = '${SITE.sentryLoaderUrl}';
+              s.crossOrigin = 'anonymous';
+              s.async = true;
+              document.head.appendChild(s);
+            })();
+          `}
+        </Script>
+
         {/* GA4 — loaded after page is interactive */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${SITE.ga4MeasurementId}`}

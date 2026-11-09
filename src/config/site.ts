@@ -15,8 +15,8 @@ export const SITE = {
 
   // External services
   ga4MeasurementId: 'G-H00TEVH9KG',
-  // Set NEXT_PUBLIC_SENTRY_DSN at build time to enable error tracking
-  sentryDsn: process.env.NEXT_PUBLIC_SENTRY_DSN ?? '',
+  // Sentry Loader Script — same project key as the static HTML pages
+  sentryLoaderUrl: 'https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js',
 
   // Social / links
   feedbackFormUrl: 'https://forms.gle/TA7WEhzzQ6csQFGZ7',

@@ -1,6 +1,6 @@
 # CLAUDE.md — Agent & Developer Instructions
 
-> **Project:** Bharat Dev Tools ([bharatdevtools.com](https://bharatdevtools.com))  
+> **Project:** Bharat Dev Tools ([bharatdevtool.com](https://bharatdevtool.com))  
 > **Repository Nature:** Proprietary commercial developer utility platform (NOT open source).  
 > **Core Mission:** "Free developer tools, no sign-up, privacy-first, blazing fast."
 
@@ -17,7 +17,7 @@ pnpm dev
 # Type check across all TypeScript code
 pnpm exec tsc --noEmit --skipLibCheck
 
-# Compile production build (prerenders all 28 static routes)
+# Compile production build (static export to out/: public/ HTML + Next.js routes)
 pnpm build
 
 # Serve compiled production build locally
@@ -25,7 +25,28 @@ pnpm start
 
 # Run ESLint
 pnpm lint
+
+# Run unit + SEO/navigation consistency tests (Vitest)
+pnpm test
 ```
+
+---
+
+## 1.1. Hybrid Architecture (read first)
+
+The site is a **hybrid**: two stacks served from one static export (`out/`), deployed on Netlify (`netlify.toml`).
+
+| Stack | Where | What |
+|---|---|---|
+| **Static HTML tools** | `public/*.html`, `public/jsondiff/`, `public/jsonformatter/` | The original, highly optimised tools. Vanilla JS, CodeMirror, shared `public/components/header.js` + `footer.js`, `public/assets/js/analytics.js`, Sentry Loader Script. SEO (title, meta, FAQ, JSON-LD) lives inside each HTML file. |
+| **Next.js tools** | `src/app/tools/<id>/` → `/tools/<id>` | New tools only (currently the 4 Lottie tools). SEO, FAQ and JSON-LD come from the registry via `ToolLayout`. |
+
+Rules:
+- **Never port an existing HTML tool to Next.js** unless it has been benchmarked as at least as fast. New tools may use either stack.
+- `src/config/tools.ts` registers **every** tool on both stacks (it drives the Next.js footer, related tools and ⌘K search). `legacy` is derived from the route: anything not under `/tools/` is a static HTML page.
+- `public/components/footer.js` (`ALL_TOOLS_LIST`) is the HTML-side tool list. Tests fail if it drifts from the registry.
+- `public/sitemap.xml` is a hand-maintained static file shared by both stacks. Tests fail if a tool or HTML page is missing.
+- Sentry: both stacks use the same Sentry Loader Script; Next.js code reports via `src/lib/monitoring/errorReporting.ts`.
 
 ---
 
@@ -34,7 +55,8 @@ pnpm lint
 ### 2.1. 100% Client-Side Privacy
 - **Zero Server Relays**: User payloads (JSON, cURL strings, Base64, passwords, regex, QR text) must **NEVER** leave the browser.
 - **No Third-Party APIs**: Never use external third-party web generation endpoints (e.g., `api.qrserver.com`). Always use offline client-side libraries (`qrcode`, `jsqr`, Web Crypto API).
-- **Zero Server-Side Actions**: All 28 routes are pre-rendered statically (`export const dynamic = 'force-static'`). There are no server-side API handlers or databases.
+- **Zero Server-Side Actions**: Every route is pre-rendered statically (`output: 'export'`). There are no server-side API handlers or databases.
+- **Telemetry Never Carries Payloads**: GA4 events and Sentry reports may only contain fixed labels and counts — never user input, file names, or file contents.
 
 ### 2.2. Strict DRY Architecture
 1. **Single Source of Truth (`src/config/tools.ts`)**:
@@ -48,7 +70,7 @@ pnpm lint
    - Reuse standard primitives: `CodeEditor`, `OutputPane`, `CommandPalette`, `CopyButton`, `SegmentedTabs`, `ErrorMessage`, `ToolIcon`.
    - Never implement ad-hoc custom textareas or duplicate copy buttons inside tool pages.
 4. **Tool Wrapper (`src/components/layout/ToolLayout.tsx`)**:
-   - Every tool page must be wrapped with `<ToolLayout toolId="...">`. It automatically renders breadcrumbs, title, category pill, client-side privacy badge, share button, and related tools.
+   - Every **Next.js** tool page must be wrapped with `<ToolLayout toolId="...">`. It automatically renders breadcrumbs, title, category pill, client-side privacy badge, share button, and related tools.
 
 ---
 
@@ -61,9 +83,9 @@ d:\Projects\bharatdevtool\
 │   ├── decisions/      # Architecture Decision Records (ADRs)
 │   ├── docs/           # Preserved documentation (SEO, Analytics, Optimization)
 │   └── skills/         # Agent skills (frontend-design, ui-ux-pro-max)
-├── public/             # Static public assets (fonts, icons, OG images, robots.txt)
+├── public/             # Static HTML tools, shared header/footer JS, assets, sitemap.xml, robots.txt
 ├── src/
-│   ├── app/            # Next.js App Router (28 static pages)
+│   ├── app/            # Next.js App Router (Next.js tools under app/tools/)
 │   ├── components/     # UI components (ui/ and layout/)
 │   ├── config/         # Single source of truth (tools.ts, site.ts, seo.ts)
 │   └── lib/            # Pure utility functions (json, curl, regex, utils)
@@ -100,16 +122,21 @@ d:\Projects\bharatdevtool\
 
 ## 5. Adding a New Tool Workflow
 
-When creating a new developer tool:
-1. **Register the tool** in [`src/config/tools.ts`](file:///d:/Projects/bharatdevtool/src/config/tools.ts) with `id`, `label`, `category`, `description`, `route`, and `keywords`.
-2. **Add icon mapping** in [`src/components/ui/ToolIcon.tsx`](file:///d:/Projects/bharatdevtool/src/components/ui/ToolIcon.tsx).
-3. **Write pure business logic** in [`src/lib/<category>/`](file:///d:/Projects/bharatdevtool/src/lib/).
-4. **Create route & client component**:
-   - `src/app/tools/<tool-id>/page.tsx` (Server Component with static metadata).
-   - `src/app/tools/<tool-id>/<ToolName>Client.tsx` (Client Component using `ToolLayout`, `CodeEditor`, `OutputPane`).
-5. **Verify**:
-   - Run `pnpm exec tsc --noEmit --skipLibCheck`.
-   - Run `pnpm build` to verify static pre-rendering.
+When creating a new **Next.js** tool:
+1. **Register the tool** in `src/config/tools.ts` with `id`, `label`, `category`, `description` (140–160 chars), `route` (`/tools/<id>`), and `keywords`.
+2. **Add icon mapping** in `src/components/ui/ToolIcon.tsx`.
+3. **Write pure business logic** in `src/lib/<category>/`.
+4. **Write FAQs** (3–5 entries) in `src/config/faqs.ts`. `ToolLayout` renders them as a visible FAQ section and FAQPage JSON-LD.
+5. **Create route & client component**:
+   - `src/app/tools/<tool-id>/page.tsx` (Server Component with `generateToolMetadata('<tool-id>')`).
+   - `src/app/tools/<tool-id>/<ToolName>Client.tsx` (Client Component using `ToolLayout`).
+6. **Track key actions** with `analytics.track(ANALYTICS_EVENTS.X)` — add the constant to `ANALYTICS_EVENTS` in `src/config/site.ts`.
+7. **Add it to navigation and the sitemap**: `public/components/footer.js` (`ALL_TOOLS_LIST`), `public/tools.html`, and `public/sitemap.xml`.
+8. **Verify**: `pnpm exec tsc --noEmit --skipLibCheck`, `pnpm test` (enforces FAQs, title ≤ 60 chars, description 140–160 chars, sitemap and footer coverage), and `pnpm build`.
+
+When adding a **static HTML** tool: create `public/<id>.html` from an existing tool page (header.js, footer.js, analytics.js, Sentry loader, canonical, OG, JSON-LD, FAQPage), then do step 1 (route `/<id>.html`), step 2 and step 7. `pnpm test` fails until all three are done.
+
+Never merge to `main` without checking the Netlify deploy preview.
 
 ---
 

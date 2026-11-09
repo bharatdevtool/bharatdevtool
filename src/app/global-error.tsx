@@ -1,12 +1,12 @@
 'use client';
 
 import { useEffect } from 'react';
-import * as Sentry from '@sentry/nextjs';
+import { reportError } from '@/lib/monitoring/errorReporting';
 
 /** Last-resort error page when the root layout itself fails; reports the error to Sentry */
 export default function GlobalError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => {
-    Sentry.captureException(error);
+    reportError(error);
   }, [error]);
 
   return (

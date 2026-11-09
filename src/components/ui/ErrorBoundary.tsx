@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import * as Sentry from '@sentry/nextjs';
+import { reportError } from '@/lib/monitoring/errorReporting';
 import { AlertTriangle, RotateCcw } from 'lucide-react';
 
 interface ErrorBoundaryProps {
@@ -21,7 +21,7 @@ export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, E
   }
 
   componentDidCatch(error: Error, info: React.ErrorInfo) {
-    Sentry.captureException(error, { contexts: { react: { componentStack: info.componentStack } } });
+    reportError(error, { contexts: { react: { componentStack: info.componentStack } } });
   }
 
   render() {
