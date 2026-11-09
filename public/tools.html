@@ -605,6 +605,58 @@
               <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON" target="_blank" rel="noopener noreferrer" class="feature-link">JSON Basics (MDN) →</a>
             </div>
           </div>
+
+          <div class="feature-card" data-category="lottie" data-tags="lottie player studio json editor preview animation bodymovin dotlottie inspect">
+            <div class="feature-icon">🎬</div>
+            <h3 class="feature-title">Lottie Player & Studio</h3>
+            <p class="feature-description">Inspect layers, colors, framerate, and audio. Live JSON code editor with Bodymovin AST validation and real-time color swapper.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>animation.json</code> → Interactive preview, scrubber & color customization
+            </div>
+            <div class="feature-actions">
+              <a href="/tools/lottie-player" class="feature-btn">Try Lottie Studio →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="lottie" data-tags="lottie converter dotlottie json archive package compress">
+            <div class="feature-icon">📦</div>
+            <h3 class="feature-title">dotLottie Converter</h3>
+            <p class="feature-description">Convert between uncompressed Bodymovin JSON and lightweight .lottie compressed zip archives with client-side ZIP packaging.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>animation.json</code> ⇄ <code>animation.lottie</code> (up to 80% smaller)
+            </div>
+            <div class="feature-actions">
+              <a href="/tools/lottie-converter" class="feature-btn">Try Converter →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="lottie" data-tags="lottie validator health check schema audit errors missing properties">
+            <div class="feature-icon">🛡️</div>
+            <h3 class="feature-title">Lottie Validator</h3>
+            <p class="feature-description">Audit Lottie structure, verify required schema properties, detect missing image assets, and spot broken layer hierarchies.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>animation.json</code> → Pass/Fail health check & missing asset alerts
+            </div>
+            <div class="feature-actions">
+              <a href="/tools/lottie-validator" class="feature-btn">Try Validator →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="lottie" data-tags="lottie optimizer compress minify clean float precision reduce size">
+            <div class="feature-icon">⚡</div>
+            <h3 class="feature-title">Lottie Optimizer</h3>
+            <p class="feature-description">Reduce file size by truncating float precision, removing unused metadata, stripping hidden layers, and minifying payloads safely.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>12.345678px</code> → <code>12.35px</code> (cleaner vectors & faster render)
+            </div>
+            <div class="feature-actions">
+              <a href="/tools/lottie-optimizer" class="feature-btn">Try Optimizer →</a>
+            </div>
+          </div>
           
           <div class="feature-card" data-category="developer" data-tags="deeplink mobile app android ios launch url scheme test">
             <div class="feature-icon">🔗</div>
@@ -1220,6 +1272,7 @@
     (function initToolFilter() {
       const CATEGORY_LABELS = {
         json: 'JSON',
+        lottie: 'Lottie',
         qr: 'QR Codes',
         developer: 'Developer',
         regex: 'Regex',
