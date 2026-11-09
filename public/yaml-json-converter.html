@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Free YAML to JSON Converter Online | Convert YAML ↔ JSON Instantly | Bharat Dev Tools</title>
-  <meta name="description" content="Free YAML to JSON and JSON to YAML converter online. Convert, validate, and format YAML and JSON data instantly in your browser. No sign-up required. 100% private — data never leaves your device.">
+  <title>Free YAML to JSON Converter Online | Bharat Dev Tools</title>
+  <meta name="description" content="Free YAML to JSON and JSON to YAML converter. Convert, validate and format instantly. No sign-up, and your data never leaves your browser.">
   <meta name="keywords" content="yaml to json, json to yaml, yaml converter, yaml json converter, convert yaml, parse yaml online, yaml formatter, json formatter, yaml validator, free yaml converter">
   <meta name="author" content="Bharat Dev Tools">
   <meta name="robots" content="index, follow">
@@ -15,7 +15,7 @@
 
   <!-- Open Graph -->
   <meta property="og:title" content="Free YAML to JSON Converter Online | Bharat Dev Tools">
-  <meta property="og:description" content="Convert YAML to JSON and JSON to YAML instantly in your browser. Free, no sign-up required. 100% private.">
+  <meta property="og:description" content="Free YAML to JSON and JSON to YAML converter. Convert, validate and format instantly. No sign-up, and your data never leaves your browser.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://bharatdevtool.com/yaml-json-converter.html">
   <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
@@ -26,7 +26,7 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Free YAML to JSON Converter Online | Bharat Dev Tools">
-  <meta name="twitter:description" content="Convert YAML to JSON and JSON to YAML instantly. Free, private, no sign-up required.">
+  <meta name="twitter:description" content="Free YAML to JSON and JSON to YAML converter. Convert, validate and format instantly. No sign-up, and your data never leaves your browser.">
   <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
 
   <!-- Favicon -->
@@ -109,12 +109,7 @@
       "Pretty Print / Minify",
       "Copy to Clipboard",
       "Browser-only — no server"
-    ],
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.8",
-      "reviewCount": "112"
-    }
+    ]
   }
   </script>
 
@@ -502,12 +497,18 @@
       .direction-toggle { flex-direction: column; gap: 8px; }
     }
   </style>
+  <style>
+    /* Editors fill the screen on laptops/desktops (phones keep their row height). */
+    @media (min-width: 1024px) {
+      #inputEditor, #outputEditor { height: clamp(320px, calc(100vh - 380px), 900px); }
+    }
+  </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
   <!-- Header Component -->
   <script src="components/header.js"></script>
 
-  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <main class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <h1 class="sr-only">YAML to JSON / JSON to YAML Converter</h1>
 
     <!-- Hero -->

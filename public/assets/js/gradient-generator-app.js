@@ -179,11 +179,11 @@ function updateColorStopsUI() {
   container.innerHTML = '';
   gradientState.colorStops.forEach((stop, index) => {
     const stopDiv = document.createElement('div');
-    stopDiv.className = 'color-stop-item flex items-center gap-4 mb-4';
+    stopDiv.className = 'color-stop-item flex flex-wrap sm:flex-nowrap items-center gap-3 sm:gap-4 mb-4';
     stopDiv.innerHTML = `
-      <input type="color" value="${stop.color}" class="color-input w-16 h-16 rounded border-2 border-gray-300 dark:border-gray-600 cursor-pointer" data-index="${index}">
-      <input type="text" value="${stop.color}" class="color-hex-input px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white font-mono text-sm" data-index="${index}">
-      <input type="range" min="0" max="100" value="${stop.position}" class="position-slider flex-1" data-index="${index}">
+      <input type="color" value="${stop.color}" class="color-input w-12 h-12 sm:w-16 sm:h-16 flex-shrink-0 rounded border-2 border-gray-300 dark:border-gray-600 cursor-pointer" data-index="${index}">
+      <input type="text" value="${stop.color}" class="color-hex-input w-28 min-w-0 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white font-mono text-sm" data-index="${index}">
+      <input type="range" min="0" max="100" value="${stop.position}" class="position-slider flex-1 min-w-[120px]" data-index="${index}">
       <span class="position-value w-16 text-center font-mono text-sm text-gray-700 dark:text-gray-300">${stop.position}%</span>
       <button class="remove-stop-btn px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors" data-index="${index}" ${gradientState.colorStops.length <= 2 ? 'disabled' : ''}>Remove</button>
     `;

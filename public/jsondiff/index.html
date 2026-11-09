@@ -3,12 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JSON Comparison Tool | Compare JSON Structures Side-by-Side | Free Online Tool</title>
-  <meta name="description" content="Compare two JSON documents side-by-side. Analyze structural differences, key mismatches, and type differences. Free online JSON comparison tool for developers.">
+  <title>Free JSON Diff: Compare JSON Online | Bharat Dev Tools</title>
+  <meta name="description" content="Free JSON diff tool. Compare two JSON documents and see every added, removed and changed key. No sign-up, and your JSON never leaves your browser.">
   <meta name="keywords" content="json comparison, json diff, compare json, json structure comparison, json validator, json compare tool, online json diff">
   <meta name="author" content="Bharat Dev Tools">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://bharatdevtool.com/jsondiff/">
+  <meta property="og:title" content="Free JSON Diff: Compare JSON Online | Bharat Dev Tools">
+  <meta property="og:description" content="Free JSON diff tool. Compare two JSON documents and see every added, removed and changed key. No sign-up, and your JSON never leaves your browser.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/jsondiff/">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free JSON Diff: Compare JSON Online | Bharat Dev Tools">
+  <meta name="twitter:description" content="Free JSON diff tool. Compare two JSON documents and see every added, removed and changed key. No sign-up, and your JSON never leaves your browser.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
@@ -292,11 +301,17 @@
       background-color: rgba(55, 65, 81, 0.5);
     }
   </style>
+  <style>
+    /* Editors fill the screen on laptops/desktops (phones keep their row height). */
+    @media (min-width: 1024px) {
+      #left-json, #right-json { height: clamp(320px, calc(100vh - 380px), 900px); }
+    }
+  </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
   <script src="../components/header.js"></script>
 
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <main class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <h1 class="sr-only">JSON Comparison Tool</h1>
     
     <div class="text-center mb-8 animate-fade-in">

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Free Diff Checker Online | Text Compare & Find Differences | Bharat Dev Tools</title>
-  <meta name="description" content="Free online diff checker and text comparison tool. Compare two text files side-by-side, find differences instantly. Supports line-by-line and character-level diff. No sign-up required.">
+  <title>Free Diff Checker: Compare Text Online | Bharat Dev Tools</title>
+  <meta name="description" content="Free diff checker. Compare two texts side by side and see every added, removed and changed line instantly. No sign-up, nothing uploaded, runs in your browser.">
   <meta name="keywords" content="diff checker, text compare, compare two texts, online diff tool, text difference, find differences, code diff, file comparison, line diff, text diff online free, side by side compare">
   <meta name="author" content="Bharat Dev Tools">
   <meta name="robots" content="index, follow">
@@ -16,8 +16,8 @@
   <link rel="canonical" href="https://bharatdevtool.com/diff-checker.html">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Free Diff Checker Online | Text Compare Tool | Bharat Dev Tools">
-  <meta property="og:description" content="Free online diff checker and text comparison tool. Compare two texts side-by-side, find differences instantly. No sign-up required.">
+  <meta property="og:title" content="Free Diff Checker: Compare Text Online | Bharat Dev Tools">
+  <meta property="og:description" content="Free diff checker. Compare two texts side by side and see every added, removed and changed line instantly. No sign-up, nothing uploaded, runs in your browser.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://bharatdevtool.com/diff-checker.html">
   <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
@@ -27,8 +27,8 @@
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Free Diff Checker Online | Text Compare Tool | Bharat Dev Tools">
-  <meta name="twitter:description" content="Free online diff checker and text comparison tool. Compare two texts side-by-side, find differences instantly.">
+  <meta name="twitter:title" content="Free Diff Checker: Compare Text Online | Bharat Dev Tools">
+  <meta name="twitter:description" content="Free diff checker. Compare two texts side by side and see every added, removed and changed line instantly. No sign-up, nothing uploaded, runs in your browser.">
   <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
 
   <!-- Favicon -->
@@ -113,12 +113,7 @@
       "Copy to clipboard",
       "Swap sides",
       "Browser-only processing"
-    ],
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.8",
-      "reviewCount": "112"
-    }
+    ]
   }
   </script>
 
@@ -415,12 +410,18 @@
       .toast { transition: none; }
     }
   </style>
+  <style>
+    /* Editors fill the screen on laptops/desktops (phones keep their row height). */
+    @media (min-width: 1024px) {
+      #original-text, #modified-text { height: clamp(320px, calc(100vh - 380px), 900px); }
+    }
+  </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
   <!-- Header -->
   <script src="components/header.js"></script>
 
-  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <main class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <h1 class="sr-only">Diff Checker – Free Online Text Comparison Tool</h1>
 
     <!-- Hero -->

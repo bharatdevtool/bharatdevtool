@@ -130,8 +130,42 @@ function createFooter(version = '1.0') {
   document.body.insertAdjacentHTML('beforeend', footerHTML);
 }
 
+/**
+ * Trust badge shown at the top of every static page's main content:
+ * the tools are free and nothing the user enters or uploads leaves the browser.
+ */
+function createTrustBadge() {
+  const main = document.querySelector('main');
+  if (!main || main.querySelector('.trust-badge')) return;
+  const lock = '<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+  const badge = '<div class="trust-badge-wrap"><p class="trust-badge">' + lock +
+    '<span><strong>100% free</strong> · No sign-up · Your data never leaves your browser</span></p></div>';
+  main.insertAdjacentHTML('afterbegin', badge);
+  if (!document.getElementById('trust-badge-style')) {
+    // Styles live here because not every page loads footer.css.
+    const style = document.createElement('style');
+    style.id = 'trust-badge-style';
+    style.textContent = TRUST_BADGE_CSS;
+    document.head.appendChild(style);
+  }
+}
+
+const TRUST_BADGE_CSS = `
+.trust-badge-wrap { display: flex; justify-content: center; padding: 12px 16px 0; }
+.trust-badge {
+  display: inline-flex; align-items: center; gap: 8px; margin: 0;
+  padding: 6px 14px; border-radius: 9999px;
+  font-size: 13px; line-height: 1.4; text-align: center;
+  color: #047857; background: rgba(16, 185, 129, 0.10); border: 1px solid rgba(16, 185, 129, 0.35);
+}
+.trust-badge svg { flex-shrink: 0; }
+[data-theme="dark"] .trust-badge, .dark .trust-badge { color: #6ee7b7; background: rgba(16, 185, 129, 0.12); border-color: rgba(16, 185, 129, 0.35); }
+@media (max-width: 480px) { .trust-badge { font-size: 12px; padding: 6px 12px; } }
+`;
+
 // Load version and create footer
 function initFooter() {
+  createTrustBadge();
   createAllToolsSection();
   // Get version from version.js (already loaded) or use default
   const version = (window.appVersion && window.appVersion.version) || '1.0';

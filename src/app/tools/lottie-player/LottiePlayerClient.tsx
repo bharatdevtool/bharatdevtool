@@ -1312,7 +1312,7 @@ export default function LottiePlayerClient({
               {/* Unified Header Menu Bar */}
               <div
                 ref={menuContainerRef}
-                className="relative z-30 flex items-center border-b border-border bg-card px-2 py-1 rounded-t-2xl"
+                className="relative z-30 flex flex-wrap items-center gap-y-1 border-b border-border bg-card px-2 py-1 rounded-t-2xl"
               >
                 {/* 1. File Menu */}
                 <div className="relative shrink-0">

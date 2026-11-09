@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Free CSV to JSON Converter Online | Convert CSV ↔ JSON Instantly | Bharat Dev Tools</title>
-  <meta name="description" content="Free CSV to JSON converter and JSON to CSV converter. Convert data instantly in your browser — no upload, no sign-up. Supports custom delimiters, header detection, and pretty-print output.">
+  <title>Free CSV to JSON Converter Online | Bharat Dev Tools</title>
+  <meta name="description" content="Free CSV to JSON and JSON to CSV converter with custom delimiters and headers. Your data never leaves your browser. No sign-up, nothing uploaded.">
   <meta name="keywords" content="csv to json converter, json to csv converter, csv json online, convert csv to json free, parse csv javascript, csv json tool, data conversion, free csv json, csv json no upload, json csv converter online">
   <meta name="author" content="Bharat Dev Tools">
   <meta name="robots" content="index, follow">
@@ -17,7 +17,7 @@
 
   <!-- Open Graph -->
   <meta property="og:title" content="Free CSV to JSON Converter Online | Bharat Dev Tools">
-  <meta property="og:description" content="Convert CSV to JSON and JSON to CSV instantly in your browser. Free, private, no sign-up required. Supports custom delimiters and pretty-print output.">
+  <meta property="og:description" content="Free CSV to JSON and JSON to CSV converter with custom delimiters and headers. Your data never leaves your browser. No sign-up, nothing uploaded.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://bharatdevtool.com/csv-json-converter.html">
   <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
@@ -28,7 +28,7 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Free CSV to JSON Converter Online | Bharat Dev Tools">
-  <meta name="twitter:description" content="Convert CSV to JSON and JSON to CSV instantly in your browser. Free, private, no sign-up required.">
+  <meta name="twitter:description" content="Free CSV to JSON and JSON to CSV converter with custom delimiters and headers. Your data never leaves your browser. No sign-up, nothing uploaded.">
   <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
 
   <!-- Favicon -->
@@ -114,12 +114,7 @@
       "File upload support",
       "Copy to clipboard",
       "Download output file"
-    ],
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.8",
-      "reviewCount": "112"
-    }
+    ]
   }
   </script>
 
@@ -393,12 +388,18 @@
     .preview-table tbody tr:hover td { background: #f9fafb; }
     [data-theme="dark"] .preview-table tbody tr:hover td { background: #1f2937; }
   </style>
+  <style>
+    /* Editors fill the screen on laptops/desktops (phones keep their row height). */
+    @media (min-width: 1024px) {
+      #inputArea, #outputArea { height: clamp(320px, calc(100vh - 380px), 900px); }
+    }
+  </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
   <!-- Header -->
   <script src="components/header.js"></script>
 
-  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <main class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <h1 class="sr-only">CSV to JSON Converter — Free Online Tool</h1>
 
     <!-- Hero -->
