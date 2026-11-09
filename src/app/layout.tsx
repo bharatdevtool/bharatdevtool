@@ -44,6 +44,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <Header />
+        {/* Same one-line trust strip as the static pages (public/components/footer.js) */}
+        <p className="m-0 px-4 py-1.5 text-center text-xs sm:text-[13px] leading-snug whitespace-nowrap overflow-hidden text-ellipsis text-emerald-700 dark:text-emerald-300">
+          <strong>100% free</strong> · No sign-up ·{' '}
+          <span className="hidden sm:inline">Your data never leaves your browser</span>
+          <span className="sm:hidden">Nothing uploaded</span>
+        </p>
         <div className="flex flex-1 flex-col">
           {children}
         </div>

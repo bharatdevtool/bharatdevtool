@@ -2,7 +2,7 @@
 
 import React, { useSyncExternalStore } from 'react';
 import Link from 'next/link';
-import { ChevronDown, ChevronRight, HelpCircle, ShieldCheck, Sparkles } from 'lucide-react';
+import { ChevronDown, ChevronRight, HelpCircle, Sparkles } from 'lucide-react';
 import { getToolById, TOOLS } from '@/config/tools';
 import { getToolFaqs } from '@/config/faqs';
 import { generateToolJsonLd } from '@/config/seo';
@@ -64,9 +64,6 @@ export default function ToolLayout({ toolId, children, headingOverride }: ToolLa
               <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
                 {headingOverride ?? tool.label}
               </h1>
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-                <ShieldCheck className="w-3 h-3" /> 100% free · Nothing uploaded
-              </span>
             </div>
             <p className="mt-1 text-xs sm:text-sm text-muted-foreground max-w-2xl">
               {tool.description}

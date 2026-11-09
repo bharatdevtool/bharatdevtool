@@ -81,9 +81,9 @@ function createSecondaryHeader() {
               <span class="hidden dark:inline">☀️</span>
             </button>
             
-            <!-- Other Tools link -->
+            <!-- All Tools link -->
             <a href="${toolsPath}" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors whitespace-nowrap tools-link-btn">
-              Other tools
+              All tools
             </a>
           </div>
         </div>

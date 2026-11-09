@@ -131,36 +131,43 @@ function createFooter(version = '1.0') {
 }
 
 /**
- * Trust badge shown at the top of every static page's main content:
+ * One-line trust strip shown right below the header on every static page:
  * the tools are free and nothing the user enters or uploads leaves the browser.
  */
 function createTrustBadge() {
-  const main = document.querySelector('main');
-  if (!main || main.querySelector('.trust-badge')) return;
-  const lock = '<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
-  const badge = '<div class="trust-badge-wrap"><p class="trust-badge">' + lock +
-    '<span><strong>100% free</strong> · No sign-up · Your data never leaves your browser</span></p></div>';
-  main.insertAdjacentHTML('afterbegin', badge);
-  if (!document.getElementById('trust-badge-style')) {
+  if (document.querySelector('.trust-strip')) return;
+  const strip = '<p class="trust-strip"><strong>100% free</strong> · No sign-up · ' +
+    '<span class="trust-long">Your data never leaves your browser</span>' +
+    '<span class="trust-short">Nothing uploaded</span></p>';
+  const header = document.querySelector('body > header, header.secondary-header');
+  if (header) header.insertAdjacentHTML('afterend', strip);
+  else {
+    const main = document.querySelector('main');
+    if (!main) return;
+    main.insertAdjacentHTML('afterbegin', strip);
+  }
+  if (!document.getElementById('trust-strip-style')) {
     // Styles live here because not every page loads footer.css.
     const style = document.createElement('style');
-    style.id = 'trust-badge-style';
-    style.textContent = TRUST_BADGE_CSS;
+    style.id = 'trust-strip-style';
+    style.textContent = TRUST_STRIP_CSS;
     document.head.appendChild(style);
   }
 }
 
-const TRUST_BADGE_CSS = `
-.trust-badge-wrap { display: flex; justify-content: center; padding: 12px 16px 0; }
-.trust-badge {
-  display: inline-flex; align-items: center; gap: 8px; margin: 0;
-  padding: 6px 14px; border-radius: 9999px;
-  font-size: 13px; line-height: 1.4; text-align: center;
-  color: #047857; background: rgba(16, 185, 129, 0.10); border: 1px solid rgba(16, 185, 129, 0.35);
+const TRUST_STRIP_CSS = `
+.trust-strip {
+  margin: 0; padding: 6px 16px; text-align: center;
+  font-size: 13px; line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  color: #047857;
 }
-.trust-badge svg { flex-shrink: 0; }
-[data-theme="dark"] .trust-badge, .dark .trust-badge { color: #6ee7b7; background: rgba(16, 185, 129, 0.12); border-color: rgba(16, 185, 129, 0.35); }
-@media (max-width: 480px) { .trust-badge { font-size: 12px; padding: 6px 12px; } }
+[data-theme="dark"] .trust-strip, .dark .trust-strip { color: #6ee7b7; }
+.trust-strip .trust-short { display: none; }
+@media (max-width: 520px) {
+  .trust-strip { font-size: 12px; }
+  .trust-strip .trust-long { display: none; }
+  .trust-strip .trust-short { display: inline; }
+}
 `;
 
 // Load version and create footer
