@@ -3,6 +3,55 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <!-- First-time vs Returning user routing -->
+  <script>
+    (function () {
+      try {
+        var cookies = document.cookie ? document.cookie.split('; ') : [];
+        var cookieMap = {};
+        for (var i = 0; i < cookies.length; i++) {
+          var parts = cookies[i].split('=');
+          if (parts[0]) cookieMap[parts[0]] = decodeURIComponent(parts.slice(1).join('='));
+        }
+        var visited = cookieMap['bdt_visited'];
+        var lastTool = cookieMap['bdt_last_tool'];
+        var maxAge = 31536000; // 1 year
+
+        // Explicit intent to open JSON Formatter (?tool=json, ?direct=1, or internal link)
+        var search = window.location.search || '';
+        var isInternal = Boolean(document.referrer && document.referrer.indexOf(window.location.origin) === 0);
+        var isExplicit = isInternal || search.indexOf('tool=') !== -1 || search.indexOf('direct=') !== -1;
+
+        if (!visited) {
+          // First-time user: mark visited and redirect to all tools menu
+          document.cookie = 'bdt_visited=1;path=/;max-age=' + maxAge + ';SameSite=Lax';
+          window.location.replace('tools.html');
+          return;
+        }
+
+        if (!isExplicit) {
+          if (lastTool) {
+            var clean = lastTool.replace(/^\/+/, '');
+            if (clean && clean !== 'index.html' && clean !== 'index.html/' && clean !== '/') {
+              // Ensure redirect stays internal
+              if (!/^https?:\/\//i.test(lastTool) || lastTool.indexOf(window.location.origin) === 0) {
+                window.location.replace(lastTool);
+                return;
+              }
+            }
+          } else {
+            // Returning user who hasn't opened a specific tool yet: show tools menu
+            window.location.replace('tools.html');
+            return;
+          }
+        }
+
+        // Staying on JSON Formatter: mark as last tool
+        document.cookie = 'bdt_last_tool=/index.html;path=/;max-age=' + maxAge + ';SameSite=Lax';
+        document.cookie = 'bdt_visited=1;path=/;max-age=' + maxAge + ';SameSite=Lax';
+      } catch (e) {}
+    })();
+  </script>
   <!-- SEO: Descriptive, keyword-rich title -->
   <title>JSON Formatter, Beautifier & Validator Online | Minify, Escape & Repair JSON | Free Tool</title>
   <!-- SEO: Primary meta description for search results -->

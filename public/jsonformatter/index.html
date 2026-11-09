@@ -3,6 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <!-- Track tool visit for returning user routing -->
+  <script>
+    (function () {
+      try {
+        var maxAge = 31536000;
+        document.cookie = 'bdt_visited=1;path=/;max-age=' + maxAge + ';SameSite=Lax';
+        document.cookie = 'bdt_last_tool=/jsonformatter/;path=/;max-age=' + maxAge + ';SameSite=Lax';
+      } catch (e) {}
+    })();
+  </script>
   <!-- SEO: Descriptive, keyword-rich title -->
   <title>JSON Formatter, Beautifier & Validator Online | Minify, Escape & Repair JSON | Free Tool</title>
   <!-- SEO: Primary meta description for search results -->
