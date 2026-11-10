@@ -44,6 +44,16 @@
 
 # Clean URL handling for static HTML tools
 [[redirects]]
+  from = "/image-to-pdf.html"
+  to = "/tools/jpg-to-pdf"
+  status = 301
+
+[[redirects]]
+  from = "/image-to-pdf"
+  to = "/tools/jpg-to-pdf"
+  status = 301
+
+[[redirects]]
   from = "/simple-qr.html"
   to = "/qr-generator-free.html"
   status = 301

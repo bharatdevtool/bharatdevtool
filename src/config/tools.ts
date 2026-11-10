@@ -11,6 +11,7 @@
 export type ToolCategory =
   | 'JSON & Data'
   | 'Image'
+  | 'PDF'
   | 'QR & Links'
   | 'Developer'
   | 'Encode & Security'
@@ -265,6 +266,73 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     keywords: ['lottie optimizer', 'compress lottie json', 'reduce lottie file size', 'clean lottie metadata', 'bodymovin optimizer'],
     heavy: true,
   },
+  // ── PDF (one shared workspace, one URL per task) ──────────
+  {
+    id: 'compress-pdf',
+    label: 'Compress PDF',
+    route: '/tools/compress-pdf',
+    category: 'PDF',
+    description:
+      'Free PDF compressor: reduce PDF size or hit an exact size like 100 KB or 200 KB for forms. Keep text sharp or squeeze hard. Runs in your browser, no upload.',
+    shortDesc: 'Shrink PDFs, or hit an exact KB size',
+    keywords: ['compress pdf', 'reduce pdf size', 'compress pdf to 100kb', 'compress pdf to 200kb', 'pdf compressor', 'shrink pdf'],
+    heavy: true,
+  },
+  {
+    id: 'merge-pdf',
+    label: 'Merge PDF',
+    route: '/tools/merge-pdf',
+    category: 'PDF',
+    description:
+      'Free PDF merger: combine PDFs and images into one PDF, drag pages into order, rotate or remove any page. No limits, no sign-up, nothing is uploaded anywhere.',
+    shortDesc: 'Combine PDFs and images into one PDF',
+    keywords: ['merge pdf', 'combine pdf', 'join pdf', 'merge pdf files', 'pdf merger', 'combine pdf and images'],
+    heavy: true,
+  },
+  {
+    id: 'split-pdf',
+    label: 'Split PDF',
+    route: '/tools/split-pdf',
+    category: 'PDF',
+    description:
+      'Free PDF splitter: extract pages, split every page into its own file, or split by ranges like 1-3, 5. Pick pages from thumbnails. Runs in your browser.',
+    shortDesc: 'Extract pages or split a PDF into files',
+    keywords: ['split pdf', 'extract pages from pdf', 'separate pdf pages', 'pdf splitter', 'split pdf by range', 'remove pages from pdf'],
+    heavy: true,
+  },
+  {
+    id: 'organize-pdf',
+    label: 'Organize PDF',
+    route: '/tools/organize-pdf',
+    category: 'PDF',
+    description:
+      'Free PDF organizer: reorder, rotate and delete PDF pages with drag and drop, then save a clean new PDF. Works on phones too. No upload, no sign-up, no limits.',
+    shortDesc: 'Reorder, rotate and delete PDF pages',
+    keywords: ['organize pdf', 'rotate pdf', 'reorder pdf pages', 'delete pdf pages', 'rearrange pdf', 'rotate pdf pages'],
+    heavy: true,
+  },
+  {
+    id: 'pdf-to-jpg',
+    label: 'PDF to JPG',
+    route: '/tools/pdf-to-jpg',
+    category: 'PDF',
+    description:
+      'Free PDF to JPG converter: turn every PDF page, or just the ones you pick, into sharp JPG or PNG images at 72 to 300 DPI. Get one image or a ZIP. No upload.',
+    shortDesc: 'Convert PDF pages to JPG or PNG images',
+    keywords: ['pdf to jpg', 'pdf to image', 'pdf to png', 'convert pdf to jpg', 'pdf to jpeg', 'extract images from pdf'],
+    heavy: true,
+  },
+  {
+    id: 'jpg-to-pdf',
+    label: 'JPG to PDF',
+    route: '/tools/jpg-to-pdf',
+    category: 'PDF',
+    description:
+      'Free JPG to PDF converter: turn photos and scans (JPG, PNG, WebP) into one PDF. Reorder and rotate pages, pick A4, Letter or fit. No upload, no sign-up.',
+    shortDesc: 'Turn JPG, PNG and WebP images into a PDF',
+    keywords: ['jpg to pdf', 'image to pdf', 'png to pdf', 'convert jpg to pdf', 'photo to pdf', 'multiple images to pdf'],
+    heavy: true,
+  },
   // ── Static HTML tools added in Phase 2-4 ──────────────────
   {
     id: 'jwt-decoder',
@@ -437,16 +505,6 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     keywords: ['resize image to 20kb', 'compress image to 50kb', 'resize photo in kb', 'signature resize', 'exam photo resizer', 'ssc photo resize'],
   },
   {
-    id: 'image-to-pdf',
-    label: 'Image to PDF Converter',
-    route: '/image-to-pdf.html',
-    category: 'Image',
-    description:
-      'Free Image to PDF converter. Convert JPG, PNG, WebP images to PDF instantly in your browser. No sign-up required. Supports multiple images, A4/Letter page sizes, portrait and landscape orientation.',
-    shortDesc: 'Free Image to PDF converter',
-    keywords: ['image to pdf', 'jpg to pdf', 'png to pdf', 'convert image to pdf', 'free image to pdf', 'multiple images to pdf'],
-  },
-  {
     id: 'favicon-generator',
     label: 'Favicon Generator',
     route: '/favicon-generator.html',
@@ -502,13 +560,14 @@ export function getToolsByCategory(category: ToolCategory): Tool[] {
 
 /** All unique categories in display order */
 export const TOOL_CATEGORIES: ToolCategory[] = [
-  'JSON & Data', 'Image', 'QR & Links', 'Developer', 'Encode & Security', 'Calculators & Time', 'Design & Animation',
+  'JSON & Data', 'Image', 'PDF', 'QR & Links', 'Developer', 'Encode & Security', 'Calculators & Time', 'Design & Animation',
 ];
 
 /** URL-safe id for each category (used by /tools?cat=… and footer.js). */
 export const CATEGORY_SLUGS: Record<ToolCategory, string> = {
   'JSON & Data': 'json',
   'Image': 'image',
+  'PDF': 'pdf',
   'QR & Links': 'qr-links',
   'Developer': 'developer',
   'Encode & Security': 'security',

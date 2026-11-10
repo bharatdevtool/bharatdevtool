@@ -121,6 +121,113 @@ export const TOOL_FAQS: Record<string, ToolFaq[]> = {
     },
     { question: 'Is my animation sent to a server for validation?', answer: PRIVACY_ANSWER },
   ],
+  // ── PDF ───────────────────────────────────────────────────
+  'compress-pdf': [
+    {
+      question: 'How do I compress a PDF to 100 KB or 200 KB?',
+      answer:
+        'Choose "Exact size", pick 100 KB, 200 KB or type your own limit, and click Compress. The tool tries the sharpest quality that still fits and tells you if a file cannot get that small. This is the mode to use for exam and government form uploads.',
+    },
+    {
+      question: 'What is the difference between "Keep text" and "Exact size"?',
+      answer:
+        '"Keep text" only recompresses the photos inside the PDF, so text stays sharp, selectable and searchable. "Exact size" turns each page into an image to reach a specific size, so text can no longer be selected. Try "Keep text" first.',
+    },
+    {
+      question: 'Is there a file size or daily limit?',
+      answer:
+        'No. There is no daily limit and no upload, so large files are limited only by your device memory. Phones handle PDFs of several hundred pages; very large scans are faster on a computer.',
+    },
+    { question: 'Is my PDF uploaded to a server?', answer: PRIVACY_ANSWER },
+  ],
+  'merge-pdf': [
+    {
+      question: 'How do I merge PDF files?',
+      answer:
+        'Drop or choose all your PDFs, drag the page thumbnails into the order you want, and click Merge. You can add more files at any time, and remove or rotate single pages before saving.',
+    },
+    {
+      question: 'Can I combine PDFs and images in one file?',
+      answer:
+        'Yes. JPG, PNG and WebP images become pages next to your PDF pages, so you can put a scanned photo between two PDF documents and save everything as one PDF.',
+    },
+    {
+      question: 'Does merging reduce quality?',
+      answer:
+        'No. PDF pages are copied as they are, with text, links and images unchanged. To make the merged file smaller afterwards, click "Compress this result".',
+    },
+    { question: 'Are my files uploaded anywhere?', answer: PRIVACY_ANSWER },
+  ],
+  'split-pdf': [
+    {
+      question: 'How do I extract pages from a PDF?',
+      answer:
+        'Open the PDF, click the page thumbnails you want (Shift-click selects a range) and choose "Selected pages → one PDF". You can also type ranges such as 1-3, 5, 8-.',
+    },
+    {
+      question: 'Can I split every page into its own PDF?',
+      answer:
+        'Yes. Choose "Every page → separate PDFs" and you get a ZIP with one PDF per page. "Custom ranges" makes one PDF per range, for example 1-3 and 4-6.',
+    },
+    {
+      question: 'Does splitting change the pages?',
+      answer: 'No. Pages are copied exactly, with text, images and links intact.',
+    },
+    { question: 'Is my PDF uploaded to a server?', answer: PRIVACY_ANSWER },
+  ],
+  'organize-pdf': [
+    {
+      question: 'How do I rotate pages in a PDF?',
+      answer:
+        'Open the PDF, select one or more pages and click Rotate (or press R). Rotate all pages at once with Select all, then save. The rotation is stored in the PDF, so it shows the same way everywhere.',
+    },
+    {
+      question: 'How do I reorder or delete PDF pages?',
+      answer:
+        'Drag a page by its handle to a new place, or use the arrow buttons on touch screens. Select pages and press Delete or click the bin to remove them, then click Save.',
+    },
+    {
+      question: 'Can I undo a change?',
+      answer:
+        'Nothing is changed in your original file. Until you save, you can re-add the file to start over; the new PDF is only created when you click Save.',
+    },
+    { question: 'Is my PDF uploaded to a server?', answer: PRIVACY_ANSWER },
+  ],
+  'pdf-to-jpg': [
+    {
+      question: 'How do I convert a PDF to JPG?',
+      answer:
+        'Open the PDF, choose JPG or PNG and a quality (150 DPI suits screens, 300 DPI suits printing), then click Convert. One page downloads as an image; several pages download as a ZIP.',
+    },
+    {
+      question: 'Can I convert only some pages?',
+      answer: 'Yes. Select the pages you want in the thumbnail grid first; only those are converted.',
+    },
+    {
+      question: 'Should I choose JPG or PNG?',
+      answer:
+        'JPG makes much smaller files and is best for scans and photos. PNG is lossless and keeps text and line drawings perfectly sharp, at a larger size.',
+    },
+    { question: 'Is my PDF uploaded to a server?', answer: PRIVACY_ANSWER },
+  ],
+  'jpg-to-pdf': [
+    {
+      question: 'How do I convert JPG images to a PDF?',
+      answer:
+        'Drop or choose your images, drag them into order, rotate any that are sideways, pick a page size and click Create PDF. Each image becomes one page.',
+    },
+    {
+      question: 'Which page size should I choose?',
+      answer:
+        'A4 is the standard for India and most forms; Letter is common in the US. "Fit to image" makes each page exactly the size of its image with no white border.',
+    },
+    {
+      question: 'Which image formats are supported?',
+      answer:
+        'JPG, PNG and WebP, plus GIF, BMP and AVIF where your browser can open them. iPhone HEIC photos should be exported as JPG first.',
+    },
+    { question: 'Are my photos uploaded anywhere?', answer: PRIVACY_ANSWER },
+  ],
   'lottie-optimizer': [
     {
       question: 'How does the Lottie optimizer reduce file size?',
