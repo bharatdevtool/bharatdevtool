@@ -32,7 +32,7 @@ function extractColorFromImage(image, x, y) {
   } catch (error) {
     if (typeof window.Analytics !== 'undefined') {
       window.Analytics.track('image_color_extraction_failed', {
-        error: error.message,
+        error_type: (error && error.name) || "Error",
         page: 'color_picker'
       });
     }
@@ -98,7 +98,7 @@ function extractDominantColors(image, count = 5) {
   } catch (error) {
     if (typeof window.Analytics !== 'undefined') {
       window.Analytics.track('dominant_color_extraction_failed', {
-        error: error.message,
+        error_type: (error && error.name) || "Error",
         page: 'color_picker'
       });
     }

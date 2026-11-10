@@ -1081,7 +1081,7 @@ ${bodyHtml}</body>
         if (typeof window.Analytics !== 'undefined') {
           window.Analytics.track('markdown_convert_error', {
             page: PAGE_NAME,
-            error_message: err.message,
+            error_type: (err && err.name) || "Error",
             input_length: input.length
           });
         }

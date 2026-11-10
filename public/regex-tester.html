@@ -2,6 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <!-- Prefill (#pattern= or legacy ?pattern=) can hold user data: copy it to memory and clear the address bar before analytics/Sentry load. -->
+  <script>
+    (function () {
+      var p = new URLSearchParams();
+      try {
+        p = new URLSearchParams(location.search);
+        new URLSearchParams(location.hash.slice(1)).forEach(function (v, k) { p.set(k, v); });
+        if (['pattern'].some(function (k) { return p.has(k); })) history.replaceState(null, '', location.pathname);
+      } catch (e) {}
+      window.__bdtPrefill = p;
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Free Regex Tester &amp; Debugger Online | Bharat Dev Tools</title>
   <meta name="description" content="Free regex tester. Test regular expressions in real time with match highlighting and capture groups. No sign-up, and your text stays in your browser.">

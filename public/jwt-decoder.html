@@ -2,6 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <!-- Prefill (#token= or legacy ?token=) can hold user data: copy it to memory and clear the address bar before analytics/Sentry load. -->
+  <script>
+    (function () {
+      var p = new URLSearchParams();
+      try {
+        p = new URLSearchParams(location.search);
+        new URLSearchParams(location.hash.slice(1)).forEach(function (v, k) { p.set(k, v); });
+        if (['token'].some(function (k) { return p.has(k); })) history.replaceState(null, '', location.pathname);
+      } catch (e) {}
+      window.__bdtPrefill = p;
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Free JWT Decoder Online | Bharat Dev Tools</title>
   <meta name="description" content="Free JWT decoder. Inspect the header, payload, claims and expiry of any JSON Web Token. No sign-up, and your tokens never leave your browser.">
@@ -804,7 +816,7 @@
           window.Analytics.track('jwt_decode_error', {
             page: JWT_PAGE_NAME,
             error_type: err.name,
-            error_message: err.message,
+            error_type: (err && err.name) || "Error",
             input_length: input.length
           });
         }
@@ -879,10 +891,10 @@
         copyToClipboard(text, 'Signature');
       });
 
-      const urlParams = new URLSearchParams(window.location.search);
+      const urlParams = (window.__bdtPrefill || new URLSearchParams());
       const tokenParam = urlParams.get('token');
       if (tokenParam) {
-        input.value = decodeURIComponent(tokenParam);
+        input.value = tokenParam;
         decodeToken();
       }
     });

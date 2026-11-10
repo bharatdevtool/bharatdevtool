@@ -1168,7 +1168,7 @@ tags:
         showToast('Invalid YAML', 'error');
 
         if (typeof window.Analytics !== 'undefined') {
-          window.Analytics.track('yaml_to_json_error', { page: PAGE_NAME, error: err.message });
+          window.Analytics.track('yaml_to_json_error', { page: PAGE_NAME, error_type: (err && err.name) || "Error" });
         }
         if (typeof Sentry !== 'undefined') {
           try { Sentry.captureException(err, { tags: { operation: 'yaml_to_json' } }); } catch (_) {}
@@ -1208,7 +1208,7 @@ tags:
         showToast('Invalid JSON', 'error');
 
         if (typeof window.Analytics !== 'undefined') {
-          window.Analytics.track('json_to_yaml_error', { page: PAGE_NAME, error: err.message });
+          window.Analytics.track('json_to_yaml_error', { page: PAGE_NAME, error_type: (err && err.name) || "Error" });
         }
         if (typeof Sentry !== 'undefined') {
           try { Sentry.captureException(err, { tags: { operation: 'json_to_yaml' } }); } catch (_) {}

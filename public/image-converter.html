@@ -745,7 +745,7 @@
       if (typeof window.Analytics !== 'undefined') {
         window.Analytics.track('image_converter_error', {
           page: PAGE_NAME,
-          error: err.message
+          error_type: (err && err.name) || "Error"
         });
       }
       if (typeof Sentry !== 'undefined') {

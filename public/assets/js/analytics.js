@@ -232,7 +232,11 @@ function initGA4() {
   }
   window.gtag = gtag;
   gtag('js', new Date());
-  
+  // Early config without a page view so events fired before load never carry ?query or #hash.
+  const earlyConfig = { send_page_view: false, page_location: stripQueryAndHash(window.location.href) };
+  if (document.referrer) earlyConfig.page_referrer = stripQueryAndHash(document.referrer);
+  gtag('config', ANALYTICS_CONFIG.GA4_MEASUREMENT_ID, earlyConfig);
+
   // Note: Page view tracking happens in auto-initialization section
   // with user-friendly page names
 }
@@ -242,6 +246,82 @@ function initGA4() {
  * @param {string} eventName - Name of the event (use ANALYTICS_EVENTS constants)
  * @param {object} eventParams - Optional parameters for the event
  */
+// ============================================================================
+// PRIVACY GUARD — telemetry may only carry fixed labels and counts.
+// This is a safety net: call sites should already send labels only.
+// ============================================================================
+const RISKY_PARAM_KEY = /(file_?name|filename|url|uri|link|preview|input|token|secret|password|message|^error$|^err$|value|result|query|content|payload|text|bmi|emi|amount|principal|phone|email)/i;
+const SAFE_PARAM_SUFFIX = /(_length|_len|_count|_size|_bytes|_kb|_ms|_type|_code|_mode|_format|_version|_status|_id)$/i;
+const LABEL_LIKE = /^[A-Za-z0-9 _.,()+\-]{0,60}$/;
+
+function sanitizeEventParams(params) {
+  const out = {};
+  if (!params || typeof params !== 'object') return out;
+  Object.keys(params).forEach(function (key) {
+    const v = params[key];
+    if (v === null || v === undefined) return;
+    const risky = RISKY_PARAM_KEY.test(key) && !SAFE_PARAM_SUFFIX.test(key);
+    if (typeof v === 'boolean') { out[key] = v; return; }
+    if (typeof v === 'number') { if (!risky) out[key] = v; return; }
+    if (typeof v !== 'string' || risky) return;
+    out[key] = LABEL_LIKE.test(v) ? v : '[redacted]';
+  });
+  return out;
+}
+
+function stripQueryAndHash(url) {
+  if (!url) return url;
+  try {
+    const u = new URL(url, window.location.origin);
+    return u.origin + u.pathname;
+  } catch (_) {
+    return String(url).split(/[?#]/)[0];
+  }
+}
+
+// Sentry: drop error text (it can quote user input), extras, and network/console breadcrumbs.
+function scrubSentryEvent(event) {
+  try {
+    if (event.exception && event.exception.values) {
+      event.exception.values.forEach(function (ex) {
+        if (ex.value && !/^[A-Za-z0-9_.:\-]{1,60}$/.test(ex.value)) ex.value = ex.type || 'Error';
+      });
+    }
+    if (event.message && !LABEL_LIKE.test(event.message)) event.message = '[redacted]';
+    delete event.extra;
+    if (event.request) {
+      event.request.url = stripQueryAndHash(event.request.url);
+      delete event.request.query_string;
+      delete event.request.data;
+      if (event.request.headers) delete event.request.headers.Referer;
+    }
+    if (event.breadcrumbs) {
+      const list = Array.isArray(event.breadcrumbs) ? event.breadcrumbs : event.breadcrumbs.values;
+      const kept = (list || []).filter(function (b) {
+        return !/^(console|fetch|xhr|navigation)$/.test(b.category || '');
+      }).map(function (b) { delete b.data; return b; });
+      if (Array.isArray(event.breadcrumbs)) event.breadcrumbs = kept; else event.breadcrumbs.values = kept;
+    }
+  } catch (_) { /* never block on scrubbing */ }
+  return event;
+}
+
+function installSentryScrubber() {
+  if (typeof window.Sentry === 'undefined' || typeof window.Sentry.onLoad !== 'function') return false;
+  window.Sentry.onLoad(function () {
+    window.Sentry.init({
+      sendDefaultPii: false,
+      beforeSend: scrubSentryEvent,
+      beforeBreadcrumb: function (b) {
+        if (/^(console|fetch|xhr|navigation)$/.test(b.category || '')) return null;
+        if (b) delete b.data;
+        return b;
+      }
+    });
+  });
+  return true;
+}
+
 function trackEvent(eventName, eventParams = {}) {
   if (!shouldEnableAnalytics() || typeof window.gtag === 'undefined') {
     // Silently fail in development or if GA4 is not loaded
@@ -249,7 +329,7 @@ function trackEvent(eventName, eventParams = {}) {
   }
 
   try {
-    window.gtag('event', eventName, eventParams);
+    window.gtag('event', eventName, sanitizeEventParams(eventParams));
   } catch (error) {
     console.error('Error tracking event:', error);
   }
@@ -316,10 +396,13 @@ function trackPageView(pagePath, pageTitle) {
     const performanceMetrics = getPerformanceMetrics();
     
     // Base config with page info
+    // page_location / page_referrer without query or hash: those can carry user input.
     const pageConfig = {
       page_path: pagePath,
-      page_title: pageTitle || document.title
+      page_title: pageTitle || document.title,
+      page_location: stripQueryAndHash(window.location.href)
     };
+    if (document.referrer) pageConfig.page_referrer = stripQueryAndHash(document.referrer);
     
     // Add performance metrics if available
     if (performanceMetrics) {
@@ -539,7 +622,12 @@ function getCurrentPageName() {
 // Initialize GA4 when the script loads
 if (typeof window !== 'undefined') {
   initGA4();
-  
+
+  // Sentry loader may load before or after this file — try now and again once the DOM is ready.
+  if (!installSentryScrubber()) {
+    document.addEventListener('DOMContentLoaded', installSentryScrubber, { once: true });
+  }
+
   // Function to track page view with performance metrics
   function trackPageViewWithMetrics() {
     const pageName = getCurrentPageName();

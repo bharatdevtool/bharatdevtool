@@ -12,7 +12,7 @@ function logErrorToSentry(error, context = {}) {
         },
         extra: {
           errorType: error.name,
-          errorMessage: error.message,
+          error_type: (error && error.name) || "Error",
           ...context.extra
         }
       });
@@ -159,8 +159,8 @@ export function validateRegexPattern(pattern, flavor = 'javascript', flagsString
     trackValidationError({
       operation: 'validate_regex',
       error_type: error.name,
-      error_message: error.message,
-      pattern_preview: pattern.substring(0, 100),
+      error_type: (error && error.name) || "Error",
+      pattern_length: pattern.length,
       flavor: flavor
     });
     
@@ -324,8 +324,8 @@ export function testRegex(pattern, text, flags = {}, flavor = 'javascript') {
     trackRegexError({
       operation: 'test_regex',
       error_type: error.name,
-      error_message: error.message,
-      pattern_preview: pattern.substring(0, 100),
+      error_type: (error && error.name) || "Error",
+      pattern_length: pattern.length,
       text_length: text.length,
       flavor: flavor
     });

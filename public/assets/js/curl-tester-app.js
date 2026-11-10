@@ -42,24 +42,19 @@ function trackCurlEvent(eventName, context = {}) {
 }
 
 function trackCurlError(errorType, context = {}) {
+  // Privacy: only fixed labels and counts. Never the cURL text, URL, headers or error text.
   const errorContext = {
     error_type: errorType,
-    error_message: context.error_message || '',
     input_length: context.input_length || 0,
-    input_preview: context.input_preview || '',
-    page: getCurrentPageNameForAnalytics(),
-    timestamp: Date.now(),
-    user_agent: navigator.userAgent,
-    viewport: `${window.innerWidth}x${window.innerHeight}`,
-    ...context
+    page: getCurrentPageNameForAnalytics()
   };
-  
+  if (typeof context.status === 'number') errorContext.status = context.status;
+
   trackCurlEvent('curl_error', errorContext);
-  
+
   if (typeof Sentry !== 'undefined') {
     Sentry.captureException(new Error(errorType), {
-      tags: { operation: 'curl_tester', error_type: errorType },
-      extra: errorContext
+      tags: { operation: 'curl_tester', error_type: errorType }
     });
   }
 }
@@ -583,8 +578,7 @@ function parseCurlCommand() {
       trackCurlEvent('parse_curl', { 
         method: parsed.method, 
         hasBody: !!parsed.body,
-        input_length: curlInput.length,
-        input_preview: curlInput.substring(0, 100)
+        input_length: curlInput.length
       });
       
       // Auto-send on first parse
@@ -597,11 +591,7 @@ function parseCurlCommand() {
       }
     } catch (error) {
       showError(`Failed to parse cURL: ${error.message}`);
-      trackCurlError('parse_failed', { 
-        error_message: error.message,
-        input_length: curlInput.length,
-        input_preview: curlInput.substring(0, 100)
-      });
+      trackCurlError('parse_failed', { input_length: curlInput.length });
       throw error;
     }
   }).catch((error) => {
@@ -1409,23 +1399,11 @@ Solutions:
         </div>`;
       }
       
-      trackCurlError('cors_blocked', {
-        method: method,
-        url: url.substring(0, 100),
-        error_message: error.message,
-        origin: window.location.origin,
-        target_host: new URL(url).hostname
-      });
+      trackCurlError('cors_blocked', {});
     } else {
       showError(`Request failed: ${error.message || 'Unknown error'}`);
       showErrorExplanation(error, null);
-      trackCurlError('request_failed', { 
-        error_message: error.message,
-        method: method,
-        url_length: url.length,
-        url_preview: url.substring(0, 100),
-        error_name: error.name
-      });
+      trackCurlError('request_failed', {});
     }
     
     // Save failed request to history

@@ -2,6 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <!-- Prefill (#url= or legacy ?url=) can hold user data: copy it to memory and clear the address bar before analytics/Sentry load. -->
+  <script>
+    (function () {
+      var p = new URLSearchParams();
+      try {
+        p = new URLSearchParams(location.search);
+        new URLSearchParams(location.hash.slice(1)).forEach(function (v, k) { p.set(k, v); });
+        if (['url'].some(function (k) { return p.has(k); })) history.replaceState(null, '', location.pathname);
+      } catch (e) {}
+      window.__bdtPrefill = p;
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Free Deep Link Tester for Android &amp; iOS | Bharat Dev Tools</title>
   <meta name="description" content="Free deep link tester for Android and iOS. Encode, decode, validate and launch app links and custom URL schemes. No sign-up, nothing uploaded.">
@@ -716,9 +728,7 @@
         const input = document.getElementById('deeplink-input');
         if (typeof window.Analytics !== 'undefined' && input) {
           window.Analytics.trackDeeplinkLaunchFailed({
-            page: window.getCurrentPageNameForAnalytics ? window.getCurrentPageNameForAnalytics() : 'DeepLink Launcher',
-            error_message: message,
-            deeplink_url: input.value.trim()
+            page: window.getCurrentPageNameForAnalytics ? window.getCurrentPageNameForAnalytics() : 'DeepLink Launcher'
           });
         }
         
@@ -1067,13 +1077,12 @@
       // Track share
       if (typeof window.Analytics !== 'undefined' && window.Analytics.track) {
         window.Analytics.track('deeplink_share', {
-          page: 'DeepLink Launcher',
-          deeplink_url: url
+          page: 'DeepLink Launcher'
         });
       }
       
       // Create shareable URL that opens deeplink.html with the URL pre-filled
-      const shareableUrl = `${window.location.origin}${window.location.pathname}?url=${encodeURIComponent(url)}`;
+      const shareableUrl = `${window.location.origin}${window.location.pathname}#url=${encodeURIComponent(url)}`;
       
       // Try Web Share API first (mobile)
       if (navigator.share) {
@@ -1223,11 +1232,11 @@
       updateHistoryDisplay();
       
       // Check for URL parameters
-      const urlParams = new URLSearchParams(window.location.search);
+      const urlParams = (window.__bdtPrefill || new URLSearchParams());
       const urlParam = urlParams.get('url');
       if (urlParam) {
         const input = document.getElementById('deeplink-input');
-        input.value = decodeURIComponent(urlParam);
+        input.value = urlParam;
         input.focus();
         showToast('Deep link loaded from URL', 'info');
       }
@@ -1302,7 +1311,7 @@
       // Shared handler functions
       function handleEncodeDecode() {
         const url = input.value.trim();
-        const encoderUrl = url ? `url-encoder.html?url=${encodeURIComponent(url)}` : 'url-encoder.html';
+        const encoderUrl = url ? `url-encoder.html#url=${encodeURIComponent(url)}` : 'url-encoder.html';
         window.location.href = encoderUrl;
       }
 
@@ -1313,7 +1322,7 @@
             page: 'DeepLink Launcher'
           });
         }
-        const qrUrl = url ? `qr-generator-free.html?text=${encodeURIComponent(url)}` : 'qr-generator-free.html';
+        const qrUrl = url ? `qr-generator-free.html#text=${encodeURIComponent(url)}` : 'qr-generator-free.html';
         window.location.href = qrUrl;
         showToast('Redirecting to QR Generator...', 'info');
       }

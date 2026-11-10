@@ -699,6 +699,23 @@
   </script>
 
   <script>
+function showPageMessage(text, isError) {
+  var el = document.getElementById('bdt-page-message');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'bdt-page-message';
+    el.setAttribute('role', 'alert');
+    el.style.cssText = 'position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:9999;max-width:min(92vw,560px);padding:12px 16px;border-radius:8px;font:500 14px/1.4 system-ui,sans-serif;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.25);cursor:pointer';
+    el.addEventListener('click', function () { el.style.display = 'none'; });
+    document.body.appendChild(el);
+  }
+  el.style.background = isError === false ? '#059669' : '#DC2626';
+  el.textContent = text;
+  el.style.display = 'block';
+  clearTimeout(el._t);
+  el._t = setTimeout(function () { el.style.display = 'none'; }, 6000);
+}
+
     // Theme management is now handled by theme.js utility
 
     function getType(value) {
@@ -1772,7 +1789,7 @@
         console.log('Rendering complete');
       } catch (error) {
         console.error('Error in renderComparison:', error);
-        alert('Error rendering comparison: ' + error.message);
+        showPageMessage('Could not render the comparison: ' + error.message);
       }
     }
 
@@ -1933,13 +1950,13 @@
         }
       } catch (error) {
         console.error('Comparison error:', error);
-        alert('Error during comparison: ' + error.message);
+        showPageMessage('Comparison failed: ' + error.message);
         
         // Track comparison error
         if (typeof window.Analytics !== 'undefined') {
           window.Analytics.trackJsonDiffCompareFailed({
             page: 'JSON Comparison Tool',
-            error_message: error.message
+            error_type: (error && error.name) || "Error"
           });
         }
       }
@@ -2082,7 +2099,7 @@
           if (typeof window.Analytics !== 'undefined') {
             window.Analytics.trackJsonDiffUploadFile({
               page: 'JSON Comparison Tool',
-              file_name: file.name,
+              file_count: 1,
               file_size: file.size,
               file_type: file.type,
               side: textareaId.includes('left') ? 'left' : 'right'
@@ -2137,7 +2154,7 @@
                   window.Analytics.trackUrlFetchFailed({
                     page: 'JSON Comparison Tool',
                     side: textareaId.includes('left') ? 'left' : 'right',
-                    error_message: err.message
+                    error_type: (err && err.name) || "Error"
                   });
                 }
               });

@@ -869,7 +869,7 @@
           window.Analytics.track('html_format_error', {
             page: PAGE_NAME,
             mode: currentMode,
-            error: err.message
+            error_type: (err && err.name) || "Error"
           });
         }
 

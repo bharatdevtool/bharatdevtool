@@ -747,7 +747,7 @@
         fallbackCopy(text);
       }
       if (typeof window.Analytics !== 'undefined') {
-        window.Analytics.track('percentage_copy', { page: PAGE_NAME, value: text });
+        window.Analytics.track('percentage_copy', { page: PAGE_NAME, value_length: String(text).length });
       }
     }
 
@@ -952,7 +952,7 @@
     /* ── Analytics helpers ── */
     function trackCalculation(type, params) {
       if (typeof window.Analytics !== 'undefined') {
-        window.Analytics.track('percentage_calculated', Object.assign({ page: PAGE_NAME, type: type }, params));
+        window.Analytics.track('percentage_calculated', { page: PAGE_NAME, type: type }); // never the numbers typed
       }
     }
 

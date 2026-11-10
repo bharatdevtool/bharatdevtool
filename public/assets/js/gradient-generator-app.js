@@ -79,7 +79,7 @@ function loadState() {
   } catch (error) {
     if (typeof window.Analytics !== 'undefined') {
       window.Analytics.track('gradient_generator_load_state_failed', {
-        error: error.message,
+        error_type: (error && error.name) || "Error",
         page: getCurrentPageNameForAnalytics()
       });
     }
@@ -96,7 +96,7 @@ function saveState() {
   } catch (error) {
     if (typeof window.Analytics !== 'undefined') {
       window.Analytics.track('gradient_generator_save_state_failed', {
-        error: error.message,
+        error_type: (error && error.name) || "Error",
         page: getCurrentPageNameForAnalytics()
       });
     }
@@ -304,7 +304,7 @@ function copyToClipboard(text, message = 'Copied!') {
   }).catch(error => {
     if (typeof window.Analytics !== 'undefined') {
       window.Analytics.track('gradient_generator_copy_failed', {
-        error: error.message,
+        error_type: (error && error.name) || "Error",
         page: getCurrentPageNameForAnalytics()
       });
     }

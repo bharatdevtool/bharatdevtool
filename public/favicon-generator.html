@@ -540,7 +540,7 @@
   <div id="toast-container"></div>
 
   <!-- JSZip for ZIP download -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" integrity="sha384-+mbV2IY1Zk/X1p/nWllGySJSUN8uMs+gUAN10Or95UBH0fpj6GfKgPmgC5EXieXG" crossorigin="anonymous" defer></script>
 
   <!-- FAQ Accordion -->
   <script>
@@ -757,7 +757,7 @@
             Sentry.captureException(err, { tags: { operation: 'generate_favicons' } });
           }
           if (typeof window.Analytics !== 'undefined') {
-            window.Analytics.track('favicon_generation_failed', { page: PAGE_NAME, error: err.message });
+            window.Analytics.track('favicon_generation_failed', { page: PAGE_NAME, error_type: (err && err.name) || "Error" });
           }
         } finally {
           setGeneratingState(false);

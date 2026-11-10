@@ -11,10 +11,10 @@ function trackVersionLoadFailed(error) {
   const errorName = error.name || 'VersionLoadError';
   const errorData = {
     error_name: errorName,
-    error_message: errorMessage,
+    error_kind: errorName,
     error_type: 'version_load_error',
     page: window.getCurrentPageNameForAnalytics ? window.getCurrentPageNameForAnalytics() : 'Unknown',
-    url: window.location.href,
+    path: window.location.pathname,
     default_version: appVersion.version
   };
 

@@ -220,7 +220,7 @@ function generateRegex() {
     
   } catch (error) {
     Debug.error('Failed to generate regex:', error);
-    alert('Failed to generate regex. Please check your options.');
+    showPageMessage('Failed to generate regex. Please check your options.');
   }
 }
 
@@ -258,7 +258,7 @@ function copyPattern() {
     }
   } catch (error) {
     Debug.error('Failed to copy:', error);
-    alert('Failed to copy pattern. Please select and copy manually.');
+    showPageMessage('Copy failed. Please select the pattern and copy it manually.');
   }
 }
 
@@ -305,4 +305,19 @@ if (document.readyState === 'loading') {
   initApp();
 }
 
-
+function showPageMessage(text, isError) {
+  var el = document.getElementById('bdt-page-message');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'bdt-page-message';
+    el.setAttribute('role', 'alert');
+    el.style.cssText = 'position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:9999;max-width:min(92vw,560px);padding:12px 16px;border-radius:8px;font:500 14px/1.4 system-ui,sans-serif;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.25);cursor:pointer';
+    el.addEventListener('click', function () { el.style.display = 'none'; });
+    document.body.appendChild(el);
+  }
+  el.style.background = isError === false ? '#059669' : '#DC2626';
+  el.textContent = text;
+  el.style.display = 'block';
+  clearTimeout(el._t);
+  el._t = setTimeout(function () { el.style.display = 'none'; }, 6000);
+}

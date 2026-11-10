@@ -659,52 +659,82 @@
     }
 
     // ──────────────────────────────────────────────────────────────────
-    // LCS-based line diff
+    // Line diff: common prefix/suffix trim + Myers O((N+M)·D).
     // Returns an array of { type: 'equal'|'added'|'removed', value: string }
     // ──────────────────────────────────────────────────────────────────
+    const MYERS_MAX_EDITS = 3000; // beyond this, treat the middle as one replaced block
+
+    function myersOps(a, b) {
+      // a, b: arrays of ints. Returns ops ['=',i,j] | ['-',i] | ['+',j] or null if too different.
+      const N = a.length, M = b.length, max = N + M, off = max;
+      const v = new Int32Array(2 * max + 2);
+      const trace = [];
+      let D = -1;
+      outer: for (let d = 0; d <= max; d++) {
+        if (d > MYERS_MAX_EDITS) return null;
+        trace.push(v.slice(off - d, off + d + 1));
+        for (let k = -d; k <= d; k += 2) {
+          let x = (k === -d || (k !== d && v[off + k - 1] < v[off + k + 1])) ? v[off + k + 1] : v[off + k - 1] + 1;
+          let y = x - k;
+          while (x < N && y < M && a[x] === b[y]) { x++; y++; }
+          v[off + k] = x;
+          if (x >= N && y >= M) { D = d; break outer; }
+        }
+      }
+      const ops = [];
+      let x = N, y = M;
+      for (let d = D; d > 0; d--) {
+        const V = trace[d];
+        const get = (k) => V[k + d];
+        const k = x - y;
+        const prevK = (k === -d || (k !== d && get(k - 1) < get(k + 1))) ? k + 1 : k - 1;
+        const prevX = get(prevK);
+        const prevY = prevX - prevK;
+        while (x > prevX && y > prevY) { ops.push(['=', x - 1, y - 1]); x--; y--; }
+        if (x === prevX) ops.push(['+', y - 1]); else ops.push(['-', x - 1]);
+        x = prevX; y = prevY;
+      }
+      while (x > 0 && y > 0) { ops.push(['=', x - 1, y - 1]); x--; y--; }
+      return ops.reverse();
+    }
+
     function computeLineDiff(originalLines, modifiedLines, compareOriginal, compareModified) {
       // compareOriginal/compareModified (optional) are normalized copies used
       // only for equality checks (e.g. ignore-case/ignore-whitespace); the
-      // rendered `value` always comes from the real originalLines/modifiedLines
-      // so the diff output never shows mutated/normalized text to the user.
+      // rendered `value` always comes from the real originalLines/modifiedLines.
       compareOriginal = compareOriginal || originalLines;
       compareModified = compareModified || modifiedLines;
       const m = originalLines.length;
       const n = modifiedLines.length;
 
-      // Build LCS table
-      const dp = [];
-      for (let i = 0; i <= m; i++) {
-        dp[i] = new Array(n + 1).fill(0);
-      }
-      for (let i = 1; i <= m; i++) {
-        for (let j = 1; j <= n; j++) {
-          if (compareOriginal[i - 1] === compareModified[j - 1]) {
-            dp[i][j] = dp[i - 1][j - 1] + 1;
-          } else {
-            dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
-          }
+      let start = 0;
+      while (start < m && start < n && compareOriginal[start] === compareModified[start]) start++;
+      let endA = m, endB = n;
+      while (endA > start && endB > start && compareOriginal[endA - 1] === compareModified[endB - 1]) { endA--; endB--; }
+
+      const result = [];
+      for (let i = 0; i < start; i++) result.push({ type: 'equal', value: originalLines[i] });
+
+      // Map lines to small ints so the inner loop compares numbers, not strings.
+      const ids = new Map();
+      const idOf = (s) => { let id = ids.get(s); if (id === undefined) { id = ids.size; ids.set(s, id); } return id; };
+      const a = [], b = [];
+      for (let i = start; i < endA; i++) a.push(idOf(compareOriginal[i]));
+      for (let j = start; j < endB; j++) b.push(idOf(compareModified[j]));
+
+      const ops = myersOps(a, b);
+      if (ops) {
+        for (const op of ops) {
+          if (op[0] === '=') result.push({ type: 'equal', value: originalLines[start + op[1]] });
+          else if (op[0] === '-') result.push({ type: 'removed', value: originalLines[start + op[1]] });
+          else result.push({ type: 'added', value: modifiedLines[start + op[1]] });
         }
+      } else {
+        for (let i = start; i < endA; i++) result.push({ type: 'removed', value: originalLines[i] });
+        for (let j = start; j < endB; j++) result.push({ type: 'added', value: modifiedLines[j] });
       }
 
-      // Backtrack to get diff
-      const result = [];
-      let i = m;
-      let j = n;
-      while (i > 0 || j > 0) {
-        if (i > 0 && j > 0 && compareOriginal[i - 1] === compareModified[j - 1]) {
-          result.push({ type: 'equal', value: originalLines[i - 1] });
-          i--;
-          j--;
-        } else if (j > 0 && (i === 0 || dp[i][j - 1] >= dp[i - 1][j])) {
-          result.push({ type: 'added', value: modifiedLines[j - 1] });
-          j--;
-        } else {
-          result.push({ type: 'removed', value: originalLines[i - 1] });
-          i--;
-        }
-      }
-      result.reverse();
+      for (let i = endA; i < m; i++) result.push({ type: 'equal', value: originalLines[i] });
       return result;
     }
 

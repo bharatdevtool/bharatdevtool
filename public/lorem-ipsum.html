@@ -659,7 +659,7 @@
               page: LOREM_PAGE,
               type: activeType,
               count: raw,
-              error: err.message
+              error_type: (err && err.name) || "Error"
             });
           }
           if (typeof Sentry !== 'undefined') {

@@ -2,6 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <!-- Prefill (#text= or legacy ?text=) can hold user data: copy it to memory and clear the address bar before analytics/Sentry load. -->
+  <script>
+    (function () {
+      var p = new URLSearchParams();
+      try {
+        p = new URLSearchParams(location.search);
+        new URLSearchParams(location.hash.slice(1)).forEach(function (v, k) { p.set(k, v); });
+        if (['text'].some(function (k) { return p.has(k); })) history.replaceState(null, '', location.pathname);
+      } catch (e) {}
+      window.__bdtPrefill = p;
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Free Base64 Encoder &amp; Decoder Online | Bharat Dev Tools</title>
   <meta name="description" content="Free Base64 encoder and decoder. Encode text to Base64 or decode it back instantly, with Unicode support. No sign-up, nothing uploaded, runs in your browser.">
@@ -726,7 +738,7 @@
             window.Analytics.track('encode_error', {
               operation: 'encode_base64',
               error_type: error.name,
-              error_message: error.message,
+              error_type: (error && error.name) || "Error",
               input_length: text ? text.length : 0,
               page: BASE64_PAGE_NAME
             });
@@ -820,7 +832,7 @@
             window.Analytics.track('decode_error', {
               operation: 'decode_base64',
               error_type: error.name,
-              error_message: error.message,
+              error_type: (error && error.name) || "Error",
               input_length: base64String ? base64String.length : 0,
               page: BASE64_PAGE_NAME
             });
@@ -919,10 +931,16 @@
       return base64 + '='.repeat(padLength);
     }
 
-    // History management
+    // History management — kept for this tab only (sessionStorage): Base64 often holds tokens/secrets.
+    const historyStore = {
+      get() { try { return JSON.parse(sessionStorage.getItem('base64-history') || '[]'); } catch (_) { return []; } },
+      set(list) { try { sessionStorage.setItem('base64-history', JSON.stringify(list)); } catch (_) {} },
+      clear() { try { sessionStorage.removeItem('base64-history'); } catch (_) {} }
+    };
+    try { localStorage.removeItem('base64-history'); } catch (_) {} // drop history saved by older versions
+
     function loadHistory() {
-      const history = JSON.parse(localStorage.getItem('base64-history') || '[]');
-      return history;
+      return historyStore.get();
     }
 
     function saveToHistory(input, output, type) {
@@ -935,6 +953,7 @@
         return; // Already saved
       }
       
+      if (input.length + output.length > 20000) return; // don't keep huge payloads
       history.unshift({ input, output, type, timestamp });
       
       // Keep only last 50 items
@@ -942,7 +961,7 @@
         history.pop();
       }
       
-      localStorage.setItem('base64-history', JSON.stringify(history));
+      historyStore.set(history);
       updateHistoryDisplay();
     }
 
@@ -1107,7 +1126,7 @@
       }
       const history = loadHistory();
       history.splice(index, 1);
-      localStorage.setItem('base64-history', JSON.stringify(history));
+      historyStore.set(history);
       updateHistoryDisplay();
       showToast('Item deleted', 'info');
     }
@@ -1130,7 +1149,7 @@
         }
 
         // Clear history
-        localStorage.removeItem('base64-history');
+        historyStore.clear();
         updateHistoryDisplay();
         showToast('All history cleared', 'success');
       }
@@ -1141,11 +1160,11 @@
       updateHistoryDisplay();
       
       // Check for URL parameters
-      const urlParams = new URLSearchParams(window.location.search);
+      const urlParams = (window.__bdtPrefill || new URLSearchParams());
       const textParam = urlParams.get('text');
       if (textParam) {
         const input = document.getElementById('base64-input');
-        input.value = decodeURIComponent(textParam);
+        input.value = textParam;
         input.focus();
         showToast('Text loaded from URL', 'info');
       }

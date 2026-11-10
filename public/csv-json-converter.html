@@ -675,8 +675,22 @@
       return result;
     }
 
+    // Split into records on newlines that are NOT inside quotes, so quoted fields may contain line breaks.
+    function splitCSVRecords(text) {
+      const records = [];
+      let start = 0;
+      let inQuotes = false;
+      for (let i = 0; i < text.length; i++) {
+        const ch = text[i];
+        if (ch === '"') inQuotes = !inQuotes; // an escaped "" toggles twice, so state stays correct
+        else if (ch === '\n' && !inQuotes) { records.push(text.slice(start, i)); start = i + 1; }
+      }
+      records.push(text.slice(start));
+      return records;
+    }
+
     function convertCSVtoJSON(csvText, delimiter, hasHeader, pretty) {
-      const lines = csvText.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
+      const lines = splitCSVRecords(csvText.replace(/\r\n/g, '\n').replace(/\r/g, '\n'));
       const nonEmpty = lines.filter(function(l) { return l.trim() !== ''; });
       if (nonEmpty.length === 0) throw new Error('Input is empty.');
 
@@ -881,7 +895,7 @@
         errorBanner.classList.remove('hidden');
         showToast('Conversion failed. Check input.', 'error');
         captureError(err, { mode: currentMode, input_length: input.length });
-        trackAnalyticsEvent('csv_json_convert_error', { mode: currentMode, error: err.message });
+        trackAnalyticsEvent('csv_json_convert_error', { mode: currentMode, error_type: (err && err.name) || "Error" });
       }
     }
 
@@ -969,7 +983,7 @@
         document.getElementById('inputArea').value = e.target.result;
         updateInputStats(e.target.result);
         showToast('File loaded: ' + file.name, 'info');
-        trackAnalyticsEvent('csv_json_file_upload', { filename: file.name, size: file.size });
+        trackAnalyticsEvent('csv_json_file_upload', { size: file.size });
       };
       reader.onerror = function() {
         showToast('Failed to read file.', 'error');

@@ -2,6 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <!-- Prefill (#url= or legacy ?url=) can hold user data: copy it to memory and clear the address bar before analytics/Sentry load. -->
+  <script>
+    (function () {
+      var p = new URLSearchParams();
+      try {
+        p = new URLSearchParams(location.search);
+        new URLSearchParams(location.hash.slice(1)).forEach(function (v, k) { p.set(k, v); });
+        if (['url','text'].some(function (k) { return p.has(k); })) history.replaceState(null, '', location.pathname);
+      } catch (e) {}
+      window.__bdtPrefill = p;
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Free URL Encoder &amp; Decoder Online | Bharat Dev Tools</title>
   <meta name="description" content="Free URL encoder and decoder. Percent-encode or decode URLs and query strings instantly. No sign-up, nothing uploaded, runs in your browser.">
@@ -175,8 +187,8 @@
       {
         "@type": "HowToStep",
         "position": 3,
-        "name": "Copy or Launch",
-        "text": "Review the result and use the Copy button to copy it to your clipboard, or click Launch to open the URL in your browser.",
+        "name": "Copy the result",
+        "text": "Review the result and use the Copy button to copy it to your clipboard, or Generate QR to turn it into a QR code.",
         "url": "https://bharatdevtool.com/url-encoder.html#step3"
       }
     ],
@@ -312,14 +324,10 @@
             class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white font-mono text-sm mb-4"
             rows="3"
           ></textarea>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <button id="copy-result" class="flex items-center justify-center px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium">
               <span class="mr-2">📋</span>
               Copy
-            </button>
-            <button id="launch-result" class="flex items-center justify-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
-              <span class="mr-2">🚀</span>
-              Launch
             </button>
             <button id="generate-qr-result" class="flex items-center justify-center px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors font-medium">
               <span class="mr-2">📱</span>
@@ -518,9 +526,7 @@
         const input = document.getElementById('url-input');
         if (typeof window.Analytics !== 'undefined' && input) {
           window.Analytics.trackDeeplinkLaunchFailed({
-            page: window.getCurrentPageNameForAnalytics ? window.getCurrentPageNameForAnalytics() : 'Url Encoder/Decoder',
-            error_message: message,
-            deeplink_url: input.value.trim()
+            page: window.getCurrentPageNameForAnalytics ? window.getCurrentPageNameForAnalytics() : 'Url Encoder/Decoder'
           });
         }
         
@@ -706,8 +712,7 @@
 
     // History management
     function loadHistory() {
-      const history = JSON.parse(localStorage.getItem('url-history') || '[]');
-      return history;
+      try { return JSON.parse(localStorage.getItem('url-history') || '[]'); } catch (_) { return []; }
     }
 
     function saveToHistory(url) {
@@ -717,7 +722,8 @@
       // Avoid duplicates
       if (!history.some(item => item.url === url)) {
         history.unshift({ url, timestamp });
-        localStorage.setItem('url-history', JSON.stringify(history));
+        history.splice(50);
+        try { localStorage.setItem('url-history', JSON.stringify(history)); } catch (_) {}
         updateHistoryDisplay();
         showToast('Url saved to history', 'success');
       }
@@ -973,11 +979,11 @@
       updateHistoryDisplay();
       
       // Check for URL parameters
-      const urlParams = new URLSearchParams(window.location.search);
-      const urlParam = urlParams.get('url');
+      const urlParams = (window.__bdtPrefill || new URLSearchParams());
+      const urlParam = urlParams.get('url') || urlParams.get('text');
       if (urlParam) {
         const input = document.getElementById('url-input');
-        input.value = decodeURIComponent(urlParam);
+        input.value = urlParam;
         input.focus();
         showToast('URL loaded from URL', 'info');
       }
@@ -997,8 +1003,8 @@
 
       // Input validation
       input.addEventListener('input', function() {
-        const validation = validateDeepLink(this.value);
-        if (this.value.trim()) {
+        // Any text can be encoded/decoded — no URL validation while typing.
+        if (false) {
           if (validation.valid) {
             validationMessage.classList.add('hidden');
             validationMessage.textContent = '';
@@ -1014,8 +1020,8 @@
 
       // Encode button
       encodeBtn.addEventListener('click', function() {
-        const url = input.value.trim();
-        if (url) {
+        const url = input.value;
+        if (url.trim()) {
           // Track encode
           if (typeof window.Analytics !== 'undefined') {
             window.Analytics.trackDeeplinkEncode({
@@ -1033,15 +1039,21 @@
 
       // Decode button
       decodeBtn.addEventListener('click', function() {
-        const url = input.value.trim();
-        if (url) {
+        const url = input.value;
+        if (url.trim()) {
           // Track decode
           if (typeof window.Analytics !== 'undefined') {
             window.Analytics.trackDeeplinkDecode({
               page: 'Url Encoder/Decoder'
             });
           }
-          const decoded = decodeURL(url);
+          let decoded;
+          try {
+            decoded = decodeURIComponent(url);
+          } catch (e) {
+            showToast('Cannot decode: the text has a broken % sequence (e.g. "%E0%A4" cut short)', 'error');
+            return;
+          }
           resultOutput.value = decoded;
           resultContainer.classList.remove('hidden');
           showToast('URL decoded', 'success');
@@ -1073,13 +1085,13 @@
           });
         }
         // Navigate to QR page with the result as a parameter if text exists, otherwise just navigate
-        const qrUrl = resultValue ? `qr-generator-free.html?text=${encodeURIComponent(resultValue)}` : 'qr-generator-free.html';
+        const qrUrl = resultValue ? `qr-generator-free.html#text=${encodeURIComponent(resultValue)}` : 'qr-generator-free.html';
         window.location.href = qrUrl;
         showToast('Redirecting to QR Generator...', 'info');
       });
 
       // Launch result
-      launchResultBtn.addEventListener('click', function() {
+      if (launchResultBtn) launchResultBtn.addEventListener('click', function() {
         const resultValue = resultOutput.value.trim();
         if (resultValue) {
           // Check if it's an encoded URL (contains % characters)

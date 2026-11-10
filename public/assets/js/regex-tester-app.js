@@ -505,11 +505,11 @@ function initApp() {
   initEventListeners();
   
   // Check for URL parameter to pre-fill pattern
-  const urlParams = new URLSearchParams(window.location.search);
+  const urlParams = window.__bdtPrefill || new URLSearchParams(window.location.search);
   const patternParam = urlParams.get('pattern');
   if (patternParam) {
-    document.getElementById('regex-pattern').value = decodeURIComponent(patternParam);
-    appState.pattern = decodeURIComponent(patternParam);
+    document.getElementById('regex-pattern').value = patternParam;
+    appState.pattern = patternParam;
     saveState();
     testRegex();
   } else if (appState.pattern) {

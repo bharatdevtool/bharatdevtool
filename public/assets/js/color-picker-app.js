@@ -39,7 +39,7 @@ function loadState() {
   } catch (error) {
     if (typeof window.Analytics !== 'undefined') {
       window.Analytics.track('color_picker_load_state_failed', {
-        error: error.message,
+        error_type: (error && error.name) || "Error",
         page: getCurrentPageNameForAnalytics()
       });
     }
@@ -56,7 +56,7 @@ function saveState() {
   } catch (error) {
     if (typeof window.Analytics !== 'undefined') {
       window.Analytics.track('color_picker_save_state_failed', {
-        error: error.message,
+        error_type: (error && error.name) || "Error",
         page: getCurrentPageNameForAnalytics()
       });
     }
@@ -450,7 +450,7 @@ function initializeIroColorPicker() {
         } catch (error) {
           if (typeof window.Analytics !== 'undefined') {
             window.Analytics.track('color_picker_iro_change_error', {
-              error: error.message,
+              error_type: (error && error.name) || "Error",
               page: getCurrentPageNameForAnalytics()
             });
           }
@@ -467,7 +467,7 @@ function initializeIroColorPicker() {
   } catch (error) {
     if (typeof window.Analytics !== 'undefined') {
       window.Analytics.track('color_picker_iro_init_failed', {
-        error: error.message,
+        error_type: (error && error.name) || "Error",
         page: getCurrentPageNameForAnalytics()
       });
     }
@@ -546,7 +546,7 @@ function updatePalettes() {
   }).catch((error) => {
     if (typeof window.Analytics !== 'undefined') {
       window.Analytics.track('palette_update_failed', {
-        error: error.message,
+        error_type: (error && error.name) || "Error",
         page: getCurrentPageNameForAnalytics()
       });
     }
@@ -702,7 +702,7 @@ function updateColorBlindness() {
   } catch (error) {
     if (typeof window.Analytics !== 'undefined') {
       window.Analytics.track('color_blindness_update_failed', {
-        error: error.message,
+        error_type: (error && error.name) || "Error",
         page: getCurrentPageNameForAnalytics()
       });
     }
@@ -830,7 +830,7 @@ function copyToClipboard(text, message = 'Copied!') {
   }).catch(error => {
     if (typeof window.Analytics !== 'undefined') {
       window.Analytics.track('color_picker_copy_failed', {
-        error: error.message,
+        error_type: (error && error.name) || "Error",
         page: getCurrentPageNameForAnalytics()
       });
     }
@@ -916,7 +916,7 @@ function initializeImagePicker() {
       showToast('Failed to load image');
       if (typeof window.Analytics !== 'undefined') {
         window.Analytics.track('image_upload_failed', {
-          error: error.message,
+          error_type: (error && error.name) || "Error",
           page: getCurrentPageNameForAnalytics()
         });
       }
@@ -1104,7 +1104,7 @@ function initializeImagePicker() {
         showToast('Failed to extract colors');
         if (typeof window.Analytics !== 'undefined') {
           window.Analytics.track('dominant_colors_extraction_failed', {
-            error: error.message,
+            error_type: (error && error.name) || "Error",
             page: getCurrentPageNameForAnalytics()
           });
         }
@@ -1331,7 +1331,7 @@ function exportAsASE() {
     showToast('Failed to export ASE file');
     if (typeof window.Analytics !== 'undefined') {
       window.Analytics.track('export_ase_failed', {
-        error: error.message,
+        error_type: (error && error.name) || "Error",
         page: getCurrentPageNameForAnalytics()
       });
     }
@@ -1369,7 +1369,7 @@ ${Math.round(rgb.r).toString().padStart(3)} ${Math.round(rgb.g).toString().padSt
     showToast('Failed to export GPL file');
     if (typeof window.Analytics !== 'undefined') {
       window.Analytics.track('export_gpl_failed', {
-        error: error.message,
+        error_type: (error && error.name) || "Error",
         page: getCurrentPageNameForAnalytics()
       });
     }
@@ -1424,7 +1424,7 @@ function setupEventHandlers() {
         
         if (typeof window.Analytics !== 'undefined') {
           window.Analytics.track('hex_validation_failed', {
-            input: inputValue.substring(0, 20),
+            input_length: inputValue.length,
             page: getCurrentPageNameForAnalytics()
           });
         }
@@ -1795,7 +1795,7 @@ function initApp() {
   } catch (error) {
     if (typeof window.Analytics !== 'undefined') {
       window.Analytics.track('color_picker_init_failed', {
-        error: error.message,
+        error_type: (error && error.name) || "Error",
         page: getCurrentPageNameForAnalytics()
       });
     }

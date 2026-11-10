@@ -30,12 +30,40 @@
   <meta name="twitter:description" content="Our tools are free and private: everything runs in your browser and your data is never uploaded or stored on our servers. Read how we handle analytics.">
   <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+  
+  <!-- TailwindCSS CDN (required for header component) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
+        }
+      }
+    }
+  </script>
   <link rel="stylesheet" href="assets/css/common.css">
   <!-- Analytics Script -->
   <script src="assets/js/analytics.js"></script>
   
   <!-- Theme Management (load early to prevent flash) -->
   <script src="assets/js/theme.js"></script>
+  <!-- App config + logo loader so header logo uses central LOGO_URL -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
   
   <style>
     .privacy-layout { max-width: 1180px; margin: 24px auto 36px; padding: 0 12px;
@@ -61,75 +89,81 @@
     .back { text-align:center; margin-top: 16px; }
     .back a { display:inline-block; padding:8px 12px; border-radius:8px; border:1px solid rgba(0,0,0,.1); background:var(--panel); color:var(--fg); text-decoration:none; }
     .back a:hover { background:var(--accent); color:#fff; border-color:transparent; }
+    .policy ul { list-style: disc; padding-left: 4px; }
+    .policy h2 { font-size: 1.15rem; font-weight: 700; margin: 0 0 8px; }
+    .policy a { color: var(--accent); text-decoration: underline; }
   </style>
 </head>
 <body>
+  <!-- Header Component Script (load after body exists) -->
+  <script src="components/header.js"></script>
   <main>
     <div class="privacy-layout">
       <aside class="privacy-side">
         <h1>Privacy Policy</h1>
-        <p>Last updated: October 2025</p>
+        <p>Last updated: 10 November 2026</p>
       </aside>
 
       <div class="policy">
       <section>
-        <h2>Welcome to Bharat Dev Tools</h2>
-        <p>Your privacy is extremely important to us. This policy explains how we handle your information when you use our JSON Formatter, Beautifier, Escape/Unescape and Minify tools.</p>
-      </section>
-
-      <section>
-        <h2>1. No Data Collection</h2>
+        <h2>The short version</h2>
         <ul>
-          <li>We do not collect, store, or share any data you paste or upload into our tools.</li>
-          <li>All formatting and processing happen directly in your browser using JavaScript. Your data never leaves your device.</li>
+          <li>Every tool on Bharat Dev Tools runs inside your browser. What you paste, type or upload (JSON, text, images, PDFs, tokens, cURL commands, QR codes) is processed on your device and is never sent to our servers. We do not have servers that could receive it.</li>
+          <li>No account, no sign-up, no ads.</li>
+          <li>We use anonymous usage statistics (Google Analytics) and error reports (Sentry) to keep the site working. Neither ever contains what you put into a tool.</li>
         </ul>
       </section>
-
       <section>
-        <h2>2. No Account Required</h2>
-        <p>You don’t need to sign up or provide personal information to use the site. We do not store names, emails, or any identifiable data.</p>
-      </section>
-
-      <section>
-        <h2>3. Analytics (Optional)</h2>
-        <p>We use Google Analytics 4 (GA4) to understand traffic patterns such as page visits, user interactions, and general usage statistics. These analytics do not collect content you paste into the tools.</p>
+        <h2>1. Your data stays on your device</h2>
         <ul>
-          <li>IP addresses are anonymized for privacy protection.</li>
-          <li>Analytics tracking is automatically disabled on localhost/development environments.</li>
-          <li>No personally identifiable information is collected or stored.</li>
-        </ul>
-        <p>You can disable cookies in your browser settings if you prefer not to be tracked at all. You can also opt out by installing the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">Google Analytics Opt-out Browser Add-on</a>.</p>
-      </section>
-
-      <section>
-        <h2>4. Cookies</h2>
-        <ul>
-          <li>We use minimal cookies, for example to remember your editor font size preference.</li>
-          <li>If analytics is enabled, a cookie may be used to measure traffic anonymously.</li>
-          <li>We do not use cookies for advertising or profiling.</li>
+          <li>Formatting, converting, compressing, hashing, encoding and decoding all happen locally with JavaScript and browser APIs.</li>
+          <li>Some tools remember your last settings or recent items in your browser&rsquo;s local storage (for example recent deep links or URL encoder history). This stays on your device; you can clear it with the tool&rsquo;s Clear button or by clearing site data in your browser. Base64 history is kept only until you close the tab.</li>
+          <li>Share links put the data after the <code>#</code> in the link (for example <code>#json=</code>). Browsers never send that part to any server, and our pages remove it from the address bar before analytics loads.</li>
+          <li>The cURL Tester sends the request you build directly from your browser to the API you choose. It does not pass through us.</li>
         </ul>
       </section>
-
       <section>
-        <h2>5. Contact Information</h2>
-        <p>If you have any privacy‑related questions or requests, contact us at: <strong>feedback@bharatdevtool.com</strong>.</p>
-      </section>
-
-      <section>
-        <h2>6. Policy Updates</h2>
-        <p>We may update this policy to reflect changes in practices or legal requirements. Any updates will be posted here with a new “Last updated” date.</p>
-      </section>
-
-      <section>
-        <h2>Summary</h2>
+        <h2>2. Anonymous usage statistics (Google Analytics 4)</h2>
+        <p>We count page views and which buttons are used (for example &ldquo;format clicked&rdquo;, &ldquo;3 files compressed&rdquo;, input length) so we know which tools to improve.</p>
         <ul>
-          <li>We don’t store your data</li>
-          <li>We don’t share your data</li>
-          <li>We don’t track personal information</li>
-          <li>All processing is done locally in your browser</li>
+          <li>Events carry fixed labels and counts only: never your input, file names, URLs you enter, or error text.</li>
+          <li>Page addresses are sent without the query string or <code>#</code> part.</li>
+          <li>IP addresses are anonymized. Analytics is off on localhost.</li>
+          <li>To opt out, block cookies for this site or install the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google Analytics Opt-out Add-on</a>.</li>
         </ul>
       </section>
-
+      <section>
+        <h2>3. Error reports (Sentry)</h2>
+        <p>When something breaks, Sentry receives a technical report (browser, page, which operation failed, stack trace) so we can fix it. Before a report leaves your browser we remove error messages (they can quote your input), extra data, network and console logs, and the query string from the page address.</p>
+      </section>
+      <section>
+        <h2>4. Cookies and local storage</h2>
+        <ul>
+          <li><strong>bdt_visited</strong>, <strong>bdt_last_tool</strong>: remember that you have visited and which tool you used last, to show &ldquo;continue where you left off&rdquo;.</li>
+          <li><strong>bdt_query_bar</strong>: remembers whether you opened the JSON Formatter&rsquo;s query bar.</li>
+          <li>Tool preferences (theme, font size, indent, options) in local storage.</li>
+          <li>Google Analytics cookies (<code>_ga</code>, <code>_ga_*</code>) for anonymous visit counting.</li>
+          <li>No advertising or profiling cookies.</li>
+        </ul>
+      </section>
+      <section>
+        <h2>5. Third-party files we load</h2>
+        <p>Pages load code and images from these services. They receive your IP address and browser details like any website you visit, but never your tool input:</p>
+        <ul>
+          <li>Google Tag Manager / Google Analytics (statistics)</li>
+          <li>Sentry (<code>js-de.sentry-cdn.com</code>, error reports, EU region)</li>
+          <li>cdn.tailwindcss.com, cdnjs.cloudflare.com, cdn.jsdelivr.net, unpkg.com (open-source libraries, for example the PDF, ZIP and QR libraries)</li>
+          <li>ImageKit (<code>ik.imagekit.io</code>, our logo and images)</li>
+        </ul>
+      </section>
+      <section>
+        <h2>6. Your rights (India DPDP Act 2023 and GDPR)</h2>
+        <p>We do not hold personal data about you that we could look up, correct or delete: we have no accounts and do not receive your tool input. For analytics data held by Google, use the opt-out above. For any privacy question or request, write to <strong>feedback@bharatdevtool.com</strong>.</p>
+      </section>
+      <section>
+        <h2>7. Changes to this policy</h2>
+        <p>If our practices change we will update this page and its &ldquo;Last updated&rdquo; date.</p>
+      </section>
         <div class="back"><a href="index.html">← Back to Bharat Dev Tools</a></div>
       </div>
     </div>

@@ -826,7 +826,7 @@
           window.Analytics.track('hash_generate_failed', {
             page: 'Hash Generator',
             mode: currentMode,
-            error: err.message,
+            error_type: (err && err.name) || "Error",
           });
         }
       } finally {

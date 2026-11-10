@@ -44,6 +44,11 @@
 
 # Clean URL handling for static HTML tools
 [[redirects]]
+  from = "/simple-qr.html"
+  to = "/qr-generator-free.html"
+  status = 301
+
+[[redirects]]
   from = "/tools"
   to = "/tools.html"
   status = 301

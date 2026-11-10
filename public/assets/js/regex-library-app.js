@@ -241,7 +241,7 @@ function renderPatterns(patterns = REGEX_PATTERNS) {
       
       <div class="flex gap-2">
         <a
-          href="regex-tester.html?pattern=${encodeURIComponent(pattern.pattern)}"
+          href="regex-tester.html#pattern=${encodeURIComponent(pattern.pattern)}"
           class="flex-1 text-center px-4 py-2 text-sm bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
         >
           Test

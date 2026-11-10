@@ -31,8 +31,38 @@
   <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
   
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+  
+  <!-- TailwindCSS CDN (required for header component) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
+        }
+      }
+    }
+  </script>
   <!-- Analytics Script -->
   <script src="assets/js/analytics.js"></script>
+  <!-- Theme Management (load early to prevent flash) -->
+  <script src="assets/js/theme.js"></script>
+  <!-- App config + logo loader so header logo uses central LOGO_URL -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
   <style>
     .feedback {
       max-width: 720px; margin: 40px auto; padding: 16px; background: var(--panel);
@@ -50,29 +80,26 @@
       .feedback { margin: 16px; }
       .feedback form { grid-template-columns: 1fr; }
     }
+    .feedback-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+    .feedback-btn { display: inline-block; padding: 10px 16px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.12); color: var(--fg); text-decoration: none; font-weight: 500; }
+    .feedback-btn.primary { background: #2563EB; border-color: transparent; color: #fff; }
+    .feedback-btn:hover { opacity: 0.92; }
+    .feedback-note { font-size: 14px; }
+    .feedback h1 { font-size: 1.6rem; font-weight: 700; }
   </style>
 </head>
 <body>
+  <!-- Header Component Script (load after body exists) -->
+  <script src="components/header.js"></script>
   <main>
     <section class="feedback">
       <h1>Contact • Feedback • Requests</h1>
       <p>Reach out with feedback, feature requests, bugs, or collaboration ideas.</p>
-      <form action="mailto:feedback@bharatdevtool.com" method="post" enctype="text/plain">
-        <select name="topic" required>
-          <option value="" disabled selected>Select topic</option>
-          <option>Contact us</option>
-          <option>Feedback</option>
-          <option>Request feature</option>
-          <option>Report bug</option>
-          <option>Collaborate</option>
-        </select>
-        <input type="text" name="name" placeholder="Your name" required>
-        <input type="email" name="email" placeholder="Your email" required>
-        <input type="tel" name="mobile" placeholder="Mobile (optional)">
-        <input type="text" name="country" placeholder="Country (optional)">
-        <textarea name="message" rows="6" placeholder="Your message..." required></textarea>
-        <button type="submit">Send suggestion</button>
-      </form>
+      <div class="feedback-actions">
+        <a class="feedback-btn primary" href="https://forms.gle/TA7WEhzzQ6csQFGZ7" target="_blank" rel="noopener noreferrer">Open the feedback form</a>
+        <a class="feedback-btn" href="mailto:feedback@bharatdevtool.com?subject=Bharat%20Dev%20Tools%20feedback">Email feedback@bharatdevtool.com</a>
+      </div>
+      <p class="feedback-note">Feature requests, bug reports, new tool ideas and collaboration are all welcome. No account needed; leave your email only if you want a reply.</p>
     </section>
   </main>
 

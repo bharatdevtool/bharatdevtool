@@ -2,6 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <!-- Prefill (#text= or legacy ?text=) can hold user data: copy it to memory and clear the address bar before analytics/Sentry load. -->
+  <script>
+    (function () {
+      var p = new URLSearchParams();
+      try {
+        p = new URLSearchParams(location.search);
+        new URLSearchParams(location.hash.slice(1)).forEach(function (v, k) { p.set(k, v); });
+        if (['text'].some(function (k) { return p.has(k); })) history.replaceState(null, '', location.pathname);
+      } catch (e) {}
+      window.__bdtPrefill = p;
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Free QR Code Generator Online | Bharat Dev Tools</title>
   <meta name="description" content="Free QR code generator for links, text and WiFi. Customize colors and download PNG or SVG. No sign-up, no watermark, nothing uploaded.">
@@ -441,10 +453,8 @@
   <!-- Toast Container -->
   <div id="toast-container"></div>
 
-  <!-- QR Code Library -->
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-  <!-- Fallback QR Code Library -->
-  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+  <!-- QR Code Library (qrcode-generator; the old qrcode@1.5.3 "build/" URL returns 404) -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js" integrity="sha384-lQXOAyZwHXE55JFyrOMB7nY2Wv+m5ZWNtJcHrd1rceRQXAYNLak8ukN5TjBTcIwz" crossorigin="anonymous"></script>
 
   <!-- FAQ Accordion Script -->
   <script>
@@ -635,14 +645,7 @@
       
       // Check if QRCode library is loaded
       if (typeof QRCode === 'undefined') {
-        // Wait for library to load
-        setTimeout(() => {
-          if (typeof QRCode !== 'undefined') {
-            generateQRCode(text);
-          } else {
-            generateQRCodeFallback(text, qrContainer);
-          }
-        }, 500);
+        generateQRCodeFallback(text, qrContainer);
         return;
       }
       
@@ -997,11 +1000,11 @@
       updateHistoryDisplay();
       
       // Check for URL parameters
-      const urlParams = new URLSearchParams(window.location.search);
+      const urlParams = (window.__bdtPrefill || new URLSearchParams());
       const textParam = urlParams.get('text');
       if (textParam) {
         const input = document.getElementById('qr-input');
-        const decodedText = decodeURIComponent(textParam);
+        const decodedText = textParam;
         input.value = decodedText;
         input.focus();
         showToast('Text loaded from URL', 'info');

@@ -903,7 +903,7 @@
           if (typeof initSentryTracking !== 'undefined') initSentryTracking();
           Sentry.setContext('page', {
             name: 'WhatsApp Link Generator',
-            url: window.location.href
+            path: window.location.pathname
           });
         }
       });

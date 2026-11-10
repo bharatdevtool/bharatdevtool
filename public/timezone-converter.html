@@ -842,7 +842,7 @@
       } catch (err) {
         showToast('Conversion failed. Please check your inputs.', 'error');
         if (typeof window.Analytics !== 'undefined') {
-          window.Analytics.track('timezone_convert_error', { page: PAGE_NAME, reason: err.message });
+          window.Analytics.track('timezone_convert_error', { page: PAGE_NAME, error_type: (err && err.name) || "Error" });
         }
         if (typeof Sentry !== 'undefined') {
           try {

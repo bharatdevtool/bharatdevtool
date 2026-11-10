@@ -791,7 +791,7 @@
         errEl.textContent = 'Invalid timestamp. Enter a number in seconds (10 digits) or milliseconds (13 digits).';
         errEl.classList.remove('hidden');
         if (typeof window.Analytics !== 'undefined') {
-          window.Analytics.track('timestamp_convert_error', { page: PAGE_NAME, input: raw.substring(0, 20) });
+          window.Analytics.track('timestamp_convert_error', { page: PAGE_NAME, input_length: raw.length });
         }
         return;
       }

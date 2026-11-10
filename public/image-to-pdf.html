@@ -750,10 +750,10 @@
       count.textContent = '(' + imageItems.length + ' image' + (imageItems.length !== 1 ? 's' : '') + ')';
 
       grid.innerHTML = imageItems.map(function(item, i) {
-        return '<div class="image-card animate-slide-up" draggable="true" data-index="' + i + '" data-id="' + item.id + '" role="listitem" aria-label="Image ' + (i+1) + ': ' + item.name + '">' +
+        return '<div class="image-card animate-slide-up" draggable="true" data-index="' + i + '" data-id="' + item.id + '" role="listitem" aria-label="Image ' + (i+1) + ': ' + escapeAttr(item.name) + '">' +
           '<img src="' + item.dataURL + '" alt="' + escapeAttr(item.name) + '" class="image-thumb" loading="lazy">' +
           '<span class="image-card-num" aria-hidden="true">' + (i+1) + '</span>' +
-          '<button class="image-card-remove" data-index="' + i + '" aria-label="Remove image ' + (i+1) + ': ' + item.name + '" title="Remove">×</button>' +
+          '<button class="image-card-remove" data-index="' + i + '" aria-label="Remove image ' + (i+1) + ': ' + escapeAttr(item.name) + '" title="Remove">×</button>' +
           '<div class="image-card-info">' +
             '<div class="image-card-name" title="' + escapeAttr(item.name) + '">' + escapeHtml(item.name) + '</div>' +
             '<div class="image-card-size">' + formatBytes(item.size) + '</div>' +
@@ -792,7 +792,7 @@
     function removeImageAt(index) {
       const removed = imageItems[index];
       imageItems.splice(index, 1);
-      trackEvent('image_removed', { name: removed && removed.name });
+      trackEvent('image_removed', { count: 1 });
       renderGrid();
       syncWorkArea();
     }
@@ -999,7 +999,7 @@
       } catch (err) {
         showToast('Failed to generate PDF: ' + err.message, 'error');
         captureError(err, { step: 'generate_pdf', image_count: imageItems.length });
-        trackEvent('pdf_generation_failed', { reason: err.message });
+        trackEvent('pdf_generation_failed', { error_type: (err && err.name) || 'Error' });
       }
 
       setTimeout(function() {

@@ -1153,7 +1153,7 @@
       if (typeof Sentry !== 'undefined') {
         Sentry.setContext('page', {
           name: 'Our Developer Tools',
-          url: window.location.href
+          path: window.location.pathname
         });
       }
       

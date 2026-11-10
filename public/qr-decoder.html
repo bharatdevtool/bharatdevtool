@@ -597,7 +597,7 @@
   <div id="toast-container"></div>
 
   <!-- QR Code Decoding Library -->
-  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js" 
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js" integrity="sha384-hStSInNIZ8ljtOVrmrgf7zdHMapaLBWoSnPTtF0nzsybp4+LuhDz6sHuEVpWIX8o" crossorigin="anonymous" 
           onerror="console.error('Failed to load jsQR from primary CDN'); loadJsQRFallback();"></script>
   <script>
     // Fallback loader for jsQR library
@@ -605,7 +605,9 @@
       if (typeof jsQR === 'undefined') {
         console.log('Attempting to load jsQR from fallback CDN...');
         const script = document.createElement('script');
-        script.src = 'https://unpkg.com/jsqr@1.4.0/dist/jsQR.min.js';
+        script.src = 'https://unpkg.com/jsqr@1.4.0/dist/jsQR.js';
+        script.integrity = 'sha384-b5Ya4Bq3qCyz39m2ISh+4DxjAIljdeFwK/BsXLuj9gugaNwAcj/ia15fxNZL9Nlx';
+        script.crossOrigin = 'anonymous';
         script.onerror = function() {
           console.error('Failed to load jsQR from fallback CDN as well');
         };
@@ -686,7 +688,7 @@
             },
             extra: {
               errorType: error.name,
-              errorMessage: error.message,
+              error_type: (error && error.name) || "Error",
               ...context.extra
             }
           });
@@ -1098,7 +1100,7 @@
               window.Analytics.trackQrDecodeFailed({
                 page: 'QR Code Decoder',
                 reason: 'error',
-                error_message: error.message
+                error_type: (error && error.name) || "Error"
               });
             }
           }

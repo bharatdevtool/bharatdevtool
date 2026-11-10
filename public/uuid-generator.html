@@ -851,7 +851,7 @@
           window.Analytics.track('uuid_generate_error', {
             page: UUID_PAGE_NAME,
             version: selectedVersion,
-            error: err.message
+            error_type: (err && err.name) || "Error"
           });
         }
       }

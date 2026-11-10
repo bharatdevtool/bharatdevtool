@@ -40,22 +40,16 @@ function trackComparisonEvent(eventName, context = {}) {
 function trackComparisonError(errorType, context = {}) {
   const errorContext = {
     error_type: errorType,
-    error_message: context.error_message || '',
-    input_length: context.input_length || 0,
-    input_preview: context.input_preview || '',
-    page: getCurrentPageNameForAnalytics(),
-    timestamp: Date.now(),
-    user_agent: navigator.userAgent,
-    viewport: `${window.innerWidth}x${window.innerHeight}`,
-    ...context
+    input_length_a: context.input_length_a || 0,
+    input_length_b: context.input_length_b || 0,
+    page: getCurrentPageNameForAnalytics()
   };
   
   trackComparisonEvent('comparison_error', errorContext);
   
   if (typeof Sentry !== 'undefined') {
     Sentry.captureException(new Error(errorType), {
-      tags: { operation: 'curl_comparison', error_type: errorType },
-      extra: errorContext
+      tags: { operation: 'curl_comparison', error_type: errorType }
     });
   }
 }
@@ -373,11 +367,8 @@ function compareCurlsHandler() {
     } catch (error) {
       showError(`Failed to compare: ${error.message}`);
       trackComparisonError('compare_failed', {
-        error_message: error.message,
         input_length_a: curlA.length,
-        input_length_b: curlB.length,
-        input_preview_a: curlA.substring(0, 100),
-        input_preview_b: curlB.substring(0, 100)
+        input_length_b: curlB.length
       });
     }
   }).catch((error) => {

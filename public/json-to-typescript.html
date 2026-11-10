@@ -516,62 +516,88 @@
     }
 
     // ─── Type inference ───────────────────────────────────────────────────────
+    // Arrays: every element is inspected. Object elements are merged into one
+    // interface (keys missing from some elements become optional) and mixed
+    // element types become a union, e.g. (string | number)[].
+
+    function isPlainObject(v) {
+      return v !== null && typeof v === 'object' && !Array.isArray(v);
+    }
+
+    function joinUnion(types) {
+      const uniq = [];
+      types.forEach(function (t) { if (uniq.indexOf(t) === -1) uniq.push(t); });
+      // keep null last for readability
+      uniq.sort(function (a, b) { return (a === 'null') - (b === 'null'); });
+      return uniq.length ? uniq.join(' | ') : 'unknown';
+    }
+
+    // Type for a list of sample values seen at the same position.
+    function inferValuesType(values, key, ctx) {
+      const types = [];
+      const objects = [];
+      const arrays = [];
+      values.forEach(function (v) {
+        if (v === null) types.push('null');
+        else if (typeof v === 'string') types.push('string');
+        else if (typeof v === 'number') types.push('number');
+        else if (typeof v === 'boolean') types.push('boolean');
+        else if (Array.isArray(v)) arrays.push(v);
+        else if (isPlainObject(v)) objects.push(v);
+        else types.push('unknown');
+      });
+      if (objects.length) types.push(inferObjectType(objects, key, ctx));
+      if (arrays.length) {
+        const elements = [].concat.apply([], arrays);
+        const el = elements.length ? inferValuesType(elements, key + 'Item', ctx) : 'unknown';
+        types.push(el.indexOf(' | ') !== -1 ? '(' + el + ')[]' : el + '[]');
+      }
+      return joinUnion(types);
+    }
 
     function inferType(value, key, ctx) {
-      if (value === null)        return 'null';
-      if (typeof value === 'string')  return 'string';
-      if (typeof value === 'number')  return Number.isInteger(value) ? 'number' : 'number';
-      if (typeof value === 'boolean') return 'boolean';
-      if (Array.isArray(value))       return inferArrayType(value, key, ctx);
-      if (typeof value === 'object')  return inferObjectType(value, key, ctx);
-      return 'unknown';
+      return inferValuesType([value], key, ctx);
     }
 
-    function inferArrayType(arr, key, ctx) {
-      if (arr.length === 0) return 'unknown[]';
-      const elementType = inferType(arr[0], key + 'Item', ctx);
-      return elementType + '[]';
-    }
-
-    function inferObjectType(obj, key, ctx) {
-      const interfaceName = toPascalCase(key);
-      if (!ctx.interfaces[interfaceName]) {
-        ctx.interfaces[interfaceName] = null; // reserve slot to handle recursion
-        ctx.interfaces[interfaceName] = buildInterface(obj, interfaceName, ctx);
+    // samples: one or more objects describing the same shape.
+    function inferObjectType(samples, key, ctx) {
+      const base = toPascalCase(key) || 'Item';
+      const body = buildInterfaceBody(samples, ctx);
+      // Same name + same shape → reuse; same name + different shape → Name2, Name3…
+      let name = base;
+      for (let n = 2; ctx.interfaces[name] !== undefined && ctx.bodies[name] !== body; n++) name = base + n;
+      if (ctx.interfaces[name] === undefined) {
+        ctx.bodies[name] = body;
+        ctx.interfaces[name] = renderInterface(name, body, ctx);
       }
-      return interfaceName;
+      return name;
     }
 
     // ─── Interface builder ────────────────────────────────────────────────────
 
-    function buildInterface(obj, name, ctx) {
+    function buildInterfaceBody(samples, ctx) {
       const semi = ctx.options.semicolons ? ';' : '';
-      const useType = ctx.options.useTypeAlias;
       const optionalNulls = ctx.options.optionalFields;
-
-      const lines = [];
-      const header = useType ? 'type ' + name + ' = {' : 'interface ' + name + ' {';
-      lines.push(header);
-
-      const keys = Object.keys(obj);
-      keys.forEach(function (key) {
-        const value = obj[key];
-        let tsType = inferType(value, key, ctx);
-
-        let propKey = key;
-        const isOptional = optionalNulls && value === null;
-        if (isOptional) {
-          propKey = key + '?';
-          tsType = tsType === 'null' ? 'null | undefined' : tsType + ' | null';
-        } else if (tsType === 'null') {
-          tsType = 'null';
-        }
-
-        lines.push('  ' + propKey + ': ' + tsType + semi);
+      const keys = [];
+      samples.forEach(function (o) {
+        Object.keys(o).forEach(function (k) { if (keys.indexOf(k) === -1) keys.push(k); });
       });
+      return keys.map(function (key) {
+        const present = samples.filter(function (o) { return Object.prototype.hasOwnProperty.call(o, key); });
+        const values = present.map(function (o) { return o[key]; });
+        let tsType = inferValuesType(values, key, ctx);
+        const missingSometimes = present.length < samples.length;
+        const hasNull = values.some(function (v) { return v === null; });
+        const optional = missingSometimes || (optionalNulls && hasNull);
+        if (optionalNulls && hasNull && tsType === 'null') tsType = 'null | undefined';
+        const safeKey = /^[A-Za-z_$][\w$]*$/.test(key) ? key : JSON.stringify(key);
+        return '  ' + safeKey + (optional ? '?' : '') + ': ' + tsType + semi;
+      }).join('\n');
+    }
 
-      lines.push('}');
-      return lines.join('\n');
+    function renderInterface(name, body, ctx) {
+      const header = ctx.options.useTypeAlias ? 'type ' + name + ' = {' : 'interface ' + name + ' {';
+      return header + (body ? '\n' + body : '') + '\n}';
     }
 
     // ─── Main converter ───────────────────────────────────────────────────────
@@ -579,46 +605,27 @@
     function convertJsonToTypeScript(jsonText, options) {
       const parsed = JSON.parse(jsonText); // throws on invalid JSON
 
-      const rootName = (options.rootName || 'Root').trim() || 'Root';
-      const ctx = {
-        interfaces: {},
-        options: options
-      };
+      const rootName = toPascalCase((options.rootName || 'Root').trim()) || 'Root';
+      const ctx = { interfaces: {}, bodies: {}, options: options };
+      const semi = options.semicolons ? ';' : '';
 
-      let rootType;
       if (Array.isArray(parsed)) {
-        if (parsed.length === 0) {
-          rootType = 'unknown[]';
-        } else if (typeof parsed[0] === 'object' && parsed[0] !== null && !Array.isArray(parsed[0])) {
-          inferObjectType(parsed[0], rootName, ctx);
-          rootType = rootName + '[]';
-        } else {
-          rootType = inferType(parsed[0], 'item', ctx) + '[]';
-        }
-        // For array root, emit root alias
-        const semi = options.semicolons ? ';' : '';
-        const rootAlias = 'type ' + rootName + ' = ' + rootType + semi;
-        const parts = [rootAlias];
-        Object.keys(ctx.interfaces).forEach(function (iName) {
-          if (ctx.interfaces[iName]) parts.push('\n' + ctx.interfaces[iName]);
-        });
+        const el = parsed.length ? inferValuesType(parsed, rootName + 'Item', ctx) : 'unknown';
+        const rootType = el.indexOf(' | ') !== -1 ? '(' + el + ')[]' : el + '[]';
+        const parts = ['type ' + rootName + ' = ' + rootType + semi];
+        Object.keys(ctx.interfaces).forEach(function (iName) { parts.push('\n' + ctx.interfaces[iName]); });
         return parts.join('\n');
       }
 
-      if (typeof parsed !== 'object' || parsed === null) {
-        const semi = options.semicolons ? ';' : '';
+      if (!isPlainObject(parsed)) {
         return '// Primitive JSON value\ntype ' + rootName + ' = ' + inferType(parsed, rootName, ctx) + semi;
       }
 
-      ctx.interfaces[rootName] = buildInterface(parsed, rootName, ctx);
-
-      const parts = [];
-      // Root interface first, then nested
-      if (ctx.interfaces[rootName]) parts.push(ctx.interfaces[rootName]);
+      // Root first: build its body (which registers nested interfaces), then list nested ones.
+      const rootBody = buildInterfaceBody([parsed], ctx);
+      const parts = [renderInterface(rootName, rootBody, ctx)];
       Object.keys(ctx.interfaces).forEach(function (iName) {
-        if (iName !== rootName && ctx.interfaces[iName]) {
-          parts.push('\n' + ctx.interfaces[iName]);
-        }
+        if (iName !== rootName) parts.push('\n' + ctx.interfaces[iName]);
       });
       return parts.join('\n');
     }
@@ -687,7 +694,7 @@
         errorEl.textContent = 'Invalid JSON: ' + err.message;
         errorEl.classList.remove('hidden');
         outputEl.value = '';
-        trackEvent('json_ts_convert_error', { error_message: err.message });
+        trackEvent('json_ts_convert_error', { error_type: (err && err.name) || "Error" });
         if (typeof Sentry !== 'undefined') {
           try { Sentry.captureException(err, { tags: { operation: 'json_to_typescript' } }); } catch (_) {}
         }
