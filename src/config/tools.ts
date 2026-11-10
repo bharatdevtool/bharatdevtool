@@ -68,9 +68,9 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     route: '/qr-generator-free.html',
     category: 'QR & Links',
     description:
-      'Create QR codes for URLs, plain text and WiFi networks with custom colors and error correction. Free QR code generator that works offline in your browser.',
-    shortDesc: 'Generate QR codes for any content',
-    keywords: ['qr code generator', 'create qr code', 'free qr generator', 'qr code maker'],
+      'Free QR code generator for links, Wi-Fi, UPI, WhatsApp and contacts, with logo, colours and frames. Never expires, no sign-up, no watermark, made in your browser.',
+    shortDesc: 'QR codes with logo, never expire',
+    keywords: ['qr code generator', 'create qr code', 'free qr generator', 'qr code maker', 'qr code with logo', 'upi qr code', 'wifi qr code', 'whatsapp qr code', 'vcard qr code'],
     heavy: true,
   },
   {
@@ -79,9 +79,9 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     route: '/qr-decoder.html',
     category: 'QR & Links',
     description:
-      'Decode QR codes from images and screenshots instantly. Upload or drag and drop a picture to read its content. Free, private, runs in your browser.',
-    shortDesc: 'Decode QR code images',
-    keywords: ['qr code decoder', 'qr scanner', 'qr reader', 'scan qr code', 'decode qr'],
+      'Scan QR codes from images, screenshots or the camera. Reads links, Wi-Fi, UPI and contacts, and warns about risky links before you open them. Nothing uploaded.',
+    shortDesc: 'Scan QR codes, check links',
+    keywords: ['qr code decoder', 'qr scanner', 'qr reader', 'scan qr code', 'decode qr', 'qr code from screenshot', 'check qr link safe', 'wifi qr password'],
     heavy: true,
   },
   // ── Color ─────────────────────────────────────────────────
@@ -634,7 +634,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     description:
       'Resize photos and signatures to 20 KB, 50 KB or any size for SSC, IBPS, SBI, NEET, JEE and UPSC forms. Batch resize, exact KB, free, nothing uploaded.',
     shortDesc: 'Exam photo & signature to exact KB',
-    keywords: ['resize image to 20kb', 'compress image to 50kb', 'resize photo in kb', 'signature resize', 'exam photo resizer', 'ssc photo resize'],
+    keywords: ['resize image to 20kb', 'compress image to 50kb', 'resize photo in kb', 'signature resize', 'exam photo resizer', 'ssc photo resize', 'upsc photo resize', 'ibps photo resize', 'neet photo size', 'add name and date on photo', 'signature white background', 'photo size in cm'],
   },
   {
     id: 'favicon-generator',

@@ -134,6 +134,8 @@ When creating a new **Next.js** tool:
 7. **Add it to navigation and the sitemap**: `public/components/footer.js` (`ALL_TOOLS_LIST`), `public/tools.html`, and `public/sitemap.xml`.
 8. **Verify**: `pnpm exec tsc --noEmit --skipLibCheck`, `pnpm test` (enforces FAQs, title ≤ 60 chars, description 140–160 chars, sitemap and footer coverage), and `pnpm build`.
 
+**Resize Image to KB landing pages** (`resize-image-to-20kb.html`, `upsc-photo-signature-resize.html`, …) are generated: `public/resize-image-to-kb.html` is the template (its `<!-- kb:… -->` regions are replaced per page), page text lives in `scripts/kb-pages.mjs`, exam limits in `public/assets/js/exam-presets.js`, and the UI in `public/assets/js/resize-to-kb-page.js`. After editing any of them run `pnpm gen:pages` (it also adds new pages to the sitemap); `tests/kb-pages.test.ts` fails on stale pages. The QR generator works the same way: `public/qr-generator-free.html` is the template for `visiting-card-qr-code.html` etc., page text in `scripts/qr-pages.mjs`, checked by `tests/qr-pages.test.ts`. These pages carry `<meta name="bdt:variant-of">` and are not separate registry entries.
+
 When adding a **static HTML** tool: create `public/<id>.html` from an existing tool page (header.js, footer.js, analytics.js, Sentry loader, canonical, OG, JSON-LD, FAQPage), then do step 1 (route `/<id>.html`), step 2 and step 7. `pnpm test` fails until all three are done.
 
 Never merge to `main` without checking the Netlify deploy preview.

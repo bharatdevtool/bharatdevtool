@@ -3,6 +3,7 @@
 // (no DOM access except where a canvas fallback is needed).
 
 import { fitToSize, padJpeg, kbRangeToBytes } from './target-size.js';
+import { prepareSource, stampBandHeight, drawStamp } from './kb-edit.js';
 
 /** @param {number} bytes */
 export function formatBytes(bytes) {
@@ -101,6 +102,39 @@ export function drawImage(source, outW, outH, opts = {}) {
 }
 
 /**
+ * Like drawImage, plus an optional white name/date band at the bottom: the picture
+ * fills the area above the band.
+ * @param {CanvasImageSource & { width: number, height: number }} source
+ * @param {number} outW
+ * @param {number} outH
+ * @param {'cover' | 'contain' | 'stretch'} fit
+ * @param {{ name: string, date: string } | null | undefined} stamp
+ */
+export function drawOutput(source, outW, outH, fit, stamp) {
+  if (!stamp) return drawImage(source, outW, outH, { fit });
+  const band = stampBandHeight(outH);
+  const imgH = Math.max(1, outH - band);
+  const canvas = makeCanvas(outW, outH);
+  const ctx = /** @type {CanvasRenderingContext2D} */ (canvas.getContext('2d'));
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, outW, outH);
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  const f = computeFrame(source.width, source.height, outW, imgH, fit);
+  ctx.drawImage(source, f.sx, f.sy, f.sw, f.sh, f.dx, f.dy, f.dw, f.dh);
+  drawStamp(ctx, outW, imgH, band, stamp);
+  return canvas;
+}
+
+/**
+ * Largest box with width/height = aspect inside (w × h): the centre crop for a required photo shape.
+ * @param {number} w @param {number} h @param {number} aspect
+ */
+export function aspectBox(w, h, aspect) {
+  return w / h > aspect ? { width: Math.round(h * aspect), height: h } : { width: w, height: Math.round(w / aspect) };
+}
+
+/**
  * Decode a file into a bitmap, honouring EXIF orientation (phone photos).
  * @param {Blob} file
  */
@@ -115,8 +149,13 @@ export const DEFAULT_MAX_SIDE = 2000;
  * @typedef {{
  *   minKB: number, maxKB: number,
  *   width?: number, height?: number,
- *   fit?: 'cover' | 'contain' | 'none'
+ *   fit?: 'cover' | 'contain' | 'none',
+ *   aspect?: number,
+ *   maxSide?: number,
+ *   edits?: import('./kb-edit.js').Edits
  * }} SizeJob
+ * `aspect` (width/height) crops to that shape when no exact pixel size is given.
+ * `edits` are applied first: rotate, crop, signature clean-up; `edits.stamp` adds the name/date band.
  */
 
 /**
@@ -129,11 +168,23 @@ export const DEFAULT_MAX_SIDE = 2000;
 export async function processToKB(file, job) {
   const bitmap = await loadBitmap(file);
   try {
+    const edits = job.edits || {};
+    const source = prepareSource(bitmap, edits);
+    const stamp = edits.stamp && (edits.stamp.name.trim() || edits.stamp.date.trim()) ? edits.stamp : null;
     const hasBox = Boolean(job.width && job.height);
-    const start = hasBox
-      ? { width: /** @type {number} */ (job.width), height: /** @type {number} */ (job.height) }
-      : capSize(bitmap.width, bitmap.height, DEFAULT_MAX_SIDE);
-    const fit = hasBox && job.fit && job.fit !== 'none' ? job.fit : 'stretch';
+    /** @type {{ width: number, height: number }} */
+    let start;
+    /** @type {'cover' | 'contain' | 'stretch'} */
+    let fit;
+    if (hasBox) {
+      start = { width: /** @type {number} */ (job.width), height: /** @type {number} */ (job.height) };
+      fit = job.fit && job.fit !== 'none' ? job.fit : 'stretch';
+    } else {
+      const shape = job.aspect ? aspectBox(source.width, source.height, job.aspect) : { width: source.width, height: source.height };
+      // With a name/date band, the output is taller so the picture keeps its shape above the band.
+      start = capSize(shape.width, stamp ? Math.round(shape.height / 0.84) : shape.height, job.maxSide || DEFAULT_MAX_SIDE);
+      fit = job.aspect ? 'cover' : 'stretch';
+    }
     const { minBytes, maxBytes } = kbRangeToBytes(job.minKB, job.maxKB);
 
     // Draw once per pixel size; only re-encode for each quality step.
@@ -142,7 +193,7 @@ export async function processToKB(file, job) {
     /** @param {number} w @param {number} h @param {number} q */
     const encode = (w, h, q) => {
       const key = w + 'x' + h;
-      if (!cached || cached.key !== key) cached = { key, canvas: drawImage(bitmap, w, h, { fit }) };
+      if (!cached || cached.key !== key) cached = { key, canvas: drawOutput(source, w, h, fit, stamp) };
       return canvasToBlob(cached.canvas, 'image/jpeg', q);
     };
 
@@ -161,6 +212,7 @@ export async function processToKB(file, job) {
       height: fitted.height,
       quality: fitted.quality,
       padded: fitted.padToBytes > 0,
+      stamped: Boolean(stamp),
     };
   } finally {
     bitmap.close();

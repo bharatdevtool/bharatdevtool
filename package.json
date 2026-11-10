@@ -5,6 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "gen:kb": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/kb-pages.mjs",
+    "gen:qr": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/qr-pages.mjs",
+    "gen:pages": "pnpm -s gen:kb && pnpm -s gen:qr",
     "preview": "npx serve out",
     "start": "npx serve out",
     "lint": "eslint",

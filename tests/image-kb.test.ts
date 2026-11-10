@@ -7,7 +7,10 @@ import {
   QUALITY_FLOOR,
 } from '../public/assets/js/target-size.js';
 import { computeFrame, capSize, crc32, createZip } from '../public/assets/js/image-utils.js';
-import { EXAM_GROUPS, guessDoc, getGroup } from '../public/assets/js/exam-presets.js';
+import { EXAM_GROUPS, guessDoc, getGroup, rangeText, dimsText, inkLines } from '../public/assets/js/exam-presets.js';
+import { checkOutput, toPixels, formatPhotoDate } from '../public/assets/js/kb-checks.js';
+import { cleanSignaturePixels, stampBandHeight } from '../public/assets/js/kb-edit.js';
+import { aspectBox } from '../public/assets/js/image-utils.js';
 
 /** Fake JPEG encoder: size grows with pixel count and quality, like the real thing. */
 function fakeEncoder(bytesPerPixelAtMax = 1.2) {
@@ -167,7 +170,127 @@ describe('exam presets', () => {
     expect(guessDoc(banking, 1600, 800)).toBe('declaration');
   });
 
+  it('tells a phone photo of a signature from a declaration by its lines of writing', () => {
+    const banking = getGroup('banking')!;
+    expect(guessDoc(banking, 1600, 900, 1)).toBe('signature');
+    expect(guessDoc(banking, 1600, 900, 4)).toBe('declaration');
+    // A 40×30 page with three dark lines vs. one tall signature stroke.
+    const page = (bands: [number, number][]) => {
+      const w = 40, h = 30;
+      const d = new Uint8ClampedArray(w * h * 4).fill(230);
+      for (const [y0, y1] of bands) for (let y = y0; y < y1; y++) for (let x = 5; x < 35; x++) d.set([20, 20, 20, 255], (y * w + x) * 4);
+      return inkLines(d, w, h);
+    };
+    expect(page([[3, 6], [12, 15], [21, 24]])).toBe(3);
+    expect(page([[8, 20]])).toBe(1);
+  });
+
   it('falls back to the only document a group has', () => {
     expect(guessDoc(getGroup('ssc')!, 600, 700)).toBe('signature');
+  });
+
+  it('gives every document a kind, a sane shape and readable labels', () => {
+    for (const g of EXAM_GROUPS) {
+      expect(g.short, g.id).toBeTruthy();
+      for (const d of g.docs) {
+        expect(['photo', 'signature', 'thumb', 'document'], `${g.id}/${d.id}`).toContain(d.kind);
+        if (d.aspect) expect(d.aspect, `${g.id}/${d.id}`).toBeGreaterThan(0);
+        if (d.cm && d.aspect) expect(Math.abs(d.cm[0] / d.cm[1] - d.aspect), `${g.id}/${d.id}`).toBeLessThan(0.01);
+      }
+    }
+    expect(rangeText({ minKB: 20, maxKB: 50 })).toBe('20–50 KB');
+    expect(rangeText({ minKB: 0, maxKB: 20 })).toBe('under 20 KB');
+    expect(dimsText(getGroup('banking')!.docs[0])).toBe('200 × 230 px');
+    expect(dimsText(getGroup('ctet')!.docs[0])).toBe('3.5 × 4.5 cm');
+  });
+});
+
+describe('size units', () => {
+  it('converts cm, mm and inches to pixels at a DPI', () => {
+    expect(toPixels(3.5, 'cm', 300)).toBe(413);
+    expect(toPixels(45, 'mm', 300)).toBe(531);
+    expect(toPixels(2, 'in', 200)).toBe(400);
+    expect(toPixels(200, 'px', 300)).toBe(200);
+    expect(toPixels(0, 'cm', 300)).toBe(0);
+  });
+
+  it('formats the photo date as DD-MM-YYYY', () => {
+    expect(formatPhotoDate(new Date(2026, 0, 5))).toBe('05-01-2026');
+  });
+
+  it('finds the largest centre box with the required shape', () => {
+    expect(aspectBox(1000, 1000, 3.5 / 4.5)).toEqual({ width: 778, height: 1000 });
+    expect(aspectBox(900, 300, 3)).toEqual({ width: 900, height: 300 });
+    expect(aspectBox(1200, 300, 3)).toEqual({ width: 900, height: 300 });
+  });
+});
+
+describe('will the form accept it?', () => {
+  const jpg = (bytes: number, width = 200, height = 230, stamped = false) => ({ bytes, width, height, mime: 'image/jpeg', stamped });
+
+  it('passes a file that fits under both 1000- and 1024-byte KB', () => {
+    const checks = checkOutput(jpg(35_000), { minKB: 20, maxKB: 50, width: 200, height: 230 });
+    expect(checks.map((c) => [c.id, c.ok])).toEqual([['size', true], ['format', true], ['pixels', true]]);
+    expect(checks[2].label).toBe('Exactly 200 × 230 px');
+  });
+
+  it('fails a file that only fits if the portal counts 1 KB as 1024 bytes', () => {
+    expect(checkOutput(jpg(50_500), { minKB: 20, maxKB: 50 })[0].ok).toBe(false);
+    // …and one under the minimum when the portal counts 1 KB as 1024 bytes.
+    expect(checkOutput(jpg(20_200), { minKB: 20, maxKB: 50 })[0].ok).toBe(false);
+  });
+
+  it('catches wrong pixels, wrong shape, PNG and a missing name/date', () => {
+    expect(checkOutput(jpg(30_000, 201, 230), { minKB: 20, maxKB: 50, width: 200, height: 230 })[2].ok).toBe(false);
+    expect(checkOutput(jpg(30_000, 350, 450), { minKB: 10, maxKB: 100, aspect: 3.5 / 4.5 })[2].ok).toBe(true);
+    expect(checkOutput(jpg(30_000, 450, 450), { minKB: 10, maxKB: 100, aspect: 3.5 / 4.5 })[2].ok).toBe(false);
+    expect(checkOutput({ ...jpg(30_000), mime: 'image/png' }, { minKB: 0, maxKB: 50 })[1].ok).toBe(false);
+    const stamp = checkOutput(jpg(30_000), { minKB: 0, maxKB: 50, stamp: 'required' });
+    expect(stamp.find((c) => c.id === 'stamp')?.ok).toBe(false);
+    // "Recommended" only shows a tick once it was added.
+    expect(checkOutput(jpg(30_000), { minKB: 0, maxKB: 50, stamp: 'recommended' }).some((c) => c.id === 'stamp')).toBe(false);
+    expect(checkOutput(jpg(30_000, 200, 230, true), { minKB: 0, maxKB: 50, stamp: 'recommended' }).find((c) => c.id === 'stamp')?.ok).toBe(true);
+  });
+});
+
+describe('signature clean-up', () => {
+  /** Grey paper (190) with a faint blue stroke and a soft shadow. */
+  function scan(w: number, h: number) {
+    const d = new Uint8ClampedArray(w * h * 4);
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
+        const o = (y * w + x) * 4;
+        const shadow = x < 10 ? 25 : 0;
+        const ink = y >= 20 && y < 24 && x >= 30 && x < 70;
+        d[o] = ink ? 70 : 190 - shadow;
+        d[o + 1] = ink ? 80 : 190 - shadow;
+        d[o + 2] = ink ? 150 : 185 - shadow;
+        d[o + 3] = 255;
+      }
+    }
+    return d;
+  }
+
+  it('turns paper white, darkens the ink (keeping it blue) and finds the ink box', () => {
+    const w = 100, h = 50;
+    const d = scan(w, h);
+    const box = cleanSignaturePixels(d, w, h);
+    expect(box).toEqual({ x: 30, y: 20, w: 40, h: 4 });
+    const px = (x: number, y: number) => Array.from(d.slice((y * w + x) * 4, (y * w + x) * 4 + 3));
+    expect(px(90, 5)).toEqual([255, 255, 255]); // paper
+    expect(px(3, 5)).toEqual([255, 255, 255]); // shadowed paper
+    const [r, g, b] = px(50, 21);
+    expect(Math.max(r, g, b)).toBeLessThan(80); // darker than before
+    expect(b).toBeGreaterThan(r); // still blue
+  });
+
+  it('returns null for a blank page', () => {
+    const d = new Uint8ClampedArray(20 * 20 * 4).fill(240);
+    expect(cleanSignaturePixels(d, 20, 20)).toBeNull();
+  });
+
+  it('sizes the name/date band to the photo', () => {
+    expect(stampBandHeight(230)).toBe(37);
+    expect(stampBandHeight(50)).toBe(14);
   });
 });

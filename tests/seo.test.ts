@@ -87,7 +87,9 @@ describe('Shared navigation', () => {
 
   it('gives every tool page in public/ a registry entry', () => {
     const nonTools = ['about.html', 'privacy.html', 'feedback.html', 'tools.html', 'simple-qr.html'];
-    const pages = readdirSync(PUBLIC_DIR).filter((f) => f.endsWith('.html') && f !== 'index.html' && !nonTools.includes(f));
+    // Landing-page variants of a registered tool (e.g. resize-image-to-20kb.html) point at it instead.
+    const isVariant = (f: string) => /<meta name="bdt:variant-of" content="[^"]+">/.test(readFileSync(join(PUBLIC_DIR, f), 'utf8'));
+    const pages = readdirSync(PUBLIC_DIR).filter((f) => f.endsWith('.html') && f !== 'index.html' && !nonTools.includes(f) && !isVariant(f));
     const routes = TOOLS.map((t) => t.route);
     for (const page of pages) expect(routes, page).toContain(`/${page}`);
   });
