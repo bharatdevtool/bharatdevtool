@@ -164,3 +164,13 @@ pre,
     scroll-behavior: auto !important;
   }
 }
+
+/* "Share with expiry": an hourglass that flips every few seconds (stops after one turn with reduced motion). */
+@keyframes hourglass-flip {
+  0%, 70% { transform: rotate(0deg); }
+  85%, 100% { transform: rotate(180deg); }
+}
+.animate-hourglass {
+  animation: hourglass-flip 2.8s ease-in-out infinite;
+  transform-origin: center;
+}

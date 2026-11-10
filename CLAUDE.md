@@ -39,11 +39,11 @@ The site is a **hybrid**: two stacks served from one static export (`out/`), dep
 | Stack | Where | What |
 |---|---|---|
 | **Static HTML tools** | `public/*.html`, `public/jsondiff/`, `public/jsonformatter/` | The original, highly optimised tools. Vanilla JS, CodeMirror, shared `public/components/header.js` + `footer.js`, `public/assets/js/analytics.js`, Sentry Loader Script. SEO (title, meta, FAQ, JSON-LD) lives inside each HTML file. |
-| **Next.js tools** | `src/app/tools/<id>/` → `/tools/<id>` | New tools only (currently the 4 Lottie tools). SEO, FAQ and JSON-LD come from the registry via `ToolLayout`. |
+| **Next.js tools** | `src/app/<slug>/` → `/<slug>` (e.g. `/compress-pdf`, `/pdf-editor`) | New tools only (Lottie tools and the PDF suite). SEO, FAQ and JSON-LD come from the registry via `ToolLayout`. |
 
 Rules:
 - **Never port an existing HTML tool to Next.js** unless it has been benchmarked as at least as fast. New tools may use either stack.
-- `src/config/tools.ts` registers **every** tool on both stacks (it drives the Next.js footer, related tools and ⌘K search). `legacy` is derived from the route: anything not under `/tools/` is a static HTML page.
+- `src/config/tools.ts` registers **every** tool on both stacks (it drives the Next.js footer, related tools and ⌘K search). `legacy` is derived from the route: routes ending in `.html` or `/` are static HTML pages; clean paths (`/pdf-editor`) are Next.js pages. Next.js tools live at the site root (no `/tools/` prefix; old `/tools/*` links 301 in `netlify.toml`).
 - `public/components/footer.js` (`ALL_TOOLS_LIST`) is the HTML-side tool list. Tests fail if it drifts from the registry.
 - `public/sitemap.xml` is a hand-maintained static file shared by both stacks. Tests fail if a tool or HTML page is missing.
 - Sentry: both stacks use the same Sentry Loader Script; Next.js code reports via `src/lib/monitoring/errorReporting.ts`.
@@ -85,7 +85,7 @@ d:\Projects\bharatdevtool\
 │   └── skills/         # Agent skills (frontend-design, ui-ux-pro-max)
 ├── public/             # Static HTML tools, shared header/footer JS, assets, sitemap.xml, robots.txt
 ├── src/
-│   ├── app/            # Next.js App Router (Next.js tools under app/tools/)
+│   ├── app/            # Next.js App Router (one folder per Next.js tool, at the root: app/<slug>/)
 │   ├── components/     # UI components (ui/ and layout/)
 │   ├── config/         # Single source of truth (tools.ts, site.ts, seo.ts)
 │   └── lib/            # Pure utility functions (json, curl, regex, utils)
@@ -123,13 +123,13 @@ d:\Projects\bharatdevtool\
 ## 5. Adding a New Tool Workflow
 
 When creating a new **Next.js** tool:
-1. **Register the tool** in `src/config/tools.ts` with `id`, `label`, `category`, `description` (140–160 chars), `route` (`/tools/<id>`), and `keywords`.
+1. **Register the tool** in `src/config/tools.ts` with `id`, `label`, `category`, `description` (140–160 chars), `route` (`/<slug>`, short and keyword-first, e.g. `/compress-pdf`), and `keywords`.
 2. **Add icon mapping** in `src/components/ui/ToolIcon.tsx`.
 3. **Write pure business logic** in `src/lib/<category>/`.
 4. **Write FAQs** (3–5 entries) in `src/config/faqs.ts`. `ToolLayout` renders them as a visible FAQ section and FAQPage JSON-LD.
 5. **Create route & client component**:
-   - `src/app/tools/<tool-id>/page.tsx` (Server Component with `generateToolMetadata('<tool-id>')`).
-   - `src/app/tools/<tool-id>/<ToolName>Client.tsx` (Client Component using `ToolLayout`).
+   - `src/app/<slug>/page.tsx` (Server Component with `generateToolMetadata('<tool-id>')`).
+   - `src/app/<slug>/<ToolName>Client.tsx` (Client Component using `ToolLayout`).
 6. **Track key actions** with `analytics.track(ANALYTICS_EVENTS.X)` — add the constant to `ANALYTICS_EVENTS` in `src/config/site.ts`.
 7. **Add it to navigation and the sitemap**: `public/components/footer.js` (`ALL_TOOLS_LIST`), `public/tools.html`, and `public/sitemap.xml`.
 8. **Verify**: `pnpm exec tsc --noEmit --skipLibCheck`, `pnpm test` (enforces FAQs, title ≤ 60 chars, description 140–160 chars, sitemap and footer coverage), and `pnpm build`.

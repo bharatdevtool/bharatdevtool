@@ -42,10 +42,13 @@ describe('SEO registry', () => {
     }
   });
 
-  it('points social images at the published OG image', () => {
-    const meta = generateToolMetadata('json-formatter');
-    const images = meta.openGraph?.images as { url: string }[];
-    expect(images[0].url).toBe(`${SITE.url}/assets/img/og/og-image.jpg`);
+  it('gives every tool its own generated link-preview image', async () => {
+    const meta = generateToolMetadata('compress-pdf');
+    const images = meta.openGraph?.images as { url: string; width: number; height: number }[];
+    expect(images[0]).toMatchObject({ url: `${SITE.url}/og/compress-pdf.png`, width: 1200, height: 630 });
+    const { generateStaticParams } = await import('@/app/og/[id]/route');
+    const ids = generateStaticParams().map((p) => p.id);
+    for (const t of TOOLS) expect(ids, t.id).toContain(`${t.id}.png`);
   });
 
   it('emits WebApplication, BreadcrumbList and FAQPage structured data', () => {

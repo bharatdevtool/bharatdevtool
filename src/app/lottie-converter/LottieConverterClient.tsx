@@ -526,21 +526,21 @@ export default function LottieConverterClient() {
           <div className="flex items-center gap-2 flex-wrap">
             <button
               type="button"
-              onClick={() => handleNavigateToTool('lottie-player', '/tools/lottie-player')}
+              onClick={() => handleNavigateToTool('lottie-player', '/lottie-player')}
               className="px-3 py-1.5 rounded-lg bg-secondary hover:bg-muted border border-border text-foreground font-medium transition-colors cursor-pointer"
             >
               Lottie Player & Studio
             </button>
             <button
               type="button"
-              onClick={() => handleNavigateToTool('lottie-validator', '/tools/lottie-validator')}
+              onClick={() => handleNavigateToTool('lottie-validator', '/lottie-validator')}
               className="px-3 py-1.5 rounded-lg bg-secondary hover:bg-muted border border-border text-foreground font-medium transition-colors cursor-pointer"
             >
               Lottie Validator
             </button>
             <button
               type="button"
-              onClick={() => handleNavigateToTool('lottie-optimizer', '/tools/lottie-optimizer')}
+              onClick={() => handleNavigateToTool('lottie-optimizer', '/lottie-optimizer')}
               className="px-3 py-1.5 rounded-lg bg-secondary hover:bg-muted border border-border text-foreground font-medium transition-colors cursor-pointer"
             >
               Lottie Optimizer

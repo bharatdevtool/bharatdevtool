@@ -113,7 +113,7 @@ export default function LottieOptimizerClient() {
       left: JSON.stringify(animationData, null, 2),
       right: optimizationResult.optimizedJson,
     });
-    router.push('/tools/json-diff');
+    router.push('/jsondiff/');
   };
 
   // Load and synchronize side-by-side players
@@ -473,7 +473,7 @@ export default function LottieOptimizerClient() {
                 type="button"
                 onClick={() => {
                   setCrossToolData('lottie-player', { lottieJson: optimizationResult.optimizedJson });
-                  router.push('/tools/lottie-player');
+                  router.push('/lottie-player');
                 }}
                 className="w-full flex items-center justify-between p-2 rounded-lg bg-secondary/40 hover:bg-secondary text-foreground transition-colors cursor-pointer text-left"
               >
@@ -486,7 +486,7 @@ export default function LottieOptimizerClient() {
                 type="button"
                 onClick={() => {
                   setCrossToolData('lottie-validator', { lottieJson: optimizationResult.optimizedJson });
-                  router.push('/tools/lottie-validator');
+                  router.push('/lottie-validator');
                 }}
                 className="w-full flex items-center justify-between p-2 rounded-lg bg-secondary/40 hover:bg-secondary text-foreground transition-colors cursor-pointer text-left"
               >

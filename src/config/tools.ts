@@ -214,7 +214,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
   {
     id: 'lottie-player',
     label: 'Lottie Player & Studio',
-    route: '/tools/lottie-player',
+    route: '/lottie-player',
     category: 'Design & Animation',
     description:
       'Preview, inspect and edit Lottie animations online. Play .json and .lottie files, swap colors, inspect layers and audit warnings. 100% in your browser.',
@@ -236,7 +236,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
   {
     id: 'lottie-converter',
     label: 'Lottie to dotLottie Converter',
-    route: '/tools/lottie-converter',
+    route: '/lottie-converter',
     category: 'Design & Animation',
     description:
       'Convert Bodymovin JSON to compressed dotLottie (.lottie) archives and unpack .lottie packages to clean JSON. 100% offline client-side compression.',
@@ -247,7 +247,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
   {
     id: 'lottie-validator',
     label: 'Lottie Validator',
-    route: '/tools/lottie-validator',
+    route: '/lottie-validator',
     category: 'Design & Animation',
     description:
       'Validate Lottie animation JSON structure, verify layer parent hierarchies, and detect missing asset references online. 100% client-side validation.',
@@ -258,7 +258,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
   {
     id: 'lottie-optimizer',
     label: 'Lottie Optimizer',
-    route: '/tools/lottie-optimizer',
+    route: '/lottie-optimizer',
     category: 'Design & Animation',
     description:
       'Safely compress Lottie animations with configurable coordinate rounding and optional metadata cleanup. Side-by-side preview with zero silent pruning.',
@@ -270,7 +270,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
   {
     id: 'compress-pdf',
     label: 'Compress PDF',
-    route: '/tools/compress-pdf',
+    route: '/compress-pdf',
     category: 'PDF',
     description:
       'Free PDF compressor: reduce PDF size or hit an exact size like 100 KB or 200 KB for forms. Keep text sharp or squeeze hard. Runs in your browser, no upload.',
@@ -281,7 +281,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
   {
     id: 'merge-pdf',
     label: 'Merge PDF',
-    route: '/tools/merge-pdf',
+    route: '/merge-pdf',
     category: 'PDF',
     description:
       'Free PDF merger: combine PDFs and images into one PDF, drag pages into order, rotate or remove any page. No limits, no sign-up, nothing is uploaded anywhere.',
@@ -292,7 +292,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
   {
     id: 'split-pdf',
     label: 'Split PDF',
-    route: '/tools/split-pdf',
+    route: '/split-pdf',
     category: 'PDF',
     description:
       'Free PDF splitter: extract pages, split every page into its own file, or split by ranges like 1-3, 5. Pick pages from thumbnails. Runs in your browser.',
@@ -303,7 +303,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
   {
     id: 'organize-pdf',
     label: 'Organize PDF',
-    route: '/tools/organize-pdf',
+    route: '/organize-pdf',
     category: 'PDF',
     description:
       'Free PDF organizer: reorder, rotate and delete PDF pages with drag and drop, then save a clean new PDF. Works on phones too. No upload, no sign-up, no limits.',
@@ -314,7 +314,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
   {
     id: 'pdf-to-jpg',
     label: 'PDF to JPG',
-    route: '/tools/pdf-to-jpg',
+    route: '/pdf-to-jpg',
     category: 'PDF',
     description:
       'Free PDF to JPG converter: turn every PDF page, or just the ones you pick, into sharp JPG or PNG images at 72 to 300 DPI. Get one image or a ZIP. No upload.',
@@ -325,12 +325,144 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
   {
     id: 'jpg-to-pdf',
     label: 'JPG to PDF',
-    route: '/tools/jpg-to-pdf',
+    route: '/jpg-to-pdf',
     category: 'PDF',
     description:
       'Free JPG to PDF converter: turn photos and scans (JPG, PNG, WebP) into one PDF. Reorder and rotate pages, pick A4, Letter or fit. No upload, no sign-up.',
     shortDesc: 'Turn JPG, PNG and WebP images into a PDF',
     keywords: ['jpg to pdf', 'image to pdf', 'png to pdf', 'convert jpg to pdf', 'photo to pdf', 'multiple images to pdf'],
+    heavy: true,
+  },
+  {
+    id: 'protect-pdf',
+    label: 'Protect PDF',
+    route: '/protect-pdf',
+    category: 'PDF',
+    description:
+      'Free tool to password protect a PDF with AES-256 encryption. Choose who can print, copy or edit. Your file and password never leave your browser.',
+    shortDesc: 'Add a password to a PDF',
+    keywords: ['protect pdf', 'password protect pdf', 'encrypt pdf', 'lock pdf', 'add password to pdf', 'secure pdf'],
+    heavy: true,
+  },
+  {
+    id: 'unlock-pdf',
+    label: 'Unlock PDF',
+    route: '/unlock-pdf',
+    category: 'PDF',
+    description:
+      'Free tool to remove a PDF password: open a protected PDF with its password and save a copy that opens without one. Restrictions removed too. Nothing uploaded.',
+    shortDesc: 'Remove a PDF password you know',
+    keywords: ['unlock pdf', 'remove pdf password', 'pdf password remover', 'decrypt pdf', 'remove pdf restrictions', 'unlock pdf file'],
+    heavy: true,
+  },
+  {
+    id: 'edit-pdf',
+    label: 'Edit PDF',
+    route: '/pdf-editor',
+    category: 'PDF',
+    description:
+      'Free PDF editor: add text, images, signatures, white-out, highlights and shapes, or fill in form fields. Works on phones. No upload, no sign-up, no watermark.',
+    shortDesc: 'Add text, images and white-out to a PDF',
+    keywords: ['edit pdf', 'pdf editor', 'add text to pdf', 'fill pdf form', 'white out pdf', 'write on pdf'],
+    heavy: true,
+  },
+  {
+    id: 'sign-pdf',
+    label: 'Sign PDF',
+    route: '/sign-pdf',
+    category: 'PDF',
+    description:
+      'Free tool to sign a PDF: draw, type or upload your signature, place it on any page, add the date and save. Works on phones. Your signature stays on your device.',
+    shortDesc: 'Draw, type or upload your signature',
+    keywords: ['sign pdf', 'add signature to pdf', 'esign pdf', 'sign pdf online free', 'digital signature pdf', 'signature on pdf'],
+    heavy: true,
+  },
+  {
+    id: 'redact-pdf',
+    label: 'Redact PDF',
+    route: '/redact-pdf',
+    category: 'PDF',
+    description:
+      'Free PDF redaction: black out Aadhaar, PAN, phone numbers or any text, or mask Aadhaar to its last 4 digits. Text under the boxes is truly removed. No upload.',
+    shortDesc: 'Black out sensitive info for good',
+    keywords: ['redact pdf', 'black out pdf', 'mask aadhaar', 'hide text in pdf', 'remove sensitive data pdf', 'pdf redaction tool'],
+    heavy: true,
+  },
+  {
+    id: 'watermark-pdf',
+    label: 'Watermark PDF',
+    route: '/watermark-pdf',
+    category: 'PDF',
+    description:
+      'Free PDF watermark: stamp \"For KYC purpose only\", Confidential, Draft or your logo on every page, then make it permanent so it cannot be removed. No upload.',
+    shortDesc: 'Stamp text or a logo on every page',
+    keywords: ['watermark pdf', 'add watermark to pdf', 'for kyc purpose only', 'confidential watermark', 'add logo to pdf', 'stamp pdf'],
+    heavy: true,
+  },
+  {
+    id: 'add-page-numbers',
+    label: 'Add Page Numbers to PDF',
+    route: '/add-page-numbers',
+    category: 'PDF',
+    description:
+      'Free tool to add page numbers to a PDF: pick the position, a style like \"Page 1 of 10\", the starting number, and skip the cover page. Live preview. No upload.',
+    shortDesc: 'Number the pages of a PDF',
+    keywords: ['add page numbers to pdf', 'number pdf pages', 'pdf page numbering', 'insert page numbers pdf', 'page x of y pdf', 'paginate pdf'],
+    heavy: true,
+  },
+  {
+    id: 'grayscale-pdf',
+    label: 'Grayscale PDF',
+    route: '/grayscale-pdf',
+    category: 'PDF',
+    description:
+      'Free tool to convert a colour PDF to black and white (grayscale) for printing, saving ink or smaller scans. Choose the quality. Runs in your browser, no upload.',
+    shortDesc: 'Convert a PDF to black and white',
+    keywords: ['grayscale pdf', 'pdf to black and white', 'convert pdf to grayscale', 'black and white pdf', 'remove color from pdf', 'pdf greyscale'],
+    heavy: true,
+  },
+  {
+    id: 'pdf-metadata',
+    label: 'Edit PDF Metadata',
+    route: '/pdf-metadata',
+    category: 'PDF',
+    description:
+      'Free PDF metadata editor: see and change the title, author, subject and keywords of a PDF, or remove all hidden properties before you share it. No upload.',
+    shortDesc: 'View, edit or remove PDF properties',
+    keywords: ['pdf metadata', 'edit pdf properties', 'remove pdf metadata', 'change pdf title', 'pdf author', 'clean pdf metadata'],
+    heavy: true,
+  },
+  {
+    id: 'secure-share-pdf',
+    label: 'Share PDF with Expiry',
+    route: '/share-pdf-with-expiry',
+    category: 'PDF',
+    description:
+      'Share a PDF that stops opening after the date and time you pick, with optional password and recipient watermark. Encrypted in your browser, viewed only in ours.',
+    shortDesc: 'Share a PDF that stops opening after a date',
+    keywords: ['pdf expiry date', 'share pdf with expiry', 'self destruct pdf', 'expiring pdf link', 'pdf access time limit', 'password protect pdf with expiration date'],
+    heavy: true,
+  },
+  {
+    id: 'image-to-pdf',
+    label: 'Image to PDF',
+    route: '/image-to-pdf',
+    category: 'PDF',
+    description:
+      'Free image to PDF converter for JPG, PNG, WebP, AVIF, GIF and more. Reorder and rotate pages, pick A4, Letter or fit, add margins. No upload, no sign-up.',
+    shortDesc: 'Turn any images into a PDF',
+    keywords: ['image to pdf', 'photo to pdf', 'jpeg to pdf', 'webp to pdf', 'pictures to pdf', 'convert images to pdf'],
+    heavy: true,
+  },
+  {
+    id: 'pdf-to-image',
+    label: 'PDF to Image',
+    route: '/pdf-to-image',
+    category: 'PDF',
+    description:
+      'Free PDF to image converter: turn PDF pages into JPG, PNG or WebP at 72, 150 or 300 DPI. Choose pages, download one image or a ZIP. Runs in your browser.',
+    shortDesc: 'Convert PDF pages to images',
+    keywords: ['pdf to image', 'pdf to png', 'pdf to webp', 'convert pdf to image', 'pdf pages to images', 'save pdf as image'],
     heavy: true,
   },
   // ── Static HTML tools added in Phase 2-4 ──────────────────
@@ -546,7 +678,8 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
   },
 ];
 
-export const TOOLS: Tool[] = TOOL_ENTRIES.map((t) => ({ ...t, legacy: !t.route.startsWith('/tools/') }));
+// Static HTML pages end in .html or / (folder index); Next.js pages are clean paths like /pdf-editor.
+export const TOOLS: Tool[] = TOOL_ENTRIES.map((t) => ({ ...t, legacy: /(\.html|\/)$/.test(t.route) }));
 
 /** Lookup a tool by its id */
 export function getToolById(id: string): Tool | undefined {

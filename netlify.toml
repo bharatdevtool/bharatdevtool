@@ -31,26 +31,43 @@
 # HTML pages, sitemap.xml and robots.txt keep Netlify's default
 # (always revalidate) so every deploy is visible immediately.
 
-# Legacy/Deprecated tool redirects to unified studio
+# Retired Lottie tools → the unified player
 [[redirects]]
   from = "/tools/lottie-analyzer"
-  to = "/tools/lottie-player"
+  to = "/lottie-player"
   status = 301
 
 [[redirects]]
   from = "/tools/lottie-editor"
-  to = "/tools/lottie-player"
+  to = "/lottie-player"
   status = 301
 
-# Clean URL handling for static HTML tools
+# The old static Image to PDF page
 [[redirects]]
   from = "/image-to-pdf.html"
-  to = "/tools/jpg-to-pdf"
+  to = "/image-to-pdf"
+  status = 301
+
+# Common guesses for the editor
+[[redirects]]
+  from = "/edit-pdf"
+  to = "/pdf-editor"
+  status = 301
+
+# Next.js tools used to live under /tools/ (before launch); keep old links working.
+[[redirects]]
+  from = "/tools/edit-pdf"
+  to = "/pdf-editor"
   status = 301
 
 [[redirects]]
-  from = "/image-to-pdf"
-  to = "/tools/jpg-to-pdf"
+  from = "/tools/secure-share-pdf"
+  to = "/share-pdf-with-expiry"
+  status = 301
+
+[[redirects]]
+  from = "/tools/*"
+  to = "/:splat"
   status = 301
 
 [[redirects]]

@@ -37,14 +37,14 @@
   <meta property="og:description" content="Free JSON formatter, viewer and grid editor. Validate, repair, query with JSONPath, view as a table and export CSV. No sign-up, runs 100% in your browser.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://bharatdevtool.com/jsonformatter/">
-  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image" content="https://bharatdevtool.com/og/json-formatter.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="JSON Formatter & Beautifier - Free Online Tool">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Free JSON Formatter, Viewer &amp; Grid Editor | Bharat Dev Tools">
   <meta name="twitter:description" content="Free JSON formatter, viewer and grid editor. Validate, repair, query with JSONPath, view as a table and export CSV. No sign-up, runs 100% in your browser.">
-  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta name="twitter:image" content="https://bharatdevtool.com/og/json-formatter.png">
 
   <!-- Resource Hints: Preconnect to external domains for faster loading -->
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -807,6 +807,14 @@
       if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
         initSentryTracking();
       }
+    });
+  </script>
+  <!-- Share this tool + "shared with you" banner for people opening a #json= link -->
+  <script src="../assets/js/share.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var actions = document.querySelector('header .header-actions');
+      if (window.BDTShare && actions) window.BDTShare.mountButton(actions, { before: actions.firstElementChild });
     });
   </script>
 </body>

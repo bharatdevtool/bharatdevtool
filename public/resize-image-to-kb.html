@@ -15,7 +15,7 @@
   <meta property="og:description" content="Free tool to resize photos and signatures to 20 KB, 50 KB or any size for SSC, IBPS, SBI, NEET, JEE and UPSC forms. Batch resize, nothing uploaded.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://bharatdevtool.com/resize-image-to-kb.html">
-  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image" content="https://bharatdevtool.com/og/resize-image-to-kb.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Resize Image to KB - Free Exam Photo and Signature Resizer">
@@ -24,7 +24,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Free Image Resize to KB for Exam Forms | Bharat Dev Tools">
   <meta name="twitter:description" content="Free tool to resize photos and signatures to 20 KB, 50 KB or any size for SSC, IBPS, SBI, NEET, JEE and UPSC forms. Batch resize, nothing uploaded.">
-  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta name="twitter:image" content="https://bharatdevtool.com/og/resize-image-to-kb.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
@@ -273,7 +273,7 @@
     <p class="text-sm text-gray-600 dark:text-gray-300 mb-8 text-center">
       Need something else? Try the <a href="image-compressor.html" class="text-blue-600 dark:text-blue-400 hover:underline">Image Compressor</a>,
       <a href="image-resizer.html" class="text-blue-600 dark:text-blue-400 hover:underline">Image Resizer</a> or
-      <a href="/tools/jpg-to-pdf" class="text-blue-600 dark:text-blue-400 hover:underline">Image to PDF</a>.
+      <a href="/jpg-to-pdf" class="text-blue-600 dark:text-blue-400 hover:underline">Image to PDF</a>.
     </p>
 
     <!-- FAQ (keep in sync with the FAQPage JSON-LD above) -->
@@ -540,6 +540,7 @@
         dl.addEventListener('click', function() {
           downloadBlob(row.result.blob, outputName(row));
           track('image_kb_download', { group: state.groupId, doc: row.docId || CUSTOM_ID });
+          if (window.BDTShare) window.BDTShare.successPrompt(document.getElementById('resultsList'), 'Photo ready for your form! Friends filling the same form? Share this free tool.');
         });
         actions.appendChild(dl);
       }

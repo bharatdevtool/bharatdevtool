@@ -72,6 +72,7 @@ export const ANALYTICS_EVENTS = {
   PDF_FILES_ADDED: 'pdf_files_added',
   PDF_EXPORT: 'pdf_export',
   PDF_EXPORT_FAILED: 'pdf_export_failed',
+  PDF_SHARE: 'pdf_share',
   // Security
   GENERATE_UUID: 'generate_uuid',
   // Social

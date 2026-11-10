@@ -44,17 +44,17 @@ export default function LottieValidatorClient() {
 
   const handleNavigateToPlayer = () => {
     setCrossToolData('lottie-player', { lottieJson: rawJson });
-    router.push('/tools/lottie-player');
+    router.push('/lottie-player');
   };
 
   const handleNavigateToOptimizer = () => {
     setCrossToolData('lottie-optimizer', { lottieJson: rawJson });
-    router.push('/tools/lottie-optimizer');
+    router.push('/lottie-optimizer');
   };
 
   const handleNavigateToFormatter = () => {
     setCrossToolData('json-formatter', { json: rawJson, tab: 'repair' });
-    router.push('/tools/json-formatter');
+    router.push('/');
   };
 
   // Compute validation result reactively

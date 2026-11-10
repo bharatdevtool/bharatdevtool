@@ -60,7 +60,7 @@ export default function PageGrid({ pages, selected, onSelect, onRotate, onDelete
 
   return (
     <ul
-      className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3 sm:gap-4"
+      className="grid grid-cols-[repeat(auto-fill,minmax(132px,1fr))] gap-x-3 gap-y-4 sm:gap-x-4"
       aria-label="Pages. Click to select, Shift-click to select a range, drag the handle to reorder."
     >
       {pages.map((page, i) => {
@@ -72,16 +72,16 @@ export default function PageGrid({ pages, selected, onSelect, onRotate, onDelete
           <li
             key={page.key}
             data-page-key={page.key}
-            className={`group relative flex flex-col rounded-xl border bg-card transition-all select-none ${
-              isSelected ? 'border-primary ring-2 ring-primary/40' : 'border-border hover:border-primary/50'
-            } ${isDragging ? 'opacity-40 scale-95' : ''} ${isOver ? 'ring-2 ring-emerald-500 border-emerald-500' : ''}`}
+            className={`group relative flex flex-col select-none transition-all ${isDragging ? 'scale-95 opacity-40' : ''}`}
           >
             <button
               type="button"
               onClick={(e) => onSelect(page.key, { range: e.shiftKey, toggle: true })}
               aria-pressed={isSelected}
               aria-label={`${page.label}${isSelected ? ', selected' : ''}`}
-              className="relative flex h-36 sm:h-40 items-center justify-center overflow-hidden rounded-t-xl bg-muted/40 p-2 focus-visible:outline-2 focus-visible:outline-primary"
+              className={`relative flex h-40 items-center justify-center overflow-hidden rounded-lg p-2.5 transition-colors focus-visible:outline-2 focus-visible:outline-primary ${
+                isOver ? 'bg-emerald-500/10 ring-2 ring-emerald-500' : isSelected ? 'bg-primary/10 ring-2 ring-primary' : 'hover:bg-card'
+              }`}
             >
               {page.thumb ? (
                 // eslint-disable-next-line @next/next/no-img-element
@@ -89,7 +89,7 @@ export default function PageGrid({ pages, selected, onSelect, onRotate, onDelete
                   src={page.thumb}
                   alt=""
                   draggable={false}
-                  className="max-h-full max-w-full object-contain shadow-sm bg-white transition-transform duration-200"
+                  className="max-h-full max-w-full bg-white object-contain shadow-sm ring-1 ring-black/5 transition-transform duration-200"
                   style={{ transform: `rotate(${page.rotation}deg)${sideways ? ' scale(0.72)' : ''}` }}
                 />
               ) : (
@@ -97,7 +97,7 @@ export default function PageGrid({ pages, selected, onSelect, onRotate, onDelete
               )}
               <span
                 className={`absolute left-2 top-2 flex h-5 w-5 items-center justify-center rounded-md border text-[11px] ${
-                  isSelected ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-card/90 text-transparent group-hover:text-muted-foreground'
+                  isSelected ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-card/90 text-transparent opacity-0 group-hover:opacity-100 group-hover:text-muted-foreground'
                 }`}
                 aria-hidden="true"
               >
@@ -110,20 +110,20 @@ export default function PageGrid({ pages, selected, onSelect, onRotate, onDelete
               )}
             </button>
 
-            <div className="flex items-center justify-between gap-1 border-t border-border px-1.5 py-1">
+            <div className="mt-1 flex items-center justify-between gap-1 px-0.5">
               <span
                 onPointerDown={(e) => onHandleDown(e, page.key)}
                 onPointerMove={onHandleMove}
                 onPointerUp={onHandleUp}
                 onPointerCancel={onHandleUp}
-                className="flex cursor-grab touch-none items-center rounded p-1 text-muted-foreground hover:bg-muted active:cursor-grabbing"
+                className="flex cursor-grab touch-none items-center rounded p-1 text-muted-foreground transition-opacity hover:bg-muted active:cursor-grabbing sm:opacity-0 sm:group-hover:opacity-100"
                 title="Drag to reorder"
                 aria-hidden="true"
               >
                 <GripVertical className="h-4 w-4" />
               </span>
               <span className="text-xs font-medium tabular-nums text-muted-foreground">{i + 1}</span>
-              <div className="flex items-center">
+              <div className="flex items-center transition-opacity sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100">
                 <IconBtn label={`Move ${page.label} left`} disabled={i === 0} onClick={() => onMove(page.key, i - 1)} className="sm:hidden">
                   <ArrowLeft className="h-3.5 w-3.5" />
                 </IconBtn>

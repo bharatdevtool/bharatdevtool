@@ -9,9 +9,10 @@ import { SITE } from './site';
 import { getToolById, type Tool } from './tools';
 import { getToolFaqs } from './faqs';
 
-const OG_IMAGE = `${SITE.url}/assets/img/og/og-image.jpg`;
-// Intrinsic size of public/assets/img/og/og-image.jpg
-const OG_IMAGE_SIZE = { width: 3000, height: 2000 };
+// Per-tool link-preview images are generated at build time by src/app/og/[id]/route.tsx.
+const ogImage = (id = 'default') => `${SITE.url}/og/${id}.png`;
+const OG_IMAGE = ogImage();
+const OG_IMAGE_SIZE = { width: 1200, height: 630 };
 const BRAND_SUFFIX = ` | ${SITE.name}`;
 const MAX_TITLE_LENGTH = 60;
 
@@ -45,14 +46,14 @@ export function generateToolMetadata(toolId: string): Metadata {
       description: tool.description,
       type: 'website',
       url: canonical,
-      images: [{ url: OG_IMAGE, ...OG_IMAGE_SIZE, alt: `${tool.label} — Free Online Tool` }],
+      images: [{ url: ogImage(tool.id), ...OG_IMAGE_SIZE, alt: `${tool.label} — Free Online Tool` }],
       siteName: SITE.name,
     },
     twitter: {
       card: 'summary_large_image',
       title: socialTitle,
       description: tool.description,
-      images: [OG_IMAGE],
+      images: [ogImage(tool.id)],
     },
   };
 }

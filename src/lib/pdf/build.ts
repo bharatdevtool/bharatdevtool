@@ -62,6 +62,17 @@ export async function loadPdf(file: SourceFile): Promise<PDFDocument> {
   }
 }
 
+/** True when the PDF is encrypted (needs a password, or only restricts printing/copying). */
+export async function isEncryptedPdf(bytes: Uint8Array): Promise<boolean> {
+  try {
+    await PDFDocument.load(bytes, { updateMetadata: false });
+    return false;
+  } catch (err) {
+    if (/encrypt/i.test(String((err as Error)?.message))) return true;
+    throw err;
+  }
+}
+
 /** Page count of a PDF file. */
 export async function countPages(file: SourceFile): Promise<number> {
   return (await loadPdf(file)).getPageCount();
@@ -148,4 +159,11 @@ export async function buildPdf(
   out.setProducer('Bharat Dev Tools (bharatdevtool.com)');
   out.setCreator('Bharat Dev Tools');
   return out.save({ useObjectStreams: true });
+}
+
+/** A one-page PDF with an empty white page of this size (points), for "Blank page". */
+export async function blankPdf(width = 595.28, height = 841.89): Promise<Uint8Array> {
+  const doc = await PDFDocument.create();
+  doc.addPage([width, height]);
+  return doc.save();
 }

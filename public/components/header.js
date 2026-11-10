@@ -10,6 +10,24 @@
   } catch (e) {}
 })();
 
+// share.js lives next to the other shared scripts; resolve it relative to this file.
+var BDT_SHARE_SRC = (function () {
+  try {
+    var src = document.currentScript && document.currentScript.src;
+    return src ? src.replace(/components\/header\.js(\?.*)?$/, 'assets/js/share.js') : null;
+  } catch (e) { return null; }
+})();
+
+function loadShareScript(onReady) {
+  if (window.BDTShare) return onReady();
+  if (!BDT_SHARE_SRC) return;
+  var s = document.createElement('script');
+  s.src = BDT_SHARE_SRC;
+  s.defer = true;
+  s.onload = onReady;
+  document.head.appendChild(s);
+}
+
 // Header Component JavaScript for Secondary Pages (using Tailwind CSS)
 function createSecondaryHeader() {
   // Remove any existing headers (hardcoded or previously created) to avoid duplicates
@@ -93,6 +111,12 @@ function createSecondaryHeader() {
 
   // Insert header at the beginning of body
   document.body.insertAdjacentHTML('afterbegin', headerHTML);
+
+  // "Share this tool" button (WhatsApp, Telegram, X, LinkedIn, copy link)
+  loadShareScript(function () {
+    var actions = document.querySelector('.secondary-header-actions');
+    if (actions && window.BDTShare) window.BDTShare.mountButton(actions, { before: actions.firstElementChild });
+  });
   
   // Trigger logo loader for the newly inserted logo
   // Wait a bit to ensure logo-loader.js has loaded

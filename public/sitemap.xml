@@ -181,37 +181,109 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://bharatdevtool.com/tools/compress-pdf</loc>
+    <loc>https://bharatdevtool.com/compress-pdf</loc>
     <lastmod>2026-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://bharatdevtool.com/tools/merge-pdf</loc>
+    <loc>https://bharatdevtool.com/merge-pdf</loc>
     <lastmod>2026-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://bharatdevtool.com/tools/split-pdf</loc>
+    <loc>https://bharatdevtool.com/split-pdf</loc>
     <lastmod>2026-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://bharatdevtool.com/tools/organize-pdf</loc>
+    <loc>https://bharatdevtool.com/organize-pdf</loc>
     <lastmod>2026-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://bharatdevtool.com/tools/pdf-to-jpg</loc>
+    <loc>https://bharatdevtool.com/pdf-to-jpg</loc>
     <lastmod>2026-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://bharatdevtool.com/tools/jpg-to-pdf</loc>
+    <loc>https://bharatdevtool.com/jpg-to-pdf</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bharatdevtool.com/protect-pdf</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bharatdevtool.com/unlock-pdf</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bharatdevtool.com/pdf-editor</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bharatdevtool.com/sign-pdf</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bharatdevtool.com/redact-pdf</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bharatdevtool.com/watermark-pdf</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bharatdevtool.com/add-page-numbers</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bharatdevtool.com/grayscale-pdf</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bharatdevtool.com/pdf-metadata</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bharatdevtool.com/share-pdf-with-expiry</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bharatdevtool.com/image-to-pdf</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bharatdevtool.com/pdf-to-image</loc>
     <lastmod>2026-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -283,25 +355,25 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://bharatdevtool.com/tools/lottie-player</loc>
+    <loc>https://bharatdevtool.com/lottie-player</loc>
     <lastmod>2026-11-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://bharatdevtool.com/tools/lottie-converter</loc>
+    <loc>https://bharatdevtool.com/lottie-converter</loc>
     <lastmod>2026-11-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://bharatdevtool.com/tools/lottie-validator</loc>
+    <loc>https://bharatdevtool.com/lottie-validator</loc>
     <lastmod>2026-11-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://bharatdevtool.com/tools/lottie-optimizer</loc>
+    <loc>https://bharatdevtool.com/lottie-optimizer</loc>
     <lastmod>2026-11-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

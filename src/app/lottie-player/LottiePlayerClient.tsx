@@ -1704,7 +1704,7 @@ export default function LottiePlayerClient({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 <button
                   type="button"
-                  onClick={() => handleNavigateToTool('lottie-converter', '/tools/lottie-converter')}
+                  onClick={() => handleNavigateToTool('lottie-converter', '/lottie-converter')}
                   className="flex flex-col p-2.5 rounded-lg bg-secondary/50 hover:bg-secondary border border-border transition-colors text-xs text-left group cursor-pointer"
                 >
                   <div className="flex items-center justify-between mb-1">
@@ -1717,7 +1717,7 @@ export default function LottiePlayerClient({
 
                 <button
                   type="button"
-                  onClick={() => handleNavigateToTool('lottie-validator', '/tools/lottie-validator')}
+                  onClick={() => handleNavigateToTool('lottie-validator', '/lottie-validator')}
                   className="flex flex-col p-2.5 rounded-lg bg-secondary/50 hover:bg-secondary border border-border transition-colors text-xs text-left group cursor-pointer"
                 >
                   <div className="flex items-center justify-between mb-1">
@@ -1730,7 +1730,7 @@ export default function LottiePlayerClient({
 
                 <button
                   type="button"
-                  onClick={() => handleNavigateToTool('lottie-optimizer', '/tools/lottie-optimizer')}
+                  onClick={() => handleNavigateToTool('lottie-optimizer', '/lottie-optimizer')}
                   className="flex flex-col p-2.5 rounded-lg bg-secondary/50 hover:bg-secondary border border-border transition-colors text-xs text-left group cursor-pointer"
                 >
                   <div className="flex items-center justify-between mb-1">

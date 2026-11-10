@@ -5,6 +5,7 @@ import { PDFDocument, StandardFonts, PDFName, PDFRawStream, decodePDFRawStream }
 import { parsePageRanges, formatPageList } from '@/lib/pdf/ranges';
 import { buildPdf, imagePageLayout, normalizeRotation, loadPdf, type SourceFile } from '@/lib/pdf/build';
 import { compressKeepText, compressToTarget, type RasterPage } from '@/lib/pdf/compress';
+import { protectPdf, passwordProblem, passwordStrength, ownerPasswordProblem } from '@/lib/pdf/protect';
 
 const FIX = join(process.cwd(), 'tests/fixtures/pdf');
 const JPG = new Uint8Array(readFileSync(join(FIX, 'sample.jpg')));
@@ -194,5 +195,57 @@ describe('compress', () => {
     const r = await compressToTarget(5 * 1024, fakeRasterizer(3));
     expect(r.reachedTarget).toBe(false);
     expect((await PDFDocument.load(r.bytes)).getPageCount()).toBe(3);
+  });
+});
+
+describe('protect', () => {
+  it('encrypts with AES-256 so the file needs the password, and the password opens it', async () => {
+    const plain = await makePdf(['top secret', 'page 2']);
+    const locked = await protectPdf(plain, { openPassword: 'Pa55word!', permissions: { copy: false, modify: false } });
+    await expect(loadPdf(file('p', locked))).rejects.toMatchObject({ name: 'EncryptedPdfError' });
+    await expect(loadPdf({ ...file('p', locked), password: 'wrong' })).rejects.toMatchObject({ wrongPassword: true });
+    const opened = await loadPdf({ ...file('p', locked), password: 'Pa55word!' });
+    expect(opened.getPageCount()).toBe(2);
+    expect(Buffer.from(locked).toString('latin1')).toContain('/AESV3');
+    expect(Buffer.from(locked).toString('latin1')).not.toContain('top secret');
+  });
+
+  it('writes the chosen permissions, admin password and encryption', async () => {
+    const plain = await makePdf(['x']);
+    const pBits = (bytes: Uint8Array) => Number(/\/P (-?\d+)/.exec(Buffer.from(bytes).toString('latin1'))![1]) >>> 0;
+    const bit = (n: number) => 1 << (n - 1);
+    // Print in low quality only, fill forms; nothing else.
+    const locked = await protectPdf(plain, {
+      openPassword: 'open-1', ownerPassword: 'admin-1', algorithm: 'AES-128',
+      permissions: { print: true, printHighRes: false, copy: false, modify: false, comment: false, fillForms: true, assemble: false },
+    });
+    const p = pBits(locked);
+    expect(p & bit(3)).toBeTruthy(); // print
+    expect(p & bit(12)).toBeFalsy(); // high-quality print
+    expect(p & bit(5)).toBeFalsy(); // copy
+    expect(p & bit(4)).toBeFalsy(); // modify
+    expect(p & bit(6)).toBeFalsy(); // comment
+    expect(p & bit(9)).toBeTruthy(); // fill forms
+    expect(p & bit(11)).toBeFalsy(); // assemble
+    expect(Buffer.from(locked).toString('latin1')).toContain('/AESV2');
+    // Both the open and the admin password open the file.
+    expect((await loadPdf({ ...file('p', locked), password: 'open-1' })).getPageCount()).toBe(1);
+    expect((await loadPdf({ ...file('p', locked), password: 'admin-1' })).getPageCount()).toBe(1);
+    // Default: everything allowed, including high-quality printing.
+    const all = pBits(await protectPdf(plain, { openPassword: 'open-1' }));
+    for (const n of [3, 4, 5, 6, 9, 11, 12]) expect(all & bit(n)).toBeTruthy();
+  });
+
+  it('rejects an admin password equal to the open password', () => {
+    expect(ownerPasswordProblem('same', 'same')).toMatch(/different/);
+    expect(ownerPasswordProblem('a', '')).toBeNull();
+    expect(ownerPasswordProblem('a', 'b')).toBeNull();
+  });
+
+  it('checks the password fields', () => {
+    expect(passwordProblem('', '')).toMatch(/Enter/);
+    expect(passwordProblem('a', 'b')).toMatch(/match/);
+    expect(passwordProblem('abc', 'abc')).toBeNull();
+    expect([passwordStrength('abc'), passwordStrength('abcdefg1'), passwordStrength('Abcdefgh12!x')]).toEqual(['weak', 'ok', 'strong']);
   });
 });
