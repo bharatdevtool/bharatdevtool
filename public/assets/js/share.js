@@ -19,7 +19,8 @@
   function injectStyle() {
     if (document.getElementById(STYLE_ID)) return;
     var css =
-      '.bdt-share-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:8px;border:1px solid rgba(100,116,139,.35);background:transparent;color:inherit;font:500 14px/1 system-ui,sans-serif;cursor:pointer}' +
+      '.bdt-share-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:8px;border:1px solid rgba(100,116,139,.35);background:transparent;color:#334155;font:500 14px/1 system-ui,sans-serif;cursor:pointer}' +
+      '.dark .bdt-share-btn,[data-theme=dark] .bdt-share-btn{color:#E2E8F0}' +
       '.bdt-share-btn:hover{border-color:#3B82F6;color:#3B82F6}' +
       '@media(max-width:639px){.bdt-share-label{display:none}.bdt-share-btn{padding:7px 9px}}' +
       '.bdt-sheet-backdrop{position:fixed;inset:0;z-index:9998;background:rgba(2,6,23,.45);display:flex;align-items:flex-end;justify-content:center}' +

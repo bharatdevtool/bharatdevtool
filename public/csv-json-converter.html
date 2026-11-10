@@ -329,7 +329,7 @@
     .action-btn:hover { opacity: 0.88; transform: scale(1.02); }
     .action-btn:active { transform: scale(0.98); }
     .btn-primary { background: #2563eb; color: #fff; }
-    .btn-green   { background: #10b981; color: #fff; }
+    .btn-green   { background: #047857; color: #fff; }
     .btn-purple  { background: #7c3aed; color: #fff; }
     .btn-gray    { background: #6b7280; color: #fff; }
 
@@ -405,7 +405,7 @@
     <!-- Hero -->
     <div class="text-center mb-10 animate-fade-in">
       <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-3">
-        📊 CSV ↔ JSON Converter
+        <svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg> CSV ↔ JSON Converter
       </h2>
       <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
         Convert CSV to JSON or JSON to CSV instantly — entirely in your browser. No upload, no sign-up, 100% free.
@@ -429,7 +429,7 @@
           <select id="delimiterSelect" class="opt-select" aria-label="CSV delimiter">
             <option value=",">Comma ( , )</option>
             <option value=";">Semicolon ( ; )</option>
-            <option value="	">Tab ( \t )</option>
+            <option value="">Tab ( \t )</option>
             <option value="|">Pipe ( | )</option>
           </select>
         </div>
@@ -461,7 +461,7 @@
             <label id="inputLabel" class="text-sm font-semibold text-gray-700 dark:text-gray-300">Input CSV</label>
             <div class="flex gap-2">
               <label for="fileUpload" class="action-btn btn-gray text-xs py-1 px-3 cursor-pointer" title="Upload file" aria-label="Upload CSV or JSON file">
-                📂 Upload
+                <svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"/></svg> Upload
               </label>
               <input type="file" id="fileUpload" accept=".csv,.json,.txt,.tsv" class="hidden" aria-label="File upload">
               <button id="clearInputBtn" class="action-btn btn-gray text-xs py-1 px-3" title="Clear input" aria-label="Clear input">✕ Clear</button>
@@ -484,8 +484,8 @@
           <div class="flex items-center justify-between mb-2">
             <label id="outputLabel" class="text-sm font-semibold text-gray-700 dark:text-gray-300">Output JSON</label>
             <div class="flex gap-2">
-              <button id="copyOutputBtn" class="action-btn btn-purple text-xs py-1 px-3" aria-label="Copy output">📋 Copy</button>
-              <button id="downloadOutputBtn" class="action-btn btn-green text-xs py-1 px-3" aria-label="Download output">⬇ Download</button>
+              <button id="copyOutputBtn" class="action-btn btn-purple text-xs py-1 px-3" aria-label="Copy output"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copy</button>
+              <button id="downloadOutputBtn" class="action-btn btn-green text-xs py-1 px-3" aria-label="Download output"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></svg> Download</button>
             </div>
           </div>
           <textarea
@@ -504,14 +504,14 @@
       <!-- Convert Button -->
       <div class="mt-6 flex justify-center">
         <button id="convertBtn" class="action-btn btn-primary text-base px-10 py-3">
-          ⚡ Convert
+          <svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z"/></svg> Convert
         </button>
       </div>
     </div>
 
     <!-- Table Preview Card -->
     <div id="previewCard" class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 sm:p-8 mb-8 hidden animate-fade-in">
-      <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-4">📋 Table Preview <span id="previewMeta" class="text-sm font-normal text-gray-500 dark:text-gray-400"></span></h3>
+      <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-4"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Table Preview <span id="previewMeta" class="text-sm font-normal text-gray-500 dark:text-gray-400"></span></h3>
       <div id="previewTableWrap" class="preview-table-wrap"></div>
       <p class="text-xs text-gray-400 dark:text-gray-500 mt-2">Showing first 10 rows</p>
     </div>

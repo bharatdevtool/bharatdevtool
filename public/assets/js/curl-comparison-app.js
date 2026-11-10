@@ -771,7 +771,7 @@ function displaySummary() {
   
   if (comparisonResult.totalDifferences === 0) {
     summaryPanel.className = 'mb-6 p-4 rounded-lg border border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/20';
-    summaryContent.innerHTML = '<span class="text-green-600 dark:text-green-400 font-semibold">✅ No differences found. Both cURL commands are identical.</span>';
+    summaryContent.innerHTML = '<span class="text-green-600 dark:text-green-400 font-semibold"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg> No differences found. Both cURL commands are identical.</span>';
   } else {
     summaryPanel.className = 'mb-6 p-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50';
     const items = [];
@@ -792,7 +792,7 @@ function displaySummary() {
       items.push('Body differs');
     }
     
-    summaryContent.innerHTML = `<span class="text-red-600 dark:text-red-400 font-semibold">❌ ${escapeHtml(String(comparisonResult.totalDifferences))} difference(s) found:</span><ul class="mt-2 list-disc list-inside text-gray-700 dark:text-gray-300">${items.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`;
+    summaryContent.innerHTML = `<span class="text-red-600 dark:text-red-400 font-semibold"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg> ${escapeHtml(String(comparisonResult.totalDifferences))} difference(s) found:</span><ul class="mt-2 list-disc list-inside text-gray-700 dark:text-gray-300">${items.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`;
   }
 }
 
@@ -811,7 +811,7 @@ function displayMethodDiff() {
   const section = document.getElementById('method-diff-section');
   const result = comparisonResult.method;
   
-  let html = '<h3 class="text-md font-semibold text-gray-900 dark:text-white mb-2">✅ Method</h3>';
+  let html = '<h3 class="text-md font-semibold text-gray-900 dark:text-white mb-2"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg> Method</h3>';
   
   if (result.same) {
     html += `<div class="diff-same p-3 rounded bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">`;
@@ -833,7 +833,7 @@ function displayUrlDiff() {
   const section = document.getElementById('url-diff-section');
   const result = comparisonResult.url;
   
-  let html = '<h3 class="text-md font-semibold text-gray-900 dark:text-white mb-2">🌐 URL</h3>';
+  let html = '<h3 class="text-md font-semibold text-gray-900 dark:text-white mb-2"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg> URL</h3>';
   
   if (result.same) {
     html += `<div class="diff-same p-3 rounded bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">`;
@@ -855,7 +855,7 @@ function displayHeadersDiff() {
   const section = document.getElementById('headers-diff-section');
   const result = comparisonResult.headers;
   
-  let html = '<h3 class="text-md font-semibold text-gray-900 dark:text-white mb-2">🧾 Headers</h3>';
+  let html = '<h3 class="text-md font-semibold text-gray-900 dark:text-white mb-2"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M12 17V7"/><path d="M16 8h-6a2 2 0 0 0 0 4h4a2 2 0 0 1 0 4H8"/><path d="M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z"/></svg> Headers</h3>';
   
   if (result.differences.length === 0 && result.missing.length === 0 && result.extra.length === 0) {
     html += `<div class="diff-same p-3 rounded bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">`;
@@ -876,7 +876,7 @@ function displayHeadersDiff() {
       html += `<td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-sm font-mono">${escapeHtml(header.key)}</td>`;
       html += `<td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-sm">${escapeHtml(header.value)}</td>`;
       html += `<td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-sm">${escapeHtml(header.value)}</td>`;
-      html += `<td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-center"><span class="text-green-600 dark:text-green-400">✅</span></td>`;
+      html += `<td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-center"><span class="text-green-600 dark:text-green-400"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg></span></td>`;
       html += `</tr>`;
     });
     
@@ -886,7 +886,7 @@ function displayHeadersDiff() {
       html += `<td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-sm font-mono">${escapeHtml(header.key)}</td>`;
       html += `<td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-sm text-red-700 dark:text-red-300">${escapeHtml(header.valueA)}</td>`;
       html += `<td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-sm text-red-700 dark:text-red-300">${escapeHtml(header.valueB)}</td>`;
-      html += `<td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-center"><span class="text-red-600 dark:text-red-400">❌</span></td>`;
+      html += `<td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-center"><span class="text-red-600 dark:text-red-400"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span></td>`;
       html += `</tr>`;
     });
     
@@ -896,7 +896,7 @@ function displayHeadersDiff() {
       html += `<td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-sm font-mono">${escapeHtml(header.key)}</td>`;
       html += `<td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-sm text-yellow-700 dark:text-yellow-300">${escapeHtml(header.value)}</td>`;
       html += `<td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-sm text-gray-400">—</td>`;
-      html += `<td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-center"><span class="text-yellow-600 dark:text-yellow-400">➖</span></td>`;
+      html += `<td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-center"><span class="text-yellow-600 dark:text-yellow-400"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M5 12h14"/></svg></span></td>`;
       html += `</tr>`;
     });
     
@@ -906,7 +906,7 @@ function displayHeadersDiff() {
       html += `<td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-sm font-mono">${escapeHtml(header.key)}</td>`;
       html += `<td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-sm text-gray-400">—</td>`;
       html += `<td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-sm text-blue-700 dark:text-blue-300">${escapeHtml(header.value)}</td>`;
-      html += `<td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-center"><span class="text-blue-600 dark:text-blue-400">➕</span></td>`;
+      html += `<td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-center"><span class="text-blue-600 dark:text-blue-400"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span></td>`;
       html += `</tr>`;
     });
     
@@ -921,7 +921,7 @@ function displayBodyDiff() {
   const section = document.getElementById('body-diff-section');
   const result = comparisonResult.body;
   
-  let html = '<h3 class="text-md font-semibold text-gray-900 dark:text-white mb-2">📦 Body</h3>';
+  let html = '<h3 class="text-md font-semibold text-gray-900 dark:text-white mb-2"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><polyline points="3.29 7 12 12 20.71 7"/><path d="m7.5 4.27 9 5.15"/></svg> Body</h3>';
   
   if (result.type === 'empty') {
     html += `<div class="diff-same p-3 rounded bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600">`;

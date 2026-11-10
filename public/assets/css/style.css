@@ -1,13 +1,18 @@
 :root {
-  --bg: #ffffff;
-  --panel: #f7f9fc;
-  --fg: #0f1720;
-  --muted: #6b7280;
-  --accent: #0069ff;
+  /* Light tokens (CLAUDE.md §4): slate-50 page, white cards, slate-200 borders */
+  --bg: #f8fafc;
+  --panel: #ffffff;
+  --fg: #0f172a;
+  --muted: #64748b;
+  --accent: #2563eb;
   --danger: #dc2626;
   --icon-outline: rgba(15, 23, 32, 0.18);
-  --pane-valid-bg: #ecfdf5; /* emerald-50 */
-  --pane-invalid-bg: #fef2f2; /* red-50 */
+  --pane-border: #e2e8f0;
+  /* Light mode shows validity on the pane border, not by tinting the whole editor */
+  --pane-valid-bg: #ffffff;
+  --pane-invalid-bg: #ffffff;
+  --pane-valid-border: #6ee7b7; /* emerald-300 */
+  --pane-invalid-border: #fca5a5; /* red-300 */
   --search-width-collapsed: 80px;
   --search-width-expanded: 144px;
 }
@@ -20,8 +25,11 @@
   --accent: #7dd3fc;
   --danger: #fca5a5;
   --icon-outline: rgba(255, 255, 255, 0.25);
+  --pane-border: #1e293b;
   --pane-valid-bg: rgba(16, 185, 129, 0.12); /* emerald tint */
   --pane-invalid-bg: rgba(239, 68, 68, 0.12); /* red tint */
+  --pane-valid-border: rgba(16, 185, 129, 0.35);
+  --pane-invalid-border: rgba(239, 68, 68, 0.35);
 }
 
 html, body {
@@ -438,6 +446,10 @@ button:hover {
   color: white;
   border: none;
 }
+/* Dark --accent is a light sky blue (good for links, unreadable under white text):
+   buttons use the dark-mode primary token instead (CLAUDE.md §4). */
+[data-theme="dark"] .btn-primary { background: #3b82f6; }
+[data-theme="dark"] .btn-primary .info-icon { color: #fff; background: rgba(255,255,255,0.22); }
 
 .btn-danger {
   background: transparent;
@@ -532,6 +544,7 @@ main {
 
 .panel {
   background: var(--panel);
+  border: 1px solid var(--pane-border);
   border-radius: 12px;
   padding: 16px;
   height: calc(100vh - 140px);
@@ -615,7 +628,7 @@ main {
 }
 
 .validation-indicator.valid {
-  color: #22c55e;
+  color: #059669;
 }
 
 .validation-indicator.invalid {
@@ -946,14 +959,14 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
 [data-theme="dark"] .menu-list button:hover, [data-theme="dark"] .menu-list button:focus-visible { background: rgba(255,255,255,0.1); }
 
 /* Validity state styling: tint the input pane background */
-.input-pane { transition: background-color 0.25s ease; }
-.input-pane.valid { background: var(--pane-valid-bg); }
-.input-pane.invalid { background: var(--pane-invalid-bg); }
+.input-pane { transition: background-color 0.25s ease, border-color 0.25s ease; }
+.input-pane.valid { background: var(--pane-valid-bg); border-color: var(--pane-valid-border); }
+.input-pane.invalid { background: var(--pane-invalid-bg); border-color: var(--pane-invalid-border); }
 
 /* Validity state styling: tint the output pane background */
-.output-pane { transition: background-color 0.25s ease; }
-.output-pane.valid { background: var(--pane-valid-bg); }
-.output-pane.invalid { background: var(--pane-invalid-bg); }
+.output-pane { transition: background-color 0.25s ease, border-color 0.25s ease; }
+.output-pane.valid { background: var(--pane-valid-bg); border-color: var(--pane-valid-border); }
+.output-pane.invalid { background: var(--pane-invalid-bg); border-color: var(--pane-invalid-border); }
 
 .center-toolbar {
   display: flex;
@@ -1483,19 +1496,23 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
 }
 
 .file-size.small {
-  background: #e5f3e5;
-  color: #22c55e;
+  background: #d1fae5;
+  color: #047857;
 }
 
 .file-size.medium {
   background: #fef3c7;
-  color: #d97706;
+  color: #b45309;
 }
 
 .file-size.large {
   background: #fee2e2;
-  color: #dc2626;
+  color: #b91c1c;
 }
+
+[data-theme="dark"] .file-size.small { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+[data-theme="dark"] .file-size.medium { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+[data-theme="dark"] .file-size.large { background: rgba(239, 68, 68, 0.15); color: #f87171; }
 
 /* Features Section */
 .features-section {

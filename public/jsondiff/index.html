@@ -149,13 +149,13 @@
       width: 50px;
       text-align: right;
       padding-right: 12px;
-      color: #9ca3af;
+      color: #6b7280;
       user-select: none;
       flex-shrink: 0;
     }
     
     .dark .json-line-number {
-      color: #6b7280;
+      color: #94a3b8;
     }
     
     .json-line-content {
@@ -307,6 +307,111 @@
       #left-json, #right-json { height: clamp(320px, calc(100vh - 380px), 900px); }
     }
   </style>
+  <!-- FAQPage Schema (mirrors the visible FAQ) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a JSON comparison tool and how does it work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A JSON comparison tool (also known as a JSON diff tool or JSON structure comparator) analyzes two JSON documents side-by-side to identify differences in structure, keys, types, and values. Our tool focuses on structural differences, highlighting missing keys, type mismatches, and value differences between JSON objects and arrays. How it works: The tool parses both JSON documents, compares their hierarchical structures, and displays differences with color-coded highlights. Red indicates missing items, purple shows type mismatches, and yellow highlights value differences. For advanced understanding, check out JSON.org for JSON specification and MDN's JSON documentation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What types of differences can this JSON diff tool detect?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our JSON comparison tool detects three main types of differences: Missing Keys: Keys present in one JSON but absent in the other (highlighted in red/green); Type Mismatches: Same key with different data types (e.g., string vs number, object vs array) - highlighted in purple; Value Differences: Same key and type but different values - highlighted in yellow (optional). The tool performs deep comparison of nested objects and arrays, maintaining alignment even when structures differ. Learn more about JSON structure comparison at W3Schools JSON Tutorial."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I compare two JSON files or JSON strings?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "To compare two JSON documents: Paste your first JSON into the \"Left JSON\" textarea; Paste your second JSON into the \"Right JSON\" textarea; Click the \"Compare\" button; Review the side-by-side comparison with highlighted differences. You can use the \"Format Both\" button to automatically format and validate your JSON before comparison. The tool supports nested objects, arrays, and complex JSON structures. For JSON validation best practices, see JSONLint."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does \"missing on left\" and \"missing on right\" mean?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "These terms indicate structural differences in your JSON comparison: Missing on left: A key or property exists in the right JSON but is absent in the left JSON (highlighted in green/teal); Missing on right: A key or property exists in the left JSON but is absent in the right JSON (highlighted in red). This is particularly useful when comparing API responses, configuration files, or schema migrations. Understanding JSON schema differences helps in API versioning - learn more at JSON Schema."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I compare minified JSON or formatted JSON?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! Our JSON comparison tool works with both minified (single-line) and formatted (pretty-printed) JSON. The tool automatically parses and compares the structure regardless of formatting. Use the \"Format Both\" button to standardize formatting before comparison for better readability. The comparison focuses on structural differences, not whitespace, so you can compare JSON from different sources without worrying about formatting variations. For JSON formatting tools, visit our JSON Formatter page."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a type mismatch in JSON comparison?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A type mismatch occurs when the same key exists in both JSON documents but has different data types. For example: Left: \"age\": \"30\" (string) vs Right: \"age\": 30 (number); Left: \"items\": [] (array) vs Right: \"items\": {} (object). Type mismatches are highlighted in purple and are critical for API compatibility and data validation. Understanding JSON data types is essential - refer to JSON.org data types for the complete specification."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my JSON data stored or sent to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No, your JSON data is never stored or transmitted to any server. All comparison processing happens entirely in your browser using JavaScript. Your sensitive data, API responses, and configuration files remain completely private and secure on your device. This makes our tool ideal for comparing sensitive JSON documents, API responses, and configuration files without privacy concerns."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I use the full-screen mode for JSON comparison?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Click the \"⤢ Full Screen\" button in the comparison results header to enter full-screen mode. This expands the side-by-side comparison view to use your entire screen, making it easier to review large JSON documents and complex nested structures. Full-screen mode is especially useful when comparing large API responses or configuration files with deep nesting levels. Click \"⤢ Exit Full Screen\" to return to normal view."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What are common use cases for JSON comparison tools?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "JSON comparison tools are essential for: API Versioning: Compare API responses between versions to identify breaking changes; Configuration Management: Compare config files across environments (dev, staging, production); Schema Validation: Verify JSON structure matches expected schemas; Data Migration: Identify differences when migrating between systems; Testing: Compare expected vs actual JSON responses in automated tests; Debugging: Find structural differences causing application issues. For advanced JSON manipulation and transformation, explore jq Playground for JSON querying."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I compare JSON with different key ordering?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! JSON object key ordering doesn't affect comparison results. The tool compares keys semantically, not by position. Two JSON objects with the same keys and values in different orders will show as identical. However, array element ordering matters - arrays are compared by index position. This follows the JSON specification where objects are unordered collections but arrays maintain order. Learn more about JSON structure at JSON.org."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How accurate is the JSON diff algorithm?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our JSON comparison tool uses a recursive deep-diff algorithm that accurately compares nested structures, arrays, and objects. It handles: Nested objects of any depth; Arrays with different lengths; Mixed object/array structures; Primitive value differences (strings, numbers, booleans, null). The algorithm aligns structures side-by-side, even when keys are missing on one side, ensuring accurate visual comparison. For understanding diff algorithms, see Wikipedia on Diff algorithms."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What other developer tools are available on Bharat Dev Tools?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Bharat Dev Tools offers a comprehensive suite of free developer utilities: JSON Formatter & Beautifier - Format, validate, minify, and repair JSON; JSON Comparison Tool - Compare and diff JSON structures (this tool); DeepLink Launcher - Test mobile deep links for Android and iOS apps; URL Encoder/Decoder - Encode and decode URLs and query parameters; QR Code Generator - Create QR codes from URLs, text, or deep links; QR Code Decoder - Decode and extract data from QR code images. All tools are free, privacy-focused, and work entirely in your browser. Visit our tools page to explore all available utilities."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
   <script src="../components/header.js"></script>
@@ -316,7 +421,7 @@
     
     <div class="text-center mb-8 animate-fade-in">
       <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-        🔍 JSON Comparison Tool
+        <svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg> JSON Comparison Tool
       </h2>
     </div>
 
@@ -325,13 +430,13 @@
       <!-- Controls -->
       <div class="flex flex-wrap items-center gap-4">
         <button id="format-both-btn" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm">
-          📝 Format Both
+          <svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> Format Both
         </button>
         <button id="swap-btn" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium text-sm">
-          🔄 Swap
+          <svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/></svg> Swap
         </button>
         <button id="clear-btn" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors font-medium text-sm">
-          🗑️ Clear
+          <svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> Clear
         </button>
         <div class="flex items-center gap-2 ml-auto">
           <input type="checkbox" id="highlight-values" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
@@ -340,7 +445,7 @@
           </label>
         </div>
         <button id="compare-btn" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium text-sm">
-          ⚡ Compare
+          <svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z"/></svg> Compare
         </button>
       </div>
 
@@ -383,7 +488,7 @@
           </div>
           <textarea 
             id="left-json" 
-            placeholder='{"message": "Built with ❤️ for developers"}'
+            placeholder='{"message": "Built with  for developers"}'
             class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 font-mono text-sm"
             rows="12"
           ></textarea>
@@ -427,7 +532,7 @@
           </div>
           <textarea 
             id="right-json" 
-            placeholder='{"message": "Built with ❤️ for developers"}'
+            placeholder='{"message": "Built with  for developers"}'
             class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 font-mono text-sm"
             rows="12"
           ></textarea>
@@ -449,7 +554,7 @@
         <div class="flex flex-col gap-3 mb-4 md:flex-row md:items-center md:justify-between">
           <div>
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">
-              📊 Comparison Summary
+              <svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg> Comparison Summary
             </h3>
             <div id="summary-content" class="text-sm text-gray-700 dark:text-gray-200"></div>
           </div>
@@ -480,7 +585,7 @@
         <div class="border-t border-gray-200 dark:border-gray-700 mt-2 mb-4"></div>
 
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-          📄 Side-by-Side Comparison
+          <svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/></svg> Side-by-Side Comparison
         </h3>
         <div class="json-comparison-container">
           <div class="json-panel" id="left-panel">
@@ -540,7 +645,7 @@
             <ol>
               <li>Paste your first JSON into the "Left JSON" textarea</li>
               <li>Paste your second JSON into the "Right JSON" textarea</li>
-              <li>Click the "⚡ Compare" button</li>
+              <li>Click the "Compare" button</li>
               <li>Review the side-by-side comparison with highlighted differences</li>
             </ol>
             <p>You can use the "Format Both" button to automatically format and validate your JSON before comparison. The tool supports nested objects, arrays, and complex JSON structures. For JSON validation best practices, see <a href="https://jsonlint.com/" target="_blank" rel="noopener noreferrer">JSONLint</a>.</p>
@@ -1831,7 +1936,7 @@ function showPageMessage(text, isError) {
       if (!content) return;
 
       if (summary.missingLeft === 0 && summary.missingRight === 0 && summary.typeMismatches === 0) {
-        content.innerHTML = '<span class="text-green-600 dark:text-green-400 font-semibold">✅ Both JSON structures are in sync.</span>';
+        content.innerHTML = '<span class="text-green-600 dark:text-green-400 font-semibold"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg> Both JSON structures are in sync.</span>';
         return;
       }
 

@@ -269,7 +269,7 @@
     <!-- Hero Section -->
     <div class="text-center mb-12 animate-fade-in">
       <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-        🔗 Url Encoder/Decoder
+        <svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Url Encoder/Decoder
       </h2>
       <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
         Encode and decode URLs instantly. Perfect for developers and testers.
@@ -304,11 +304,11 @@
         <!-- Action Buttons -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <button id="encode-btn" class="flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
-            <span class="mr-2">🔒</span>
+            <span class="mr-2"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
             Encode
           </button>
           <button id="decode-btn" class="flex items-center justify-center px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium">
-            <span class="mr-2">🔓</span>
+            <span class="mr-2"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg></span>
             Decode
           </button>
         </div>
@@ -326,11 +326,11 @@
           ></textarea>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <button id="copy-result" class="flex items-center justify-center px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium">
-              <span class="mr-2">📋</span>
+              <span class="mr-2"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></span>
               Copy
             </button>
             <button id="generate-qr-result" class="flex items-center justify-center px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors font-medium">
-              <span class="mr-2">📱</span>
+              <span class="mr-2"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg></span>
               Generate QR
             </button>
           </div>
@@ -341,13 +341,13 @@
     <!-- History Panel -->
     <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 animate-fade-in">
       <div class="flex items-center justify-between mb-6">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">📚 URL History</h3>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg> URL History</h3>
         <span id="history-count" class="text-sm text-gray-500 dark:text-gray-400">0 links saved</span>
       </div>
       
       <div id="history-list" class="space-y-3">
         <div id="empty-history" class="text-center py-8 text-gray-500 dark:text-gray-400">
-          <div class="text-4xl mb-2">📝</div>
+          <div class="text-4xl mb-2"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></div>
           <p>No URLs saved yet</p>
           <p class="text-sm">Enter a url above and it will be saved here automatically</p>
         </div>
@@ -566,10 +566,10 @@
         
         const scheme = trimmedUrl.split(':')[0] + ':';
         if (knownSchemes.includes(scheme.toLowerCase())) {
-          return { valid: true, message: `✅ Valid ${scheme} URL` };
+          return { valid: true, message: `Valid ${scheme} URL` };
         }
         
-        return { valid: true, message: '✅ Valid URL format' };
+        return { valid: true, message: 'Valid URL format' };
       }
       
       return {
@@ -617,7 +617,7 @@
       const isSimulator = /Simulator|iPhone Simulator|iPad Simulator/.test(navigator.userAgent);
       
       if (isSimulator) {
-        showToast('⚠️ Simulator detected! url may not work. Try on real device.', 'error');
+        showToast('Simulator detected! url may not work. Try on real device.', 'error');
         // Still try to launch
         setTimeout(() => {
           window.location.href = url;
@@ -785,18 +785,10 @@
           <div class="flex items-center justify-between">
             <div class="text-xs text-gray-500 dark:text-gray-400">${timeDisplay}</div>
             <div class="flex items-center space-x-2">
-              <button onclick="editDeepLink('${escapedUrl}')" class="p-2 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900 rounded" title="Edit">
-                ✏️
-              </button>
-              <button onclick="copyDeepLink('${escapedUrl}')" class="p-2 text-green-600 hover:bg-green-100 dark:hover:bg-green-900 rounded" title="Copy">
-                📋
-              </button>
-              <button onclick="launchDeepLink('${escapedUrl}'); if(typeof window.Analytics !== 'undefined') window.Analytics.trackDeeplinkHistoryLaunch({page:'Url Encoder/Decoder'});" class="p-2 text-purple-600 hover:bg-purple-100 dark:hover:bg-purple-900 rounded" title="Launch">
-                🚀
-              </button>
-              <button onclick="deleteDeepLinkByUrl('${escapedUrl}')" class="p-2 text-red-600 hover:bg-red-100 dark:hover:bg-red-900 rounded" title="Delete">
-                🗑️
-              </button>
+              <button onclick="editDeepLink('${escapedUrl}')" class="p-2 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900 rounded" title="Edit" aria-label="Edit"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg></button>
+              <button onclick="copyDeepLink('${escapedUrl}')" class="p-2 text-green-600 hover:bg-green-100 dark:hover:bg-green-900 rounded" title="Copy" aria-label="Copy"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button>
+              <button onclick="launchDeepLink('${escapedUrl}'); if(typeof window.Analytics !== 'undefined') window.Analytics.trackDeeplinkHistoryLaunch({page:'Url Encoder/Decoder'});" class="p-2 text-purple-600 hover:bg-purple-100 dark:hover:bg-purple-900 rounded" title="Launch" aria-label="Launch"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09"/><path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05"/></svg></button>
+              <button onclick="deleteDeepLinkByUrl('${escapedUrl}')" class="p-2 text-red-600 hover:bg-red-100 dark:hover:bg-red-900 rounded" title="Delete" aria-label="Delete"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
             </div>
           </div>
         </div>

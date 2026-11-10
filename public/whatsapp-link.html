@@ -61,6 +61,12 @@
 
   <!-- TailwindCSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: { 50: '#eff6ff', 100: '#dbeafe', 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' } } } }
+    };
+  </script>
 
   <!-- Common CSS -->
   <link rel="stylesheet" href="assets/css/common.css">
@@ -175,6 +181,25 @@
        PAGE-SPECIFIC STYLES
        ================================================================ */
 
+    /* Theme tokens used below (CLAUDE.md §4). They were never defined, so the
+       card, inputs and buttons had no background or border. */
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #ffffff;
+      --bg-hover: #f1f5f9;
+      --border-color: #e2e8f0;
+      --text-primary: #0f172a;
+      --text-secondary: #64748b;
+    }
+    [data-theme="dark"] {
+      --bg-primary: #090e17;
+      --bg-secondary: #0f172a;
+      --bg-hover: #1e293b;
+      --border-color: #1e293b;
+      --text-primary: #e2e8f0;
+      --text-secondary: #94a3b8;
+    }
+
     .tool-wrapper {
       max-width: 780px;
       margin: 0 auto;
@@ -278,7 +303,7 @@
       align-items: center;
       gap: 0.5rem;
       padding: 0.7rem 1.5rem;
-      background: #25D366;
+      background: #128C7E;
       color: #fff;
       border: none;
       border-radius: 8px;
@@ -382,7 +407,7 @@
     }
 
     .btn-open-wa {
-      background: #25D366;
+      background: #128C7E;
       color: #fff;
     }
 
@@ -545,7 +570,7 @@
     <div class="tool-wrapper">
       <!-- Page Header -->
       <div class="tool-header">
-        <h1>💬 WhatsApp Link Generator</h1>
+        <h1><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/></svg> WhatsApp Link Generator</h1>
         <p>Create a free wa.me click-to-chat link. No sign up. No data sent to server.</p>
       </div>
 
@@ -615,7 +640,7 @@
         </div>
 
         <button class="btn-generate" id="generateBtn" type="button" aria-label="Generate WhatsApp link">
-          <span>⚡</span> Generate WhatsApp Link
+          <span><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z"/></svg></span> Generate WhatsApp Link
         </button>
       </div>
 
@@ -626,7 +651,7 @@
         <div class="result-link-box">
           <span class="result-link-text" id="generatedLink" aria-label="Generated WhatsApp link"></span>
           <button class="btn-copy" id="copyBtn" type="button" aria-label="Copy WhatsApp link to clipboard">
-            <span id="copyIcon">📋</span>
+            <span id="copyIcon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></span>
             <span id="copyText">Copy</span>
           </button>
         </div>
@@ -640,7 +665,7 @@
             rel="noopener noreferrer"
             aria-label="Test your WhatsApp link by opening it"
           >
-            💬 Test on WhatsApp
+            <svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/></svg> Test on WhatsApp
           </a>
           <button class="btn-action btn-reset" id="resetBtn" type="button" aria-label="Reset form and generate another link">
             ↺ Generate Another
@@ -789,7 +814,7 @@
         if (!currentLink) return;
 
         navigator.clipboard.writeText(currentLink).then(function () {
-          copyIcon.textContent = '✅';
+          copyIcon.innerHTML = '<svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M20 6 9 17l-5-5"/></svg>';
           copyText.textContent = 'Copied!';
           copyBtn.classList.add('copied');
 
@@ -810,7 +835,7 @@
         el.select();
         try {
           document.execCommand('copy');
-          copyIcon.textContent = '✅';
+          copyIcon.innerHTML = '<svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M20 6 9 17l-5-5"/></svg>';
           copyText.textContent = 'Copied!';
           copyBtn.classList.add('copied');
           trackCopyEvent();
@@ -825,7 +850,7 @@
       }
 
       function resetCopyButton() {
-        copyIcon.textContent = '📋';
+        copyIcon.innerHTML = '<svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>';
         copyText.textContent = 'Copy';
         copyBtn.classList.remove('copied');
       }

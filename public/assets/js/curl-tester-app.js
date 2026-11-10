@@ -1383,7 +1383,7 @@ Solutions:
       // Display error in response viewer
       if (bodyContent) {
         bodyContent.innerHTML = `<div class="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-          <div class="font-semibold text-red-800 dark:text-red-200 mb-2">🚫 CORS Error</div>
+          <div class="font-semibold text-red-800 dark:text-red-200 mb-2"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="M4.929 4.929 19.07 19.071"/></svg> CORS Error</div>
           <div class="text-sm text-red-700 dark:text-red-300 space-y-2">
             <p><strong>Error:</strong> ${error.message || 'Failed to fetch'}</p>
             <p><strong>Reason:</strong> The server at <code class="bg-red-100 dark:bg-red-900 px-1 rounded">${new URL(url).hostname}</code> does not allow requests from <code class="bg-red-100 dark:bg-red-900 px-1 rounded">${window.location.origin}</code></p>
@@ -1643,7 +1643,7 @@ function analyzeRequestAndResponse(request, response) {
       if (value.length > 20) {
         suggestions.push({
           type: 'warning',
-          icon: '⚠️',
+          icon: '<svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>',
           title: 'Authorization token exposed in headers',
           description: 'Consider using environment variables or secure storage for sensitive tokens.'
         });
@@ -1657,7 +1657,7 @@ function analyzeRequestAndResponse(request, response) {
     if (base64Regex.test(request.body.trim())) {
       suggestions.push({
         type: 'warning',
-        icon: '⚠️',
+        icon: '<svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>',
         title: 'Base64 detected in body',
         description: 'Consider using binary upload for large Base64 data.'
       });
@@ -1672,7 +1672,7 @@ function analyzeRequestAndResponse(request, response) {
     if (!hasContentType) {
       suggestions.push({
         type: 'warning',
-        icon: '⚠️',
+        icon: '<svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>',
         title: 'No Content-Type header set',
         description: 'Setting Content-Type helps servers understand your request format.'
       });
@@ -1685,7 +1685,7 @@ function analyzeRequestAndResponse(request, response) {
     if (size > 1024 * 1024) {
       suggestions.push({
         type: 'warning',
-        icon: '⚠️',
+        icon: '<svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>',
         title: 'Very large payload (>1MB)',
         description: 'Consider using file upload or chunked transfer for large payloads.'
       });
@@ -1698,7 +1698,7 @@ function analyzeRequestAndResponse(request, response) {
     if (sensitivePatterns.test(request.body)) {
       suggestions.push({
         type: 'error',
-        icon: '🔒',
+        icon: '<svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',
         title: 'Sensitive fields detected',
         description: 'Ensure sensitive data is properly encrypted and not logged.'
       });
@@ -1710,14 +1710,14 @@ function analyzeRequestAndResponse(request, response) {
   if (url.startsWith('https://')) {
     suggestions.push({
       type: 'success',
-      icon: '✅',
+      icon: '<svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg>',
       title: 'HTTPS used',
       description: 'Good! Using HTTPS ensures encrypted communication.'
     });
   } else if (url.startsWith('http://')) {
     suggestions.push({
       type: 'error',
-      icon: '🔒',
+      icon: '<svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',
       title: 'HTTP used (not secure)',
       description: 'Consider using HTTPS for secure communication.'
     });
@@ -1727,7 +1727,7 @@ function analyzeRequestAndResponse(request, response) {
   if (response.duration > 2000) {
     suggestions.push({
       type: 'warning',
-      icon: '⚠️',
+      icon: '<svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>',
       title: 'Slow response (>2s)',
       description: `Response took ${response.duration}ms. Consider optimizing the API or using caching.`
     });
@@ -2544,7 +2544,7 @@ function displayCurlType(parsed) {
     
     let message = `Detected: ${type}`;
     if (parsed.method === 'OPTIONS') {
-      message += ' ⚠️ This is a CORS preflight request, not the actual API call';
+      message += ' This is a CORS preflight request, not the actual API call';
     }
     
     messageEl.textContent = message;

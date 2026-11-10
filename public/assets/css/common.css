@@ -1,10 +1,11 @@
 /* Common CSS for Bharat Dev Tools - Theme Variables and Footer */
 :root {
-  --bg: #ffffff;
-  --panel: #f7f9fc;
-  --fg: #0f1720;
-  --muted: #6b7280;
-  --accent: #0069ff;
+  /* Light tokens (CLAUDE.md §4): slate-50 page, white cards */
+  --bg: #f8fafc;
+  --panel: #ffffff;
+  --fg: #0f172a;
+  --muted: #64748b;
+  --accent: #2563eb;
   --danger: #dc2626;
   --icon-outline: rgba(15, 23, 32, 0.18);
   --pane-valid-bg: #ecfdf5; /* emerald-50 */
@@ -24,6 +25,12 @@
   --pane-valid-bg: rgba(16, 185, 129, 0.12); /* emerald tint */
   --pane-invalid-bg: rgba(239, 68, 68, 0.12); /* red tint */
 }
+
+/* Light theme: Tailwind gray-400 text is only 2.5:1 on white. Use gray-500 (4.8:1)
+   for helper text; hover colours set by the page still win. */
+html:not(.dark):not([data-theme="dark"]) .text-gray-400:not(:hover) { color: #6b7280; }
+/* Dark theme: the matching "dark:text-gray-500" helper text is ~2:1 on gray-800 cards. */
+html.dark .text-gray-400.dark\:text-gray-500:not(:hover) { color: #9ca3af; }
 
 /* Footer Styles */
 footer.site-footer { 

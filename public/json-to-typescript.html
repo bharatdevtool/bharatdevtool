@@ -269,7 +269,7 @@
     <!-- Hero -->
     <div class="text-center mb-10 animate-fade-in">
       <h2 class="text-4xl font-bold text-gray-900 mb-3">
-        🔷 JSON to TypeScript Interface
+        <svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1"/><path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"/></svg> JSON to TypeScript Interface
       </h2>
       <p class="text-xl text-gray-600 max-w-2xl mx-auto">
         Paste any JSON and instantly get TypeScript interfaces. Free, browser-only, no sign-up.
@@ -286,7 +286,7 @@
             JSON Input
           </label>
           <div class="flex items-center gap-2">
-            <button id="load-example-btn" class="text-xs text-blue-600 hover:text-blue-700 font-medium px-2 py-1 rounded hover:bg-blue-50 transition-colors" aria-label="Load example JSON">
+            <button id="load-example-btn" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 font-medium px-2 py-1 rounded hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors" aria-label="Load example JSON">
               Load Example
             </button>
             <button id="clear-input-btn" class="text-xs text-gray-500 hover:text-gray-700 font-medium px-2 py-1 rounded hover:bg-gray-100 transition-colors" aria-label="Clear input">
@@ -313,7 +313,7 @@
             TypeScript Output
           </label>
           <button id="copy-output-btn" class="text-xs bg-blue-600 hover:bg-blue-700 text-white font-medium px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1" aria-label="Copy TypeScript output">
-            📋 Copy
+            <svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Copy
           </button>
         </div>
         <textarea
@@ -350,7 +350,7 @@
         <div class="option-toggle flex items-center gap-2 pt-5">
           <input type="checkbox" id="use-type-alias" class="w-4 h-4 rounded">
           <label for="use-type-alias" class="text-sm text-gray-700 cursor-pointer select-none">
-            Use <code class="text-blue-600">type</code> instead of <code class="text-blue-600">interface</code>
+            Use <code class="text-blue-600 dark:text-blue-400">type</code> instead of <code class="text-blue-600 dark:text-blue-400">interface</code>
           </label>
         </div>
 
@@ -358,7 +358,7 @@
         <div class="option-toggle flex items-center gap-2 pt-5">
           <input type="checkbox" id="optional-fields" class="w-4 h-4 rounded">
           <label for="optional-fields" class="text-sm text-gray-700 cursor-pointer select-none">
-            Mark null fields as optional (<code class="text-blue-600">?</code>)
+            Mark null fields as optional (<code class="text-blue-600 dark:text-blue-400">?</code>)
           </label>
         </div>
 
@@ -377,7 +377,7 @@
         class="w-full sm:w-auto px-8 py-3 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-semibold rounded-xl transition-all duration-150 flex items-center gap-2"
         aria-label="Convert JSON to TypeScript"
       >
-        <span>⚡</span> Convert to TypeScript
+        <span><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z"/></svg></span> Convert to TypeScript
       </button>
     </div>
 
