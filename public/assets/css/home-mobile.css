@@ -1,0 +1,113 @@
+/* JSON Formatter (/ and /jsonformatter/) on phones: match the other tool pages.
+   One-row header (logo · theme · All tools), no bookmark, stacked full-width
+   editors at a usable height, toolbar that fits the screen.
+   Loaded after style.css; only applies up to tablet width. */
+@media (max-width: 768px) {
+  body > header {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px !important;
+    height: auto;
+  }
+  body > header .brand { flex: 1 1 auto; min-width: 0; margin: 0 !important; }
+  body > header .brand-text-link { display: block; min-width: 0; overflow: hidden; }
+  .header-actions { flex-shrink: 0; }
+  body > header .brand-text {
+    display: block;
+    font-size: 18px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .header-actions { flex-wrap: nowrap !important; gap: 8px !important; }
+  .header-actions .v-sep,
+  .header-actions .bookmark-switcher,
+  #theme-label { display: none !important; }
+  .header-actions .theme-switcher { flex-direction: row !important; }
+
+  /* "All tools" as the same blue button the other pages use */
+  .header-actions .tools-btn {
+    flex-direction: row !important;
+    gap: 4px !important;
+    min-width: 0 !important;
+    padding: 8px 14px !important;
+    border-radius: 8px;
+    background: #2563eb !important;
+    border-color: #2563eb !important;
+    color: #fff !important;
+    box-shadow: none !important;
+  }
+  .header-actions .tools-btn .tools-icon { display: none !important; }
+  .header-actions .tools-label { display: flex !important; flex-direction: row !important; gap: 4px; }
+  .header-actions .tools-label span { font-size: 14px !important; font-weight: 600 !important; line-height: 1.2 !important; }
+
+  /* Editors: stacked, each ~45% of the screen tall */
+  main .workspace { gap: 12px !important; padding: 8px 12px 16px !important; }
+  main .pane { height: auto !important; min-height: 0 !important; overflow: visible !important; }
+  main .pane .editor { flex: none !important; height: 45vh !important; min-height: 240px; }
+  main .pane .editor .CodeMirror { height: 100% !important; }
+
+  /* Pane toolbar: let the search box shrink instead of being cut off */
+  .pane-toolbar { flex-wrap: wrap; gap: 6px; max-width: 100%; }
+  .pane-toolbar .searchbar { flex: 1 1 120px; min-width: 0; }
+  .pane-toolbar .searchbar input { width: 100%; min-width: 0; }
+}
+
+/* ── Match the shared header (components/header.js + header.css) ───────── */
+.home-back-btn { display: none; }
+
+@media (max-width: 768px) {
+  body { background: #f9fafb !important; }
+  [data-theme="dark"] body { background: #111827 !important; }
+
+  body > header {
+    height: 64px;
+    padding: 0 12px !important;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+  [data-theme="dark"] body > header { background: #1f2937; }
+  body > header .brand-text { font-size: 16px !important; font-weight: 700 !important; line-height: 28px; color: #111827; }
+  [data-theme="dark"] body > header .brand-text { color: #ffffff; }
+
+  /* Theme switch → square icon button (☀️ in dark mode, 🌙 in light) */
+  .header-actions { gap: 16px !important; }
+  .header-actions .theme-toggle .toggle-track {
+    width: 40px; height: 40px; padding: 0; border: none; border-radius: 8px;
+    justify-content: center; background: #f3f4f6;
+  }
+  [data-theme="dark"] .header-actions .theme-toggle .toggle-track { background: #374151; }
+  .header-actions .theme-toggle .toggle-thumb { display: none !important; }
+  .header-actions .theme-toggle .toggle-icon {
+    position: absolute; inset: 0; width: auto; height: auto; font-size: 18px;
+  }
+  .header-actions .theme-toggle .toggle-icon[data-light] { opacity: 0 !important; }
+  .header-actions .theme-toggle .toggle-icon[data-dark] { opacity: 1 !important; }
+  [data-theme="dark"] .header-actions .theme-toggle .toggle-icon[data-light] { opacity: 1 !important; }
+  [data-theme="dark"] .header-actions .theme-toggle .toggle-icon[data-dark] { opacity: 0 !important; }
+
+  /* "All tools" button: same size and text as the other pages */
+  .header-actions .theme-switcher { order: 1; }
+  .header-actions .tools-link { order: 2; }
+  .header-actions .tools-btn {
+    box-sizing: border-box; height: 40px; padding: 0 10px !important; border-width: 0 !important;
+    font-size: 12px !important; font-weight: 400 !important;
+  }
+  .header-actions .tools-label span { font-size: 12px !important; font-weight: 400 !important; line-height: 1 !important; }
+  .header-actions .tools-label span:last-child { text-transform: lowercase; }
+}
+
+@media (max-width: 640px) {
+  .home-back-btn {
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    width: 38px; height: 38px; padding: 0; border: none; border-radius: 8px; cursor: pointer;
+    background: #f3f4f6; color: #111827;
+  }
+  [data-theme="dark"] .home-back-btn { background: #374151; color: #ffffff; }
+  body > header .logo { display: none !important; }
+  body > header .brand { justify-content: flex-start; margin-left: 8px !important; }
+}

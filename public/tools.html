@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Online Tools: JSON, Image, PDF, QR | Bharat Dev Tools</title>
+  <meta name="description" content="Free online tools for JSON, images, PDF, QR codes, regex and Indian calculators like GST and EMI. No sign-up, and nothing you use is ever uploaded.">
+  <meta name="keywords" content="free developer tools, json formatter, qr code generator, age calculator, gst calculator, image compressor, regex tester, base64 encoder, url encoder, password generator, uuid generator, online tools india">
+  <link rel="canonical" href="https://bharatdevtool.com/tools.html">
+  
+  <!-- Social preview -->
+  <meta property="og:title" content="Free Online Tools: JSON, Image, PDF, QR | Bharat Dev Tools">
+  <meta property="og:description" content="Free online tools for JSON, images, PDF, QR codes, regex and Indian calculators like GST and EMI. No sign-up, and nothing you use is ever uploaded.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/tools.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Bharat Dev Tools - Free Developer Tools Collection">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free Online Tools: JSON, Image, PDF, QR | Bharat Dev Tools">
+  <meta name="twitter:description" content="Free online tools for JSON, images, PDF, QR codes, regex and Indian calculators like GST and EMI. No sign-up, and nothing you use is ever uploaded.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="components/header.css">
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Tool filter UI styles -->
+  <style>
+    .tool-filter-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    .tool-search-wrapper {
+      position: relative;
+      max-width: 400px;
+    }
+    .tool-search-icon {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.95rem;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+    .tool-search-input {
+      width: 100%;
+      padding: 10px 16px 10px 38px;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      background: white;
+      color: #111827;
+      outline: none;
+      transition: border-color 0.18s, box-shadow 0.18s;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+    .tool-search-input:focus {
+      border-color: #0069ff;
+      box-shadow: 0 0 0 3px rgba(0, 105, 255, 0.08);
+    }
+    [data-theme="dark"] .tool-search-input {
+      background: rgb(31, 41, 55);
+      border-color: rgb(55, 65, 81);
+      color: #e6edf3;
+    }
+    [data-theme="dark"] .tool-search-input:focus {
+      border-color: #7dd3fc;
+      box-shadow: 0 0 0 3px rgba(125, 211, 252, 0.1);
+    }
+    .tool-search-input::placeholder { color: #9ca3af; }
+    .category-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    #categoryFilters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    .category-btn {
+      padding: 6px 18px;
+      border-radius: 20px;
+      border: 1.5px solid #e5e7eb;
+      background: white;
+      color: #374151;
+      font-size: 0.825rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
+      font-family: inherit;
+      line-height: 1.5;
+    }
+    .category-btn:hover {
+      border-color: #0069ff;
+      color: #0069ff;
+      transform: translateY(-1px);
+    }
+    .category-btn.active {
+      background: #0069ff;
+      border-color: #0069ff;
+      color: white;
+    }
+    [data-theme="dark"] .category-btn {
+      background: rgb(31, 41, 55);
+      border-color: rgb(55, 65, 81);
+      color: #d1d5db;
+    }
+    [data-theme="dark"] .category-btn:hover {
+      border-color: #7dd3fc;
+      color: #7dd3fc;
+    }
+    [data-theme="dark"] .category-btn.active {
+      background: #0069ff;
+      border-color: #0069ff;
+      color: white;
+    }
+    .tools-count-label {
+      font-size: 0.8rem;
+      color: var(--muted, #64748b);
+      margin-left: 4px;
+      align-self: center;
+    }
+    .tool-category-badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 2px 8px;
+      border-radius: 20px;
+      background: #eff6ff;
+      color: #2563eb;
+      margin-bottom: 10px;
+    }
+    [data-theme="dark"] .tool-category-badge {
+      background: rgba(37, 99, 235, 0.15);
+      color: #7dd3fc;
+    }
+    .tool-hidden { display: none !important; }
+    .tools-no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      color: #9ca3af;
+      font-size: 1rem;
+      display: none;
+    }
+    .tools-no-results.visible { display: block; }
+    .tool-filter-bar ~ .features-grid { margin-top: 0; }
+    @media (prefers-reduced-motion: reduce) {
+      .category-btn { transition: none; }
+    }
+    @media (max-width: 640px) {
+      .tool-search-wrapper { max-width: 100%; }
+    }
+  </style>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ik.imagekit.io/bdt/bdt_logo_v3_16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/bdt/bdt_logo_v3_180.png">
+
+  <!-- Sentry SDK -->
+  <script
+    src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
+    crossorigin="anonymous"
+  ></script>
+  
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+  
+  <!-- Version Tracking Script -->
+  <script src="assets/js/version.js"></script>
+  
+  <!-- Analytics Script -->
+  <script src="assets/js/analytics.js"></script>
+  
+  <!-- Theme Management (load early to prevent flash) -->
+  <script src="assets/js/theme.js"></script>
+  
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Our Developer Tools",
+    "description": "Explore all developer tools from Bharat Dev Tools: JSON Formatter, DeepLink Launcher, URL Encoder/Decoder, and QR Code Generator.",
+    "url": "https://bharatdevtool.com/tools.html",
+    "inLanguage": "en",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    }
+  }
+  </script>
+  
+  <!-- BreadcrumbList Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Developer Tools",
+        "item": "https://bharatdevtool.com/tools.html"
+      }
+    ]
+  }
+  </script>
+  
+  <!-- ItemList Schema for Tools Collection -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Bharat Dev Tools Collection",
+    "description": "Free developer tools collection",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "JSON Formatter & Beautifier",
+        "url": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "JSON Comparison & Diff Tool",
+        "url": "https://bharatdevtool.com/jsondiff/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 5,
+        "name": "DeepLink Launcher",
+        "url": "https://bharatdevtool.com/deeplink.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 6,
+        "name": "URL Encoder/Decoder",
+        "url": "https://bharatdevtool.com/url-encoder.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 7,
+        "name": "Base64 Encoder/Decoder",
+        "url": "https://bharatdevtool.com/base64.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 8,
+        "name": "QR Code Generator",
+        "url": "https://bharatdevtool.com/qr-generator-free.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 9,
+        "name": "QR Code Decoder",
+        "url": "https://bharatdevtool.com/qr-decoder.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 10,
+        "name": "Regex Tester",
+        "url": "https://bharatdevtool.com/regex-tester.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 11,
+        "name": "Regex Generator",
+        "url": "https://bharatdevtool.com/regex-generator.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 12,
+        "name": "Regex Library",
+        "url": "https://bharatdevtool.com/regex-library.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 13,
+        "name": "Color Picker",
+        "url": "https://bharatdevtool.com/color-picker.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 14,
+        "name": "Gradient Generator",
+        "url": "https://bharatdevtool.com/gradient-generator.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 15,
+        "name": "cURL Tester",
+        "url": "https://bharatdevtool.com/curl-tester.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 16,
+        "name": "cURL Comparison",
+        "url": "https://bharatdevtool.com/curl-comparison.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 17,
+        "name": "UUID Generator",
+        "url": "https://bharatdevtool.com/uuid-generator.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 18,
+        "name": "WhatsApp Link Generator",
+        "url": "https://bharatdevtool.com/whatsapp-link.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 19,
+        "name": "Percentage Calculator",
+        "url": "https://bharatdevtool.com/percentage-calculator.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 20,
+        "name": "BMI Calculator",
+        "url": "https://bharatdevtool.com/bmi-calculator.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 21,
+        "name": "GST Calculator",
+        "url": "https://bharatdevtool.com/gst-calculator.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 22,
+        "name": "EMI Calculator",
+        "url": "https://bharatdevtool.com/emi-calculator.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 23,
+        "name": "Unix Timestamp Converter",
+        "url": "https://bharatdevtool.com/timestamp-converter.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 24,
+        "name": "JWT Decoder",
+        "url": "https://bharatdevtool.com/jwt-decoder.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 25,
+        "name": "PNG ↔ JPG Converter",
+        "url": "https://bharatdevtool.com/image-converter.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 26,
+        "name": "Image Resizer",
+        "url": "https://bharatdevtool.com/image-resizer.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 27,
+        "name": "Image Compressor",
+        "url": "https://bharatdevtool.com/image-compressor.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 28,
+        "name": "JPG to PDF",
+        "url": "https://bharatdevtool.com/jpg-to-pdf"
+      },
+      {
+        "@type": "ListItem",
+        "position": 29,
+        "name": "Hash Generator",
+        "url": "https://bharatdevtool.com/hash-generator.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 30,
+        "name": "CSV ↔ JSON Converter",
+        "url": "https://bharatdevtool.com/csv-json-converter.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 31,
+        "name": "YAML ↔ JSON Converter",
+        "url": "https://bharatdevtool.com/yaml-json-converter.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 32,
+        "name": "Diff Checker",
+        "url": "https://bharatdevtool.com/diff-checker.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 33,
+        "name": "Cron Expression Generator",
+        "url": "https://bharatdevtool.com/cron-generator.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 34,
+        "name": "Lorem Ipsum Generator",
+        "url": "https://bharatdevtool.com/lorem-ipsum.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 35,
+        "name": "Timezone Converter",
+        "url": "https://bharatdevtool.com/timezone-converter.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 36,
+        "name": "Markdown to HTML Converter",
+        "url": "https://bharatdevtool.com/markdown-to-html.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 37,
+        "name": "JSON to TypeScript Interface Generator",
+        "url": "https://bharatdevtool.com/json-to-typescript.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 38,
+        "name": "HTML Formatter & Beautifier",
+        "url": "https://bharatdevtool.com/html-formatter.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 39,
+        "name": "Favicon Generator",
+        "url": "https://bharatdevtool.com/favicon-generator.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 40,
+        "name": "Resize Image to KB",
+        "url": "https://bharatdevtool.com/resize-image-to-kb.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 41,
+        "name": "Suggest Tool",
+        "url": "https://forms.gle/TA7WEhzzQ6csQFGZ7"
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+
+  <main class="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+      <div class="features-container">
+        <h2 class="section-title">All Free Tools</h2>
+        <p class="section-subtitle">Free, fast and private: everything runs in your browser. Search or pick a category.</p>
+
+        <!-- Tool Filter Bar -->
+        <div class="tool-filter-bar">
+          <div class="tool-search-wrapper">
+            <span class="tool-search-icon" aria-hidden="true"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg></span>
+            <input
+              type="search"
+              id="toolSearchInput"
+              class="tool-search-input"
+              placeholder="Search tools..."
+              aria-label="Search developer tools"
+              autocomplete="off"
+            />
+          </div>
+          <div class="category-filters" role="group" aria-label="Filter tools by category">
+            <div id="categoryFilters"></div>
+            <span id="toolsCountLabel" class="tools-count-label"></span>
+          </div>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card" data-category="qr-links" data-tags="qr code barcode generate customize download free">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/></svg></div>
+            <h3 class="feature-title">QR Code Generator</h3>
+            <p class="feature-description">Generate QR codes from URLs or text. Customize size and download as images. Perfect for sharing links.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>https://example.com</code> → QR code image
+            </div>
+            <div class="feature-actions">
+              <a href="qr-generator-free.html" class="feature-btn">Try QR Generator →</a>
+              <a href="https://www.qrcode.com/en/about/standards.html" target="_blank" rel="noopener noreferrer" class="feature-link">QR Code Standards →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card" data-category="qr-links" data-tags="qr code decoder scan read upload image extract">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10"/></svg></div>
+            <h3 class="feature-title">QR Code Decoder</h3>
+            <p class="feature-description">Upload QR code images and extract links instantly. Decode QR codes from screenshots or images with launch functionality.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>QR code image</code> → <code>https://example.com</code>
+            </div>
+            <div class="feature-actions">
+              <a href="qr-decoder.html" class="feature-btn">Try QR Decoder →</a>
+              <a href="https://www.qrcode.com/en/about/standards.html" target="_blank" rel="noopener noreferrer" class="feature-link">QR Code Standards →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card" data-category="json" data-tags="json format beautify minify validate repair syntax highlight">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1"/><path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"/></svg></div>
+            <h3 class="feature-title">JSON Formatter</h3>
+            <p class="feature-description">Format, validate, repair, minify, and escape JSON instantly. Supports large files, syntax highlighting, and error detection.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>{"name":"John","age":30}</code> → Formatted JSON with proper indentation
+            </div>
+            <div class="feature-actions">
+              <a href="index.html" class="feature-btn">Try JSON Formatter →</a>
+              <a href="https://www.json.org/json-en.html" target="_blank" rel="noopener noreferrer" class="feature-link">Learn JSON Specification →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="json" data-tags="json diff compare difference side by side keys mismatch">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><path d="M11 18H8a2 2 0 0 1-2-2V9"/></svg></div>
+            <h3 class="feature-title">JSON Comparison & Diff</h3>
+            <p class="feature-description">Compare two JSON documents side-by-side. Highlight missing keys, type mismatches, and value differences in structured JSON responses.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>{\"id\":1,\"name\":\"John\"}</code> ⇄ <code>{\"id\":\"1\",\"fullName\":\"John\"}</code> → Type mismatch & missing keys
+            </div>
+            <div class="feature-actions">
+              <a href="jsondiff/" class="feature-btn">Try JSON Diff →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON" target="_blank" rel="noopener noreferrer" class="feature-link">JSON Basics (MDN) →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="design" data-tags="lottie player studio json editor preview animation bodymovin dotlottie inspect">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18"/><path d="M3 7.5h4"/><path d="M3 12h18"/><path d="M3 16.5h4"/><path d="M17 3v18"/><path d="M17 7.5h4"/><path d="M17 16.5h4"/></svg></div>
+            <h3 class="feature-title">Lottie Player & Studio</h3>
+            <p class="feature-description">Inspect layers, colors, framerate, and audio. Live JSON code editor with Bodymovin AST validation and real-time color swapper.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>animation.json</code> → Interactive preview, scrubber & color customization
+            </div>
+            <div class="feature-actions">
+              <a href="/lottie-player" class="feature-btn">Try Lottie Studio →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="design" data-tags="lottie converter dotlottie json archive package compress">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><polyline points="3.29 7 12 12 20.71 7"/><path d="m7.5 4.27 9 5.15"/></svg></div>
+            <h3 class="feature-title">dotLottie Converter</h3>
+            <p class="feature-description">Convert between uncompressed Bodymovin JSON and lightweight .lottie compressed zip archives with client-side ZIP packaging.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>animation.json</code> ⇄ <code>animation.lottie</code> (up to 80% smaller)
+            </div>
+            <div class="feature-actions">
+              <a href="/lottie-converter" class="feature-btn">Try Converter →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="design" data-tags="lottie validator health check schema audit errors missing properties">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div>
+            <h3 class="feature-title">Lottie Validator</h3>
+            <p class="feature-description">Audit Lottie structure, verify required schema properties, detect missing image assets, and spot broken layer hierarchies.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>animation.json</code> → Pass/Fail health check & missing asset alerts
+            </div>
+            <div class="feature-actions">
+              <a href="/lottie-validator" class="feature-btn">Try Validator →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="design" data-tags="lottie optimizer compress minify clean float precision reduce size">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z"/></svg></div>
+            <h3 class="feature-title">Lottie Optimizer</h3>
+            <p class="feature-description">Reduce file size by truncating float precision, removing unused metadata, stripping hidden layers, and minifying payloads safely.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>12.345678px</code> → <code>12.35px</code> (cleaner vectors & faster render)
+            </div>
+            <div class="feature-actions">
+              <a href="/lottie-optimizer" class="feature-btn">Try Optimizer →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card" data-category="qr-links" data-tags="deeplink mobile app android ios launch url scheme test">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></div>
+            <h3 class="feature-title">DeepLink Launcher</h3>
+            <p class="feature-description">Test and launch deep links for Android and iOS apps. Encode, decode, and validate deep link URLs.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>myapp://product/123</code> → Launch mobile app deep links
+            </div>
+            <div class="feature-actions">
+              <a href="deeplink.html" class="feature-btn">Try DeepLink Launcher →</a>
+              <a href="https://developer.android.com/training/app-links" target="_blank" rel="noopener noreferrer" class="feature-link">Android Deep Links →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card" data-category="qr-links" data-tags="url encode decode percent encoding special characters query string">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/></svg></div>
+            <h3 class="feature-title">URL Encoder/Decoder</h3>
+            <p class="feature-description">Encode and decode URLs with percent encoding. Perfect for handling special characters in URLs.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>hello world</code> → <code>hello%20world</code>
+            </div>
+            <div class="feature-actions">
+              <a href="url-encoder.html" class="feature-btn">Try URL Encoder →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent" target="_blank" rel="noopener noreferrer" class="feature-link">URL Encoding Docs →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card" data-category="security" data-tags="base64 encode decode binary string token api data transmission">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><rect x="14" y="14" width="4" height="6" rx="2"/><rect x="6" y="4" width="4" height="6" rx="2"/><path d="M6 20h4"/><path d="M14 10h4"/><path d="M6 14h2v6"/><path d="M14 4h2v6"/></svg></div>
+            <h3 class="feature-title">Base64 Encoder/Decoder</h3>
+            <p class="feature-description">Encode and decode Base64 strings instantly. Perfect for encoding binary data, API tokens, and data transmission. Supports text, Unicode, and special characters.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>Hello World</code> → <code>SGVsbG8gV29ybGQ=</code>
+            </div>
+            <div class="feature-actions">
+              <a href="base64.html" class="feature-btn">Try Base64 Encoder →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/API/btoa" target="_blank" rel="noopener noreferrer" class="feature-link">Base64 Docs (MDN) →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card" data-category="developer" data-tags="regex regular expression test match debug highlight javascript python">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M17 3v10"/><path d="m12.67 5.5 8.66 5"/><path d="m12.67 10.5 8.66-5"/><path d="M9 17a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-2z"/></svg></div>
+            <h3 class="feature-title">Regex Tester</h3>
+            <p class="feature-description">Test and debug regular expressions in real-time with syntax highlighting, match groups, and performance analysis. Support for JavaScript, Python, Golang, Java, and PCRE.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>/^[a-z]+$/i</code> → Real-time match highlighting and group analysis
+            </div>
+            <div class="feature-actions">
+              <a href="regex-tester.html" class="feature-btn">Try Regex Tester →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions" target="_blank" rel="noopener noreferrer" class="feature-link">Regex Docs (MDN) →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card" data-category="developer" data-tags="regex generate pattern email phone url password date uuid">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z"/></svg></div>
+            <h3 class="feature-title">Regex Generator</h3>
+            <p class="feature-description">Generate regular expressions for email, phone, URL, username, password, date, UUID and custom patterns. AI-like rule builder with human-readable explanations.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>Email pattern</code> → <code>^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$</code>
+            </div>
+            <div class="feature-actions">
+              <a href="regex-generator.html" class="feature-btn">Try Regex Generator →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions" target="_blank" rel="noopener noreferrer" class="feature-link">Regex Docs (MDN) →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card" data-category="developer" data-tags="regex library patterns templates common email phone credit card copy ready">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M12 5v16"/><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"/></svg></div>
+            <h3 class="feature-title">Regex Library</h3>
+            <p class="feature-description">Browse ready-to-use regex patterns for common use cases. Email, phone, password, URL, date, credit card, and more. Copy and use instantly.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>Email validation</code> → <code>^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$</code>
+            </div>
+            <div class="feature-actions">
+              <a href="regex-library.html" class="feature-btn">Try Regex Library →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions" target="_blank" rel="noopener noreferrer" class="feature-link">Regex Docs (MDN) →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card" data-category="design" data-tags="color picker hex rgb hsl oklch palette contrast css variables designer">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/></svg></div>
+            <h3 class="feature-title">Color Picker</h3>
+            <p class="feature-description">Pick colors, convert between HEX, RGB, HSL formats. Generate color palettes, check contrast ratios, and export CSS variables. Perfect for developers and designers.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>#FF5733</code> → <code>rgb(255, 87, 51)</code> → <code>hsl(9, 100%, 60%)</code>
+            </div>
+            <div class="feature-actions">
+              <a href="color-picker.html" class="feature-btn">Try Color Picker →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value" target="_blank" rel="noopener noreferrer" class="feature-link">CSS Colors (MDN) →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card" data-category="design" data-tags="gradient css linear radial conic background tailwind export design">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg></div>
+            <h3 class="feature-title">Gradient Generator</h3>
+            <p class="feature-description">Create beautiful linear, radial, and conic gradients. Export CSS code and Tailwind config. Perfect for modern web design and UI development.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>linear-gradient(45deg, #FF5733, #4A00E0)</code> → Beautiful gradient background
+            </div>
+            <div class="feature-actions">
+              <a href="gradient-generator.html" class="feature-btn">Try Gradient Generator →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/gradient" target="_blank" rel="noopener noreferrer" class="feature-link">CSS Gradients (MDN) →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card" data-category="developer" data-tags="curl api test request http headers response local browser">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M12 19h8"/><path d="m4 17 6-6-6-6"/></svg></div>
+            <h3 class="feature-title">cURL Tester</h3>
+            <p class="feature-description">Test cURL commands online. Parse, beautify, and execute API requests. View responses with syntax highlighting, analyze headers, measure performance, and get security suggestions. All processing happens locally in your browser.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>curl -X POST https://api.example.com/users -H 'Content-Type: application/json' -d '{"name":"John"}'</code> → Execute and view response
+            </div>
+            <div class="feature-actions">
+              <a href="curl-tester.html" class="feature-btn">Try cURL Tester →</a>
+              <a href="https://curl.se/docs/manual.html" target="_blank" rel="noopener noreferrer" class="feature-link">cURL Documentation →</a>
+            </div>
+          </div>
+          
+          <div class="feature-card" data-category="developer" data-tags="curl compare diff api regression staging production headers body">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/></svg></div>
+            <h3 class="feature-title">cURL Comparison</h3>
+            <p class="feature-description">Compare two cURL commands side-by-side. Detect differences in URLs, headers, query parameters, and request bodies. Perfect for API regression checking, debugging prod vs staging, and finding header/body mistakes. All comparisons run locally in your browser.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>curl A</code> ⇄ <code>curl B</code> → Highlight differences in method, URL, headers, and body
+            </div>
+            <div class="feature-actions">
+              <a href="curl-comparison.html" class="feature-btn">Try cURL Comparison →</a>
+              <a href="https://curl.se/docs/manual.html" target="_blank" rel="noopener noreferrer" class="feature-link">cURL Documentation →</a>
+            </div>
+          </div>
+          
+
+
+
+
+          <div class="feature-card" data-category="security" data-tags="uuid generator generate uuid v4 v1 v7 unique id guid random bulk validate developer">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4"/><path d="M14 13.12c0 2.38 0 6.38-1 8.88"/><path d="M17.29 21.02c.12-.6.43-2.3.5-3.02"/><path d="M2 12a10 10 0 0 1 18-6"/><path d="M2 16h.01"/><path d="M21.8 16c.2-2 .131-5.354 0-6"/><path d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2"/><path d="M8.65 22c.21-.66.45-1.32.57-2"/><path d="M9 6.8a6 6 0 0 1 9 5.2v2"/></svg></div>
+            <h3 class="feature-title">UUID Generator</h3>
+            <p class="feature-description">Generate UUID v1, v4, and v7 instantly. Bulk generate up to 100 UUIDs at once, validate existing UUIDs, and copy with one click. Supports standard, uppercase, no-hyphens, and braces formats. All generation runs locally in your browser — no data sent to any server.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>v4 × 5</code> → <code>550e8400-e29b-41d4-a716-446655440000 …</code>
+            </div>
+            <div class="feature-actions">
+              <a href="uuid-generator.html" class="feature-btn">Try UUID Generator →</a>
+              <a href="https://www.rfc-editor.org/rfc/rfc9562" target="_blank" rel="noopener noreferrer" class="feature-link">UUID RFC 9562 →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="qr-links" data-tags="whatsapp link generator wa.me click to chat india message url free">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></svg></div>
+            <h3 class="feature-title">WhatsApp Link Generator</h3>
+            <p class="feature-description">Generate free wa.me click-to-chat links instantly. Enter a phone number and optional pre-filled message to create a shareable WhatsApp link — no number saving required. Works for India (+91) and all countries.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>+91 9876543210 + "Hello!"</code> → <code>https://wa.me/919876543210?text=Hello!</code>
+            </div>
+            <div class="feature-actions">
+              <a href="whatsapp-link.html" class="feature-btn">Try WhatsApp Link Generator →</a>
+              <a href="https://faq.whatsapp.com/5913398998672934" target="_blank" rel="noopener noreferrer" class="feature-link">WhatsApp Link Docs →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="calculators" data-tags="percentage calculator calculate percent percentage increase decrease difference what percent of free online">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><line x1="19" x2="5" y1="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg></div>
+            <h3 class="feature-title">Percentage Calculator</h3>
+            <p class="feature-description">Six instant percentage calculators in one: find X% of Y, calculate percentage increase/decrease, percentage difference, and add/subtract percentages. Free, works offline, no sign-up needed.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>18% of 5000</code> → <code>900</code> &nbsp;|&nbsp; <code>500 → 600</code> → <code>▲ 20% increase</code>
+            </div>
+            <div class="feature-actions">
+              <a href="percentage-calculator.html" class="feature-btn">Try Percentage Calculator →</a>
+              <a href="https://en.wikipedia.org/wiki/Percentage" target="_blank" rel="noopener noreferrer" class="feature-link">About Percentages →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="calculators" data-tags="bmi calculator body mass index weight height health obesity underweight normal overweight india free online">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M12 3v18"/><path d="m19 8 3 8a5 5 0 0 1-6 0zV7"/><path d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1"/><path d="m5 8 3 8a5 5 0 0 1-6 0zV7"/><path d="M7 21h10"/></svg></div>
+            <h3 class="feature-title">BMI Calculator</h3>
+            <p class="feature-description">Calculate your Body Mass Index (BMI) instantly using height and weight. Supports both metric (kg/cm) and imperial (lb/ft) units. Get your BMI category, healthy weight range, and a visual gauge — free, private, no sign-up required.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>70 kg, 170 cm</code> → <code>BMI 24.2 — Normal weight</code>
+            </div>
+            <div class="feature-actions">
+              <a href="bmi-calculator.html" class="feature-btn">Try BMI Calculator →</a>
+              <a href="https://www.who.int/news-room/fact-sheets/detail/obesity-and-overweight" target="_blank" rel="noopener noreferrer" class="feature-link">WHO BMI Guide →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="calculators" data-tags="gst calculator india cgst sgst igst gst amount tax inclusive exclusive 5% 12% 18% 28% goods services tax">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M12 17V7"/><path d="M16 8h-6a2 2 0 0 0 0 4h4a2 2 0 0 1 0 4H8"/><path d="M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z"/></svg></div>
+            <h3 class="feature-title">GST Calculator</h3>
+            <p class="feature-description">Calculate GST instantly for all Indian GST slabs (5%, 12%, 18%, 28%). Add or remove GST from any price. Get CGST, SGST, and IGST breakdown. Free and works entirely in your browser.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>₹1,000 + 18% GST</code> → <code>CGST ₹90 + SGST ₹90 = ₹1,180</code>
+            </div>
+            <div class="feature-actions">
+              <a href="gst-calculator.html" class="feature-btn">Try GST Calculator →</a>
+              <a href="https://www.gst.gov.in/" target="_blank" rel="noopener noreferrer" class="feature-link">GST India Portal →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="calculators" data-tags="emi calculator loan emi home loan car loan personal loan monthly installment interest amortization india">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M10 18v-7"/><path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="M3 22h18"/><path d="M6 18v-7"/></svg></div>
+            <h3 class="feature-title">EMI Calculator</h3>
+            <p class="feature-description">Calculate your monthly EMI for home loan, car loan, or personal loan instantly. Get a full amortization schedule, total interest payable, and principal vs. interest breakdown — free, no sign-up required.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>₹30L @ 8.5% for 20yr</code> → <code>EMI ≈ ₹26,035/mo</code>
+            </div>
+            <div class="feature-actions">
+              <a href="emi-calculator.html" class="feature-btn">Try EMI Calculator →</a>
+              <a href="https://en.wikipedia.org/wiki/Equated_monthly_installment" target="_blank" rel="noopener noreferrer" class="feature-link">What is EMI? →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="calculators" data-tags="unix timestamp converter epoch time date seconds milliseconds ist timezone datetime javascript">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+            <h3 class="feature-title">Unix Timestamp Converter</h3>
+            <p class="feature-description">Convert Unix/epoch timestamps to human-readable dates and back instantly. Supports seconds and milliseconds, all timezones including IST, ISO 8601, relative time, and live current timestamp display.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>1700000000</code> → <code>Nov 14, 2023 22:13:20 UTC</code>
+            </div>
+            <div class="feature-actions">
+              <a href="timestamp-converter.html" class="feature-btn">Try Timestamp Converter →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank" rel="noopener noreferrer" class="feature-link">Date API Docs (MDN) →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="security" data-tags="jwt decoder json web token decode inspect header payload claims expiry hs256 rs256 bearer token authentication">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M12.4 2.7a2.5 2.5 0 0 1 3.4 0l5.5 5.5a2.5 2.5 0 0 1 0 3.4l-3.7 3.7a2.5 2.5 0 0 1-3.4 0L8.7 9.8a2.5 2.5 0 0 1 0-3.4z"/><path d="m14 7 3 3"/><path d="m9.4 10.6-6.814 6.814A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814"/></svg></div>
+            <h3 class="feature-title">JWT Decoder</h3>
+            <p class="feature-description">Instantly decode and inspect JSON Web Tokens in your browser. View the header, payload claims, and signature — plus check token expiry. Free, private, and works entirely client-side with no data sent to any server.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>eyJhbGci...token</code> → <code>{"sub":"1234","name":"John"}</code>
+            </div>
+            <div class="feature-actions">
+              <a href="jwt-decoder.html" class="feature-btn">Try JWT Decoder →</a>
+              <a href="https://jwt.io/introduction" target="_blank" rel="noopener noreferrer" class="feature-link">JWT Spec (RFC 7519) →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="image" data-tags="png to jpg converter jpg to png image converter webp convert image format online free browser no upload">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg></div>
+            <h3 class="feature-title">PNG ↔ JPG Converter</h3>
+            <p class="feature-description">Convert images between PNG, JPG, and WebP formats instantly — entirely in your browser. No upload, no server, no sign-up required. Adjust JPEG quality and set a background colour for transparent images.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>logo.png (transparent)</code> → <code>logo.jpg (white bg, 85% quality)</code>
+            </div>
+            <div class="feature-actions">
+              <a href="image-converter.html" class="feature-btn">Try Image Converter →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL" target="_blank" rel="noopener noreferrer" class="feature-link">Canvas API Docs →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="image" data-tags="image resizer resize jpg png webp gif photo dimensions pixels scale aspect ratio free online">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M14 15H9v-5"/><path d="M16 3h5v5"/><path d="M21 3 9 15"/></svg></div>
+            <h3 class="feature-title">Image Resizer</h3>
+            <p class="feature-description">Resize JPG, PNG, WebP, and GIF images to any custom width and height instantly. Lock aspect ratio, scale by percentage, or pick social-media presets. Free and private — all processing happens in your browser.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>1920 × 1080 px</code> → <code>800 × 450 px (JPG)</code>
+            </div>
+            <div class="feature-actions">
+              <a href="image-resizer.html" class="feature-btn">Try Image Resizer →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API" target="_blank" rel="noopener noreferrer" class="feature-link">Canvas API Docs →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="image" data-tags="image compressor compress jpg png webp reduce file size optimizer browser free online">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="m15 15 6 6m-6-6v4.8m0-4.8h4.8"/><path d="M9 19.8V15m0 0H4.2M9 15l-6 6"/><path d="M15 4.2V9m0 0h4.8M15 9l6-6"/><path d="M9 4.2V9m0 0H4.2M9 9 3 3"/></svg></div>
+            <h3 class="feature-title">Image Compressor</h3>
+            <p class="feature-description">Compress JPG, PNG, and WebP images instantly — right in your browser. Adjust quality, choose output format, and download smaller images with no file uploads and no sign-up required.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>photo.jpg (2.4 MB)</code> → <code>photo-compressed.jpg (480 KB, −80%)</code>
+            </div>
+            <div class="feature-actions">
+              <a href="image-compressor.html" class="feature-btn">Try Image Compressor →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob" target="_blank" rel="noopener noreferrer" class="feature-link">Canvas toBlob Docs →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="image" data-tags="resize image to kb 20kb 50kb 100kb exam photo signature ssc ibps sbi neet jee upsc cuet rrb thumb impression declaration compress">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M10.3 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10l-3.1-3.1a2 2 0 0 0-2.814.014L6 21"/><path d="m14 19 3 3v-5.5"/><path d="m17 22 3-3"/><circle cx="9" cy="9" r="2"/></svg></div>
+            <h3 class="feature-title">Resize Image to KB</h3>
+            <p class="feature-description">Resize your photo, signature, thumb impression and declaration to the exact KB limits of exam forms like IBPS, SBI, SSC, UPSC, NEET and JEE. Batch resize, download all as ZIP, nothing uploaded.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>photo.jpg (3.1 MB)</code> → <code>banking-photo.jpg (46 KB, 200×230)</code>
+            </div>
+            <div class="feature-actions">
+              <a href="resize-image-to-kb.html" class="feature-btn">Try Resize Image to KB →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="pdf" data-tags="compress pdf reduce size shrink 100kb 200kb exam form upload smaller">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M13.659 22H18a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v11.5"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M8 12v-1"/><path d="M8 18v-2"/><path d="M8 7V6"/><circle cx="8" cy="20" r="2"/></svg></div>
+            <h3 class="feature-title">Compress PDF</h3>
+            <p class="feature-description">Make PDFs smaller, or hit an exact size like 100 KB or 200 KB for exam and government form uploads. "Keep text" mode keeps text sharp and searchable. Runs in your browser, nothing uploaded.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>scan.pdf (4.2 MB)</code> → <code>scan-200kb.pdf</code>
+            </div>
+            <div class="feature-actions">
+              <a href="/compress-pdf" class="feature-btn">Try Compress PDF →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="pdf" data-tags="merge combine join pdf files images one document">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg></div>
+            <h3 class="feature-title">Merge PDF</h3>
+            <p class="feature-description">Combine PDFs and images into one PDF. Drag page thumbnails into order, rotate or remove pages before saving. No limits. Runs in your browser, nothing uploaded.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>a.pdf + b.pdf + photo.jpg</code> → <code>merged.pdf</code>
+            </div>
+            <div class="feature-actions">
+              <a href="/merge-pdf" class="feature-btn">Try Merge PDF →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="pdf" data-tags="split extract pages separate pdf ranges">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/></svg></div>
+            <h3 class="feature-title">Split PDF</h3>
+            <p class="feature-description">Extract selected pages, split every page into its own PDF, or split by ranges like 1-3, 5. Choose pages from thumbnails. Runs in your browser, nothing uploaded.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>report.pdf</code> + <code>1-3, 5</code> → <code>2 PDFs (ZIP)</code>
+            </div>
+            <div class="feature-actions">
+              <a href="/split-pdf" class="feature-btn">Try Split PDF →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="pdf" data-tags="organize rotate reorder delete pdf pages rearrange">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg></div>
+            <h3 class="feature-title">Organize PDF</h3>
+            <p class="feature-description">Reorder pages with drag and drop, rotate sideways scans and delete pages you do not need, then save a clean PDF. Works on phones. Runs in your browser, nothing uploaded.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>scan.pdf</code> → rotate page 2, delete page 5 → <code>scan-organized.pdf</code>
+            </div>
+            <div class="feature-actions">
+              <a href="/organize-pdf" class="feature-btn">Try Organize PDF →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="pdf" data-tags="pdf to jpg png image convert pages dpi">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg></div>
+            <h3 class="feature-title">PDF to JPG</h3>
+            <p class="feature-description">Turn every page, or just the pages you pick, into JPG or PNG images at 72, 150 or 300 DPI. Many pages download as one ZIP. Runs in your browser, nothing uploaded.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>slides.pdf</code> → <code>slides-images.zip</code>
+            </div>
+            <div class="feature-actions">
+              <a href="/pdf-to-jpg" class="feature-btn">Try PDF to JPG →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="pdf" data-tags="jpg png webp image photo to pdf convert a4 letter">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/></svg></div>
+            <h3 class="feature-title">JPG to PDF</h3>
+            <p class="feature-description">Turn photos and scans into one PDF. Reorder and rotate pages, choose A4, Letter or fit to image, and add margins. Runs in your browser, nothing uploaded.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>photo1.jpg + photo2.png</code> → <code>images.pdf (2 pages)</code>
+            </div>
+            <div class="feature-actions">
+              <a href="/jpg-to-pdf" class="feature-btn">Try JPG to PDF →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="pdf" data-tags="protect password encrypt lock secure aes pdf">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+            <h3 class="feature-title">Protect PDF</h3>
+            <p class="feature-description">Lock a PDF with a password using AES-256 encryption, and choose whether it can be printed, copied or edited. Runs in your browser, nothing uploaded.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>salary-slip.pdf</code> + password → <code>salary-slip-protected.pdf</code>
+            </div>
+            <div class="feature-actions">
+              <a href="/protect-pdf" class="feature-btn">Try Protect PDF →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="pdf" data-tags="unlock remove password decrypt restrictions pdf">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg></div>
+            <h3 class="feature-title">Unlock PDF</h3>
+            <p class="feature-description">Remove the password from a PDF you can open, and lift print or copy restrictions, so it opens anywhere without asking. Runs in your browser, nothing uploaded.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>statement.pdf</code> (locked) → <code>statement-unlocked.pdf</code>
+            </div>
+            <div class="feature-actions">
+              <a href="/unlock-pdf" class="feature-btn">Try Unlock PDF →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="pdf" data-tags="edit pdf editor add text image whiteout highlight fill form write">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg></div>
+            <h3 class="feature-title">Edit PDF</h3>
+            <p class="feature-description">Add text, images, white-out, highlights and shapes to any PDF, or fill in its form fields. Runs in your browser, nothing uploaded.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>form.pdf</code> + your answers → <code>form-edited.pdf</code>
+            </div>
+            <div class="feature-actions">
+              <a href="/pdf-editor" class="feature-btn">Try Edit PDF →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="pdf" data-tags="sign signature esign draw type upload date pdf">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M14.364 13.634a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506l4.013-4.009a1 1 0 0 0-3.004-3.004z"/><path d="M14.487 7.858A1 1 0 0 1 14 7V2"/><path d="M20 19.645V20a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l2.516 2.516"/><path d="M8 18h1"/></svg></div>
+            <h3 class="feature-title">Sign PDF</h3>
+            <p class="feature-description">Draw, type or upload your signature, place it anywhere on the page, add the date, and save. Runs in your browser, nothing uploaded.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>agreement.pdf</code> + signature → <code>agreement-signed.pdf</code>
+            </div>
+            <div class="feature-actions">
+              <a href="/sign-pdf" class="feature-btn">Try Sign PDF →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="pdf" data-tags="redact black out mask aadhaar pan phone hide sensitive remove">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M5 3a2 2 0 0 0-2 2"/><path d="M19 3a2 2 0 0 1 2 2"/><path d="M21 19a2 2 0 0 1-2 2"/><path d="M5 21a2 2 0 0 1-2-2"/><path d="M9 3h1"/><path d="M9 21h1"/><path d="M14 3h1"/><path d="M14 21h1"/><path d="M3 9v1"/><path d="M21 9v1"/><path d="M3 14v1"/><path d="M21 14v1"/></svg></div>
+            <h3 class="feature-title">Redact PDF</h3>
+            <p class="feature-description">Find and black out Aadhaar, PAN, phone numbers, emails or any text, and permanently remove what is underneath. Runs in your browser, nothing uploaded.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>statement.pdf</code> → <code>statement-redacted.pdf</code>
+            </div>
+            <div class="feature-actions">
+              <a href="/redact-pdf" class="feature-btn">Try Redact PDF →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="pdf" data-tags="watermark kyc confidential draft logo stamp aadhaar copy">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M14 13V8.5C14 7 15 7 15 5a3 3 0 0 0-6 0c0 2 1 2 1 3.5V13"/><path d="M20 15.5a2.5 2.5 0 0 0-2.5-2.5h-11A2.5 2.5 0 0 0 4 15.5V17a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1z"/><path d="M5 22h14"/></svg></div>
+            <h3 class="feature-title">Watermark PDF</h3>
+            <p class="feature-description">Stamp “For KYC purpose only - date”, Confidential, Draft or a logo on every page, and make it permanent. Runs in your browser, nothing uploaded.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>aadhaar.pdf</code> → <code>aadhaar-watermarked.pdf</code>
+            </div>
+            <div class="feature-actions">
+              <a href="/watermark-pdf" class="feature-btn">Try Watermark PDF →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="pdf" data-tags="page numbers numbering paginate page x of y footer">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><rect x="14" y="14" width="4" height="6" rx="2"/><rect x="6" y="4" width="4" height="6" rx="2"/><path d="M6 20h4"/><path d="M14 10h4"/><path d="M6 14h2v6"/><path d="M14 4h2v6"/></svg></div>
+            <h3 class="feature-title">Add Page Numbers to PDF</h3>
+            <p class="feature-description">Number every page: choose the corner, a style like “Page 1 of 10”, the first number and whether to skip the cover. Runs in your browser, nothing uploaded.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>report.pdf</code> → <code>report-numbered.pdf</code>
+            </div>
+            <div class="feature-actions">
+              <a href="/add-page-numbers" class="feature-btn">Try Add Page Numbers to PDF →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="pdf" data-tags="grayscale black white greyscale print ink colour remove">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="M12 18a6 6 0 0 0 0-12v12z"/></svg></div>
+            <h3 class="feature-title">Grayscale PDF</h3>
+            <p class="feature-description">Turn colour pages into black and white for printing or forms that ask for grayscale scans. Runs in your browser, nothing uploaded.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>scan.pdf</code> → <code>scan-bw.pdf</code>
+            </div>
+            <div class="feature-actions">
+              <a href="/grayscale-pdf" class="feature-btn">Try Grayscale PDF →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="pdf" data-tags="metadata properties title author remove hidden xmp clean">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></div>
+            <h3 class="feature-title">Edit PDF Metadata</h3>
+            <p class="feature-description">See and change title, author and keywords, or strip every hidden property before sharing. Runs in your browser, nothing uploaded.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>cv.pdf</code> → <code>cv.pdf</code> (title fixed, author removed)
+            </div>
+            <div class="feature-actions">
+              <a href="/pdf-metadata" class="feature-btn">Try Edit PDF Metadata →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="pdf" data-tags="expiry expiring share self destruct time limit secure view only">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></svg></div>
+            <h3 class="feature-title">Share PDF with Expiry</h3>
+            <p class="feature-description">Create an encrypted file that opens only until the date you choose, with an optional password and recipient watermark. Runs in your browser, nothing uploaded.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>offer.pdf</code> → <code>offer.bdtpdf</code> (expires in 1 day)
+            </div>
+            <div class="feature-actions">
+              <a href="/share-pdf-with-expiry" class="feature-btn">Try Share PDF with Expiry →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="pdf" data-tags="image photo jpeg webp png gif to pdf convert">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg></div>
+            <h3 class="feature-title">Image to PDF</h3>
+            <p class="feature-description">Turn photos in any format (JPG, PNG, WebP, AVIF, GIF, BMP) into one PDF. Runs in your browser, nothing uploaded.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>IMG_2041.jpg + scan.png</code> → <code>images.pdf</code>
+            </div>
+            <div class="feature-actions">
+              <a href="/image-to-pdf" class="feature-btn">Try Image to PDF →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="pdf" data-tags="pdf to image png webp jpg convert pages dpi">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><circle cx="10" cy="12" r="2"/><path d="m20 17-1.296-1.296a2.41 2.41 0 0 0-3.408 0L9 22"/></svg></div>
+            <h3 class="feature-title">PDF to Image</h3>
+            <p class="feature-description">Turn PDF pages into JPG, PNG or WebP images at the resolution you need. Runs in your browser, nothing uploaded.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>brochure.pdf</code> → <code>brochure-images.zip</code>
+            </div>
+            <div class="feature-actions">
+              <a href="/pdf-to-image" class="feature-btn">Try PDF to Image →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="security" data-tags="hash generator md5 sha1 sha256 sha384 sha512 checksum file hash verify integrity cryptographic">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg></div>
+            <h3 class="feature-title">Hash Generator</h3>
+            <p class="feature-description">Generate MD5, SHA-1, SHA-256, SHA-384, and SHA-512 cryptographic hashes from text or files. 100% browser-based — your data never leaves your device. Perfect for verifying file checksums and integrity.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>"hello"</code> → <code>SHA-256: 2cf24dba…</code>
+            </div>
+            <div class="feature-actions">
+              <a href="hash-generator.html" class="feature-btn">Try Hash Generator →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest" target="_blank" rel="noopener noreferrer" class="feature-link">Web Crypto API Docs →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="json" data-tags="csv json converter csv to json json to csv data conversion parse tsv delimiter online free">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><line x1="3" x2="21" y1="9" y2="9"/><line x1="3" x2="21" y1="15" y2="15"/><line x1="9" x2="9" y1="9" y2="21"/><line x1="15" x2="15" y1="9" y2="21"/></svg></div>
+            <h3 class="feature-title">CSV ↔ JSON Converter</h3>
+            <p class="feature-description">Convert CSV to JSON or JSON to CSV instantly in your browser. Supports comma, semicolon, tab, and pipe delimiters. Pretty-print output, table preview, file upload, and one-click download — all free, no upload required.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>name,age\nAlice,30</code> → <code>[{"name":"Alice","age":30}]</code>
+            </div>
+            <div class="feature-actions">
+              <a href="csv-json-converter.html" class="feature-btn">Try CSV ↔ JSON →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON" target="_blank" rel="noopener noreferrer" class="feature-link">JSON Docs (MDN) →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="json" data-tags="yaml json converter yaml to json json to yaml parse format validate config kubernetes docker ansible">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M10 12.5 8 15l2 2.5"/><path d="m14 12.5 2 2.5-2 2.5"/></svg></div>
+            <h3 class="feature-title">YAML ↔ JSON Converter</h3>
+            <p class="feature-description">Convert between YAML and JSON instantly in your browser. Paste YAML to get formatted JSON, or paste JSON to get clean YAML. Supports anchors, multi-document, and block scalars. Free, no sign-up, 100% private.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>name: John\nage: 30</code> → <code>{"name":"John","age":30}</code>
+            </div>
+            <div class="feature-actions">
+              <a href="yaml-json-converter.html" class="feature-btn">Try YAML ↔ JSON Converter →</a>
+              <a href="https://yaml.org/spec/1.2-old/spec.html" target="_blank" rel="noopener noreferrer" class="feature-link">YAML 1.2 Spec →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="developer" data-tags="diff checker text compare comparison find differences code diff line diff file compare online free">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M12 3v14"/><path d="M5 10h14"/><path d="M5 21h14"/></svg></div>
+            <h3 class="feature-title">Diff Checker</h3>
+            <p class="feature-description">Compare two texts side-by-side and instantly see every addition, deletion, and change. Supports line-by-line and inline character-level diff. Runs entirely in your browser — no data sent to any server.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>Hello World</code> → <code>Hello Earth</code> → highlights "World" → "Earth"
+            </div>
+            <div class="feature-actions">
+              <a href="diff-checker.html" class="feature-btn">Try Diff Checker →</a>
+              <a href="https://en.wikipedia.org/wiki/Diff" target="_blank" rel="noopener noreferrer" class="feature-link">About Diff Algorithm →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="developer" data-tags="cron expression generator cron job schedule crontab builder validator next run time linux unix cron syntax">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M16 14v2.2l1.6 1"/><path d="M16 2v3"/><path d="M21 7.338V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h2.338"/><path d="M3 9h5.859"/><path d="M8 2v3"/><circle cx="16" cy="16" r="6"/></svg></div>
+            <h3 class="feature-title">Cron Expression Generator</h3>
+            <p class="feature-description">Build cron schedule expressions visually, validate syntax, and preview the next 5 run times with human-readable descriptions. Free, browser-based — no data sent to any server.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>0 9 * * 1-5</code> → <code>Every weekday at 9:00 AM</code>
+            </div>
+            <div class="feature-actions">
+              <a href="cron-generator.html" class="feature-btn">Try Cron Generator →</a>
+              <a href="https://man7.org/linux/man-pages/man5/crontab.5.html" target="_blank" rel="noopener noreferrer" class="feature-link">Crontab Man Page →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="developer" data-tags="lorem ipsum generator placeholder text dummy text filler text lipsum paragraphs sentences words design free">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M13 4v16"/><path d="M17 4v16"/><path d="M19 4H9.5a4.5 4.5 0 0 0 0 9H13"/></svg></div>
+            <h3 class="feature-title">Lorem Ipsum Generator</h3>
+            <p class="feature-description">Generate free Lorem Ipsum placeholder text instantly. Choose paragraphs, sentences, or words — with the classic opening line or fully randomized. Perfect for mockups, prototypes, and UI design.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>3 paragraphs</code> → <code>Lorem ipsum dolor sit amet…</code>
+            </div>
+            <div class="feature-actions">
+              <a href="lorem-ipsum.html" class="feature-btn">Try Lorem Ipsum Generator →</a>
+              <a href="https://en.wikipedia.org/wiki/Lorem_ipsum" target="_blank" rel="noopener noreferrer" class="feature-link">What is Lorem Ipsum? →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="calculators" data-tags="timezone converter convert time timezone IST UTC EST PST GMT world clock time difference free online">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></div>
+            <h3 class="feature-title">Timezone Converter</h3>
+            <p class="feature-description">Convert time between any two timezones instantly. Supports IST, UTC, EST, PST, GMT and 400+ IANA timezones. Includes a live world clock and offset difference display. Free, no sign-up required.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>9:00 AM IST</code> → <code>3:30 AM UTC</code>
+            </div>
+            <div class="feature-actions">
+              <a href="timezone-converter.html" class="feature-btn">Try Timezone Converter →</a>
+              <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones" target="_blank" rel="noopener noreferrer" class="feature-link">IANA TZ List →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="developer" data-tags="markdown to html converter md html preview live editor github flavored gfm free online">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M4 12.15V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.706.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2h-3.35"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="m5 16-3 3 3 3"/><path d="m9 22 3-3-3-3"/></svg></div>
+            <h3 class="feature-title">Markdown to HTML</h3>
+            <p class="feature-description">Convert Markdown to HTML instantly with a live preview. Supports GitHub Flavored Markdown (GFM), tables, code blocks, and strikethrough. Copy or download the HTML output. Runs 100% in your browser — no data sent to any server.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code># Hello **World**</code> → <code>&lt;h1&gt;Hello &lt;strong&gt;World&lt;/strong&gt;&lt;/h1&gt;</code>
+            </div>
+            <div class="feature-actions">
+              <a href="markdown-to-html.html" class="feature-btn">Try Markdown to HTML →</a>
+              <a href="https://commonmark.org/help/" target="_blank" rel="noopener noreferrer" class="feature-link">Markdown Syntax Guide →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="json" data-tags="json typescript interface type ts convert generator developer types">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M11 18h2"/><path d="M12 12v6"/><path d="M9 13v-.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5v.5"/></svg></div>
+            <h3 class="feature-title">JSON to TypeScript Interface</h3>
+            <p class="feature-description">Paste any JSON and instantly get TypeScript interface declarations. Free online converter — handles nested objects, arrays, optional fields, and custom interface names. No sign-up required.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>{"name":"Alice","age":30}</code> → <code>interface Root { name: string; age: number; }</code>
+            </div>
+            <div class="feature-actions">
+              <a href="json-to-typescript.html" class="feature-btn">Try JSON → TypeScript →</a>
+              <a href="https://www.typescriptlang.org/docs/handbook/2/objects.html" target="_blank" rel="noopener noreferrer" class="feature-link">TypeScript Interfaces Docs →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="developer" data-tags="html formatter beautifier pretty print indent minify html code tidy clean online free">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg></div>
+            <h3 class="feature-title">HTML Formatter & Beautifier</h3>
+            <p class="feature-description">Instantly format, indent, and beautify messy HTML code online. Supports 2-space, 4-space, and tab indentation. Also minifies HTML to reduce file size. Free, no sign-up, runs entirely in your browser.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>&lt;div&gt;&lt;p&gt;Hello&lt;/p&gt;&lt;/div&gt;</code> → <code>Indented &amp; readable HTML</code>
+            </div>
+            <div class="feature-actions">
+              <a href="html-formatter.html" class="feature-btn">Try HTML Formatter →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noopener noreferrer" class="feature-link">HTML Docs (MDN) →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="image" data-tags="favicon generator create favicon from image text emoji png zip ico website icon apple touch icon pwa">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M10 4v4"/><path d="M2 8h20"/><path d="M6 4v4"/></svg></div>
+            <h3 class="feature-title">Favicon Generator</h3>
+            <p class="feature-description">Create favicons in all standard sizes (16×16 to 512×512) from any image or text/emoji. Download individual PNGs or a complete ZIP bundle with an HTML snippet ready to paste. Free, no sign-up — runs entirely in your browser.</p>
+            <div class="feature-example">
+              <strong>Example:</strong>
+              <code>logo.png</code> → <code>favicon-16.png, favicon-32.png, apple-touch-icon.png …</code>
+            </div>
+            <div class="feature-actions">
+              <a href="favicon-generator.html" class="feature-btn">Try Favicon Generator →</a>
+              <a href="https://developer.mozilla.org/en-US/docs/Glossary/Favicon" target="_blank" rel="noopener noreferrer" class="feature-link">Favicon Docs (MDN) →</a>
+            </div>
+          </div>
+
+
+          <div class="feature-card">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></div>
+            <h3 class="feature-title">Suggest Tool</h3>
+            <p class="feature-description">Have an idea for a new developer tool? Share your suggestions with us. We'd love to hear what tools would be most helpful for your workflow.</p>
+            <div class="feature-example">
+              <strong>Help us improve:</strong>
+              Share your ideas and feedback to help us build better tools for developers.
+            </div>
+            <div class="feature-actions">
+              <a href="https://forms.gle/TA7WEhzzQ6csQFGZ7" target="_blank" rel="noopener noreferrer" class="feature-btn">Suggest a Tool →</a>
+            </div>
+          </div>
+
+          <div class="tools-no-results" id="toolsNoResults" role="status" aria-live="polite">
+            No tools matched your search. Try a different keyword or category.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Header Component Script (load after body exists) -->
+  <script src="components/header.js"></script>
+
+  <!-- Footer Component -->
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+
+  <!-- Initialize Sentry with version tracking -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof Sentry !== 'undefined' && typeof initSentryTracking !== 'undefined') {
+        initSentryTracking();
+      }
+      
+      // Set Sentry context for this page
+      if (typeof Sentry !== 'undefined') {
+        Sentry.setContext('page', {
+          name: 'Our Developer Tools',
+          path: window.location.pathname
+        });
+      }
+      
+      // Track feature card button clicks (Try buttons)
+      const featureButtons = document.querySelectorAll('.feature-btn');
+      featureButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+          if (typeof window.Analytics !== 'undefined') {
+            const toolName = this.textContent.trim().replace('Try ', '').replace(' →', '');
+            window.Analytics.track('feature_card_button_click', {
+              page: 'Our Developer Tools',
+              tool_name: toolName,
+              button_text: this.textContent.trim(),
+              destination_url: this.href
+            });
+          }
+        });
+      });
+      
+      // Track feature card link clicks (documentation links)
+      const featureLinks = document.querySelectorAll('.feature-link');
+      featureLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          if (typeof window.Analytics !== 'undefined') {
+            const linkText = this.textContent.trim();
+            window.Analytics.track('feature_card_link_click', {
+              page: 'Our Developer Tools',
+              link_text: linkText,
+              destination_url: this.href,
+              is_external: this.target === '_blank'
+            });
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- Tool filter: search + category -->
+  <script>
+    (function initToolFilter() {
+      // Must match TOOL_CATEGORIES in components/footer.js (same ids, same order).
+      const CATEGORY_LABELS = {
+        json: 'JSON & Data',
+        image: 'Image',
+        pdf: 'PDF',
+        'qr-links': 'QR & Links',
+        developer: 'Developer',
+        security: 'Encode & Security',
+        calculators: 'Calculators & Time',
+        design: 'Design & Animation',
+      };
+
+      let activeCategory = 'all';
+      let searchQuery = '';
+
+      function debounce(fn, delay) {
+        let timer;
+        return function(...args) {
+          clearTimeout(timer);
+          timer = setTimeout(() => fn.apply(this, args), delay);
+        };
+      }
+
+      function getFilterableCards() {
+        return Array.from(document.querySelectorAll('.feature-card[data-category]'));
+      }
+
+      function getPresentCategories(cards) {
+        const present = new Set(cards.map(c => c.dataset.category));
+        return Object.keys(CATEGORY_LABELS).filter(cat => present.has(cat));
+      }
+
+      function buildCategoryButton(cat, label, isActive) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'category-btn' + (isActive ? ' active' : '');
+        btn.textContent = label;
+        btn.dataset.category = cat;
+        btn.addEventListener('click', () => handleCategoryClick(cat));
+        return btn;
+      }
+
+      function buildCategoryButtons(cards) {
+        const container = document.getElementById('categoryFilters');
+        if (!container) return;
+        container.innerHTML = '';
+
+        container.appendChild(buildCategoryButton('all', 'All Tools', activeCategory === 'all'));
+
+        getPresentCategories(cards).forEach(cat => {
+          const label = CATEGORY_LABELS[cat] || cat;
+          container.appendChild(buildCategoryButton(cat, label, activeCategory === cat));
+        });
+      }
+
+      function cardMatchesFilters(card) {
+        const matchesCategory = activeCategory === 'all' || card.dataset.category === activeCategory;
+        if (!matchesCategory) return false;
+        if (!searchQuery) return true;
+
+        const title = (card.querySelector('.feature-title')?.textContent || '').toLowerCase();
+        const desc = (card.querySelector('.feature-description')?.textContent || '').toLowerCase();
+        const tags = (card.dataset.tags || '').toLowerCase();
+        return title.includes(searchQuery) || desc.includes(searchQuery) || tags.includes(searchQuery);
+      }
+
+      function applyFilters(cards) {
+        let visibleCount = 0;
+        cards.forEach(card => {
+          const isVisible = cardMatchesFilters(card);
+          card.classList.toggle('tool-hidden', !isVisible);
+          if (isVisible) visibleCount++;
+        });
+
+        const noResultsEl = document.getElementById('toolsNoResults');
+        if (noResultsEl) noResultsEl.classList.toggle('visible', visibleCount === 0);
+
+        const countEl = document.getElementById('toolsCountLabel');
+        if (countEl) {
+          const total = cards.length;
+          const isFiltered = activeCategory !== 'all' || searchQuery;
+          countEl.textContent = isFiltered ? `Showing ${visibleCount} of ${total}` : `${total} tools`;
+        }
+      }
+
+      function handleCategoryClick(cat) {
+        activeCategory = cat;
+        document.querySelectorAll('.category-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.category === cat);
+        });
+        const cards = getFilterableCards();
+        applyFilters(cards);
+
+        // Keep the filter in the URL (#cat=…) so it can be shared. A hash, not a
+        // query string, because it survives the /tools.html → /tools redirect.
+        const url = new URL(window.location.href);
+        url.searchParams.delete('cat');
+        url.hash = cat === 'all' ? '' : 'cat=' + cat;
+        history.replaceState(null, '', url);
+
+        if (typeof window.Analytics !== 'undefined') {
+          window.Analytics.track('tools_page_category_filter', {
+            page: 'Our Developer Tools',
+            category: cat,
+          });
+        }
+      }
+
+      function handleSearchInput(query) {
+        searchQuery = query.trim().toLowerCase();
+        applyFilters(getFilterableCards());
+
+        if (searchQuery.length >= 2 && typeof window.Analytics !== 'undefined') {
+          // Never send what the user typed — only its length.
+          window.Analytics.track('tools_page_search', {
+            page: 'Our Developer Tools',
+            query_length: searchQuery.length,
+            active_category: activeCategory,
+          });
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        // Order cards by category so the "All" view reads as groups.
+        const order = Object.keys(CATEGORY_LABELS);
+        const grid = document.querySelector('.features-grid');
+        if (grid) {
+          getFilterableCards()
+            .map((card, i) => ({ card, i, rank: order.indexOf(card.dataset.category) }))
+            .sort((a, b) => a.rank - b.rank || a.i - b.i)
+            .forEach(({ card }) => grid.insertBefore(card, grid.querySelector('.feature-card:not([data-category])')));
+        }
+
+        const cards = getFilterableCards();
+        const requested = new URLSearchParams(window.location.hash.slice(1)).get('cat') ||
+          new URLSearchParams(window.location.search).get('cat');
+        if (requested && CATEGORY_LABELS[requested]) activeCategory = requested;
+        buildCategoryButtons(cards);
+        applyFilters(cards);
+
+        // Footer category tiles on this same page only change the hash.
+        window.addEventListener('hashchange', () => {
+          const cat = new URLSearchParams(window.location.hash.slice(1)).get('cat') || 'all';
+          if (cat !== 'all' && !CATEGORY_LABELS[cat]) return;
+          if (cat !== activeCategory) handleCategoryClick(cat);
+          document.querySelector('.tool-filter-bar')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        const searchInput = document.getElementById('toolSearchInput');
+        if (searchInput) {
+          searchInput.addEventListener('input', debounce(e => handleSearchInput(e.target.value), 200));
+          searchInput.addEventListener('search', e => handleSearchInput(e.target.value));
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>

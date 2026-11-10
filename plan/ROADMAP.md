@@ -35,18 +35,13 @@
 
 | # | Tool | Category | Traffic Potential | Effort | Status | File |
 |---|------|----------|-------------------|--------|--------|------|
-| 1 | Word / Character Counter | text | Very High | 0.5d | `done` | `word-counter.html` |
 | 2 | WhatsApp Link Generator | utility | High (India) | 0.5d | `done` | `whatsapp-link.html` |
-| 3 | Age Calculator | calculator | Very High (India) | 1d | `done` | `age-calculator.html` |
 | 4 | UUID Generator | developer | High | 0.5d | `done` | `uuid-generator.html` |
-| 5 | Password Generator | security | High | 0.5d | `done` | `password-generator.html` |
-| 6 | Text Case Converter | text | High | 0.5d | `done` | `text-case-converter.html` |
 
 **Why these first:**
 - All are 0.5–1 day builds — fast to ship, fast to get indexed
-- Word Counter + Age Calculator have massive India search volume
 - WhatsApp Link Generator is India-specific with almost no quality free competitors
-- UUID + Password + Text Case are bookmark-worthy dev utilities
+- UUID Generator is a bookmark-worthy dev utility
 
 ---
 
@@ -104,7 +99,48 @@
 | 25 | JSON → TypeScript Interface | developer | Medium-High | 1.5d | `done` | `json-to-typescript.html` |
 | 26 | HTML Formatter/Beautifier | developer | High | 1d | `done` | `html-formatter.html` |
 | 27 | Favicon Generator | design | High | 1d | `done` | `favicon-generator.html` |
-| 28 | Reading Time Estimator | text | Medium | 0.5d | `done` | `reading-time.html` |
+
+---
+
+## Phase 5 – Lottie Viewer (Power Tool)
+**Target: Week 13–14** | Effort ~3d | Medium-High traffic | Differentiator tool — no clean free competitor  
+**Stack:** lottie-web (MIT, free for commercial use) — no backend needed for Core + Advanced features.  
+**File:** `lottie-viewer.html` | **Category:** `developer`
+
+### Roadmap Entry
+| # | Tool | Category | Traffic Potential | Effort | Status | File |
+|---|------|----------|-------------------|--------|--------|------|
+| 29 | Lottie Viewer & Editor | developer | Medium-High | 3d | `not-started` | `lottie-viewer.html` |
+
+### Core (Build First)
+- [ ] Load Lottie via URL or file upload (drag & drop + browse button)
+- [ ] Play / Pause / Stop / Loop controls
+- [ ] JSON structure explorer — collapsible tree view of the Lottie JSON
+- [ ] Canvas size controls — resize by px or %
+- [ ] Playback speed controls — 0.25x to 4x
+- [ ] Background color picker for the preview canvas
+- [ ] Key replacement — find any JSON key, set a new value, live preview updates
+
+### Advanced (Toggle in UI)
+- [ ] Color palette editor — auto-extract all unique colors, click swatch to replace globally with live preview
+- [ ] Frame scrubber — drag timeline frame by frame, jump to specific frame number, show total frames + duration
+- [ ] Performance analyzer — scan JSON for layer count, shape complexity, nested precomps, frame rate, file size; show score + recommendations
+- [ ] Text layer editor — auto-detect all text layers, edit each string inline, live preview
+- [ ] Layer toggle — list all named layers, toggle visibility on/off for debugging
+- [ ] Export modified JSON — download updated Lottie JSON after edits; one-click copy as minified JSON
+
+### Pro (Future / Monetizable)
+- [ ] SVG / PNG frame export — capture any single frame via `canvas.toDataURL()` (frontend-safe)
+- [ ] Batch processing — upload multiple files, apply same replacements to all, download as zip
+- [ ] Export as GIF / MP4 — **requires backend** (Puppeteer or third-party render API); out of scope for current stack
+- [ ] Lottie → CSS/GSAP converter — convert simple animations to pure CSS keyframes
+- [ ] User accounts + share links — **requires backend storage**; out of scope for current stack
+
+### Notes
+- lottie-web is MIT licensed — free for commercial use
+- URL loading will hit CORS on many hosts — handle gracefully, suggest file upload as fallback
+- Add a UI note that users are responsible for the licensing of Lottie files they upload
+- GIF/MP4 export and user accounts are the only features that truly need a backend
 
 ---
 
@@ -160,11 +196,11 @@ Use these exact values in `data-category` on tools.html cards:
 |------|---------------|---------------|
 | `json` | JSON | JSON Formatter, JSON Diff |
 | `qr` | QR Codes | QR Generator, QR Decoder, Simple QR |
-| `developer` | Developer | DeepLink, URL Encoder, Base64, cURL Tester, cURL Comparison, UUID, Timestamp, JWT, CSV/JSON, YAML/JSON, Diff, Cron, HTML Formatter, JSON→TS |
+| `developer` | Developer | DeepLink, URL Encoder, Base64, cURL Tester, cURL Comparison, UUID, Timestamp, JWT, CSV/JSON, YAML/JSON, Diff, Cron, HTML Formatter, JSON→TS, Lottie Viewer |
 | `regex` | Regex | Regex Tester, Generator, Library |
 | `design` | Design | Color Picker, Gradient Generator, Favicon |
 | `calculator` | Calculator | Age, Percentage, BMI, GST, EMI |
-| `text` | Text | Word Counter, Text Case Converter, Lorem Ipsum, Markdown→HTML, Reading Time |
+| `text` | Text | Lorem Ipsum, Markdown→HTML, Diff Checker, HTML Formatter |
 | `image` | Image | Image Compressor, PNG↔JPG, Image Resizer, Image to PDF |
-| `security` | Security | Password Generator, Hash Generator, JWT Decoder |
+| `security` | Security | Hash Generator, JWT Decoder |
 | `utility` | Utility | WhatsApp Link, Timezone Converter |

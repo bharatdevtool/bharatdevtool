@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free QR Code Scanner and Safe Link Check | Bharat Dev Tools</title>
+  <meta name="description" content="Free QR code scanner: upload, paste or use your camera. Reads links, Wi-Fi, UPI and contacts, and warns about risky links before you open them. No upload.">
+  <meta name="keywords" content="qr code scanner, qr code decoder, qr code reader online, scan qr code from image, qr scanner from screenshot, upi qr scanner, wifi qr code scanner, check qr code link safe">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://bharatdevtool.com/qr-decoder.html">
+
+  <!-- Social preview -->
+  <meta property="og:title" content="Free QR Code Scanner and Safe Link Check | Bharat Dev Tools">
+  <meta property="og:description" content="Free QR code scanner: upload, paste or use your camera. Reads links, Wi-Fi, UPI and contacts, and warns about risky links before you open them. No upload.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/qr-decoder.html">
+  <meta property="og:image" content="https://bharatdevtool.com/og/qr-decoder.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="QR Code Scanner with safe link check">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free QR Code Scanner and Safe Link Check | Bharat Dev Tools">
+  <meta name="twitter:description" content="Free QR code scanner: upload, paste or use your camera. Reads links, Wi-Fi, UPI and contacts, and warns about risky links before you open them. No upload.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/og/qr-decoder.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ik.imagekit.io/bdt/bdt_logo_v3_16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/bdt/bdt_logo_v3_180.png">
+
+  <!-- Theme (load first to prevent flash) -->
+  <script src="assets/js/theme.js"></script>
+
+  <!-- Sentry SDK -->
+  <script src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js" crossorigin="anonymous" defer></script>
+
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+  <script src="assets/js/version.js" defer></script>
+  <script src="assets/js/analytics.js" defer></script>
+
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: { 50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' } } } }
+    }
+  </script>
+
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+  <link rel="stylesheet" href="assets/css/qr.css">
+
+  <!-- Structured Data: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "QR Code Scanner",
+    "description": "Free QR code scanner and decoder: read QR codes from an image, a pasted screenshot or the camera. Shows links, Wi-Fi, UPI payments, contacts and events in plain words and warns about risky links. Runs in your browser.",
+    "url": "https://bharatdevtool.com/qr-decoder.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web Browser",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+    "creator": { "@type": "Organization", "name": "Bharat Dev Tools", "url": "https://bharatdevtool.com" },
+    "featureList": [
+      "Scan from an image, a pasted screenshot or the camera",
+      "Reads several QR codes in one image",
+      "Shows Wi-Fi, UPI, contact, event, email, SMS and phone codes in plain words",
+      "Warns about risky links before you open them",
+      "Save contacts and events from a QR code",
+      "100% in the browser: images are never uploaded"
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://bharatdevtool.com/" },
+      { "@type": "ListItem", "position": 2, "name": "QR Code Scanner", "item": "https://bharatdevtool.com/qr-decoder.html" }
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: FAQPage (keep in sync with the visible FAQ below) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How do I scan a QR code from a screenshot or photo?", "acceptedAnswer": { "@type": "Answer", "text": "Take a screenshot, then press Ctrl+V (Cmd+V on Mac) on this page, or drop the image in, or choose it from your files. The code is read instantly in your browser, even if the image has several QR codes." } },
+      { "@type": "Question", "name": "How do I know if a QR code link is safe?", "acceptedAnswer": { "@type": "Answer", "text": "The scanner never opens links by itself. It shows the real website name in large letters and warns about common tricks: short links that hide the destination, look-alike website names, app downloads (APK files), unencrypted http links, and pages asking for KYC, OTP or refunds." } },
+      { "@type": "Question", "name": "Can someone send me money by asking me to scan a QR code?", "acceptedAnswer": { "@type": "Answer", "text": "No. A UPI QR code is only ever used to pay. If someone asks you to scan a QR code or enter your UPI PIN to receive money, it is a scam. This scanner shows who a UPI code pays and how much, without opening any app." } },
+      { "@type": "Question", "name": "How do I see the password in a Wi-Fi QR code?", "acceptedAnswer": { "@type": "Answer", "text": "Upload or scan the Wi-Fi QR code. The network name and password are shown, with a button to copy the password, so you can join from a laptop that has no camera." } },
+      { "@type": "Question", "name": "Are my images uploaded?", "acceptedAnswer": { "@type": "Answer", "text": "No. QR codes are read entirely in your browser. Images and their contents never leave your device and are not saved after you close the page." } }
+    ]
+  }
+  </script>
+</head>
+
+<body class="bg-slate-50 dark:bg-[#090E17] transition-colors duration-300">
+  <script src="components/header.js"></script>
+
+  <main class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="text-center mb-8">
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white mb-3">QR Code Scanner</h1>
+      <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+        Read any QR code from a photo, a screenshot or your camera, and see exactly what it does before you open it.
+      </p>
+      <div class="mt-4 flex flex-wrap justify-center gap-x-5 gap-y-2">
+        <span class="qr-chip"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Checks links for scams</span>
+        <span class="qr-chip"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Never opens anything by itself</span>
+        <span class="qr-chip"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Images stay on your device</span>
+      </div>
+    </div>
+
+    <section class="qr-card p-4 sm:p-6">
+      <div id="dropZone" class="qr-drop flex flex-col items-center justify-center text-center px-4 py-10 cursor-pointer" role="button" tabindex="0" aria-label="Choose, drop or paste a QR code image">
+        <svg class="w-11 h-11 text-blue-500 mb-3" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7V5a1 1 0 011-1h2M17 4h2a1 1 0 011 1v2M20 17v2a1 1 0 01-1 1h-2M7 20H5a1 1 0 01-1-1v-2M8 8h3v3H8zM13 8h3v3h-3zM8 13h3v3H8zM14 14h2v2"/></svg>
+        <p class="text-lg font-semibold text-slate-800 dark:text-slate-100">Choose an image, drop it here, or paste a screenshot</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1"><kbd class="px-1.5 py-0.5 rounded border border-slate-300 dark:border-slate-600 text-xs">Ctrl</kbd> + <kbd class="px-1.5 py-0.5 rounded border border-slate-300 dark:border-slate-600 text-xs">V</kbd> works anywhere on this page</p>
+        <div class="mt-5 flex flex-wrap justify-center gap-2">
+          <button type="button" id="chooseBtn" class="qr-btn qr-btn-primary">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16V4m0 0l-4 4m4-4l4 4M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+            Choose image
+          </button>
+          <button type="button" id="cameraBtn" class="qr-btn qr-btn-ghost">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8a2 2 0 012-2h2l2-2h6l2 2h2a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/><circle cx="12" cy="13" r="3.5"/></svg>
+            Scan with camera
+          </button>
+        </div>
+        <input type="file" id="fileInput" accept="image/*" class="hidden">
+      </div>
+
+      <div id="cameraPanel" class="hidden">
+        <div class="qr-video-wrap">
+          <video id="video" playsinline muted></video>
+          <div class="qr-video-frame" aria-hidden="true"></div>
+          <div class="qr-scanline" aria-hidden="true"></div>
+        </div>
+        <div class="mt-3 flex items-center justify-between gap-3">
+          <p class="text-sm text-slate-500 dark:text-slate-400">Point the camera at a QR code. It reads automatically.</p>
+          <button type="button" id="stopCamera" class="qr-btn qr-btn-ghost">Stop camera</button>
+        </div>
+      </div>
+
+      <div id="scanStatus" class="hidden mt-4" aria-live="polite"></div>
+    </section>
+
+    <section id="results" class="mt-6 space-y-4" aria-live="polite"></section>
+
+    <section class="mt-10 grid sm:grid-cols-3 gap-4">
+      <div class="qr-card p-5">
+        <h2 class="font-semibold text-slate-900 dark:text-white mb-1">Scam check</h2>
+        <p class="text-sm text-slate-600 dark:text-slate-400">See the real website before you visit. Short links, look-alike names, app downloads and KYC traps are flagged.</p>
+      </div>
+      <div class="qr-card p-5">
+        <h2 class="font-semibold text-slate-900 dark:text-white mb-1">Plain words</h2>
+        <p class="text-sm text-slate-600 dark:text-slate-400">Wi-Fi passwords, UPI payee and amount, contacts and events are shown clearly, with copy and save buttons.</p>
+      </div>
+      <div class="qr-card p-5">
+        <h2 class="font-semibold text-slate-900 dark:text-white mb-1">Private</h2>
+        <p class="text-sm text-slate-600 dark:text-slate-400">Everything happens in your browser. Nothing is uploaded and nothing is kept after you close the page.</p>
+      </div>
+    </section>
+    <p class="mt-6 text-center text-sm text-slate-600 dark:text-slate-400">
+      Need your own? <a href="qr-generator-free.html" class="text-blue-600 dark:text-blue-400 hover:underline font-medium">Create a QR code with your logo →</a>
+    </p>
+
+    <!-- FAQ (keep in sync with the FAQPage JSON-LD above) -->
+    <section class="faq-section" id="faq">
+      <div class="faq-container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false"><span>How do I scan a QR code from a screenshot or photo?</span><span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>Take a screenshot, then press Ctrl+V (Cmd+V on Mac) on this page, or drop the image in, or choose it from your files. The code is read instantly in your browser, even if the image has several QR codes.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false"><span>How do I know if a QR code link is safe?</span><span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>The scanner never opens links by itself. It shows the real website name in large letters and warns about common tricks: short links that hide the destination, look-alike website names, app downloads (APK files), unencrypted http links, and pages asking for KYC, OTP or refunds.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false"><span>Can someone send me money by asking me to scan a QR code?</span><span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>No. A UPI QR code is only ever used to pay. If someone asks you to scan a QR code or enter your UPI PIN to receive money, it is a scam. This scanner shows who a UPI code pays and how much, without opening any app.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false"><span>How do I see the password in a Wi-Fi QR code?</span><span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>Upload or scan the Wi-Fi QR code. The network name and password are shown, with a button to copy the password, so you can join from a laptop that has no camera.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false"><span>Are my images uploaded?</span><span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>No. QR codes are read entirely in your browser. Images and their contents never leave your device and are not saved after you close the page.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+  <div id="toastContainer"></div>
+
+  <!-- FAQ accordion -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.faq-question').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var isOpen = this.getAttribute('aria-expanded') === 'true';
+          document.querySelectorAll('.faq-question').forEach(function (q) {
+            q.setAttribute('aria-expanded', 'false');
+            q.closest('.faq-item').classList.remove('active');
+            q.querySelector('.faq-icon').textContent = '+';
+          });
+          if (!isOpen) {
+            this.setAttribute('aria-expanded', 'true');
+            this.closest('.faq-item').classList.add('active');
+            this.querySelector('.faq-icon').textContent = '−';
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- QR reader (offline, in the browser) -->
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js" integrity="sha384-hStSInNIZ8ljtOVrmrgf7zdHMapaLBWoSnPTtF0nzsybp4+LuhDz6sHuEVpWIX8o" crossorigin="anonymous" defer></script>
+  <script type="module" src="assets/js/qr-decoder-page.js"></script>
+</body>
+</html>

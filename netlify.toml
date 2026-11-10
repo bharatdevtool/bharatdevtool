@@ -1,0 +1,143 @@
+[build]
+  command = "pnpm build"
+  publish = "out"
+
+# ── Cache headers ──────────────────────────────────────────────
+# Next.js build output: file names change whenever content changes, so
+# browsers can keep these for a year without ever serving stale code.
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Static HTML tools' shared CSS/JS/fonts: file names stay the same when
+# edited, so cache briefly. Browsers reuse them across page-to-page
+# navigation and pick up a deploy within an hour.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/components/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# HTML pages, sitemap.xml and robots.txt keep Netlify's default
+# (always revalidate) so every deploy is visible immediately.
+
+# Retired Lottie tools → the unified player
+[[redirects]]
+  from = "/tools/lottie-analyzer"
+  to = "/lottie-player"
+  status = 301
+
+[[redirects]]
+  from = "/tools/lottie-editor"
+  to = "/lottie-player"
+  status = 301
+
+# The old static Image to PDF page
+[[redirects]]
+  from = "/image-to-pdf.html"
+  to = "/image-to-pdf"
+  status = 301
+
+# Common guesses for the editor
+[[redirects]]
+  from = "/edit-pdf"
+  to = "/pdf-editor"
+  status = 301
+
+# Next.js tools used to live under /tools/ (before launch); keep old links working.
+[[redirects]]
+  from = "/tools/edit-pdf"
+  to = "/pdf-editor"
+  status = 301
+
+[[redirects]]
+  from = "/tools/secure-share-pdf"
+  to = "/share-pdf-with-expiry"
+  status = 301
+
+[[redirects]]
+  from = "/tools/*"
+  to = "/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/simple-qr.html"
+  to = "/qr-generator-free.html"
+  status = 301
+
+[[redirects]]
+  from = "/tools"
+  to = "/tools.html"
+  status = 301
+
+[[redirects]]
+  from = "/jsondiff"
+  to = "/jsondiff/index.html"
+  status = 301
+
+[[redirects]]
+  from = "/jsonformatter"
+  to = "/jsonformatter/index.html"
+  status = 301
+
+# Removed tools (Nov 2026) — send old links and search traffic to the tools directory
+[[redirects]]
+  from = "/word-counter"
+  to = "/tools.html"
+  status = 301
+
+[[redirects]]
+  from = "/word-counter.html"
+  to = "/tools.html"
+  status = 301
+
+[[redirects]]
+  from = "/password-generator"
+  to = "/tools.html"
+  status = 301
+
+[[redirects]]
+  from = "/password-generator.html"
+  to = "/tools.html"
+  status = 301
+
+[[redirects]]
+  from = "/age-calculator"
+  to = "/tools.html"
+  status = 301
+
+[[redirects]]
+  from = "/age-calculator.html"
+  to = "/tools.html"
+  status = 301
+
+[[redirects]]
+  from = "/text-case-converter"
+  to = "/tools.html"
+  status = 301
+
+[[redirects]]
+  from = "/text-case-converter.html"
+  to = "/tools.html"
+  status = 301
+
+[[redirects]]
+  from = "/reading-time"
+  to = "/tools.html"
+  status = 301
+
+[[redirects]]
+  from = "/reading-time.html"
+  to = "/tools.html"
+  status = 301
+

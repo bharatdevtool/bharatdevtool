@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Prefill (#text= or legacy ?text=) can hold user data: copy it to memory and clear the address bar before analytics/Sentry load. -->
+  <script>
+    (function () {
+      var p = new URLSearchParams();
+      try {
+        p = new URLSearchParams(location.search);
+        new URLSearchParams(location.hash.slice(1)).forEach(function (v, k) { p.set(k, v); });
+        if (['text'].some(function (k) { return p.has(k); })) history.replaceState(null, '', location.pathname);
+      } catch (e) {}
+      window.__bdtPrefill = p;
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- qr:seo -->
+  <title>Free QR Code Generator with Logo | Bharat Dev Tools</title>
+  <meta name="description" content="Free QR code generator for links, Wi-Fi, UPI, WhatsApp and contacts. Add a logo, colours and a frame. Never expires, no sign-up, no watermark.">
+  <meta name="keywords" content="qr code generator, free qr code generator, qr code with logo, upi qr code generator, wifi qr code, whatsapp qr code, vcard qr code, qr code that never expires, qr code svg">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://bharatdevtool.com/qr-generator-free.html">
+
+  <!-- Social preview -->
+  <meta property="og:title" content="Free QR Code Generator with Logo | Bharat Dev Tools">
+  <meta property="og:description" content="Free QR code generator for links, Wi-Fi, UPI, WhatsApp and contacts. Add a logo, colours and a frame. Never expires, no sign-up, no watermark.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/qr-generator-free.html">
+  <meta property="og:image" content="https://bharatdevtool.com/og/qr-generator.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Free QR Code Generator">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free QR Code Generator with Logo | Bharat Dev Tools">
+  <meta name="twitter:description" content="Free QR code generator for links, Wi-Fi, UPI, WhatsApp and contacts. Add a logo, colours and a frame. Never expires, no sign-up, no watermark.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/og/qr-generator.png">
+  <!-- /qr:seo -->
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ik.imagekit.io/bdt/bdt_logo_v3_16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/bdt/bdt_logo_v3_180.png">
+
+  <!-- Theme (load first to prevent flash) -->
+  <script src="assets/js/theme.js"></script>
+
+  <!-- Sentry SDK -->
+  <script src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js" crossorigin="anonymous" defer></script>
+
+  <!-- App Configuration -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+  <script src="assets/js/version.js" defer></script>
+  <script src="assets/js/analytics.js" defer></script>
+
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: { primary: { 50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' } } } }
+    }
+  </script>
+
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+
+  <!-- qr:jsonld -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "QR Code Generator",
+    "description": "Free QR code generator for links, Wi-Fi, UPI payments, WhatsApp, contacts, email, SMS, locations and events, with logo, colours, gradients and frames. Static codes that never expire, made in your browser.",
+    "url": "https://bharatdevtool.com/qr-generator-free.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "INR"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "Bharat Dev Tools",
+      "url": "https://bharatdevtool.com"
+    },
+    "featureList": [
+      "11 QR types: link, text, Wi-Fi, UPI, WhatsApp, contact card (vCard), email, SMS, phone, location, event",
+      "Logo in the centre, colours, gradients, dot and corner styles",
+      "Frames with a call to action such as Scan me",
+      "Automatic scan test and smallest safe print size",
+      "PNG up to 4096 px and SVG for print",
+      "Static codes that never expire, no tracking, no watermark",
+      "100% in the browser: nothing is uploaded"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://bharatdevtool.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "QR Code Generator",
+        "item": "https://bharatdevtool.com/qr-generator-free.html"
+      }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Will my QR code ever expire?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. These are static QR codes: the link or details are stored inside the code itself, with no redirect through our servers. They keep working forever, even if this website disappears. Many other generators make dynamic codes that stop working when a trial or subscription ends."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I make a QR code for UPI payments?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Choose UPI, enter your UPI ID (like name@okhdfcbank) and the name customers should see. Leave the amount empty for a shop QR where customers type the amount, or fill it in for a fixed bill. Any UPI app such as Google Pay, PhonePe or Paytm can scan it."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I add my logo to the QR code?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Open Logo, upload a PNG, JPG or SVG, and choose its size. The code automatically switches to the highest error correction so it still scans, and the scan check confirms it before you download."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I share my Wi-Fi with a QR code?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Choose Wi-Fi, type the network name and password and pick the security type (WPA/WPA2/WPA3 for most home routers). Guests point their phone camera at the code and join without typing the password. The password never leaves your device."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which format should I download for printing?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "SVG for print: it stays sharp at any size, from a business card to a banner. For a quick image, PNG at 2048 or 4096 pixels works for most printing. The scan check tells you the smallest safe print size for your code."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my data uploaded or tracked?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. The QR code is created in your browser. Your links, Wi-Fi passwords, UPI ID and contact details are never sent to a server, and scans are not tracked."
+        }
+      }
+    ]
+  }
+  </script>
+  <!-- /qr:jsonld -->
+
+  <link rel="stylesheet" href="assets/css/qr.css">
+</head>
+
+<body class="bg-slate-50 dark:bg-[#090E17] transition-colors duration-300">
+  <script src="components/header.js"></script>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 lg:pb-8">
+    <!-- qr:hero -->
+    <!-- Hero -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white mb-3">Free QR Code Generator</h1>
+      <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+        Links, Wi-Fi, UPI payments, WhatsApp, contacts and more. Add your logo and colours, check that it scans, and download it ready to print.
+      </p>
+      <div class="mt-4 flex flex-wrap justify-center gap-x-5 gap-y-2">
+        <span class="qr-chip"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Never expires</span>
+        <span class="qr-chip"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>No sign-up, no watermark</span>
+        <span class="qr-chip"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>No scan tracking</span>
+        <span class="qr-chip"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Made on your device</span>
+      </div>
+    </div>
+    <script type="application/json" id="qrPage">{}</script>
+    <!-- /qr:hero -->
+
+    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_400px] gap-6 items-start">
+      <!-- Editor -->
+      <section class="qr-card p-4 sm:p-6" aria-label="QR code content and design">
+        <div id="qrTabs" class="qr-tabs" role="tablist" aria-label="What should the QR code do?"></div>
+        <div id="qrFields" class="mt-5 space-y-4" role="tabpanel"></div>
+
+        <details class="qr-section mt-6" open>
+          <summary><span>Design<span class="qr-sub">Styles, dots, corners and colours</span></span><svg class="qr-chevron w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></summary>
+          <div class="space-y-5 pb-5">
+            <div>
+              <span class="qr-label">Styles</span>
+              <div id="presetList" class="flex flex-wrap gap-2"></div>
+            </div>
+            <div class="flex flex-wrap gap-x-8 gap-y-4">
+              <div><span class="qr-label">Dots</span><div id="dotStyles" class="qr-seg" role="group" aria-label="Dot shape"></div></div>
+              <div><span class="qr-label">Corners</span><div id="eyeFrameStyles" class="qr-seg" role="group" aria-label="Corner shape"></div></div>
+              <div><span class="qr-label">Corner centre</span><div id="eyeBallStyles" class="qr-seg" role="group" aria-label="Corner centre shape"></div></div>
+            </div>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <span class="qr-label">Code colour</span>
+                <div class="flex flex-wrap items-center gap-2">
+                  <label class="qr-color"><input type="color" id="fgColor" aria-label="Code colour"><input type="text" id="fgHex" maxlength="7" aria-label="Code colour hex" spellcheck="false"></label>
+                  <label class="qr-switch"><input type="checkbox" id="gradientOn"> Gradient</label>
+                  <label id="fg2Wrap" class="qr-color hidden"><input type="color" id="fg2Color" aria-label="Gradient end colour"><input type="text" id="fg2Hex" maxlength="7" aria-label="Gradient end colour hex" spellcheck="false"></label>
+                </div>
+              </div>
+              <div>
+                <span class="qr-label">Background</span>
+                <div class="flex flex-wrap items-center gap-2">
+                  <label class="qr-color"><input type="color" id="bgColor" aria-label="Background colour"><input type="text" id="bgHex" maxlength="7" aria-label="Background colour hex" spellcheck="false"></label>
+                  <label class="qr-switch"><input type="checkbox" id="transparentOn"> Transparent</label>
+                </div>
+              </div>
+              <div>
+                <span class="qr-label">Corner colour</span>
+                <div class="flex flex-wrap items-center gap-2">
+                  <label class="qr-switch"><input type="checkbox" id="eyeSame" checked> Same as code</label>
+                  <label id="eyeWrap" class="qr-color hidden"><input type="color" id="eyeColor" aria-label="Corner colour"><input type="text" id="eyeHex" maxlength="7" aria-label="Corner colour hex" spellcheck="false"></label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="qr-section">
+          <summary><span>Logo<span class="qr-sub">Your brand in the centre</span></span><svg class="qr-chevron w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></summary>
+          <div class="space-y-4 pb-5">
+            <div class="flex flex-wrap items-center gap-2">
+              <button type="button" id="logoUploadBtn" class="qr-btn qr-btn-ghost">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16V4m0 0l-4 4m4-4l4 4M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+                Upload logo
+              </button>
+              <input type="file" id="logoInput" accept="image/png,image/jpeg,image/webp,image/svg+xml" class="hidden">
+              <span class="text-xs text-slate-500 dark:text-slate-400 mx-1">or</span>
+              <div id="quickLogos" class="flex flex-wrap gap-2" role="group" aria-label="Quick icons"></div>
+              <button type="button" id="logoRemove" class="qr-btn qr-btn-ghost hidden">Remove</button>
+            </div>
+            <div id="logoControls" class="hidden grid sm:grid-cols-2 gap-4">
+              <div>
+                <label for="logoSize" class="qr-label">Logo size</label>
+                <input type="range" id="logoSize" class="qr-range" min="12" max="28" step="1" value="22">
+              </div>
+              <label class="qr-switch self-end"><input type="checkbox" id="logoBg" checked> Clear space behind the logo</label>
+            </div>
+            <p class="qr-hint">Error correction is raised to the highest level automatically, so the code still scans with a logo.</p>
+          </div>
+        </details>
+
+        <details class="qr-section">
+          <summary><span>Frame<span class="qr-sub">"Scan me" call to action</span></span><svg class="qr-chevron w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></summary>
+          <div class="space-y-4 pb-5">
+            <div id="frameStyles" class="qr-seg" role="group" aria-label="Frame"></div>
+            <div id="frameControls" class="hidden grid sm:grid-cols-2 gap-4">
+              <div>
+                <label for="frameText" class="qr-label">Text</label>
+                <input type="text" id="frameText" class="qr-input" maxlength="24" value="SCAN ME">
+                <div id="frameIdeas" class="mt-2 flex flex-wrap gap-1.5"></div>
+              </div>
+              <div>
+                <span class="qr-label">Frame colour</span>
+                <label class="qr-color w-fit"><input type="color" id="frameColor" aria-label="Frame colour"><input type="text" id="frameHex" maxlength="7" aria-label="Frame colour hex" spellcheck="false"></label>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="qr-section">
+          <summary><span>Advanced<span class="qr-sub">Error correction and margin</span></span><svg class="qr-chevron w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></summary>
+          <div class="grid sm:grid-cols-2 gap-4 pb-2">
+            <div>
+              <label for="eclSelect" class="qr-label">Error correction</label>
+              <select id="eclSelect" class="qr-input">
+                <option value="auto">Automatic (recommended)</option>
+                <option value="L">Low: 7% (smallest code)</option>
+                <option value="M">Medium: 15%</option>
+                <option value="Q">Quartile: 25%</option>
+                <option value="H">High: 30% (most robust)</option>
+              </select>
+              <p class="qr-hint">Higher survives scratches, dirt and logos, but makes the dots smaller.</p>
+            </div>
+            <div>
+              <label for="marginRange" class="qr-label">Quiet zone (white border): <span id="marginValue">4</span> modules</label>
+              <input type="range" id="marginRange" class="qr-range" min="0" max="8" step="1" value="4">
+              <p class="qr-hint">Scanners need a clear border. Keep 4 unless the code sits on a plain light background.</p>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <!-- Preview + download -->
+      <aside id="previewCard" class="qr-card p-4 sm:p-5 lg:sticky lg:top-20 scroll-mt-20" aria-label="Preview and download">
+        <div id="qrStage" class="qr-stage">
+          <div id="qrPreview" class="empty" role="img" aria-label="QR code preview"></div>
+          <div id="qrEmptyMsg" class="qr-empty-msg">Fill in the details to create your QR code</div>
+        </div>
+        <div id="qrStatus" class="qr-status wait mt-4" aria-live="polite">Waiting for details…</div>
+
+        <div class="mt-4 grid grid-cols-[1fr_auto] gap-2">
+          <button type="button" id="downloadPng" class="qr-btn qr-btn-primary" disabled>
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16"/></svg>
+            Download PNG
+          </button>
+          <select id="pngSize" class="qr-input !w-auto !py-2" aria-label="PNG size">
+            <option value="512">512 px</option>
+            <option value="1024" selected>1024 px</option>
+            <option value="2048">2048 px</option>
+            <option value="4096">4096 px (print)</option>
+          </select>
+        </div>
+        <div class="mt-2 grid grid-cols-2 gap-2">
+          <button type="button" id="downloadSvg" class="qr-btn qr-btn-ghost" disabled>SVG (vector)</button>
+          <button type="button" id="copyImage" class="qr-btn qr-btn-ghost" disabled>Copy image</button>
+          <button type="button" id="shareImage" class="qr-btn qr-btn-ghost col-span-2 hidden" disabled>Share</button>
+        </div>
+
+        <details class="mt-4 text-sm">
+          <summary class="cursor-pointer text-slate-500 dark:text-slate-400 text-xs">What's inside the code</summary>
+          <pre id="payloadView" class="qr-payload mt-2 p-2 rounded-lg bg-slate-50 dark:bg-slate-900"></pre>
+        </details>
+        <p class="mt-4 text-xs text-slate-500 dark:text-slate-400">
+          Have a QR code to read? <a href="qr-decoder.html" class="text-blue-600 dark:text-blue-400 hover:underline">Scan it safely here</a>.
+        </p>
+      </aside>
+    </div>
+
+    <!-- Why -->
+    <section class="mt-12 grid sm:grid-cols-3 gap-4">
+      <div class="qr-card p-5">
+        <h2 class="font-semibold text-slate-900 dark:text-white mb-1">Never expires</h2>
+        <p class="text-sm text-slate-600 dark:text-slate-400">Your link or details live inside the code itself. No redirect through our servers, so it keeps working on printed menus, cards and banners forever.</p>
+      </div>
+      <div class="qr-card p-5">
+        <h2 class="font-semibold text-slate-900 dark:text-white mb-1">Private</h2>
+        <p class="text-sm text-slate-600 dark:text-slate-400">Made in your browser. Wi-Fi passwords, UPI IDs and contact details never leave your device, and nobody tracks who scans your code.</p>
+      </div>
+      <div class="qr-card p-5">
+        <h2 class="font-semibold text-slate-900 dark:text-white mb-1">Checked before you print</h2>
+        <p class="text-sm text-slate-600 dark:text-slate-400">Every design is test-scanned as you change it, with a warning if colours, a logo or a tight border could stop phones reading it.</p>
+      </div>
+    </section>
+
+    <!-- qr:faq -->
+    <!-- FAQ (generated with the FAQPage JSON-LD from scripts/qr-pages.mjs) -->
+    <section class="faq-section" id="faq">
+      <div class="faq-container">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false"><span>Will my QR code ever expire?</span><span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>No. These are static QR codes: the link or details are stored inside the code itself, with no redirect through our servers. They keep working forever, even if this website disappears. Many other generators make dynamic codes that stop working when a trial or subscription ends.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false"><span>How do I make a QR code for UPI payments?</span><span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>Choose UPI, enter your UPI ID (like name@okhdfcbank) and the name customers should see. Leave the amount empty for a shop QR where customers type the amount, or fill it in for a fixed bill. Any UPI app such as Google Pay, PhonePe or Paytm can scan it.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false"><span>Can I add my logo to the QR code?</span><span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>Yes. Open Logo, upload a PNG, JPG or SVG, and choose its size. The code automatically switches to the highest error correction so it still scans, and the scan check confirms it before you download.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false"><span>How do I share my Wi-Fi with a QR code?</span><span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>Choose Wi-Fi, type the network name and password and pick the security type (WPA/WPA2/WPA3 for most home routers). Guests point their phone camera at the code and join without typing the password. The password never leaves your device.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false"><span>Which format should I download for printing?</span><span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>SVG for print: it stays sharp at any size, from a business card to a banner. For a quick image, PNG at 2048 or 4096 pixels works for most printing. The scan check tells you the smallest safe print size for your code.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false"><span>Is my data uploaded or tracked?</span><span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>No. The QR code is created in your browser. Your links, Wi-Fi passwords, UPI ID and contact details are never sent to a server, and scans are not tracked.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- /qr:faq -->
+
+  </main>
+
+  <!-- Phones: live mini preview and download, always in reach -->
+  <div id="mobileBar" class="lg:hidden fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-[#090E17]/95 backdrop-blur px-4 py-2.5 hidden">
+    <div class="flex items-center gap-3">
+      <button type="button" id="mobileThumb" class="w-12 h-12 shrink-0 rounded-lg bg-white border border-slate-200 dark:border-slate-700 p-1" aria-label="Show the full preview"></button>
+      <p id="mobileStatus" class="flex-1 min-w-0 text-xs text-slate-600 dark:text-slate-300 leading-snug"></p>
+      <button type="button" id="mobileDownload" class="qr-btn qr-btn-primary shrink-0">Download</button>
+    </div>
+  </div>
+
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+  <div id="toastContainer"></div>
+
+  <!-- FAQ accordion -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.faq-question').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var isOpen = this.getAttribute('aria-expanded') === 'true';
+          document.querySelectorAll('.faq-question').forEach(function (q) {
+            q.setAttribute('aria-expanded', 'false');
+            q.closest('.faq-item').classList.remove('active');
+            q.querySelector('.faq-icon').textContent = '+';
+          });
+          if (!isOpen) {
+            this.setAttribute('aria-expanded', 'true');
+            this.closest('.faq-item').classList.add('active');
+            this.querySelector('.faq-icon').textContent = '−';
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- QR encoder (offline, in the browser) -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js" integrity="sha384-lQXOAyZwHXE55JFyrOMB7nY2Wv+m5ZWNtJcHrd1rceRQXAYNLak8ukN5TjBTcIwz" crossorigin="anonymous"></script>
+  <script type="module" src="assets/js/qr-generator-page.js"></script>
+</body>
+</html>

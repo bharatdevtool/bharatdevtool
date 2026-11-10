@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SEO: Descriptive, keyword-rich title -->
+  <title>About Bharat Dev Tools | Free &amp; Private Online Tools</title>
+  <!-- SEO: Primary meta description for search results -->
+  <meta name="description" content="Free, private online tools for developers and everyone: JSON, images, PDF, QR and calculators. No sign-up, nothing uploaded, it all runs in your browser.">
+  <!-- SEO: Helpful keywords (kept concise) -->
+  <meta name="keywords" content="bharat dev tools, developer tools, json formatter, qr code generator, deeplink launcher, url encoder, free developer tools, online tools, developer utilities">
+  <meta name="author" content="Bharat Dev Tools">
+  <meta name="robots" content="index, follow">
+  <meta name="googlebot" content="index, follow">
+  <meta name="language" content="English">
+  <!-- SEO: Canonical URL -->
+  <link rel="canonical" href="https://bharatdevtool.com/about.html">
+  
+  <!-- Social preview (Open Graph / Twitter) -->
+  <meta property="og:title" content="About Bharat Dev Tools | Free &amp; Private Online Tools">
+  <meta property="og:description" content="Free, private online tools for developers and everyone: JSON, images, PDF, QR and calculators. No sign-up, nothing uploaded, it all runs in your browser.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bharatdevtool.com/about.html">
+  <meta property="og:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Bharat Dev Tools - Free Developer Tools">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="About Bharat Dev Tools | Free &amp; Private Online Tools">
+  <meta name="twitter:description" content="Free, private online tools for developers and everyone: JSON, images, PDF, QR and calculators. No sign-up, nothing uploaded, it all runs in your browser.">
+  <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="components/header.css">
+  
+  <!-- TailwindCSS CDN (required for header component) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Analytics Script -->
+  <script src="assets/js/analytics.js"></script>
+  
+  <!-- Theme Management (load early to prevent flash) -->
+  <script src="assets/js/theme.js"></script>
+  
+  <!-- App config + logo loader so header logo uses central LOGO_URL -->
+  <script type="module">
+    import { APP_CONFIG } from './assets/js/config.js';
+    window.APP_CONFIG = APP_CONFIG;
+  </script>
+  <script src="assets/js/logo-loader.js"></script>
+  
+  <style>
+    .about-layout { max-width: 1180px; margin: 24px auto 36px; padding: 0 12px;
+      display: grid; grid-template-columns: 300px 1fr; gap: 14px; }
+    .gradient-card { background: radial-gradient(1200px 400px at 50% -10%, rgba(125,211,252,.25), transparent), var(--panel); }
+    .about-side { grid-column: 1 / 2; border: 1px solid rgba(0,0,0,.08); border-radius: 12px; padding: 16px; text-align: center; }
+    .about-side h1 { margin: 0 0 8px; font-size: 28px; }
+    .about-side p { margin: 0; color: var(--muted); }
+    .main.card { grid-column: 2 / -1; }
+    .card { background: var(--panel); border: 1px solid rgba(0,0,0,.08); border-radius: 12px; padding: 14px; }
+    .card h3 { margin: 0 0 6px; font-size: 16px; }
+    .card p { margin: 0; color: var(--muted); font-size: 14px; }
+    .span-all { grid-column: 1 / -1; }
+    .about-layout > * { min-width: 0; }
+    @media (max-width: 760px) {
+      .about-layout { grid-template-columns: 1fr; }
+      .about-side, .main.card { grid-column: 1 / -1; }
+    }
+
+    .cta { max-width: 1040px; margin: 10px auto 36px; text-align: center; color: var(--muted); }
+    .cta a { color: var(--fg); text-decoration: none; }
+    .cta a:hover { text-decoration: underline; }
+    .back-home { display: inline-block; margin-top: 16px; padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(0,0,0,.1); background: var(--panel); color: var(--fg); text-decoration: none; }
+    .back-home:hover { background: var(--accent); color: #fff; border-color: transparent; }
+  </style>
+</head>
+<body>
+  <!-- Header Component Script (load after body exists) -->
+  <script src="components/header.js"></script>
+  
+  <main>
+    <div class="about-layout">
+      <aside class="about-side gradient-card">
+        <h1>About Bharat Dev Tools</h1>
+        <p>Free, fast tools for developers, students and everyday work. Built in India for everyone.</p>
+      </aside>
+
+      <section class="main card">
+        <h2>What we build</h2>
+        <p>Bharat Dev Tools is a set of about 40 free tools that open instantly and need no sign-up. Every tool runs inside your browser, so what you paste or upload never leaves your device.</p>
+
+        <h3>Developer tools</h3>
+        <ul>
+          <li><strong>JSON</strong>: formatter and validator with grid view and JSONPath queries, JSON Diff, JSON to TypeScript, YAML &harr; JSON, CSV &harr; JSON.</li>
+          <li><strong>Encode and decode</strong>: Base64, URL encoder, JWT decoder, hash generator, UUID generator.</li>
+          <li><strong>Text and code</strong>: regex tester, generator and library, diff checker, HTML formatter, Markdown to HTML, lorem ipsum.</li>
+          <li><strong>API and apps</strong>: cURL tester and comparison, deep link launcher, cron expression generator, timestamp and timezone converters.</li>
+          <li><strong>Design</strong>: color picker, CSS gradient generator, favicon generator, Lottie player, converter, validator and optimizer.</li>
+        </ul>
+
+        <h3>Image and document tools</h3>
+        <ul>
+          <li>Resize an image to an exact size in KB, with presets for Indian exam and government forms.</li>
+          <li>Image compressor, resizer, PNG &harr; JPG converter and image to PDF.</li>
+          <li>QR code generator and decoder, WhatsApp link generator.</li>
+        </ul>
+      </section>
+
+      <section class="main card">
+        <h3>How we work</h3>
+        <ul>
+          <li><strong>Private by design</strong>: processing happens on your device. We have no servers that receive your input. See the <a href="privacy.html">privacy policy</a> for exactly what anonymous statistics we collect.</li>
+          <li><strong>Free and no sign-up</strong>: no account, no paywall, no ads.</li>
+          <li><strong>Fast</strong>: pages load quickly and work on phones and slow connections.</li>
+          <li><strong>Accurate</strong>: strict parsers and clear error messages.</li>
+        </ul>
+
+        <h3>Ideas or bugs?</h3>
+        <p>Tell us what to build or fix next on the <a href="feedback.html">feedback page</a>. We read every message.</p>
+      </section>
+
+      <div class="cta span-all">
+        <a class="back-home" href="index.html">← Back to Bharat Dev Tools</a>
+      </div>
+    </div>
+  </main>
+
+  <link rel="stylesheet" href="components/footer.css">
+  <script src="components/footer.js"></script>
+</body>
+</html>
+
+
