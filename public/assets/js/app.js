@@ -3,7 +3,7 @@ import { formatJSON, minifyJSON, isValidJSON, escapeJSONString, unescapeJSONStri
 import {
   readInput, stringifyWithPrefs, showInputError, showInputNote, clearInputError, goToError,
   scheduleLiveErrorCheck, initLinkPopover, initPrefs, initQueryBar, initSendTo, initShare,
-  revealPathInCode, toast,
+  revealPathInCode, toast, handOff,
 } from "./formatter-features.js";
 import { parseJSONPrecise } from "./json-raw.js";
 import { collapseRanges } from "./json-tools.js";
@@ -172,6 +172,10 @@ window.addEventListener("DOMContentLoaded", () => {
   inputContainer.addEventListener("drop", (e) => {
     if (!e.defaultPrevented) handleDrop(e);
   });
+
+  // "JSON Diff" button: open JSON Diff with the current JSON already in its left pane.
+  const diffBtn = document.getElementById("jsondiff-btn");
+  if (diffBtn) diffBtn.addEventListener("click", openInJsonDiff);
 
   // Save edits back to the opened file (Chrome/Edge) or download it under its name.
   const saveBtn = document.getElementById("output-save-btn");
@@ -1139,6 +1143,17 @@ let lastChangedEditor = "output";
 function currentJsonText() {
   const [first, second] = lastChangedEditor === "input" ? [inputEditor, outputEditor] : [outputEditor, inputEditor];
   return first.getValue() || second.getValue();
+}
+
+/** Go to JSON Diff, carrying the JSON being worked on (the output after Format) when it is valid. */
+function openInJsonDiff() {
+  const text = currentJsonText();
+  let valid = false;
+  try { JSON.parse(text); valid = true; } catch { /* nothing to carry */ }
+  if (text.trim() && valid && handOff("diff", text)) {
+    try { window.Analytics?.trackFormatterFeature?.("send_to", "diff_button"); } catch { /* optional */ }
+  }
+  window.location.href = "../jsondiff/";
 }
 
 async function saveHandler() {
