@@ -6,7 +6,7 @@
     var p = window.location.pathname;
     // The homepage and info pages are not tools: don't let them overwrite the last tool used.
     var isHome = p === '/' || p === '/index.html';
-    if (!isHome && p.indexOf('privacy.html') === -1 && p.indexOf('feedback.html') === -1 && p.indexOf('about.html') === -1) {
+    if (!isHome && p.indexOf('/test/') !== 0 && p.indexOf('privacy.html') === -1 && p.indexOf('feedback.html') === -1 && p.indexOf('about.html') === -1) {
       document.cookie = 'bdt_last_tool=' + encodeURIComponent(p) + ';path=/;max-age=' + maxAge + ';SameSite=Lax';
     }
   } catch (e) {}

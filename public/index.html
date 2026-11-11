@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Shared JSON Formatter links (bharatdevtool.com/#json=…) predate the tool's own page: forward them.
-       The hash is removed from this URL first so no analytics or Sentry script can read it. -->
+  <!-- 1. Shared JSON Formatter links (bharatdevtool.com/#json=…) predate the tool's own page: forward them.
+          The hash is removed from this URL first so no analytics or Sentry script can read it.
+       2. Returning visitors who TYPE the address or open a bookmark go straight to the last tool they used
+          (bdt_last_tool cookie). Visits with a referrer (Google, other sites, the logo inside the site),
+          with a query or hash, or a second time in the same tab stay on this directory. Bots carry no cookie. -->
   <script>
     (function () {
       try {
@@ -12,7 +15,18 @@
           var h = location.hash;
           history.replaceState(null, '', location.pathname + location.search);
           location.replace('/jsonformatter/' + h);
+          return;
         }
+        if (document.referrer || location.search || location.hash) return;
+        if (sessionStorage.getItem('bdt_auto_opened')) return;
+        var m = document.cookie.match(/(?:^|; )bdt_last_tool=([^;]*)/);
+        var p = m ? decodeURIComponent(m[1]) : '';
+        // Same-site tool paths only: "/x.html", "/x/", "/x" — never "//host", "/", "/index.html", test or viewer pages.
+        if (!/^\/[a-z0-9][a-z0-9._\-\/]*$/i.test(p) || /\/\/|\.\./.test(p)) return;
+        if (/^\/(index\.html|test\/|open\b|og\/)/.test(p)) return;
+        sessionStorage.setItem('bdt_auto_opened', '1');
+        sessionStorage.setItem('bdt_auto_note', '1'); // the tool page shows a one-time "See all tools" note
+        location.replace(p);
       } catch (e) {}
     })();
   </script>
