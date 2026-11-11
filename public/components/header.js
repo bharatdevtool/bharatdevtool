@@ -4,7 +4,9 @@
     var maxAge = 31536000; // 1 year
     document.cookie = 'bdt_visited=1;path=/;max-age=' + maxAge + ';SameSite=Lax';
     var p = window.location.pathname;
-    if (p.indexOf('tools.html') === -1 && p.indexOf('privacy.html') === -1 && p.indexOf('feedback.html') === -1 && p.indexOf('about.html') === -1) {
+    // The homepage and info pages are not tools: don't let them overwrite the last tool used.
+    var isHome = p === '/' || p === '/index.html';
+    if (!isHome && p.indexOf('privacy.html') === -1 && p.indexOf('feedback.html') === -1 && p.indexOf('about.html') === -1) {
       document.cookie = 'bdt_last_tool=' + encodeURIComponent(p) + ';path=/;max-age=' + maxAge + ';SameSite=Lax';
     }
   } catch (e) {}
@@ -28,7 +30,7 @@ function loadShareScript(onReady) {
   document.head.appendChild(s);
 }
 
-// Header Component JavaScript for Secondary Pages (using Tailwind CSS)
+// Shared header for static HTML pages (using Tailwind CSS). The JSON Formatter has its own.
 function createSecondaryHeader() {
   // Remove any existing headers (hardcoded or previously created) to avoid duplicates
   const existingHeaders = document.querySelectorAll('header.bg-white, header.secondary-header');
@@ -39,46 +41,22 @@ function createSecondaryHeader() {
     }
   });
 
-  // Determine the correct path to root index.html based on current location
-  function getRootPath() {
-    const pathname = window.location.pathname;
-    // Count how many directory levels deep we are
-    const pathParts = pathname.split('/').filter(part => part && part !== 'index.html');
-    // If we're in a subdirectory (like jsondiff/), go up one level
-    if (pathParts.length > 0) {
-      return '../index.html';
-    }
-    // If we're at root, use index.html
-    return 'index.html';
-  }
-
-  // Determine the correct path to tools.html based on current location
-  function getToolsPath() {
-    const pathname = window.location.pathname;
-    // Count how many directory levels deep we are
-    const pathParts = pathname.split('/').filter(part => part && part !== 'index.html');
-    // If we're in a subdirectory (like jsondiff/), go up one level
-    if (pathParts.length > 0) {
-      return '../tools.html';
-    }
-    // If we're at root, use tools.html
-    return 'tools.html';
-  }
-
-  const rootPath = getRootPath();
-  const toolsPath = getToolsPath();
+  // The homepage is the tool directory, so the logo and "All tools" both go there.
+  // Root-relative: every page is served from the site root (bharatdevtool.com/…).
+  const rootPath = '/';
+  const isHome = window.location.pathname === '/' || window.location.pathname === '/index.html';
 
   const headerHTML = `
-    <header class="secondary-header bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+    <header class="secondary-header${isHome ? ' is-home' : ''} bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="secondary-header-inner flex justify-between items-center h-16 w-full">
-          <!-- Back button (mobile only) -->
-          <button id="mobile-back-btn" class="mobile-back-button p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" onclick="window.history.back()" aria-label="Go back">
+          <!-- Back button (mobile only; not on the homepage) -->
+          ${isHome ? '' : `<button id="mobile-back-btn" class="mobile-back-button p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" onclick="window.history.back()" aria-label="Go back">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-900 dark:text-white">
               <path d="m12 19-7-7 7-7"/>
               <path d="M19 12H5"/>
             </svg>
-          </button>
+          </button>`}
           
           <!-- Logo -->
           <div class="secondary-header-logo flex items-center">
@@ -99,10 +77,10 @@ function createSecondaryHeader() {
               <span class="hidden dark:inline"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
             </button>
             
-            <!-- All Tools link -->
-            <a href="${toolsPath}" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors whitespace-nowrap tools-link-btn">
+            <!-- All Tools link (hidden on the homepage, which is the tool list) -->
+            ${isHome ? '' : `<a href="${rootPath}" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors whitespace-nowrap tools-link-btn">
               All tools
-            </a>
+            </a>`}
           </div>
         </div>
       </div>
@@ -191,19 +169,6 @@ function initHeaderThemeToggle() {
 
 // Initialize header when DOM is loaded and Tailwind is ready
 function initHeader() {
-  // Skip header creation only on root index.html (main JSON formatter page)
-  const fullPath = window.location.pathname;
-  const pathParts = fullPath.split('/').filter(part => part);
-  
-  // Check if we're on root index.html - skip header creation (it has its own header)
-  // Only skip if path is exactly "/" or "/index.html" (root level)
-  if (fullPath === '/' || 
-      fullPath === '/index.html' ||
-      (pathParts.length === 0) ||
-      (pathParts.length === 1 && pathParts[0] === 'index.html')) {
-    return;
-  }
-  
   // Wait for Tailwind to be available
   if (typeof tailwind !== 'undefined') {
     createSecondaryHeader();

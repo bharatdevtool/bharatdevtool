@@ -158,10 +158,9 @@
     var bar = document.createElement('div');
     bar.className = 'bdt-banner';
     bar.setAttribute('role', 'note');
-    var root = window.location.pathname.split('/').length > 2 ? '../' : '';
     bar.innerHTML =
-      '<span>' + ICON.gift + '</span><span>This was shared with you using <strong>' + SITE + '</strong>: 40+ free tools that run privately in your browser.</span>' +
-      '<a href="' + root + 'tools.html">See all tools →</a><button type="button" aria-label="Dismiss">' + ICON.close + '</button>';
+      '<span>' + ICON.gift + '</span><span>This was shared with you using <strong>' + SITE + '</strong>: 50+ free tools that run privately in your browser.</span>' +
+      '<a href="/">See all tools →</a><button type="button" aria-label="Dismiss">' + ICON.close + '</button>';
     bar.querySelector('button').addEventListener('click', function () {
       bar.remove();
       try { sessionStorage.setItem('bdt_banner_closed', '1'); } catch (e) {}

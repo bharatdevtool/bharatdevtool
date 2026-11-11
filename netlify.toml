@@ -75,9 +75,15 @@
   to = "/qr-generator-free.html"
   status = 301
 
+# The tool directory moved to the homepage (Nov 2026). The browser keeps any #cat=… hash.
 [[redirects]]
   from = "/tools"
-  to = "/tools.html"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/tools.html"
+  to = "/"
   status = 301
 
 [[redirects]]
@@ -90,54 +96,54 @@
   to = "/jsonformatter/index.html"
   status = 301
 
-# Removed tools (Nov 2026) — send old links and search traffic to the tools directory
+# Removed tools (Nov 2026) — send old links and search traffic to the tool directory (homepage)
 [[redirects]]
   from = "/word-counter"
-  to = "/tools.html"
+  to = "/"
   status = 301
 
 [[redirects]]
   from = "/word-counter.html"
-  to = "/tools.html"
+  to = "/"
   status = 301
 
 [[redirects]]
   from = "/password-generator"
-  to = "/tools.html"
+  to = "/"
   status = 301
 
 [[redirects]]
   from = "/password-generator.html"
-  to = "/tools.html"
+  to = "/"
   status = 301
 
 [[redirects]]
   from = "/age-calculator"
-  to = "/tools.html"
+  to = "/"
   status = 301
 
 [[redirects]]
   from = "/age-calculator.html"
-  to = "/tools.html"
+  to = "/"
   status = 301
 
 [[redirects]]
   from = "/text-case-converter"
-  to = "/tools.html"
+  to = "/"
   status = 301
 
 [[redirects]]
   from = "/text-case-converter.html"
-  to = "/tools.html"
+  to = "/"
   status = 301
 
 [[redirects]]
   from = "/reading-time"
-  to = "/tools.html"
+  to = "/"
   status = 301
 
 [[redirects]]
   from = "/reading-time.html"
-  to = "/tools.html"
+  to = "/"
   status = 301
 

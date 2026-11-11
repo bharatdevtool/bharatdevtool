@@ -2415,7 +2415,7 @@ function openResponseInJsonFormatter() {
     }
 
     // Navigate to JSON Formatter in the SAME tab (same origin)
-    const formatterUrl = window.location.origin + '/jsonformatter/index.html';
+    const formatterUrl = window.location.origin + '/jsonformatter/';
     window.location.href = formatterUrl;
   } catch (error) {
     Debug.error('Failed to open response in JSON Formatter:', error);
