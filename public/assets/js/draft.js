@@ -1,11 +1,15 @@
 // draft.js — remember the last text a tool was given, so a refresh or an
 // accidentally closed tab doesn't lose it.
 //
-// Stored only in this browser (localStorage), never sent anywhere. Limits keep
-// it small and short-lived: at most MAX_LINES lines and MAX_CHARS characters
-// per field, removed after TTL. Clearing a field forgets it. A draft is only
-// restored into an EMPTY field, so share links, "Send to" hand-offs and
-// samples always win.
+// Stored only in this browser (localStorage), never sent anywhere. A draft is
+// only restored into an EMPTY field, so share links, "Send to" hand-offs and
+// samples always win. Clearing a field forgets it; drafts expire after TTL.
+//
+// Size: localStorage holds about 5 MB per site, shared with everything else the
+// site keeps there (hand-offs between tools, Regex Tester state, preferences).
+// So one field keeps up to MAX_CHARS (about 1 MB: practically any pasted JSON),
+// and all drafts together stay under TOTAL_BUDGET; the oldest drafts of other
+// pages are dropped first to make room. Larger text is simply not remembered.
 //
 // Opt in per field:
 //   <textarea id="x" data-draft>                       plain text field
@@ -17,10 +21,10 @@
 // Do not use on tools that handle secrets (JWT, hashes, cURL headers, Base64).
 (function () {
   var PREFIX = 'bdt_draft:';
-  var MAX_LINES = 300;
-  var MAX_CHARS = 100000;
+  var MAX_CHARS = 1000000; // per field (~1 MB)
+  var TOTAL_BUDGET = 2000000; // all drafts together, leaving room for the rest of the site
   var TTL = 7 * 24 * 60 * 60 * 1000; // 7 days
-  var SAVE_DELAY = 400;
+  var SAVE_DELAY = 600;
 
   function storage() {
     try { return window.localStorage; } catch (e) { return null; }
@@ -31,14 +35,9 @@
     return PREFIX + path + '#' + id;
   }
 
-  /** Small enough to keep: within the line and character limits. */
+  /** Small enough to keep. */
   function fits(text) {
-    if (text.length > MAX_CHARS) return false;
-    var lines = 1;
-    for (var i = text.indexOf('\n'); i !== -1; i = text.indexOf('\n', i + 1)) {
-      if (++lines > MAX_LINES) return false;
-    }
-    return true;
+    return text.length <= MAX_CHARS;
   }
 
   function read(key) {
@@ -57,13 +56,45 @@
     }
   }
 
+  /** Other pages' drafts, oldest first, with their stored size. */
+  function otherDrafts(s, exceptKey) {
+    var list = [];
+    for (var i = 0; i < s.length; i++) {
+      var k = s.key(i);
+      if (!k || k.indexOf(PREFIX) !== 0 || k === exceptKey) continue;
+      var raw = s.getItem(k) || '';
+      var t = 0;
+      try { t = JSON.parse(raw).t || 0; } catch (e) { /* corrupt: oldest */ }
+      list.push({ key: k, size: raw.length, t: t });
+    }
+    return list.sort(function (a, b) { return a.t - b.t; });
+  }
+
   function write(key, text, mode) {
     var s = storage();
     if (!s) return;
     try {
-      if (!text || !text.trim() || !fits(text)) s.removeItem(key);
-      else s.setItem(key, JSON.stringify({ v: text, t: Date.now(), m: mode || undefined }));
-    } catch (e) { /* storage full or blocked: just don't remember */ }
+      if (!text || !text.trim() || !fits(text)) {
+        s.removeItem(key);
+        return;
+      }
+      var value = JSON.stringify({ v: text, t: Date.now(), m: mode || undefined });
+      // Stay within the shared budget: drop the oldest drafts of other pages.
+      var others = otherDrafts(s, key);
+      var total = others.reduce(function (n, d) { return n + d.size; }, value.length);
+      while (total > TOTAL_BUDGET && others.length) {
+        var oldest = others.shift();
+        s.removeItem(oldest.key);
+        total -= oldest.size;
+      }
+      try {
+        s.setItem(key, value);
+      } catch (full) {
+        // Storage full anyway (other data): free all other drafts and try once more.
+        others.forEach(function (d) { s.removeItem(d.key); });
+        try { s.setItem(key, value); } catch (e) { s.removeItem(key); }
+      }
+    } catch (e) { /* storage blocked: just don't remember */ }
   }
 
   /** Drop expired drafts from every page (cheap: only our own keys). */
@@ -222,7 +253,7 @@
     fields.forEach(function (f) { f.restore(); });
   }
 
-  window.BDTDraft = { attach: attach, _test: { fits: fits, pageKey: pageKey, read: read, write: write, MAX_LINES: MAX_LINES } };
+  window.BDTDraft = { attach: attach, _test: { fits: fits, pageKey: pageKey, read: read, write: write, MAX_CHARS: MAX_CHARS, TOTAL_BUDGET: TOTAL_BUDGET } };
 
   // After the page's own DOMContentLoaded set-up, so its listeners see the restored text.
   if (document.readyState === 'loading') {

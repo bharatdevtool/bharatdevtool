@@ -11,7 +11,8 @@ type DraftTest = {
   pageKey: (id: string) => string;
   read: (k: string) => { v: string; t: number; m?: string } | null;
   write: (k: string, t: string, m?: string) => void;
-  MAX_LINES: number;
+  MAX_CHARS: number;
+  TOTAL_BUDGET: number;
 };
 
 /** Load draft.js against a minimal fake browser (localStorage, location, document). */
@@ -35,10 +36,10 @@ describe('draft.js (remember last input)', () => {
   let store: Map<string, string>;
   beforeAll(() => ({ api: t, store } = load()));
 
-  it('keeps text up to 300 lines and drops anything longer', () => {
-    expect(t.fits('x\n'.repeat(t.MAX_LINES - 1) + 'x')).toBe(true);
-    expect(t.fits('x\n'.repeat(t.MAX_LINES))).toBe(false);
-    expect(t.fits('x'.repeat(200_000))).toBe(false); // one huge minified line
+  it('keeps a whole pasted JSON of any line count, up to about 1 MB', () => {
+    expect(t.fits('{"a":1},\n'.repeat(50_000))).toBe(true); // 50,000 lines, ~450 KB
+    expect(t.fits('x'.repeat(t.MAX_CHARS))).toBe(true);
+    expect(t.fits('x'.repeat(t.MAX_CHARS + 1))).toBe(false);
   });
 
   it('keys drafts by page and field', () => {
@@ -53,8 +54,24 @@ describe('draft.js (remember last input)', () => {
     t.write(k, '   ');
     expect(store.has(k)).toBe(false);
     t.write(k, '{}');
-    t.write(k, 'x\n'.repeat(400));
+    t.write(k, 'x'.repeat(t.MAX_CHARS + 1));
     expect(store.has(k)).toBe(false); // too big: the old draft must not come back either
+  });
+
+  it('drops the oldest other drafts to stay within the total budget', () => {
+    const { api, store: st } = load();
+    const big = 'y'.repeat(700_000);
+    const now = Date.now();
+    st.set('bdt_draft:/old#a', JSON.stringify({ v: big, t: now - 3000 }));
+    st.set('bdt_draft:/mid#a', JSON.stringify({ v: big, t: now - 2000 }));
+    st.set('unrelated', 'kept');
+    api.write(api.pageKey('new'), big);
+    expect(st.has('bdt_draft:/old#a')).toBe(false);
+    expect(st.has('bdt_draft:/mid#a')).toBe(true);
+    expect(st.has(api.pageKey('new'))).toBe(true);
+    expect(st.get('unrelated')).toBe('kept');
+    const total = [...st].filter(([k]) => k.startsWith('bdt_draft:')).reduce((n, [, v]) => n + v.length, 0);
+    expect(total).toBeLessThanOrEqual(api.TOTAL_BUDGET);
   });
 
   it('expires drafts after 7 days', () => {
