@@ -991,12 +991,16 @@
         if (arr.length === 0) return '[]';
         const pad = ' '.repeat(depth * indent);
         return arr.map(function(item) {
-          const serialized = serializeValue(item, depth + 1, indent, false);
-          if (typeof item === 'object' && item !== null && !Array.isArray(item)) {
-            const lines = serialized.split('\n');
+          // Non-empty objects and arrays: serialize without their own indentation,
+          // then hang them under "- " (first line) and two spaces (the rest).
+          // Serializing at depth + 1 here indented them twice ("-     key: v").
+          const isBlock = typeof item === 'object' && item !== null &&
+            (Array.isArray(item) ? item.length > 0 : Object.keys(item).length > 0);
+          if (isBlock) {
+            const lines = serializeValue(item, 0, indent, false).split('\n');
             return pad + '- ' + lines.join('\n' + pad + '  ');
           }
-          return pad + '- ' + serialized;
+          return pad + '- ' + serializeValue(item, depth + 1, indent, false);
         }).join('\n');
       }
 

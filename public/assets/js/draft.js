@@ -5,11 +5,18 @@
 // only restored into an EMPTY field, so share links, "Send to" hand-offs and
 // samples always win. Clearing a field forgets it; drafts expire after TTL.
 //
+// Compression: drafts are saved deflate-compressed (the browser's built-in
+// CompressionStream, lossless, typically 5-15x smaller for JSON), so the exact
+// text comes back, formatting included, even half-edited or invalid JSON.
+// Compressing is asynchronous, so when the tab is closing with unsaved changes
+// the text is written uncompressed instead (that must be instant); the next
+// normal save compresses it again.
+//
 // Size: localStorage holds about 5 MB per site, shared with everything else the
 // site keeps there (hand-offs between tools, Regex Tester state, preferences).
-// So one field keeps up to MAX_CHARS (about 1 MB: practically any pasted JSON),
+// One field may take up to MAX_STORED in storage (MAX_TEXT before compression),
 // and all drafts together stay under TOTAL_BUDGET; the oldest drafts of other
-// pages are dropped first to make room. Larger text is simply not remembered.
+// pages are dropped first to make room. Anything larger is not remembered.
 //
 // Opt in per field:
 //   <textarea id="x" data-draft>                       plain text field
@@ -21,7 +28,8 @@
 // Do not use on tools that handle secrets (JWT, hashes, cURL headers, Base64).
 (function () {
   var PREFIX = 'bdt_draft:';
-  var MAX_CHARS = 1000000; // per field (~1 MB)
+  var MAX_TEXT = 5000000; // longest text we try to keep, before compression (characters)
+  var MAX_STORED = 1000000; // most one field may take in storage (~1 MB)
   var TOTAL_BUDGET = 2000000; // all drafts together, leaving room for the rest of the site
   var TTL = 7 * 24 * 60 * 60 * 1000; // 7 days
   var SAVE_DELAY = 600;
@@ -35,57 +43,94 @@
     return PREFIX + path + '#' + id;
   }
 
-  /** Small enough to keep. */
-  function fits(text) {
-    return text.length <= MAX_CHARS;
+  // ── Compression (deflate-raw + base64) ───────────────────────────────
+
+  function canCompress() {
+    return typeof CompressionStream === 'function' && typeof DecompressionStream === 'function' &&
+      typeof Response === 'function' && typeof Blob === 'function';
   }
 
-  function read(key) {
+  function toBase64(bytes) {
+    var bin = '';
+    for (var i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+    return btoa(bin);
+  }
+
+  function fromBase64(b64) {
+    var bin = atob(b64);
+    var out = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+    return out;
+  }
+
+  function pipe(bytes, stream) {
+    return new Response(new Blob([bytes]).stream().pipeThrough(stream)).arrayBuffer().then(function (buf) {
+      return new Uint8Array(buf);
+    });
+  }
+
+  function compress(text) {
+    return pipe(new TextEncoder().encode(text), new CompressionStream('deflate-raw')).then(toBase64);
+  }
+
+  function decompress(b64) {
+    return pipe(fromBase64(b64), new DecompressionStream('deflate-raw')).then(function (bytes) {
+      return new TextDecoder().decode(bytes);
+    });
+  }
+
+  // ── Records: { v: text } or { z: compressed }, plus t (saved at) and m (mode) ──
+
+  function remove(key) {
+    try { var s = storage(); if (s) s.removeItem(key); } catch (e) { /* ignore */ }
+  }
+
+  function readRecord(key) {
     var s = storage();
     if (!s) return null;
     try {
       var d = JSON.parse(s.getItem(key) || 'null');
-      if (!d || typeof d.v !== 'string' || typeof d.t !== 'number' || Date.now() - d.t > TTL) {
-        s.removeItem(key);
-        return null;
-      }
+      var ok = d && (typeof d.v === 'string' || typeof d.z === 'string') && typeof d.t === 'number' && Date.now() - d.t <= TTL;
+      if (!ok) { s.removeItem(key); return null; }
       return d;
     } catch (e) {
-      try { s.removeItem(key); } catch (e2) { /* ignore */ }
+      remove(key);
       return null;
     }
   }
 
-  /** Other pages' drafts, oldest first, with their stored size. */
-  function otherDrafts(s, exceptKey) {
-    var list = [];
-    for (var i = 0; i < s.length; i++) {
-      var k = s.key(i);
-      if (!k || k.indexOf(PREFIX) !== 0 || k === exceptKey) continue;
-      var raw = s.getItem(k) || '';
-      var t = 0;
-      try { t = JSON.parse(raw).t || 0; } catch (e) { /* corrupt: oldest */ }
-      list.push({ key: k, size: raw.length, t: t });
-    }
-    return list.sort(function (a, b) { return a.t - b.t; });
+  /** The text of a record (decompressed if needed). */
+  function recordText(d) {
+    if (typeof d.v === 'string') return Promise.resolve(d.v);
+    if (!canCompress()) return Promise.reject(new Error('cannot decompress'));
+    return decompress(d.z);
   }
 
-  function write(key, text, mode) {
+  /** Write one record, keeping all drafts within TOTAL_BUDGET (oldest other drafts go first). */
+  function put(key, value) {
     var s = storage();
     if (!s) return;
     try {
-      if (!text || !text.trim() || !fits(text)) {
-        s.removeItem(key);
-        return;
+      if (value.length > MAX_STORED) { s.removeItem(key); return; }
+      var others = [];
+      var total = value.length;
+      for (var i = 0; i < s.length; i++) {
+        var k = s.key(i);
+        if (!k || k.indexOf(PREFIX) !== 0 || k === key) continue;
+        var size = (s.getItem(k) || '').length;
+        others.push({ key: k, size: size });
+        total += size;
       }
-      var value = JSON.stringify({ v: text, t: Date.now(), m: mode || undefined });
-      // Stay within the shared budget: drop the oldest drafts of other pages.
-      var others = otherDrafts(s, key);
-      var total = others.reduce(function (n, d) { return n + d.size; }, value.length);
-      while (total > TOTAL_BUDGET && others.length) {
-        var oldest = others.shift();
-        s.removeItem(oldest.key);
-        total -= oldest.size;
+      if (total > TOTAL_BUDGET) {
+        others.forEach(function (d) {
+          try { d.t = JSON.parse(s.getItem(d.key)).t || 0; } catch (e) { d.t = 0; }
+        });
+        others.sort(function (a, b) { return a.t - b.t; });
+        while (total > TOTAL_BUDGET && others.length) {
+          var oldest = others.shift();
+          s.removeItem(oldest.key);
+          total -= oldest.size;
+        }
       }
       try {
         s.setItem(key, value);
@@ -95,6 +140,37 @@
         try { s.setItem(key, value); } catch (e) { s.removeItem(key); }
       }
     } catch (e) { /* storage blocked: just don't remember */ }
+  }
+
+  function isEmpty(text) {
+    return !text || !text.trim();
+  }
+
+  /** Synchronous, uncompressed: for a closing tab, where there is no time to compress. */
+  function writePlain(key, text, mode) {
+    if (isEmpty(text) || text.length > MAX_STORED) { remove(key); return; }
+    put(key, JSON.stringify({ v: text, t: Date.now(), m: mode || undefined }));
+  }
+
+  /**
+   * Compressed when the browser supports it (falls back to plain).
+   * `isCurrent()` says whether this save is still the newest one when compression finishes.
+   */
+  function writeCompressed(key, text, mode, isCurrent) {
+    isCurrent = isCurrent || function () { return true; };
+    if (isEmpty(text) || text.length > MAX_TEXT) { remove(key); return Promise.resolve(); }
+    var plain = JSON.stringify({ v: text, t: Date.now(), m: mode || undefined });
+    if (!canCompress() || text.length < 2000) { // short text: compression doesn't pay off
+      put(key, plain);
+      return Promise.resolve();
+    }
+    return compress(text).then(function (z) {
+      if (!isCurrent()) return;
+      var packed = JSON.stringify({ z: z, t: Date.now(), m: mode || undefined });
+      put(key, packed.length < plain.length ? packed : plain);
+    }, function () {
+      if (isCurrent()) writePlain(key, text, mode);
+    });
   }
 
   /** Drop expired drafts from every page (cheap: only our own keys). */
@@ -107,7 +183,7 @@
         var k = s.key(i);
         if (k && k.indexOf(PREFIX) === 0) keys.push(k);
       }
-      keys.forEach(read);
+      keys.forEach(readRecord);
     } catch (e) { /* ignore */ }
   }
 
@@ -124,18 +200,43 @@
   function attach(opts) {
     var key = pageKey(opts.id);
     var timer = null;
+    var seq = 0; // bumps on every write, so a slow compressed save never overwrites a newer one
+    var written = null; // text currently in storage (null: unknown)
+    var restoring = false;
 
+    function mode() {
+      return opts.getMode ? opts.getMode() : undefined;
+    }
+
+    /** Normal save, after typing pauses: compressed. */
     function save() {
       clearTimeout(timer);
       timer = null;
-      write(key, opts.get(), opts.getMode && opts.getMode());
+      if (restoring) return;
+      var text = opts.get();
+      if (text === written) return;
+      var mine = ++seq;
+      writeCompressed(key, text, mode(), function () { return mine === seq; }).then(function () {
+        if (mine === seq) written = text;
+      });
     }
 
-    // Also save when the tab is hidden or closed, which catches changes made by
-    // buttons (Clear, Swap, Sample) that don't fire an input event.
-    window.addEventListener('pagehide', save);
+    /** Tab hidden or closing: write now, uncompressed, if anything changed. */
+    function flush() {
+      clearTimeout(timer);
+      timer = null;
+      if (restoring) return; // the draft hasn't been put back yet: keep it
+      var text = opts.get();
+      if (text === written) return;
+      ++seq;
+      writePlain(key, text, mode());
+      written = text;
+    }
+
+    // Also catches changes made by buttons (Clear, Swap, Sample) that don't fire input events.
+    window.addEventListener('pagehide', flush);
     document.addEventListener('visibilitychange', function () {
-      if (document.visibilityState === 'hidden') save();
+      if (document.visibilityState === 'hidden') flush();
     });
 
     var field = {
@@ -144,21 +245,33 @@
         timer = setTimeout(save, SAVE_DELAY);
       },
       save: save,
-      /** Put the draft back if the field is empty. Returns true if it did. */
+      /** Put the draft back if the field is empty. Resolves to true if it did. */
       restore: function () {
-        if (handoffPending || opts.get()) return false;
-        var d = read(key);
-        if (!d) return false;
-        if (d.m && opts.setMode) opts.setMode(d.m);
-        opts.set(d.v);
-        restoredFields.push(field);
-        showNotice();
-        return true;
+        if (handoffPending || opts.get()) return Promise.resolve(false);
+        var d = readRecord(key);
+        if (!d) return Promise.resolve(false);
+        restoring = true;
+        return recordText(d).then(function (text) {
+          restoring = false;
+          if (opts.get()) return false; // the user started typing meanwhile
+          if (d.m && opts.setMode) opts.setMode(d.m);
+          // Already compressed: no need to save it again. Plain (from a closing tab): recompress.
+          written = d.z ? text : null;
+          opts.set(text);
+          restoredFields.push(field);
+          showNotice();
+          return true;
+        }, function () {
+          restoring = false;
+          remove(key);
+          return false;
+        });
       },
       forget: function () {
         clearTimeout(timer);
-        var s = storage();
-        try { if (s) s.removeItem(key); } catch (e) { /* ignore */ }
+        ++seq;
+        remove(key);
+        written = '';
       },
       clear: function () {
         field.forget();
@@ -253,7 +366,13 @@
     fields.forEach(function (f) { f.restore(); });
   }
 
-  window.BDTDraft = { attach: attach, _test: { fits: fits, pageKey: pageKey, read: read, write: write, MAX_CHARS: MAX_CHARS, TOTAL_BUDGET: TOTAL_BUDGET } };
+  window.BDTDraft = {
+    attach: attach,
+    _test: {
+      pageKey: pageKey, readRecord: readRecord, recordText: recordText, writePlain: writePlain,
+      writeCompressed: writeCompressed, MAX_TEXT: MAX_TEXT, MAX_STORED: MAX_STORED, TOTAL_BUDGET: TOTAL_BUDGET,
+    },
+  };
 
   // After the page's own DOMContentLoaded set-up, so its listeners see the restored text.
   if (document.readyState === 'loading') {

@@ -265,7 +265,7 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   // Remember the last input across refreshes and closed tabs (draft.js:
-  // this browser only, up to ~1 MB). Only fills an empty editor, so cURL
+  // this browser only, compressed). Only fills an empty editor, so cURL
   // Tester hand-offs and share links are never overwritten.
   const draft = window.BDTDraft?.attach({
     id: "input",
