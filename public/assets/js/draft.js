@@ -135,9 +135,19 @@
       try {
         s.setItem(key, value);
       } catch (full) {
-        // Storage full anyway (other data): free all other drafts and try once more.
-        others.forEach(function (d) { s.removeItem(d.key); });
-        try { s.setItem(key, value); } catch (e) { s.removeItem(key); }
+        // Storage full anyway (other data): free the other drafts and try once more.
+        // If even that fails, put them back: never lose existing drafts for nothing.
+        var kept = others.map(function (d) { return { key: d.key, value: s.getItem(d.key) }; });
+        kept.forEach(function (d) { s.removeItem(d.key); });
+        try {
+          s.setItem(key, value);
+        } catch (e) {
+          s.removeItem(key);
+          kept.forEach(function (d) {
+            if (d.value === null) return;
+            try { s.setItem(d.key, d.value); } catch (e2) { /* ignore */ }
+          });
+        }
       }
     } catch (e) { /* storage blocked: just don't remember */ }
   }
@@ -201,11 +211,16 @@
     var key = pageKey(opts.id);
     var timer = null;
     var seq = 0; // bumps on every write, so a slow compressed save never overwrites a newer one
-    var written = null; // text currently in storage (null: unknown)
+    var written = null; // text + mode currently in storage (null: unknown)
     var restoring = false;
 
     function mode() {
       return opts.getMode ? opts.getMode() : undefined;
+    }
+
+    /** What is stored: the text and the mode (e.g. CSV → JSON), so a mode-only change is saved too. */
+    function stateOf(text, m) {
+      return (m || '') + '\u0000' + text;
     }
 
     /** Normal save, after typing pauses: compressed. */
@@ -214,10 +229,12 @@
       timer = null;
       if (restoring) return;
       var text = opts.get();
-      if (text === written) return;
+      var m = mode();
+      var state = stateOf(text, m);
+      if (state === written) return;
       var mine = ++seq;
-      writeCompressed(key, text, mode(), function () { return mine === seq; }).then(function () {
-        if (mine === seq) written = text;
+      writeCompressed(key, text, m, function () { return mine === seq; }).then(function () {
+        if (mine === seq) written = state;
       });
     }
 
@@ -227,10 +244,12 @@
       timer = null;
       if (restoring) return; // the draft hasn't been put back yet: keep it
       var text = opts.get();
-      if (text === written) return;
+      var m = mode();
+      var state = stateOf(text, m);
+      if (state === written) return;
       ++seq;
-      writePlain(key, text, mode());
-      written = text;
+      writePlain(key, text, m);
+      written = state;
     }
 
     // Also catches changes made by buttons (Clear, Swap, Sample) that don't fire input events.
@@ -256,8 +275,8 @@
           if (opts.get()) return false; // the user started typing meanwhile
           if (d.m && opts.setMode) opts.setMode(d.m);
           // Already compressed: no need to save it again. Plain (from a closing tab): recompress.
-          written = d.z ? text : null;
           opts.set(text);
+          written = d.z ? stateOf(text, mode()) : null;
           restoredFields.push(field);
           showNotice();
           return true;
@@ -271,7 +290,7 @@
         clearTimeout(timer);
         ++seq;
         remove(key);
-        written = '';
+        written = stateOf('', mode());
       },
       clear: function () {
         field.forget();

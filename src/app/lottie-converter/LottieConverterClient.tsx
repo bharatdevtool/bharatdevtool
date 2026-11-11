@@ -68,10 +68,15 @@ export default function LottieConverterClient() {
   const [jsonInput, setJsonInput] = useState<string>(() => JSON.stringify(EMPTY_ANIMATION, null, 2));
   const [animationId, setAnimationId] = useState<string>('animation');
   // Sample animations: the first loads on open; the editor's "Sample" button cycles through them.
-  const { samples: LOTTIE_SAMPLES, activeSampleId, selectSample, markUserContent } = useLottieSamples((sample, loaded) => {
-    setJsonInput(loaded.rawJson);
-    setAnimationId(sample.id.replace(/-/g, '_'));
-  });
+  const [sampleError, setSampleError] = useState<string | null>(null);
+  const { samples: LOTTIE_SAMPLES, activeSampleId, selectSample, markUserContent } = useLottieSamples(
+    (sample, loaded) => {
+      setJsonInput(loaded.rawJson);
+      setAnimationId(sample.id.replace(/-/g, '_'));
+      setSampleError(null);
+    },
+    (message) => setSampleError(message)
+  );
   const [loopSetting, setLoopSetting] = useState<boolean>(true);
   const [speedSetting, setSpeedSetting] = useState<number>(1);
 
@@ -286,6 +291,7 @@ export default function LottieConverterClient() {
                   }}
                 />
 
+                {sampleError && <ErrorMessage message={sampleError} />}
                 {compressError && <ErrorMessage message={compressError} />}
 
                 {/* dotLottie Manifest Configuration */}

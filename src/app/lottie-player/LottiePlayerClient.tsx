@@ -259,6 +259,10 @@ export default function LottiePlayerClient({
   // Playback state (declared early: the sample loader starts playback)
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
 
+  // Bumped whenever an animation is put in the player, so a slow link load can't replace it.
+  const urlSeq = useRef(0);
+  const urlRequest = useRef(0); // the latest link request, for the Loading… state
+
   // Sample animations (.lottie files, fetched when picked)
   const {
     samples: LOTTIE_SAMPLES,
@@ -268,6 +272,7 @@ export default function LottiePlayerClient({
     markUserContent,
   } = useLottieSamples(
     (_sample, loaded) => {
+      urlSeq.current++;
       setAnimationData(loaded.animation);
       originalAnimationRef.current = loaded.animation;
       setIsColorModified(false);
@@ -289,6 +294,7 @@ export default function LottiePlayerClient({
       setRawJson(JSON.stringify(parsed.animation, null, 2));
       setMetadata(parsed.metadata || null);
       markUserContent();
+      urlSeq.current++;
       setError(null);
     }
   });
@@ -562,6 +568,8 @@ export default function LottiePlayerClient({
       if (e.metaKey || e.ctrlKey || e.altKey) return;
       const t = e.target instanceof HTMLElement ? e.target : null;
       if (t && (t.closest('input, textarea, select, [contenteditable="true"]') || t.isContentEditable)) return;
+      // Space/Enter on a focused button or link activates it; don't also toggle playback.
+      if ((e.key === ' ' || e.key === 'Enter') && t?.closest('button, a, [role="button"]')) return;
       const a = keyActionsRef.current;
       if (!a) return;
       if (e.key === ' ' || e.key === 'k') { e.preventDefault(); a.handlePlayPause(); }
@@ -600,6 +608,7 @@ export default function LottiePlayerClient({
     const parsed = parseLottieJSON(jsonStr);
     setMetadata(parsed.metadata || null);
     markUserContent();
+    urlSeq.current++;
     setIsPlaying(true);
     setError(null);
     if (fileInputRef.current) fileInputRef.current.value = '';
@@ -611,10 +620,10 @@ export default function LottiePlayerClient({
   const [urlInput, setUrlInput] = useState('');
   const [urlLoading, setUrlLoading] = useState(false);
   const [urlError, setUrlError] = useState<string | null>(null);
-  const urlSeq = useRef(0);
 
   const loadFromUrl = async (link: string) => {
     const mine = ++urlSeq.current;
+    const request = ++urlRequest.current;
     markUserContent(); // a sample still loading must not replace this
     setUrlInput(link);
     setUrlLoading(true);
@@ -636,7 +645,7 @@ export default function LottiePlayerClient({
       setUrlOpen(true);
       setUrlError(err instanceof LottieUrlError ? err.message : 'Could not load this link.');
     } finally {
-      if (mine === urlSeq.current) setUrlLoading(false);
+      if (request === urlRequest.current) setUrlLoading(false);
     }
   };
 

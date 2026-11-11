@@ -16,6 +16,7 @@ export function useLottieSamples(onLoaded: (sample: LottieSample, loaded: Loaded
   const [activeSampleId, setActiveSampleId] = useState<string>(LOTTIE_SAMPLES[0].id);
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const seq = useRef(0);
+  const shownId = useRef(''); // the sample actually on screen ('' = none or the user's own)
   const userContent = useRef(false);
   const callbacks = useRef({ onLoaded, onError });
   useEffect(() => {
@@ -32,11 +33,13 @@ export function useLottieSamples(onLoaded: (sample: LottieSample, loaded: Loaded
       (loaded) => {
         if (mine !== seq.current) return; // something newer was loaded meanwhile
         setLoadingId(null);
+        shownId.current = id;
         callbacks.current.onLoaded(sample, loaded);
       },
       (err: Error) => {
         if (mine !== seq.current) return;
         setLoadingId(null);
+        setActiveSampleId(shownId.current); // keep the highlight on what is actually shown
         callbacks.current.onError?.(err.message);
       },
     );
@@ -46,6 +49,7 @@ export function useLottieSamples(onLoaded: (sample: LottieSample, loaded: Loaded
   const markUserContent = useCallback(() => {
     userContent.current = true;
     seq.current++;
+    shownId.current = '';
     setActiveSampleId('');
     setLoadingId(null);
   }, []);

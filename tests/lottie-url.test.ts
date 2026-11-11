@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { checkLottieUrl, loadLottieFromUrl, lottieUrlFromHash, LottieUrlError, MAX_URL_BYTES } from '@/lib/lottie/fromUrl';
@@ -51,6 +51,41 @@ describe('Lottie from URL', () => {
     await expect(loadLottieFromUrl('https://example.com/x.json', fakeFetch('nope', { status: 404 }).impl)).rejects.toThrow(/404/);
     const big = fakeFetch(lottieJson, { headers: { 'content-length': String(MAX_URL_BYTES + 1) } });
     await expect(loadLottieFromUrl('https://example.com/x.json', big.impl)).rejects.toThrow(/25 MB/);
+  });
+
+  it('stops reading a body without Content-Length once it passes the limit', async () => {
+    let pulled = 0;
+    const chunk = new Uint8Array(1024 * 1024); // 1 MB
+    const body = new ReadableStream<Uint8Array>({
+      pull(controller) {
+        pulled++;
+        if (pulled > 100) controller.close(); // would be 100 MB if read to the end
+        else controller.enqueue(chunk);
+      },
+    });
+    const { impl } = fakeFetch(body);
+    await expect(loadLottieFromUrl('https://example.com/huge.json', impl)).rejects.toThrow(/25 MB/);
+    expect(pulled).toBeLessThan(40);
+  });
+
+  it('times out a download that stalls after the headers arrive', async () => {
+    vi.useFakeTimers();
+    try {
+      const impl = (async (_url: string, opts?: RequestInit) => {
+        const body = new ReadableStream<Uint8Array>({
+          start(controller) {
+            opts?.signal?.addEventListener('abort', () => controller.error(new DOMException('aborted', 'AbortError')));
+          },
+        });
+        return new Response(body, { status: 200 });
+      }) as unknown as typeof fetch;
+      const p = loadLottieFromUrl('https://example.com/slow.json', impl);
+      const check = expect(p).rejects.toThrow(/too long/);
+      await vi.advanceTimersByTimeAsync(21_000);
+      await check;
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('only accepts http(s) links', async () => {

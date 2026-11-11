@@ -95,9 +95,11 @@ export function readDroppedFile(event) {
  * 'downloaded' (fallback copy) or 'cancelled' (permission refused).
  */
 export async function saveToOpenedFile(text) {
-  if (!opened) throw new Error('No file is open');
-  if (canSaveInPlace()) {
-    const { handle } = opened;
+  // Snapshot now: another file could be opened while the permission prompt is up.
+  const file = opened;
+  if (!file) throw new Error('No file is open');
+  const { name, handle } = file;
+  if (handle && typeof handle.createWritable === 'function') {
     try {
       if (typeof handle.queryPermission === 'function') {
         let perm = await handle.queryPermission({ mode: 'readwrite' });
@@ -113,7 +115,7 @@ export async function saveToOpenedFile(text) {
       // File moved or deleted, or the browser refused: fall back to a download.
     }
   }
-  downloadText(text, opened.name);
+  downloadText(text, name);
   return 'downloaded';
 }
 

@@ -119,6 +119,22 @@ describe('draft.js (remember last input)', () => {
     expect(total).toBeLessThanOrEqual(api.TOTAL_BUDGET);
   });
 
+  it('keeps existing drafts when storage is full and the new draft cannot be saved', () => {
+    const { api, store: st } = load();
+    st.set('bdt_draft:/other#a', JSON.stringify({ v: 'keep me', t: Date.now() }));
+    // Storage that refuses every new write (full with other data).
+    const realSet = st.set.bind(st);
+    let full = true;
+    st.set = ((k: string, v: string) => {
+      if (full && k === api.pageKey('new')) throw new Error('QuotaExceededError');
+      return realSet(k, v);
+    }) as typeof st.set;
+    api.writePlain(api.pageKey('new'), 'x'.repeat(5000));
+    full = false;
+    expect(st.get('bdt_draft:/other#a')).toContain('keep me');
+    expect(st.has(api.pageKey('new'))).toBe(false);
+  });
+
   it('expires drafts after 7 days', () => {
     const k = t.pageKey('old');
     store.set(k, JSON.stringify({ v: 'old', t: Date.now() - 8 * 24 * 3600 * 1000 }));

@@ -65,28 +65,68 @@ export async function loadLottieFromUrl(input: string, fetchImpl: typeof fetch =
   const checked = checkLottieUrl(input);
   if ('error' in checked) throw new LottieUrlError(checked.error);
 
+  // The timeout covers the whole download, not just the response headers.
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
-  let res: Response;
   try {
-    // No cookies or credentials: only public files.
-    res = await fetchImpl(checked.url, { signal: controller.signal, credentials: 'omit', redirect: 'follow' });
-  } catch (err) {
+    let res: Response;
+    try {
+      // No cookies or credentials: only public files.
+      res = await fetchImpl(checked.url, { signal: controller.signal, credentials: 'omit', redirect: 'follow' });
+    } catch (err) {
+      if ((err as Error)?.name === 'AbortError') throw new LottieUrlError('The link took too long to respond.');
+      throw new LottieUrlError(
+        'Could not load this link. The site may block other websites from loading its files (CORS), or it is offline. Download the file and use Upload instead.'
+      );
+    }
+
+    if (!res.ok) throw new LottieUrlError(`The link returned an error (${res.status}). Check that it is public and correct.`);
+    const length = Number(res.headers.get('content-length') || 0);
+    if (length > MAX_URL_BYTES) throw new LottieUrlError(TOO_LARGE);
+
+    let bytes: Uint8Array;
+    try {
+      bytes = await readLimited(res, MAX_URL_BYTES);
+    } catch (err) {
+      if (err instanceof LottieUrlError) throw err;
+      if ((err as Error)?.name === 'AbortError') throw new LottieUrlError('The link took too long to respond.');
+      throw new LottieUrlError('The download was interrupted. Try again, or download the file and use Upload.');
+    }
+    return parseLottieBytes(bytes);
+  } finally {
     clearTimeout(timer);
-    if ((err as Error)?.name === 'AbortError') throw new LottieUrlError('The link took too long to respond.');
-    throw new LottieUrlError(
-      'Could not load this link. The site may block other websites from loading its files (CORS), or it is offline. Download the file and use Upload instead.'
-    );
   }
-  clearTimeout(timer);
+}
 
-  if (!res.ok) throw new LottieUrlError(`The link returned an error (${res.status}). Check that it is public and correct.`);
-  const length = Number(res.headers.get('content-length') || 0);
-  if (length > MAX_URL_BYTES) throw new LottieUrlError('This file is larger than 25 MB, the browser limit for this tool.');
+const TOO_LARGE = 'This file is larger than 25 MB, the browser limit for this tool.';
 
-  const bytes = new Uint8Array(await res.arrayBuffer());
-  if (bytes.byteLength > MAX_URL_BYTES) throw new LottieUrlError('This file is larger than 25 MB, the browser limit for this tool.');
-  return parseLottieBytes(bytes);
+/** Read the body, stopping as soon as it passes `limit` (servers don't always send Content-Length). */
+async function readLimited(res: Response, limit: number): Promise<Uint8Array> {
+  if (!res.body) {
+    const buf = new Uint8Array(await res.arrayBuffer());
+    if (buf.byteLength > limit) throw new LottieUrlError(TOO_LARGE);
+    return buf;
+  }
+  const reader = res.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let total = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    total += value.byteLength;
+    if (total > limit) {
+      void reader.cancel();
+      throw new LottieUrlError(TOO_LARGE);
+    }
+    chunks.push(value);
+  }
+  const out = new Uint8Array(total);
+  let offset = 0;
+  for (const c of chunks) {
+    out.set(c, offset);
+    offset += c.byteLength;
+  }
+  return out;
 }
 
 /** The animation link carried in a page URL as #url=… (kept out of analytics, which ignore the hash). */
