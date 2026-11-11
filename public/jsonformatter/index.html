@@ -217,6 +217,14 @@
       },
       {
         "@type": "Question",
+        "name": "Can I edit a JSON file and save it back?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Open the file with Upload or drag and drop, edit it in the code view or the grid, then press Save (Ctrl/Cmd+S). In Chrome and Edge on a computer the changes are written into the same file after you allow it once. In other browsers Save downloads the edited file with the same name. Invalid JSON is never saved."
+        }
+      },
+      {
+        "@type": "Question",
         "name": "What other tools are available on Bharat Dev Tools?",
         "acceptedAnswer": {
           "@type": "Answer",
@@ -435,7 +443,7 @@
           type="button"
           class="btn-secondary"
           title="Compare two JSON documents side-by-side"
-          onclick="window.location.href='jsondiff/';"
+          onclick="window.location.href='../jsondiff/';"
         >
           JSON Diff
         </button>
@@ -468,6 +476,8 @@
             <button id="share-btn" class="icon-btn" title="Copy a share link (the JSON travels inside the link, not through our server)" aria-label="Copy a share link" data-tip="Share link">
               <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4"/><path d="m15.4 6.5-6.8 4"/></svg>
             </button>
+            <!-- Shown once a file is opened (Upload or drag & drop); see assets/js/json-file.js -->
+            <button id="output-save-btn" class="icon-btn" title="Save" aria-label="Save" data-tip="Save" hidden><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/><path d="M7 3v4a1 1 0 0 0 1 1h7"/></svg></button>
             <div class="menu" id="download-menu">
               <button id="output-download-btn" class="icon-btn" title="Download JSON" aria-label="Download JSON" data-tip="Download">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V9"/><path d="M8 17l4 4 4-4"/><path d="M5 3h14a2 2 0 0 1 2 2v6"/></svg>
@@ -654,6 +664,16 @@
             </button>
             <div class="faq-answer">
               <p>Yes! You can upload JSON files by clicking the Upload button in the input pane toolbar, or simply drag and drop a .json file onto the input editor. The file content will be loaded automatically.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Can I edit a JSON file and save it back?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes. Open the file with Upload or drag and drop, edit it in the code view or the grid, then press Save (Ctrl/Cmd+S). In Chrome and Edge on a computer the changes are written into the same file after you allow it once. In other browsers Save downloads the edited file with the same name. Invalid JSON is never saved.</p>
             </div>
           </div>
           
