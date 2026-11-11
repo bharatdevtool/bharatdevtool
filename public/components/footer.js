@@ -340,6 +340,8 @@ function createContinueCard() {
   } catch (e) {}
   const last = readLastToolCookie();
   if (!last || !/^\/[a-z0-9][a-z0-9._\-\/]*$/i.test(last) || /\/\/|\.\./.test(last)) return;
+  // Same exclusions as the redirect in index.html's <head> (older cookies may still hold these).
+  if (/^\/(index\.html|test\/|open\b|og\/)/.test(last)) return;
   if (normaliseToolPath(last) === 'index') return;
   const tool = ALL_TOOLS_LIST.find(function(t) { return t.cat && normaliseToolPath(t.href) === normaliseToolPath(last); });
   const label = tool ? tool.label : labelFromPath(last);

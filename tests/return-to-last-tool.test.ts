@@ -86,3 +86,12 @@ describe('homepage: return to the last tool', () => {
     expect(visit({ cookie: last('/deeplink.html'), hash: '#json=abc' }).replacedWith).toBe('/jsonformatter/#json=abc');
   });
 });
+
+describe('homepage continue card', () => {
+  it('skips the same non-tool paths as the redirect', () => {
+    const footer = readFileSync(join(__dirname, '../public/components/footer.js'), 'utf8');
+    const rule = '/^\\/(index\\.html|test\\/|open\\b|og\\/)/';
+    expect(script).toContain(rule);
+    expect(footer).toContain(rule);
+  });
+});
