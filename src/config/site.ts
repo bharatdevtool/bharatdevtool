@@ -6,7 +6,7 @@ export const SITE = {
   name: 'Bharat Dev Tools',
   tagline: 'Free Developer Tools. No Sign Up. Privacy First.',
   url: 'https://bharatdevtool.com',
-  version: '2.2',
+  version: '4.0',
 
   // Branding
   logoUrl: 'https://ik.imagekit.io/bdt/bdt_logo_v3_400.png',
