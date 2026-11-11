@@ -240,10 +240,46 @@ const TRUST_STRIP_CSS = `
   font-size: 13px;
 }
 .related-tools::-webkit-scrollbar { display: none; }
-.continue-banner { margin: 0; padding: 2px 16px 8px; text-align: center; font-size: 13px; }
-.continue-banner a { color: #2563eb; font-weight: 600; text-decoration: none; }
-.continue-banner a:hover { text-decoration: underline; }
-[data-theme="dark"] .continue-banner a, .dark .continue-banner a { color: #93c5fd; }
+.continue-card {
+  display: flex; align-items: center; gap: 14px; max-width: 640px; margin: 0 auto 20px;
+  padding: 12px 14px; border-radius: 12px; text-align: left;
+  background: #eff6ff; border: 1px solid #bfdbfe; color: #0f172a;
+}
+.continue-card .cc-icon {
+  flex-shrink: 0; width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center;
+  background: #2563eb; color: #fff;
+}
+.continue-card .cc-text { flex: 1; min-width: 0; line-height: 1.35; }
+.continue-card .cc-kicker { display: block; font-size: 12px; color: #475569; }
+.continue-card .cc-name { display: block; font-size: 15px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.continue-card .cc-open {
+  flex-shrink: 0; padding: 8px 14px; border-radius: 8px; background: #2563eb; color: #fff;
+  font-size: 14px; font-weight: 600; text-decoration: none; white-space: nowrap;
+}
+.continue-card .cc-open:hover { background: #1d4ed8; }
+.continue-card .cc-close, .return-note .rn-close {
+  flex-shrink: 0; border: 0; background: transparent; color: inherit; opacity: 0.6; cursor: pointer;
+  padding: 4px; border-radius: 6px; line-height: 0;
+}
+.continue-card .cc-close:hover, .return-note .rn-close:hover { opacity: 1; background: rgba(127, 127, 127, 0.15); }
+[data-theme="dark"] .continue-card, .dark .continue-card { background: #0f172a; border-color: #1e3a8a; color: #e2e8f0; }
+[data-theme="dark"] .continue-card .cc-kicker, .dark .continue-card .cc-kicker { color: #94a3b8; }
+[data-theme="dark"] .continue-card .cc-icon, .dark .continue-card .cc-icon,
+[data-theme="dark"] .continue-card .cc-open, .dark .continue-card .cc-open { background: #3b82f6; }
+[data-theme="dark"] .continue-card .cc-open:hover, .dark .continue-card .cc-open:hover { background: #2563eb; }
+@media (max-width: 520px) {
+  .continue-card { gap: 10px; padding: 10px; }
+  .continue-card .cc-icon { display: none; }
+  .continue-card .cc-open { padding: 8px 10px; }
+}
+.return-note {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin: 0; padding: 0 16px 6px; font-size: 13px; color: #475569;
+}
+.return-note a { color: #2563eb; font-weight: 600; text-decoration: none; }
+.return-note a:hover { text-decoration: underline; }
+[data-theme="dark"] .return-note, .dark .return-note { color: #94a3b8; }
+[data-theme="dark"] .return-note a, .dark .return-note a { color: #93c5fd; }
 .related-tools .related-title { font-weight: 600; opacity: 0.75; margin-right: 2px; flex-shrink: 0; }
 .related-tools .related-link {
   flex-shrink: 0; padding: 4px 10px; border-radius: 9999px; text-decoration: none;
@@ -262,32 +298,96 @@ const TRUST_STRIP_CSS = `
 }
 `;
 
-/**
- * Homepage only: if the visitor last used a different tool, offer a one-line
- * link back to it. Replaces the old automatic redirect, which sent search
- * visitors (and Google) away from the JSON Formatter.
- */
-function createContinueBanner() {
-  if (normaliseToolPath(window.location.pathname) !== 'index') return;
-  let last = '';
+const CLOSE_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
+const HISTORY_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>';
+
+function escapeHtmlText(s) {
+  return String(s).replace(/[&<>"']/g, function(c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+
+/** Label for a page that is not in ALL_TOOLS_LIST (generated pages like resize-image-to-20kb.html). */
+function labelFromPath(path) {
+  const slug = String(path).replace(/^\/+|\/+$/g, '').replace(/\.html$/, '').split('/').pop() || '';
+  const UPPER = /^(qr|kb|pdf|jpg|png|upsc|ssc|neet|jee|ibps|sbi|rrb|ctet|cuet|json|url|gst|emi|bmi|cm|mm)$/i;
+  const words = slug.split('-').filter(Boolean).map(function(w, i) {
+    if (UPPER.test(w)) return w.toUpperCase();
+    if (/^\d+kb$/i.test(w)) return w.slice(0, -2) + ' KB';
+    return i === 0 ? w.charAt(0).toUpperCase() + w.slice(1) : w;
+  });
+  return words.join(' ');
+}
+
+function readLastToolCookie() {
   try {
     const match = document.cookie.split('; ').find(function(c) { return c.indexOf('bdt_last_tool=') === 0; });
-    last = match ? decodeURIComponent(match.split('=').slice(1).join('=')) : '';
-  } catch (e) { return; }
-  if (!last || /^[a-z]+:/i.test(last)) return; // only same-site paths
+    return match ? decodeURIComponent(match.split('=').slice(1).join('=')) : '';
+  } catch (e) { return ''; }
+}
+
+/**
+ * Homepage only: a "Welcome back" card linking to the tool used last. Typed and
+ * bookmarked visits are sent there automatically by the script in index.html's
+ * <head>; everyone else (Google, links, the logo) sees the directory with this card.
+ */
+function createContinueCard() {
+  if (normaliseToolPath(window.location.pathname) !== 'index') return;
+  try {
+    // "?all" (from "See all tools") only exists to skip the redirect: tidy the address bar.
+    if (window.location.search === '?all') history.replaceState(history.state, '', window.location.pathname + window.location.hash);
+    if (sessionStorage.getItem('bdt_continue_hidden')) return;
+  } catch (e) {}
+  const last = readLastToolCookie();
+  if (!last || !/^\/[a-z0-9][a-z0-9._\-\/]*$/i.test(last) || /\/\/|\.\./.test(last)) return;
+  if (normaliseToolPath(last) === 'index') return;
   const tool = ALL_TOOLS_LIST.find(function(t) { return t.cat && normaliseToolPath(t.href) === normaliseToolPath(last); });
-  if (!tool || normaliseToolPath(tool.href) === 'index') return;
-  const html = '<p class="continue-banner">Continue where you left off: ' +
-    '<a href="' + getFooterBasePath() + tool.href + '">' + tool.label + ' →</a></p>';
-  const anchor = document.querySelector('.related-tools') || document.querySelector('.trust-strip');
+  const label = tool ? tool.label : labelFromPath(last);
+  if (!label) return;
+  const href = tool ? getFooterBasePath() + tool.href : last;
+  const html = '<div class="continue-card" role="region" aria-label="Continue where you left off">' +
+    '<span class="cc-icon">' + HISTORY_SVG + '</span>' +
+    '<span class="cc-text"><span class="cc-kicker">Welcome back. Continue where you left off</span>' +
+    '<span class="cc-name">' + escapeHtmlText(label) + '</span></span>' +
+    '<a class="cc-open" href="' + escapeHtmlText(href) + '">Open →</a>' +
+    '<button type="button" class="cc-close" aria-label="Hide">' + CLOSE_SVG + '</button></div>';
+  const anchor = document.querySelector('.tool-filter-bar') || document.querySelector('.features-container');
+  if (!anchor) return;
+  if (anchor.classList.contains('tool-filter-bar')) anchor.insertAdjacentHTML('beforebegin', html);
+  else anchor.insertAdjacentHTML('afterbegin', html);
+  const card = document.querySelector('.continue-card');
+  card.querySelector('.cc-close').addEventListener('click', function() {
+    card.remove();
+    try { sessionStorage.setItem('bdt_continue_hidden', '1'); } catch (e) {}
+  });
+}
+
+/**
+ * Tool pages: right after the homepage sent this tab here automatically,
+ * show a one-time line with a way back to the full directory.
+ */
+function createReturnNote() {
+  if (normaliseToolPath(window.location.pathname) === 'index') return;
+  try {
+    if (sessionStorage.getItem('bdt_auto_note') !== '1') return;
+    sessionStorage.removeItem('bdt_auto_note');
+  } catch (e) { return; }
+  const html = '<p class="return-note"><span>Opened the tool you used last.</span>' +
+    '<a href="' + homeHref() + '?all">See all tools →</a>' +
+    '<button type="button" class="rn-close" aria-label="Dismiss">' + CLOSE_SVG + '</button></p>';
+  const anchor = document.querySelector('.trust-strip');
   if (anchor) anchor.insertAdjacentHTML('afterend', html);
+  else document.body.insertAdjacentHTML('afterbegin', html);
+  const note = document.querySelector('.return-note');
+  note.querySelector('.rn-close').addEventListener('click', function() { note.remove(); });
 }
 
 // Load version and create footer
 function initFooter() {
   createTrustBadge();
   createRelatedToolsBar();
-  createContinueBanner();
+  createContinueCard();
+  createReturnNote();
   createAllToolsSection();
   // Get version from version.js (already loaded) or use default
   const version = (window.appVersion && window.appVersion.version) || '1.0';
