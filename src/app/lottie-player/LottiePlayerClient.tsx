@@ -14,6 +14,7 @@ import { extractLottieColors, replaceLottieColor } from '@/lib/lottie/colors';
 import { analyzeLottie } from '@/lib/lottie/analyzer';
 import { EMPTY_ANIMATION } from '@/lib/lottie/samples';
 import { useLottieSamples } from '@/hooks/useLottieSamples';
+import { loadLottieFromUrl, lottieUrlFromHash, LottieUrlError } from '@/lib/lottie/fromUrl';
 import { setCrossToolData } from '@/lib/crossToolData';
 import { useCrossToolData } from '@/hooks/useCrossToolData';
 import type { LottieAnimation, LottieMetadata } from '@/lib/lottie/types';
@@ -46,6 +47,9 @@ import {
   Check,
   Package,
   GitCompare,
+  Link2,
+  Loader2,
+  X,
 } from 'lucide-react';
 
 function formatBytes(bytes: number): string {
@@ -602,6 +606,55 @@ export default function LottiePlayerClient({
     analytics.track(ANALYTICS_EVENTS.LOAD_LOTTIE, { tool: 'player', format: file.name.toLowerCase().endsWith('.lottie') ? 'lottie' : 'json' });
   };
 
+  // ── Load from a link (.json or .lottie; fetched by the browser, never via our servers) ──
+  const [urlOpen, setUrlOpen] = useState(false);
+  const [urlInput, setUrlInput] = useState('');
+  const [urlLoading, setUrlLoading] = useState(false);
+  const [urlError, setUrlError] = useState<string | null>(null);
+  const urlSeq = useRef(0);
+
+  const loadFromUrl = async (link: string) => {
+    const mine = ++urlSeq.current;
+    markUserContent(); // a sample still loading must not replace this
+    setUrlInput(link);
+    setUrlLoading(true);
+    setUrlError(null);
+    try {
+      const res = await loadLottieFromUrl(link);
+      if (mine !== urlSeq.current) return;
+      setAnimationData(res.animation);
+      originalAnimationRef.current = res.animation;
+      setIsColorModified(false);
+      setRawJson(res.rawJson);
+      setMetadata(parseLottieJSON(res.rawJson).metadata || null);
+      setIsPlaying(true);
+      setError(null);
+      setUrlOpen(false);
+      analytics.track(ANALYTICS_EVENTS.LOAD_LOTTIE, { tool: 'player', format: res.format, source: 'url' });
+    } catch (err) {
+      if (mine !== urlSeq.current) return;
+      setUrlOpen(true);
+      setUrlError(err instanceof LottieUrlError ? err.message : 'Could not load this link.');
+    } finally {
+      if (mine === urlSeq.current) setUrlLoading(false);
+    }
+  };
+
+  // Shareable links: /lottie-player#url=<link>. The hash keeps the link out of analytics;
+  // it is removed from the address bar as soon as it is read.
+  useEffect(() => {
+    if (!lottieUrlFromHash(window.location.hash)) return;
+    // Deferred (and cancellable) so a development double-run of this effect loads it once.
+    const timer = setTimeout(() => {
+      const link = lottieUrlFromHash(window.location.hash);
+      if (!link) return;
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+      void loadFromUrl(link);
+    }, 0);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleDownloadDotLottie = () => {
     const bytes = createDotLottie(animationData, {
       name: metadata?.name || 'animation',
@@ -690,8 +743,75 @@ export default function LottiePlayerClient({
             >
               <Upload className="w-3.5 h-3.5" /> Upload File (.json / .lottie)
             </button>
+            <button
+              type="button"
+              onClick={() => {
+                setUrlOpen((o) => !o);
+                setUrlError(null);
+              }}
+              aria-expanded={urlOpen}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-medium transition-colors cursor-pointer ${
+                urlOpen ? 'bg-primary/10 border-primary text-primary' : 'bg-muted/50 border-border text-foreground hover:bg-muted'
+              }`}
+            >
+              <Link2 className="w-3.5 h-3.5" /> From URL
+            </button>
           </div>
         </div>
+
+        {urlOpen && (
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              void loadFromUrl(urlInput);
+            }}
+            className="p-3.5 rounded-xl bg-card border border-border space-y-2"
+          >
+            <label htmlFor="lottie-url" className="text-xs font-semibold text-foreground">
+              Link to a .json or .lottie file
+            </label>
+            <div className="flex flex-col sm:flex-row gap-2">
+              <input
+                id="lottie-url"
+                type="url"
+                inputMode="url"
+                autoFocus
+                value={urlInput}
+                onChange={(e) => setUrlInput(e.target.value)}
+                placeholder="https://lottie.host/…/animation.lottie"
+                className="flex-1 min-w-0 px-3 py-2 rounded-lg border border-border bg-background text-sm font-mono text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
+              />
+              <div className="flex gap-2">
+                <button
+                  type="submit"
+                  disabled={urlLoading || !urlInput.trim()}
+                  className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90 disabled:opacity-60 transition-colors cursor-pointer"
+                >
+                  {urlLoading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Link2 className="w-3.5 h-3.5" />}
+                  {urlLoading ? 'Loading…' : 'Load'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setUrlOpen(false)}
+                  aria-label="Close"
+                  className="p-2 rounded-lg border border-border text-muted-foreground hover:text-foreground cursor-pointer"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+            {urlError ? (
+              <p className="text-xs text-red-500" role="alert">{urlError}</p>
+            ) : (
+              <p className="text-[11px] text-muted-foreground">
+                Your browser downloads the file directly from that site; it never passes through our servers. Works with
+                public links that allow other sites to load them (for example LottieFiles &ldquo;Lottie JSON&rdquo; or
+                &ldquo;dotLottie&rdquo; links on lottie.host). Share a ready-to-play link as{' '}
+                <code className="font-mono">bharatdevtool.com/lottie-player#url=&lt;link&gt;</code>.
+              </p>
+            )}
+          </form>
+        )}
 
         {error && <ErrorMessage message={error} />}
 
