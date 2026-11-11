@@ -14,6 +14,11 @@ function getFooterBasePath() {
   return depth > 0 ? '../'.repeat(depth) : '';
 }
 
+/** Link to the homepage (the tool directory), relative so it also works from sub-folders. */
+function homeHref() {
+  return getFooterBasePath() || './';
+}
+
 /** Alpha for All tools button backgrounds: 0 = fully transparent, 1 = fully opaque. Change this to see effect. */
 const ALL_TOOLS_BUTTON_ALPHA = 0.07;
 
@@ -31,7 +36,7 @@ function getRandomColorWithAlpha(alpha) {
 
 /** Tool list: { label, href } - href is relative to root or full URL for external */
 const ALL_TOOLS_LIST = [
-  { label: 'JSON Formatter', href: 'index.html', cat: 'json' },
+  { label: 'JSON Formatter', href: 'jsonformatter/', cat: 'json' },
   { label: 'JSON Diff', href: 'jsondiff/', cat: 'json' },
   { label: 'DeepLink Launcher', href: 'deeplink.html', cat: 'qr-links' },
   { label: 'URL Encoder', href: 'url-encoder.html', cat: 'qr-links' },
@@ -119,7 +124,7 @@ function createAllToolsSection() {
   const tiles = TOOL_CATEGORIES.map(function(cat) {
     const count = ALL_TOOLS_LIST.filter(function(t) { return t.cat === cat.id; }).length;
     const bgColor = getRandomColorWithAlpha(ALL_TOOLS_BUTTON_ALPHA);
-    return '<a href="' + base + 'tools.html#cat=' + cat.id + '" class="all-tools-btn category-tile" style="background-color:' + bgColor + '">' +
+    return '<a href="' + homeHref() + '#cat=' + cat.id + '" class="all-tools-btn category-tile" style="background-color:' + bgColor + '">' +
       '<span class="category-tile-icon" aria-hidden="true">' + cat.icon + '</span>' +
       '<span class="category-tile-label">' + cat.label + '</span>' +
       '<span class="category-tile-count">' + count + ' tools</span></a>';
@@ -129,7 +134,7 @@ function createAllToolsSection() {
     '<div class="all-tools-container">' +
     '<h2 class="all-tools-title">Browse free tools by category</h2>' +
     '<div class="all-tools-grid category-grid">' + tiles + '</div>' +
-    '<p class="all-tools-more"><a href="' + base + 'tools.html">See all ' + ALL_TOOLS_LIST.filter(function(t) { return t.cat; }).length + ' tools</a>' +
+    '<p class="all-tools-more"><a href="' + homeHref() + '">See all ' + ALL_TOOLS_LIST.filter(function(t) { return t.cat; }).length + ' tools</a>' +
     ' · <a href="https://forms.gle/TA7WEhzzQ6csQFGZ7" target="_blank" rel="noopener noreferrer">Suggest a tool</a></p>' +
     '</div></section>';
   document.body.insertAdjacentHTML('beforeend', html);
@@ -139,7 +144,6 @@ function createAllToolsSection() {
 function normaliseToolPath(path) {
   let p = String(path || '').split(/[?#]/)[0].replace(/^\/+/, '').replace(/\.html$/, '').replace(/\/index$/, '/');
   if (p === '' || p === 'index') return 'index';
-  if (p === 'jsonformatter/') return 'index';
   return p.replace(/\/$/, '') || 'index';
 }
 
@@ -161,7 +165,7 @@ function createRelatedToolsBar() {
   }).join('');
   const bar = '<nav class="related-tools" aria-label="' + cat.label + ' tools">' +
     '<span class="related-title">' + cat.label + ':</span>' + links +
-    '<a href="' + base + 'tools.html#cat=' + cat.id + '" class="related-link related-all">All ' + cat.label + ' →</a></nav>';
+    '<a href="' + homeHref() + '#cat=' + cat.id + '" class="related-link related-all">All ' + cat.label + ' →</a></nav>';
   const anchor = document.querySelector('.trust-strip');
   if (anchor) anchor.insertAdjacentHTML('afterend', bar);
 }

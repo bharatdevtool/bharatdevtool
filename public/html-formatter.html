@@ -113,12 +113,6 @@
       {
         "@type": "ListItem",
         "position": 2,
-        "name": "Developer Tools",
-        "item": "https://bharatdevtool.com/tools.html"
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
         "name": "HTML Formatter & Beautifier",
         "item": "https://bharatdevtool.com/html-formatter.html"
       }
@@ -328,7 +322,7 @@
           </div>
         </div>
         <textarea
-          id="html-input"
+          id="html-input" data-draft
           class="code-editor w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           placeholder="Paste your HTML here…"
           rows="10"
@@ -959,5 +953,7 @@
       updateModeUI();
     });
   </script>
+  <!-- Remembers the last input across refreshes (this browser only) -->
+  <script src="assets/js/draft.js" defer></script>
 </body>
 </html>

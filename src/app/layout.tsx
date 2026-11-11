@@ -38,7 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Track tool visit for returning user routing */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var p=window.location.pathname;var m=31536000;document.cookie='bdt_visited=1;path=/;max-age='+m+';SameSite=Lax';if(p.indexOf('tools.html')===-1&&p.indexOf('privacy.html')===-1&&p.indexOf('feedback.html')===-1&&p.indexOf('about.html')===-1)document.cookie='bdt_last_tool='+encodeURIComponent(p)+';path=/;max-age='+m+';SameSite=Lax';}catch(e){}})();`,
+            __html: `(function(){try{var p=window.location.pathname;var m=31536000;document.cookie='bdt_visited=1;path=/;max-age='+m+';SameSite=Lax';if(p!=='/'&&p.indexOf('privacy.html')===-1&&p.indexOf('feedback.html')===-1&&p.indexOf('about.html')===-1)document.cookie='bdt_last_tool='+encodeURIComponent(p)+';path=/;max-age='+m+';SameSite=Lax';}catch(e){}})();`,
           }}
         />
       </head>

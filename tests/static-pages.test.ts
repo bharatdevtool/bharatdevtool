@@ -10,7 +10,7 @@ const PAGES = [
   'jsonformatter/index.html',
 ];
 // Site pages that are not tools: they need good meta tags but no FAQ.
-const NON_TOOL_PAGES = new Set(['about.html', 'privacy.html', 'feedback.html', 'tools.html']);
+const NON_TOOL_PAGES = new Set(['index.html', 'about.html', 'privacy.html', 'feedback.html']);
 
 const read = (page: string) => readFileSync(join(PUBLIC_DIR, page), 'utf8');
 const decode = (s: string) =>

@@ -507,6 +507,19 @@ const TARGETS = {
   diff: { url: '/jsondiff/', label: 'JSON Diff' },
 };
 
+/**
+ * Leave `text` for another tool's page (handoff.js there reads it once; it expires in
+ * 10 minutes). Returns false if it could not be stored (e.g. too large).
+ */
+export function handOff(to, text) {
+  try {
+    localStorage.setItem(HANDOFF_KEY, JSON.stringify({ to, text, t: Date.now() }));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 /** Store the JSON for the target page (read once, expires in 10 minutes) and open it in a new tab. */
 export function initSendTo({ getOutputText }) {
   const menu = document.getElementById('send-menu');
@@ -535,9 +548,7 @@ export function initSendTo({ getOutputText }) {
         toast('Format valid JSON first, then send it.');
         return;
       }
-      try {
-        localStorage.setItem(HANDOFF_KEY, JSON.stringify({ to, text, t: Date.now() }));
-      } catch {
+      if (!handOff(to, text)) {
         toast('This JSON is too large to send. Copy it and paste it into the other tool.');
         return;
       }

@@ -9,7 +9,9 @@ import CodeEditor from '@/components/ui/CodeEditor';
 import ErrorMessage from '@/components/ui/ErrorMessage';
 import CopyButton from '@/components/ui/CopyButton';
 import { validateLottie } from '@/lib/lottie/validator';
-import { LOTTIE_SAMPLES } from '@/lib/lottie/samples';
+import { EMPTY_ANIMATION } from '@/lib/lottie/samples';
+import { useLottieSamples } from '@/hooks/useLottieSamples';
+import { sendToJsonFormatter } from '@/lib/staticHandoff';
 import { setCrossToolData } from '@/lib/crossToolData';
 import { useCrossToolData } from '@/hooks/useCrossToolData';
 import { extractLottieFromFile } from '@/lib/lottie/dotLottie';
@@ -29,17 +31,24 @@ type FilterSeverity = 'all' | 'error' | 'warning' | 'info';
 
 export default function LottieValidatorClient() {
   const router = useRouter();
-  const [activeSampleId, setActiveSampleId] = useState<string>(LOTTIE_SAMPLES[0].id);
-  const [rawJson, setRawJson] = useState<string>(() => JSON.stringify(LOTTIE_SAMPLES[0].data, null, 2));
+  const [rawJson, setRawJson] = useState<string>(() => JSON.stringify(EMPTY_ANIMATION, null, 2));
   const [filter, setFilter] = useState<FilterSeverity>('all');
   const [fileError, setFileError] = useState<string | null>(null);
+
+  const { samples: LOTTIE_SAMPLES, activeSampleId, selectSample, markUserContent } = useLottieSamples(
+    (_sample, loaded) => {
+      setRawJson(loaded.rawJson);
+      setFileError(null);
+    },
+    (message) => setFileError(message)
+  );
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Read incoming cross-tool data on mount
   useCrossToolData<{ lottieJson: string }>('lottie-validator', ({ lottieJson }) => {
     setRawJson(lottieJson);
-    setActiveSampleId('');
+    markUserContent();
   });
 
   const handleNavigateToPlayer = () => {
@@ -52,9 +61,11 @@ export default function LottieValidatorClient() {
     router.push('/lottie-optimizer');
   };
 
+  // The JSON Formatter is a static page: it reads its input from localStorage (src/lib/staticHandoff.ts).
   const handleNavigateToFormatter = () => {
-    setCrossToolData('json-formatter', { json: rawJson, tab: 'repair' });
-    router.push('/');
+    if (!sendToJsonFormatter(rawJson)) {
+      setFileError('This animation is too large to open in the JSON Formatter. Download it and open the file there.');
+    }
   };
 
   // Compute validation result reactively
@@ -130,7 +141,7 @@ export default function LottieValidatorClient() {
     }
 
     setRawJson(res.rawJson);
-    setActiveSampleId('');
+    markUserContent();
     setFileError(null);
     if (fileInputRef.current) fileInputRef.current.value = '';
     const result = validateLottie(JSON.parse(res.rawJson));
@@ -141,13 +152,7 @@ export default function LottieValidatorClient() {
     });
   };
 
-  const handleSampleSelect = (id: string) => {
-    const s = LOTTIE_SAMPLES.find((item) => item.id === id);
-    if (!s) return;
-    setActiveSampleId(id);
-    setRawJson(JSON.stringify(s.data, null, 2));
-    setFileError(null);
-  };
+  const handleSampleSelect = (id: string) => selectSample(id);
 
   return (
     <ToolLayout toolId="lottie-validator">
@@ -268,7 +273,7 @@ export default function LottieValidatorClient() {
               value={rawJson}
               onChange={(val) => {
                 setRawJson(val);
-                setActiveSampleId('');
+                markUserContent();
               }}
               placeholder="Paste Lottie JSON payload here..."
               height={540}

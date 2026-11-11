@@ -39,7 +39,8 @@ export default function Header() {
         <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
           {/* Logo + Name */}
           <div className="flex items-center gap-6">
-            <Link href="/tools.html" className="flex items-center gap-2.5 group">
+            {/* The homepage is a static HTML page, not a Next.js route: plain <a>, not <Link>. */}
+            <a href="/" className="flex items-center gap-2.5 group">
               <div className="relative flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 group-hover:border-primary/40 transition-colors">
                 <Image
                   src={SITE.logoUrl}
@@ -58,7 +59,7 @@ export default function Header() {
                   <ShieldCheck className="w-3 h-3 text-emerald-500 inline" /> 100% Client-Side
                 </span>
               </div>
-            </Link>
+            </a>
 
             {/* Quick search button */}
             <button
@@ -86,16 +87,12 @@ export default function Header() {
               <Search className="w-4 h-4" />
             </button>
 
-            <Link
-              href="/tools"
-              className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
-                pathname === '/tools.html'
-                  ? 'bg-primary/10 text-primary font-semibold'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'
-              }`}
+            <a
+              href="/"
+              className="rounded-lg px-3 py-1.5 text-xs font-medium transition-colors text-muted-foreground hover:text-foreground hover:bg-muted/60"
             >
               All Tools
-            </Link>
+            </a>
 
             <Link
               href="/about.html"

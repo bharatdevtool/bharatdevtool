@@ -4,7 +4,7 @@
 // All tool metadata lives here. Consumed by:
 //  - SEO metadata generation (seo.ts)
 //  - Footer tool list (Footer.tsx)
-//  - Tools directory page (/tools)
+//  - Homepage tool directory (public/index.html)
 //  - Header navigation
 // ============================================================
 
@@ -42,7 +42,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
   {
     id: 'json-formatter',
     label: 'JSON Formatter',
-    route: '/index.html',
+    route: '/jsonformatter/',
     category: 'JSON & Data',
     description:
       'Free JSON formatter, viewer and grid editor. Validate, repair, query with JSONPath, view as a table and export CSV. No sign-up, runs 100% in your browser.',

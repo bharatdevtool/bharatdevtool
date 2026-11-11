@@ -3,10 +3,14 @@ import { formatJSON, minifyJSON, isValidJSON, escapeJSONString, unescapeJSONStri
 import {
   readInput, stringifyWithPrefs, showInputError, showInputNote, clearInputError, goToError,
   scheduleLiveErrorCheck, initLinkPopover, initPrefs, initQueryBar, initSendTo, initShare,
-  revealPathInCode, toast,
+  revealPathInCode, toast, handOff,
 } from "./formatter-features.js";
 import { parseJSONPrecise } from "./json-raw.js";
 import { collapseRanges } from "./json-tools.js";
+import {
+  pickJsonFile, readInputFile, readDroppedFile, saveToOpenedFile, getOpenedFile,
+  forgetOpenedFile, onOpenedFileChange, canSaveInPlace, downloadText,
+} from "./json-file.js";
 
 let inputEditor;
 let outputEditor;
@@ -15,6 +19,8 @@ function defaultGreetingJSON() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+  // Opened from a share link: that JSON wins over the remembered draft.
+  const sharedOnLoad = !!window.__bdtShared;
   // Initialize CodeMirror editors
   inputEditor = CodeMirror(document.getElementById("input-editor"), {
     mode: "application/json",
@@ -115,10 +121,13 @@ window.addEventListener("DOMContentLoaded", () => {
   const inputFsBtn = document.getElementById("input-fullscreen-btn");
   const hiddenUpload = document.getElementById("upload-json");
   if (uploadBtn && hiddenUpload) {
-    uploadBtn.addEventListener("click", () => hiddenUpload.click());
+    // The File System Access picker (Chrome/Edge) lets Save write back to the same file.
+    uploadBtn.addEventListener("click", () => {
+      pickJsonFile(() => hiddenUpload.click()).then((text) => { if (text != null) loadFileText(text); });
+    });
   }
   if (fetchBtn) fetchBtn.addEventListener("click", promptFetchIntoInput);
-  if (inputClearBtn) inputClearBtn.addEventListener("click", () => { inputEditor.setValue(""); updatePlaceholder(); updateValidity(); });
+  if (inputClearBtn) inputClearBtn.addEventListener("click", () => { inputEditor.setValue(""); forgetOpenedFile(); updatePlaceholder(); updateValidity(); });
   if (inputCopyBtn) inputCopyBtn.addEventListener("click", () => navigator.clipboard.writeText(inputEditor.getValue()));
   if (inputFsBtn) inputFsBtn.addEventListener("click", () => toggleFullscreen("input-editor"));
 
@@ -145,12 +154,48 @@ window.addEventListener("DOMContentLoaded", () => {
   // Upload (hidden input)
   document.getElementById("upload-json").addEventListener("change", handleUpload);
 
-  // Drag & drop on the input editor container itself
+  inputEditor.on("change", () => { lastChangedEditor = "input"; });
+  outputEditor.on("change", () => { lastChangedEditor = "output"; });
+
+  // Drag & drop a file onto the input editor. CodeMirror has its own file-drop
+  // handling that *inserts* the file at the drop point; running both read the
+  // file twice and could leave it in the editor twice (invalid JSON). So files
+  // are handled here only: preventDefault() tells CodeMirror to skip the event.
   const inputContainer = document.getElementById("input-editor");
   inputContainer.addEventListener("dragover", (e) => {
     e.preventDefault();
   });
-  inputContainer.addEventListener("drop", handleDrop);
+  inputEditor.on("drop", (_cm, e) => {
+    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) handleDrop(e);
+  });
+  // Drops outside CodeMirror's own area (e.g. on the placeholder).
+  inputContainer.addEventListener("drop", (e) => {
+    if (!e.defaultPrevented) handleDrop(e);
+  });
+
+  // "JSON Diff" button: open JSON Diff with the current JSON already in its left pane.
+  const diffBtn = document.getElementById("jsondiff-btn");
+  if (diffBtn) diffBtn.addEventListener("click", openInJsonDiff);
+
+  // Save edits back to the opened file (Chrome/Edge) or download it under its name.
+  const saveBtn = document.getElementById("output-save-btn");
+  if (saveBtn) saveBtn.addEventListener("click", saveHandler);
+  onOpenedFileChange((file) => {
+    if (!saveBtn) return;
+    saveBtn.hidden = !file;
+    if (file) {
+      const tip = canSaveInPlace() ? `Save to ${file.name}` : `Download as ${file.name}`;
+      saveBtn.title = tip + " (Ctrl/Cmd+S)";
+      saveBtn.setAttribute("aria-label", tip);
+      saveBtn.dataset.tip = tip;
+    }
+  });
+  document.addEventListener("keydown", (e) => {
+    if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === "s" && getOpenedFile()) {
+      e.preventDefault();
+      saveHandler();
+    }
+  });
 
   // Keyboard shortcut: Ctrl/Cmd + Enter
   document.addEventListener("keydown", (e) => {
@@ -216,11 +261,32 @@ window.addEventListener("DOMContentLoaded", () => {
   initShare({
     getOutputText: () => outputEditor.getValue(),
     loadShared: (text) => {
+      forgetOpenedFile();
       inputEditor.setValue(text);
       updatePlaceholder();
       formatHandler();
     },
   });
+
+  // Remember the last input across refreshes and closed tabs (draft.js:
+  // this browser only, compressed). Only fills an empty editor, so cURL
+  // Tester hand-offs and share links are never overwritten.
+  const draft = window.BDTDraft?.attach({
+    id: "input",
+    get: () => inputEditor.getValue(),
+    set: (v) => {
+      inputEditor.setValue(v);
+      inputEditor.scrollTo(0, 0);
+      updateStatus();
+      updateValidity();
+      updatePlaceholder();
+      updateFileSizeIndicator();
+    },
+  });
+  if (draft) {
+    inputEditor.on("change", draft.changed);
+    if (!sharedOnLoad) draft.restore();
+  }
 
   // Initialize theme
   initTheme();
@@ -1037,6 +1103,7 @@ function copyHandler() {
 
 function clearHandler() {
   inputEditor.setValue("");
+  forgetOpenedFile();
   outputEditor.setValue("");
   updateValidity();
   updateOutputStatus();
@@ -1047,28 +1114,80 @@ function clearHandler() {
 
 function handleUpload(event) {
   const file = event.target.files[0];
+  event.target.value = ""; // so choosing the same file again still fires "change"
   if (!file) return;
+  readInputFile(file).then(loadFileText);
+}
 
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    inputEditor.setValue(e.target.result);
-    updatePlaceholder();
-  };
-  reader.readAsText(file);
+/** Show a file the user opened (upload or drop) in the input editor. */
+function loadFileText(text) {
+  inputEditor.setValue(text);
+  inputEditor.scrollTo(0, 0);
+  updatePlaceholder();
+  updateValidity();
+  const file = getOpenedFile();
+  if (file) {
+    toast(canSaveInPlace()
+      ? `Opened ${file.name}. Edit it, then press Save (Ctrl/Cmd+S) to update the file.`
+      : `Opened ${file.name}. Save downloads your edited copy with the same name.`, { duration: 5000 });
+  }
+}
+
+/**
+ * The JSON a download or save writes: whichever editor changed last. Opening a
+ * file updates the input; Format, Minify and grid edits update the output; typing
+ * updates the editor you type in. So the output left over from earlier JSON is
+ * never written into a file that was just opened.
+ */
+let lastChangedEditor = "output";
+function currentJsonText() {
+  const [first, second] = lastChangedEditor === "input" ? [inputEditor, outputEditor] : [outputEditor, inputEditor];
+  return first.getValue() || second.getValue();
+}
+
+/** Go to JSON Diff, carrying the JSON being worked on (the output after Format) when it is valid. */
+function openInJsonDiff() {
+  const text = currentJsonText();
+  let valid = false;
+  try { JSON.parse(text); valid = true; } catch { /* nothing to carry */ }
+  if (text.trim() && valid && handOff("diff", text)) {
+    try { window.Analytics?.trackFormatterFeature?.("send_to", "diff_button"); } catch { /* optional */ }
+  }
+  window.location.href = "../jsondiff/";
+}
+
+async function saveHandler() {
+  const file = getOpenedFile();
+  if (!file) return;
+  const text = currentJsonText();
+  try {
+    parseJSONPrecise(text);
+  } catch {
+    toast("This JSON has errors. Fix them before saving, so the file is not damaged.", { duration: 5000 });
+    return;
+  }
+  try {
+    const result = await saveToOpenedFile(text);
+    if (result === "saved") toast(`Saved to ${file.name}`);
+    else if (result === "downloaded") toast(`Downloaded as ${file.name}. This browser cannot write to the original file.`, { duration: 5000 });
+    else toast("Not saved: permission to edit the file was not given.");
+    trackFileSave(result);
+  } catch {
+    toast("Could not save the file.");
+  }
+}
+
+function trackFileSave(result) {
+  // Fixed labels only: never the file name or contents.
+  try { window.Analytics?.trackFormatterFeature?.("file", "save", { result }); } catch { /* optional */ }
 }
 
 function handleDownload() {
-  const blob = new Blob([outputEditor.getValue() || inputEditor.getValue()], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "data.json";
-  a.click();
-  URL.revokeObjectURL(url);
+  downloadText(currentJsonText(), getOpenedFile()?.name || "data.json");
 }
 
 function downloadWithTransform(kind) {
-  let text = outputEditor.getValue() || inputEditor.getValue();
+  let text = currentJsonText();
   try {
     if (kind === 'formatted') text = formatJSON(text);
     if (kind === 'minified') text = minifyJSON(text);
@@ -1116,6 +1235,7 @@ function promptFetchIntoInput() {
   fetch(url)
     .then((r) => r.text())
     .then((t) => {
+      forgetOpenedFile();
       inputEditor.setValue(t);
       updatePlaceholder();
       updateValidity();
@@ -1166,15 +1286,9 @@ function adjustEditorFont(delta) {
 
 function handleDrop(e) {
   e.preventDefault();
-  const file = e.dataTransfer.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = (event) => {
-    inputEditor.setValue(event.target.result);
-    updatePlaceholder();
-  };
-  reader.readAsText(file);
+  // Synchronously, inside the event: the browser only gives out the file handle now.
+  const reading = readDroppedFile(e);
+  if (reading) reading.then(loadFileText);
 }
 
 // --- Placeholder watermark ---

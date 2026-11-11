@@ -174,3 +174,46 @@ pre,
   animation: hourglass-flip 2.8s ease-in-out infinite;
   transform-origin: center;
 }
+
+/* Lottie Player seek bar: visible track, filled "played" part (--pct), round thumb. */
+.lottie-timeline {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 18px; /* tall hit area; the visible track is drawn below */
+  background: transparent;
+  cursor: pointer;
+  --track: hsl(var(--muted-foreground) / 0.3);
+  --fill: hsl(var(--primary));
+}
+.lottie-timeline:focus-visible { outline: none; }
+.lottie-timeline::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--fill) 0 var(--pct, 0%), var(--track) var(--pct, 0%) 100%);
+}
+.lottie-timeline::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  margin-top: -5px; /* centre on the 6px track */
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--fill);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.35);
+  transition: transform 0.12s;
+}
+.lottie-timeline:hover::-webkit-slider-thumb,
+.lottie-timeline:focus-visible::-webkit-slider-thumb { transform: scale(1.2); }
+.lottie-timeline:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 4px hsl(var(--primary) / 0.35); }
+.lottie-timeline::-moz-range-track { height: 6px; border-radius: 999px; background: var(--track); }
+.lottie-timeline::-moz-range-progress { height: 6px; border-radius: 999px; background: var(--fill); }
+.lottie-timeline::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--fill);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.35);
+}
+.lottie-timeline:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 4px hsl(var(--primary) / 0.35); }

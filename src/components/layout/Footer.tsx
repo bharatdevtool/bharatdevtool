@@ -20,10 +20,10 @@ export default function Footer() {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-8">
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-1 space-y-3">
-            <Link href="/tools.html" className="text-sm font-bold tracking-tight text-foreground flex items-center gap-2">
+            <a href="/" className="text-sm font-bold tracking-tight text-foreground flex items-center gap-2">
               <span className="p-1 rounded bg-primary/10 text-primary font-mono text-xs">BDT</span>
               {SITE.name}
-            </Link>
+            </a>
             <p className="text-xs text-muted-foreground leading-relaxed">
               {TOOLS.length} free, privacy-first, client-side utilities engineered for modern developers.
             </p>

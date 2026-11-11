@@ -14,10 +14,16 @@ const nextConfig: NextConfig = {
   ...(isProd
     ? { output: 'export' }
     : {
+        // Mirrors netlify.toml: the tool directory is the homepage.
+        async redirects() {
+          return [
+            { source: '/tools', destination: '/', permanent: true },
+            { source: '/tools.html', destination: '/', permanent: true },
+          ];
+        },
         async rewrites() {
           return [
             { source: '/', destination: '/index.html' },
-            { source: '/tools', destination: '/tools.html' },
             { source: '/jsondiff', destination: '/jsondiff/index.html' },
             { source: '/jsonformatter', destination: '/jsonformatter/index.html' },
             ...staticHtmlTools.map((tool) => ({

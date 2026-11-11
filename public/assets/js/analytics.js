@@ -558,9 +558,11 @@ const Analytics = {
 // ============================================================================
 // Map file paths to user-friendly page names for GA4
 const PAGE_NAMES = {
-  'index.html': 'JSON Formatter',
-  '/': 'JSON Formatter',
-  'jsondiff.html': 'JSON Comparison Tool',
+  '/': 'Home',
+  '/index.html': 'Home',
+  '/jsonformatter/': 'JSON Formatter',
+  '/jsonformatter/index.html': 'JSON Formatter',
+  '/jsondiff/index.html': 'JSON Comparison Tool',
   '/jsondiff/': 'JSON Comparison Tool',
   'deeplink.html': 'DeepLink Launcher',
   'url-encoder.html': 'Url Encoder/Decoder',
@@ -576,7 +578,6 @@ const PAGE_NAMES = {
   'gradient-generator.html': 'Gradient Generator',
   'curl-tester.html': 'cURL Tester',
   'curl-comparison.html': 'cURL Comparison',
-  'tools.html': 'Our Developer Tools',
   'about.html': 'About',
   'feedback.html': 'Feedback',
   'privacy.html': 'Privacy Policy',
@@ -611,8 +612,9 @@ const PAGE_NAMES = {
  */
 function getCurrentPageName() {
   const path = window.location.pathname;
-  const filename = path.split('/').pop() || 'index.html';
-  return PAGE_NAMES[filename] || PAGE_NAMES[path] || document.title || 'Unknown Page';
+  // Full path first: "/", "/jsonformatter/" and "/jsondiff/" all end in an empty or "index.html" file name.
+  const filename = path.split('/').pop();
+  return PAGE_NAMES[path] || (filename && PAGE_NAMES[filename]) || document.title || 'Unknown Page';
 }
 
 // ============================================================================

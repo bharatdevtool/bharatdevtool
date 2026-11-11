@@ -4,6 +4,8 @@
 //   data-input   id of the textarea to fill
 //   data-before  optional id of a button to click first (e.g. pick the JSON → YAML direction)
 //   data-run     optional id of the button that converts
+//   data-input-right  optional id of a second textarea, filled from the payload's "right" (JSON Diff)
+//   data-run-both     optional id of a button to click when both sides were filled (e.g. Compare)
 // The data lives in localStorage for at most 10 minutes and is removed as soon as it is read.
 (function () {
   var script = document.currentScript;
@@ -11,6 +13,8 @@
   var cfg = script.dataset;
   var KEY = 'bdt_handoff';
   var MAX_AGE = 10 * 60 * 1000;
+
+  var right = null;
 
   function take() {
     var raw = null;
@@ -29,6 +33,7 @@
     if (!data || data.to !== cfg.tool) return null;
     try { localStorage.removeItem(KEY); } catch { /* ignore */ }
     if (typeof data.text !== 'string' || Date.now() - data.t > MAX_AGE) return null;
+    right = typeof data.right === 'string' ? data.right : null;
     return data.text;
   }
 
@@ -47,6 +52,14 @@
     input.dispatchEvent(new Event('input', { bubbles: true }));
     input.dispatchEvent(new Event('change', { bubbles: true }));
     click(cfg.run);
+    var second = right !== null && cfg.inputRight && document.getElementById(cfg.inputRight);
+    if (second) {
+      second.value = right;
+      second.dispatchEvent(new Event('input', { bubbles: true }));
+      second.dispatchEvent(new Event('change', { bubbles: true }));
+      click(cfg.runBoth);
+      return;
+    }
     if (cfg.focus) {
       var next = document.getElementById(cfg.focus);
       if (next) next.focus();

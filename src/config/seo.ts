@@ -80,7 +80,7 @@ export function generateToolJsonLd(toolId: string): Record<string, unknown>[] {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Tools', item: `${SITE.url}/tools` },
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE.url}/` },
         { '@type': 'ListItem', position: 2, name: tool.label, item: canonical },
       ],
     },

@@ -28,7 +28,7 @@ export default function ToolLayout({ toolId, children, headingOverride, sidebar,
   const tool = getToolById(toolId);
   if (!tool) throw new Error(`ToolLayout: unknown toolId "${toolId}"`);
 
-  const categoryHref = `/tools.html#cat=${CATEGORY_SLUGS[tool.category]}`;
+  const categoryHref = `/#cat=${CATEGORY_SLUGS[tool.category]}`;
   const categoryTools = TOOLS.filter((t) => t.category === tool.category);
 
   // Get other tools in the same category
@@ -65,9 +65,9 @@ export default function ToolLayout({ toolId, children, headingOverride, sidebar,
 
       {/* Breadcrumb */}
       <nav className="mb-4 flex items-center gap-1.5 text-xs text-muted-foreground" aria-label="Breadcrumb">
-        <Link href="/tools" className="hover:text-foreground transition-colors">
+        <a href="/" className="hover:text-foreground transition-colors">
           Tools
-        </Link>
+        </a>
         <ChevronRight className="w-3.5 h-3.5 opacity-50" />
         <a href={categoryHref} className="px-2 py-0.5 rounded-full bg-muted border border-border text-[11px] font-medium text-muted-foreground hover:text-foreground transition-colors">
           {tool.category}

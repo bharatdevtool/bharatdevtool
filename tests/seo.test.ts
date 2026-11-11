@@ -9,7 +9,7 @@ import { generateToolMetadata, generateToolJsonLd, getToolTitle } from '@/config
 // The sitemap is a static file: legacy HTML tools and Next.js tools share it.
 const PUBLIC_DIR = join(process.cwd(), 'public');
 const sitemapUrls = [...readFileSync(join(PUBLIC_DIR, 'sitemap.xml'), 'utf8').matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
-const toUrl = (route: string) => `${SITE.url}${route === '/index.html' ? '/' : route}`;
+const toUrl = (route: string) => `${SITE.url}${route}`;
 
 // Legacy tools are static HTML pages: their title, description and FAQ live in
 // the HTML file, so the Next.js metadata rules below apply only to Next.js tools.
@@ -74,7 +74,7 @@ describe('SEO registry', () => {
 describe('Shared navigation', () => {
   const footerJs = readFileSync(join(PUBLIC_DIR, 'components', 'footer.js'), 'utf8');
   const footerHrefs = [...footerJs.matchAll(/href: '([^']+)'/g)].map((m) => m[1]).filter((h) => !h.startsWith('http'));
-  const toFooterHref = (route: string) => (route === '/index.html' ? 'index.html' : route.replace(/^\//, ''));
+  const toFooterHref = (route: string) => route.replace(/^\//, '');
 
   it('lists every registered tool in the static HTML footer', () => {
     for (const tool of TOOLS) expect(footerHrefs, tool.id).toContain(toFooterHref(tool.route));
@@ -86,7 +86,7 @@ describe('Shared navigation', () => {
   });
 
   it('gives every tool page in public/ a registry entry', () => {
-    const nonTools = ['about.html', 'privacy.html', 'feedback.html', 'tools.html', 'simple-qr.html'];
+    const nonTools = ['about.html', 'privacy.html', 'feedback.html', 'simple-qr.html'];
     // Landing-page variants of a registered tool (e.g. resize-image-to-20kb.html) point at it instead.
     const isVariant = (f: string) => /<meta name="bdt:variant-of" content="[^"]+">/.test(readFileSync(join(PUBLIC_DIR, f), 'utf8'));
     const pages = readdirSync(PUBLIC_DIR).filter((f) => f.endsWith('.html') && f !== 'index.html' && !nonTools.includes(f) && !isVariant(f));
@@ -108,16 +108,16 @@ describe('Shared navigation', () => {
 describe('Tool categories', () => {
   const slugs = TOOL_CATEGORIES.map((c) => CATEGORY_SLUGS[c]);
   const footerJs = readFileSync(join(PUBLIC_DIR, 'components', 'footer.js'), 'utf8');
-  const toolsHtml = readFileSync(join(PUBLIC_DIR, 'tools.html'), 'utf8');
+  const toolsHtml = readFileSync(join(PUBLIC_DIR, 'index.html'), 'utf8');
 
-  it('uses the same category ids, in the same order, in footer.js and tools.html', () => {
+  it('uses the same category ids, in the same order, in footer.js and the homepage', () => {
     const footerBlock = footerJs.slice(footerJs.indexOf('const TOOL_CATEGORIES'), footerJs.indexOf('];', footerJs.indexOf('const TOOL_CATEGORIES')));
     expect([...footerBlock.matchAll(/id: '([^']+)'/g)].map((m) => m[1])).toEqual(slugs);
     const labelsBlock = toolsHtml.slice(toolsHtml.indexOf('const CATEGORY_LABELS'), toolsHtml.indexOf('};', toolsHtml.indexOf('const CATEGORY_LABELS')));
     expect([...labelsBlock.matchAll(/^\s+'?([a-z-]+)'?: '/gm)].map((m) => m[1])).toEqual(slugs);
   });
 
-  it('gives every tools.html card a known category', () => {
+  it('gives every homepage card a known category', () => {
     const cats = [...toolsHtml.matchAll(/class="feature-card" data-category="([^"]+)"/g)].map((m) => m[1]);
     expect(cats.length).toBe(TOOLS.length);
     for (const c of cats) expect(slugs).toContain(c);
@@ -125,5 +125,46 @@ describe('Tool categories', () => {
 
   it('has no empty category', () => {
     for (const c of TOOL_CATEGORIES) expect(TOOLS.some((t) => t.category === c), c).toBe(true);
+  });
+});
+
+// The homepage (public/index.html) is the tool directory: one card per tool plus
+// an ItemList in its structured data, both hand-written, so check them against the registry.
+describe('Homepage tool directory', () => {
+  const home = readFileSync(join(PUBLIC_DIR, 'index.html'), 'utf8');
+  const routes = TOOLS.map((t) => t.route);
+  const cardHrefs = [...home.matchAll(/<a href="([^"]+)" class="feature-btn"/g)]
+    .map((m) => m[1])
+    .filter((h) => !h.startsWith('http'))
+    .map((h) => (h.startsWith('/') ? h : `/${h}`));
+
+  it('has a card linking to every registered tool, and no card for an unknown page', () => {
+    expect([...cardHrefs].sort()).toEqual([...routes].sort());
+  });
+
+  it('lists every registered tool in the ItemList structured data', () => {
+    const ld = JSON.parse(home.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)![1]);
+    const list = ld['@graph'].find((n: { '@type': string }) => n['@type'] === 'ItemList');
+    const urls = list.itemListElement.map((i: { url: string }) => i.url);
+    expect([...urls].sort()).toEqual(TOOLS.map((t) => toUrl(t.route)).sort());
+    expect(list.numberOfItems).toBe(TOOLS.length);
+  });
+
+  it('has one h1 and FAQ structured data that matches the visible FAQ', () => {
+    expect(home.match(/<h1[\s>]/g)?.length).toBe(1);
+    const ld = JSON.parse(home.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)![1]);
+    const faq = ld['@graph'].find((n: { '@type': string }) => n['@type'] === 'FAQPage');
+    const visible = [...home.matchAll(/<button class="faq-question"[^>]*>\s*<span>([^<]+)<\/span>/g)].map((m) => m[1]);
+    expect(faq.mainEntity.map((q: { name: string }) => q.name)).toEqual(visible);
+  });
+});
+
+
+describe('llms.txt', () => {
+  it('links every registered tool by its canonical URL', async () => {
+    const { buildLlmsTxt } = await import('@/lib/seo/llms');
+    const txt = buildLlmsTxt();
+    expect(txt.startsWith(`# ${SITE.name}\n`)).toBe(true);
+    for (const tool of TOOLS) expect(txt, tool.id).toContain(`](${toUrl(tool.route)})`);
   });
 });

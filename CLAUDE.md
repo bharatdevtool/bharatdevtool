@@ -46,6 +46,7 @@ Rules:
 - `src/config/tools.ts` registers **every** tool on both stacks (it drives the Next.js footer, related tools and ⌘K search). `legacy` is derived from the route: routes ending in `.html` or `/` are static HTML pages; clean paths (`/pdf-editor`) are Next.js pages. Next.js tools live at the site root (no `/tools/` prefix; old `/tools/*` links 301 in `netlify.toml`).
 - `public/components/footer.js` (`ALL_TOOLS_LIST`) is the HTML-side tool list. Tests fail if it drifts from the registry.
 - `public/sitemap.xml` is a hand-maintained static file shared by both stacks. Tests fail if a tool or HTML page is missing.
+- `/` (`public/index.html`) is the tool directory (the old `tools.html`; `/tools` and `/tools.html` 301 to it). The JSON Formatter lives only at `/jsonformatter/`.
 - Sentry: both stacks use the same Sentry Loader Script; Next.js code reports via `src/lib/monitoring/errorReporting.ts`.
 
 ---
@@ -131,7 +132,7 @@ When creating a new **Next.js** tool:
    - `src/app/<slug>/page.tsx` (Server Component with `generateToolMetadata('<tool-id>')`).
    - `src/app/<slug>/<ToolName>Client.tsx` (Client Component using `ToolLayout`).
 6. **Track key actions** with `analytics.track(ANALYTICS_EVENTS.X)` — add the constant to `ANALYTICS_EVENTS` in `src/config/site.ts`.
-7. **Add it to navigation and the sitemap**: `public/components/footer.js` (`ALL_TOOLS_LIST`), `public/tools.html`, and `public/sitemap.xml`.
+7. **Add it to navigation and the sitemap**: `public/components/footer.js` (`ALL_TOOLS_LIST`), the homepage `public/index.html` (a tool card **and** an entry in its JSON-LD `ItemList`), and `public/sitemap.xml`. `/llms.txt` is generated from the registry automatically. After the deploy is live, run `pnpm indexnow /<slug>` to tell Bing and other IndexNow engines.
 8. **Verify**: `pnpm exec tsc --noEmit --skipLibCheck`, `pnpm test` (enforces FAQs, title ≤ 60 chars, description 140–160 chars, sitemap and footer coverage), and `pnpm build`.
 
 **Resize Image to KB landing pages** (`resize-image-to-20kb.html`, `upsc-photo-signature-resize.html`, …) are generated: `public/resize-image-to-kb.html` is the template (its `<!-- kb:… -->` regions are replaced per page), page text lives in `scripts/kb-pages.mjs`, exam limits in `public/assets/js/exam-presets.js`, and the UI in `public/assets/js/resize-to-kb-page.js`. After editing any of them run `pnpm gen:pages` (it also adds new pages to the sitemap); `tests/kb-pages.test.ts` fails on stale pages. The QR generator works the same way: `public/qr-generator-free.html` is the template for `visiting-card-qr-code.html` etc., page text in `scripts/qr-pages.mjs`, checked by `tests/qr-pages.test.ts`. These pages carry `<meta name="bdt:variant-of">` and are not separate registry entries.

@@ -443,7 +443,7 @@
           <button id="clear-original" class="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors px-2 py-1 rounded" aria-label="Clear original text">Clear</button>
         </div>
         <textarea
-          id="original-text"
+          id="original-text" data-draft
           class="diff-textarea diff-input"
           rows="12"
           placeholder="Paste original text here…"
@@ -459,7 +459,7 @@
           <button id="clear-modified" class="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors px-2 py-1 rounded" aria-label="Clear modified text">Clear</button>
         </div>
         <textarea
-          id="modified-text"
+          id="modified-text" data-draft
           class="diff-textarea diff-input"
           rows="12"
           placeholder="Paste modified text here…"
@@ -1096,5 +1096,7 @@
       });
     });
   </script>
+  <!-- Remembers the last input across refreshes (this browser only) -->
+  <script src="assets/js/draft.js" defer></script>
 </body>
 </html>

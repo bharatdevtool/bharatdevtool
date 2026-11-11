@@ -180,7 +180,7 @@
         "name": "Does the tool store my data?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "No, we do not store any of your JSON data. All processing happens entirely in your browser. Your data never leaves your device, ensuring complete privacy and security."
+          "text": "Your JSON is never sent to or stored on our servers: all processing happens in your browser. To survive a refresh or a closed tab, your last input is kept only in this browser on your device, compressed, for up to 7 days. Clearing the input deletes it straight away."
         }
       },
       {
@@ -213,6 +213,14 @@
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "Yes! You can upload JSON files by clicking the Upload button in the input pane toolbar, or simply drag and drop a .json file onto the input editor. The file content will be loaded automatically."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I edit a JSON file and save it back?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Open the file with Upload or drag and drop, edit it in the code view or the grid, then press Save (Ctrl/Cmd+S). In Chrome and Edge on a computer the changes are written into the same file after you allow it once. In other browsers Save downloads the edited file with the same name. Invalid JSON is never saved."
         }
       },
       {
@@ -282,7 +290,7 @@
          class="logo">
     
     <!-- Brand Text -->
-    <a href="index.html" class="brand-text-link">
+    <a href="../" class="brand-text-link">
       <span class="brand-text">Bharat Dev Tools</span>
     </a>
 
@@ -294,7 +302,7 @@
   <div class="header-actions" role="group" aria-label="Quick actions">
     <!-- All Tools Link -->
     <div class="tools-link">
-      <a href="tools.html" class="tools-btn" title="All Tools">
+      <a href="../" class="tools-btn" title="All Tools">
         <span class="tools-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></svg></span>
         <div class="tools-label">
           <span>All</span>
@@ -434,8 +442,7 @@
           id="jsondiff-btn"
           type="button"
           class="btn-secondary"
-          title="Compare two JSON documents side-by-side"
-          onclick="window.location.href='jsondiff/';"
+          title="Compare this JSON with another in JSON Diff"
         >
           JSON Diff
         </button>
@@ -468,6 +475,8 @@
             <button id="share-btn" class="icon-btn" title="Copy a share link (the JSON travels inside the link, not through our server)" aria-label="Copy a share link" data-tip="Share link">
               <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4"/><path d="m15.4 6.5-6.8 4"/></svg>
             </button>
+            <!-- Shown once a file is opened (Upload or drag & drop); see assets/js/json-file.js -->
+            <button id="output-save-btn" class="icon-btn" title="Save" aria-label="Save" data-tip="Save" hidden><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/><path d="M7 3v4a1 1 0 0 0 1 1h7"/></svg></button>
             <div class="menu" id="download-menu">
               <button id="output-download-btn" class="icon-btn" title="Download JSON" aria-label="Download JSON" data-tip="Download">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V9"/><path d="M8 17l4 4 4-4"/><path d="M5 3h14a2 2 0 0 1 2 2v6"/></svg>
@@ -605,7 +614,7 @@
               <span class="faq-icon">+</span>
             </button>
             <div class="faq-answer">
-              <p>No, we do not store any of your JSON data. All processing happens entirely in your browser. Your data never leaves your device, ensuring complete privacy and security.</p>
+              <p>Your JSON is never sent to or stored on our servers: all processing happens in your browser. To survive a refresh or a closed tab, your last input is kept only in this browser on your device, compressed, for up to 7 days. Clearing the input deletes it straight away.</p>
             </div>
           </div>
           
@@ -656,6 +665,16 @@
               <p>Yes! You can upload JSON files by clicking the Upload button in the input pane toolbar, or simply drag and drop a .json file onto the input editor. The file content will be loaded automatically.</p>
             </div>
           </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Can I edit a JSON file and save it back?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes. Open the file with Upload or drag and drop, edit it in the code view or the grid, then press Save (Ctrl/Cmd+S). In Chrome and Edge on a computer the changes are written into the same file after you allow it once. In other browsers Save downloads the edited file with the same name. Invalid JSON is never saved.</p>
+            </div>
+          </div>
           
           <div class="faq-item">
             <button class="faq-question" aria-expanded="false">
@@ -691,6 +710,8 @@
     });
   </script>
 
+  <!-- Remembers the last input across refreshes (this browser only); used by app.js -->
+  <script src="../assets/js/draft.js" defer></script>
   <script type="module" src="../assets/js/app.js"></script>
   
   <!-- FAQ Accordion Script -->
