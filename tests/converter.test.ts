@@ -4,7 +4,11 @@ import {
   extractDotLottie,
   isDotLottieBuffer,
 } from '@/lib/lottie/dotLottie';
-import { LOTTIE_SAMPLES } from '@/lib/lottie/samples';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { LOTTIE_SAMPLES, parseLottieSample } from '@/lib/lottie/samples';
+
+const readSample = (url: string) => new Uint8Array(readFileSync(join(process.cwd(), 'public', url)));
 import type { LottieAnimation } from '@/lib/lottie/types';
 
 describe('Lottie to dotLottie Converter Suite', () => {
@@ -69,7 +73,7 @@ describe('Lottie to dotLottie Converter Suite', () => {
   });
 
   it('achieves substantial compression reduction over raw JSON on standard animations', () => {
-    const realAnimation = LOTTIE_SAMPLES[0].data;
+    const realAnimation = parseLottieSample(readSample(LOTTIE_SAMPLES[0].url)).animation;
     const rawJsonString = JSON.stringify(realAnimation, null, 2);
     const rawSize = new Blob([rawJsonString]).size;
 
@@ -85,5 +89,20 @@ describe('Lottie to dotLottie Converter Suite', () => {
     expect(extraction.success).toBe(false);
     expect(extraction.error).toBeDefined();
   });
-});
 
+  it('ships sample .lottie files that all open and have layers to play', () => {
+    expect(LOTTIE_SAMPLES.length).toBeGreaterThanOrEqual(3);
+    for (const sample of LOTTIE_SAMPLES) {
+      const { animation, rawJson } = parseLottieSample(readSample(sample.url));
+      expect(animation.layers?.length, sample.id).toBeGreaterThan(0);
+      expect((animation.op ?? 0) - (animation.ip ?? 0), sample.id).toBeGreaterThan(0);
+      expect(JSON.parse(rawJson).w, sample.id).toBe(animation.w);
+    }
+  });
+
+  it('inlines a sample\'s embedded images so it plays offline', () => {
+    const { animation } = parseLottieSample(readSample('/samples/lottie/love-dancing.lottie'));
+    const images = (animation.assets ?? []).filter((a) => typeof (a as { p?: string }).p === 'string' && (a as { p: string }).p.startsWith('data:image/'));
+    expect(images.length).toBeGreaterThan(0);
+  });
+});

@@ -9,7 +9,9 @@ import ErrorMessage from '@/components/ui/ErrorMessage';
 import CopyButton from '@/components/ui/CopyButton';
 import { optimizeLottie } from '@/lib/lottie/optimizer';
 import { parseLottieJSON, sanitizeAnimationForPrivacy } from '@/lib/lottie/parser';
-import { LOTTIE_SAMPLES } from '@/lib/lottie/samples';
+import { EMPTY_ANIMATION } from '@/lib/lottie/samples';
+import { useLottieSamples } from '@/hooks/useLottieSamples';
+import { sendToJsonDiff } from '@/lib/staticHandoff';
 import { setCrossToolData } from '@/lib/crossToolData';
 import { useCrossToolData } from '@/hooks/useCrossToolData';
 import { extractLottieFromFile, createDotLottie } from '@/lib/lottie/dotLottie';
@@ -61,10 +63,18 @@ function optimizeOrPassthrough(
 
 export default function LottieOptimizerClient() {
   const router = useRouter();
-  const [activeSampleId, setActiveSampleId] = useState<string>(LOTTIE_SAMPLES[0].id);
-  const [animationData, setAnimationData] = useState<LottieAnimation>(LOTTIE_SAMPLES[0].data);
-  const [rawJson, setRawJson] = useState<string>(() => JSON.stringify(LOTTIE_SAMPLES[0].data, null, 2));
+  const [animationData, setAnimationData] = useState<LottieAnimation>(EMPTY_ANIMATION);
+  const [rawJson, setRawJson] = useState<string>(() => JSON.stringify(EMPTY_ANIMATION, null, 2));
   const [error, setError] = useState<string | null>(null);
+
+  const { samples: LOTTIE_SAMPLES, activeSampleId, selectSample, markUserContent } = useLottieSamples(
+    (_sample, loaded) => {
+      setAnimationData(loaded.animation);
+      setRawJson(loaded.rawJson);
+      setError(null);
+    },
+    (message) => setError(message)
+  );
 
   // Check for incoming cross-tool data on mount
   useCrossToolData<{ lottieJson: string }>('lottie-optimizer', ({ lottieJson }) => {
@@ -72,7 +82,7 @@ export default function LottieOptimizerClient() {
     if (parsed.success && parsed.animation) {
       setAnimationData(parsed.animation);
       setRawJson(lottieJson);
-      setActiveSampleId('');
+      markUserContent();
     }
   });
 
@@ -108,13 +118,26 @@ export default function LottieOptimizerClient() {
     [animationData, precision, removeNames, removeMarkers, removeHidden, removeMetadata, minifyWhitespace, rawJson]
   );
 
+  // JSON Diff is a static page: it reads the hand-off from localStorage (see src/lib/staticHandoff.ts).
   const handleCompareInJsonDiff = () => {
-    setCrossToolData('json-diff', {
-      left: JSON.stringify(animationData, null, 2),
-      right: optimizationResult.optimizedJson,
-    });
-    router.push('/jsondiff/');
+    const ok = sendToJsonDiff(
+      JSON.stringify(animationData, null, 2),
+      JSON.stringify(optimizationResult.optimizedAnimation, null, 2)
+    );
+    if (!ok) setError('This animation is too large to open in JSON Diff. Download both files and compare them there.');
   };
+
+  // The same comparison for the .lottie download (zipped; embedded images packed as files).
+  const dotLottieSizes = useMemo(() => {
+    try {
+      const original = createDotLottie(animationData, { name: 'original', id: 'original' }).byteLength;
+      const optimized = createDotLottie(optimizationResult.optimizedAnimation, { name: 'optimized', id: 'optimized' }).byteLength;
+      const percent = original > 0 ? Math.round(((original - optimized) / original) * 1000) / 10 : 0;
+      return { original, optimized, percent };
+    } catch {
+      return null;
+    }
+  }, [animationData, optimizationResult.optimizedAnimation]);
 
   // Load and synchronize side-by-side players
   useEffect(() => {
@@ -207,20 +230,13 @@ export default function LottieOptimizerClient() {
 
     setAnimationData(res.animation);
     setRawJson(res.rawJson || JSON.stringify(res.animation, null, 2));
-    setActiveSampleId('');
+    markUserContent();
     setError(null);
     if (fileInputRef.current) fileInputRef.current.value = '';
     analytics.track(ANALYTICS_EVENTS.LOAD_LOTTIE, { tool: 'optimizer', format: file.name.toLowerCase().endsWith('.lottie') ? 'lottie' : 'json' });
   };
 
-  const handleSampleSelect = (id: string) => {
-    const s = LOTTIE_SAMPLES.find((item) => item.id === id);
-    if (!s) return;
-    setActiveSampleId(id);
-    setAnimationData(s.data);
-    setRawJson(JSON.stringify(s.data, null, 2));
-    setError(null);
-  };
+  const handleSampleSelect = (id: string) => selectSample(id);
 
   const handleDownload = () => {
     const blob = new Blob([optimizationResult.optimizedJson], { type: 'application/json' });
@@ -326,20 +342,26 @@ export default function LottieOptimizerClient() {
             <span className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">
               Optimization Summary
             </span>
-            <div className="flex items-baseline gap-3">
-              <span className="text-2xl font-extrabold text-foreground font-mono">
-                {formatBytes(optimizationResult.originalSize)}
-              </span>
-              <span className="text-muted-foreground text-sm">→</span>
-              <span className="text-2xl font-extrabold text-emerald-500 font-mono">
-                {formatBytes(optimizationResult.optimizedSize)}
-              </span>
-              <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold font-mono">
-                -{optimizationResult.savingsPercentage}%
-              </span>
+            <div className="flex flex-wrap gap-x-8 gap-y-3 pt-1">
+              <SizeComparison
+                label="JSON"
+                before={optimizationResult.originalSize}
+                after={optimizationResult.optimizedSize}
+                percent={optimizationResult.savingsPercentage}
+              />
+              {dotLottieSizes && (
+                <SizeComparison
+                  label=".lottie"
+                  before={dotLottieSizes.original}
+                  after={dotLottieSizes.optimized}
+                  percent={dotLottieSizes.percent}
+                />
+              )}
             </div>
             <p className="text-xs text-muted-foreground">
-              Saved {formatBytes(optimizationResult.savedBytes)} using conservative non-destructive transforms.
+              {optimizationResult.savedBytes > 0
+                ? `Saved ${formatBytes(optimizationResult.savedBytes)} of JSON (${optimizationResult.savingsPercentage}% smaller) using conservative, non-destructive transforms.`
+                : 'Already compact with these settings. Try lower precision or removing names and metadata.'}
             </p>
           </div>
 
@@ -518,8 +540,9 @@ export default function LottieOptimizerClient() {
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between text-xs px-1">
                   <span className="font-semibold text-emerald-500">Optimized Result</span>
-                  <span className="font-mono text-emerald-500 font-bold">
+                  <span className="flex items-center gap-1.5 font-mono text-emerald-500 font-bold">
                     {formatBytes(optimizationResult.optimizedSize)}
+                    <SavingsBadge percent={optimizationResult.savingsPercentage} />
                   </span>
                 </div>
                 <div className="h-[280px] rounded-xl border border-emerald-500/30 bg-[#090E17] flex items-center justify-center p-4 overflow-hidden shadow-inner">
@@ -559,6 +582,40 @@ export default function LottieOptimizerClient() {
         </div>
       </div>
     </ToolLayout>
+  );
+}
+
+/** "−23.4%" in green when smaller, "+1.2%" in amber when larger, "0%" otherwise. */
+function SavingsBadge({ percent }: { percent: number }) {
+  const smaller = percent > 0;
+  const larger = percent < 0;
+  return (
+    <span
+      className={`px-2 py-0.5 rounded-full border text-[11px] font-bold font-mono ${
+        smaller
+          ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-600 dark:text-emerald-400'
+          : larger
+          ? 'bg-amber-500/10 border-amber-500/20 text-amber-600 dark:text-amber-400'
+          : 'bg-muted border-border text-muted-foreground'
+      }`}
+    >
+      {smaller ? `−${percent}%` : larger ? `+${Math.abs(percent)}%` : '0%'}
+    </span>
+  );
+}
+
+/** Before → after size of one format, with the change in percent. */
+function SizeComparison({ label, before, after, percent }: { label: string; before: number; after: number; percent: number }) {
+  return (
+    <div className="space-y-0.5">
+      <div className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">{label}</div>
+      <div className="flex items-baseline gap-2.5">
+        <span className="text-xl font-extrabold text-foreground font-mono">{formatBytes(before)}</span>
+        <span className="text-muted-foreground text-sm">→</span>
+        <span className="text-xl font-extrabold text-emerald-500 font-mono">{formatBytes(after)}</span>
+        <SavingsBadge percent={percent} />
+      </div>
+    </div>
   );
 }
 

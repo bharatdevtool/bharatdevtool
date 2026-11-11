@@ -10,7 +10,8 @@ import CodeEditor from '@/components/ui/CodeEditor';
 import OutputPane from '@/components/ui/OutputPane';
 import { parseLottieJSON, type LottieParseResult } from '@/lib/lottie/parser';
 import { createDotLottie, extractDotLottie, type DotLottieManifest } from '@/lib/lottie/dotLottie';
-import { LOTTIE_SAMPLES } from '@/lib/lottie/samples';
+import { EMPTY_ANIMATION } from '@/lib/lottie/samples';
+import { useLottieSamples } from '@/hooks/useLottieSamples';
 import { setCrossToolData } from '@/lib/crossToolData';
 import { useCrossToolData } from '@/hooks/useCrossToolData';
 import type { LottieAnimation } from '@/lib/lottie/types';
@@ -64,8 +65,13 @@ export default function LottieConverterClient() {
   const [mode, setMode] = useState<Mode>('json-to-lottie');
 
   // Mode 1: JSON -> .lottie states
-  const [jsonInput, setJsonInput] = useState<string>(() => JSON.stringify(LOTTIE_SAMPLES[0].data, null, 2));
+  const [jsonInput, setJsonInput] = useState<string>(() => JSON.stringify(EMPTY_ANIMATION, null, 2));
   const [animationId, setAnimationId] = useState<string>('animation');
+  // Sample animations: the first loads on open; the editor's "Sample" button cycles through them.
+  const { samples: LOTTIE_SAMPLES, activeSampleId, selectSample, markUserContent } = useLottieSamples((sample, loaded) => {
+    setJsonInput(loaded.rawJson);
+    setAnimationId(sample.id.replace(/-/g, '_'));
+  });
   const [loopSetting, setLoopSetting] = useState<boolean>(true);
   const [speedSetting, setSpeedSetting] = useState<number>(1);
 
@@ -88,6 +94,7 @@ export default function LottieConverterClient() {
   // Cross-tool data ingestion
   useCrossToolData<{ lottieJson: string }>('lottie-converter', ({ lottieJson }) => {
     setJsonInput(lottieJson);
+    markUserContent();
     setMode('json-to-lottie');
   });
 
@@ -267,13 +274,15 @@ export default function LottieConverterClient() {
                   title="Source Bodymovin JSON"
                   language="json"
                   value={jsonInput}
-                  onChange={setJsonInput}
+                  onChange={(val) => {
+                    setJsonInput(val);
+                    markUserContent();
+                  }}
                   placeholder="Paste Lottie JSON payload here..."
                   height={240}
                   onSample={() => {
-                    const sample = LOTTIE_SAMPLES[0];
-                    setJsonInput(JSON.stringify(sample.data, null, 2));
-                    setAnimationId(sample.id);
+                    const i = LOTTIE_SAMPLES.findIndex((s) => s.id === activeSampleId);
+                    selectSample(LOTTIE_SAMPLES[(i + 1) % LOTTIE_SAMPLES.length].id);
                   }}
                 />
 
