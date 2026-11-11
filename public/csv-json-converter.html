@@ -468,7 +468,7 @@
             </div>
           </div>
           <textarea
-            id="inputArea"
+            id="inputArea" data-draft data-draft-mode="modeCsvToJson modeJsonToCsv"
             class="code-textarea"
             rows="16"
             placeholder="Paste your CSV here, e.g.:&#10;name,age,city&#10;Alice,30,Mumbai&#10;Bob,25,Delhi"
@@ -1033,5 +1033,7 @@
   </script>
   <!-- Receives JSON from the JSON Formatter's "Send to" menu -->
   <script src="assets/js/handoff.js" data-tool="csv" data-input="inputArea" data-before="modeJsonToCsv" data-run="convertBtn" defer></script>
+  <!-- Remembers the last input across refreshes (this browser only) -->
+  <script src="assets/js/draft.js" defer></script>
 </body>
 </html>

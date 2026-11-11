@@ -19,6 +19,8 @@ function defaultGreetingJSON() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+  // Opened from a share link: that JSON wins over the remembered draft.
+  const sharedOnLoad = !!window.__bdtShared;
   // Initialize CodeMirror editors
   inputEditor = CodeMirror(document.getElementById("input-editor"), {
     mode: "application/json",
@@ -261,6 +263,26 @@ window.addEventListener("DOMContentLoaded", () => {
       formatHandler();
     },
   });
+
+  // Remember the last input across refreshes and closed tabs (draft.js:
+  // this browser only, up to 300 lines). Only fills an empty editor, so cURL
+  // Tester hand-offs and share links are never overwritten.
+  const draft = window.BDTDraft?.attach({
+    id: "input",
+    get: () => inputEditor.getValue(),
+    set: (v) => {
+      inputEditor.setValue(v);
+      inputEditor.scrollTo(0, 0);
+      updateStatus();
+      updateValidity();
+      updatePlaceholder();
+      updateFileSizeIndicator();
+    },
+  });
+  if (draft) {
+    inputEditor.on("change", draft.changed);
+    if (!sharedOnLoad) draft.restore();
+  }
 
   // Initialize theme
   initTheme();
