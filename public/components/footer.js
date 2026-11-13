@@ -51,6 +51,7 @@ const ALL_TOOLS_LIST = [
   { label: 'cURL Tester', href: 'curl-tester.html', cat: 'developer' },
   { label: 'cURL Comparison', href: 'curl-comparison.html', cat: 'developer' },
   { label: 'WhatsApp Link Generator', href: 'whatsapp-link.html', cat: 'qr-links' },
+  { label: 'QuickDrop', href: 'quickdrop', cat: 'qr-links' },
   { label: 'UUID Generator', href: 'uuid-generator.html', cat: 'security' },
   { label: 'Percentage Calculator', href: 'percentage-calculator.html', cat: 'calculators' },
   { label: 'BMI Calculator', href: 'bmi-calculator.html', cat: 'calculators' },

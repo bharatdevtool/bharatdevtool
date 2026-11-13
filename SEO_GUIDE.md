@@ -220,6 +220,49 @@ Keywords used naturally in context.
 
 ---
 
+## Standard Specification for New Pages & Tools (Agent & Developer Rules)
+
+Any agent or developer adding a new page or tool to Bharat Dev Tools MUST adhere to the following rules, verified automatically by `tests/seo.test.ts` and `tests/static-pages.test.ts`.
+
+### 1. Title & Meta Description Constraints
+- **`<title>`**: Must be between 1 and 60 characters total, branded once:
+  `Tool Name — Core Action or Problem Solved | Bharat Dev Tools`
+- **`<meta name="description">`**: Must be strictly between 140 and 160 characters. Must clearly state that it is free, runs in the browser, and requires zero server uploads.
+- **Social Metadata Sync**:
+  - `meta[property="og:title"]` and `meta[name="twitter:title"]` MUST equal `<title>` exactly.
+  - `meta[property="og:description"]` and `meta[name="twitter:description"]` MUST equal `<meta name="description">` exactly.
+
+### 2. Error-Driven Search Intent & FAQ Structure
+- Developers search for exact error messages when things fail. Whenever relevant, incorporate targeted error keywords into `keywords`, `description`, and FAQ questions.
+  - Examples: `"how to fix unexpected token in json"`, `"invalid base64 string length"`, `"failed to connect webrtc data channel"`.
+- **Word-for-Word Matching**: Visible FAQ accordion text and the Schema.org `FAQPage` JSON-LD schema MUST match word-for-word to comply with Google Search Essentials.
+- Required FAQ topics for every tool:
+  1. Primary function & usage guide ("How to use X?").
+  2. Common troubleshooting or error solution ("How to fix error Y?").
+  3. Client-side privacy & security disclosure ("Is data uploaded to a server?").
+  4. File size / compatibility / feature limits.
+
+### 3. Structured Data (Schema.org JSON-LD)
+- **Next.js Tools**: Handled automatically via `<ToolLayout toolId="...">` + `src/config/seo.ts` (generates `WebApplication`, `BreadcrumbList`, and `FAQPage`).
+- **Static HTML Tools**: Include `<script type="application/ld+json">` declaring `WebApplication`, `BreadcrumbList`, and `FAQPage`.
+
+### 4. The 4 Synchronization Points (Single Source of Truth)
+Whenever a new tool is introduced, all 4 locations must be updated simultaneously:
+1. `src/config/tools.ts`: Register the tool entry (`id`, `label`, `route`, `category`, `description`, `shortDesc`, `keywords`).
+2. `public/components/footer.js`: Add the tool route to `ALL_TOOLS_LIST` under the matching category slug.
+3. `public/sitemap.xml`: Add the canonical URL `<loc>https://bharatdevtool.com/<route></loc>`.
+4. `public/index.html`: Add the feature card to `.features-grid` with `data-category="..."` and search `data-tags="..."`.
+
+### 5. Automated Pre-Commit Verification
+Always run the test suites before shipping changes:
+```bash
+npx vitest run tests/seo.test.ts tests/static-pages.test.ts
+npx tsc --noEmit --skipLibCheck
+pnpm build
+```
+
+---
+
 ## Summary
 
 ✅ **You DON'T need lots of keywords** - Use them naturally
@@ -227,5 +270,4 @@ Keywords used naturally in context.
 ✅ **Write for humans first** - Google rewards helpful content
 ✅ **Be patient** - SEO takes time (weeks to months)
 ✅ **Keep improving** - Regular updates help rankings
-
 Your main tool pages already have excellent SEO! The improvements I'm making to about.html, privacy.html, and feedback.html will complete your SEO optimization across all pages.

@@ -768,6 +768,33 @@ export const TOOL_FAQS: Record<string, ToolFaq[]> = {
     },
     { question: 'Is my phone number sent to a server?', answer: PRIVACY_ANSWER },
   ],
+  'quickdrop': [
+    {
+      question: 'What is QuickDrop and how does it work?',
+      answer:
+        'QuickDrop is a free, in-browser peer-to-peer file transfer tool. It connects two devices directly using WebRTC DataChannels over your local Wi-Fi or the internet. Files stream directly from sender to receiver without passing through a server.',
+    },
+    {
+      question: 'Are my files uploaded to or stored on any server?',
+      answer:
+        'No. Unlike cloud storage or email, your files are never uploaded to, processed by, or stored on any server. Data flows directly between the two browser sessions, end-to-end encrypted via WebRTC (DTLS/SCTP).',
+    },
+    {
+      question: 'Is there any file size limit in QuickDrop?',
+      answer:
+        'No. Because files stream directly between devices in 64KB binary chunks without passing through server memory, there is no file size limit. You can transfer gigabyte-sized videos, zip archives, or high-res photos freely.',
+    },
+    {
+      question: 'How do I fix "Failed to connect to peer" or WebRTC connection errors?',
+      answer:
+        'If two devices fail to connect automatically, it is usually due to symmetric NAT or client isolation on public Wi-Fi networks (like universities or cafes). To resolve this, click "Pair Device" to create a direct pairing room, or ensure both devices have WebRTC enabled in browser privacy settings.',
+    },
+    {
+      question: 'Does QuickDrop work across different operating systems?',
+      answer:
+        'Yes. QuickDrop runs entirely in modern web browsers (Chrome, Safari, Firefox, Edge) and works seamlessly across Android, iOS, Windows, macOS, Linux, and ChromeOS with no app installation required.',
+    },
+  ],
 };
 
 /** FAQs for a tool, or an empty list when none are defined */

@@ -229,6 +229,27 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     shortDesc: 'Create wa.me click-to-chat links',
     keywords: ['whatsapp link generator', 'wa.me link', 'whatsapp click to chat', 'whatsapp api link'],
   },
+  {
+    id: 'quickdrop',
+    label: 'QuickDrop',
+    route: '/quickdrop',
+    category: 'QR & Links',
+    description:
+      'Fast, private peer-to-peer file transfer between devices over Wi-Fi. No file size limits, zero server uploads, 100% encrypted in your browser.',
+    shortDesc: 'Instant P2P file share over Wi-Fi',
+    keywords: [
+      'quickdrop',
+      'p2p file transfer',
+      'pairdrop online',
+      'snapdrop alternative',
+      'airdrop for pc',
+      'share files wifi',
+      'browser to browser file share',
+      'webrtc file transfer',
+      'webrtc datachannel error',
+      'failed to connect webrtc peer'
+    ],
+  },
   // ── Lottie ────────────────────────────────────────────────
   {
     id: 'lottie-player',
