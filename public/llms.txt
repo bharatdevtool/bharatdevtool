@@ -1,0 +1,57 @@
+# Bharat Dev Tools
+
+> Free, fast, privacy-first developer utilities running 100% client-side in the browser. Zero server uploads, no sign-ups, no tracking of user payloads.
+
+## Core Capabilities
+Bharat Dev Tools provides web-based utilities for software engineers, designers, students, and digital creators. All data processing (JSON formatting, image compression, PDF editing, crypto hashing, deep link testing) is performed entirely on the client device using modern Web APIs, WebAssembly, and Canvas.
+
+## Tool Directory
+
+### JSON & Data Tools
+- [JSON Formatter & Viewer](https://bharatdevtool.com/jsonformatter/): Format, validate, beautify, minify, repair syntax errors, and query JSON with JSONPath.
+- [JSON Diff](https://bharatdevtool.com/jsondiff/): Compare two JSON documents side-by-side with color-coded key additions, removals, and modifications.
+- [JSON to TypeScript](https://bharatdevtool.com/json-to-typescript.html): Convert JSON payloads to TypeScript interfaces and type definitions.
+- [CSV to JSON Converter](https://bharatdevtool.com/csv-json-converter.html): Convert CSV spreadsheets to JSON arrays and vice versa.
+- [YAML to JSON Converter](https://bharatdevtool.com/yaml-json-converter.html): Bi-directional YAML and JSON parser and converter.
+
+### Image & Media Utilities
+- [Image Compressor](https://bharatdevtool.com/image-compressor.html): Compress PNG, JPEG, and WebP images client-side without quality loss.
+- [Image Resizer & Govt Exam Suite](https://bharatdevtool.com/image-resizer.html): Resize images by exact pixels, percentage, or target file size (e.g. 20KB, 50KB for UPSC, SSC, IBPS, and State PSC forms).
+- [Image Converter](https://bharatdevtool.com/image-converter.html): Convert between PNG, JPEG, WebP, AVIF, and SVG formats.
+- [Favicon Generator](https://bharatdevtool.com/favicon-generator.html): Generate full favicon packages (16x16, 32x32, apple-touch-icon, android-chrome) from any image.
+
+### PDF Utilities (Zero Server Upload)
+- [Merge PDF](https://bharatdevtool.com/merge-pdf/): Combine multiple PDF documents into a single file locally.
+- [Compress PDF](https://bharatdevtool.com/compress-pdf/): Reduce PDF file sizes without uploading confidential documents.
+- [Split PDF](https://bharatdevtool.com/split-pdf/): Extract specific pages or split PDF into separate files.
+- [Protect & Unlock PDF](https://bharatdevtool.com/protect-pdf/): Add or remove passwords and permissions on PDF files client-side.
+- [Sign & Watermark PDF](https://bharatdevtool.com/sign-pdf/): Add digital signatures, text, or image watermarks.
+- [Redact PDF](https://bharatdevtool.com/redact-pdf/): Permanently black out sensitive information client-side.
+
+### Developer Utilities & Link Testing
+- [DeepLink Launcher](https://bharatdevtool.com/deeplink.html): Test Android App Links, intent URIs, and iOS Universal Links directly from browser.
+- [cURL Tester & Runner](https://bharatdevtool.com/curl-tester.html): Parse, test, and convert cURL command lines into fetch and axios requests.
+- [JWT Decoder](https://bharatdevtool.com/jwt-decoder.html): Decode JSON Web Tokens, inspect headers, claims, and expiry without sending tokens to a server.
+- [URL Encoder / Decoder](https://bharatdevtool.com/url-encoder.html): Percent-encode and decode query parameters and URIs.
+- [Base64 Encoder / Decoder](https://bharatdevtool.com/base64.html): Encode and decode text and binary files to Base64.
+- [UUID Generator](https://bharatdevtool.com/uuid-generator.html): Generate cryptographically secure UUID v4 and sequential UUID v7 identifiers.
+- [Hash Generator](https://bharatdevtool.com/hash-generator.html): Calculate MD5, SHA-1, SHA-256, and SHA-512 hashes using SubtleCrypto.
+- [Regex Tester & Generator](https://bharatdevtool.com/regex-tester.html): Test regular expressions with live match highlighting and generate regex patterns.
+- [Cron Expression Generator](https://bharatdevtool.com/cron-generator.html): Build and translate cron schedule expressions into plain English.
+- [Timestamp & Epoch Converter](https://bharatdevtool.com/timestamp-converter.html): Convert Unix epoch timestamps (seconds, milliseconds) to human-readable dates across timezones.
+
+### QR Code & Communications
+- [QR Code Generator](https://bharatdevtool.com/qr-generator.html): Generate customizable QR codes for URLs, WiFi, vCards, UPI payments, and plain text.
+- [QR Code Decoder](https://bharatdevtool.com/qr-decoder.html): Decode QR codes from webcam or uploaded images client-side.
+- [WhatsApp Link Generator](https://bharatdevtool.com/whatsapp-link.html): Create click-to-chat WhatsApp direct links with pre-filled messages.
+
+### Design & CSS Tools
+- [Color Picker & Converter](https://bharatdevtool.com/color-picker.html): Pick colors and convert between HEX, RGB, HSL, HSV, and CMYK.
+- [CSS Gradient Generator](https://bharatdevtool.com/gradient-generator.html): Design linear and radial CSS gradients with copyable CSS code.
+- [Lottie Player & Studio](https://bharatdevtool.com/lottie-player.html): Preview, inspect, optimize, and convert Lottie animations (JSON / dotLottie).
+
+## Privacy & Security Guarantee
+- Processing is 100% in-browser using HTML5 Canvas, WebAssembly, and JavaScript.
+- No files, payloads, code, or tokens are ever sent to remote backend servers.
+- Fully operational offline after initial page cache.
+

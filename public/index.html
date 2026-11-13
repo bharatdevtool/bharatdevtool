@@ -49,6 +49,11 @@
   <meta name="twitter:description" content="Free online tools for PDF, images, JSON, QR codes, regex and Indian calculators like GST and EMI. No sign-up, and your files never leave your browser.">
   <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
 
+  <!-- Resource Hints for faster paint on mobile -->
+  <link rel="preconnect" href="https://ik.imagekit.io" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="dns-prefetch" href="https://js-de.sentry-cdn.com">
+
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/common.css">
   <link rel="stylesheet" href="components/header.css">
@@ -249,10 +254,11 @@
   <link rel="icon" type="image/png" sizes="16x16" href="https://ik.imagekit.io/bdt/bdt_logo_v3_16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/bdt/bdt_logo_v3_180.png">
 
-  <!-- Sentry SDK -->
+  <!-- Sentry SDK: Defer loading -->
   <script
     src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
     crossorigin="anonymous"
+    defer
   ></script>
   
   <!-- App Configuration -->
@@ -260,13 +266,13 @@
     import { APP_CONFIG } from './assets/js/config.js';
     window.APP_CONFIG = APP_CONFIG;
   </script>
-  <script src="assets/js/logo-loader.js"></script>
+  <script src="assets/js/logo-loader.js" defer></script>
   
-  <!-- Version Tracking Script -->
-  <script src="assets/js/version.js"></script>
+  <!-- Version Tracking Script: Defer loading -->
+  <script src="assets/js/version.js" defer></script>
   
-  <!-- Analytics Script -->
-  <script src="assets/js/analytics.js"></script>
+  <!-- Analytics Script: Defer loading -->
+  <script src="assets/js/analytics.js" defer></script>
   
   <!-- Theme Management (load early to prevent flash) -->
   <script src="assets/js/theme.js"></script>
@@ -1723,6 +1729,7 @@
         btn.className = 'category-btn' + (isActive ? ' active' : '');
         btn.textContent = label;
         btn.dataset.category = cat;
+        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
         btn.addEventListener('click', () => handleCategoryClick(cat));
         return btn;
       }
@@ -1773,7 +1780,9 @@
       function handleCategoryClick(cat) {
         activeCategory = cat;
         document.querySelectorAll('.category-btn').forEach(btn => {
-          btn.classList.toggle('active', btn.dataset.category === cat);
+          const isCurrent = btn.dataset.category === cat;
+          btn.classList.toggle('active', isCurrent);
+          btn.setAttribute('aria-pressed', isCurrent ? 'true' : 'false');
         });
         const cards = getFilterableCards();
         applyFilters(cards);

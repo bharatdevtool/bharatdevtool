@@ -53,8 +53,8 @@
     }
   </script>
   <link rel="stylesheet" href="assets/css/common.css">
-  <!-- Analytics Script -->
-  <script src="assets/js/analytics.js"></script>
+  <!-- Analytics Script: Defer loading -->
+  <script src="assets/js/analytics.js" defer></script>
   
   <!-- Theme Management (load early to prevent flash) -->
   <script src="assets/js/theme.js"></script>
@@ -63,8 +63,46 @@
     import { APP_CONFIG } from './assets/js/config.js';
     window.APP_CONFIG = APP_CONFIG;
   </script>
-  <script src="assets/js/logo-loader.js"></script>
+  <script src="assets/js/logo-loader.js" defer></script>
   
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://bharatdevtool.com/privacy.html#webpage",
+        "url": "https://bharatdevtool.com/privacy.html",
+        "name": "Privacy Policy | Bharat Dev Tools",
+        "description": "Our tools are free and private: everything runs in your browser and your data is never uploaded or stored on our servers.",
+        "isPartOf": {
+          "@type": "WebSite",
+          "@id": "https://bharatdevtool.com/#website",
+          "name": "Bharat Dev Tools",
+          "url": "https://bharatdevtool.com/"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Bharat Dev Tools",
+          "url": "https://bharatdevtool.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://ik.imagekit.io/bdt/bdt_logo_v3_400.png"
+          }
+        },
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://bharatdevtool.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Privacy Policy", "item": "https://bharatdevtool.com/privacy.html" }
+          ]
+        }
+      }
+    ]
+  }
+  </script>
+
   <style>
     .privacy-layout { max-width: 1180px; margin: 24px auto 36px; padding: 0 12px;
       display: grid; grid-template-columns: 300px 1fr; gap: 12px; }
