@@ -232,8 +232,26 @@
       #categoryFilters::-webkit-scrollbar { display: none; }
       .category-btn { white-space: nowrap; flex: none; }
       .features-grid { grid-template-columns: 1fr; gap: 10px; margin-top: 0; }
-      .features-grid .feature-card { position: relative; padding: 14px 16px; column-gap: 10px; }
+      .features-grid .feature-card {
+        position: relative;
+        padding: 14px 44px 14px 16px;
+        column-gap: 10px;
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(37, 99, 235, 0.1);
+      }
+      .features-grid .feature-card::after {
+        content: '›';
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.6rem;
+        line-height: 1;
+        color: #94a3b8;
+        pointer-events: none;
+      }
       .features-grid .feature-card:hover { transform: none; }
+      .features-grid .feature-card:active { background-color: rgba(37, 99, 235, 0.05); }
       .features-grid .feature-icon { font-size: 1.4rem; }
       .features-grid .feature-title { font-size: 1.05rem; }
       .features-grid .feature-description {
@@ -243,9 +261,20 @@
       .features-grid .feature-example,
       .features-grid .feature-link { display: none; }
       .features-grid .feature-actions { margin: 0; }
-      /* The button's link covers the whole card; the button itself is hidden. */
-      .features-grid .feature-btn { position: static; padding: 0; height: 0; overflow: hidden; }
-      .features-grid .feature-btn::after { content: ''; position: absolute; inset: 0; border-radius: 12px; }
+      /* The link physically covers the whole card so mobile touches navigate natively */
+      .features-grid .feature-btn {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        opacity: 0;
+        margin: 0;
+        padding: 0;
+        border: none;
+        background: transparent;
+        border-radius: 12px;
+      }
     }
   </style>
 
@@ -1682,6 +1711,22 @@
               destination_url: this.href,
               is_external: this.target === '_blank'
             });
+          }
+        });
+      });
+
+      // Make the entire card clickable on both desktop and mobile
+      const featureCards = document.querySelectorAll('.features-grid .feature-card');
+      featureCards.forEach(card => {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', function(e) {
+          // If clicking an explicit secondary link (e.g. documentation), do not override
+          if (e.target.closest('.feature-link') || e.target.closest('.feature-btn')) {
+            return;
+          }
+          const primaryBtn = card.querySelector('.feature-btn');
+          if (primaryBtn && primaryBtn.href) {
+            primaryBtn.click();
           }
         });
       });
