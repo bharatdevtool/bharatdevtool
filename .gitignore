@@ -47,3 +47,7 @@ next-env.d.ts
 
 # JetBrains
 .idea/
+
+.next/
+.agents/
+.out/

@@ -47,7 +47,26 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     description:
       'Free JSON formatter, viewer and grid editor. Validate, repair, query with JSONPath, view as a table and export CSV. No sign-up, runs 100% in your browser.',
     shortDesc: 'Format, view as grid & query JSON',
-    keywords: ['json formatter', 'json viewer', 'json grid', 'json to table', 'json editor', 'jsonpath', 'json beautifier', 'json minifier', 'json validator', 'pretty print json', 'json escape'],
+    keywords: [
+      'json formatter',
+      'json viewer',
+      'json grid',
+      'json to table',
+      'json editor',
+      'jsonpath',
+      'json beautifier',
+      'json minifier',
+      'json validator',
+      'pretty print json',
+      'json escape',
+      'fix invalid json',
+      'unexpected token in json',
+      'json parse error',
+      'unexpected token < in json',
+      'repair json online',
+      'format json without uploading',
+      'trailing comma json repair'
+    ],
     heavy: true,
   },
   {
@@ -134,7 +153,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     description:
       'Parse, inspect and launch app deep links and custom URL schemes. Check scheme, host, path and query parameters before testing on device. Free tool.',
     shortDesc: 'Test Android & iOS deep links',
-    keywords: ['deeplink tester', 'deep link launcher', 'android deep link', 'ios deep link', 'app link tester'],
+    keywords: ['deeplink tester', 'deep link launcher', 'android deep link', 'ios deep link', 'app link tester', 'android deep link tester', 'test intent uri', 'intent filter tester'],
   },
   // ── Encoding ──────────────────────────────────────────────
   {
@@ -145,7 +164,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     description:
       'Encode text to Base64 and decode Base64 back to text instantly, with full Unicode support. Free online Base64 encoder and decoder, private in your browser.',
     shortDesc: 'Encode & decode Base64 strings',
-    keywords: ['base64 encoder', 'base64 decoder', 'encode base64', 'decode base64', 'base64 online'],
+    keywords: ['base64 encoder', 'base64 decoder', 'encode base64', 'decode base64', 'base64 online', 'invalid base64 string length', 'base64 decode error'],
   },
   {
     id: 'url-encoder',
@@ -155,7 +174,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     description:
       'Percent-encode URLs and query parameters, or decode and inspect encoded URLs instantly. Free online URL encoder and decoder that runs in your browser.',
     shortDesc: 'URL percent-encode & decode',
-    keywords: ['url encoder', 'url decoder', 'percent encoding', 'uri encoder', 'url encode online'],
+    keywords: ['url encoder', 'url decoder', 'percent encoding', 'uri encoder', 'url encode online', 'urierror uri malformed', 'url query parameter encoder'],
   },
   // ── Regex ─────────────────────────────────────────────────
   {
@@ -209,6 +228,27 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
       'Create WhatsApp click-to-chat links with a pre-filled message and a scannable QR code. No need to save the number. Free WhatsApp link generator.',
     shortDesc: 'Create wa.me click-to-chat links',
     keywords: ['whatsapp link generator', 'wa.me link', 'whatsapp click to chat', 'whatsapp api link'],
+  },
+  {
+    id: 'quickdrop',
+    label: 'QuickDrop',
+    route: '/quickdrop',
+    category: 'QR & Links',
+    description:
+      'Fast, private peer-to-peer file transfer between devices over Wi-Fi. No file size limits, zero server uploads, 100% encrypted in your browser.',
+    shortDesc: 'Instant P2P file share over Wi-Fi',
+    keywords: [
+      'quickdrop',
+      'p2p file transfer',
+      'pairdrop online',
+      'snapdrop alternative',
+      'airdrop for pc',
+      'share files wifi',
+      'browser to browser file share',
+      'webrtc file transfer',
+      'webrtc datachannel error',
+      'failed to connect webrtc peer'
+    ],
   },
   // ── Lottie ────────────────────────────────────────────────
   {

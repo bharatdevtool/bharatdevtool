@@ -49,6 +49,11 @@
   <meta name="twitter:description" content="Free online tools for PDF, images, JSON, QR codes, regex and Indian calculators like GST and EMI. No sign-up, and your files never leave your browser.">
   <meta name="twitter:image" content="https://bharatdevtool.com/assets/img/og/og-image.jpg">
 
+  <!-- Resource Hints for faster paint on mobile -->
+  <link rel="preconnect" href="https://ik.imagekit.io" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="dns-prefetch" href="https://js-de.sentry-cdn.com">
+
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/common.css">
   <link rel="stylesheet" href="components/header.css">
@@ -227,8 +232,26 @@
       #categoryFilters::-webkit-scrollbar { display: none; }
       .category-btn { white-space: nowrap; flex: none; }
       .features-grid { grid-template-columns: 1fr; gap: 10px; margin-top: 0; }
-      .features-grid .feature-card { position: relative; padding: 14px 16px; column-gap: 10px; }
+      .features-grid .feature-card {
+        position: relative;
+        padding: 14px 44px 14px 16px;
+        column-gap: 10px;
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(37, 99, 235, 0.1);
+      }
+      .features-grid .feature-card::after {
+        content: '›';
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.6rem;
+        line-height: 1;
+        color: #94a3b8;
+        pointer-events: none;
+      }
       .features-grid .feature-card:hover { transform: none; }
+      .features-grid .feature-card:active { background-color: rgba(37, 99, 235, 0.05); }
       .features-grid .feature-icon { font-size: 1.4rem; }
       .features-grid .feature-title { font-size: 1.05rem; }
       .features-grid .feature-description {
@@ -238,9 +261,20 @@
       .features-grid .feature-example,
       .features-grid .feature-link { display: none; }
       .features-grid .feature-actions { margin: 0; }
-      /* The button's link covers the whole card; the button itself is hidden. */
-      .features-grid .feature-btn { position: static; padding: 0; height: 0; overflow: hidden; }
-      .features-grid .feature-btn::after { content: ''; position: absolute; inset: 0; border-radius: 12px; }
+      /* The link physically covers the whole card so mobile touches navigate natively */
+      .features-grid .feature-btn {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        opacity: 0;
+        margin: 0;
+        padding: 0;
+        border: none;
+        background: transparent;
+        border-radius: 12px;
+      }
     }
   </style>
 
@@ -249,10 +283,11 @@
   <link rel="icon" type="image/png" sizes="16x16" href="https://ik.imagekit.io/bdt/bdt_logo_v3_16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/bdt/bdt_logo_v3_180.png">
 
-  <!-- Sentry SDK -->
+  <!-- Sentry SDK: Defer loading -->
   <script
     src="https://js-de.sentry-cdn.com/377fa2c5032178b56ab058bb0a0fffbb.min.js"
     crossorigin="anonymous"
+    defer
   ></script>
   
   <!-- App Configuration -->
@@ -260,13 +295,13 @@
     import { APP_CONFIG } from './assets/js/config.js';
     window.APP_CONFIG = APP_CONFIG;
   </script>
-  <script src="assets/js/logo-loader.js"></script>
+  <script src="assets/js/logo-loader.js" defer></script>
   
-  <!-- Version Tracking Script -->
-  <script src="assets/js/version.js"></script>
+  <!-- Version Tracking Script: Defer loading -->
+  <script src="assets/js/version.js" defer></script>
   
-  <!-- Analytics Script -->
-  <script src="assets/js/analytics.js"></script>
+  <!-- Analytics Script: Defer loading -->
+  <script src="assets/js/analytics.js" defer></script>
   
   <!-- Theme Management (load early to prevent flash) -->
   <script src="assets/js/theme.js"></script>
@@ -307,7 +342,7 @@
         "@type": "ItemList",
         "@id": "https://bharatdevtool.com/#tools",
         "name": "Free online tools",
-        "numberOfItems": 59,
+        "numberOfItems": 60,
         "itemListElement": [
           {
             "@type": "ListItem",
@@ -662,6 +697,12 @@
             "position": 59,
             "name": "Lottie Optimizer",
             "url": "https://bharatdevtool.com/lottie-optimizer"
+          },
+          {
+            "@type": "ListItem",
+            "position": 60,
+            "name": "QuickDrop",
+            "url": "https://bharatdevtool.com/quickdrop"
           }
         ]
       },
@@ -1020,6 +1061,19 @@
             <div class="feature-actions">
               <a href="whatsapp-link.html" class="feature-btn">Try WhatsApp Link Generator →</a>
               <a href="https://faq.whatsapp.com/5913398998672934" target="_blank" rel="noopener noreferrer" class="feature-link">WhatsApp Link Docs →</a>
+            </div>
+          </div>
+
+          <div class="feature-card" data-category="qr-links" data-tags="quickdrop p2p file transfer pairdrop snapdrop airdrop share files wifi local network webrtc">
+            <div class="feature-icon"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m16 16-4-4-4 4"/></svg></div>
+            <h3 class="feature-title">QuickDrop</h3>
+            <p class="feature-description">Fast, secure peer-to-peer file transfer directly between phones, tablets, and PCs over Wi-Fi. 100% private, no file size limits, zero server uploads.</p>
+            <div class="feature-example">
+              <strong>Transfer:</strong>
+              <code>Direct P2P via WebRTC</code> &nbsp;|&nbsp; <code>QR &amp; PIN Pairing</code>
+            </div>
+            <div class="feature-actions">
+              <a href="/quickdrop" class="feature-btn">Try QuickDrop →</a>
             </div>
           </div>
 
@@ -1679,6 +1733,22 @@
           }
         });
       });
+
+      // Make the entire card clickable on both desktop and mobile
+      const featureCards = document.querySelectorAll('.features-grid .feature-card');
+      featureCards.forEach(card => {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', function(e) {
+          // If clicking an explicit secondary link (e.g. documentation), do not override
+          if (e.target.closest('.feature-link') || e.target.closest('.feature-btn')) {
+            return;
+          }
+          const primaryBtn = card.querySelector('.feature-btn');
+          if (primaryBtn && primaryBtn.href) {
+            primaryBtn.click();
+          }
+        });
+      });
     });
   </script>
 
@@ -1723,6 +1793,7 @@
         btn.className = 'category-btn' + (isActive ? ' active' : '');
         btn.textContent = label;
         btn.dataset.category = cat;
+        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
         btn.addEventListener('click', () => handleCategoryClick(cat));
         return btn;
       }
@@ -1773,7 +1844,9 @@
       function handleCategoryClick(cat) {
         activeCategory = cat;
         document.querySelectorAll('.category-btn').forEach(btn => {
-          btn.classList.toggle('active', btn.dataset.category === cat);
+          const isCurrent = btn.dataset.category === cat;
+          btn.classList.toggle('active', isCurrent);
+          btn.setAttribute('aria-pressed', isCurrent ? 'true' : 'false');
         });
         const cards = getFilterableCards();
         applyFilters(cards);

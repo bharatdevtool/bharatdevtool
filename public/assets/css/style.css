@@ -1570,6 +1570,7 @@ footer.site-footer { padding: 32px 16px 40px; color: var(--fg); border-top: 1px 
   grid-template-columns: max-content 1fr;
   column-gap: 12px;
   align-items: start;
+  cursor: pointer;
 }
 
 .dark .feature-card,

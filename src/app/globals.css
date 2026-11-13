@@ -217,3 +217,123 @@ pre,
   box-shadow: 0 1px 4px rgb(0 0 0 / 0.35);
 }
 .lottie-timeline:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 4px hsl(var(--primary) / 0.35); }
+
+/* ============================================================
+   QuickDrop — Animated Radar Ripple & Device Glow
+   ============================================================ */
+.radar-container {
+  position: relative;
+  width: 420px;
+  height: 420px;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  isolation: isolate;
+}
+
+.radar-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 110px;
+  height: 110px;
+  border: 1.5px solid rgba(79, 110, 255, 0.65);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0.5);
+  opacity: 0;
+  pointer-events: none;
+  animation: radar-expand 4s linear infinite;
+  will-change: transform, opacity;
+  z-index: 0;
+}
+
+[data-theme="dark"] .radar-ring {
+  border-color: rgba(99, 102, 241, 0.75);
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+}
+
+.ring-1 { animation-delay: 0s; }
+.ring-2 { animation-delay: 0.8s; }
+.ring-3 { animation-delay: 1.6s; }
+.ring-4 { animation-delay: 2.4s; }
+.ring-5 { animation-delay: 3.2s; }
+
+@keyframes radar-expand {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(3.5);
+    opacity: 0;
+  }
+}
+
+.device-icon {
+  position: relative;
+  z-index: 10;
+}
+
+@keyframes device-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 8px 30px rgba(79, 70, 229, 0.25);
+  }
+
+  50% {
+    transform: scale(1.035);
+    box-shadow: 0 12px 42px rgba(79, 70, 229, 0.45);
+  }
+}
+
+.animate-device-pulse {
+  animation: device-pulse 3s ease-in-out infinite;
+}
+
+
+@keyframes peerFloating {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-peer-float {
+  animation: peerFloating 3.8s ease-in-out infinite;
+}
+
+@keyframes peerFloatingAlt {
+  0%, 100% {
+    transform: translateY(-6px);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+.animate-peer-float-alt {
+  animation: peerFloatingAlt 4.4s ease-in-out infinite;
+}
+
+@keyframes dropTargetGlow {
+  0%, 100% {
+    border-color: rgba(37, 99, 235, 0.8);
+    box-shadow: 0 0 40px rgba(37, 99, 235, 0.4);
+  }
+  50% {
+    border-color: rgba(139, 92, 246, 0.9);
+    box-shadow: 0 0 60px rgba(139, 92, 246, 0.5);
+  }
+}
+
+.animate-drop-glow {
+  animation: dropTargetGlow 2s ease-in-out infinite;
+}
+
+
+

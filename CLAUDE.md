@@ -73,6 +73,15 @@ Rules:
 4. **Tool Wrapper (`src/components/layout/ToolLayout.tsx`)**:
    - Every **Next.js** tool page must be wrapped with `<ToolLayout toolId="...">`. It automatically renders breadcrumbs, title, category pill, client-side privacy badge, share button, and related tools.
 
+### 2.3. Technical SEO & Registration Standards
+Every new tool page MUST follow the rules in `SEO_GUIDE.md`:
+1. **Title**: $\le 60$ characters, branded once (`| Bharat Dev Tools`).
+2. **Meta Description**: Strictly 140–160 characters, highlights client-side in-browser processing.
+3. **Social Sync**: `og:title` / `twitter:title` must match `<title>`; `og:description` / `twitter:description` must match `<meta name="description">`.
+4. **Error Keywords & FAQs**: Incorporate specific developer error messages into keywords and FAQs. Visible FAQs and `FAQPage` JSON-LD schema must match word-for-word.
+5. **The 4 Sync Points**: `src/config/tools.ts`, `public/components/footer.js`, `public/sitemap.xml`, and `public/index.html`.
+6. **Automated Verification**: `npx vitest run tests/seo.test.ts tests/static-pages.test.ts` must pass with 0 failures before committing.
+
 ---
 
 ## 3. Directory Layout
