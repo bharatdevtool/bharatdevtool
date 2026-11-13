@@ -1,8 +1,10 @@
 'use client';
+/* eslint-disable react-hooks/purity -- Date.now()/Math.random() run only inside peer and click handlers, never during render. */
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import QRCode from 'qrcode';
 import { motion, AnimatePresence } from 'framer-motion';
+import type { DataConnection, Peer as PeerType } from 'peerjs';
 import {
   Smartphone,
   Laptop,
@@ -42,7 +44,7 @@ export default function QuickDropClient() {
   const [roomId, setRoomId] = useState<string>('');
   const [targetRoomInput, setTargetRoomInput] = useState<string>('');
   const [, setPeerStatus] = useState<'initializing' | 'ready' | 'connecting' | 'error'>('initializing');
-  const [connectedPeers, setConnectedPeers] = useState<Map<string, { info: DeviceInfo; conn: any }>>(new Map());
+  const [connectedPeers, setConnectedPeers] = useState<Map<string, { info: DeviceInfo; conn: DataConnection }>>(new Map());
   const [selectedPeerId, setSelectedPeerId] = useState<string | null>(null);
 
   // Transfers & Messages
@@ -58,34 +60,46 @@ export default function QuickDropClient() {
   const [copiedLink, setCopiedLink] = useState<boolean>(false);
   const [copiedCode, setCopiedCode] = useState<boolean>(false);
   const [isDragOverStage, setIsDragOverStage] = useState<boolean>(false);
+  // Devices that connected to us and wait for "Allow" (outgoing connections are trusted).
+  const [pendingRequests, setPendingRequests] = useState<{ info: DeviceInfo; conn: DataConnection }[]>([]);
+  const [notice, setNotice] = useState<string>('');
   const [dragOverPeerId, setDragOverPeerId] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const targetPeerForFileRef = useRef<string | null>(null);
-  const peerInstanceRef = useRef<any>(null);
+  const peerInstanceRef = useRef<PeerType | null>(null);
   const incomingChunksRef = useRef<Map<string, { chunks: ArrayBuffer[]; total: number; name: string; type: string; size: number }>>(new Map());
   const transferStatsRef = useRef<Map<string, { lastBytes: number; lastTime: number; speed: number }>>(new Map());
+  const deviceRef = useRef<DeviceInfo>(device);
+  const approvedRef = useRef<Set<DataConnection>>(new Set()); // connections allowed to send data
+  const handlersRef = useRef<{ setup: (conn: DataConnection, outgoing: boolean) => void; connect: (code: string) => void } | null>(null);
+  const receivedBytesRef = useRef<Map<string, number>>(new Map());
 
   // 1. Initialize Device & Room Code
   useEffect(() => {
     const dev = detectDevice();
+    // Reads navigator.userAgent, which only exists in the browser: must run after hydration.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setDevice(dev);
 
+    deviceRef.current = dev;
+
+    // A QR code / link carries the OTHER device's PIN: connect to it once we are online.
     const params = new URLSearchParams(window.location.search);
     const roomParam = params.get('room');
-
-    let myRoom = roomParam;
-    if (!myRoom) {
-      myRoom = Math.floor(100000 + Math.random() * 900000).toString();
-    }
-    setRoomId(myRoom);
+    let joinPin = roomParam && /^\d{6}$/.test(roomParam) ? roomParam : null;
+    if (roomParam !== null) history.replaceState(history.state, '', window.location.pathname);
 
     let isMounted = true;
+    let attempts = 0;
 
     async function initPeer() {
       try {
         const { default: Peer } = await import('peerjs');
-        const peerId = `bdt-qd-${myRoom}-${Math.random().toString(36).substring(2, 7)}`;
+        // This device's PIN IS its peer ID, so "enter PIN" and "scan QR" reach exactly this device.
+        const myRoom = Math.floor(100000 + Math.random() * 900000).toString();
+        const peerId = `bdt-qd-${myRoom}`;
+        attempts += 1;
 
         const peer = new Peer(peerId, {
           debug: 1,
@@ -101,8 +115,11 @@ export default function QuickDropClient() {
 
         peer.on('open', (id) => {
           if (!isMounted) return;
+          setRoomId(myRoom);
           setDevice((prev) => ({ ...prev, id }));
           setPeerStatus('ready');
+          if (joinPin && joinPin !== myRoom) handlersRef.current?.connect(joinPin);
+          joinPin = null;
 
           const pairUrl = `${window.location.origin}/quickdrop?room=${myRoom}`;
           QRCode.toDataURL(pairUrl, {
@@ -118,12 +135,25 @@ export default function QuickDropClient() {
         });
 
         peer.on('connection', (conn) => {
-          setupConnectionListeners(conn);
+          handlersRef.current?.setup(conn, false);
         });
 
-        peer.on('error', (err) => {
-          console.warn('[QuickDrop] Peer error:', err);
-          if (isMounted) setPeerStatus('error');
+        peer.on('error', (err: { type?: string }) => {
+          if (!isMounted) return;
+          if (err?.type === 'unavailable-id' && attempts < 5) {
+            // PIN already taken by another device: pick a new one.
+            peer.destroy();
+            initPeer();
+            return;
+          }
+          if (err?.type === 'peer-unavailable') {
+            setNotice('No device found with that PIN. Check the PIN and keep QuickDrop open on the other device.');
+            setPeerStatus('ready');
+            return;
+          }
+          console.warn('[QuickDrop] Peer error:', err?.type);
+          setPeerStatus('error');
+          setNotice('Could not reach the pairing service. Check your internet connection and reload.');
         });
       } catch (err) {
         console.error('[QuickDrop] Failed to initialize peer:', err);
@@ -141,20 +171,26 @@ export default function QuickDropClient() {
     };
   }, []);
 
-  const setupConnectionListeners = useCallback((conn: any) => {
+  function setupConnectionListeners(conn: DataConnection, outgoing: boolean) {
+    // We chose to connect to this device (its PIN or QR), so we trust it; incoming ones need "Allow".
+    if (outgoing) approvedRef.current.add(conn);
+
     conn.on('open', () => {
       conn.send({
         type: 'HANDSHAKE',
-        device,
+        device: deviceRef.current,
       });
     });
 
-    conn.on('data', (data: ProtocolMessage) => {
-      handleIncomingData(conn, data);
+    conn.on('data', (data: unknown) => {
+      handleIncomingData(conn, data as ProtocolMessage);
     });
 
     conn.on('close', () => {
+      approvedRef.current.delete(conn);
+      setPendingRequests((prev) => prev.filter((r) => r.conn !== conn));
       setConnectedPeers((prev) => {
+        if (prev.get(conn.peer)?.conn !== conn) return prev;
         const next = new Map(prev);
         next.delete(conn.peer);
         return next;
@@ -162,32 +198,51 @@ export default function QuickDropClient() {
       setSelectedPeerId((prev) => (prev === conn.peer ? null : prev));
     });
 
-    conn.on('error', (err: any) => {
-      console.warn('[QuickDrop] Connection error:', err);
+    conn.on('error', (err: { type?: string }) => {
+      console.warn('[QuickDrop] Connection error:', err?.type);
     });
-  }, [device]);
+  }
 
-  function handleIncomingData(conn: any, data: ProtocolMessage) {
+  function addPeer(conn: DataConnection, info: DeviceInfo) {
+    setConnectedPeers((prev) => {
+      const next = new Map(prev);
+      next.set(conn.peer, { info, conn });
+      return next;
+    });
+    setSelectedPeerId((prev) => prev || conn.peer);
+  }
+
+  function allowRequest(conn: DataConnection) {
+    const req = pendingRequests.find((r) => r.conn === conn);
+    setPendingRequests((prev) => prev.filter((r) => r.conn !== conn));
+    if (!req || !conn.open) return;
+    approvedRef.current.add(conn);
+    addPeer(conn, req.info);
+  }
+
+  function declineRequest(conn: DataConnection) {
+    setPendingRequests((prev) => prev.filter((r) => r.conn !== conn));
+    try { conn.close(); } catch {}
+  }
+
+  function handleIncomingData(conn: DataConnection, data: ProtocolMessage) {
     if (!data || !data.type) return;
+    // Only HANDSHAKE until the user allows this device: nothing else may arrive unasked.
+    if (data.type !== 'HANDSHAKE' && !approvedRef.current.has(conn)) return;
 
     switch (data.type) {
       case 'HANDSHAKE': {
-        const peerInfo = data.device || {
+        const d: Partial<DeviceInfo> = data.device || {};
+        const types = ['mobile', 'tablet', 'desktop'];
+        const peerInfo: DeviceInfo = {
           id: conn.peer,
-          name: 'Remote Peer',
-          type: 'desktop',
-          os: 'Unknown',
-          browser: 'Browser',
+          name: String(d.name || 'Device').slice(0, 40),
+          type: (types.includes(d.type as string) ? d.type : 'desktop') as DeviceInfo['type'],
+          os: String(d.os || '').slice(0, 20),
+          browser: String(d.browser || '').slice(0, 20),
         };
-        peerInfo.id = conn.peer;
-
-        setConnectedPeers((prev) => {
-          const next = new Map(prev);
-          next.set(conn.peer, { info: peerInfo, conn });
-          return next;
-        });
-
-        setSelectedPeerId((prev) => prev || conn.peer);
+        if (approvedRef.current.has(conn)) addPeer(conn, peerInfo);
+        else setPendingRequests((prev) => [...prev.filter((r) => r.conn !== conn), { info: peerInfo, conn }]);
         break;
       }
 
@@ -226,8 +281,10 @@ export default function QuickDropClient() {
         const session = incomingChunksRef.current.get(data.fileId);
         if (!session) return;
 
+        if (session.chunks[data.chunkIndex]) return;
         session.chunks[data.chunkIndex] = data.data;
-        const currentBytes = session.chunks.reduce((acc, chunk) => acc + (chunk ? chunk.byteLength : 0), 0);
+        const currentBytes = (receivedBytesRef.current.get(data.fileId) || 0) + data.data.byteLength;
+        receivedBytesRef.current.set(data.fileId, currentBytes);
         const progress = Math.min(100, Math.round((currentBytes / session.size) * 100));
 
         // Speed calculation
@@ -256,6 +313,8 @@ export default function QuickDropClient() {
         const session = incomingChunksRef.current.get(data.fileId);
         if (!session) return;
 
+        const safeName = String(session.name).replace(/[\\/:*?"<>|\u0000-\u001f]/g, '_').slice(0, 200) || 'file';
+        session.name = safeName;
         const blob = new Blob(session.chunks, { type: session.type });
         const downloadUrl = URL.createObjectURL(blob);
 
@@ -277,6 +336,7 @@ export default function QuickDropClient() {
         setReceivedFiles((prev) => [completedTransfer, ...prev]);
         incomingChunksRef.current.delete(data.fileId);
         transferStatsRef.current.delete(data.fileId);
+        receivedBytesRef.current.delete(data.fileId);
 
         // Auto trigger download for instant utility
         try {
@@ -299,14 +359,23 @@ export default function QuickDropClient() {
 
   function connectToRoomCode(targetCode: string) {
     if (!peerInstanceRef.current || !targetCode) return;
-    const cleanCode = targetCode.trim();
+    const cleanCode = targetCode.replace(/\D/g, '');
+    if (!/^\d{6}$/.test(cleanCode)) {
+      setNotice('Enter the 6-digit PIN shown on the other device.');
+      return;
+    }
+    if (cleanCode === roomId) {
+      setNotice('That is this device\'s own PIN. Enter the PIN shown on the other device.');
+      return;
+    }
 
+    setNotice('');
     setPeerStatus('connecting');
     const targetPeerId = `bdt-qd-${cleanCode}`;
     const conn = peerInstanceRef.current.connect(targetPeerId, { reliable: true });
 
     if (conn) {
-      setupConnectionListeners(conn);
+      setupConnectionListeners(conn, true);
       setShowPairModal(false);
       setTargetRoomInput('');
       setPeerStatus('ready');
@@ -350,7 +419,15 @@ export default function QuickDropClient() {
         await sliceAndSendFile(
           file,
           fileId,
-          (msg) => activePeer.conn.send(msg),
+          async (msg) => {
+            const conn = activePeer.conn;
+            if (!conn.open) throw new Error('Connection closed');
+            // Wait while the channel is backed up: sending a whole file at once overflows it.
+            while (conn.open && ((conn.dataChannel?.bufferedAmount ?? 0) > 4 * 1024 * 1024 || ((conn as unknown as { bufferSize?: number }).bufferSize ?? 0) > 64)) {
+              await new Promise((r) => setTimeout(r, 20));
+            }
+            conn.send(msg);
+          },
           (sentBytes, totalBytes) => {
             const progress = Math.min(100, Math.round((sentBytes / totalBytes) * 100));
 
@@ -379,10 +456,10 @@ export default function QuickDropClient() {
           prev.map((t) => (t.id === fileId ? { ...t, status: 'completed', progress: 100, speed: 0 } : t))
         );
         transferStatsRef.current.delete(fileId);
-      } catch (err: any) {
+      } catch (err) {
         console.error('[QuickDrop] Send error:', err);
         setActiveTransfers((prev) =>
-          prev.map((t) => (t.id === fileId ? { ...t, status: 'error', error: err.message } : t))
+          prev.map((t) => (t.id === fileId ? { ...t, status: 'error', error: 'Transfer stopped: the other device disconnected.' } : t))
         );
         transferStatsRef.current.delete(fileId);
       }
@@ -443,9 +520,34 @@ export default function QuickDropClient() {
 
   const peerList = Array.from(connectedPeers.values());
 
+  // Peer callbacks are registered once; they call the latest handlers through this ref.
+  useEffect(() => {
+    handlersRef.current = { setup: setupConnectionListeners, connect: connectToRoomCode };
+  });
+
   return (
     <ToolLayout toolId="quickdrop">
       <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 py-2">
+
+        {pendingRequests.map((req) => (
+          <div key={req.conn.connectionId || req.conn.peer} role="alert" className="mb-3 flex flex-col sm:flex-row sm:items-center gap-3 rounded-xl border border-blue-500/40 bg-blue-500/10 px-4 py-3 text-sm">
+            <span className="flex-1">
+              <strong>{req.info.name}</strong>
+              {req.info.os ? ` (${req.info.os}${req.info.browser ? ', ' + req.info.browser : ''})` : ''} wants to connect. Allow it to send you files and messages?
+            </span>
+            <div className="flex gap-2">
+              <button type="button" onClick={() => allowRequest(req.conn)} className="px-4 py-1.5 rounded-lg bg-primary text-primary-foreground text-xs font-bold hover:opacity-90 cursor-pointer">Allow</button>
+              <button type="button" onClick={() => declineRequest(req.conn)} className="px-4 py-1.5 rounded-lg border border-border text-xs font-bold hover:bg-muted cursor-pointer">Decline</button>
+            </div>
+          </div>
+        ))}
+
+        {notice && (
+          <div role="status" className="mb-3 flex items-center gap-3 rounded-xl border border-amber-500/40 bg-amber-500/10 px-4 py-2.5 text-sm">
+            <span className="flex-1">{notice}</span>
+            <button type="button" onClick={() => setNotice('')} aria-label="Dismiss" className="p-1 rounded hover:bg-muted cursor-pointer"><X className="w-4 h-4" /></button>
+          </div>
+        )}
 
         {/* 1. COMPACT MINIMAL HEADER BAR (NO UNNECESSARY NESTING) */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-border/50 text-sm">
@@ -928,10 +1030,14 @@ export default function QuickDropClient() {
 
               {/* Connect to Another Room Input */}
               <div className="pt-3 border-t border-border">
+                {notice && <p className="mb-2 text-xs text-amber-600 dark:text-amber-400">{notice}</p>}
                 <div className="flex gap-2">
                   <input
                     type="text"
                     placeholder="Enter 6-digit PIN..."
+                    inputMode="numeric"
+                    maxLength={7}
+                    onKeyDown={(e) => { if (e.key === 'Enter') connectToRoomCode(targetRoomInput); }}
                     value={targetRoomInput}
                     onChange={(e) => setTargetRoomInput(e.target.value)}
                     className="flex-1 px-3 py-2 text-sm rounded-xl border border-border bg-background focus:outline-hidden focus:ring-2 focus:ring-primary font-mono"

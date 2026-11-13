@@ -21,7 +21,7 @@ export async function sliceAndSendFile(
   const totalChunks = Math.ceil(file.size / CHUNK_SIZE);
 
   // Send header
-  sendFn({
+  await sendFn({
     type: 'FILE_HEADER',
     fileId,
     name: file.name,
@@ -35,7 +35,7 @@ export async function sliceAndSendFile(
     const slice = file.slice(offset, offset + CHUNK_SIZE);
     const buffer = await slice.arrayBuffer();
 
-    sendFn({
+    await sendFn({
       type: 'FILE_CHUNK',
       fileId,
       chunkIndex: i,
@@ -54,7 +54,7 @@ export async function sliceAndSendFile(
   }
 
   // Send complete
-  sendFn({
+  await sendFn({
     type: 'FILE_COMPLETE',
     fileId,
   });
