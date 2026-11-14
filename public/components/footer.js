@@ -301,6 +301,376 @@ const TRUST_STRIP_CSS = `
 
 const CLOSE_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
 const HISTORY_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>';
+const COMPARISON_CHECK_SVG = '<span class="bdt-icon-check" aria-hidden="true"><svg class="bdt-i" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>';
+const COMPARISON_CROSS_SVG = '<span class="bdt-icon-cross" aria-hidden="true"><svg class="bdt-i" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></span>';
+const COMPARISON_SHIELD_SVG = '<svg class="bdt-i" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>';
+
+const COMPARISON_TABLE_CSS = `
+.bdt-comparison-section {
+  width: 100%;
+  max-width: 900px;
+  margin: 48px auto 24px;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+.bdt-comp-header {
+  margin-bottom: 20px;
+}
+.bdt-comp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(37, 99, 235, 0.08);
+  color: #2563eb;
+  margin-bottom: 8px;
+}
+[data-theme="dark"] .bdt-comp-badge, .dark .bdt-comp-badge {
+  background: rgba(59, 130, 246, 0.15);
+  color: #93c5fd;
+}
+.bdt-comp-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 6px;
+  color: var(--fg, #0f172a);
+  letter-spacing: -0.01em;
+}
+.bdt-comp-subtitle {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.5;
+}
+[data-theme="dark"] .bdt-comp-subtitle, .dark .bdt-comp-subtitle {
+  color: #94a3b8;
+}
+.bdt-comp-table-wrapper {
+  overflow-x: auto;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+[data-theme="dark"] .bdt-comp-table-wrapper, .dark .bdt-comp-table-wrapper {
+  background: #0b1220;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+.bdt-comp-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.bdt-comp-table th {
+  padding: 12px 16px;
+  font-weight: 600;
+  color: var(--fg, #0f172a);
+  background: rgba(0, 0, 0, 0.02);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+[data-theme="dark"] .bdt-comp-table th, .dark .bdt-comp-table th {
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+.bdt-comp-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  vertical-align: top;
+  color: var(--fg, #0f172a);
+}
+[data-theme="dark"] .bdt-comp-table td, .dark .bdt-comp-table td {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+.bdt-comp-table tr:last-child td {
+  border-bottom: none;
+}
+.bdt-comp-table tr:hover td {
+  background: rgba(0, 0, 0, 0.015);
+}
+[data-theme="dark"] .bdt-comp-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+.bdt-col-highlight {
+  background: rgba(37, 99, 235, 0.03) !important;
+  color: #2563eb !important;
+  font-weight: 700;
+  border-left: 1px solid rgba(37, 99, 235, 0.1);
+  border-right: 1px solid rgba(37, 99, 235, 0.1);
+}
+[data-theme="dark"] .bdt-col-highlight, .dark .bdt-col-highlight {
+  background: rgba(59, 130, 246, 0.06) !important;
+  color: #60a5fa !important;
+  border-left-color: rgba(59, 130, 246, 0.18);
+  border-right-color: rgba(59, 130, 246, 0.18);
+}
+.bdt-comp-cell {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.bdt-icon-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+[data-theme="dark"] .bdt-icon-check, .dark .bdt-icon-check {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+}
+.bdt-icon-cross {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+[data-theme="dark"] .bdt-icon-cross, .dark .bdt-icon-cross {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
+.bdt-live-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+.bdt-comp-competitor-val {
+  color: #64748b;
+}
+[data-theme="dark"] .bdt-comp-competitor-val, .dark .bdt-comp-competitor-val {
+  color: #94a3b8;
+}
+@media (max-width: 640px) {
+  .bdt-comp-title { font-size: 18px; }
+  .bdt-comp-table th, .bdt-comp-table td { padding: 10px 12px; font-size: 12px; }
+}
+`;
+
+const COMPARISONS_BY_CAT = {
+  'json': {
+    title: 'Bharat Dev Tools vs Standard Online JSON Formatters',
+    subtitle: 'Confidential API keys, tokens, and database exports are parsed entirely client-side without network requests.',
+    features: [
+      {
+        name: 'Confidential Data Security',
+        bharatDevTools: '100% Client-Side (Tokens never sent over network)',
+        competitors: 'Sent to remote backend parser APIs'
+      },
+      {
+        name: '64-Bit Integer Precision',
+        bharatDevTools: 'Exact BigInt Preservation (Never rounded)',
+        competitors: 'IEEE-754 Numeric Precision Loss (Alters IDs)'
+      },
+      {
+        name: 'Syntax Auto-Repair',
+        bharatDevTools: 'Fixes Trailing Commas, Unquoted Keys & Single Quotes',
+        competitors: 'Throws syntax error with no auto-fix option'
+      },
+      {
+        name: 'Interactive Grid Editor',
+        bharatDevTools: 'Spreadsheet Grid View with Filter, Sort & CSV Export',
+        competitors: 'Raw code view only (no tabular editing)'
+      },
+      {
+        name: 'Direct Disk Save (Ctrl+S)',
+        bharatDevTools: 'Native File System API (Overwrites original file)',
+        competitors: 'Only downloads duplicate file copies'
+      },
+      {
+        name: 'JSONPath Queries',
+        bharatDevTools: 'Client-Side Real-Time JSONPath Query Engine',
+        competitors: 'Not supported or requires command-line tools'
+      }
+    ]
+  },
+  'image': {
+    title: 'Bharat Dev Tools vs Typical Image Compression Services',
+    subtitle: 'Fast, secure image processing directly via HTML5 Canvas and Web Workers without third-party cloud uploads.',
+    features: [
+      {
+        name: 'Processing Pipeline',
+        bharatDevTools: '100% In-Browser Canvas API & Web Workers',
+        competitors: 'Uploaded to third-party compression servers'
+      },
+      {
+        name: 'Batch Processing',
+        bharatDevTools: 'Unlimited Photos (Parallel local compression)',
+        competitors: 'Limited to 5 to 20 images on free tier'
+      },
+      {
+        name: 'Quality Adjustment',
+        bharatDevTools: 'Granular 1% to 100% Slider with Live Byte Preview',
+        competitors: 'Fixed, non-customizable compression presets'
+      },
+      {
+        name: 'Format Support',
+        bharatDevTools: 'Instant JPG, PNG & WebP Conversion',
+        competitors: 'Often locks WebP or charges for exports'
+      },
+      {
+        name: 'Watermarks / Branding',
+        bharatDevTools: '100% Clean Output (Zero watermarks)',
+        competitors: 'Applies watermark or forces paid plan'
+      }
+    ]
+  },
+  'qr-links': {
+    title: 'Bharat Dev Tools vs Commercial QR Code Generators',
+    subtitle: 'Generate permanent static QR codes with zero expiration dates, zero tracking redirects, and no forced logos.',
+    features: [
+      {
+        name: 'QR Code Lifespan',
+        bharatDevTools: 'Static QR Codes That Never Expire',
+        competitors: 'Deactivated after 14 days to force a subscription'
+      },
+      {
+        name: 'Watermarks & Branding',
+        bharatDevTools: 'Zero Forced Watermarks (Custom logo support)',
+        competitors: 'Forces company logo in center unless upgraded'
+      },
+      {
+        name: 'Scan Redirect Tracking',
+        bharatDevTools: 'Direct Data (Scanners reach destination directly)',
+        competitors: 'Redirects through intermediary tracking servers'
+      },
+      {
+        name: 'Print Export Resolution',
+        bharatDevTools: 'Print-Ready Vector SVG & 4096px High-Res PNG',
+        competitors: 'Low-resolution only (SVG locked behind paywall)'
+      },
+      {
+        name: 'Supported Formats Free',
+        bharatDevTools: '11 Types Free (UPI, Wi-Fi, vCard, WhatsApp, etc.)',
+        competitors: 'Business types locked behind premium tiers'
+      }
+    ]
+  },
+  'developer': {
+    title: 'Bharat Dev Tools vs Typical Developer Utilities',
+    subtitle: 'Purpose-built developer utilities designed for instant execution, zero latency, and zero telemetry.',
+    features: [
+      {
+        name: 'Security & Telemetry',
+        bharatDevTools: 'Zero Analytics on Inputs (Tokens & keys stay local)',
+        competitors: 'Inputs often sent to telemetry or analytics servers'
+      },
+      {
+        name: 'Offline Capable',
+        bharatDevTools: 'Runs 100% Offline in Browser Cache',
+        competitors: 'Fails to function without active internet'
+      },
+      {
+        name: 'Computation Latency',
+        bharatDevTools: 'Instant Computation (0ms network roundtrip)',
+        competitors: 'Subject to remote server latency and queues'
+      },
+      {
+        name: 'Account & Sign-In',
+        bharatDevTools: 'Immediate Access (No sign-in or API keys needed)',
+        competitors: 'Requires registration or developer account'
+      }
+    ]
+  },
+  'security': {
+    title: 'Bharat Dev Tools vs Remote Cryptographic Tools',
+    subtitle: 'Cryptographic hashing, decoding, and key generation powered strictly by the native W3C Web Crypto API.',
+    features: [
+      {
+        name: 'Secret Key Protection',
+        bharatDevTools: 'Web Crypto API (Keys never leave browser memory)',
+        competitors: 'Secrets transmitted across network to server'
+      },
+      {
+        name: 'Network Access',
+        bharatDevTools: 'Zero Network Requests for Hash/Decode',
+        competitors: 'Logged in web server proxy and access logs'
+      },
+      {
+        name: 'Offline Verification',
+        bharatDevTools: 'Runs Fully Offline without an Internet Connection',
+        competitors: 'Requires continuous internet connection'
+      },
+      {
+        name: 'Output Integrity',
+        bharatDevTools: 'RFC-Compliant Standard Implementations',
+        competitors: 'Often injects promotional wrapper text'
+      }
+    ]
+  },
+  'calculators': {
+    title: 'Bharat Dev Tools vs Commercial Calculator Portals',
+    subtitle: 'Fast, responsive financial and time calculators with instant live feedback on every keystroke.',
+    features: [
+      {
+        name: 'Calculation Speed',
+        bharatDevTools: 'Real-Time Dynamic Recalculation on Every Keystroke',
+        competitors: 'Requires page reloads or submit button clicks'
+      },
+      {
+        name: 'Amortization & Schedules',
+        bharatDevTools: 'Complete Month-by-Month Table & CSV Export Free',
+        competitors: 'Summary only (full schedule requires lead capture)'
+      },
+      {
+        name: 'Distraction-Free UI',
+        bharatDevTools: 'Zero Popups, Zero Ads, Clean Clean Layout',
+        competitors: 'Heavy display advertisements and financial offers'
+      },
+      {
+        name: 'Offline Support',
+        bharatDevTools: 'Functions Locally without Network Connection',
+        competitors: 'Reloads on every adjustment'
+      }
+    ]
+  },
+  'design': {
+    title: 'Bharat Dev Tools vs Cloud Animation Services',
+    subtitle: 'Inspect, validate, optimize and play Lottie animations locally with zero intellectual property leakage.',
+    features: [
+      {
+        name: 'Asset Confidentiality',
+        bharatDevTools: '100% In-Browser Rendering (Unreleased assets stay safe)',
+        competitors: 'Uploaded to third-party cloud hosting servers'
+      },
+      {
+        name: 'Engine Performance',
+        bharatDevTools: 'Hardware-Accelerated WebAssembly Canvas/SVG',
+        competitors: 'Server-side video transcoding queues'
+      },
+      {
+        name: 'File Size Limits',
+        bharatDevTools: 'No Artificial File Size Caps',
+        competitors: 'Restricts animation JSON size on free plans'
+      },
+      {
+        name: 'No Sign-Up or Paywall',
+        bharatDevTools: 'Instant 1-Click Inspection and Playback',
+        competitors: 'Requires paid subscription for basic dev features'
+      }
+    ]
+  }
+};
 
 function escapeHtmlText(s) {
   return String(s).replace(/[&<>"']/g, function(c) {
@@ -385,12 +755,111 @@ function createReturnNote() {
   note.querySelector('.rn-close').addEventListener('click', function() { note.remove(); });
 }
 
+/**
+ * Comparison Table: Contrasts Bharat Dev Tools against typical alternatives
+ * using verified, tested features and privacy facts.
+ */
+function createComparisonTable() {
+  if (document.querySelector('.bdt-comparison-section')) return;
+  const here = normaliseToolPath(window.location.pathname);
+  if (here === 'index' || here === 'about' || here === 'privacy' || here === 'feedback' || here.indexOf('test') > -1) {
+    return;
+  }
+
+  let currentCat = null;
+  const current = ALL_TOOLS_LIST.find(function(t) { return t.cat && normaliseToolPath(t.href) === here; });
+  if (current) {
+    currentCat = current.cat;
+  } else {
+    if (/resize|photo|signature|compress|image|favicon/i.test(here)) currentCat = 'image';
+    else if (/qr|link|whatsapp|url/i.test(here)) currentCat = 'qr-links';
+    else if (/json|diff|csv|yaml/i.test(here)) currentCat = 'json';
+    else if (/calculator|time|date|gst|emi|bmi|percentage/i.test(here)) currentCat = 'calculators';
+    else if (/base64|hash|uuid|jwt|crypto|security/i.test(here)) currentCat = 'security';
+    else if (/lottie|color|gradient/i.test(here)) currentCat = 'design';
+    else currentCat = 'developer';
+  }
+
+  const compData = COMPARISONS_BY_CAT[currentCat] || COMPARISONS_BY_CAT['developer'];
+  if (!compData) return;
+
+  if (!document.getElementById('bdt-comp-style')) {
+    const style = document.createElement('style');
+    style.id = 'bdt-comp-style';
+    style.textContent = COMPARISON_TABLE_CSS;
+    document.head.appendChild(style);
+  }
+
+  const rows = compData.features.map(function(item) {
+    return '<tr>' +
+      '<td>' + escapeHtmlText(item.name) + '</td>' +
+      '<td class="bdt-col-highlight">' +
+        '<div class="bdt-comp-cell">' +
+          COMPARISON_CHECK_SVG +
+          '<span>' + escapeHtmlText(item.bharatDevTools) + '</span>' +
+        '</div>' +
+      '</td>' +
+      '<td>' +
+        '<div class="bdt-comp-cell bdt-comp-competitor-val">' +
+          COMPARISON_CROSS_SVG +
+          '<span>' + escapeHtmlText(item.competitors) + '</span>' +
+        '</div>' +
+      '</td>' +
+    '</tr>';
+  }).join('');
+
+  const html = '<section class="bdt-comparison-section" aria-labelledby="bdt-comp-heading">' +
+    '<div class="bdt-comp-container">' +
+      '<div class="bdt-comp-header">' +
+        '<div class="bdt-comp-badge">' +
+          COMPARISON_SHIELD_SVG +
+          '<span>Feature &amp; Privacy Comparison</span>' +
+        '</div>' +
+        '<h2 id="bdt-comp-heading" class="bdt-comp-title">' + escapeHtmlText(compData.title) + '</h2>' +
+        '<p class="bdt-comp-subtitle">' + escapeHtmlText(compData.subtitle) + '</p>' +
+      '</div>' +
+      '<div class="bdt-comp-table-wrapper">' +
+        '<table class="bdt-comp-table">' +
+          '<thead>' +
+            '<tr>' +
+              '<th scope="col" style="width:32%;">Feature / Capability</th>' +
+              '<th scope="col" class="bdt-col-highlight" style="width:34%;">' +
+                '<span class="bdt-live-dot" aria-hidden="true"></span>Bharat Dev Tools' +
+              '</th>' +
+              '<th scope="col" style="width:34%;">Typical Online Services</th>' +
+            '</tr>' +
+          '</thead>' +
+          '<tbody>' + rows + '</tbody>' +
+        '</table>' +
+      '</div>' +
+    '</div>' +
+  '</section>';
+
+  const anchor = document.querySelector('.faq-section, #faq, .faqs, section[aria-labelledby*="faq"]');
+  if (anchor) {
+    anchor.insertAdjacentHTML('beforebegin', html);
+  } else {
+    const main = document.querySelector('main');
+    if (main) {
+      main.insertAdjacentHTML('beforeend', html);
+    } else {
+      const footer = document.querySelector('.site-footer, .all-tools-section');
+      if (footer) {
+        footer.insertAdjacentHTML('beforebegin', html);
+      } else {
+        document.body.insertAdjacentHTML('beforeend', html);
+      }
+    }
+  }
+}
+
 // Load version and create footer
 function initFooter() {
   createTrustBadge();
   createRelatedToolsBar();
   createContinueCard();
   createReturnNote();
+  createComparisonTable();
   createAllToolsSection();
   // Get version from version.js (already loaded) or use default
   const version = (window.appVersion && window.appVersion.version) || '1.0';

@@ -49,6 +49,16 @@ describe('Static pages: icons', () => {
       expect(src.match(EMOJI) ?? [], file).toEqual([]);
     }
   });
+
+  it('defines comparison tables with verified features for all tool categories in footer.js', () => {
+    const footerSrc = readFileSync(join(PUBLIC_DIR, 'components', 'footer.js'), 'utf8');
+    expect(footerSrc).toContain('function createComparisonTable()');
+    expect(footerSrc).toContain('createComparisonTable();');
+    const categories = ['json', 'image', 'qr-links', 'developer', 'security', 'calculators', 'design'];
+    for (const cat of categories) {
+      expect(footerSrc).toContain(`'${cat}': {`);
+    }
+  });
 });
 
 describe('Static pages: SEO', () => {

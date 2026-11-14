@@ -10,6 +10,7 @@ import { SITE } from '@/config/site';
 import ToolIcon from '@/components/ui/ToolIcon';
 import ShareButton from '@/components/ui/ShareButton';
 import ErrorBoundary from '@/components/ui/ErrorBoundary';
+import ComparisonTable from '@/components/ui/ComparisonTable';
 
 interface ToolLayoutProps {
   toolId: string;
@@ -107,6 +108,9 @@ export default function ToolLayout({ toolId, children, headingOverride, sidebar,
       <div className="w-full">
         <ErrorBoundary>{children}</ErrorBoundary>
       </div>
+
+      {/* Feature & Privacy Comparison Table for SEO and User Conversion */}
+      <ComparisonTable toolId={tool.id} category={tool.category} />
 
       {/* Frequently asked questions (mirrored in FAQPage JSON-LD) */}
       {faqs.length > 0 && (
