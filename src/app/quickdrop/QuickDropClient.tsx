@@ -518,6 +518,30 @@ export default function QuickDropClient() {
     return <Laptop className={className} />;
   }
 
+  function getPeerPosition(peerId: string, index: number) {
+    // Strategic angles around the ripple waves that cleanly float outside the central square and bottom text
+    const angles = [-35, -145, 32, 148, -80, -12, -168, 68];
+    const angleDeg = angles[index % angles.length];
+    const angleRad = (angleDeg * Math.PI) / 180;
+
+    // Stable pseudo-random variation based on peerId so position stays consistent
+    let hash = 0;
+    for (let i = 0; i < peerId.length; i++) {
+      hash = (hash << 5) - hash + peerId.charCodeAt(i);
+    }
+    const jitter = (Math.abs(hash) % 20) - 5; // -5px to +14px
+
+    // Distance places the device clearly floating on the 3rd/4th expanding ripple ring:
+    // Mobile (~148px radius) vs Desktop (~200px radius)
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+    const radius = (isMobile ? 146 : 202) + jitter;
+
+    const x = Math.round(Math.cos(angleRad) * radius);
+    const y = Math.round(Math.sin(angleRad) * radius);
+
+    return { x, y };
+  }
+
   const peerList = Array.from(connectedPeers.values());
 
   // Peer callbacks are registered once; they call the latest handlers through this ref.
@@ -710,82 +734,81 @@ export default function QuickDropClient() {
               </span>
             </div>
 
-            {/* NEARBY DISCOVERED PEERS (DYNAMICALLY POSITIONED ON RADAR CANVAS) */}
+            {/* NEARBY DISCOVERED PEERS (DYNAMICALLY POSITIONED ON RIPPLE WAVES AWAY FROM CENTER) */}
             <AnimatePresence>
               {peerList.map(({ info }, idx) => {
                 const isDragTarget = dragOverPeerId === info.id;
-                const angle = (idx * (2 * Math.PI)) / Math.max(peerList.length, 1) - Math.PI / 2;
-                const radius = typeof window !== 'undefined' && window.innerWidth < 640 ? 120 : 160;
-                const x = Math.cos(angle) * radius;
-                const y = Math.sin(angle) * radius;
+                const pos = getPeerPosition(info.id, idx);
 
                 return (
-                  <motion.div
+                  <div
                     key={info.id}
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{
-                      scale: isDragTarget ? 1.2 : 1,
-                      opacity: 1,
-                      y: [0, -6, 0],
-                    }}
-                    exit={{ scale: 0, opacity: 0 }}
-                    transition={{
-                      y: { duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: idx * 0.5 },
-                      scale: { duration: 0.2 },
-                      opacity: { duration: 0.25 },
-                    }}
-                    onClick={() => triggerPeerFileSelect(info.id)}
-                    onDragOver={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      setDragOverPeerId(info.id);
-                    }}
-                    onDragLeave={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      setDragOverPeerId(null);
-                    }}
-                    onDrop={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      setDragOverPeerId(null);
-                      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-                        handleSendFiles(e.dataTransfer.files, info.id);
-                      }
-                    }}
                     style={{
                       position: 'absolute',
-                      left: '50%',
-                      top: '50%',
-                      x: `calc(-50% + ${x}px)`,
-                      y: `calc(-50% + ${y}px)`,
+                      left: `calc(50% + ${pos.x}px)`,
+                      top: `calc(50% + ${pos.y}px)`,
+                      transform: 'translate(-50%, -50%)',
                       zIndex: 30,
                     }}
-                    className="flex flex-col items-center cursor-pointer group"
                   >
-                    <div
-                      className={`relative w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-card border-2 flex items-center justify-center shadow-lg transition-all ${
-                        isDragTarget
-                          ? 'border-primary ring-4 ring-primary/30 bg-primary/10'
-                          : 'border-border/80 group-hover:border-primary group-hover:shadow-primary/25'
-                      }`}
+                    <motion.div
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{
+                        scale: isDragTarget ? 1.15 : 1,
+                        opacity: 1,
+                        y: [0, -6, 0],
+                      }}
+                      exit={{ scale: 0, opacity: 0 }}
+                      transition={{
+                        y: { duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: (idx % 3) * 0.5 },
+                        scale: { duration: 0.2 },
+                        opacity: { duration: 0.25 },
+                      }}
+                      onClick={() => triggerPeerFileSelect(info.id)}
+                      onDragOver={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setDragOverPeerId(info.id);
+                      }}
+                      onDragLeave={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setDragOverPeerId(null);
+                      }}
+                      onDrop={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setDragOverPeerId(null);
+                        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                          handleSendFiles(e.dataTransfer.files, info.id);
+                        }
+                      }}
+                      className="flex flex-col items-center cursor-pointer group"
                     >
-                      {getDeviceIcon(info.type, 'w-7 h-7 text-foreground group-hover:text-primary transition-colors')}
-                      <span className="absolute -top-1 -right-1 flex h-3 w-3">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-4 w-4 bg-emerald-500"></span>
-                      </span>
-                    </div>
+                      <div
+                        className={`relative w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-card border-2 flex items-center justify-center shadow-lg transition-all ${
+                          isDragTarget
+                            ? 'border-primary ring-4 ring-primary/30 bg-primary/10'
+                            : 'border-border/80 group-hover:border-primary group-hover:shadow-primary/25'
+                        }`}
+                      >
+                        {getDeviceIcon(info.type, 'w-7 h-7 text-foreground group-hover:text-primary transition-colors')}
+                        <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                        </span>
+                      </div>
 
-                    <div className="mt-1.5 text-center px-2 py-0.5 rounded-full bg-background/80 backdrop-blur-xs border border-border/50 shadow-2xs">
-                      <span className="text-xs font-bold text-foreground block truncate max-w-[100px]">
-                        {info.name}
-                      </span>
-                      <span className="text-[10px] text-muted-foreground block">
-                        {info.os}
-                      </span>
-                    </div>
-                  </motion.div>
+                      <div className="mt-1.5 text-center px-2 py-0.5 rounded-full bg-background/85 backdrop-blur-xs border border-border/50 shadow-2xs">
+                        <span className="text-xs font-bold text-foreground block truncate max-w-[100px]">
+                          {info.name}
+                        </span>
+                        <span className="text-[10px] text-muted-foreground block">
+                          {info.os}
+                        </span>
+                      </div>
+                    </motion.div>
+                  </div>
                 );
               })}
             </AnimatePresence>
