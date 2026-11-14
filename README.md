@@ -117,3 +117,55 @@ Bharat Dev Tools is built on a strict privacy-first foundation:
 1. **Zero Server Relays**: Payloads entered into JSON tools, cURL builders, Base64 decoders, or QR generators never leave the client's machine.
 2. **Offline-Capable Libraries**: Uses client-side `qrcode` and `jsqr` instead of external third-party generation APIs.
 3. **Transparent Analytics**: Only high-level anonymous page views and tool usage events are recorded in production via Google Analytics 4 (`anonymize_ip: true`). Analytics are completely disabled on `localhost`.
+
+---
+
+## ⚖️ Feature & Privacy Comparison Standards (Advantages Table)
+
+Every tool and the homepage include a **Feature & Privacy Comparison Table** contrasting Bharat Dev Tools against typical cloud-based alternatives.
+
+### 1. The Core Principle: Never Assume Features
+> [!IMPORTANT]
+> **Every row in the comparison table must reflect verified, tested codebase capabilities.**
+> Never assume a feature exists or make speculative claims. Every green checkmark (<span style="color:#059669;">✔</span>) must be backed by concrete implementation:
+> - **PDF Tools**: Local WebAssembly (`pdf-lib`), zero upload, client-side PII regex detection, 0-byte retention.
+> - **QuickDrop**: Direct WebRTC P2P datachannels, 64KB chunk streaming with backpressure, receiver authorization prompt, no cloud storage.
+> - **JSON & Data**: In-browser client parsing, BigInt 64-bit precision preservation, syntax auto-repair (trailing commas, unquoted keys), spreadsheet grid view with CSV export, native File System API (`Ctrl+S`).
+> - **Image Tools**: HTML5 Canvas & Web Workers, parallel batch processing, granular 1%–100% quality slider, WebP/JPG/PNG conversion.
+> - **QR & Links**: Permanent static QR codes (zero expiration dates), zero forced watermarks, direct destination payload without tracking redirects, vector SVG and 4096px PNG.
+> - **Encode & Security**: Native W3C Web Crypto API, secret keys never leave browser memory, 0 network requests, RFC compliance.
+> - **Calculators & Time**: Real-time recalculation on every keystroke, full amortization schedules with CSV export, distraction-free UI with zero popups or ads.
+> - **Design & Animation**: Hardware-accelerated local WebAssembly Canvas/SVG playback, zero intellectual property leaks.
+
+---
+
+### 2. Implementation Rules for New Pages
+
+#### A. Next.js App Router Tools (`src/app/`)
+- **Automated via Layout**: All Next.js tools using `ToolLayout` (`src/components/layout/ToolLayout.tsx`) automatically render `<ComparisonTable toolId={tool.id} category={tool.category} />` directly above the FAQ section.
+- **Data Source**: Defined in [`src/components/ui/ComparisonTable.tsx`](file:///d:/Projects/bharatdevtool/src/components/ui/ComparisonTable.tsx).
+- **Adding a new Next.js Tool**:
+  1. Register the tool in `src/config/tools.ts`.
+  2. Wrap the page with `<ToolLayout tool={tool}>...</ToolLayout>`.
+  3. The layout automatically displays the verified category comparison table (or tool-specific override if provided).
+
+#### B. Static HTML Tool Pages (`public/*.html`)
+- **Automated via Footer**: All static HTML tools load `public/components/footer.js`.
+- **Dynamic Insertion**: `createComparisonTable()` automatically detects the current tool and category (`json`, `image`, `qr-links`, `developer`, `security`, `calculators`, `design`) and injects the comparison table right above `<section class="faq-section" id="faq">` (or before `</main>`).
+- **Adding a new Static Tool**:
+  1. Add the tool to `ALL_TOOLS_LIST` in `public/components/footer.js` and `TOOLS` in `src/config/tools.ts`.
+  2. Ensure `<script src="components/footer.js"></script>` is included at the bottom of the page.
+  3. Include a `<section class="faq-section" id="faq">` on the page — the table will automatically inject before it.
+
+#### C. Home Page (`public/index.html`)
+- **Platform Advantages**: The homepage features an overarching **Platform Advantages** table right above the FAQ section, comparing Bharat Dev Tools' overall architecture (in-browser compute, 0-byte retention, RAM-bounded limits, zero watermarks, 1-click access) against typical online utility sites.
+
+---
+
+### 3. Icon & Code Quality Rules
+- **No Raw Emoji Glyphs**: Automated tests (`tests/static-pages.test.ts`) forbid raw emoji characters in visible markup or shared scripts. Always use vector SVG icons (`<svg class="bdt-i">...`) or standard text symbols.
+- **Theme Adaptability**: All comparison table elements must support both light and dark themes using `.bdt-comparison-section`, `.bdt-comp-table`, `.bdt-col-highlight`, `.bdt-icon-check`, and `.bdt-icon-cross`.
+- **Verification Command**:
+  ```bash
+  npx vitest run tests/static-pages.test.ts tests/seo.test.ts
+  ```

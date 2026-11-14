@@ -2306,3 +2306,164 @@ body.link-mod .CodeMirror .cm-string.cm-url { cursor: pointer !important; }
 .workspace ::-webkit-scrollbar-track, .workspace ::-webkit-scrollbar-corner { background: transparent; }
 .workspace ::-webkit-scrollbar-thumb { background: rgba(100,116,139,0.35); border-radius: 8px; border: 2px solid transparent; background-clip: padding-box; }
 .workspace ::-webkit-scrollbar-thumb:hover { background-color: rgba(100,116,139,0.6); }
+
+/* ── Platform & Category Feature Comparison Tables ── */
+.bdt-comparison-section {
+  width: 100%;
+  max-width: 900px;
+  margin: 48px auto 24px;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+.bdt-comp-header {
+  margin-bottom: 20px;
+}
+.bdt-comp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(37, 99, 235, 0.08);
+  color: #2563eb;
+  margin-bottom: 8px;
+}
+[data-theme="dark"] .bdt-comp-badge, .dark .bdt-comp-badge {
+  background: rgba(59, 130, 246, 0.15);
+  color: #93c5fd;
+}
+.bdt-comp-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 6px;
+  color: var(--fg, #0f172a);
+  letter-spacing: -0.01em;
+}
+.bdt-comp-subtitle {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.5;
+}
+[data-theme="dark"] .bdt-comp-subtitle, .dark .bdt-comp-subtitle {
+  color: #94a3b8;
+}
+.bdt-comp-table-wrapper {
+  overflow-x: auto;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+[data-theme="dark"] .bdt-comp-table-wrapper, .dark .bdt-comp-table-wrapper {
+  background: #0b1220;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+.bdt-comp-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.bdt-comp-table th {
+  padding: 12px 16px;
+  font-weight: 600;
+  color: var(--fg, #0f172a);
+  background: rgba(0, 0, 0, 0.02);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+[data-theme="dark"] .bdt-comp-table th, .dark .bdt-comp-table th {
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+.bdt-comp-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  vertical-align: top;
+  color: var(--fg, #0f172a);
+}
+[data-theme="dark"] .bdt-comp-table td, .dark .bdt-comp-table td {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+.bdt-comp-table tr:last-child td {
+  border-bottom: none;
+}
+.bdt-comp-table tr:hover td {
+  background: rgba(0, 0, 0, 0.015);
+}
+[data-theme="dark"] .bdt-comp-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+.bdt-col-highlight {
+  background: rgba(37, 99, 235, 0.03) !important;
+  color: #2563eb !important;
+  font-weight: 700;
+  border-left: 1px solid rgba(37, 99, 235, 0.1);
+  border-right: 1px solid rgba(37, 99, 235, 0.1);
+}
+[data-theme="dark"] .bdt-col-highlight, .dark .bdt-col-highlight {
+  background: rgba(59, 130, 246, 0.06) !important;
+  color: #60a5fa !important;
+  border-left-color: rgba(59, 130, 246, 0.18);
+  border-right-color: rgba(59, 130, 246, 0.18);
+}
+.bdt-comp-cell {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.bdt-icon-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+[data-theme="dark"] .bdt-icon-check, .dark .bdt-icon-check {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+}
+.bdt-icon-cross {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+[data-theme="dark"] .bdt-icon-cross, .dark .bdt-icon-cross {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
+.bdt-live-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+.bdt-comp-competitor-val {
+  color: #64748b;
+}
+[data-theme="dark"] .bdt-comp-competitor-val, .dark .bdt-comp-competitor-val {
+  color: #94a3b8;
+}
+@media (max-width: 640px) {
+  .bdt-comp-title { font-size: 18px; }
+  .bdt-comp-table th, .bdt-comp-table td { padding: 10px 12px; font-size: 12px; }
+}
