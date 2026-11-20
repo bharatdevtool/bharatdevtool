@@ -93,6 +93,7 @@ const ALL_TOOLS_LIST = [
   { label: 'Image to PDF', href: 'image-to-pdf', cat: 'pdf' },
   { label: 'PDF to Image', href: 'pdf-to-image', cat: 'pdf' },
   { label: 'Aadhaar & ID Card Print', href: 'aadhaar-card-print', cat: 'pdf' },
+  { label: 'Document Scanner', href: 'document-scanner', cat: 'pdf' },
   { label: 'Lottie Player & Studio', href: 'lottie-player', cat: 'design' },
   { label: 'Lottie Converter', href: 'lottie-converter', cat: 'design' },
   { label: 'Lottie Validator', href: 'lottie-validator', cat: 'design' },

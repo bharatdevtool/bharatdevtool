@@ -7,6 +7,7 @@ import ErrorMessage from '@/components/ui/ErrorMessage';
 import CornerCrop from '@/components/image/CornerCrop';
 import MaskBox from '@/components/image/MaskBox';
 import { isEncryptedError } from '@/lib/pdf/shared';
+import { useCrossToolData } from '@/hooks/useCrossToolData';
 import { loadImageCanvas } from '@/lib/image/perspective';
 import { cardSheet, ID_CARD, mmToPx, type CardLayoutMode } from '@/lib/print/sheet';
 import { analytics } from '@/lib/analytics';
@@ -38,6 +39,21 @@ async function canvasToJpeg(canvas: HTMLCanvasElement): Promise<Uint8Array> {
   const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.92));
   if (!blob) throw new Error('Could not prepare the card image.');
   return new Uint8Array(await blob.arrayBuffer());
+}
+
+function dataUrlToCanvas(url: string): Promise<HTMLCanvasElement> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const c = document.createElement('canvas');
+      c.width = img.naturalWidth;
+      c.height = img.naturalHeight;
+      c.getContext('2d')!.drawImage(img, 0, 0);
+      resolve(c);
+    };
+    img.onerror = () => reject(new Error('image'));
+    img.src = url;
+  });
 }
 
 const isPdf = (f: File) => f.type === 'application/pdf' || /\.pdf$/i.test(f.name);
@@ -88,6 +104,19 @@ export default function IdCardPrintClient() {
   const target = useRef<{ row: number; side: Side } | null>(null);
 
   const filled = rows.filter((r) => r.front || r.back);
+
+  // A card scanned with the Document Scanner (front, back) goes into the first empty row.
+  useCrossToolData<{ front?: string; back?: string }>('aadhaar-card-print', async ({ front, back }) => {
+    try {
+      const [f, b] = await Promise.all([front ? dataUrlToCanvas(front) : undefined, back ? dataUrlToCanvas(back) : undefined]);
+      setRows((rs) => {
+        const i = Math.max(0, rs.findIndex((r) => !r.front && !r.back));
+        return rs.map((r, j) => (j === i ? { ...r, front: f ?? r.front, back: b ?? r.back } : r));
+      });
+    } catch {
+      setError('The scanned card could not be opened here. Add the photos again.');
+    }
+  });
 
   const pick = (row: number, side: Side) => {
     target.current = { row, side };

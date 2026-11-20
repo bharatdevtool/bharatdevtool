@@ -477,6 +477,33 @@ export const TOOL_FAQS: Record<string, ToolFaq[]> = {
         'No. The photos are cropped and placed inside your browser and never leave your device. Nothing is saved: the cards disappear when you press Clear all or close the page.',
     },
   ],
+  'document-scanner': [
+    {
+      question: 'How do I scan a document with my phone without an app?',
+      answer:
+        'Open this page on your phone and tap Take photo. Drag the four corners onto the edges of the page, tap Use this, and add the next page the same way. Then download one PDF with all the pages, or JPG images.',
+    },
+    {
+      question: 'How do I straighten a crooked photo of a page?',
+      answer:
+        'Drag each corner handle onto a corner of the paper. The tool corrects the angle so the page comes out flat and rectangular, as if it had been put through a scanner, and cuts away the table or background around it.',
+    },
+    {
+      question: 'Can I make the scanned PDF smaller than 200 KB?',
+      answer:
+        'Yes. Turn on "Fit under a maximum size" and pick 100 KB, 200 KB, 500 KB or 1 MB. If the PDF comes out bigger, it is fitted under that size at the sharpest quality that still fits, which suits government and exam portals.',
+    },
+    {
+      question: 'Can I scan the front and back of an ID card?',
+      answer:
+        'Choose the ID card shape, scan the front and then the back, and press Send to ID card print. Both sides are placed at real card size on an A4 sheet that you can print, cut and laminate.',
+    },
+    {
+      question: 'Are my scans uploaded?',
+      answer:
+        'No. The photos are straightened and turned into a PDF inside your browser and never leave your device. Nothing is saved: the pages are gone when you close the page.',
+    },
+  ],
   'pdf-to-image': [
     {
       question: 'Which format should I choose?',

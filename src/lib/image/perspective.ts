@@ -65,6 +65,18 @@ export function defaultQuad(width: number, height: number, inset = 0.06): Quad {
   ];
 }
 
+/**
+ * Output size for a quad when the shape is not fixed: average edge lengths,
+ * capped so the longer side is at most `maxSide` pixels.
+ */
+export function quadSize(q: Quad, maxSide = 2400): { w: number; h: number } {
+  const d = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.y - b.y);
+  const w = (d(q[0], q[1]) + d(q[3], q[2])) / 2;
+  const h = (d(q[0], q[3]) + d(q[1], q[2])) / 2;
+  const k = Math.min(1, maxSide / Math.max(w, h, 1));
+  return { w: Math.max(1, Math.round(w * k)), h: Math.max(1, Math.round(h * k)) };
+}
+
 /** Put any four points in TL, TR, BR, BL order (for detected corners). */
 export function orderQuad(points: Point[]): Quad {
   if (points.length !== 4) throw new Error('Need exactly four corners.');

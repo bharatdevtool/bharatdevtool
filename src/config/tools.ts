@@ -546,6 +546,17 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     ],
     heavy: true,
   },
+  {
+    id: 'document-scanner',
+    label: 'Document Scanner',
+    route: '/document-scanner',
+    category: 'PDF',
+    description:
+      'Free online document scanner: photograph a page, drag the corners to straighten it and save a clean PDF or JPG, even under a size limit. No app, no upload.',
+    shortDesc: 'Photo of a page to a straight PDF scan',
+    keywords: ['document scanner online', 'cam scanner online', 'scan document to pdf', 'photo to scanned pdf', 'scanner online free', 'scan with phone camera'],
+    heavy: true,
+  },
   // ── Static HTML tools added in Phase 2-4 ──────────────────
   {
     id: 'jwt-decoder',

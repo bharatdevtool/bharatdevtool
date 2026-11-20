@@ -2,15 +2,15 @@
 
 import React, { useMemo, useRef, useState } from 'react';
 import { Check, RotateCw, Undo2, X } from 'lucide-react';
-import { defaultQuad, rotateCanvas90, warpCanvas, type Quad } from '@/lib/image/perspective';
+import { defaultQuad, quadSize, rotateCanvas90, warpCanvas, type Quad } from '@/lib/image/perspective';
 
 interface CornerCropProps {
   /** Decoded image (see loadImageCanvas). */
   source: HTMLCanvasElement;
-  /** Output width ÷ height, e.g. 85.6 / 54 for an ID card. */
-  aspect: number;
-  /** Output width in pixels (1011 = 85.6 mm at 300 DPI). */
-  outputWidth: number;
+  /** Output width ÷ height, e.g. 85.6 / 54 for an ID card. Leave out to keep the shape of the corners. */
+  aspect?: number;
+  /** Output width in pixels (1011 = 85.6 mm at 300 DPI). Used with `aspect`. */
+  outputWidth?: number;
   /** Starting corners in source pixels (e.g. from auto-detection). */
   initialQuad?: Quad;
   title?: string;
@@ -53,7 +53,9 @@ export default function CornerCrop({ source, aspect, outputWidth, initialQuad, t
 
   const apply = () => {
     try {
-      onDone(warpCanvas(img, quad, outputWidth, Math.round(outputWidth / aspect)));
+      const width = outputWidth ?? 1600;
+      const size = aspect ? { w: width, h: Math.round(width / aspect) } : quadSize(quad);
+      onDone(warpCanvas(img, quad, size.w, size.h));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Could not straighten this photo. Move the corners and try again.');
     }

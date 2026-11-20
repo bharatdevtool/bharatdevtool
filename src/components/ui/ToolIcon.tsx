@@ -120,6 +120,7 @@ const ICON_MAP: Record<string, LucideIcon> = {
   'image-to-pdf': ImagePlus,
   'pdf-to-image': FileImage,
   'aadhaar-card-print': IdCard,
+  'document-scanner': ScanLine,
   'favicon-generator': AppWindow,
   'csv-json-converter': Sheet,
   'yaml-json-converter': FileCode,

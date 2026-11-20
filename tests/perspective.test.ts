@@ -1,5 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { homography, applyHomography, warpPixels, orderQuad, defaultQuad, type Quad, type Pixels } from '@/lib/image/perspective';
+import { homography, applyHomography, warpPixels, orderQuad, defaultQuad, quadSize, type Quad, type Pixels } from '@/lib/image/perspective';
+import { scanPageLayout, scansToPdf } from '@/lib/scan/pdf';
+import { PDFDocument } from '@cantoo/pdf-lib';
 
 /** w×h image where every pixel has a unique red value (x + y*w) and green = 255. */
 function grid(w: number, h: number): Pixels {
@@ -52,5 +54,29 @@ describe('perspective maths', () => {
 
   it('rejects corners that collapse to a line', () => {
     expect(() => warpPixels(grid(4, 4), [{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 3 }], 4, 4)).toThrow();
+  });
+});
+
+describe('scan pages', () => {
+  it('keeps the shape of the corners when no shape is fixed', () => {
+    expect(quadSize([{ x: 0, y: 0 }, { x: 400, y: 0 }, { x: 400, y: 600 }, { x: 0, y: 600 }])).toEqual({ w: 400, h: 600 });
+    expect(quadSize([{ x: 0, y: 0 }, { x: 4800, y: 0 }, { x: 4800, y: 2400 }, { x: 0, y: 2400 }])).toEqual({ w: 2400, h: 1200 });
+  });
+
+  it('centres a scan on A4 and turns A4 landscape for wide scans', () => {
+    const tall = scanPageLayout(1000, 2000, 'a4');
+    expect([tall.pageW, tall.pageH]).toEqual([595.28, 841.89]);
+    expect(tall.h).toBeCloseTo(841.89, 2);
+    expect(tall.x).toBeCloseTo((595.28 - tall.w) / 2, 6);
+    const wide = scanPageLayout(2000, 1000, 'a4');
+    expect(wide.pageW).toBeGreaterThan(wide.pageH);
+    const fit = scanPageLayout(1654, 2339, 'fit');
+    expect(fit.pageW).toBeCloseTo(595.4, 1); // 1654 px at 200 DPI ≈ A4 width
+  });
+
+  it('writes one PDF page per scan', async () => {
+    const jpeg = Uint8Array.from(atob('/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wAALCAABAAEBAREA/8QAFAABAAAAAAAAAAAAAAAAAAAAA//EABQQAQAAAAAAAAAAAAAAAAAAAAD/2gAIAQEAAD8AN//Z'), (c) => c.charCodeAt(0));
+    const bytes = await scansToPdf([{ bytes: jpeg, width: 1, height: 1 }, { bytes: jpeg, width: 1, height: 1 }], 'a4');
+    expect((await PDFDocument.load(bytes)).getPageCount()).toBe(2);
   });
 });
