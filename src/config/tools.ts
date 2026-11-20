@@ -788,7 +788,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     description:
       'Free JSON to TypeScript interface generator. Instantly convert JSON objects to TypeScript interfaces and types online. No sign-up required. Supports nested objects, arrays, and optional fields.',
     shortDesc: 'Free JSON to TypeScript interface generator',
-    keywords: ['json to typescript', 'json to typescript interface', 'json to ts', 'convert json to typescript', 'typescript interface generator', 'json types'],
+    keywords: ['json to typescript', 'json to typescript interface', 'json to ts', 'convert json to typescript', 'typescript interface generator', 'json types', 'json to kotlin', 'json to swift', 'json to dart'],
   },
 ];
 

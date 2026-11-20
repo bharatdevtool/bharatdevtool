@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- code:seo -->
   <title>Free JSON to TypeScript Converter | Bharat Dev Tools</title>
   <meta name="description" content="Free JSON to TypeScript converter. Generate interfaces and types from any JSON instantly. No sign-up, and your data never leaves your browser.">
   <meta name="keywords" content="json to typescript, json to typescript interface, json to ts, convert json to typescript, typescript interface generator, json types, typescript types from json, online json to typescript, free json converter">
@@ -28,6 +29,7 @@
   <meta name="twitter:title" content="Free JSON to TypeScript Converter | Bharat Dev Tools">
   <meta name="twitter:description" content="Free JSON to TypeScript converter. Generate interfaces and types from any JSON instantly. No sign-up, and your data never leaves your browser.">
   <meta name="twitter:image" content="https://bharatdevtool.com/og/json-to-typescript.png">
+  <!-- /code:seo -->
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
@@ -63,6 +65,7 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="components/header.css">
 
+  <!-- code:jsonld -->
   <!-- Structured Data: WebApplication -->
   <script type="application/ld+json">
   {
@@ -166,6 +169,7 @@
     ]
   }
   </script>
+  <!-- /code:jsonld -->
 
   <script>
     tailwind.config = {
@@ -258,6 +262,7 @@
   <script src="components/header.js"></script>
 
   <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- code:hero -->
     <h1 class="sr-only">JSON to TypeScript Interface Generator</h1>
 
     <!-- Hero -->
@@ -269,6 +274,8 @@
         Paste any JSON and instantly get TypeScript interfaces. Free, browser-only, no sign-up.
       </p>
     </div>
+    <script type="application/json" id="codePage">{"lang":"typescript"}</script>
+    <!-- /code:hero -->
 
     <!-- Main Panel: two-column on large screens -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-fade-in">
@@ -393,6 +400,7 @@
     </div>
 
     <!-- FAQ Section -->
+    <!-- code:faq -->
     <section class="faq-section mt-8" id="faq">
       <div class="faq-container">
         <h2 class="section-title">Frequently Asked Questions</h2>
@@ -452,6 +460,7 @@
         </div>
       </div>
     </section>
+    <!-- /code:faq -->
   </main>
 
   <!-- Footer -->
@@ -680,6 +689,10 @@
       document.getElementById('ts-output').placeholder = (info ? name + ' classes' : 'TypeScript interfaces') + ' will appear here…';
       document.getElementById('ts-output').value = '';
     }
+    try {
+      const preset = JSON.parse(document.getElementById('codePage')?.textContent || '{}');
+      if (preset.lang && [...langEl.options].some((o) => o.value === preset.lang)) langEl.value = preset.lang;
+    } catch (_) { /* keep TypeScript */ }
     langEl.addEventListener('change', syncLanguage);
     libEl.addEventListener('change', () => { document.getElementById('ts-output').value = ''; });
     syncLanguage();
