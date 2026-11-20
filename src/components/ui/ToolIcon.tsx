@@ -60,6 +60,7 @@ import {
   ImageDown,
   IdCard,
   ScanText,
+  FileScan,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -123,6 +124,7 @@ const ICON_MAP: Record<string, LucideIcon> = {
   'aadhaar-card-print': IdCard,
   'document-scanner': ScanLine,
   'image-to-text': ScanText,
+  'make-pdf-look-scanned': FileScan,
   'favicon-generator': AppWindow,
   'csv-json-converter': Sheet,
   'yaml-json-converter': FileCode,

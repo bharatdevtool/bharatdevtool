@@ -568,6 +568,17 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     keywords: ['image to text', 'ocr online', 'extract text from image', 'photo to text', 'scanned pdf to text', 'screenshot to text', 'jpg to text'],
     heavy: true,
   },
+  {
+    id: 'make-pdf-look-scanned',
+    label: 'Make PDF Look Scanned',
+    route: '/make-pdf-look-scanned',
+    category: 'PDF',
+    description:
+      'Free tool to make a PDF look scanned: adds a slight tilt, grey paper tone, grain and softness like a real scan or photocopy. Optional size limit. No upload.',
+    shortDesc: 'Give a digital PDF a scanned look',
+    keywords: ['make pdf look scanned', 'pdf to scanned pdf', 'make document look scanned', 'jpg to scanned pdf', 'scanned effect pdf', 'look scanned online'],
+    heavy: true,
+  },
   // ── Static HTML tools added in Phase 2-4 ──────────────────
   {
     id: 'jwt-decoder',

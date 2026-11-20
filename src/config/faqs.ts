@@ -531,6 +531,33 @@ export const TOOL_FAQS: Record<string, ToolFaq[]> = {
         'No. Text recognition runs inside your browser and your images never leave your device. Nothing is saved after you close the page.',
     },
   ],
+  'make-pdf-look-scanned': [
+    {
+      question: 'How do I make a PDF look scanned?',
+      answer:
+        'Add the PDF (or JPG/PNG pages), choose grey, black & white or colour, and adjust tilt, grain and softness while you watch the preview. Then download: every page gets its own small tilt, like sheets fed through a real scanner.',
+    },
+    {
+      question: 'Can I still select or search the text afterwards?',
+      answer:
+        'No. Each page is turned into an image, exactly like a real scan, so the text can no longer be selected or searched. Keep your original PDF if you need the text.',
+    },
+    {
+      question: 'Can I keep the scanned PDF under 200 KB?',
+      answer:
+        'Yes. Turn on "Fit under a maximum size" and pick 100 KB, 200 KB, 500 KB or 1 MB. The file is fitted under that size at the sharpest quality that still fits.',
+    },
+    {
+      question: 'Does it keep the page size of my PDF?',
+      answer:
+        'Yes. Pages from a PDF keep their original size, such as A4. Images are placed on A4 pages.',
+    },
+    {
+      question: 'Is my PDF uploaded?',
+      answer:
+        'No. The scanned look is drawn inside your browser and your file never leaves your device. Nothing is saved after you close the page.',
+    },
+  ],
   'pdf-to-image': [
     {
       question: 'Which format should I choose?',
