@@ -73,6 +73,7 @@ export const ANALYTICS_EVENTS = {
   // ID card print (props: card count and layout only — never images or card details)
   ID_CARD_PRINT: 'id_card_print',
   DOCUMENT_SCAN: 'document_scan',
+  OCR_TEXT: 'ocr_text',
   // PDF (props are fixed labels and counts only — never file names or content)
   PDF_FILES_ADDED: 'pdf_files_added',
   PDF_EXPORT: 'pdf_export',

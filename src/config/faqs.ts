@@ -504,6 +504,33 @@ export const TOOL_FAQS: Record<string, ToolFaq[]> = {
         'No. The photos are straightened and turned into a PDF inside your browser and never leave your device. Nothing is saved: the pages are gone when you close the page.',
     },
   ],
+  'image-to-text': [
+    {
+      question: 'How do I extract text from an image?',
+      answer:
+        'Add a photo or screenshot, or paste one with Ctrl+V, and press Read text. The text appears below, ready to copy or download as a TXT file. Clear, straight photos of printed text give the best result.',
+    },
+    {
+      question: 'Can it read scanned PDFs?',
+      answer:
+        'Yes. Add the PDF and every page (up to 20) is read in order. You can also download a searchable PDF: the same pages with an invisible text layer, so you can search and copy text in any PDF reader.',
+    },
+    {
+      question: 'Which languages and handwriting does it read?',
+      answer:
+        'This version reads English printed text. Handwriting works poorly, and other scripts such as Hindi are not read yet. Small, blurry or tilted text also lowers accuracy, so straighten photos with the Document Scanner first.',
+    },
+    {
+      question: 'Why is the first run slower?',
+      answer:
+        'The first time, the browser downloads the text-recognition engine and the English model (about 7 MB) from this site. After that they are cached and reading starts quickly, even offline.',
+    },
+    {
+      question: 'Are my images uploaded?',
+      answer:
+        'No. Text recognition runs inside your browser and your images never leave your device. Nothing is saved after you close the page.',
+    },
+  ],
   'pdf-to-image': [
     {
       question: 'Which format should I choose?',

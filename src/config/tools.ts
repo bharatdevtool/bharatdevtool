@@ -557,6 +557,17 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     keywords: ['document scanner online', 'cam scanner online', 'scan document to pdf', 'photo to scanned pdf', 'scanner online free', 'scan with phone camera'],
     heavy: true,
   },
+  {
+    id: 'image-to-text',
+    label: 'Image to Text (OCR)',
+    route: '/image-to-text',
+    category: 'Image',
+    description:
+      'Free image to text converter (OCR): copy the text from photos, screenshots and scanned PDFs in your browser. Save it as TXT or a searchable PDF. No upload.',
+    shortDesc: 'Copy text from photos and scans',
+    keywords: ['image to text', 'ocr online', 'extract text from image', 'photo to text', 'scanned pdf to text', 'screenshot to text', 'jpg to text'],
+    heavy: true,
+  },
   // ── Static HTML tools added in Phase 2-4 ──────────────────
   {
     id: 'jwt-decoder',

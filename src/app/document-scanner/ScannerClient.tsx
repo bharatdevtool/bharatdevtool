@@ -2,7 +2,7 @@
 
 import React, { useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Camera, ChevronLeft, ChevronRight, Download, FileImage, IdCard, ImagePlus, RotateCw, ShieldCheck, Trash2 } from 'lucide-react';
+import { Camera, ChevronLeft, ChevronRight, Download, FileImage, IdCard, ImagePlus, RotateCw, ScanText, ShieldCheck, Trash2 } from 'lucide-react';
 import ToolLayout from '@/components/layout/ToolLayout';
 import ErrorMessage from '@/components/ui/ErrorMessage';
 import CornerCrop from '@/components/image/CornerCrop';
@@ -196,6 +196,12 @@ export default function ScannerClient() {
     router.push('/aadhaar-card-print');
   };
 
+  const sendToOcr = () => {
+    setCrossToolData('image-to-text', { images: pages.map((p) => p.canvas.toDataURL('image/jpeg', 0.92)) });
+    track('ocr');
+    router.push('/image-to-text');
+  };
+
   return (
     <ToolLayout toolId="document-scanner">
       <input ref={cameraRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={(e) => onFiles(e.target.files)} />
@@ -309,6 +315,11 @@ export default function ScannerClient() {
             <button type="button" onClick={downloadJpg} disabled={!pages.length || !!busy || !!cropping} className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-border px-4 py-2 font-medium hover:border-primary disabled:opacity-50">
               <FileImage className="h-4 w-4" /> {pages.length > 1 ? 'Download JPGs (ZIP)' : 'Download JPG'}
             </button>
+            {pages.length > 0 && (
+              <button type="button" onClick={sendToOcr} disabled={!!busy || !!cropping} className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-border px-4 py-2 font-medium hover:border-primary disabled:opacity-50">
+                <ScanText className="h-4 w-4" /> Extract text
+              </button>
+            )}
             {shape === 'id' && pages.length > 0 && (
               <button type="button" onClick={sendToIdCard} disabled={!!busy || !!cropping} className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-border px-4 py-2 font-medium hover:border-primary disabled:opacity-50">
                 <IdCard className="h-4 w-4" /> Send to ID card print
