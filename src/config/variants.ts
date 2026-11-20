@@ -142,6 +142,34 @@ export const VARIANTS: ToolVariant[] = [
       { question: 'Is my PDF uploaded to a server?', answer: PRIVATE },
     ],
   },
+  {
+    id: 'jpg-to-pdf-100kb',
+    route: '/jpg-to-pdf-under-100kb',
+    parentToolId: 'jpg-to-pdf',
+    label: 'JPG to PDF Under 100 KB',
+    chip: 'Under 100 KB',
+    description:
+      'Free tool to convert JPG photos or scans into one PDF under 100 KB for online forms. Reorder pages, pick A4 and download. Runs in your browser, no upload.',
+    keywords: ['jpg to pdf under 100kb', 'jpg to pdf 100kb', 'image to pdf below 100kb', 'convert jpg to pdf less than 100kb', 'photo to pdf 100kb'],
+    faqs: [
+      {
+        question: 'How do I convert a JPG to a PDF under 100 KB?',
+        answer:
+          'Add your JPG photos or scans, put them in order and press the button. This page has "Fit under a maximum size" switched on at 100 KB, so if the PDF comes out bigger it is fitted under 100 KB before you download.',
+      },
+      {
+        question: 'Can I put several photos in one PDF under 100 KB?',
+        answer:
+          'Yes. Add all the images; each becomes a page in one PDF. The more pages, the lower the resolution needed to stay under 100 KB, so for long documents check whether the form accepts 200 KB.',
+      },
+      {
+        question: 'Will the PDF be readable?',
+        answer:
+          'The tool keeps the highest resolution that fits and tells you the DPI it reached. Text in a clear phone photo stays readable for one or two pages. Crop away table edges and background first for the sharpest result.',
+      },
+      { question: 'Are my photos uploaded?', answer: 'No. The photos are turned into a PDF inside your browser and never leave your device, so ID proofs and certificates stay private. Nothing is stored after you close the page.' },
+    ],
+  },
 ];
 
 export function getVariant(id: string): ToolVariant | undefined {

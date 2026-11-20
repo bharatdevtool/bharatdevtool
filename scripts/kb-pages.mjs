@@ -320,6 +320,7 @@ function links(p) {
       <p class="mb-3"><span class="font-medium">More:</span> ${more.map(chip).join(' ')}</p>
       <p class="text-gray-600 dark:text-gray-400">
         Need something else? Try the <a href="image-compressor.html">Image Compressor</a>, <a href="image-resizer.html">Image Resizer</a> or <a href="/jpg-to-pdf">Image to PDF</a>.
+        Need a PDF under 200 KB? Use <a href="/compress-pdf-to-200kb">Compress PDF to 200 KB</a> or <a href="/jpg-to-pdf-under-100kb">JPG to PDF under 100 KB</a>.
       </p>
     </nav>`;
 }
