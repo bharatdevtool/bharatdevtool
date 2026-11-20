@@ -170,13 +170,27 @@ function safeError(label: string, err: unknown): Error {
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function PdfWorkspace({ task, onTaskChange }: { task: PdfTask; onTaskChange: (t: PdfTask) => void }) {
+/** Options a landing page (src/config/variants.ts) opens with, e.g. Exact size at 100 KB. Not saved unless the user changes them. */
+export type PdfPreset = Partial<Pick<Options, 'compressMode' | 'targetKb'>>;
+
+export default function PdfWorkspace({
+  task,
+  onTaskChange,
+  preset,
+  variantId,
+}: {
+  task: PdfTask;
+  onTaskChange: (t: PdfTask) => void;
+  preset?: PdfPreset;
+  /** Fixed landing-page id for analytics (never user input). */
+  variantId?: string;
+}) {
   const [files, setFiles] = useState<Map<string, WorkFile>>(new Map());
   const [pages, setPages] = useState<PageItem[]>([]);
   const [locked, setLocked] = useState<LockedFile[]>([]);
   const [selected, setSelected] = useState<Set<string>>(new Set());
   // Options UI only renders once files are added (never during prerender), so reading storage here can't cause a hydration mismatch.
-  const [options, setOptions] = useState<Options>(() => (typeof window === 'undefined' ? DEFAULT_OPTIONS : loadOptions()));
+  const [options, setOptions] = useState<Options>(() => ({ ...(typeof window === 'undefined' ? DEFAULT_OPTIONS : loadOptions()), ...preset }));
   const [ranges, setRanges] = useState('');
   // Kept in memory only: never saved, never sent anywhere.
   const [password, setPassword] = useState('');
@@ -820,6 +834,7 @@ export default function PdfWorkspace({ task, onTaskChange }: { task: PdfTask; on
         files: files.size,
         outputs: outputs.length,
         mode: task === 'compress' ? options.compressMode : task === 'split' ? options.splitMode : 'default',
+        variant: variantId ?? 'none',
       });
     } catch (err) {
       setError(err instanceof UserError ? err.message : 'Something went wrong while creating the file. Try again, or with fewer pages.');
