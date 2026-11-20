@@ -6,7 +6,8 @@ import { Camera, ChevronLeft, ChevronRight, Download, FileImage, IdCard, ImagePl
 import ToolLayout from '@/components/layout/ToolLayout';
 import ErrorMessage from '@/components/ui/ErrorMessage';
 import CornerCrop from '@/components/image/CornerCrop';
-import { loadImageCanvas, rotateCanvas90 } from '@/lib/image/perspective';
+import { loadImageCanvas, rotateCanvas90, type Quad } from '@/lib/image/perspective';
+import { detectOnCanvas } from '@/lib/scan/detect';
 import { applyScanFilter, SCAN_FILTERS, type FilterSettings } from '@/lib/scan/filters';
 import { scansToPdf, type ScanPageSize } from '@/lib/scan/pdf';
 import { setCrossToolData } from '@/lib/crossToolData';
@@ -74,7 +75,7 @@ export default function ScannerClient() {
   const [selected, setSelected] = useState<number | null>(null);
   const [defaults, setDefaults] = useState<FilterSettings>(PLAIN);
   const [shape, setShape] = useState<Shape>('auto');
-  const [cropping, setCropping] = useState<{ source: HTMLCanvasElement; rest: File[] } | null>(null);
+  const [cropping, setCropping] = useState<{ source: HTMLCanvasElement; rest: File[]; quad?: Quad } | null>(null);
   const [pageSize, setPageSize] = useState<ScanPageSize>('a4');
   const [fitUnder, setFitUnder] = useState(false);
   const [targetKb, setTargetKb] = useState(200);
@@ -93,7 +94,8 @@ export default function ScannerClient() {
       return;
     }
     try {
-      setCropping({ source: await loadImageCanvas(file, 3000), rest });
+      const source = await loadImageCanvas(file, 3000);
+      setCropping({ source, rest, quad: detectOnCanvas(source) });
     } catch {
       setError('A photo could not be opened. On iPhone, set Camera → Formats → Most Compatible, or use JPG photos.');
       void next(rest);
@@ -204,6 +206,7 @@ export default function ScannerClient() {
             <CornerCrop
               key={cropping.rest.length}
               source={cropping.source}
+              initialQuad={cropping.quad}
               aspect={current.aspect}
               outputWidth={current.width}
               title={`Page ${pages.length + 1}`}

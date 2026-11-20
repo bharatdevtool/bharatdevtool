@@ -8,7 +8,8 @@ import CornerCrop from '@/components/image/CornerCrop';
 import MaskBox from '@/components/image/MaskBox';
 import { isEncryptedError } from '@/lib/pdf/shared';
 import { useCrossToolData } from '@/hooks/useCrossToolData';
-import { loadImageCanvas } from '@/lib/image/perspective';
+import { loadImageCanvas, type Quad } from '@/lib/image/perspective';
+import { detectOnCanvas } from '@/lib/scan/detect';
 import { cardSheet, ID_CARD, mmToPx, type CardLayoutMode } from '@/lib/print/sheet';
 import { analytics } from '@/lib/analytics';
 import { ANALYTICS_EVENTS } from '@/config/site';
@@ -94,7 +95,7 @@ function save(bytes: Uint8Array, name: string, type: string) {
 export default function IdCardPrintClient() {
   const [rows, setRows] = useState<CardRow[]>(emptyRows);
   const [mode, setMode] = useState<CardLayoutMode>('fold');
-  const [cropping, setCropping] = useState<{ row: number; side: Side; source: HTMLCanvasElement; fromPdf?: boolean } | null>(null);
+  const [cropping, setCropping] = useState<{ row: number; side: Side; source: HTMLCanvasElement; fromPdf?: boolean; quad?: Quad } | null>(null);
   const [masking, setMasking] = useState<{ row: number; side: Side } | null>(null);
   const [pdfAsk, setPdfAsk] = useState<{ bytes: Uint8Array; row: number; side: Side; wrong: boolean } | null>(null);
   const [password, setPassword] = useState('');
@@ -134,7 +135,7 @@ export default function IdCardPrintClient() {
     try {
       if (!file.type.startsWith('image/')) throw new Error('Choose a photo (JPG, PNG or WebP) or the PDF of the card.');
       const source = await loadImageCanvas(file, 2400);
-      setCropping({ ...target.current, source });
+      setCropping({ ...target.current, source, quad: detectOnCanvas(source) });
     } catch (err) {
       setError(err instanceof Error && err.message.startsWith('Choose') ? err.message : 'This photo could not be opened. On iPhone, set Camera → Formats → Most Compatible, or use a JPG.');
     }
@@ -242,6 +243,7 @@ export default function IdCardPrintClient() {
             <CornerCrop
               key={`${cropping.row}-${cropping.side}`}
               source={cropping.source}
+              initialQuad={cropping.quad}
               aspect={ID_CARD.w / ID_CARD.h}
               outputWidth={OUT_W}
               title={`${CARD_TYPES.find((t) => t.id === rows[cropping.row].type)?.label ?? 'Card'}: ${cropping.side}`}
