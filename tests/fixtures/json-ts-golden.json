@@ -1,0 +1,171 @@
+{
+  "optionSets": [
+    {
+      "rootName": "Root",
+      "useTypeAlias": false,
+      "optionalFields": false,
+      "semicolons": true
+    },
+    {
+      "rootName": "user data",
+      "useTypeAlias": true,
+      "optionalFields": true,
+      "semicolons": false
+    }
+  ],
+  "cases": {
+    "example": {
+      "input": {
+        "id": 1,
+        "name": "Alice",
+        "email": "alice@example.com",
+        "age": 30,
+        "isActive": true,
+        "score": 98.5,
+        "address": {
+          "street": "123 Main St",
+          "city": "Mumbai",
+          "pincode": "400001",
+          "country": "India"
+        },
+        "tags": [
+          "developer",
+          "designer"
+        ],
+        "projects": [
+          {
+            "projectId": 101,
+            "title": "Portfolio Site",
+            "published": true
+          }
+        ],
+        "metadata": null
+      },
+      "outputs": [
+        "interface Root {\n  id: number;\n  name: string;\n  email: string;\n  age: number;\n  isActive: boolean;\n  score: number;\n  address: Address;\n  tags: string[];\n  projects: ProjectsItem[];\n  metadata: null;\n}\n\ninterface Address {\n  street: string;\n  city: string;\n  pincode: string;\n  country: string;\n}\n\ninterface ProjectsItem {\n  projectId: number;\n  title: string;\n  published: boolean;\n}",
+        "type UserData = {\n  id: number\n  name: string\n  email: string\n  age: number\n  isActive: boolean\n  score: number\n  address: Address\n  tags: string[]\n  projects: ProjectsItem[]\n  metadata?: null | undefined\n}\n\ntype Address = {\n  street: string\n  city: string\n  pincode: string\n  country: string\n}\n\ntype ProjectsItem = {\n  projectId: number\n  title: string\n  published: boolean\n}"
+      ]
+    },
+    "mixedArray": {
+      "input": [
+        {
+          "id": 1,
+          "name": "a",
+          "extra": true
+        },
+        {
+          "id": 2,
+          "name": null
+        },
+        {
+          "id": "3",
+          "tags": [
+            1,
+            "x"
+          ]
+        }
+      ],
+      "outputs": [
+        "type Root = RootItem[];\n\ninterface RootItem {\n  id: number | string;\n  name?: string | null;\n  extra?: boolean;\n  tags?: (number | string)[];\n}",
+        "type UserData = UserDataItem[]\n\ntype UserDataItem = {\n  id: number | string\n  name?: string | null\n  extra?: boolean\n  tags?: (number | string)[]\n}"
+      ]
+    },
+    "nested": {
+      "input": {
+        "user": {
+          "address": {
+            "geo": {
+              "lat": 1.5,
+              "lng": 2
+            }
+          }
+        },
+        "list": [
+          [
+            1,
+            2
+          ],
+          [
+            3
+          ]
+        ],
+        "empty": [],
+        "deep": [
+          {
+            "items": [
+              {
+                "sku": "a"
+              }
+            ]
+          }
+        ]
+      },
+      "outputs": [
+        "interface Root {\n  user: User;\n  list: number[][];\n  empty: unknown[];\n  deep: DeepItem[];\n}\n\ninterface Geo {\n  lat: number;\n  lng: number;\n}\n\ninterface Address {\n  geo: Geo;\n}\n\ninterface User {\n  address: Address;\n}\n\ninterface ItemsItem {\n  sku: string;\n}\n\ninterface DeepItem {\n  items: ItemsItem[];\n}",
+        "type UserData = {\n  user: User\n  list: number[][]\n  empty: unknown[]\n  deep: DeepItem[]\n}\n\ntype Geo = {\n  lat: number\n  lng: number\n}\n\ntype Address = {\n  geo: Geo\n}\n\ntype User = {\n  address: Address\n}\n\ntype ItemsItem = {\n  sku: string\n}\n\ntype DeepItem = {\n  items: ItemsItem[]\n}"
+      ]
+    },
+    "collisions": {
+      "input": {
+        "home": {
+          "address": {
+            "city": "x"
+          }
+        },
+        "work": {
+          "address": {
+            "zip": 1,
+            "city": "y"
+          }
+        },
+        "other": {
+          "address": {
+            "city": "z"
+          }
+        }
+      },
+      "outputs": [
+        "interface Root {\n  home: Home;\n  work: Work;\n  other: Other;\n}\n\ninterface Address {\n  city: string;\n}\n\ninterface Home {\n  address: Address;\n}\n\ninterface Address2 {\n  zip: number;\n  city: string;\n}\n\ninterface Work {\n  address: Address2;\n}\n\ninterface Other {\n  address: Address;\n}",
+        "type UserData = {\n  home: Home\n  work: Work\n  other: Other\n}\n\ntype Address = {\n  city: string\n}\n\ntype Home = {\n  address: Address\n}\n\ntype Address2 = {\n  zip: number\n  city: string\n}\n\ntype Work = {\n  address: Address2\n}\n\ntype Other = {\n  address: Address\n}"
+      ]
+    },
+    "oddKeys": {
+      "input": {
+        "first name": "a",
+        "x-id": 1,
+        "2nd": true,
+        "valid_key": null,
+        "$ok": "y"
+      },
+      "outputs": [
+        "interface Root {\n  \"first name\": string;\n  \"x-id\": number;\n  \"2nd\": boolean;\n  valid_key: null;\n  $ok: string;\n}",
+        "type UserData = {\n  \"first name\": string\n  \"x-id\": number\n  \"2nd\": boolean\n  valid_key?: null | undefined\n  $ok: string\n}"
+      ]
+    },
+    "primitive": {
+      "input": 42,
+      "outputs": [
+        "// Primitive JSON value\ntype Root = number;",
+        "// Primitive JSON value\ntype UserData = number"
+      ]
+    },
+    "emptyObject": {
+      "input": {},
+      "outputs": [
+        "interface Root {\n}",
+        "type UserData = {\n}"
+      ]
+    },
+    "rootArrayPrimitives": {
+      "input": [
+        1,
+        "two",
+        null
+      ],
+      "outputs": [
+        "type Root = (number | string | null)[];",
+        "type UserData = (number | string | null)[]"
+      ]
+    }
+  }
+}
