@@ -454,7 +454,7 @@ export const TOOL_FAQS: Record<string, ToolFaq[]> = {
     {
       question: 'How do I print the Aadhaar card front and back on one page?',
       answer:
-        'Add a photo of the front and of the back (or of your e-Aadhaar), drag the corners onto the card edges and download the A4 PDF. Each side is placed at real card size, side by side, ready to cut out.',
+        'Open your e-Aadhaar PDF (its password is the first 4 letters of your name in capitals plus your birth year, such as RAHU1990) or add photos of both sides. Drag the corners onto each side and download the A4 PDF: front and back are placed side by side at real card size.',
     },
     {
       question: 'Can I put Aadhaar, PAN, voter ID and driving licence on one A4 sheet?',
