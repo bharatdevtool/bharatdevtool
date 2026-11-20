@@ -2,11 +2,12 @@
 
 import React, { useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Camera, Download, FileImage, IdCard, ImagePlus, ShieldCheck, Trash2 } from 'lucide-react';
+import { Camera, ChevronLeft, ChevronRight, Download, FileImage, IdCard, ImagePlus, RotateCw, ShieldCheck, Trash2 } from 'lucide-react';
 import ToolLayout from '@/components/layout/ToolLayout';
 import ErrorMessage from '@/components/ui/ErrorMessage';
 import CornerCrop from '@/components/image/CornerCrop';
-import { loadImageCanvas } from '@/lib/image/perspective';
+import { loadImageCanvas, rotateCanvas90 } from '@/lib/image/perspective';
+import { applyScanFilter, SCAN_FILTERS, type FilterSettings } from '@/lib/scan/filters';
 import { scansToPdf, type ScanPageSize } from '@/lib/scan/pdf';
 import { setCrossToolData } from '@/lib/crossToolData';
 import { analytics } from '@/lib/analytics';
@@ -24,9 +25,33 @@ const sizeLabel = (kb: number) => (kb >= 1000 ? `${kb / 1000} MB` : `${kb} KB`);
 
 interface Page {
   id: number;
+  /** Straightened photo, before any filter. */
+  original: HTMLCanvasElement;
+  settings: FilterSettings;
+  /** Quarter turns clockwise. */
+  rotation: number;
+  /** What is shown and saved: original + filter + rotation. */
   canvas: HTMLCanvasElement;
 }
 let nextId = 1;
+const PLAIN: FilterSettings = { filter: 'original', brightness: 0, contrast: 0 };
+
+function processPage(original: HTMLCanvasElement, settings: FilterSettings, rotation: number): HTMLCanvasElement {
+  let c = original;
+  if (settings.filter !== 'original' || settings.brightness || settings.contrast) {
+    const ctx = original.getContext('2d')!;
+    const px = applyScanFilter(ctx.getImageData(0, 0, original.width, original.height), settings);
+    c = document.createElement('canvas');
+    c.width = px.width;
+    c.height = px.height;
+    const cctx = c.getContext('2d')!;
+    const img = cctx.createImageData(px.width, px.height);
+    img.data.set(px.data);
+    cctx.putImageData(img, 0, 0);
+  }
+  for (let r = 0; r < rotation % 4; r++) c = rotateCanvas90(c);
+  return c;
+}
 
 async function jpeg(canvas: HTMLCanvasElement, quality = 0.9): Promise<Uint8Array> {
   const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/jpeg', quality));
@@ -46,6 +71,8 @@ function save(bytes: Uint8Array, name: string, type: string) {
 export default function ScannerClient() {
   const router = useRouter();
   const [pages, setPages] = useState<Page[]>([]);
+  const [selected, setSelected] = useState<number | null>(null);
+  const [defaults, setDefaults] = useState<FilterSettings>(PLAIN);
   const [shape, setShape] = useState<Shape>('auto');
   const [cropping, setCropping] = useState<{ source: HTMLCanvasElement; rest: File[] } | null>(null);
   const [pageSize, setPageSize] = useState<ScanPageSize>('a4');
@@ -81,6 +108,31 @@ export default function ScannerClient() {
     if (photosRef.current) photosRef.current.value = '';
     if (files.length) void next(files);
   };
+
+  const sel = pages.find((p) => p.id === selected) ?? pages[pages.length - 1];
+
+  /** Change filter settings / rotation of one page (or all pages) and re-render them. */
+  const update = (ids: number[], patch: Partial<FilterSettings>, turn = 0) => {
+    setPages((ps) =>
+      ps.map((p) => {
+        if (!ids.includes(p.id)) return p;
+        const settings = { ...p.settings, ...patch };
+        const rotation = (p.rotation + turn) % 4;
+        return { ...p, settings, rotation, canvas: processPage(p.original, settings, rotation) };
+      }),
+    );
+    if (Object.keys(patch).length) setDefaults((d) => ({ ...d, ...patch }));
+  };
+
+  const move = (id: number, by: -1 | 1) =>
+    setPages((ps) => {
+      const i = ps.findIndex((p) => p.id === id);
+      const j = i + by;
+      if (i < 0 || j < 0 || j >= ps.length) return ps;
+      const next = [...ps];
+      [next[i], next[j]] = [next[j], next[i]];
+      return next;
+    });
 
   const track = (output: string) => analytics.track(ANALYTICS_EVENTS.DOCUMENT_SCAN, { pages: pages.length, output, shape, fit_under: fitUnder });
 
@@ -157,7 +209,9 @@ export default function ScannerClient() {
               title={`Page ${pages.length + 1}`}
               onCancel={() => void next(cropping.rest)}
               onDone={(canvas) => {
-                setPages((ps) => [...ps, { id: nextId++, canvas }]);
+                const id = nextId++;
+                setPages((ps) => [...ps, { id, original: canvas, settings: defaults, rotation: 0, canvas: processPage(canvas, defaults, 0) }]);
+                setSelected(id);
                 void next(cropping.rest);
               }}
             />
@@ -175,7 +229,17 @@ export default function ScannerClient() {
               {pages.length > 0 && (
                 <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
                   {pages.map((p, i) => (
-                    <Thumb key={p.id} canvas={p.canvas} index={i} onRemove={() => setPages((ps) => ps.filter((x) => x.id !== p.id))} />
+                    <Thumb
+                      key={p.id}
+                      canvas={p.canvas}
+                      index={i}
+                      count={pages.length}
+                      active={sel?.id === p.id}
+                      onSelect={() => setSelected(p.id)}
+                      onMove={(by) => move(p.id, by)}
+                      onRotate={() => update([p.id], {}, 1)}
+                      onRemove={() => setPages((ps) => ps.filter((x) => x.id !== p.id))}
+                    />
                   ))}
                 </div>
               )}
@@ -184,6 +248,29 @@ export default function ScannerClient() {
         </div>
 
         <aside className="space-y-4">
+          {sel && !cropping && (
+            <div className="rounded-xl border border-border bg-card p-4 text-xs">
+              <h2 className="mb-2 text-sm font-semibold text-foreground">Look of page {pages.indexOf(sel) + 1}</h2>
+              <div className="mb-3 flex flex-wrap gap-1.5">
+                {SCAN_FILTERS.map((f) => (
+                  <button key={f.id} type="button" onClick={() => update([sel.id], { filter: f.id })} aria-pressed={sel.settings.filter === f.id} className={`rounded-full border px-2.5 py-1 ${sel.settings.filter === f.id ? 'border-primary bg-primary text-primary-foreground' : 'border-border hover:border-primary'}`}>
+                    {f.label}
+                  </button>
+                ))}
+              </div>
+              {(['brightness', 'contrast'] as const).map((k) => (
+                <label key={k} className="mb-2 block text-muted-foreground">
+                  <span className="capitalize">{k}</span>
+                  <input type="range" min={-60} max={60} step={5} value={sel.settings[k]} onChange={(e) => update([sel.id], { [k]: Number(e.target.value) })} className="w-full accent-primary" />
+                </label>
+              ))}
+              {pages.length > 1 && (
+                <button type="button" onClick={() => update(pages.map((p) => p.id), sel.settings)} className="w-full rounded-lg border border-border px-3 py-1.5 font-medium hover:border-primary">
+                  Apply to all pages
+                </button>
+              )}
+            </div>
+          )}
           <div className="rounded-xl border border-border bg-card p-4 text-xs">
             <h2 className="mb-2 text-sm font-semibold text-foreground">Shape of each scan</h2>
             <div className="mb-4 flex flex-wrap gap-1.5">
@@ -241,16 +328,35 @@ export default function ScannerClient() {
   );
 }
 
-function Thumb({ canvas, index, onRemove }: { canvas: HTMLCanvasElement; index: number; onRemove: () => void }) {
+function Thumb({
+  canvas, index, count, active, onSelect, onMove, onRotate, onRemove,
+}: {
+  canvas: HTMLCanvasElement; index: number; count: number; active: boolean;
+  onSelect: () => void; onMove: (by: -1 | 1) => void; onRotate: () => void; onRemove: () => void;
+}) {
   const url = useMemo(() => canvas.toDataURL('image/jpeg', 0.6), [canvas]);
+  const btn = 'rounded bg-background/90 p-1 shadow disabled:opacity-40';
   return (
-    <div className="relative overflow-hidden rounded-lg border border-border bg-muted">
-      {/* eslint-disable-next-line @next/next/no-img-element -- local preview of the user's scan */}
-      <img src={url} alt={`Page ${index + 1}`} className="aspect-[3/4] w-full object-contain" />
+    <div className={`relative overflow-hidden rounded-lg border-2 bg-muted ${active ? 'border-primary' : 'border-border'}`}>
+      <button type="button" onClick={onSelect} aria-label={`Edit page ${index + 1}`} className="block w-full">
+        {/* eslint-disable-next-line @next/next/no-img-element -- local preview of the user's scan */}
+        <img src={url} alt={`Page ${index + 1}`} className="aspect-[3/4] w-full object-contain" />
+      </button>
       <span className="absolute left-1 top-1 rounded bg-background/90 px-1.5 text-[11px] font-medium">{index + 1}</span>
-      <button type="button" onClick={onRemove} aria-label={`Remove page ${index + 1}`} className="absolute right-1 top-1 rounded bg-background/90 p-1 shadow">
+      <button type="button" onClick={onRemove} aria-label={`Remove page ${index + 1}`} className={`absolute right-1 top-1 ${btn}`}>
         <Trash2 className="h-3.5 w-3.5" />
       </button>
+      <div className="absolute bottom-1 left-1 right-1 flex justify-between">
+        <button type="button" onClick={() => onMove(-1)} disabled={index === 0} aria-label={`Move page ${index + 1} earlier`} className={btn}>
+          <ChevronLeft className="h-3.5 w-3.5" />
+        </button>
+        <button type="button" onClick={onRotate} aria-label={`Rotate page ${index + 1}`} className={btn}>
+          <RotateCw className="h-3.5 w-3.5" />
+        </button>
+        <button type="button" onClick={() => onMove(1)} disabled={index === count - 1} aria-label={`Move page ${index + 1} later`} className={btn}>
+          <ChevronRight className="h-3.5 w-3.5" />
+        </button>
+      </div>
     </div>
   );
 }

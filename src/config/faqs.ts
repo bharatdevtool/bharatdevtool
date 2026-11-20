@@ -486,7 +486,7 @@ export const TOOL_FAQS: Record<string, ToolFaq[]> = {
     {
       question: 'How do I straighten a crooked photo of a page?',
       answer:
-        'Drag each corner handle onto a corner of the paper. The tool corrects the angle so the page comes out flat and rectangular, as if it had been put through a scanner, and cuts away the table or background around it.',
+        'Drag each corner handle onto a corner of the paper. The tool corrects the angle so the page comes out flat and rectangular, as if it had been put through a scanner, and cuts away the table or background around it. Then pick Black & white, Magic colour or Remove shadows for a clean, even page.',
     },
     {
       question: 'Can I make the scanned PDF smaller than 200 KB?',
