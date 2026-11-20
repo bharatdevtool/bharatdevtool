@@ -303,7 +303,7 @@
       <!-- RIGHT: TypeScript Output -->
       <div class="bg-white rounded-2xl shadow-lg p-6 flex flex-col">
         <div class="flex items-center justify-between mb-3">
-          <label for="ts-output" class="text-sm font-semibold text-gray-700">
+          <label for="ts-output" id="output-label" class="text-sm font-semibold text-gray-700">
             TypeScript Output
           </label>
           <button id="copy-output-btn" class="text-xs bg-blue-600 hover:bg-blue-700 text-white font-medium px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1" aria-label="Copy TypeScript output">
@@ -327,9 +327,26 @@
       <h3 class="text-sm font-semibold text-gray-700 mb-4">Options</h3>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
 
+        <!-- Output language -->
+        <div>
+          <label for="code-lang" class="block text-xs font-medium text-gray-600 mb-1">Language</label>
+          <select id="code-lang" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-900 outline-none">
+            <option value="typescript">TypeScript</option>
+            <option value="kotlin">Kotlin</option>
+            <option value="swift">Swift</option>
+            <option value="dart">Dart (Flutter)</option>
+          </select>
+        </div>
+
+        <!-- Library for the language -->
+        <div id="code-lib-wrap" class="hidden">
+          <label for="code-lib" class="block text-xs font-medium text-gray-600 mb-1">Library</label>
+          <select id="code-lib" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-900 outline-none"></select>
+        </div>
+
         <!-- Root interface name -->
         <div>
-          <label for="root-name" class="block text-xs font-medium text-gray-600 mb-1">Root Interface Name</label>
+          <label for="root-name" class="block text-xs font-medium text-gray-600 mb-1">Root Name</label>
           <input
             id="root-name"
             type="text"
@@ -341,7 +358,7 @@
         </div>
 
         <!-- Use type alias vs interface -->
-        <div class="option-toggle flex items-center gap-2 pt-5">
+        <div class="option-toggle ts-only flex items-center gap-2 pt-5">
           <input type="checkbox" id="use-type-alias" class="w-4 h-4 rounded">
           <label for="use-type-alias" class="text-sm text-gray-700 cursor-pointer select-none">
             Use <code class="text-blue-600 dark:text-blue-400">type</code> instead of <code class="text-blue-600 dark:text-blue-400">interface</code>
@@ -349,7 +366,7 @@
         </div>
 
         <!-- Optional fields -->
-        <div class="option-toggle flex items-center gap-2 pt-5">
+        <div class="option-toggle ts-only flex items-center gap-2 pt-5">
           <input type="checkbox" id="optional-fields" class="w-4 h-4 rounded">
           <label for="optional-fields" class="text-sm text-gray-700 cursor-pointer select-none">
             Mark null fields as optional (<code class="text-blue-600 dark:text-blue-400">?</code>)
@@ -357,7 +374,7 @@
         </div>
 
         <!-- Add semicolons -->
-        <div class="option-toggle flex items-center gap-2 pt-5">
+        <div class="option-toggle ts-only flex items-center gap-2 pt-5">
           <input type="checkbox" id="semicolons" checked class="w-4 h-4 rounded">
           <label for="semicolons" class="text-sm text-gray-700 cursor-pointer select-none">
             Semicolons after properties
@@ -371,7 +388,7 @@
         class="w-full sm:w-auto px-8 py-3 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-semibold rounded-xl transition-all duration-150 flex items-center gap-2"
         aria-label="Convert JSON to TypeScript"
       >
-        <span><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z"/></svg></span> Convert to TypeScript
+        <span><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z"/></svg></span> <span id="convert-label">Convert to TypeScript</span>
       </button>
     </div>
 
@@ -552,13 +569,17 @@
 
       try {
         const options = getOptions();
-        const result = convertJsonToTypeScript(jsonText, options);
+        const lang = document.getElementById('code-lang').value;
+        const result = lang === 'typescript'
+          ? convertJsonToTypeScript(jsonText, options)
+          : convertJsonToCode(jsonText, { lang: lang, lib: document.getElementById('code-lib').value, rootName: options.rootName });
         outputEl.value = result;
         trackEvent('json_ts_convert_success', {
           input_length: jsonText.length,
           output_length: result.length,
           use_type_alias: options.useTypeAlias,
-          optional_fields: options.optionalFields
+          optional_fields: options.optionalFields,
+          lang: document.getElementById('code-lang').value
         });
         showToast('Converted successfully!', 'success');
       } catch (err) {
@@ -639,7 +660,29 @@
   <!-- Receives JSON from the JSON Formatter's "Send to" menu -->
   <script type="module">
     import { convertJsonToTypeScript } from './assets/js/json-infer.js';
+    import { convertJsonToCode, CODE_LANGUAGES } from './assets/js/json-code.js';
     window.convertJsonToTypeScript = convertJsonToTypeScript;
+    window.convertJsonToCode = convertJsonToCode;
+
+    // Language picker: library choices, labels, and the TypeScript-only options.
+    const langEl = document.getElementById('code-lang');
+    const libEl = document.getElementById('code-lib');
+    function syncLanguage() {
+      const lang = langEl.value;
+      const info = CODE_LANGUAGES[lang];
+      const name = info ? info.label : 'TypeScript';
+      document.getElementById('code-lib-wrap').classList.toggle('hidden', !info || Object.keys(info.libs).length < 2);
+      libEl.innerHTML = '';
+      if (info) Object.entries(info.libs).forEach(([value, label]) => libEl.add(new Option(label, value)));
+      document.querySelectorAll('.ts-only').forEach((el) => el.classList.toggle('hidden', lang !== 'typescript'));
+      document.getElementById('output-label').textContent = name + ' Output';
+      document.getElementById('convert-label').textContent = 'Convert to ' + name;
+      document.getElementById('ts-output').placeholder = (info ? name + ' classes' : 'TypeScript interfaces') + ' will appear here…';
+      document.getElementById('ts-output').value = '';
+    }
+    langEl.addEventListener('change', syncLanguage);
+    libEl.addEventListener('change', () => { document.getElementById('ts-output').value = ''; });
+    syncLanguage();
   </script>
   <script src="assets/js/handoff.js" data-tool="typescript" data-input="json-input" data-run="convert-btn" defer></script>
   <!-- Remembers the last input across refreshes (this browser only) -->
