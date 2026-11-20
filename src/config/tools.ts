@@ -527,6 +527,25 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     keywords: ['pdf to image', 'pdf to png', 'pdf to webp', 'convert pdf to image', 'pdf pages to images', 'save pdf as image'],
     heavy: true,
   },
+  {
+    id: 'aadhaar-card-print',
+    label: 'Aadhaar & ID Card Print',
+    route: '/aadhaar-card-print',
+    category: 'PDF',
+    description:
+      'Free Aadhaar card print tool: put the front and back of Aadhaar, PAN, voter ID or driving licence on one A4 sheet to cut and laminate. Runs in your browser.',
+    shortDesc: 'Print ID cards front + back on one A4',
+    keywords: [
+      'aadhaar card print',
+      'aadhaar front and back on one page',
+      'print aadhaar card on a4',
+      'id card print a4',
+      'pan card print',
+      'voter id card print',
+      'print id cards to laminate',
+    ],
+    heavy: true,
+  },
   // ── Static HTML tools added in Phase 2-4 ──────────────────
   {
     id: 'jwt-decoder',

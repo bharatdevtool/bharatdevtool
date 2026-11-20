@@ -450,6 +450,33 @@ export const TOOL_FAQS: Record<string, ToolFaq[]> = {
     },
     { question: 'Is my file uploaded anywhere?', answer: PRIVACY_ANSWER },
   ],
+  'aadhaar-card-print': [
+    {
+      question: 'How do I print the Aadhaar card front and back on one page?',
+      answer:
+        'Add a photo of the front and of the back (or of your e-Aadhaar), drag the corners onto the card edges and download the A4 PDF. Each side is placed at real card size, side by side, ready to cut out.',
+    },
+    {
+      question: 'Can I put Aadhaar, PAN, voter ID and driving licence on one A4 sheet?',
+      answer:
+        'Yes. The sheet has four rows, one card per row with its front and back next to each other. Print it once on photo paper, cut out each pair, fold it along the dashed line and laminate it to get a wallet-size copy of every card.',
+    },
+    {
+      question: 'What size will the cards print at?',
+      answer:
+        'Every card is placed at the standard ID card size of 85.6 × 54 mm, the same as Aadhaar PVC, PAN and ATM cards. Print at 100% or "Actual size", never "Fit to page", and check that the line at the bottom of the sheet measures 50 mm.',
+    },
+    {
+      question: 'Is a printed or laminated copy accepted?',
+      answer:
+        'A printout is a copy. UIDAI accepts a printout of e-Aadhaar, but hotels, banks and offices can still ask for the original card or the DigiLocker version, so carry those when it matters. Never print bank or ATM cards: a printed card number and CVV can be misused.',
+    },
+    {
+      question: 'Are my ID cards uploaded anywhere?',
+      answer:
+        'No. The photos are cropped and placed inside your browser and never leave your device. Nothing is saved: the cards disappear when you press Clear all or close the page.',
+    },
+  ],
   'pdf-to-image': [
     {
       question: 'Which format should I choose?',

@@ -58,6 +58,7 @@ import {
   Sheet,
   Shrink,
   ImageDown,
+  IdCard,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -118,6 +119,7 @@ const ICON_MAP: Record<string, LucideIcon> = {
   'secure-share-pdf': Hourglass,
   'image-to-pdf': ImagePlus,
   'pdf-to-image': FileImage,
+  'aadhaar-card-print': IdCard,
   'favicon-generator': AppWindow,
   'csv-json-converter': Sheet,
   'yaml-json-converter': FileCode,
