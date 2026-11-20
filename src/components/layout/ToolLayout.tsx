@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { getToolById, TOOLS, CATEGORY_SLUGS } from '@/config/tools';
 import { getToolFaqs } from '@/config/faqs';
-import { generateToolJsonLd } from '@/config/seo';
+import { generateToolJsonLd, generateVariantJsonLd } from '@/config/seo';
+import { getVariant, variantsOf } from '@/config/variants';
 import { SITE } from '@/config/site';
 import ToolIcon from '@/components/ui/ToolIcon';
 import ShareButton from '@/components/ui/ShareButton';
@@ -23,9 +24,11 @@ interface ToolLayoutProps {
   sidebar?: React.ReactNode;
   /** Extra controls next to the Share button (e.g. a tool menu for screens without the sidebar). */
   headerActions?: React.ReactNode;
+  /** Landing-page variant of this tool (src/config/variants.ts): its own H1, description, breadcrumb and FAQs. */
+  variantId?: string;
 }
 
-export default function ToolLayout({ toolId, children, headingOverride, sidebar, headerActions }: ToolLayoutProps) {
+export default function ToolLayout({ toolId, children, headingOverride, sidebar, headerActions, variantId }: ToolLayoutProps) {
   const tool = getToolById(toolId);
   if (!tool) throw new Error(`ToolLayout: unknown toolId "${toolId}"`);
 
@@ -34,9 +37,12 @@ export default function ToolLayout({ toolId, children, headingOverride, sidebar,
 
   // Get other tools in the same category
   const relatedTools = TOOLS.filter((t) => t.category === tool.category && t.id !== tool.id).slice(0, 3);
-  const faqs = getToolFaqs(tool.id);
+  const variant = variantId ? getVariant(variantId) : undefined;
+  if (variantId && !variant) throw new Error(`ToolLayout: unknown variantId "${variantId}"`);
+  const popular = variantsOf(tool.id);
+  const faqs = variant ? variant.faqs : getToolFaqs(tool.id);
   // Escape '<' so content can never close the script tag early
-  const jsonLd = JSON.stringify(generateToolJsonLd(tool.id)).replace(/</g, '\\u003c');
+  const jsonLd = JSON.stringify(variant ? generateVariantJsonLd(variant.id) : generateToolJsonLd(tool.id)).replace(/</g, '\\u003c');
 
   const content = (
     <>
@@ -74,7 +80,15 @@ export default function ToolLayout({ toolId, children, headingOverride, sidebar,
           {tool.category}
         </a>
         <ChevronRight className="w-3.5 h-3.5 opacity-50" />
-        <span className="text-foreground font-semibold truncate">{tool.label}</span>
+        {variant && (
+          <>
+            <a href={tool.route} className="hover:text-foreground transition-colors truncate">
+              {tool.label}
+            </a>
+            <ChevronRight className="w-3.5 h-3.5 opacity-50" />
+          </>
+        )}
+        <span className="text-foreground font-semibold truncate">{variant?.label ?? tool.label}</span>
       </nav>
 
       {/* Tool Header Card */}
@@ -88,11 +102,11 @@ export default function ToolLayout({ toolId, children, headingOverride, sidebar,
           <div>
             <div className="flex items-center gap-2 flex-wrap">
               <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
-                {headingOverride ?? tool.label}
+                {headingOverride ?? variant?.label ?? tool.label}
               </h1>
             </div>
             <p className="mt-1 text-xs sm:text-sm text-muted-foreground max-w-2xl">
-              {tool.description}
+              {variant?.description ?? tool.description}
             </p>
           </div>
         </div>
@@ -100,9 +114,27 @@ export default function ToolLayout({ toolId, children, headingOverride, sidebar,
         {/* Header Action Tools */}
         <div className="flex items-center gap-2 self-start md:self-auto">
           {headerActions}
-          <ShareButton url={`${SITE.url}${tool.route}`} className="text-xs" />
+          <ShareButton url={`${SITE.url}${variant?.route ?? tool.route}`} className="text-xs" />
         </div>
       </div>
+
+      {/* Popular presets: links to this tool's landing-page variants */}
+      {popular.length > 0 && (
+        <nav aria-label={`Popular ${tool.label} presets`} className="mb-4 flex flex-wrap items-center gap-1.5 text-xs">
+          <span className="font-semibold text-muted-foreground">Popular:</span>
+          {popular.map((v) =>
+            v.id === variant?.id ? (
+              <span key={v.id} aria-current="page" className="rounded-full bg-primary px-2.5 py-1 text-primary-foreground">
+                {v.chip}
+              </span>
+            ) : (
+              <a key={v.id} href={v.route} className="rounded-full border border-border px-2.5 py-1 text-foreground hover:border-primary hover:text-primary transition-colors">
+                {v.chip}
+              </a>
+            ),
+          )}
+        </nav>
+      )}
 
       {/* Tool workspace content */}
       <div className="w-full">

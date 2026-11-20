@@ -168,3 +168,49 @@ describe('llms.txt', () => {
     for (const tool of TOOLS) expect(txt, tool.id).toContain(`](${toUrl(tool.route)})`);
   });
 });
+
+describe('Landing-page variants (src/config/variants.ts)', () => {
+  it('keeps ids and routes unique and separate from tool routes', async () => {
+    const { VARIANTS } = await import('@/config/variants');
+    const routes = VARIANTS.map((v) => v.route);
+    expect(new Set(VARIANTS.map((v) => v.id)).size).toBe(VARIANTS.length);
+    expect(new Set(routes).size).toBe(routes.length);
+    for (const r of routes) expect(TOOLS.map((t) => t.route), r).not.toContain(r);
+  });
+
+  it('points every variant at a Next.js tool and lists it in the sitemap', async () => {
+    const { VARIANTS } = await import('@/config/variants');
+    for (const v of VARIANTS) {
+      const parent = TOOLS.find((t) => t.id === v.parentToolId);
+      expect(parent && !parent.legacy, v.id).toBe(true);
+      expect(sitemapUrls, v.id).toContain(toUrl(v.route));
+    }
+  });
+
+  it('gives every variant a unique title (≤ 60), description (140–160) and at least three FAQs', async () => {
+    const { VARIANTS } = await import('@/config/variants');
+    const { getVariantTitle } = await import('@/config/seo');
+    const toolTitles = TOOLS.map((t) => getToolTitle(t));
+    const titles = VARIANTS.map((v) => getVariantTitle(v));
+    expect(new Set(titles).size).toBe(titles.length);
+    for (const v of VARIANTS) {
+      const title = `${getVariantTitle(v)} | ${SITE.name}`;
+      expect(title.length, title).toBeLessThanOrEqual(60);
+      expect(toolTitles, v.id).not.toContain(getVariantTitle(v));
+      expect(v.description.length, v.id).toBeGreaterThanOrEqual(140);
+      expect(v.description.length, v.id).toBeLessThanOrEqual(160);
+      expect(v.faqs.length, v.id).toBeGreaterThanOrEqual(3);
+    }
+  });
+
+  it('emits self-canonical metadata and WebApplication, BreadcrumbList and FAQPage data', async () => {
+    const { VARIANTS } = await import('@/config/variants');
+    const { generateVariantMetadata, generateVariantJsonLd } = await import('@/config/seo');
+    for (const v of VARIANTS) {
+      const meta = generateVariantMetadata(v.id);
+      expect(meta.alternates?.canonical, v.id).toBe(toUrl(v.route));
+      expect(meta.openGraph?.description, v.id).toBe(v.description);
+      expect(generateVariantJsonLd(v.id).map((s) => s['@type'])).toEqual(['WebApplication', 'BreadcrumbList', 'FAQPage']);
+    }
+  });
+});
