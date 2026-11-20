@@ -14,7 +14,9 @@ import { useLottieSamples } from '@/hooks/useLottieSamples';
 import { sendToJsonFormatter } from '@/lib/staticHandoff';
 import { setCrossToolData } from '@/lib/crossToolData';
 import { useCrossToolData } from '@/hooks/useCrossToolData';
-import { extractLottieFromFile } from '@/lib/lottie/dotLottie';
+import { extractLottieFromFile, uint8ArrayToBase64 } from '@/lib/lottie/dotLottie';
+import { diagnoseLottie } from '@/lib/lottie/fixer';
+import { looksLikeZip } from '@/lib/lottie/zipInspect';
 import type { ValidationIssue } from '@/lib/lottie/types';
 import {
   CheckCircle2,
@@ -25,20 +27,30 @@ import {
   Braces,
   Filter,
   Gauge,
+  Wrench,
 } from 'lucide-react';
 
 type FilterSeverity = 'all' | 'error' | 'warning' | 'info';
+
+/** A .lottie whose zip container stops it loading on Android (see Lottie Fixer) */
+interface AndroidBlocker {
+  fileName: string;
+  title: string;
+  base64: string;
+}
 
 export default function LottieValidatorClient() {
   const router = useRouter();
   const [rawJson, setRawJson] = useState<string>(() => JSON.stringify(EMPTY_ANIMATION, null, 2));
   const [filter, setFilter] = useState<FilterSeverity>('all');
   const [fileError, setFileError] = useState<string | null>(null);
+  const [androidBlocker, setAndroidBlocker] = useState<AndroidBlocker | null>(null);
 
   const { samples: LOTTIE_SAMPLES, activeSampleId, selectSample, markUserContent } = useLottieSamples(
     (_sample, loaded) => {
       setRawJson(loaded.rawJson);
       setFileError(null);
+      setAndroidBlocker(null);
     },
     (message) => setFileError(message)
   );
@@ -134,6 +146,23 @@ export default function LottieValidatorClient() {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    // .lottie archives: check the zip container itself, which the JSON checks below can't see
+    let androidBlocker: AndroidBlocker | null = null;
+    try {
+      const bytes = new Uint8Array(await file.arrayBuffer());
+      if (looksLikeZip(bytes)) {
+        const blockers = diagnoseLottie(bytes, file.name).issues.filter(
+          (i) => i.group === 'container' && i.severity === 'error' && i.platforms.includes('android')
+        );
+        if (blockers.length > 0) {
+          androidBlocker = { fileName: file.name, title: blockers[0].title, base64: uint8ArrayToBase64(bytes) };
+        }
+      }
+    } catch {
+      // The JSON validation below still runs
+    }
+    setAndroidBlocker(androidBlocker);
+
     const res = await extractLottieFromFile(file);
     if (!res.success || !res.rawJson) {
       setFileError(res.error || 'Failed to parse animation file.');
@@ -149,7 +178,14 @@ export default function LottieValidatorClient() {
       format: file.name.toLowerCase().endsWith('.lottie') ? 'lottie' : 'json',
       errors: result.issues.filter((i) => i.severity === 'error').length,
       warnings: result.issues.filter((i) => i.severity === 'warning').length,
+      android_blocker: androidBlocker ? 1 : 0,
     });
+  };
+
+  const handleOpenFixer = () => {
+    if (!androidBlocker) return;
+    setCrossToolData('lottie-fixer', { fileName: androidBlocker.fileName, base64: androidBlocker.base64 });
+    router.push('/lottie-fixer');
   };
 
   const handleSampleSelect = (id: string) => selectSample(id);
@@ -202,6 +238,33 @@ export default function LottieValidatorClient() {
 
         {(jsonError || fileError) && (
           <ErrorMessage message={fileError || `JSON Parse Error: ${jsonError}`} />
+        )}
+
+        {androidBlocker && (
+          <div
+            role="alert"
+            className="p-4 rounded-xl border border-red-500/30 bg-red-500/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+          >
+            <div className="flex items-start gap-3 text-sm">
+              <AlertCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+              <div>
+                <p className="font-semibold text-red-700 dark:text-red-300">
+                  This .lottie will fail on Android: {androidBlocker.title}
+                </p>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  The animation JSON below is valid, but the file around it can&apos;t be opened by lottie-android or
+                  lottie-react-native (&quot;Unable to parse composition&quot;). The Lottie Fixer re-packs it without changing the animation.
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={handleOpenFixer}
+              className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-primary text-primary-foreground text-xs font-medium hover:bg-primary/90 transition-colors shrink-0"
+            >
+              <Wrench className="w-3.5 h-3.5" /> Fix it in Lottie Fixer
+            </button>
+          </div>
         )}
 
         {/* Status Summary Banner */}

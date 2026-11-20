@@ -62,6 +62,18 @@ export function parseLottieBytes(bytes: Uint8Array): LottieFromUrl {
 
 /** Fetch and parse an animation from `input`. Throws LottieUrlError with a readable message. */
 export async function loadLottieFromUrl(input: string, fetchImpl: typeof fetch = fetch): Promise<LottieFromUrl> {
+  const { bytes } = await fetchLottieBytes(input, fetchImpl);
+  return parseLottieBytes(bytes);
+}
+
+/**
+ * Download the raw bytes of a .json/.lottie file, plus a file name taken from the URL path.
+ * Throws LottieUrlError with a readable message.
+ */
+export async function fetchLottieBytes(
+  input: string,
+  fetchImpl: typeof fetch = fetch
+): Promise<{ bytes: Uint8Array; fileName: string }> {
   const checked = checkLottieUrl(input);
   if ('error' in checked) throw new LottieUrlError(checked.error);
 
@@ -92,13 +104,24 @@ export async function loadLottieFromUrl(input: string, fetchImpl: typeof fetch =
       if ((err as Error)?.name === 'AbortError') throw new LottieUrlError('The link took too long to respond.');
       throw new LottieUrlError('The download was interrupted. Try again, or download the file and use Upload.');
     }
-    return parseLottieBytes(bytes);
+    return { bytes, fileName: fileNameFromUrl(checked.url) };
   } finally {
     clearTimeout(timer);
   }
 }
 
 const TOO_LARGE = 'This file is larger than 25 MB, the browser limit for this tool.';
+
+/** Last path segment of a URL ("…/hero.lottie?sig=…" → "hero.lottie"), or a generic name. */
+export function fileNameFromUrl(url: string): string {
+  try {
+    const last = new URL(url).pathname.split('/').filter(Boolean).pop();
+    const name = last ? decodeURIComponent(last) : '';
+    return name || 'animation.lottie';
+  } catch {
+    return 'animation.lottie';
+  }
+}
 
 /** Read the body, stopping as soon as it passes `limit` (servers don't always send Content-Length). */
 async function readLimited(res: Response, limit: number): Promise<Uint8Array> {

@@ -96,6 +96,7 @@ const ALL_TOOLS_LIST = [
   { label: 'Lottie Converter', href: 'lottie-converter', cat: 'design' },
   { label: 'Lottie Validator', href: 'lottie-validator', cat: 'design' },
   { label: 'Lottie Optimizer', href: 'lottie-optimizer', cat: 'design' },
+  { label: 'Lottie Fixer', href: 'lottie-fixer', cat: 'design' },
   { label: 'Suggest Tool', href: 'https://forms.gle/TA7WEhzzQ6csQFGZ7', external: true }
 ];
 

@@ -82,6 +82,7 @@ const ICON_MAP: Record<string, LucideIcon> = {
   'lottie-converter': FolderArchive,
   'lottie-validator': ShieldCheck,
   'lottie-optimizer': Gauge,
+  'lottie-fixer': Wrench,
   'jwt-decoder': KeySquare,
   'hash-generator': Hash,
   'lorem-ipsum': Pilcrow,

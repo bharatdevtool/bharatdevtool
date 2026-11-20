@@ -491,6 +491,33 @@ export const TOOL_FAQS: Record<string, ToolFaq[]> = {
     },
     { question: 'Is my animation uploaded to optimize it?', answer: PRIVACY_ANSWER },
   ],
+  'lottie-fixer': [
+    {
+      question: 'Why does my Figma .lottie play in the browser and on iOS but not on Android?',
+      answer:
+        'A .lottie file is a zip archive. Figma stores some files in it uncompressed with their sizes written after the data (a "data descriptor"). Android\'s lottie-android, which lottie-react-native also uses, reads the zip front to back with java.util.zip.ZipInputStream and stops with "only DEFLATED entries can have EXT descriptor". Browsers and iOS read the zip index at the end instead, so the same file works there. The Lottie Fixer re-packs the files with the sizes in every header so Android can open it.',
+    },
+    {
+      question: 'What does "Unable to parse composition" mean on Android?',
+      answer:
+        'lottie-android could not find a usable animation inside the file. For .lottie files the usual causes are the Figma zip format above, a theme or state machine .json that Android reads as the animation (it parses every .json in the archive and keeps the last one), or an animation file named .JSON in capitals. Drop the file in the Lottie Fixer to see which one applies and fix it.',
+    },
+    {
+      question: 'Does fixing the file change my animation?',
+      answer:
+        'No. The animation, images and manifest are copied byte for byte into a standard zip. The only content changes are removing an invisible byte-order mark from the start of a JSON file and rebuilding a broken or missing manifest.json, and both are listed. After fixing, the tool re-reads the new file and confirms every entry matches the original. Everything happens in your browser; the file is never uploaded.',
+    },
+    {
+      question: 'My .lottie loads from a URL on iOS but not on Android. Why?',
+      answer:
+        'lottie-android only treats a download as a .lottie archive when the Content-Type contains application/zip or the URL path ends in .lottie. Files on S3 or a CDN are often served as application/octet-stream from signed URLs, so Android tries to read the zip as JSON and fails. Serve the file with Content-Type: application/zip, or make sure the URL path ends in .lottie.',
+    },
+    {
+      question: 'Why do some effects look different on Android and iOS?',
+      answer:
+        'Native Lottie players do not support every After Effects feature. Expressions, most effects, layer styles, 3D layers and some blend and mask modes are skipped, and merge paths are off on Android unless the app enables them (enableMergePathsAndroidForKitKatAndAbove in lottie-react-native). The fixer lists these per platform; they need a change in After Effects or in the app, not in the file.',
+    },
+  ],
 
   // ── QR ────────────────────────────────────────────────────
   'qr-generator': [

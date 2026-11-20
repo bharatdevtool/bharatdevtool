@@ -306,6 +306,28 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     keywords: ['lottie optimizer', 'compress lottie json', 'reduce lottie file size', 'clean lottie metadata', 'bodymovin optimizer'],
     heavy: true,
   },
+  {
+    id: 'lottie-fixer',
+    label: 'Lottie Fixer',
+    route: '/lottie-fixer',
+    category: 'Design & Animation',
+    description:
+      "Fix .lottie files from Figma that won't play on Android ('Unable to parse composition'). Repairs the zip, checks images and mobile support, in your browser.",
+    shortDesc: 'Fix .lottie files that fail on Android',
+    keywords: [
+      'lottie fixer',
+      'fix lottie file',
+      'lottie not working on android',
+      'figma lottie not working android',
+      'unable to parse composition',
+      'only DEFLATED entries can have EXT descriptor',
+      'dotlottie android fix',
+      'lottie-react-native android not playing',
+      'lottie works on ios not android',
+      'repair dotlottie',
+    ],
+    heavy: true,
+  },
   // ── PDF (one shared workspace, one URL per task) ──────────
   {
     id: 'compress-pdf',
