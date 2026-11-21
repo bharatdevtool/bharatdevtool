@@ -4,10 +4,6 @@
 // element types become a union. Extracted from json-to-typescript.html;
 // tests/json-infer.test.ts keeps the TypeScript output byte-identical.
 
-function capitalizeFirst(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
 function toPascalCase(str) {
   return str
     .replace(/[_\-\s]+(.)/g, function (_, c) { return c.toUpperCase(); })
