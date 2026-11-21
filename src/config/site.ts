@@ -76,6 +76,8 @@ export const ANALYTICS_EVENTS = {
   QUICKDROP_SEND: 'quickdrop_send',
   DOCUMENT_SCAN: 'document_scan',
   OCR_TEXT: 'ocr_text',
+  // Passport photo (props: output kind, paper, copies, background only — never the photo)
+  PASSPORT_PHOTO: 'passport_photo',
   LOOK_SCANNED: 'look_scanned',
   // PDF (props are fixed labels and counts only — never file names or content)
   PDF_FILES_ADDED: 'pdf_files_added',

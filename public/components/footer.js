@@ -63,6 +63,7 @@ const ALL_TOOLS_LIST = [
   { label: 'Image Resizer', href: 'image-resizer.html', cat: 'image' },
   { label: 'Image Compressor', href: 'image-compressor.html', cat: 'image' },
   { label: 'Image to Text (OCR)', href: 'image-to-text', cat: 'image' },
+  { label: 'Passport Size Photo Maker', href: 'passport-size-photo-maker', cat: 'image' },
   { label: 'Resize Image to KB', href: 'resize-image-to-kb.html', cat: 'image' },
   { label: 'Hash Generator', href: 'hash-generator.html', cat: 'security' },
   { label: 'CSV ↔ JSON Converter', href: 'csv-json-converter.html', cat: 'json' },

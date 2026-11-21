@@ -7,7 +7,8 @@ import { mmToPt, mmToPx, type Rect, type Size, type SheetLine } from './sheet';
 export interface PrintSheet {
   paper: Size;
   lines: SheetLine[];
-  scale: { x: number; y: number; length: number };
+  /** 50 mm check line; left out on papers printed as is (4×6 photo paper). */
+  scale?: { x: number; y: number; length: number };
 }
 
 export interface PlacedImage {
@@ -28,8 +29,14 @@ export async function sheetToPdf(sheet: PrintSheet, images: PlacedImage[]): Prom
   // PDF origin is bottom-left; sheet maths is top-left.
   const y = (top: number, h = 0) => pageH - mmToPt(top + h);
 
+  // The same image placed many times (a sheet of passport photos) is stored once.
+  const cache = new Map<Uint8Array, Awaited<ReturnType<typeof doc.embedJpg>>>();
   for (const img of images) {
-    const embedded = img.mime === 'image/png' ? await doc.embedPng(img.bytes) : await doc.embedJpg(img.bytes);
+    let embedded = cache.get(img.bytes);
+    if (!embedded) {
+      embedded = img.mime === 'image/png' ? await doc.embedPng(img.bytes) : await doc.embedJpg(img.bytes);
+      cache.set(img.bytes, embedded);
+    }
     page.drawImage(embedded, { x: mmToPt(img.rect.x), y: y(img.rect.y, img.rect.h), width: mmToPt(img.rect.w), height: mmToPt(img.rect.h) });
   }
   for (const l of sheet.lines) {
@@ -42,9 +49,11 @@ export async function sheetToPdf(sheet: PrintSheet, images: PlacedImage[]): Prom
     });
   }
   const s = sheet.scale;
-  page.drawLine({ start: { x: mmToPt(s.x), y: y(s.y) }, end: { x: mmToPt(s.x + s.length), y: y(s.y) }, thickness: 0.8, color: rgb(0, 0, 0) });
-  const font = await doc.embedFont(StandardFonts.Helvetica);
-  page.drawText(SCALE_LABEL, { x: mmToPt(s.x + s.length + 3), y: y(s.y) - 2.5, size: 7, font, color: rgb(0.3, 0.3, 0.3) });
+  if (s) {
+    page.drawLine({ start: { x: mmToPt(s.x), y: y(s.y) }, end: { x: mmToPt(s.x + s.length), y: y(s.y) }, thickness: 0.8, color: rgb(0, 0, 0) });
+    const font = await doc.embedFont(StandardFonts.Helvetica);
+    page.drawText(SCALE_LABEL, { x: mmToPt(s.x + s.length + 3), y: y(s.y) - 2.5, size: 7, font, color: rgb(0.3, 0.3, 0.3) });
+  }
 
   return doc.save();
 }
@@ -72,6 +81,7 @@ export function sheetToCanvas(sheet: PrintSheet, images: { rect: Rect; source: C
     ctx.stroke();
   }
   const s = sheet.scale;
+  if (!s) return canvas;
   ctx.setLineDash([]);
   ctx.strokeStyle = '#000000';
   ctx.lineWidth = 0.8 * unit;

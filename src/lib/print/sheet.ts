@@ -123,6 +123,77 @@ export function cardSheet(opts: CardSheetOptions = {}): CardSheet {
   return { paper: { w: paper.w, h: paper.h }, slots, lines, scale: { x: margin, y: paper.h - margin - 3, length: SCALE_LENGTH } };
 }
 
+export interface PhotoSheetOptions {
+  paper?: PaperId;
+  photo?: Size;
+  /** Number of copies. Clamped to what fits. Default: as many as fit. */
+  count?: number;
+  margin?: number;
+  gap?: number;
+  /** Add the 50 mm check line. Default: yes, except on 4×6 photo paper (printed as is by photo labs). */
+  scaleLine?: boolean;
+}
+
+export interface PhotoSheet {
+  paper: Size;
+  slots: Rect[];
+  lines: SheetLine[];
+  /** Left out when the paper has no room for it (4×6 photo paper is printed as is). */
+  scale?: { x: number; y: number; length: number };
+  /** How many fit at most. */
+  capacity: number;
+}
+
+/**
+ * A grid of identical photos with cut lines, in whichever orientation fits more (4×6 photo paper
+ * takes eight 35×45 mm photos lying sideways; A4 takes 25 plus the 50 mm check line).
+ */
+export function photoSheet(opts: PhotoSheetOptions = {}): PhotoSheet {
+  const paperId = opts.paper ?? '4x6';
+  const base = PAPERS[paperId];
+  const photo = opts.photo ?? { w: 35, h: 45 };
+  const margin = opts.margin ?? (paperId === '4x6' ? 3 : 8);
+  const wantScale = opts.scaleLine ?? paperId !== '4x6';
+  const gap = opts.gap ?? 2;
+  const fit = (len: number, item: number) => Math.max(0, Math.floor((len - 2 * margin + gap) / (item + gap)));
+  const layouts = [
+    { w: base.w, h: base.h },
+    { w: base.h, h: base.w },
+  ].map((paper) => {
+    const cols = fit(paper.w, photo.w);
+    const rows = fit(paper.h - (wantScale ? SCALE_BAND : 0), photo.h);
+    return { paper, cols, rows, scale: wantScale };
+  });
+  const best = layouts[1].cols * layouts[1].rows > layouts[0].cols * layouts[0].rows ? layouts[1] : layouts[0];
+  const capacity = best.cols * best.rows;
+  if (capacity < 1) throw new Error('The photo does not fit on this paper.');
+  const count = Math.min(Math.max(1, Math.round(opts.count ?? capacity)), capacity);
+
+  const gridW = best.cols * photo.w + (best.cols - 1) * gap;
+  const gridH = best.rows * photo.h + (best.rows - 1) * gap;
+  const left = (best.paper.w - gridW) / 2;
+  const top = best.scale ? margin : (best.paper.h - gridH) / 2;
+  const slots: Rect[] = [];
+  const lines: SheetLine[] = [];
+  for (let i = 0; i < count; i++) {
+    const r = { x: left + (i % best.cols) * (photo.w + gap), y: top + Math.floor(i / best.cols) * (photo.h + gap), w: photo.w, h: photo.h };
+    slots.push(r);
+    lines.push(
+      { x1: r.x, y1: r.y, x2: r.x + r.w, y2: r.y, kind: 'cut' },
+      { x1: r.x, y1: r.y + r.h, x2: r.x + r.w, y2: r.y + r.h, kind: 'cut' },
+      { x1: r.x, y1: r.y, x2: r.x, y2: r.y + r.h, kind: 'cut' },
+      { x1: r.x + r.w, y1: r.y, x2: r.x + r.w, y2: r.y + r.h, kind: 'cut' },
+    );
+  }
+  return {
+    paper: { w: best.paper.w, h: best.paper.h },
+    slots,
+    lines,
+    capacity,
+    ...(best.scale ? { scale: { x: margin, y: best.paper.h - margin - 3, length: SCALE_LENGTH } } : {}),
+  };
+}
+
 /** Millimetres → PDF points. */
 export const mmToPt = (mm: number) => mm * MM_TO_PT;
 

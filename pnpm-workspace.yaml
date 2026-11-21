@@ -1,3 +1,5 @@
 allowBuilds:
+  # protobufjs (via onnxruntime-web) only runs a version notice on install
+  protobufjs: false
   # tesseract.js only runs an opencollective notice on install
   tesseract.js: false

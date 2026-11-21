@@ -903,6 +903,33 @@ export const TOOL_FAQS: Record<string, ToolFaq[]> = {
     },
     { question: 'Is my phone number sent to a server?', answer: PRIVACY_ANSWER },
   ],
+  'passport-photo-maker': [
+    {
+      question: 'What is the size of a passport size photo in India?',
+      answer:
+        'A passport size photo in India is 35 × 45 mm (3.5 × 4.5 cm). The head, from the top of the hair to the chin, should take up about 32 to 36 mm of that height, facing the camera, on a plain white or light background. This tool sizes and places the photo to those measurements.',
+    },
+    {
+      question: 'How do I make a passport size photo at home?',
+      answer:
+        'Stand facing the camera in good, even light with your shoulders in view, and take the photo from about a metre away. Open it here: the background is replaced with white or light blue and the face is centred at the right size. Adjust the position if needed, then download the photo or a print sheet.',
+    },
+    {
+      question: 'How many passport photos fit on 4×6 photo paper or an A4 sheet?',
+      answer:
+        'Eight 35 × 45 mm photos fit on one 4×6 inch photo paper, and 25 fit on an A4 sheet with cut lines. Print at 100% or Actual size, not Fit to page. The A4 sheet has a line that should measure exactly 50 mm, so you can check the scale with a ruler.',
+    },
+    {
+      question: 'Is my photo uploaded to a server?',
+      answer:
+        'No. The background removal and face detection run inside your browser. The first time, the page downloads the AI model (about 28 MB) from this website; after that it is cached. Your photo never leaves your device.',
+    },
+    {
+      question: 'Why is part of the background left behind or part of my hair missing?',
+      answer:
+        'The AI separates you from the background by contrast. A busy background, a background the same colour as your hair or clothes, or dim light makes the edge harder to find. Retake the photo in front of a plain wall in good light for the cleanest result.',
+    },
+  ],
   'quickdrop': [
     {
       question: 'What is QuickDrop and how does it work?',

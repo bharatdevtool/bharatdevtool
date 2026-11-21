@@ -569,6 +569,25 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     heavy: true,
   },
   {
+    id: 'passport-photo-maker',
+    label: 'Passport Size Photo Maker',
+    route: '/passport-size-photo-maker',
+    category: 'Image',
+    description:
+      'Free passport size photo maker: remove the background, centre the face at 35×45 mm and print 8 on 4×6 paper or 25 on A4. Runs in your browser, no upload.',
+    shortDesc: 'Passport photo with white background, ready to print',
+    keywords: [
+      'passport size photo maker',
+      'passport size photo online',
+      'passport photo 35x45',
+      'passport photo white background',
+      'passport size photo print 4x6',
+      'remove background passport photo',
+      'passport photo maker india',
+    ],
+    heavy: true,
+  },
+  {
     id: 'make-pdf-look-scanned',
     label: 'Make PDF Look Scanned',
     route: '/make-pdf-look-scanned',
