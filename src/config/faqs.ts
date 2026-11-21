@@ -907,7 +907,7 @@ export const TOOL_FAQS: Record<string, ToolFaq[]> = {
     {
       question: 'What is QuickDrop and how does it work?',
       answer:
-        'QuickDrop is a free, in-browser peer-to-peer file transfer tool. It connects two devices directly using WebRTC DataChannels over your local Wi-Fi or the internet. Files stream directly from sender to receiver without passing through a server.',
+        'QuickDrop is a free, in-browser peer-to-peer file transfer tool. Open it on two devices on the same Wi-Fi and they show up on each other\'s screen, with no PIN or sign-up. Tap a device to send; the other device taps Accept once. Files stream directly between the devices over WebRTC.',
     },
     {
       question: 'Are my files uploaded to or stored on any server?',
@@ -922,7 +922,7 @@ export const TOOL_FAQS: Record<string, ToolFaq[]> = {
     {
       question: 'How do I fix "Failed to connect to peer" or WebRTC connection errors?',
       answer:
-        'If two devices fail to connect automatically, it is usually due to symmetric NAT or client isolation on public Wi-Fi networks (like universities or cafes). To resolve this, click "Pair Device" to create a direct pairing room, or ensure both devices have WebRTC enabled in browser privacy settings.',
+        'If a device does not show up or fails to connect, the network may block devices from seeing each other (client isolation on office, college or cafe Wi-Fi) or the two devices may be on different networks. Tap "PIN / QR" and scan the QR code or type the PIN from the other device, and make sure WebRTC is not disabled in the browser\'s privacy settings.',
     },
     {
       question: 'Does QuickDrop work across different operating systems?',
