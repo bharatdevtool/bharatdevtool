@@ -175,6 +175,10 @@ function initApp() {
   initRequestConfigTabs();
   initResponseTabs();
   initBodyTypeToggle();
+  initAutoSendOnPaste();
+  initHistoryActions();
+  historyLibReady.then(() => loadRequestHistory());
+  openSharedRequest();
 }
 
 // Load saved state from localStorage
@@ -449,6 +453,19 @@ function initCopyAndAdvancedToggles() {
 }
 
 // Initialize body type toggle
+// Highlights the Raw / JSON button and records the body type (also used when loading from history).
+function setBodyTypeButtons(type) {
+  const rawBtn = document.getElementById('body-type-raw');
+  const jsonBtn = document.getElementById('body-type-json');
+  rawBtn?.classList.toggle('active', type !== 'json');
+  jsonBtn?.classList.toggle('active', type === 'json');
+  document.getElementById('body-type-form')?.classList.remove('active');
+  document.getElementById('request-body')?.classList.remove('hidden');
+  document.getElementById('form-body-container')?.classList.add('hidden');
+  currentRequest.bodyType = type === 'json' ? 'json' : 'raw';
+  updateCurrentRequest();
+}
+
 function initBodyTypeToggle() {
   const rawBtn = document.getElementById('body-type-raw');
   const jsonBtn = document.getElementById('body-type-json');
@@ -456,27 +473,11 @@ function initBodyTypeToggle() {
   const bodyTextarea = document.getElementById('request-body');
   const formContainer = document.getElementById('form-body-container');
   
-  rawBtn.addEventListener('click', () => {
-    rawBtn.classList.add('active');
-    jsonBtn.classList.remove('active');
-    formBtn.classList.remove('active');
-    bodyTextarea.classList.remove('hidden');
-    formContainer.classList.add('hidden');
-    currentRequest.bodyType = 'raw';
-    updateCurrentRequest();
-  });
-  
-  jsonBtn.addEventListener('click', () => {
-    jsonBtn.classList.add('active');
-    rawBtn.classList.remove('active');
-    formBtn.classList.remove('active');
-    bodyTextarea.classList.remove('hidden');
-    formContainer.classList.add('hidden');
-    currentRequest.bodyType = 'json';
-    updateCurrentRequest();
-  });
-  
-  formBtn.addEventListener('click', () => {
+  // The page has no "Form" body button (yet), so formBtn / formContainer may be null.
+  rawBtn.addEventListener('click', () => setBodyTypeButtons('raw'));
+  jsonBtn.addEventListener('click', () => setBodyTypeButtons('json'));
+
+  formBtn?.addEventListener('click', () => {
     formBtn.classList.add('active');
     rawBtn.classList.remove('active');
     jsonBtn.classList.remove('active');
@@ -512,23 +513,44 @@ function switchResponseTab(tabName) {
   document.getElementById(`response-${tabName}`).classList.remove('hidden');
 }
 
-// Parse cURL command
+// Parse cURL command. Resolves to true when the request builder was filled in.
 function parseCurlCommand() {
   const curlInput = document.getElementById('curl-input').value.trim();
-  
+
   if (!curlInput) {
     showError('Please enter a cURL command');
     trackCurlError('empty_input', {
       input_length: 0
     });
-    return;
+    return Promise.resolve(false);
   }
-  
-  detectUIFreeze('parse_curl', () => {
+
+  return detectUIFreeze('parse_curl', () => {
     try {
       const parsed = parseCurl(curlInput);
-      currentRequest = parsed;
-      
+      populateBuilder(parsed, parsed.body ? 'json' : 'raw');
+
+      trackCurlEvent('parse_curl', {
+        method: parsed.method,
+        hasBody: !!parsed.body,
+        input_length: curlInput.length
+      });
+    } catch (error) {
+      showError(`Failed to parse cURL: ${error.message}`);
+      trackCurlError('parse_failed', { input_length: curlInput.length });
+      throw error;
+    }
+  }).then(() => true, (error) => {
+    Debug.error('Parse cURL error:', error);
+    return false;
+  });
+}
+
+// Fills the request builder from { method, url, fullUrl?, queryParams?, headers, body }.
+// Used by Parse cURL, history "Load" and shared links. Never sends anything.
+function populateBuilder(parsed, bodyType) {
+      currentRequest = { ...parsed, bodyType: bodyType || 'raw' };
+
       // Populate Postman-like UI
       document.getElementById('request-method').value = parsed.method;
       
@@ -551,8 +573,7 @@ function parseCurlCommand() {
       }
       
       document.getElementById('request-body').value = parsed.body || '';
-      currentRequest.bodyType = parsed.body ? 'json' : 'raw';
-      
+
       // Extract and populate query params
       extractQueryParams();
       populateQueryParams(parsed.queryParams || {});
@@ -579,21 +600,50 @@ function parseCurlCommand() {
       if (activeTab) {
         generateCodeForLanguage(activeTab.dataset.lang);
       }
-      
-      trackCurlEvent('parse_curl', { 
-        method: parsed.method, 
-        hasBody: !!parsed.body,
-        input_length: curlInput.length
-      });
+
+      // Last, once every field is filled in: it re-reads the form into currentRequest
+      setBodyTypeButtons(bodyType);
 
       document.getElementById('send-request-btn')?.focus();
-    } catch (error) {
-      showError(`Failed to parse cURL: ${error.message}`);
-      trackCurlError('parse_failed', { input_length: curlInput.length });
-      throw error;
-    }
-  }).catch((error) => {
-    Debug.error('Parse cURL error:', error);
+}
+
+// A request object ({ method, url, headers, body, bodyType }) → the shape populateBuilder expects.
+function requestToParsed(req) {
+  const parsed = { method: req.method, url: req.url, fullUrl: req.url, queryParams: {}, headers: req.headers || {}, body: req.body || null };
+  try {
+    const u = new URL(req.url);
+    u.searchParams.forEach((value, key) => { parsed.queryParams[key] = value; });
+    parsed.url = u.origin + u.pathname;
+  } catch {
+    // URL with {{variables}}: keep it exactly as typed
+  }
+  return parsed;
+}
+
+// ── Auto-send on paste ──────────────────────────────────────────
+// Pasting a cURL fills in the request and sends it straight away (can be turned off).
+const AUTO_SEND_KEY = 'curl_tester_autosend';
+
+function initAutoSendOnPaste() {
+  const input = document.getElementById('curl-input');
+  const toggle = document.getElementById('auto-send-on-paste');
+  try {
+    if (toggle && localStorage.getItem(AUTO_SEND_KEY) === 'off') toggle.checked = false;
+  } catch {}
+  toggle?.addEventListener('change', () => {
+    try { localStorage.setItem(AUTO_SEND_KEY, toggle.checked ? 'on' : 'off'); } catch {}
+    trackCurlEvent('auto_send_toggle', { enabled: toggle.checked });
+  });
+  input?.addEventListener('paste', () => {
+    // The pasted text is in the box only after the paste event has finished
+    setTimeout(async () => {
+      if (!/^\s*curl\s/i.test(input.value)) return;
+      const ok = await parseCurlCommand();
+      if (ok && (!toggle || toggle.checked)) {
+        trackCurlEvent('auto_send_on_paste');
+        runRequest();
+      }
+    }, 0);
   });
 }
 
@@ -1291,7 +1341,7 @@ async function runRequest() {
         analyzeRequestAndResponse(fetchOptions, currentResponse);
         
         // Save to history
-        saveToHistory(currentRequest, currentResponse);
+        saveToHistory({ ...currentRequest, url }, currentResponse);
         
         // Hide error explanation on success
         const explanationEl = document.getElementById('error-explanation');
@@ -1408,7 +1458,7 @@ Solutions:
     }
     
     // Save failed request to history
-    saveToHistory(currentRequest, { status: 'Error', duration: 0, error: error.message });
+    saveToHistory({ ...currentRequest, url }, { status: 'Error', duration: 0 });
   } finally {
     sendBtn.innerHTML = originalText;
     sendBtn.disabled = false;
@@ -1738,19 +1788,27 @@ function analyzeRequestAndResponse(request, response) {
 }
 
 // Display suggestions
+// Warnings appear as a response tab next to Body / Headers / Timings, and only when
+// there is something to warn about (plain "all good" notes such as "HTTPS used" are not shown).
 function displaySuggestions(suggestions) {
-  const panel = document.getElementById('suggestions-panel');
+  const tab = document.getElementById('response-warnings-tab');
+  const count = document.getElementById('response-warnings-count');
   const list = document.getElementById('suggestions-list');
-  
-  if (suggestions.length === 0) {
-    panel.classList.add('hidden');
+  if (!tab || !list) return;
+
+  const warnings = suggestions.filter((s) => s.type === 'warning' || s.type === 'error');
+  list.innerHTML = '';
+
+  if (warnings.length === 0) {
+    tab.classList.add('hidden');
+    if (tab.classList.contains('active')) switchResponseTab('body');
     return;
   }
-  
-  panel.classList.remove('hidden');
-  list.innerHTML = '';
-  
-  suggestions.forEach(suggestion => {
+
+  tab.classList.remove('hidden');
+  if (count) count.textContent = `(${warnings.length})`;
+
+  warnings.forEach(suggestion => {
     const item = document.createElement('div');
     item.className = `suggestion-item ${suggestion.type}`;
     item.innerHTML = `
@@ -2633,24 +2691,47 @@ function calculatePerformanceMetrics(response, startTime, endTime) {
   };
 }
 
-// Request History
+// ── Request History ──────────────────────────────────────────────
+// Pure logic (entries, secrets, share links, cURL text) is in assets/js/api/history.js.
+// History is stored only in this browser (localStorage).
+let HistoryLib = null;
+const historyLibReady = import('/assets/js/api/history.js')
+  .then((m) => { HistoryLib = m; return m; })
+  .catch((e) => { Debug.error('history module failed to load', e); return null; });
+
+const HISTORY_ICONS = {
+  copy: '<rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',
+  share: '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/>',
+  trash: '<path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/>',
+  load: '<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>',
+};
+function historyIcon(name) {
+  return `<svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${HISTORY_ICONS[name]}</svg>`;
+}
+
+function readHistoryList() {
+  try {
+    return HistoryLib ? HistoryLib.readHistory(localStorage.getItem(HistoryLib.HISTORY_KEY)) : JSON.parse(localStorage.getItem('curl_tester_history') || '[]');
+  } catch {
+    return [];
+  }
+}
+
+function writeHistoryList(list) {
+  try {
+    localStorage.setItem('curl_tester_history', JSON.stringify(list));
+  } catch {
+    // Storage full: keep the newest half and try once more
+    try { localStorage.setItem('curl_tester_history', JSON.stringify(list.slice(0, Math.ceil(list.length / 2)))); } catch {}
+  }
+}
+
+// Saves the request exactly as sent ({{variables}} not filled in) with its result.
 function saveToHistory(request, response) {
   try {
-    const history = JSON.parse(localStorage.getItem('curl_tester_history') || '[]');
-    const historyItem = {
-      id: Date.now(),
-      timestamp: new Date().toISOString(),
-      method: request.method,
-      url: request.url,
-      status: response?.status || 'Error',
-      duration: response?.duration || 0,
-      success: response && response.status >= 200 && response.status < 300
-    };
-    
-    history.unshift(historyItem);
-    history.splice(10);
-    
-    localStorage.setItem('curl_tester_history', JSON.stringify(history));
+    if (!HistoryLib) return;
+    const entry = HistoryLib.makeHistoryEntry(request, response);
+    writeHistoryList(HistoryLib.addToHistory(readHistoryList(), entry));
     loadRequestHistory();
   } catch (error) {
     Debug.error('Failed to save history:', error);
@@ -2659,7 +2740,7 @@ function saveToHistory(request, response) {
 
 function loadRequestHistory() {
   try {
-    const history = JSON.parse(localStorage.getItem('curl_tester_history') || '[]');
+    const history = readHistoryList();
     const container = document.getElementById('request-history-list');
     const noHistoryMsg = document.getElementById('no-history-message');
     
@@ -2673,54 +2754,139 @@ function loadRequestHistory() {
     
     if (noHistoryMsg) noHistoryMsg.classList.add('hidden');
     
+    const btn = 'inline-flex items-center gap-1 px-2 py-1 text-xs rounded-md text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white';
     // Everything shown comes from pasted cURL commands, so it is escaped.
-    container.innerHTML = history.map(item => `
-      <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer" data-id="${Number(item.id)}">
-        <div class="flex-1 min-w-0">
+    container.innerHTML = history.map(item => {
+      const id = Number(item.id);
+      const extras = [
+        item.headers && Object.keys(item.headers).length ? `${Object.keys(item.headers).length} headers` : '',
+        item.body ? 'body' : (item.bodyOmitted ? 'body too large to keep' : ''),
+      ].filter(Boolean).join(' · ');
+      return `
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg" data-id="${id}">
+        <button type="button" class="flex-1 min-w-0 text-left" data-action="load" data-id="${id}" title="Load into the request builder">
           <div class="flex items-center gap-2">
             <span class="px-2 py-1 text-xs font-semibold rounded ${item.success ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'}">${escapeHtml(String(item.method))}</span>
             <span class="text-sm font-medium text-gray-900 dark:text-white">${escapeHtml(String(item.status))}</span>
             <span class="text-xs text-gray-500 dark:text-gray-400">${Number(item.duration) || 0}ms</span>
           </div>
           <div class="text-xs text-gray-600 dark:text-gray-300 mt-1 truncate">${escapeHtml(String(item.url))}</div>
-          <div class="text-xs text-gray-400 dark:text-gray-500 mt-1">${escapeHtml(new Date(item.timestamp).toLocaleString())}</div>
-        </div>
-        <button class="load-history-item-btn px-2 py-1 text-xs text-primary-600 dark:text-primary-400 hover:underline" data-id="${Number(item.id)}">
-          Load
+          <div class="text-xs text-gray-400 dark:text-gray-500 mt-1">${escapeHtml(new Date(item.timestamp).toLocaleString())}${extras ? ' · ' + escapeHtml(extras) : ''}</div>
         </button>
-      </div>
-    `).join('');
-    
-    container.querySelectorAll('.load-history-item-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const id = parseInt(btn.dataset.id);
-        loadHistoryItem(id);
-      });
-    });
+        <div class="flex items-center gap-1 shrink-0">
+          <button type="button" class="${btn}" data-action="load" data-id="${id}" title="Load into the request builder" aria-label="Load">${historyIcon('load')}<span>Load</span></button>
+          <button type="button" class="${btn}" data-action="copy" data-id="${id}" title="Copy as cURL" aria-label="Copy as cURL">${historyIcon('copy')}<span>Copy</span></button>
+          <button type="button" class="${btn}" data-action="share" data-id="${id}" title="Copy a share link (tokens and API keys left out)" aria-label="Share link">${historyIcon('share')}<span>Share</span></button>
+          <button type="button" class="${btn} hover:!text-red-600 dark:hover:!text-red-400" data-action="delete" data-id="${id}" title="Delete from history" aria-label="Delete">${historyIcon('trash')}</button>
+        </div>
+      </div>`;
+    }).join('');
   } catch (error) {
     Debug.error('Failed to load history:', error);
   }
 }
 
+function findHistoryItem(id) {
+  return readHistoryList().find(h => h.id === id) || null;
+}
+
+function historyItemToRequest(item) {
+  return { method: item.method, url: item.url, headers: item.headers || {}, body: item.body || null, bodyType: item.bodyType || 'raw' };
+}
+
+// Fills the builder from a request and shows its cURL in the input box. Never sends.
+function loadRequestIntoBuilder(req) {
+  populateBuilder(requestToParsed(req), req.bodyType);
+  if (HistoryLib) document.getElementById('curl-input').value = HistoryLib.toCurl(req);
+  document.getElementById('postman-interface')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 function loadHistoryItem(id) {
+  const item = findHistoryItem(id);
+  if (!item) return;
+  loadRequestIntoBuilder(historyItemToRequest(item));
+  showSuccess('Loaded. Press Send to run it again.');
+  trackCurlEvent('load_history_item');
+}
+
+function copyHistoryItem(id) {
+  const item = findHistoryItem(id);
+  if (!item || !HistoryLib) return;
+  copyText(Promise.resolve(HistoryLib.toCurl(historyItemToRequest(item)))).then((ok) => {
+    if (ok) showSuccess('Copied as cURL'); else showError('Could not copy. Load it and use Copy instead.');
+  });
+  trackCurlEvent('history_copy');
+}
+
+function shareHistoryItem(id) {
+  const item = findHistoryItem(id);
+  if (!item || !HistoryLib) return;
+  const { request, removed } = HistoryLib.stripSecrets(historyItemToRequest(item));
+  const link = HistoryLib.encodeShare(request).then((code) => `${location.origin}${location.pathname}#r=${code}`);
+  copyText(link).then((ok) => {
+    if (!ok) return showError('Could not copy the share link.');
+    const left = [...new Set(removed)];
+    showSuccess(left.length ? `Share link copied. Left out for safety: ${left.join(', ')}` : 'Share link copied');
+  });
+  trackCurlEvent('history_share', { secrets_removed: removed.length });
+}
+
+function deleteHistoryItem(id) {
+  if (!HistoryLib) return;
+  writeHistoryList(HistoryLib.removeFromHistory(readHistoryList(), id));
+  loadRequestHistory();
+  trackCurlEvent('history_delete');
+}
+
+// Copies text that may still be computing (share links are compressed asynchronously).
+// ClipboardItem with a promise keeps Safari's "user clicked" permission across the wait.
+async function copyText(textPromise) {
   try {
-    const history = JSON.parse(localStorage.getItem('curl_tester_history') || '[]');
-    const item = history.find(h => h.id === id);
-    if (!item) return;
-    
-    document.getElementById('request-method').value = item.method;
-    document.getElementById('request-url').value = item.url;
-    updateCurrentRequest();
-    
-    // Generate cURL command and update textarea
-    const curlCommand = buildCurlFromBuilder(false);
-    document.getElementById('curl-input').value = curlCommand;
-    
-    trackCurlEvent('load_history_item');
-  } catch (error) {
-    Debug.error('Failed to load history item:', error);
+    if (navigator.clipboard && window.ClipboardItem) {
+      await navigator.clipboard.write([new ClipboardItem({ 'text/plain': textPromise.then((t) => new Blob([t], { type: 'text/plain' })) })]);
+      return true;
+    }
+  } catch { /* fall through */ }
+  try {
+    const text = await textPromise;
+    if (navigator.clipboard) { await navigator.clipboard.writeText(text); return true; }
+    copyToClipboard(text);
+    return true;
+  } catch {
+    return false;
   }
+}
+
+function initHistoryActions() {
+  document.getElementById('request-history-list')?.addEventListener('click', (e) => {
+    const target = e.target.closest('[data-action]');
+    if (!target) return;
+    const id = Number(target.dataset.id);
+    const action = target.dataset.action;
+    if (action === 'load') loadHistoryItem(id);
+    else if (action === 'copy') copyHistoryItem(id);
+    else if (action === 'share') shareHistoryItem(id);
+    else if (action === 'delete') deleteHistoryItem(id);
+  });
+}
+
+// Opening a share link (#r=…): fill in the request, never send it, and drop the
+// fragment from the address bar so it isn't bookmarked or re-shared by accident.
+async function openSharedRequest() {
+  const lib = await historyLibReady;
+  if (!lib) return;
+  const code = lib.readShareHash(location.hash);
+  if (!code) return;
+  history.replaceState(null, '', location.pathname + location.search);
+  const req = await lib.decodeShare(code);
+  if (!req) {
+    showError('This share link is broken or incomplete.');
+    trackCurlError('shared_request_invalid', {});
+    return;
+  }
+  loadRequestIntoBuilder(req);
+  showSuccess('Shared request loaded. Check it, then press Send.');
+  trackCurlEvent('shared_request_open');
 }
 
 // Two clicks to clear (no blocking confirm() dialog): the first arms the button for 3 s.
