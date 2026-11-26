@@ -62,6 +62,8 @@ const ALL_TOOLS_LIST = [
   { label: 'PNG ↔ JPG Converter', href: 'image-converter.html', cat: 'image' },
   { label: 'Image Resizer', href: 'image-resizer.html', cat: 'image' },
   { label: 'Image Compressor', href: 'image-compressor.html', cat: 'image' },
+  { label: 'Image to Text (OCR)', href: 'image-to-text', cat: 'image' },
+  { label: 'Passport Size Photo Maker', href: 'passport-size-photo-maker', cat: 'image' },
   { label: 'Resize Image to KB', href: 'resize-image-to-kb.html', cat: 'image' },
   { label: 'Hash Generator', href: 'hash-generator.html', cat: 'security' },
   { label: 'CSV ↔ JSON Converter', href: 'csv-json-converter.html', cat: 'json' },
@@ -92,10 +94,14 @@ const ALL_TOOLS_LIST = [
   { label: 'Share PDF with Expiry', href: 'share-pdf-with-expiry', cat: 'pdf' },
   { label: 'Image to PDF', href: 'image-to-pdf', cat: 'pdf' },
   { label: 'PDF to Image', href: 'pdf-to-image', cat: 'pdf' },
+  { label: 'Aadhaar & ID Card Print', href: 'aadhaar-card-print', cat: 'pdf' },
+  { label: 'Document Scanner', href: 'document-scanner', cat: 'pdf' },
+  { label: 'Make PDF Look Scanned', href: 'make-pdf-look-scanned', cat: 'pdf' },
   { label: 'Lottie Player & Studio', href: 'lottie-player', cat: 'design' },
   { label: 'Lottie Converter', href: 'lottie-converter', cat: 'design' },
   { label: 'Lottie Validator', href: 'lottie-validator', cat: 'design' },
   { label: 'Lottie Optimizer', href: 'lottie-optimizer', cat: 'design' },
+  { label: 'Lottie Fixer', href: 'lottie-fixer', cat: 'design' },
   { label: 'Suggest Tool', href: 'https://forms.gle/TA7WEhzzQ6csQFGZ7', external: true }
 ];
 
@@ -182,7 +188,7 @@ function createFooter(version = '1.0') {
       </section>
       <section class="footer-meta">
         <p class="made-in">Built with <svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="#ef4444" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="love" role="img" style="display:inline-block;vertical-align:-0.125em"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg> in India</p>
-        <nav class="footer-links" aria-label="Footer links">
+        <nav class="footer-links" aria-label="Footer links" style="flex-wrap:wrap;justify-content:center;max-width:100%">
           <a href="${base}about.html">About</a>
           <span class="sep">•</span>
           <a href="${base}privacy.html">Privacy</a>

@@ -30,6 +30,26 @@ function loadShareScript(onReady) {
   document.head.appendChild(s);
 }
 
+// ── Tool search (⌘K / Ctrl+K) ───────────────────────────────────
+// Header buttons only; the palette is public/components/tool-search.js.
+var BDT_IS_MAC = /mac|iphone|ipad/i.test((navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || '');
+var BDT_SHORTCUT_LABEL = BDT_IS_MAC ? '⌘K' : 'Ctrl K';
+var BDT_SEARCH_ICON = '<svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>';
+
+// The palette itself lives in tool-search.js (shared with the JSON Formatter, which has
+// its own header). Load it right away so ⌘K works as soon as the page is up.
+(function loadToolSearch() {
+  if (window.BDTToolSearch) return;
+  try {
+    var src = document.currentScript && document.currentScript.src;
+    if (!src) return;
+    var s = document.createElement('script');
+    s.src = src.replace(/header\.js(\?.*)?$/, 'tool-search.js');
+    s.defer = true;
+    document.head.appendChild(s);
+  } catch (e) {}
+})();
+
 // Shared header for static HTML pages (using Tailwind CSS). The JSON Formatter has its own.
 function createSecondaryHeader() {
   // Remove any existing headers (hardcoded or previously created) to avoid duplicates
@@ -67,10 +87,16 @@ function createSecondaryHeader() {
                    class="logo">
               <span class="text-xl font-bold text-gray-900 dark:text-white">Bharat Dev Tools</span>
             </a>
+            <!-- Tool search (same as the ⌘K palette on the Next.js pages) -->
+            <button type="button" class="bdt-search-trigger bdt-search-wide" data-bdt-search aria-label="Search tools" aria-haspopup="dialog">
+              <span class="bdt-search-trigger-label">${BDT_SEARCH_ICON}<span>Search tools...</span></span>
+              <kbd>${BDT_SHORTCUT_LABEL}</kbd>
+            </button>
           </div>
-          
+
           <!-- Header actions -->
           <div class="secondary-header-actions flex items-center space-x-4">
+            <button type="button" class="bdt-search-trigger bdt-search-icon-btn" data-bdt-search aria-label="Search tools" aria-haspopup="dialog">${BDT_SEARCH_ICON}</button>
             <!-- Theme toggle -->
             <button id="theme-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" aria-label="Toggle dark/light theme">
               <span class="dark:hidden"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg></span>
@@ -93,8 +119,9 @@ function createSecondaryHeader() {
   // "Share this tool" button (WhatsApp, Telegram, X, LinkedIn, copy link)
   loadShareScript(function () {
     var actions = document.querySelector('.secondary-header-actions');
-    if (actions && window.BDTShare) window.BDTShare.mountButton(actions, { before: actions.firstElementChild });
+    if (actions && window.BDTShare) window.BDTShare.mountButton(actions, { before: document.getElementById('theme-toggle') });
   });
+
   
   // Trigger logo loader for the newly inserted logo
   // Wait a bit to ensure logo-loader.js has loaded

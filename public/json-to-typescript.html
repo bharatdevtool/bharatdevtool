@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- code:seo -->
   <title>Free JSON to TypeScript Converter | Bharat Dev Tools</title>
   <meta name="description" content="Free JSON to TypeScript converter. Generate interfaces and types from any JSON instantly. No sign-up, and your data never leaves your browser.">
   <meta name="keywords" content="json to typescript, json to typescript interface, json to ts, convert json to typescript, typescript interface generator, json types, typescript types from json, online json to typescript, free json converter">
@@ -28,6 +29,7 @@
   <meta name="twitter:title" content="Free JSON to TypeScript Converter | Bharat Dev Tools">
   <meta name="twitter:description" content="Free JSON to TypeScript converter. Generate interfaces and types from any JSON instantly. No sign-up, and your data never leaves your browser.">
   <meta name="twitter:image" content="https://bharatdevtool.com/og/json-to-typescript.png">
+  <!-- /code:seo -->
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="https://ik.imagekit.io/bdt/bdt_logo_v3_32.png">
@@ -63,6 +65,7 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="components/header.css">
 
+  <!-- code:jsonld -->
   <!-- Structured Data: WebApplication -->
   <script type="application/ld+json">
   {
@@ -166,6 +169,7 @@
     ]
   }
   </script>
+  <!-- /code:jsonld -->
 
   <script>
     tailwind.config = {
@@ -258,6 +262,7 @@
   <script src="components/header.js"></script>
 
   <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- code:hero -->
     <h1 class="sr-only">JSON to TypeScript Interface Generator</h1>
 
     <!-- Hero -->
@@ -269,6 +274,8 @@
         Paste any JSON and instantly get TypeScript interfaces. Free, browser-only, no sign-up.
       </p>
     </div>
+    <script type="application/json" id="codePage">{"lang":"typescript"}</script>
+    <!-- /code:hero -->
 
     <!-- Main Panel: two-column on large screens -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-fade-in">
@@ -303,7 +310,7 @@
       <!-- RIGHT: TypeScript Output -->
       <div class="bg-white rounded-2xl shadow-lg p-6 flex flex-col">
         <div class="flex items-center justify-between mb-3">
-          <label for="ts-output" class="text-sm font-semibold text-gray-700">
+          <label for="ts-output" id="output-label" class="text-sm font-semibold text-gray-700">
             TypeScript Output
           </label>
           <button id="copy-output-btn" class="text-xs bg-blue-600 hover:bg-blue-700 text-white font-medium px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1" aria-label="Copy TypeScript output">
@@ -327,9 +334,26 @@
       <h3 class="text-sm font-semibold text-gray-700 mb-4">Options</h3>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
 
+        <!-- Output language -->
+        <div>
+          <label for="code-lang" class="block text-xs font-medium text-gray-600 mb-1">Language</label>
+          <select id="code-lang" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-900 outline-none">
+            <option value="typescript">TypeScript</option>
+            <option value="kotlin">Kotlin</option>
+            <option value="swift">Swift</option>
+            <option value="dart">Dart (Flutter)</option>
+          </select>
+        </div>
+
+        <!-- Library for the language -->
+        <div id="code-lib-wrap" class="hidden">
+          <label for="code-lib" class="block text-xs font-medium text-gray-600 mb-1">Library</label>
+          <select id="code-lib" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-900 outline-none"></select>
+        </div>
+
         <!-- Root interface name -->
         <div>
-          <label for="root-name" class="block text-xs font-medium text-gray-600 mb-1">Root Interface Name</label>
+          <label for="root-name" class="block text-xs font-medium text-gray-600 mb-1">Root Name</label>
           <input
             id="root-name"
             type="text"
@@ -341,7 +365,7 @@
         </div>
 
         <!-- Use type alias vs interface -->
-        <div class="option-toggle flex items-center gap-2 pt-5">
+        <div class="option-toggle ts-only flex items-center gap-2 pt-5">
           <input type="checkbox" id="use-type-alias" class="w-4 h-4 rounded">
           <label for="use-type-alias" class="text-sm text-gray-700 cursor-pointer select-none">
             Use <code class="text-blue-600 dark:text-blue-400">type</code> instead of <code class="text-blue-600 dark:text-blue-400">interface</code>
@@ -349,7 +373,7 @@
         </div>
 
         <!-- Optional fields -->
-        <div class="option-toggle flex items-center gap-2 pt-5">
+        <div class="option-toggle ts-only flex items-center gap-2 pt-5">
           <input type="checkbox" id="optional-fields" class="w-4 h-4 rounded">
           <label for="optional-fields" class="text-sm text-gray-700 cursor-pointer select-none">
             Mark null fields as optional (<code class="text-blue-600 dark:text-blue-400">?</code>)
@@ -357,7 +381,7 @@
         </div>
 
         <!-- Add semicolons -->
-        <div class="option-toggle flex items-center gap-2 pt-5">
+        <div class="option-toggle ts-only flex items-center gap-2 pt-5">
           <input type="checkbox" id="semicolons" checked class="w-4 h-4 rounded">
           <label for="semicolons" class="text-sm text-gray-700 cursor-pointer select-none">
             Semicolons after properties
@@ -371,11 +395,12 @@
         class="w-full sm:w-auto px-8 py-3 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-semibold rounded-xl transition-all duration-150 flex items-center gap-2"
         aria-label="Convert JSON to TypeScript"
       >
-        <span><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z"/></svg></span> Convert to TypeScript
+        <span><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z"/></svg></span> <span id="convert-label">Convert to TypeScript</span>
       </button>
     </div>
 
     <!-- FAQ Section -->
+    <!-- code:faq -->
     <section class="faq-section mt-8" id="faq">
       <div class="faq-container">
         <h2 class="section-title">Frequently Asked Questions</h2>
@@ -435,6 +460,7 @@
         </div>
       </div>
     </section>
+    <!-- /code:faq -->
   </main>
 
   <!-- Footer -->
@@ -499,130 +525,7 @@
       }
     }
 
-    function capitalizeFirst(str) {
-      return str.charAt(0).toUpperCase() + str.slice(1);
-    }
-
-    function toPascalCase(str) {
-      return str
-        .replace(/[_\-\s]+(.)/g, function (_, c) { return c.toUpperCase(); })
-        .replace(/^(.)/, function (c) { return c.toUpperCase(); });
-    }
-
-    // ─── Type inference ───────────────────────────────────────────────────────
-    // Arrays: every element is inspected. Object elements are merged into one
-    // interface (keys missing from some elements become optional) and mixed
-    // element types become a union, e.g. (string | number)[].
-
-    function isPlainObject(v) {
-      return v !== null && typeof v === 'object' && !Array.isArray(v);
-    }
-
-    function joinUnion(types) {
-      const uniq = [];
-      types.forEach(function (t) { if (uniq.indexOf(t) === -1) uniq.push(t); });
-      // keep null last for readability
-      uniq.sort(function (a, b) { return (a === 'null') - (b === 'null'); });
-      return uniq.length ? uniq.join(' | ') : 'unknown';
-    }
-
-    // Type for a list of sample values seen at the same position.
-    function inferValuesType(values, key, ctx) {
-      const types = [];
-      const objects = [];
-      const arrays = [];
-      values.forEach(function (v) {
-        if (v === null) types.push('null');
-        else if (typeof v === 'string') types.push('string');
-        else if (typeof v === 'number') types.push('number');
-        else if (typeof v === 'boolean') types.push('boolean');
-        else if (Array.isArray(v)) arrays.push(v);
-        else if (isPlainObject(v)) objects.push(v);
-        else types.push('unknown');
-      });
-      if (objects.length) types.push(inferObjectType(objects, key, ctx));
-      if (arrays.length) {
-        const elements = [].concat.apply([], arrays);
-        const el = elements.length ? inferValuesType(elements, key + 'Item', ctx) : 'unknown';
-        types.push(el.indexOf(' | ') !== -1 ? '(' + el + ')[]' : el + '[]');
-      }
-      return joinUnion(types);
-    }
-
-    function inferType(value, key, ctx) {
-      return inferValuesType([value], key, ctx);
-    }
-
-    // samples: one or more objects describing the same shape.
-    function inferObjectType(samples, key, ctx) {
-      const base = toPascalCase(key) || 'Item';
-      const body = buildInterfaceBody(samples, ctx);
-      // Same name + same shape → reuse; same name + different shape → Name2, Name3…
-      let name = base;
-      for (let n = 2; ctx.interfaces[name] !== undefined && ctx.bodies[name] !== body; n++) name = base + n;
-      if (ctx.interfaces[name] === undefined) {
-        ctx.bodies[name] = body;
-        ctx.interfaces[name] = renderInterface(name, body, ctx);
-      }
-      return name;
-    }
-
-    // ─── Interface builder ────────────────────────────────────────────────────
-
-    function buildInterfaceBody(samples, ctx) {
-      const semi = ctx.options.semicolons ? ';' : '';
-      const optionalNulls = ctx.options.optionalFields;
-      const keys = [];
-      samples.forEach(function (o) {
-        Object.keys(o).forEach(function (k) { if (keys.indexOf(k) === -1) keys.push(k); });
-      });
-      return keys.map(function (key) {
-        const present = samples.filter(function (o) { return Object.prototype.hasOwnProperty.call(o, key); });
-        const values = present.map(function (o) { return o[key]; });
-        let tsType = inferValuesType(values, key, ctx);
-        const missingSometimes = present.length < samples.length;
-        const hasNull = values.some(function (v) { return v === null; });
-        const optional = missingSometimes || (optionalNulls && hasNull);
-        if (optionalNulls && hasNull && tsType === 'null') tsType = 'null | undefined';
-        const safeKey = /^[A-Za-z_$][\w$]*$/.test(key) ? key : JSON.stringify(key);
-        return '  ' + safeKey + (optional ? '?' : '') + ': ' + tsType + semi;
-      }).join('\n');
-    }
-
-    function renderInterface(name, body, ctx) {
-      const header = ctx.options.useTypeAlias ? 'type ' + name + ' = {' : 'interface ' + name + ' {';
-      return header + (body ? '\n' + body : '') + '\n}';
-    }
-
-    // ─── Main converter ───────────────────────────────────────────────────────
-
-    function convertJsonToTypeScript(jsonText, options) {
-      const parsed = JSON.parse(jsonText); // throws on invalid JSON
-
-      const rootName = toPascalCase((options.rootName || 'Root').trim()) || 'Root';
-      const ctx = { interfaces: {}, bodies: {}, options: options };
-      const semi = options.semicolons ? ';' : '';
-
-      if (Array.isArray(parsed)) {
-        const el = parsed.length ? inferValuesType(parsed, rootName + 'Item', ctx) : 'unknown';
-        const rootType = el.indexOf(' | ') !== -1 ? '(' + el + ')[]' : el + '[]';
-        const parts = ['type ' + rootName + ' = ' + rootType + semi];
-        Object.keys(ctx.interfaces).forEach(function (iName) { parts.push('\n' + ctx.interfaces[iName]); });
-        return parts.join('\n');
-      }
-
-      if (!isPlainObject(parsed)) {
-        return '// Primitive JSON value\ntype ' + rootName + ' = ' + inferType(parsed, rootName, ctx) + semi;
-      }
-
-      // Root first: build its body (which registers nested interfaces), then list nested ones.
-      const rootBody = buildInterfaceBody([parsed], ctx);
-      const parts = [renderInterface(rootName, rootBody, ctx)];
-      Object.keys(ctx.interfaces).forEach(function (iName) {
-        if (iName !== rootName) parts.push('\n' + ctx.interfaces[iName]);
-      });
-      return parts.join('\n');
-    }
+    // Type inference + TypeScript output live in assets/js/json-infer.js (loaded below as a module).
 
     // ─── UI logic ─────────────────────────────────────────────────────────────
 
@@ -675,13 +578,17 @@
 
       try {
         const options = getOptions();
-        const result = convertJsonToTypeScript(jsonText, options);
+        const lang = document.getElementById('code-lang').value;
+        const result = lang === 'typescript'
+          ? convertJsonToTypeScript(jsonText, options)
+          : convertJsonToCode(jsonText, { lang: lang, lib: document.getElementById('code-lib').value, rootName: options.rootName });
         outputEl.value = result;
         trackEvent('json_ts_convert_success', {
           input_length: jsonText.length,
           output_length: result.length,
           use_type_alias: options.useTypeAlias,
-          optional_fields: options.optionalFields
+          optional_fields: options.optionalFields,
+          lang: document.getElementById('code-lang').value
         });
         showToast('Converted successfully!', 'success');
       } catch (err) {
@@ -760,6 +667,36 @@
     });
   </script>
   <!-- Receives JSON from the JSON Formatter's "Send to" menu -->
+  <script type="module">
+    import { convertJsonToTypeScript } from './assets/js/json-infer.js';
+    import { convertJsonToCode, CODE_LANGUAGES } from './assets/js/json-code.js';
+    window.convertJsonToTypeScript = convertJsonToTypeScript;
+    window.convertJsonToCode = convertJsonToCode;
+
+    // Language picker: library choices, labels, and the TypeScript-only options.
+    const langEl = document.getElementById('code-lang');
+    const libEl = document.getElementById('code-lib');
+    function syncLanguage() {
+      const lang = langEl.value;
+      const info = CODE_LANGUAGES[lang];
+      const name = info ? info.label : 'TypeScript';
+      document.getElementById('code-lib-wrap').classList.toggle('hidden', !info || Object.keys(info.libs).length < 2);
+      libEl.innerHTML = '';
+      if (info) Object.entries(info.libs).forEach(([value, label]) => libEl.add(new Option(label, value)));
+      document.querySelectorAll('.ts-only').forEach((el) => el.classList.toggle('hidden', lang !== 'typescript'));
+      document.getElementById('output-label').textContent = name + ' Output';
+      document.getElementById('convert-label').textContent = 'Convert to ' + name;
+      document.getElementById('ts-output').placeholder = (info ? name + ' classes' : 'TypeScript interfaces') + ' will appear here…';
+      document.getElementById('ts-output').value = '';
+    }
+    try {
+      const preset = JSON.parse(document.getElementById('codePage')?.textContent || '{}');
+      if (preset.lang && [...langEl.options].some((o) => o.value === preset.lang)) langEl.value = preset.lang;
+    } catch (_) { /* keep TypeScript */ }
+    langEl.addEventListener('change', syncLanguage);
+    libEl.addEventListener('change', () => { document.getElementById('ts-output').value = ''; });
+    syncLanguage();
+  </script>
   <script src="assets/js/handoff.js" data-tool="typescript" data-input="json-input" data-run="convert-btn" defer></script>
   <!-- Remembers the last input across refreshes (this browser only) -->
   <script src="assets/js/draft.js" defer></script>

@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Search, X, CornerDownLeft, Sparkles } from 'lucide-react';
 import { TOOLS, Tool } from '@/config/tools';
 import ToolIcon from '@/components/ui/ToolIcon';
+import { searchTools } from '@/lib/search/toolSearch';
 
 interface CommandPaletteProps {
   isOpen: boolean;
@@ -18,15 +19,7 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const filteredTools = query.trim()
-    ? TOOLS.filter(
-        (t) =>
-          t.label.toLowerCase().includes(query.toLowerCase()) ||
-          t.shortDesc.toLowerCase().includes(query.toLowerCase()) ||
-          t.keywords.some((k) => k.toLowerCase().includes(query.toLowerCase())) ||
-          t.category.toLowerCase().includes(query.toLowerCase())
-      )
-    : TOOLS;
+  const filteredTools: Tool[] = searchTools(TOOLS, query);
 
   useEffect(() => {
     if (isOpen) {

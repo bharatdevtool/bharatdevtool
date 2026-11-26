@@ -28,6 +28,12 @@
   [headers.values]
     Cache-Control = "public, max-age=604800"
 
+# Passport photo AI runtime: browsers only run a module served as JavaScript.
+[[headers]]
+  for = "/bg/*.mjs"
+  [headers.values]
+    Content-Type = "text/javascript; charset=utf-8"
+
 # HTML pages, sitemap.xml and robots.txt keep Netlify's default
 # (always revalidate) so every deploy is visible immediately.
 

@@ -31,24 +31,27 @@ export function detectDevice(): DeviceInfo {
 
   const ua = navigator.userAgent;
   let type: 'mobile' | 'tablet' | 'desktop' = 'desktop';
-  if (/iPad|tablet/i.test(ua)) {
+  // iPadOS Safari reports itself as a Mac; only the touch screen gives it away.
+  if (/iPad|tablet/i.test(ua) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1)) {
     type = 'tablet';
   } else if (/Mobi|Android|iPhone/i.test(ua)) {
     type = 'mobile';
   }
 
+  // iPhone user agents say "like Mac OS X" and Android ones say "Linux": test those first.
   let os = 'Unknown OS';
-  if (/Mac/i.test(ua)) os = 'macOS';
-  else if (/Win/i.test(ua)) os = 'Windows';
-  else if (/Linux/i.test(ua)) os = 'Linux';
+  if (/iPhone|iPad|iPod/i.test(ua)) os = 'iOS';
   else if (/Android/i.test(ua)) os = 'Android';
-  else if (/iPhone|iPad|iPod/i.test(ua)) os = 'iOS';
+  else if (/Mac/i.test(ua)) os = navigator.maxTouchPoints > 1 ? 'iPadOS' : 'macOS';
+  else if (/Win/i.test(ua)) os = 'Windows';
+  else if (/CrOS/i.test(ua)) os = 'ChromeOS';
+  else if (/Linux/i.test(ua)) os = 'Linux';
 
   let browser = 'Browser';
-  if (/Chrome/i.test(ua) && !/Edg/i.test(ua)) browser = 'Chrome';
-  else if (/Safari/i.test(ua) && !/Chrome/i.test(ua)) browser = 'Safari';
-  else if (/Firefox/i.test(ua)) browser = 'Firefox';
-  else if (/Edg/i.test(ua)) browser = 'Edge';
+  if (/Edg/i.test(ua)) browser = 'Edge';
+  else if (/Chrome|CriOS/i.test(ua)) browser = 'Chrome';
+  else if (/Firefox|FxiOS/i.test(ua)) browser = 'Firefox';
+  else if (/Safari/i.test(ua)) browser = 'Safari';
 
   // Persistent device name in localStorage
   let savedName = '';

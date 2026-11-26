@@ -44,6 +44,8 @@ interface Options {
   splitMode: 'selected' | 'every' | 'ranges';
   imageFormat: 'jpg' | 'png' | 'webp';
   compressSeparately: boolean;
+  /** JPG to PDF: re-fit the built PDF under targetKb when it comes out larger. */
+  fitUnder: boolean;
   grayDpi: number;
   watermark: { preset: string; layout: WatermarkLayout; size: number; color: string; opacity: number; bold: boolean; permanent: boolean };
   pageNumbers: PageNumberOptions;
@@ -71,6 +73,7 @@ const DEFAULT_OPTIONS: Options = {
   shareAllowPrint: false,
   shareWatermark: true,
   compressSeparately: false,
+  fitUnder: false,
   grayDpi: 150,
   watermark: { preset: 'kyc', layout: 'diagonal', size: 36, color: '#dc2626', opacity: 0.25, bold: true, permanent: false },
   pageNumbers: DEFAULT_PAGE_NUMBERS,
@@ -170,13 +173,27 @@ function safeError(label: string, err: unknown): Error {
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function PdfWorkspace({ task, onTaskChange }: { task: PdfTask; onTaskChange: (t: PdfTask) => void }) {
+/** Options a landing page (src/config/variants.ts) opens with, e.g. Exact size at 100 KB. Not saved unless the user changes them. */
+export type PdfPreset = Partial<Pick<Options, 'compressMode' | 'targetKb' | 'fitUnder'>>;
+
+export default function PdfWorkspace({
+  task,
+  onTaskChange,
+  preset,
+  variantId,
+}: {
+  task: PdfTask;
+  onTaskChange: (t: PdfTask) => void;
+  preset?: PdfPreset;
+  /** Fixed landing-page id for analytics (never user input). */
+  variantId?: string;
+}) {
   const [files, setFiles] = useState<Map<string, WorkFile>>(new Map());
   const [pages, setPages] = useState<PageItem[]>([]);
   const [locked, setLocked] = useState<LockedFile[]>([]);
   const [selected, setSelected] = useState<Set<string>>(new Set());
   // Options UI only renders once files are added (never during prerender), so reading storage here can't cause a hydration mismatch.
-  const [options, setOptions] = useState<Options>(() => (typeof window === 'undefined' ? DEFAULT_OPTIONS : loadOptions()));
+  const [options, setOptions] = useState<Options>(() => ({ ...(typeof window === 'undefined' ? DEFAULT_OPTIONS : loadOptions()), ...preset }));
   const [ranges, setRanges] = useState('');
   // Kept in memory only: never saved, never sent anywhere.
   const [password, setPassword] = useState('');
@@ -620,8 +637,25 @@ export default function PdfWorkspace({ task, onTaskChange }: { task: PdfTask; on
       }
       if (task === 'merge' || task === 'organize' || task === 'jpg-to-pdf') {
         setBusy('Building PDF…');
-        const bytes = await build(pages, (d, t) => setBusy(`Building PDF… page ${d} of ${t}`));
+        let bytes = await build(pages, (d, t) => setBusy(`Building PDF… page ${d} of ${t}`));
         const name = task === 'merge' && files.size > 1 ? 'merged.pdf' : task === 'jpg-to-pdf' ? `${files.size > 1 ? 'images' : firstName}.pdf` : `${firstName}-organized.pdf`;
+        const limit = Math.max(10, options.targetKb) * 1024;
+        if (task === 'jpg-to-pdf' && options.fitUnder) {
+          if (bytes.length <= limit) {
+            note = `Already under ${sizeLabel(options.targetKb)}, so nothing more was needed.`;
+          } else {
+            const doc = await openPdf(bytes);
+            try {
+              const r = await compressToTarget(limit, makeRasterizer(doc), (step) => setBusy(`Fitting under ${sizeLabel(options.targetKb)}… ${step}`), bytes);
+              bytes = r.bytes;
+              note = r.bytes.length <= limit
+                ? `Fits under ${sizeLabel(options.targetKb)} at about ${Math.round(r.scale * 72)} DPI.`
+                : `Could not get under ${sizeLabel(options.targetKb)}; this is the smallest readable version. Use fewer images or a larger size.`;
+            } finally {
+              doc.loadingTask.destroy();
+            }
+          }
+        }
         outputs.push(pdf(name, bytes));
       } else if (task === 'split') {
         if (options.splitMode === 'selected') {
@@ -820,6 +854,7 @@ export default function PdfWorkspace({ task, onTaskChange }: { task: PdfTask; on
         files: files.size,
         outputs: outputs.length,
         mode: task === 'compress' ? options.compressMode : task === 'split' ? options.splitMode : 'default',
+        variant: variantId ?? 'none',
       });
     } catch (err) {
       setError(err instanceof UserError ? err.message : 'Something went wrong while creating the file. Try again, or with fewer pages.');
@@ -1488,6 +1523,27 @@ function TaskOptions({
           <Field label="Margin">
             <Segmented label="Margin" value={img.margin} onChange={(v) => setImg({ margin: v })} options={[{ value: 0, label: 'None' }, { value: 18, label: 'Small' }, { value: 36, label: 'Large' }]} />
           </Field>
+          {task === 'jpg-to-pdf' && (
+            <>
+              <Check
+                checked={options.fitUnder}
+                onChange={(v) => update({ fitUnder: v })}
+                detail={options.fitUnder ? 'If the PDF comes out bigger, its pages are saved as images that fit this size.' : 'For forms with a file-size limit.'}
+              >
+                Fit under a maximum size
+              </Check>
+              {options.fitUnder && (
+                <Field label="Maximum size">
+                  <Segmented
+                    label="Maximum size"
+                    value={TARGET_PRESETS.includes(options.targetKb) ? options.targetKb : -1}
+                    onChange={(v) => v > 0 && update({ targetKb: v })}
+                    options={TARGET_PRESETS.map((kb) => ({ value: kb, label: sizeLabel(kb) }))}
+                  />
+                </Field>
+              )}
+            </>
+          )}
         </>
       )}
     </>

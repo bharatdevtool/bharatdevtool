@@ -8,6 +8,7 @@ import type { Metadata } from 'next';
 import { SITE } from './site';
 import { getToolById, type Tool } from './tools';
 import { getToolFaqs } from './faqs';
+import { getVariant, type ToolVariant } from './variants';
 
 // Per-tool link-preview images are generated at build time by src/app/og/[id]/route.tsx.
 const ogImage = (id = 'default') => `${SITE.url}/og/${id}.png`;
@@ -21,8 +22,90 @@ const MAX_TITLE_LENGTH = 60;
  * Falls back to a shorter form when the full title would exceed 60 characters.
  */
 export function getToolTitle(tool: Tool): string {
-  const full = `${tool.label} — Free Online Tool`;
-  return full.length + BRAND_SUFFIX.length <= MAX_TITLE_LENGTH ? full : `Free ${tool.label}`;
+  return pageTitle(tool.label);
+}
+
+function pageTitle(label: string): string {
+  const full = `${label} — Free Online Tool`;
+  return full.length + BRAND_SUFFIX.length <= MAX_TITLE_LENGTH ? full : `Free ${label}`;
+}
+
+/** Page title (without brand) for a variant landing page. */
+export function getVariantTitle(variant: ToolVariant): string {
+  return pageTitle(variant.label);
+}
+
+function requireVariant(variantId: string): ToolVariant {
+  const variant = getVariant(variantId);
+  if (!variant) throw new Error(`Unknown variant id: "${variantId}" — add it to src/config/variants.ts`);
+  return variant;
+}
+
+/** Metadata for a variant landing page; the link preview reuses the parent tool's image. */
+export function generateVariantMetadata(variantId: string): Metadata {
+  const variant = requireVariant(variantId);
+  const title = getVariantTitle(variant);
+  const socialTitle = `${title}${BRAND_SUFFIX}`;
+  const canonical = `${SITE.url}${variant.route}`;
+  const image = ogImage(variant.parentToolId);
+
+  return {
+    title,
+    description: variant.description,
+    keywords: variant.keywords,
+    authors: [{ name: SITE.name, url: SITE.url }],
+    robots: { index: true, follow: true },
+    alternates: { canonical },
+    openGraph: {
+      title: socialTitle,
+      description: variant.description,
+      type: 'website',
+      url: canonical,
+      images: [{ url: image, ...OG_IMAGE_SIZE, alt: variant.label }],
+      siteName: SITE.name,
+    },
+    twitter: { card: 'summary_large_image', title: socialTitle, description: variant.description, images: [image] },
+  };
+}
+
+/** WebApplication, breadcrumbs (Home › parent tool › variant) and FAQPage for a variant page. */
+export function generateVariantJsonLd(variantId: string): Record<string, unknown>[] {
+  const variant = requireVariant(variantId);
+  const parent = getToolById(variant.parentToolId);
+  if (!parent) throw new Error(`Variant "${variantId}" has unknown parent "${variant.parentToolId}"`);
+  const canonical = `${SITE.url}${variant.route}`;
+
+  return [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebApplication',
+      name: variant.label,
+      url: canonical,
+      description: variant.description,
+      applicationCategory: 'UtilitiesApplication',
+      operatingSystem: 'Web Browser',
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+      creator: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE.url}/` },
+        { '@type': 'ListItem', position: 2, name: parent.label, item: `${SITE.url}${parent.route}` },
+        { '@type': 'ListItem', position: 3, name: variant.label, item: canonical },
+      ],
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: variant.faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+      })),
+    },
+  ];
 }
 
 /** Generate full Metadata for a tool page */

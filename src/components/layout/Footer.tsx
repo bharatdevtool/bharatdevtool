@@ -38,7 +38,7 @@ export default function Footer() {
 
           {/* Tool category columns */}
           {categories.map((cat) => (
-            <div key={cat.title} className="space-y-2.5">
+            <div key={cat.title} className="space-y-2.5 min-w-0">
               <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground font-mono">
                 {cat.title}
               </h3>
@@ -48,9 +48,9 @@ export default function Footer() {
                     <li key={tool.id}>
                       <Link
                         href={tool.route}
-                        className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1 group"
+                        className="text-muted-foreground hover:text-foreground transition-colors inline-flex max-w-full items-center gap-1 group"
                       >
-                        <span className="truncate">{tool.label}</span>
+                        <span className="break-words">{tool.label}</span>
                       </Link>
                     </li>
                   );

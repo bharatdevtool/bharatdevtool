@@ -450,6 +450,114 @@ export const TOOL_FAQS: Record<string, ToolFaq[]> = {
     },
     { question: 'Is my file uploaded anywhere?', answer: PRIVACY_ANSWER },
   ],
+  'aadhaar-card-print': [
+    {
+      question: 'How do I print the Aadhaar card front and back on one page?',
+      answer:
+        'Open your e-Aadhaar PDF (its password is the first 4 letters of your name in capitals plus your birth year, such as RAHU1990) or add photos of both sides. Drag the corners onto each side and download the A4 PDF: front and back are placed side by side at real card size.',
+    },
+    {
+      question: 'Can I put Aadhaar, PAN, voter ID and driving licence on one A4 sheet?',
+      answer:
+        'Yes. The sheet has four rows, one card per row with its front and back next to each other. Print it once on photo paper, cut out each pair, fold it along the dashed line and laminate it to get a wallet-size copy of every card.',
+    },
+    {
+      question: 'What size will the cards print at?',
+      answer:
+        'Every card is placed at the standard ID card size of 85.6 × 54 mm, the same as Aadhaar PVC, PAN and ATM cards. Print at 100% or "Actual size", never "Fit to page", and check that the line at the bottom of the sheet measures 50 mm.',
+    },
+    {
+      question: 'Is a printed or laminated copy accepted?',
+      answer:
+        'A printout is a copy. UIDAI accepts a printout of e-Aadhaar, but hotels, banks and offices can still ask for the original card or the DigiLocker version, so carry those when it matters. Never print bank or ATM cards: a printed card number and CVV can be misused.',
+    },
+    {
+      question: 'Are my ID cards uploaded anywhere?',
+      answer:
+        'No. The photos are cropped and placed inside your browser and never leave your device. Nothing is saved: the cards disappear when you press Clear all or close the page.',
+    },
+  ],
+  'document-scanner': [
+    {
+      question: 'How do I scan a document with my phone without an app?',
+      answer:
+        'Open this page on your phone and tap Take photo. Drag the four corners onto the edges of the page, tap Use this, and add the next page the same way. Then download one PDF with all the pages, or JPG images.',
+    },
+    {
+      question: 'How do I straighten a crooked photo of a page?',
+      answer:
+        'Drag each corner handle onto a corner of the paper. The tool corrects the angle so the page comes out flat and rectangular, as if it had been put through a scanner, and cuts away the table or background around it. Then pick Black & white, Magic colour or Remove shadows for a clean, even page.',
+    },
+    {
+      question: 'Can I make the scanned PDF smaller than 200 KB?',
+      answer:
+        'Yes. Turn on "Fit under a maximum size" and pick 100 KB, 200 KB, 500 KB or 1 MB. If the PDF comes out bigger, it is fitted under that size at the sharpest quality that still fits, which suits government and exam portals.',
+    },
+    {
+      question: 'Can I scan the front and back of an ID card?',
+      answer:
+        'Choose the ID card shape, scan the front and then the back, and press Send to ID card print. Both sides are placed at real card size on an A4 sheet that you can print, cut and laminate.',
+    },
+    {
+      question: 'Are my scans uploaded?',
+      answer:
+        'No. The photos are straightened and turned into a PDF inside your browser and never leave your device. Nothing is saved: the pages are gone when you close the page.',
+    },
+  ],
+  'image-to-text': [
+    {
+      question: 'How do I extract text from an image?',
+      answer:
+        'Add a photo or screenshot, or paste one with Ctrl+V, and press Read text. The text appears below, ready to copy or download as a TXT file. Clear, straight photos of printed text give the best result.',
+    },
+    {
+      question: 'Can it read scanned PDFs?',
+      answer:
+        'Yes. Add the PDF and every page (up to 20) is read in order. You can also download a searchable PDF: the same pages with an invisible text layer, so you can search and copy text in any PDF reader.',
+    },
+    {
+      question: 'Which languages and handwriting does it read?',
+      answer:
+        'This version reads English printed text. Handwriting works poorly, and other scripts such as Hindi are not read yet. Small, blurry or tilted text also lowers accuracy, so straighten photos with the Document Scanner first.',
+    },
+    {
+      question: 'Why is the first run slower?',
+      answer:
+        'The first time, the browser downloads the text-recognition engine and the English model (about 7 MB) from this site. After that they are cached and reading starts quickly, even offline.',
+    },
+    {
+      question: 'Are my images uploaded?',
+      answer:
+        'No. Text recognition runs inside your browser and your images never leave your device. Nothing is saved after you close the page.',
+    },
+  ],
+  'make-pdf-look-scanned': [
+    {
+      question: 'How do I make a PDF look scanned?',
+      answer:
+        'Add the PDF (or JPG/PNG pages), choose grey, black & white or colour, and adjust tilt, grain and softness while you watch the preview. Then download: every page gets its own small tilt, like sheets fed through a real scanner.',
+    },
+    {
+      question: 'Can I still select or search the text afterwards?',
+      answer:
+        'No. Each page is turned into an image, exactly like a real scan, so the text can no longer be selected or searched. Keep your original PDF if you need the text.',
+    },
+    {
+      question: 'Can I keep the scanned PDF under 200 KB?',
+      answer:
+        'Yes. Turn on "Fit under a maximum size" and pick 100 KB, 200 KB, 500 KB or 1 MB. The file is fitted under that size at the sharpest quality that still fits.',
+    },
+    {
+      question: 'Does it keep the page size of my PDF?',
+      answer:
+        'Yes. Pages from a PDF keep their original size, such as A4. Images are placed on A4 pages.',
+    },
+    {
+      question: 'Is my PDF uploaded?',
+      answer:
+        'No. The scanned look is drawn inside your browser and your file never leaves your device. Nothing is saved after you close the page.',
+    },
+  ],
   'pdf-to-image': [
     {
       question: 'Which format should I choose?',
@@ -490,6 +598,33 @@ export const TOOL_FAQS: Record<string, ToolFaq[]> = {
         'Yes. Compare in JSON Diff opens the original and optimized JSON side by side, and the result can be downloaded as JSON or as a compressed .lottie file.',
     },
     { question: 'Is my animation uploaded to optimize it?', answer: PRIVACY_ANSWER },
+  ],
+  'lottie-fixer': [
+    {
+      question: 'Why does my Figma .lottie play in the browser and on iOS but not on Android?',
+      answer:
+        'A .lottie file is a zip archive. Figma stores some files in it uncompressed with their sizes written after the data (a "data descriptor"). Android\'s lottie-android, which lottie-react-native also uses, reads the zip front to back with java.util.zip.ZipInputStream and stops with "only DEFLATED entries can have EXT descriptor". Browsers and iOS read the zip index at the end instead, so the same file works there. The Lottie Fixer re-packs the files with the sizes in every header so Android can open it.',
+    },
+    {
+      question: 'What does "Unable to parse composition" mean on Android?',
+      answer:
+        'lottie-android could not find a usable animation inside the file. For .lottie files the usual causes are the Figma zip format above, a theme or state machine .json that Android reads as the animation (it parses every .json in the archive and keeps the last one), or an animation file named .JSON in capitals. Drop the file in the Lottie Fixer to see which one applies and fix it.',
+    },
+    {
+      question: 'Does fixing the file change my animation?',
+      answer:
+        'No. The animation, images and manifest are copied byte for byte into a standard zip. The only content changes are removing an invisible byte-order mark from the start of a JSON file and rebuilding a broken or missing manifest.json, and both are listed. After fixing, the tool re-reads the new file and confirms every entry matches the original. Everything happens in your browser; the file is never uploaded.',
+    },
+    {
+      question: 'My .lottie loads from a URL on iOS but not on Android. Why?',
+      answer:
+        'lottie-android only treats a download as a .lottie archive when the Content-Type contains application/zip or the URL path ends in .lottie. Files on S3 or a CDN are often served as application/octet-stream from signed URLs, so Android tries to read the zip as JSON and fails. Serve the file with Content-Type: application/zip, or make sure the URL path ends in .lottie.',
+    },
+    {
+      question: 'Why do some effects look different on Android and iOS?',
+      answer:
+        'Native Lottie players do not support every After Effects feature. Expressions, most effects, layer styles, 3D layers and some blend and mask modes are skipped, and merge paths are off on Android unless the app enables them (enableMergePathsAndroidForKitKatAndAbove in lottie-react-native). The fixer lists these per platform; they need a change in After Effects or in the app, not in the file.',
+    },
   ],
 
   // ── QR ────────────────────────────────────────────────────
@@ -768,11 +903,38 @@ export const TOOL_FAQS: Record<string, ToolFaq[]> = {
     },
     { question: 'Is my phone number sent to a server?', answer: PRIVACY_ANSWER },
   ],
+  'passport-photo-maker': [
+    {
+      question: 'What is the size of a passport size photo in India?',
+      answer:
+        'A passport size photo in India is 35 × 45 mm (3.5 × 4.5 cm). The head, from the top of the hair to the chin, should take up about 32 to 36 mm of that height, facing the camera, on a plain white or light background. This tool sizes and places the photo to those measurements.',
+    },
+    {
+      question: 'How do I make a passport size photo at home?',
+      answer:
+        'Stand facing the camera in good, even light with your shoulders in view, and take the photo from about a metre away. Open it here: the background is replaced with white or light blue and the face is centred at the right size. Adjust the position if needed, then download the photo or a print sheet.',
+    },
+    {
+      question: 'How many passport photos fit on 4×6 photo paper or an A4 sheet?',
+      answer:
+        'Eight 35 × 45 mm photos fit on one 4×6 inch photo paper, and 25 fit on an A4 sheet with cut lines. Print at 100% or Actual size, not Fit to page. The A4 sheet has a line that should measure exactly 50 mm, so you can check the scale with a ruler.',
+    },
+    {
+      question: 'Is my photo uploaded to a server?',
+      answer:
+        'No. The background removal and face detection run inside your browser. The first time, the page downloads the AI model (about 28 MB) from this website; after that it is cached. Your photo never leaves your device.',
+    },
+    {
+      question: 'Why is part of the background left behind or part of my hair missing?',
+      answer:
+        'The AI separates you from the background by contrast. A busy background, a background the same colour as your hair or clothes, or dim light makes the edge harder to find. Retake the photo in front of a plain wall in good light for the cleanest result.',
+    },
+  ],
   'quickdrop': [
     {
       question: 'What is QuickDrop and how does it work?',
       answer:
-        'QuickDrop is a free, in-browser peer-to-peer file transfer tool. It connects two devices directly using WebRTC DataChannels over your local Wi-Fi or the internet. Files stream directly from sender to receiver without passing through a server.',
+        'QuickDrop is a free, in-browser peer-to-peer file transfer tool. Open it on two devices on the same Wi-Fi and they show up on each other\'s screen, with no PIN or sign-up. Tap a device to send; the other device taps Accept once. Files stream directly between the devices over WebRTC.',
     },
     {
       question: 'Are my files uploaded to or stored on any server?',
@@ -787,7 +949,7 @@ export const TOOL_FAQS: Record<string, ToolFaq[]> = {
     {
       question: 'How do I fix "Failed to connect to peer" or WebRTC connection errors?',
       answer:
-        'If two devices fail to connect automatically, it is usually due to symmetric NAT or client isolation on public Wi-Fi networks (like universities or cafes). To resolve this, click "Pair Device" to create a direct pairing room, or ensure both devices have WebRTC enabled in browser privacy settings.',
+        'If a device does not show up or fails to connect, the network may block devices from seeing each other (client isolation on office, college or cafe Wi-Fi) or the two devices may be on different networks. Tap "PIN / QR" and scan the QR code or type the PIN from the other device, and make sure WebRTC is not disabled in the browser\'s privacy settings.',
     },
     {
       question: 'Does QuickDrop work across different operating systems?',

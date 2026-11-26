@@ -502,6 +502,9 @@ export function initQueryBar({ getOutputText, reveal }) {
 const HANDOFF_KEY = 'bdt_handoff';
 const TARGETS = {
   typescript: { url: '/json-to-typescript.html', label: 'JSON to TypeScript' },
+  kotlin: { url: '/json-to-kotlin.html', label: 'JSON to Kotlin' },
+  swift: { url: '/json-to-swift.html', label: 'JSON to Swift' },
+  dart: { url: '/json-to-dart.html', label: 'JSON to Dart' },
   yaml: { url: '/yaml-json-converter.html', label: 'YAML converter' },
   csv: { url: '/csv-json-converter.html', label: 'CSV converter' },
   diff: { url: '/jsondiff/', label: 'JSON Diff' },

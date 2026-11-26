@@ -2,8 +2,18 @@ import type { DeviceInfo, TextMessage } from './types';
 
 export const CHUNK_SIZE = 64 * 1024; // 64 KB per WebRTC message
 
+/** What the sender is about to send, shown in the receiver's Accept prompt. */
+export interface SendOffer {
+  files: number;
+  bytes: number;
+  texts: number;
+}
+
 export type ProtocolMessage =
-  | { type: 'HANDSHAKE'; device: DeviceInfo }
+  | { type: 'HANDSHAKE'; device: DeviceInfo; offer?: SendOffer }
+  // The receiver tapped Accept (or Decline) for the device that connected to it.
+  | { type: 'ACCEPTED' }
+  | { type: 'DECLINED' }
   | { type: 'FILE_HEADER'; fileId: string; name: string; size: number; mimeType: string; totalChunks: number }
   | { type: 'FILE_CHUNK'; fileId: string; chunkIndex: number; data: ArrayBuffer }
   | { type: 'FILE_COMPLETE'; fileId: string }

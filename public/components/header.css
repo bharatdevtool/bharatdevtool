@@ -1,3 +1,6 @@
+/* Tool search (⌘K) button + palette, shared with the JSON Formatter */
+@import url('tool-search.css');
+
 /* Header Component CSS for Secondary Pages */
 /* Note: This component uses Tailwind CSS classes, so Tailwind CSS must be loaded */
 /* This is a common component used across all secondary pages */
@@ -155,6 +158,28 @@ header.secondary-header > div.max-w-7xl > div > div:last-child,
   .secondary-header-actions {
     gap: 0.25rem !important;
   }
+  /* Tailwind's space-x-4 adds 1rem between the buttons; on phones the gap above is enough */
+  .secondary-header-actions > * + * {
+    margin-left: 0 !important;
+  }
+
+  /* Let the site name give way (with "…") so the buttons always fit */
+  header.secondary-header .secondary-header-logo,
+  header.secondary-header > div.max-w-7xl > div > div.secondary-header-logo,
+  header.secondary-header > div.max-w-7xl > div > div.secondary-header-logo:first-child {
+    flex: 0 1 auto !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    margin-right: 0.5rem !important;
+  }
+  header.secondary-header .secondary-header-logo > a {
+    min-width: 0;
+  }
+  header.secondary-header .secondary-header-logo span[class*="text-xl"] {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   
   /* Match tools button height exactly to theme toggler on mobile */
   /* Theme toggler uses p-2 (0.5rem = 8px padding on all sides) */
@@ -212,5 +237,18 @@ header.secondary-header > div.max-w-7xl > div > div:last-child,
   header.secondary-header #theme-toggle {
     height: 2.5rem !important;
     width: 2.5rem !important;
+  }
+}
+
+
+/* Narrow phones: big page titles (Tailwind text-4xl/5xl) can hold a single long word
+   ("Encoder/Decoder") wider than the screen. Shrink them a step and allow a break as a
+   last resort, instead of the word being cut off at the edge. */
+@media (max-width: 400px) {
+  main h1.text-4xl, main h2.text-4xl,
+  main h1.text-5xl, main h2.text-5xl {
+    font-size: 1.875rem !important;
+    line-height: 2.25rem !important;
+    overflow-wrap: break-word;
   }
 }

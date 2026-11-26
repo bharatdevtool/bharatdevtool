@@ -306,6 +306,28 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     keywords: ['lottie optimizer', 'compress lottie json', 'reduce lottie file size', 'clean lottie metadata', 'bodymovin optimizer'],
     heavy: true,
   },
+  {
+    id: 'lottie-fixer',
+    label: 'Lottie Fixer',
+    route: '/lottie-fixer',
+    category: 'Design & Animation',
+    description:
+      "Fix .lottie files from Figma that won't play on Android ('Unable to parse composition'). Repairs the zip, checks images and mobile support, in your browser.",
+    shortDesc: 'Fix .lottie files that fail on Android',
+    keywords: [
+      'lottie fixer',
+      'fix lottie file',
+      'lottie not working on android',
+      'figma lottie not working android',
+      'unable to parse composition',
+      'only DEFLATED entries can have EXT descriptor',
+      'dotlottie android fix',
+      'lottie-react-native android not playing',
+      'lottie works on ios not android',
+      'repair dotlottie',
+    ],
+    heavy: true,
+  },
   // ── PDF (one shared workspace, one URL per task) ──────────
   {
     id: 'compress-pdf',
@@ -503,6 +525,77 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
       'Free PDF to image converter: turn PDF pages into JPG, PNG or WebP at 72, 150 or 300 DPI. Choose pages, download one image or a ZIP. Runs in your browser.',
     shortDesc: 'Convert PDF pages to images',
     keywords: ['pdf to image', 'pdf to png', 'pdf to webp', 'convert pdf to image', 'pdf pages to images', 'save pdf as image'],
+    heavy: true,
+  },
+  {
+    id: 'aadhaar-card-print',
+    label: 'Aadhaar & ID Card Print',
+    route: '/aadhaar-card-print',
+    category: 'PDF',
+    description:
+      'Free Aadhaar card print tool: put the front and back of Aadhaar, PAN, voter ID or driving licence on one A4 sheet to cut and laminate. Runs in your browser.',
+    shortDesc: 'Print ID cards front + back on one A4',
+    keywords: [
+      'aadhaar card print',
+      'aadhaar front and back on one page',
+      'print aadhaar card on a4',
+      'id card print a4',
+      'pan card print',
+      'voter id card print',
+      'print id cards to laminate',
+    ],
+    heavy: true,
+  },
+  {
+    id: 'document-scanner',
+    label: 'Document Scanner',
+    route: '/document-scanner',
+    category: 'PDF',
+    description:
+      'Free online document scanner: photograph a page, drag the corners to straighten it and save a clean PDF or JPG, even under a size limit. No app, no upload.',
+    shortDesc: 'Photo of a page to a straight PDF scan',
+    keywords: ['document scanner online', 'cam scanner online', 'scan document to pdf', 'photo to scanned pdf', 'scanner online free', 'scan with phone camera'],
+    heavy: true,
+  },
+  {
+    id: 'image-to-text',
+    label: 'Image to Text (OCR)',
+    route: '/image-to-text',
+    category: 'Image',
+    description:
+      'Free image to text converter (OCR): copy the text from photos, screenshots and scanned PDFs in your browser. Save it as TXT or a searchable PDF. No upload.',
+    shortDesc: 'Copy text from photos and scans',
+    keywords: ['image to text', 'ocr online', 'extract text from image', 'photo to text', 'scanned pdf to text', 'screenshot to text', 'jpg to text'],
+    heavy: true,
+  },
+  {
+    id: 'passport-photo-maker',
+    label: 'Passport Size Photo Maker',
+    route: '/passport-size-photo-maker',
+    category: 'Image',
+    description:
+      'Free passport size photo maker: remove the background, centre the face at 35×45 mm and print 8 on 4×6 paper or 25 on A4. Runs in your browser, no upload.',
+    shortDesc: 'Passport photo with white background, ready to print',
+    keywords: [
+      'passport size photo maker',
+      'passport size photo online',
+      'passport photo 35x45',
+      'passport photo white background',
+      'passport size photo print 4x6',
+      'remove background passport photo',
+      'passport photo maker india',
+    ],
+    heavy: true,
+  },
+  {
+    id: 'make-pdf-look-scanned',
+    label: 'Make PDF Look Scanned',
+    route: '/make-pdf-look-scanned',
+    category: 'PDF',
+    description:
+      'Free tool to make a PDF look scanned: adds a slight tilt, grey paper tone, grain and softness like a real scan or photocopy. Optional size limit. No upload.',
+    shortDesc: 'Give a digital PDF a scanned look',
+    keywords: ['make pdf look scanned', 'pdf to scanned pdf', 'make document look scanned', 'jpg to scanned pdf', 'scanned effect pdf', 'look scanned online'],
     heavy: true,
   },
   // ── Static HTML tools added in Phase 2-4 ──────────────────
@@ -714,7 +807,7 @@ const TOOL_ENTRIES: Omit<Tool, 'legacy'>[] = [
     description:
       'Free JSON to TypeScript interface generator. Instantly convert JSON objects to TypeScript interfaces and types online. No sign-up required. Supports nested objects, arrays, and optional fields.',
     shortDesc: 'Free JSON to TypeScript interface generator',
-    keywords: ['json to typescript', 'json to typescript interface', 'json to ts', 'convert json to typescript', 'typescript interface generator', 'json types'],
+    keywords: ['json to typescript', 'json to typescript interface', 'json to ts', 'convert json to typescript', 'typescript interface generator', 'json types', 'json to kotlin', 'json to swift', 'json to dart'],
   },
 ];
 
