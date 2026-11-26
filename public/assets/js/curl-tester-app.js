@@ -14,13 +14,9 @@ const Debug = {
   }
 };
 
-// Track if this is the first parse (for auto-send)
-let isFirstParse = true;
-
-// Reset first parse flag when user manually edits
-function resetFirstParseFlag() {
-  isFirstParse = false;
-}
+// Parsing never sends: a pasted DELETE or payment cURL must not run before the
+// user has looked at it. Requests go out only on Send or ⌘/Ctrl+Enter.
+function resetFirstParseFlag() {}
 
 // Get current page name for analytics
 function getCurrentPageNameForAnalytics() {
@@ -216,6 +212,15 @@ function initEventListeners() {
   
   // Postman-like Interface
   document.getElementById('send-request-btn').addEventListener('click', runRequest);
+  // ⌘/Ctrl+Enter sends (once a request has been parsed or typed in)
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' || !(e.metaKey || e.ctrlKey)) return;
+    const builder = document.getElementById('postman-interface');
+    const sendBtn = document.getElementById('send-request-btn');
+    if (!builder || builder.classList.contains('hidden') || sendBtn.disabled) return;
+    e.preventDefault();
+    runRequest();
+  });
   document.getElementById('add-header-btn').addEventListener('click', () => {
     addHeaderRow();
     resetFirstParseFlag();
@@ -580,15 +585,8 @@ function parseCurlCommand() {
         hasBody: !!parsed.body,
         input_length: curlInput.length
       });
-      
-      // Auto-send on first parse
-      if (isFirstParse) {
-        isFirstParse = false;
-        // Small delay to ensure UI is ready
-        setTimeout(() => {
-          runRequest();
-        }, 100);
-      }
+
+      document.getElementById('send-request-btn')?.focus();
     } catch (error) {
       showError(`Failed to parse cURL: ${error.message}`);
       trackCurlError('parse_failed', { input_length: curlInput.length });
@@ -1086,6 +1084,9 @@ async function runRequest() {
     return;
   }
   
+  // History and code snippets must reflect what is actually sent, including edits made after parsing
+  updateCurrentRequest();
+
   // Build URL with query params
   url = buildURLWithParams(url);
   
@@ -1329,6 +1330,7 @@ async function runRequest() {
     
     // Show response viewer with error state
     const viewer = document.getElementById('response-viewer');
+    const bodyContent = document.getElementById('response-body-content');
     if (viewer) {
       viewer.classList.remove('hidden');
       
@@ -1340,7 +1342,6 @@ async function runRequest() {
       }
       
       // Show error in body tab
-      const bodyContent = document.getElementById('response-body-content');
       if (bodyContent) {
         bodyContent.textContent = `Error: ${error.message || 'Unknown error'}`;
       }
@@ -1385,7 +1386,7 @@ Solutions:
         bodyContent.innerHTML = `<div class="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
           <div class="font-semibold text-red-800 dark:text-red-200 mb-2"><svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-0.125em;flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="M4.929 4.929 19.07 19.071"/></svg> CORS Error</div>
           <div class="text-sm text-red-700 dark:text-red-300 space-y-2">
-            <p><strong>Error:</strong> ${error.message || 'Failed to fetch'}</p>
+            <p><strong>Error:</strong> ${escapeHtml(error.message || 'Failed to fetch')}</p>
             <p><strong>Reason:</strong> The server at <code class="bg-red-100 dark:bg-red-900 px-1 rounded">${new URL(url).hostname}</code> does not allow requests from <code class="bg-red-100 dark:bg-red-900 px-1 rounded">${window.location.origin}</code></p>
             <p><strong>What is CORS?</strong> Cross-Origin Resource Sharing is a browser security feature that blocks requests between different domains unless the server explicitly allows it.</p>
             <p><strong>Solutions:</strong></p>
@@ -2672,18 +2673,19 @@ function loadRequestHistory() {
     
     if (noHistoryMsg) noHistoryMsg.classList.add('hidden');
     
+    // Everything shown comes from pasted cURL commands, so it is escaped.
     container.innerHTML = history.map(item => `
-      <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer" data-id="${item.id}">
-        <div class="flex-1">
+      <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer" data-id="${Number(item.id)}">
+        <div class="flex-1 min-w-0">
           <div class="flex items-center gap-2">
-            <span class="px-2 py-1 text-xs font-semibold rounded ${item.success ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'}">${item.method}</span>
-            <span class="text-sm font-medium text-gray-900 dark:text-white">${item.status}</span>
-            <span class="text-xs text-gray-500 dark:text-gray-400">${item.duration}ms</span>
+            <span class="px-2 py-1 text-xs font-semibold rounded ${item.success ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'}">${escapeHtml(String(item.method))}</span>
+            <span class="text-sm font-medium text-gray-900 dark:text-white">${escapeHtml(String(item.status))}</span>
+            <span class="text-xs text-gray-500 dark:text-gray-400">${Number(item.duration) || 0}ms</span>
           </div>
-          <div class="text-xs text-gray-600 dark:text-gray-300 mt-1 truncate">${item.url}</div>
-          <div class="text-xs text-gray-400 dark:text-gray-500 mt-1">${new Date(item.timestamp).toLocaleString()}</div>
+          <div class="text-xs text-gray-600 dark:text-gray-300 mt-1 truncate">${escapeHtml(String(item.url))}</div>
+          <div class="text-xs text-gray-400 dark:text-gray-500 mt-1">${escapeHtml(new Date(item.timestamp).toLocaleString())}</div>
         </div>
-        <button class="load-history-item-btn px-2 py-1 text-xs text-primary-600 dark:text-primary-400 hover:underline" data-id="${item.id}">
+        <button class="load-history-item-btn px-2 py-1 text-xs text-primary-600 dark:text-primary-400 hover:underline" data-id="${Number(item.id)}">
           Load
         </button>
       </div>
@@ -2721,12 +2723,24 @@ function loadHistoryItem(id) {
   }
 }
 
+// Two clicks to clear (no blocking confirm() dialog): the first arms the button for 3 s.
+let clearHistoryArmed = null;
 function clearRequestHistory() {
-  if (confirm('Clear all request history?')) {
-    localStorage.removeItem('curl_tester_history');
-    loadRequestHistory();
-    trackCurlEvent('clear_history');
+  const btn = document.getElementById('clear-history-btn');
+  if (!clearHistoryArmed) {
+    if (btn) btn.textContent = 'Click again to clear';
+    clearHistoryArmed = setTimeout(() => {
+      clearHistoryArmed = null;
+      if (btn) btn.textContent = 'Clear History';
+    }, 3000);
+    return;
   }
+  clearTimeout(clearHistoryArmed);
+  clearHistoryArmed = null;
+  if (btn) btn.textContent = 'Clear History';
+  localStorage.removeItem('curl_tester_history');
+  loadRequestHistory();
+  trackCurlEvent('clear_history');
 }
 
 // Create expandable JSON tree (simplified version)
