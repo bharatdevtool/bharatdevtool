@@ -331,8 +331,10 @@ function initializeIroColorPicker() {
     const initialAlpha = appState.currentColor.a !== undefined ? appState.currentColor.a / 255 : 1;
     
     // Calculate responsive width for mobile
+    // Fit the box it sits in (not the whole window), so it never runs off narrow phones
     const isMobile = window.innerWidth < 640;
-    const pickerWidth = isMobile ? Math.min(280, window.innerWidth - 32) : 300;
+    const available = container.clientWidth || (window.innerWidth - 32);
+    const pickerWidth = Math.max(160, Math.min(isMobile ? 280 : 300, available));
     
     // Initialize iro.js color picker
     iroColorPicker = new iro.ColorPicker(container, {

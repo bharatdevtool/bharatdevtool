@@ -188,7 +188,7 @@ function createFooter(version = '1.0') {
       </section>
       <section class="footer-meta">
         <p class="made-in">Built with <svg class="bdt-i" width="1em" height="1em" viewBox="0 0 24 24" fill="#ef4444" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="love" role="img" style="display:inline-block;vertical-align:-0.125em"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg> in India</p>
-        <nav class="footer-links" aria-label="Footer links">
+        <nav class="footer-links" aria-label="Footer links" style="flex-wrap:wrap;justify-content:center;max-width:100%">
           <a href="${base}about.html">About</a>
           <span class="sep">•</span>
           <a href="${base}privacy.html">Privacy</a>

@@ -466,7 +466,7 @@ export default function LottieValidatorClient() {
             </div>
 
             {/* Quick Action Workflows */}
-            <div className="pt-2 flex items-center gap-3">
+            <div className="pt-2 flex flex-wrap items-center gap-3">
               <button
                 type="button"
                 onClick={handleNavigateToPlayer}

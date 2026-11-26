@@ -2083,7 +2083,33 @@
         const title = (card.querySelector('.feature-title')?.textContent || '').toLowerCase();
         const desc = (card.querySelector('.feature-description')?.textContent || '').toLowerCase();
         const tags = (card.dataset.tags || '').toLowerCase();
-        return title.includes(searchQuery) || desc.includes(searchQuery) || tags.includes(searchQuery);
+        const text = [title, desc, tags, registryText(card)].join(' ');
+        // Every word must match somewhere ("lottie android", "pdf 100kb"), like the ⌘K search
+        return searchQuery.split(/\s+/).filter(Boolean).every((w) => text.includes(w));
+      }
+
+      // Registry keywords and descriptions (from /tools-index.json, the same index the
+      // ⌘K search uses), keyed by the card's link, so cards also match search keywords.
+      const registryTextByPath = new Map();
+      const pathKey = (href) => {
+        try {
+          return new URL(href, location.origin).pathname.replace(/\/index\.html$/, '/').replace(/\/+$/, '').toLowerCase();
+        } catch {
+          return '';
+        }
+      };
+      function registryText(card) {
+        const link = card.querySelector('.feature-actions a[href]');
+        return link ? registryTextByPath.get(pathKey(link.getAttribute('href'))) || '' : '';
+      }
+      let registryRequested = false;
+      function loadRegistryText() {
+        if (registryRequested || !window.BDTToolSearch) return;
+        registryRequested = true;
+        window.BDTToolSearch.loadIndex().then((tools) => {
+          tools.forEach((t) => registryTextByPath.set(pathKey(t.route), t.text));
+          if (searchQuery) applyFilters(getFilterableCards());
+        }, () => { registryRequested = false; });
       }
 
       function applyFilters(cards) {
@@ -2132,6 +2158,7 @@
 
       function handleSearchInput(query) {
         searchQuery = query.trim().toLowerCase();
+        if (searchQuery) loadRegistryText();
         applyFilters(getFilterableCards());
 
         if (searchQuery.length >= 2 && typeof window.Analytics !== 'undefined') {
